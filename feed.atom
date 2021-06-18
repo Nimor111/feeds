@@ -2,10 +2,578 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2021-06-17T20:38:22.296Z</updated>
+    <updated>2021-06-18T20:38:11.969Z</updated>
     <generator>osmosfeed 1.10.2</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[Add autoloading use-package keywords to a fork of general.el]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2zkks/add_autoloading_usepackage_keywords_to_a_fork_of/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2zkks/add_autoloading_usepackage_keywords_to_a_fork_of/"/>
+        <updated>2021-06-18T20:32:57.000Z</updated>
+        <summary type="html"><![CDATA[Hello!
+ As in the title; I have forked general.el to add a few autoloaded keywords of my own, by using the :general keyword use-package functions as a template. However, this bit of code, originally used for :general, is not working (read "not being autoloaded"):
+ emacs-lisp (defun use-package-handler/:gone (name _keyword args rest state) "Use-package handler for :gone." (use-package-concat (use-package-process-keywords name rest state) `(,@(mapcar (lambda (arglist) ;; Note: prefix commands are not valid functions (if (or (functionp (car arglist)) (macrop (car arglist))) `(,@arglist :package ',name) `(general-def (:keymaps '(global aiern-insert-state-map aiern-normal-state-map)) ,@arglist :package ',name))) (plist-get args :arglists))))) 
+ The part I have changed is the general-def bit, by adding (:keymaps '(global aiern-insert-state-map aiern-normal-state-map)). When demanding the package, it works fine. Am I missing anything here? I've also copied the use-package-autoloads/:general and use-package-handler/:general functions as well, which are exactly the same, and renaming them appropriately.
+ Thank you kindly for the help!
+    submitted by    /u/ShadowRylander  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How do you enable prettier-mode and other project-specific modes?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2zeek/how_do_you_enable_prettiermode_and_other/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2zeek/how_do_you_enable_prettiermode_and_other/"/>
+        <updated>2021-06-18T20:24:54.000Z</updated>
+        <summary type="html"><![CDATA[I have an issue where my .dir-locals are getting bigger and bigger, namely due to my current projects using prettier in quite a few different major modes. But also due to specific eglot setups. Enabling prettier and eglot for the relevant major-mode would work in these projects, but would start becoming annoying in the others.
+ In trying to move most of the logic to my Emacs configuration and have less duplicates in each of my project roots, I tried the following:
+ ;; path/to/my/project/.dir-locals.el ((nil . ((me/eglot-p . t) (me/prettier-p . t)))) ;; dotemacs.el (use-package prettier :preface (defvar-local me/prettier-p nil "Should prettier be enabled?") :hook (web-mode . me/prettier-mode-maybe) :config (put 'me/prettier-p 'safe-local-variable #'booleanp)) (defun me/prettier-mode-maybe () "Enable `prettier-mode' when the prettier executable is found locally." (when me/prettier-p (prettier-mode))) 
+ The issue with that is that dir-local variables are taken into account after web-mode-hook has kicked in, even with nil when no major-mode is specified. So me/prettier-p is always nil in me/prettier-mode-maybe.
+ A second attempt, ignoring dir-local variables altogether, looked like this:
+ (defun me/prettier-mode-maybe () "Enable `prettier-mode' when the prettier executable is found locally." (when-let ((command (shell-command-to-string "npm list -p prettier")) (prettier-p (length> (string-trim-right command) 0))) (prettier-mode))) 
+ Which is obviously too slow to be acceptable.
+ What are your preferred methods to avoid having to copy the same .dir-locals.el every time you start a similar project or even reinstall your machine(s)? That was actually my case btw: I realized while reinstalling my machine how much stuff I had to copy around after cloning all my repositories.
+    submitted by    /u/TheFrenchPoulp  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vterm (20210618.1922) --- Fully-featured terminal emulator]]></title>
+        <id>https://melpa.org/packages/vterm-20210618.1922.tar</id>
+        <link href="https://melpa.org/#/vterm"/>
+        <updated>2021-06-18T19:22:00.000Z</updated>
+        <summary type="html"><![CDATA[The vterm package has been updated to version 20210618.1922.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Scala, 2.12/2.13, which driver/library recommend for connecting to Cassandra]]></title>
+        <id>https://www.reddit.com/r/scala/comments/o2xv6s/scala_212213_which_driverlibrary_recommend_for/</id>
+        <link href="https://www.reddit.com/r/scala/comments/o2xv6s/scala_212213_which_driverlibrary_recommend_for/"/>
+        <updated>2021-06-18T19:14:45.000Z</updated>
+        <summary type="html"><![CDATA[Just that, what library do you recommend for connecting to Cassandra?
+ Thanks for your feedback.
+    submitted by    /u/gustavo-mnz  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Binding keys, beginner questions.]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2xd2k/binding_keys_beginner_questions/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2xd2k/binding_keys_beginner_questions/"/>
+        <updated>2021-06-18T18:53:23.000Z</updated>
+        <summary type="html"><![CDATA[The documentation and Google didn't help...
+ I have three problems that I cannot fix, if possible, can you help?
+  
+Close Emacs win LWin+Q
+ What I tried:
+ (global-set-key (kbd "s-q") 'kill-emacs)
+ Open shell with ` (tilde key below esc) and if already open, close with ` (tilde key below esc)
+ What I tried:
+ (global-set-key [f1] 'shell)
+  
+   submitted by    /u/According_Title2355  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Emacs window manager like I3]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2vnq5/emacs_window_manager_like_i3/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2vnq5/emacs_window_manager_like_i3/"/>
+        <updated>2021-06-18T17:40:10.000Z</updated>
+        <summary type="html"><![CDATA[Why nobody was able to create a window manager inside Emacs?
+ When I create multiple windows (ctrl+x 3, ctrl+x 2) I find it difficult to navigate to the third, fourth or fifth window. Is there a solution?
+ Thank you! :)
+    submitted by    /u/According_Title2355  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Emacs configuration for C/C++]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2uzwn/emacs_configuration_for_cc/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2uzwn/emacs_configuration_for_cc/"/>
+        <updated>2021-06-18T17:22:27.000Z</updated>
+        <summary type="html"><![CDATA[Hi folks, I'm very new to Emacs world. I just started to use Emacs for my daily life, configure it a little bit and I love Emacs very much. My question is, is there any beginner-friendly good tutorial to how can I customize my Emacs setup for C/C++ development?
+    submitted by    /u/RennisDitchie  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[lsp-treemacs (20210618.1722) --- LSP treemacs]]></title>
+        <id>https://melpa.org/packages/lsp-treemacs-20210618.1722.tar</id>
+        <link href="https://melpa.org/#/lsp-treemacs"/>
+        <updated>2021-06-18T17:22:00.000Z</updated>
+        <summary type="html"><![CDATA[The lsp-treemacs package has been updated to version 20210618.1722.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Switching from gnus to mu4e?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2tkkm/switching_from_gnus_to_mu4e/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2tkkm/switching_from_gnus_to_mu4e/"/>
+        <updated>2021-06-18T16:35:50.000Z</updated>
+        <summary type="html"><![CDATA[Has someone here made this switch? Relatively new to working with email on emacs, but I have previously set up gnus on my primary machine to send/receive mail from my gmail account. 
+ I've setup mu4e on another machine, but I would like to use it on the gnus machine. Is there any way I can do this without having to setup offlineimap again? I don't think that gnus actually stores emails locally so perhaps that's not possible...
+    submitted by    /u/nonreligious  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ZuriHac GHC AMA: Submit your questions!]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/o2ta9r/zurihac_ghc_ama_submit_your_questions/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/o2ta9r/zurihac_ghc_ama_submit_your_questions/"/>
+        <updated>2021-06-18T16:26:04.000Z</updated>
+        <summary type="html"><![CDATA[Have you ever had a technical question about GHC you didn't get a good answer for?
+ Tomorrow, Saturday June 19, 17:00 Zurich time, there will be a GHC ask-me-anything panel discussion.
+ It will be live-streamed on YouTube on the ZuriHac channel.
+ We will have Simon Peyton-Jones and Ben Gamari on the panel as GHC developers, and we need you to ask them questions!
+ You can ask your questions:
+  
+Live via the ZuriHac Discord, channel #ghc-panel-discussion
+ Live via the libera.chat IRC channel #ghc; prefix your question with nh2: ZuriHac GHC AMA question:
+ Here any time (I will collect the questons until 1 hour before the event)
+  
+The questions will read to the panelists during the event.
+ We'd like to get technical questions about GHC, e.g. “how does class instance lookup work?”, not so much personal questions like “how long have you worked on GHC?”.
+  
+ZuriHac is the world's largest Haskell Hackathon. It is free to join, and this year it is remote, so you can join simply by registering on https://zfoh.ch/zurihac2021/ Registering will send you the Discord invite, in case you want to ask your questions there.
+    submitted by    /u/nh2_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[k8s-mode (20210618.1540) --- Major mode for Kubernetes configuration file]]></title>
+        <id>https://melpa.org/packages/k8s-mode-20210618.1540.tar</id>
+        <link href="https://melpa.org/#/k8s-mode"/>
+        <updated>2021-06-18T15:40:00.000Z</updated>
+        <summary type="html"><![CDATA[The k8s-mode package has been updated to version 20210618.1540.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[language-id (20210618.1532) --- Library to work with programming language identifiers]]></title>
+        <id>https://melpa.org/packages/language-id-20210618.1532.el</id>
+        <link href="https://melpa.org/#/language-id"/>
+        <updated>2021-06-18T15:32:00.000Z</updated>
+        <summary type="html"><![CDATA[The language-id package has been updated to version 20210618.1532.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to add border between tab-bar and window?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2rmo4/how_to_add_border_between_tabbar_and_window/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2rmo4/how_to_add_border_between_tabbar_and_window/"/>
+        <updated>2021-06-18T15:25:01.000Z</updated>
+        <summary type="html"><![CDATA[As title, I want to add a border between tab-bar and the top of window, how can I do this?
+ ​
+ ​
+ https://preview.redd.it/r4nsb553l1671.png?width=1920&format=png&auto=webp&s=c3d2564e00ad45552c4e71c6ea7a9e22d7fad188
+    submitted by    /u/s930054123  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Scala Type Classes from Scratch]]></title>
+        <id>https://www.reddit.com/r/scala/comments/o2r34e/scala_type_classes_from_scratch/</id>
+        <link href="https://www.reddit.com/r/scala/comments/o2r34e/scala_type_classes_from_scratch/"/>
+        <updated>2021-06-18T15:01:08.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/elastiknn  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ZuriHac officially starts in a hour - Live stream link of the first talk]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/o2qsiy/zurihac_officially_starts_in_a_hour_live_stream/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/o2qsiy/zurihac_officially_starts_in_a_hour_live_stream/"/>
+        <updated>2021-06-18T14:47:35.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/instantdoctor  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Single "data declaration" introducing "more type constructors" ?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/o2qf6w/single_data_declaration_introducing_more_type/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/o2qf6w/single_data_declaration_introducing_more_type/"/>
+        <updated>2021-06-18T14:30:17.000Z</updated>
+        <summary type="html"><![CDATA[https://wiki.haskell.org/Constructor
+  
+A data declaration introduces one or more type constructors and one or more value constructors for each type constructor.
+  
+Out of curiosity, in what syntax can "more" type constructors be defined in "a" data declaration?
+    submitted by    /u/complyue  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[grep-a-lot (20210618.1420) --- manages multiple search results buffers for grep.el]]></title>
+        <id>https://melpa.org/packages/grep-a-lot-20210618.1420.el</id>
+        <link href="https://melpa.org/#/grep-a-lot"/>
+        <updated>2021-06-18T14:20:00.000Z</updated>
+        <summary type="html"><![CDATA[The grep-a-lot package has been updated to version 20210618.1420.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Reject promise with json error]]></title>
+        <id>https://www.reddit.com/r/purescript/comments/o2ohyj/reject_promise_with_json_error/</id>
+        <link href="https://www.reddit.com/r/purescript/comments/o2ohyj/reject_promise_with_json_error/"/>
+        <updated>2021-06-18T12:57:13.000Z</updated>
+        <summary type="html"><![CDATA[I have to use a js lib that wants me to reject a promise with a json object:
+ { requeue: true } 
+ I've been trying to use Variant approach (inspired by https://github.com/justinwoo/purescript-chirashi)
+ type MyError = Variant (ErrorRow ()) type ErrorRow r = ( requeue :: Boolean | r ) case foo of Right h -> h Left _ -> Aff.throwError $ mkVariantError (inj (Proxy :: Proxy "requeue") true) 
+ But all I could get was:
+ {"variant":{"type":"requeue","value":true},"message":"VariantError"} 
+ Is there an easy way to do this? Thanks for any tips.
+    submitted by    /u/wtfisthiswitchery  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>PureScript</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Programming in Scala, 5th Edition]]></title>
+        <id>https://www.reddit.com/r/scala/comments/o2o9ya/programming_in_scala_5th_edition/</id>
+        <link href="https://www.reddit.com/r/scala/comments/o2o9ya/programming_in_scala_5th_edition/"/>
+        <updated>2021-06-18T12:45:33.000Z</updated>
+        <summary type="html"><![CDATA[Hi Guys, Did anyone here purchase the "Programming in Scala, 5th edition" which is updated for Scala 3?
+  
+How is it?
+ Would you recommend buying it?
+  
+Link for the book: https://www.artima.com/shop/programming_in_scala_5ed
+ Thanks
+    submitted by    /u/tharindudg  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[JOB] Haskell Developer @Chordify]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/o2mxq8/job_haskell_developer_chordify/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/o2mxq8/job_haskell_developer_chordify/"/>
+        <updated>2021-06-18T11:28:59.000Z</updated>
+        <summary type="html"><![CDATA[Hello everyone,
+ Chordify is hiring again! This post might look familiar to you if you've been around here for a while. That's because I posted about a vacancy we had back in October. Since then, we've hired two new developers, but we're still expanding!
+ Chordify is a music platform that you can use to automatically detect the chords in any song you like. This way we help musicians to play all of their favourite music in an easy and intuitive way. You can try it at https://chordify.net
+ Now, the backend for our website and apps, that are used by millions of people worldwide, is written in Haskell! We serve the user using primarily Servant, Persistent and Esqueleto. We also have a custom Redis caching layer and use an advanced Cloud Haskell setup to distribute our chord analysis computations.
+ We are quickly becoming an autonomous workforce, meaning there is pretty much no hierarchy, and we are looking to expand our fast-growing team with a pro-active, independent and creative functional programmer to further improve Chordify. You'd get the opportunity to work with advanced type systems to power a website that serves millions.
+ More information and a form to apply can be found at https://jobs.chordify.net. If you have any questions, feel free to ask them in this thread, or reach out to me at [rik@chordify.net](mailto:rik@chordify.net).
+ We strive for diversity in our team, and encourage people of all backgrounds and genders to apply.
+ One more thing, this is explicitly NOT a remote job. We expect our new colleague to come work with us at our (new!) office in Utrecht, The Netherlands.
+    submitted by    /u/RikvanToor  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Issue 268 :: Haskell Weekly newsletter]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/o2mtq5/issue_268_haskell_weekly_newsletter/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/o2mtq5/issue_268_haskell_weekly_newsletter/"/>
+        <updated>2021-06-18T11:22:52.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/haskellweekly  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Unclear type mismatching/]]></title>
+        <id>https://www.reddit.com/r/scala/comments/o2le70/unclear_type_mismatching/</id>
+        <link href="https://www.reddit.com/r/scala/comments/o2le70/unclear_type_mismatching/"/>
+        <updated>2021-06-18T09:49:00.000Z</updated>
+        <summary type="html"><![CDATA[Hello, can anyone explain this error and what causes it ?
+ https://preview.redd.it/9oh0fk41xz571.png?width=1197&format=png&auto=webp&s=5a1aa459472c5be0b35bd2125908d6909a04c7c1
+ partitionFlow .map(new PopularityFlowProcessFunction()) .windowAll(TumblingProcessingTimeWindows.of(Time.seconds(5))) .process(new ProcessAllWindowFunction[(String, Int), Map[String, Double], TimeWindow] { override def process(context: Context, elements: Iterable[(String, Int)], out: Collector[Map[String, Double]]): Unit = { val counts: Int = elements.size val result: Map[String, Double] = elements .groupBy((in: (String, Int)) => in._1) .map((elem: (String, Iterable[(String, Int)])) => (elem._1, elem._2.reduce((v1: (String, Int), v2: (String, Int)) => v1._2 + v2._2))) .map((elem: (String, Int)) => (elem._1, (elem._2 / counts).toDouble)) out.collect(result) } }) 
+ Code looks like this. This mapping looks quite clear to me and I cant understand why is there type misamatching.
+    submitted by    /u/puch001  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[help] Org-capture always asks for path to save in despite given templates]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/o2jazu/help_orgcapture_always_asks_for_path_to_save_in/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/o2jazu/help_orgcapture_always_asks_for_path_to_save_in/"/>
+        <updated>2021-06-18T07:22:27.000Z</updated>
+        <summary type="html"><![CDATA[Hello reddit!
+ I rely heavily on org-capture / org-roam-capture to sort my notes.
+ Problem
+ Until recently I had a working setup for my capture templates, but at the moment everytime I want to capture a file I get prompted to specify a path to save the capture in – which the template already should have done.
+ It doesn't matter whether I specify a full path or not – but I dont't see the error in my config (except org-capture works without my config quite well)
+ Config
+ (setq org-directory "~/org/" org-roam-directory "~/org/") (setq org-capture-templates '( ("t" "Aufgabe" entry (file+headline "~/org/gtd/inbox.org" "Tasks to sort") "* TODO %?\n %i\n %a") ("n" "Notiz" entry (file+headline "~/org/gtd/inbox.org" "Notes to sort") "* %?\n %i\n %a") ;; templates for the org-capture extension in Fi…]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[persp-projectile (20210618.708) --- Perspective integration with Projectile]]></title>
+        <id>https://melpa.org/packages/persp-projectile-20210618.708.el</id>
+        <link href="https://melpa.org/#/persp-projectile"/>
+        <updated>2021-06-18T07:08:00.000Z</updated>
+        <summary type="html"><![CDATA[The persp-projectile package has been updated to version 20210618.708.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Confused about Layers of Evidence]]></title>
+        <id>1872@/discussions</id>
+        <link href="https://forum.zettelkasten.de/discussion/1872/confused-about-layers-of-evidence"/>
+        <updated>2021-06-18T06:54:54.000Z</updated>
+        <summary type="html"><![CDATA[Hi Zettelkasten friends,
+I've been processing papers on psychology lately (on retrieval practice and reading comprehension) but I'm having trouble implementing the concept of "layers of evidence" as described in https://zettelkasten.de/posts/layers-of-evidence/.
+In the post, @sfast said: (my emphasis for context)
+
+  
+The next layer of evidence is the interpretation of data patterns. The phenomenological layer meant you describe what you saw. Here, you interpret why you saw it.
+Now the concept of causality can come into play. You can explain the correlation above by saying: Drowning people in swimming pools generates amplifiers for the nuclear power plants in the U.S, and that’s why when more people drown in swimming pools, more energy is generated in nuclear power plants.
+
+
+Going down to t…]]></summary>
+        <author>
+            <name>alcantal</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Modifing the DOM tree with FFI while playing nice with Halogen]]></title>
+        <id>https://www.reddit.com/r/purescript/comments/o2hud0/modifing_the_dom_tree_with_ffi_while_playing_nice/</id>
+        <link href="https://www.reddit.com/r/purescript/comments/o2hud0/modifing_the_dom_tree_with_ffi_while_playing_nice/"/>
+        <updated>2021-06-18T05:45:00.000Z</updated>
+        <summary type="html"><![CDATA[I'm working on a Halogen project which uses contenteditable divs. This has been causing a lot of problems for Halogen and the Virtual DOM due to the inversion of control with contenteditable.
+ I'm essentially creating a rich text editor and I have the following HTML structure:
+ <div id="editor"> <p class="content" id="0" contenteditable="true">foo</p> <p id="2" class="content" contenteditable="true">This is a new row</p> <p id="1" class="content" contenteditable="true">baz</p> </div> 
+ I have a subscription to an event listener for each p tag to track text input and record it into my Halogen component's state. I render the editor div from the Halogen component state.
+ I also use the onKeyDown event to refocus the caret for navigation up and down between p tags and for inserting new p tags …]]></summary>
+        <author>
+            <name>PureScript</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[emacs/doom hangs with ediff-files, how to debug?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2hn6p/emacsdoom_hangs_with_edifffiles_how_to_debug/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2hn6p/emacsdoom_hangs_with_edifffiles_how_to_debug/"/>
+        <updated>2021-06-18T05:32:52.000Z</updated>
+        <summary type="html"><![CDATA[I run into a problem of ediff-files hanging. How to figure out the root cause? 
+ When I performed ediff between two files, after providing file B, the emacs hanged, without displaying the ediff buffers, but the status area shows "processing difference regions ... done". 
+ The emacs process has to be aborted through task manager. C-g would not work, neither SPC q 
+ The emacs version is Emacs 27.1. 
+ The emacs-config of tecosaur (https://github.com/tecosaur/emacs-config) is used with the recent Doom. 
+ Here is a screenshot showing where it hanged and the high CPU utilization of the emacs process. ![image](https://user-images.githubusercontent.com/2638417/122454243-05707c00-cf60-11eb-8bb7-93c39339811d.png) 
+ I tried ediff-buffers has the same problem.(edited)
+ I really like emacs-config that I want to make it work. Thanks in advance for helps!
+    submitted by    /u/currious_636  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Take math notes in Emacs Org mode]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2g7a3/take_math_notes_in_emacs_org_mode/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2g7a3/take_math_notes_in_emacs_org_mode/"/>
+        <updated>2021-06-18T04:06:24.000Z</updated>
+        <summary type="html"><![CDATA[Summation, Integration sign -> I wish to use these mathematical symbols in my org file to take math notes. Any help would be appreciated.
+    submitted by    /u/Both-Level4667  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[popup (20210618.402) --- Visual Popup User Interface]]></title>
+        <id>https://melpa.org/packages/popup-20210618.402.el</id>
+        <link href="https://melpa.org/#/popup"/>
+        <updated>2021-06-18T04:02:00.000Z</updated>
+        <summary type="html"><![CDATA[The popup package has been updated to version 20210618.402.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA["Normie" mode with mainstream GUI editors keybindings(C-A, C-C, C-V, C-Z, etc)]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2g0x2/normie_mode_with_mainstream_gui_editors/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2g0x2/normie_mode_with_mainstream_gui_editors/"/>
+        <updated>2021-06-18T03:56:46.000Z</updated>
+        <summary type="html"><![CDATA[Does Emacs have plugins for such? Or is it possible to create such config with binding traditional Emacs prefixes(C-C, C-X) to something other?
+    submitted by    /u/vatosarmat  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Containers in Functional Programming]]></title>
+        <id>https://www.reddit.com/r/scala/comments/o2frbz/containers_in_functional_programming/</id>
+        <link href="https://www.reddit.com/r/scala/comments/o2frbz/containers_in_functional_programming/"/>
+        <updated>2021-06-18T03:42:08.000Z</updated>
+        <summary type="html"><![CDATA[Hi All, I am reading a book that talks about parallel programming and starts implementing a method for adding list of elements. He say's we need a container to store the result i.e, myresult[ aggSum ] . My question is Why do we need to store the result ( aggSum ) inside myResult ( container ), when we can represent the sum of elements using aggSum. If he says Optional[aggSum] / Either[aggSum] I would understand but he wants to store it in a container. So what exactly is a container ?, why is it's purpose ?, does it has to do anything with generics.
+    submitted by    /u/SlightUsual  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[An trivial play app with ZLayer and ZIO]]></title>
+        <id>https://www.reddit.com/r/scala/comments/o2fonf/an_trivial_play_app_with_zlayer_and_zio/</id>
+        <link href="https://www.reddit.com/r/scala/comments/o2fonf/an_trivial_play_app_with_zlayer_and_zio/"/>
+        <updated>2021-06-18T03:37:57.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/Beginning-Pin9226  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[burly (20210618.324) --- Save and restore frame/window configurations with buffers]]></title>
+        <id>https://melpa.org/packages/burly-20210618.324.tar</id>
+        <link href="https://melpa.org/#/burly"/>
+        <updated>2021-06-18T03:24:00.000Z</updated>
+        <summary type="html"><![CDATA[The burly package has been updated to version 20210618.324.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Dear VSCODERS, What damn good features would you want in EMACS ?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2dw6q/dear_vscoders_what_damn_good_features_would_you/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2dw6q/dear_vscoders_what_damn_good_features_would_you/"/>
+        <updated>2021-06-18T02:01:17.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/Psycho-logical-being  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Automatically, recursively sorting an Org file upon save using multiple sorting criteria]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2dfjp/automatically_recursively_sorting_an_org_file/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2dfjp/automatically_recursively_sorting_an_org_file/"/>
+        <updated>2021-06-18T01:36:43.000Z</updated>
+        <summary type="html"><![CDATA[In my Org QL project, I maintain a notes file to track ideas, bugs, etc, similar to the way GitHub issues and milestones can be used. After modifying entries for a while–including setting priorities, to-do/done status, etc–the outline tends to get a bit jumbled. Org has the built-in org-sort command, but it must be run manually, and it only supports one sorting method at a time. It quickly becomes tedious, and it's impractical to use regularly.
+ But with a bit of code and an after-save-hook, this can be automated so that, every time I save the file, all of its entries are re-sorted according to my criteria (alphabetical, priority, and to-do status), and then the point is repositioned to where it was before the file was sorted (the last feature being one I just added, which makes it much mo…]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Automatically, recursively sorting an Org file upon save using multiple sorting criteria]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/o2df99/automatically_recursively_sorting_an_org_file/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/o2df99/automatically_recursively_sorting_an_org_file/"/>
+        <updated>2021-06-18T01:36:19.000Z</updated>
+        <summary type="html"><![CDATA[In my Org QL project, I maintain a notes file to track ideas, bugs, etc, similar to the way GitHub issues and milestones can be used. After modifying entries for a while–including setting priorities, to-do/done status, etc–the outline tends to get a bit jumbled. Org has the built-in org-sort command, but it must be run manually, and it only supports one sorting method at a time. It quickly becomes tedious, and it's impractical to use regularly.
+ But with a bit of code and an after-save-hook, this can be automated so that, every time I save the file, all of its entries are re-sorted according to my criteria (alphabetical, priority, and to-do status), and then the point is repositioned to where it was before the file was sorted (the last feature being one I just added, which makes it much mo…]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[M-x-term - "Error in Process Filter: Invalid Face: Unspecified"]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2dc3o/mxterm_error_in_process_filter_invalid_face/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2dc3o/mxterm_error_in_process_filter_invalid_face/"/>
+        <updated>2021-06-18T01:31:39.000Z</updated>
+        <summary type="html"><![CDATA[I love running cmus in M-x-term bin/bash in Emacs. However, recently, the error in the subject line has surfaced. And my terminal won't display properly. It remains black (the background color of my theme), and the error: "error in process filter: invalid face: unspecified" appears to be the problem. Not only cannot I not access cmus, I can't access anything.
+ However, I have no idea what caused this, where to fix it, and how to fix it. Can anyone help? I've looked around, but can't find a good answer.
+ Also, when I run emacs -Q, the terminal DOES seem to work fine. 
+    submitted by    /u/brainshrinedrip  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How can I use org "plain list" items as org "todo" items?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2b57e/how_can_i_use_org_plain_list_items_as_org_todo/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2b57e/how_can_i_use_org_plain_list_items_as_org_todo/"/>
+        <updated>2021-06-17T23:36:46.000Z</updated>
+        <summary type="html"><![CDATA[Greetings, emacsians. I'm trying to set up org mode for personal task management and have come across the issue that apparently org mode list items can't be todo items (only checkmarked items) and that only headings can actually be org mode todos. This is quite a disappointment as I enjoy the automatic numbering and nicely formatted nestability available for lists and also the agenda views of todo items, and I would very much like to use them together.
+ Are there any packages which fix this dilemma? Or any elisp way to do this? Or are miracles real and is there a way to actually do this in normal org mode? Any of these would be much appreciated!
+ Thanks!
+    submitted by    /u/the88doctor  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[best way to emacs a remote project on windows machine, from ubuntu/linux]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o2a4cz/best_way_to_emacs_a_remote_project_on_windows/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o2a4cz/best_way_to_emacs_a_remote_project_on_windows/"/>
+        <updated>2021-06-17T22:47:57.000Z</updated>
+        <summary type="html"><![CDATA[i have work on windows, and i prepare to use emacs from remote ubuntu machine over ssh.
+ for some reason when ever i write the file path /ssh:name@ip:path, emacs hangs! i always ssh from emacs into another linux machine, i wonder why it hangs?! is there a better way?
+ i do normally access the machine from the terminal, but /ssh:some_name@192.168.5.40:d:\note do take forever!
+    submitted by    /u/m-mohab  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[phpstan (20210617.2234) --- Interface to PHPStan]]></title>
+        <id>https://melpa.org/packages/phpstan-20210617.2234.el</id>
+        <link href="https://melpa.org/#/phpstan"/>
+        <updated>2021-06-17T22:34:00.000Z</updated>
+        <summary type="html"><![CDATA[The phpstan package has been updated to version 20210617.2234.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[flymake-phpstan (20210617.2223) --- Flymake backend for PHP using PHPStan]]></title>
+        <id>https://melpa.org/packages/flymake-phpstan-20210617.2223.el</id>
+        <link href="https://melpa.org/#/flymake-phpstan"/>
+        <updated>2021-06-17T22:23:00.000Z</updated>
+        <summary type="html"><![CDATA[The flymake-phpstan package has been updated to version 20210617.2223.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[YASnippet snippets/templating Introduction/Tutorial — Straightforward Emacs]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/o282fq/yasnippet_snippetstemplating_introductiontutorial/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/o282fq/yasnippet_snippetstemplating_introductiontutorial/"/>
+        <updated>2021-06-17T21:15:00.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/TrepidTurtle  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Functional code and logging]]></title>
         <id>https://www.reddit.com/r/scala/comments/o22xvb/functional_code_and_logging/</id>
@@ -1157,6 +1725,16 @@ Thank you.
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[diff-hl (20210615.1539) --- Highlight uncommitted changes using VC]]></title>
+        <id>https://melpa.org/packages/diff-hl-20210615.1539.tar</id>
+        <link href="https://melpa.org/#/diff-hl"/>
+        <updated>2021-06-15T15:39:00.000Z</updated>
+        <summary type="html"><![CDATA[The diff-hl package has been updated to version 20210615.1539.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[emacsql (20210615.1539) --- high-level SQL database front-end]]></title>
         <id>https://melpa.org/packages/emacsql-20210615.1539.tar</id>
         <link href="https://melpa.org/#/emacsql"/>
@@ -2014,6 +2592,16 @@ I looked through the manual and searched a bit and have not really found anythin
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[pippel (20210614.1655) --- Frontend to python package manager pip]]></title>
+        <id>https://melpa.org/packages/pippel-20210614.1655.tar</id>
+        <link href="https://melpa.org/#/pippel"/>
+        <updated>2021-06-14T16:55:00.000Z</updated>
+        <summary type="html"><![CDATA[The pippel package has been updated to version 20210614.1655.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Finite abstract algebra in Haskell]]></title>
         <id>https://www.reddit.com/r/haskell/comments/nzr6ec/finite_abstract_algebra_in_haskell/</id>
         <link href="https://www.reddit.com/r/haskell/comments/nzr6ec/finite_abstract_algebra_in_haskell/"/>
@@ -2787,6 +3375,16 @@ Oleg Grenrus — Should fmap coerce = coerce hold?
         <link href="https://melpa.org/#/zmq"/>
         <updated>2021-06-13T03:43:00.000Z</updated>
         <summary type="html"><![CDATA[The zmq package has been updated to version 20210613.343.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[good-scroll (20210613.206) --- Good pixel line scrolling]]></title>
+        <id>https://melpa.org/packages/good-scroll-20210613.206.tar</id>
+        <link href="https://melpa.org/#/good-scroll"/>
+        <updated>2021-06-13T02:06:00.000Z</updated>
+        <summary type="html"><![CDATA[The good-scroll package has been updated to version 20210613.206.]]></summary>
         <author>
             <name>MELPA package updates</name>
         </author>
@@ -15347,555 +15945,6 @@ Calculate "age" based on 2 dates (e.g. 3 Jan - 1 Jan = 2 days)
  Is there any particular reason why this is defined in Data.List.NonEmpty instead of Data.Functor? I imagine it's less efficient than a specific implementation (it iterates its argument twice, whereas Data.List.unzip seems to do it once), but this is probably more of a consideration for the clien…]]></summary>
         <author>
             <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[ANN] evil-numbers v0.6 (fixes and new features)]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ngulgt/ann_evilnumbers_v06_fixes_and_new_features/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ngulgt/ann_evilnumbers_v06_fixes_and_new_features/"/>
-        <updated>2021-05-20T08:24:45.000Z</updated>
-        <summary type="html"><![CDATA[evil-numbers 0.6 has been released, from the change-log.
- Additions
-  
-Add evil-numbers-separator-chars
- option to support separator characters, such as 16_777_216 or 4,294,967,296.
- Add evil-numbers-case
- option for the case to use for hexadecimal values (defaults to the current case).
-  
-Fixes
-  
-Fix #25 increment steps to the next line.
- Fix #24 hexadecimal values case changes when incrementing/decrementing.
- Fix padding being ignored with block selection.
- Fix #21 increment w/ selection ignores items be…]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[simulate exwm keys]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ngtem6/simulate_exwm_keys/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ngtem6/simulate_exwm_keys/"/>
-        <updated>2021-05-20T07:07:06.000Z</updated>
-        <summary type="html"><![CDATA[i cant simulate the M-backspace to work as C-backspace in exwm anybody have any idea how to simulate such key
-    submitted by    /u/rese2020  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How can I get LaTex Snippets in org-mode to work properly?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ngsjy2/how_can_i_get_latex_snippets_in_orgmode_to_work/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ngsjy2/how_can_i_get_latex_snippets_in_orgmode_to_work/"/>
-        <updated>2021-05-20T06:12:27.000Z</updated>
-        <summary type="html"><![CDATA[I am pretty new to Emacs and have been using Doom Emacs. Org Mode has been great, but I'm having some issues.
- I have been using YASnippet and have this in my config.el to get the snippets working in Latex Mode in Org Mode.
- (add-hook 'org-mode-hook (λ! (yas-minor-mode) (yas-activate-extra-mode 'latex-mode))) 
- The issue is as follows.
- For example, if I have this snippet:
- # -*- mode: snippet -*- # name: arrow # key: ra # condition: t # -- \Rightarrow $0 
- If I do $ra<tab>$ in Latex, it works. However, in …]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Has anyone built a dashboard showing the status of Scala 3 support by popular libraries?]]></title>
-        <id>https://www.reddit.com/r/scala/comments/ngs7b6/has_anyone_built_a_dashboard_showing_the_status/</id>
-        <link href="https://www.reddit.com/r/scala/comments/ngs7b6/has_anyone_built_a_dashboard_showing_the_status/"/>
-        <updated>2021-05-20T05:50:35.000Z</updated>
-        <summary type="html"><![CDATA[There's the community build, but it's only a small fraction.
- If anyone's up for it, I think it can be done by querying github API (to get a list of scala projects, and the number of stars for each) and maven central (to check for scala3 artifacts).
-    submitted by    /u/nikitaga  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[graphql-doc (20210520.533) --- GraphQL Documentation Explorer]]></title>
-        <id>https://melpa.org/packages/graphql-doc-20210520.533.el</id>
-        <link href="https://melpa.org/#/graphql-doc"/>
-        <updated>2021-05-20T05:33:00.000Z</updated>
-        <summary type="html"><![CDATA[The graphql-doc package has been updated to version 20210520.533.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[babel (20210520.501) --- interface to web translation services such as Babelfish]]></title>
-        <id>https://melpa.org/packages/babel-20210520.501.el</id>
-        <link href="https://melpa.org/#/babel"/>
-        <updated>2021-05-20T05:01:00.000Z</updated>
-        <summary type="html"><![CDATA[The babel package has been updated to version 20210520.501.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Help: Multiple interpretations, and when to stop digging?]]></title>
-        <id>1821@/discussions</id>
-        <link href="https://forum.zettelkasten.de/discussion/1821/help-multiple-interpretations-and-when-to-stop-digging"/>
-        <updated>2021-05-20T03:42:57.000Z</updated>
-        <summary type="html"><![CDATA[Hello Zettelkasten friends,
-How do you make notes on an experimental study when you have multiple interpretations of it? For example, here is a note I got from "Human memory: A proposed system and its control processes":
-
-  
-Montague, Adams, and Kiess (1966) found that associating a word — called a Natural Language Mediator increased recall rate. Specifically, when people forgot the NLM assigned to a pair of nonsense words, retention rate was negligible. In contrast, when people remembered the NLM assigned …]]></summary>
-        <author>
-            <name>improveism</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Auto-generating a C++ implementation file from its header file?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/nglu7z/autogenerating_a_c_implementation_file_from_its/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/nglu7z/autogenerating_a_c_implementation_file_from_its/"/>
-        <updated>2021-05-20T00:30:13.000Z</updated>
-        <summary type="html"><![CDATA[There are a few tasks that I have to do repetitively when writing C++ and which seem like they could be easily automated, but I don't know how. For example,
-  
-Auto-generating implementation file from header function signatures (kind of like C++ helper in vscode) (Also not necessary, but it would be nice if it auto-updated as you made changes)
- 
-Auto-generating getters/setters for private member variables, since they have the very predictable signature of const int& get_thing() const; and in the implementat…]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Pretty Simple Beginner Q]]></title>
-        <id>https://www.reddit.com/r/scala/comments/ngli92/pretty_simple_beginner_q/</id>
-        <link href="https://www.reddit.com/r/scala/comments/ngli92/pretty_simple_beginner_q/"/>
-        <updated>2021-05-20T00:14:24.000Z</updated>
-        <summary type="html"><![CDATA[​
-  
- Col A Col B  
-  
- 1 14  
-  3 12  
-  5 34  
-  2 5  
-  4 2  
-  4 9  
-  5 15  
-  3 10  
-  1 4  
-  2 12  
- 
- ​
- So I have a table similar to the one above(but like 800k lines) and Col A only goes from 1-5. How would I make a new Col C that includes just 5 lines and the averages of all the Col B which correspond to the Col A?
- So like:
- ​
-  
- Col A Col C  
-  
- 1 9  
-  2 8.5  
-  3 11  
-  4 5.5  
-  5 24.5  
- 
- Sorry if this is not allowed here or too simple a question haha. I have two days to learn Scala bef…]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Readable Scala Style]]></title>
-        <id>https://www.reddit.com/r/scala/comments/ngkjb4/readable_scala_style/</id>
-        <link href="https://www.reddit.com/r/scala/comments/ngkjb4/readable_scala_style/"/>
-        <updated>2021-05-19T23:29:43.000Z</updated>
-        <summary type="html"><![CDATA[I've been working on a straightforward enough style guide for Scala targeted at teams that use the standard Future-centric stack. My main idea was to give new Scala developers a list of quick and easy-to-follow rules that can help them avoid newbie mistakes, and I also wanted also summarize my own experience and preferences. It's a little bit opinionated, but I would be curious to hear if I missed something that other people here consider important. 
- https://appliedscala.com/blog/2021/readable-scala-style/…]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Do I Install Emacs Snap or Regular Emacs In Ubuntu?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ngk6gj/do_i_install_emacs_snap_or_regular_emacs_in_ubuntu/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ngk6gj/do_i_install_emacs_snap_or_regular_emacs_in_ubuntu/"/>
-        <updated>2021-05-19T23:13:11.000Z</updated>
-        <summary type="html"><![CDATA[Switched from Windows to Ubuntu since Ubuntu plays nice with my Nvidia hardware. 
- So do I just do sudo apt install emacs or sudo snap apt-get install emacs?
- Thank you for any help. 
- Note I ask this question because I want to download the emacs that will prevent me from encountering problems in the future.
-    submitted by    /u/jrosend963  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[kdeconnect (20210519.2016) --- An interface for KDE Connect]]></title>
-        <id>https://melpa.org/packages/kdeconnect-20210519.2016.el</id>
-        <link href="https://melpa.org/#/kdeconnect"/>
-        <updated>2021-05-19T20:16:00.000Z</updated>
-        <summary type="html"><![CDATA[The kdeconnect package has been updated to version 20210519.2016.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[apache-mode (20210519.1931) --- Major mode for editing Apache httpd configuration files]]></title>
-        <id>https://melpa.org/packages/apache-mode-20210519.1931.el</id>
-        <link href="https://melpa.org/#/apache-mode"/>
-        <updated>2021-05-19T19:31:00.000Z</updated>
-        <summary type="html"><![CDATA[The apache-mode package has been updated to version 20210519.1931.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Elfeed: tag entries with embedded [youtube] videos]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ngeb1e/elfeed_tag_entries_with_embedded_youtube_videos/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ngeb1e/elfeed_tag_entries_with_embedded_youtube_videos/"/>
-        <updated>2021-05-19T19:11:36.000Z</updated>
-        <summary type="html"><![CDATA[Wondering if there is a way tag entries which have an embedded video in them? I use elfeed for reading news from sources that both have text and video content. Just to be able to separate when I want to open entries for reading and when do I want to watch videos.
-    submitted by    /u/birdhana  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Notmuch Address completion with external program]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ngcs11/notmuch_address_completion_with_external_program/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ngcs11/notmuch_address_completion_with_external_program/"/>
-        <updated>2021-05-19T18:08:50.000Z</updated>
-        <summary type="html"><![CDATA[I am trying to define an external address book completion using abook. Using the example from this page I set up the below.
- https://notmuchmail.org/emacstips/#index13h2 
- (require 'notmuch-address)
- (setq notmuch-address-command "~/bin/abook_query.sh")
- Trying full, partial, and no path I get the below error.
- Looking for completion candidates...
- process-lines: ~/bin/abook_query.sh exited with status 126
- When I try with abook directly I get the below error message.
- (setq notmuch-address-command "/usr/lo…]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Transpiling a large PureScript codebase into Haskell, part 1: The pipeline]]></title>
-        <id>https://www.reddit.com/r/purescript/comments/ngcg26/transpiling_a_large_purescript_codebase_into/</id>
-        <link href="https://www.reddit.com/r/purescript/comments/ngcg26/transpiling_a_large_purescript_codebase_into/"/>
-        <updated>2021-05-19T17:54:53.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/peargreen  
- [link]   [comments]]]></summary>
-        <author>
-            <name>PureScript</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Offer collaboration]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ngbt2j/offer_collaboration/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ngbt2j/offer_collaboration/"/>
-        <updated>2021-05-19T17:28:25.000Z</updated>
-        <summary type="html"><![CDATA[Hi!
- My name is Sergi and I have contributed to Melpa with two simple chemical utilities packages: molar-mass and chembalance.
- Now I have not got personal coding projects and I want to offer my collaboration to help in any elisp project. I am interested in maths, chemistry, editing, and I code in elisp and python.
- If you are developing packages to melpa and you need help, please tell me!
- Thanks.
-    submitted by    /u/sergiruiztrepat  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[WIP citation syntax for org-mode?]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/ngbju3/wip_citation_syntax_for_orgmode/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/ngbju3/wip_citation_syntax_for_orgmode/"/>
-        <updated>2021-05-19T17:18:01.000Z</updated>
-        <summary type="html"><![CDATA[I've found out that there is a development branch of Org which supports its own citation syntax -> https://github.com/andras-simonyi/citeproc-org#org-mode-citations-and-bibliography-using-the-wip-cite-syntax
- Does anyone know anything more about it?
-    submitted by    /u/Gevatter  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[right-click-context (20210519.1713) --- Right Click Context menu]]></title>
-        <id>https://melpa.org/packages/right-click-context-20210519.1713.el</id>
-        <link href="https://melpa.org/#/right-click-context"/>
-        <updated>2021-05-19T17:13:00.000Z</updated>
-        <summary type="html"><![CDATA[The right-click-context package has been updated to version 20210519.1713.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[region-convert (20210519.1655) --- Convert string in region by Lisp function]]></title>
-        <id>https://melpa.org/packages/region-convert-20210519.1655.el</id>
-        <link href="https://melpa.org/#/region-convert"/>
-        <updated>2021-05-19T16:55:00.000Z</updated>
-        <summary type="html"><![CDATA[The region-convert package has been updated to version 20210519.1655.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Module organization guidelines for Haskell projects]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/ngauhj/module_organization_guidelines_for_haskell/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/ngauhj/module_organization_guidelines_for_haskell/"/>
-        <updated>2021-05-19T16:49:34.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/n00bomb  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Haskell amqp "declareExchange" hangs]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/ngaegl/haskell_amqp_declareexchange_hangs/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/ngaegl/haskell_amqp_declareexchange_hangs/"/>
-        <updated>2021-05-19T16:31:13.000Z</updated>
-        <summary type="html"><![CDATA[I'm using AMQP to communicate with RabbitMQ.
- One of my applications is listening on a queue, and when something comes in, it works on it and then sends a message on a different queue.
- ​
- Listening is just fine, but when it declares a new exchange, it simply hangs.
- ​
- Example:
- sendToExchange :: ToJSON a => Channel -> Exchange -> a -> IO () sendToExchange chan exchange msg = do putStrLn $ "Declaring exchange: " ++ T.unpack exchange declareExchange chan newExchange {exchangeName = exchange, exchangeType = …]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[good tutorials on org-publish]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ng9hyq/good_tutorials_on_orgpublish/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ng9hyq/good_tutorials_on_orgpublish/"/>
-        <updated>2021-05-19T15:54:38.000Z</updated>
-        <summary type="html"><![CDATA[the manual is very succinct and inaccessible to newbies. there are so many material on running a blog with org but I find very little on org-publish/html. please share the links that pertains to plain org-publish.
- ​
- [1] https://nicolasknoebber.com/posts/blogging-with-emacs-and-org.html
- [2] https://loomcom.com/blog/0110_emacs_blogging_for_fun_and_profit.html
-    submitted by    /u/paarulakan  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Package to replicate Spacemacs' buffer-to-window-<N> commands?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ng9b1n/package_to_replicate_spacemacs_buffertowindown/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ng9b1n/package_to_replicate_spacemacs_buffertowindown/"/>
-        <updated>2021-05-19T15:46:34.000Z</updated>
-        <summary type="html"><![CDATA[Hello! I'm in the process of switching from Spacemacs to Doom, and I'm wondering if there's a package that provides functionality similar to Spacemacs' buffer-to-window-<N> commands (i.e., the command that gets run in Spacemacs when you press SPC b <N>). I've searched high and low with no luck yet, but I'd be surprised if it wasn't out there somewhere.
- Thank you!
-    submitted by    /u/orlandoduran  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Transpiling a large PureScript codebase into Haskell, part 1: The pipeline]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/ng8x2j/transpiling_a_large_purescript_codebase_into/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/ng8x2j/transpiling_a_large_purescript_codebase_into/"/>
-        <updated>2021-05-19T15:30:46.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/peargreen  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Which FRP libraries would you recommend?]]></title>
-        <id>https://www.reddit.com/r/purescript/comments/ng8qvt/which_frp_libraries_would_you_recommend/</id>
-        <link href="https://www.reddit.com/r/purescript/comments/ng8qvt/which_frp_libraries_would_you_recommend/"/>
-        <updated>2021-05-19T15:24:00.000Z</updated>
-        <summary type="html"><![CDATA[I'm new to PureScript and I find it amazing so far! The language is really intuitive if you know a bit of javascript and haskell. However, I also wanted to start learning some FRP. What is the currently recommended FRP purescript library for beginners?
-    submitted by    /u/ctenbrinke  
- [link]   [comments]]]></summary>
-        <author>
-            <name>PureScript</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Switch README from Markdown to Org, having problem with image rendering.]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ng8gm2/switch_readme_from_markdown_to_org_having_problem/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ng8gm2/switch_readme_from_markdown_to_org_having_problem/"/>
-        <updated>2021-05-19T15:13:11.000Z</updated>
-        <summary type="html"><![CDATA[I have a repository on Gitlab, I'm trying to change my README from Markdown to Org, I'm fully able to make the changes, but for reasons the the images are having some sizing issues, they expand outside of the document itself. I'm trying to figure out how to fix this? Here is a screenshot to help explain the situation better,
- https://preview.redd.it/cob9ipg5f3071.png?width=1202&format=png&auto=webp&s=70390b127434f27ab7ec4c87edd034df9a487485
- As you can see the image is exceeding the width of document, and p…]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Fun with Emacs Macros - Irregular Plists]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ng8fo0/fun_with_emacs_macros_irregular_plists/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ng8fo0/fun_with_emacs_macros_irregular_plists/"/>
-        <updated>2021-05-19T15:12:12.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/arthurno1  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Vanilla vs DooM vs Space]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ng874z/vanilla_vs_doom_vs_space/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ng874z/vanilla_vs_doom_vs_space/"/>
-        <updated>2021-05-19T15:02:48.000Z</updated>
-        <summary type="html"><![CDATA[Can some one explain me the difference between the Vanilla emacs vs DooM emacs vs Spacemacs.
-    submitted by    /u/prakashchetan98  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ordinal (20210519.1442) --- Convert number to ordinal number notation]]></title>
-        <id>https://melpa.org/packages/ordinal-20210519.1442.el</id>
-        <link href="https://melpa.org/#/ordinal"/>
-        <updated>2021-05-19T14:42:00.000Z</updated>
-        <summary type="html"><![CDATA[The ordinal package has been updated to version 20210519.1442.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Symbol's value as variable is void: /usr/bin/sh]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ng78vu/symbols_value_as_variable_is_void_usrbinsh/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ng78vu/symbols_value_as_variable_is_void_usrbinsh/"/>
-        <updated>2021-05-19T14:25:11.000Z</updated>
-        <summary type="html"><![CDATA[I have been using Emacs for almost a year. Today, I tried to C-x C-q in a dired buffer in order to rename a lot of things. It was working in this morning.
- But in the evening, C-x C-q in dired buffer resulted in Symbol's value as variable is void: /usr/bin/sh. And I have no idea why this happen. The only thing I did in between is to install zsh and chsh zsh as my default shell, but I was still able to play around with zsh for hours in Emacs. I did not close Emacs at all.
- And things get worse. When I restar…]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[OEIS Integer Sequences in Haskell]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/ng762r/oeis_integer_sequences_in_haskell/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/ng762r/oeis_integer_sequences_in_haskell/"/>
-        <updated>2021-05-19T14:22:10.000Z</updated>
-        <summary type="html"><![CDATA[Hey 👋 Guys,
- ​
- I made this collection of OEIS - The Online Encyclopedia of Integer Sequences, in Haskell as learning practice ranging from Posets to Tilings
- ​
- https://github.com/Debdut/oeis.haskell
- ​
- Best
-    submitted by    /u/debdutkarmakar  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Simple Haskell Book – Learn how to build Haskell applications.]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/ng6ydx/simple_haskell_book_learn_how_to_build_haskell/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/ng6ydx/simple_haskell_book_learn_how_to_build_haskell/"/>
-        <updated>2021-05-19T14:13:29.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/n00bomb  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Is it possible to search mail in gnus with notmuch ?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ng67fm/is_it_possible_to_search_mail_in_gnus_with_notmuch/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ng67fm/is_it_possible_to_search_mail_in_gnus_with_notmuch/"/>
-        <updated>2021-05-19T13:42:58.000Z</updated>
-        <summary type="html"><![CDATA[Hi guys,
- I've tried Gnus and, while I liked the paradigm, had to go back to notmuch because searching mails was only possible with mairix and too slow !
- But from Protesilaos config (deprecated), it looked like it's possible to search mail in gnus with notmuch (with Emacs 28). The only catch is that I could not make it work with :
- (setq gnus-select-method '(nnmaildir "gmail" (directory "~/mail/gmail") (gnus-search-engine gnus-search-notmuch (remove-prefix "~/mail/gmail")) (get-new-mail nil))) 
- Thanks,
-  …]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[molar-mass (20210519.1342) --- Calculates molar mass of a molecule]]></title>
-        <id>https://melpa.org/packages/molar-mass-20210519.1342.el</id>
-        <link href="https://melpa.org/#/molar-mass"/>
-        <updated>2021-05-19T13:42:00.000Z</updated>
-        <summary type="html"><![CDATA[The molar-mass package has been updated to version 20210519.1342.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-radiobutton (20210519.1225) --- Radiobutton for org-mode lists.]]></title>
-        <id>https://melpa.org/packages/org-radiobutton-20210519.1225.el</id>
-        <link href="https://melpa.org/#/org-radiobutton"/>
-        <updated>2021-05-19T12:25:00.000Z</updated>
-        <summary type="html"><![CDATA[The org-radiobutton package has been updated to version 20210519.1225.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Evil paste older items from kill ring]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ng3xk3/evil_paste_older_items_from_kill_ring/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ng3xk3/evil_paste_older_items_from_kill_ring/"/>
-        <updated>2021-05-19T12:02:59.000Z</updated>
-        <summary type="html"><![CDATA[Hi folks. Any Evil user around here?
- Please, how can I paste a previous item from the kill ring in Evil?
- This is my workflow: I copy some text that I know I will need. I find the place where I want to paste it, instead of some of the text that's already there. I ciw or whatever to change the text and now I want to paste the previously copied text, but I'm pasting exactly what I just deleted... This drives me NUTS.
- Is there any way to delete the text forever without copying it? That would solve part of my…]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Personal Rant about EXWM]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ng3t14/personal_rant_about_exwm/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ng3t14/personal_rant_about_exwm/"/>
-        <updated>2021-05-19T11:56:52.000Z</updated>
-        <summary type="html"><![CDATA[I have used a significant amount of time configuring and learning about exwm. I use it 24/7 now. However, language barrier has become a big concern for me. My mother language is Bengali and I have to spend a significant amount of time writing in Bengali (announcement, text messaging etc). select-input-method has 3 input methods for bengali but they don't have, almost the most popular input method for bengali, avro. As a result, I can't type bengali in EXWM. 
- I strongly think exwm should give a feature wher…]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[slurm-mode (20210519.1109) --- Interaction with the SLURM job scheduling system]]></title>
-        <id>https://melpa.org/packages/slurm-mode-20210519.1109.tar</id>
-        <link href="https://melpa.org/#/slurm-mode"/>
-        <updated>2021-05-19T11:09:00.000Z</updated>
-        <summary type="html"><![CDATA[The slurm-mode package has been updated to version 20210519.1109.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[desktop-mail-user-agent (20210519.1008) --- Call OS default mail program to compose mail]]></title>
-        <id>https://melpa.org/packages/desktop-mail-user-agent-20210519.1008.el</id>
-        <link href="https://melpa.org/#/desktop-mail-user-agent"/>
-        <updated>2021-05-19T10:08:00.000Z</updated>
-        <summary type="html"><![CDATA[The desktop-mail-user-agent package has been updated to version 20210519.1008.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[borg (20210519.937) --- assimilate Emacs packages as Git submodules]]></title>
-        <id>https://melpa.org/packages/borg-20210519.937.tar</id>
-        <link href="https://melpa.org/#/borg"/>
-        <updated>2021-05-19T09:37:00.000Z</updated>
-        <summary type="html"><![CDATA[The borg package has been updated to version 20210519.937.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[solarized-theme (20210519.925) --- The Solarized color theme]]></title>
-        <id>https://melpa.org/packages/solarized-theme-20210519.925.tar</id>
-        <link href="https://melpa.org/#/solarized-theme"/>
-        <updated>2021-05-19T09:25:00.000Z</updated>
-        <summary type="html"><![CDATA[The solarized-theme package has been updated to version 20210519.925.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
         </author>
     </entry>
 </feed>
