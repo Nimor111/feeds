@@ -49,6 +49,42 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/oi9c1g/setup_hls_for_neovim_05/",
+          "author": null,
+          "description": "Hello everyone!\n I'm pretty new to Haskell itself and its development ecosystem. I'm trying to setup a Haskell Language Server for Neovim 0.5 (with native LSP support). Previously I was using CoC and HLS that I installed via ghcup and it worked just fine. Now with new version of Neovim I stopped using CoC and trying to make HLS work with native LSP. I have no idea on how to make my already installed HLS work together with native LSP, so I tried to install HLS via lspinstall plugin, but I always get the same error:\n ghcide compiled against GHC 8.10.5 but currently using 8.10.4 This is unsupported, ghcide must be compiled with the same GHC version as the project.\n I checked a version of `ghc` (with ghc -v) on my machine the output is:\n The Glorious Glasgow Haskell Compilation System, version 8.10.5\n I also tried to create a new project with stack new ... to check if that issue persists there and it does.\n Does anybody have similar issues?\n If anybody could share his way of configuring Neovim LSP + HLS that would be great!\n Thanks in advance!\n    submitted by    /u/open-do  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/oi9c1g/setup_hls_for_neovim_05/",
+          "publishedOn": "2021-07-11T18:02:24.000Z",
+          "wordCount": 376,
+          "title": "Setup HLS for Neovim 0.5"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/oi1x5v/tiny_use_of_template_haskell_causing_huge_memory/",
+          "author": null,
+          "description": "Played around with a nice TH tutorial posted here not a long ago.\n I've just copy-pasted relevant code snippets from the article - definitions for relevant generateTupleBoilerplate, generateTupleClass and generateTupleInstance - here is the source. Then in the main module used it for generating 62(current limit) type classes for tuples and their instances - source.\n My question: is that normal for such simple program GHC consumes really huge memory ~1.2 GiB at compilation, while full web-application project based on Servant takes about 400 MiB at max? Talking about RSS memory footprint, tested with GHC 9.0.1 . Either loading in ghci REPL or compiling with ghc -O makes no difference.\n Is this a known issue with TH extension or template-haskell package & its dependencies?\n    submitted by    /u/dunrix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/oi1x5v/tiny_use_of_template_haskell_causing_huge_memory/",
+          "publishedOn": "2021-07-11T10:14:43.000Z",
+          "wordCount": 1947,
+          "title": "Tiny use of Template Haskell causing huge memory spikes at compilation?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/ohyinf/can_i_make_make_sets_with_qualifieddo_blocks/",
+          "author": null,
+          "description": "Let's say I want to build a Set with do-notation, ala []\n bars :: Set Bar basz :: Set Baz foos :: Set Foo foos = do bar <- bars baz <- bazs pure $ mkFoo bar baz \n Set is not a monad, which I get, so this doesn't work. But QualifiedDo let's you use do-notation to build non-Monads. So let's say I make a module that looks like this\n module SetDo where import Data.Set (Set) import qualified Data.Set as Set fmap :: Ord b => (a -> b) -> Set a -> Set b fmap = Set.map return = Set.singleton ma >>= mf = Set.unions $ Set.map mf ma \n And this makes everything work! Very cool, QualifiedDo doing QualifiedDo things. However, it's clear that foo doesn't require the full power of a monad. ApplicativeDo, here we come. Turn it on, implement some bindings\n pure = Set.singleton ma <*> mb = ma >>= \\f -> Set.map f mb \n and....bummer\n • Could not deduce (Ord (Baz -> Foo)) arising from a do statement (maybe you haven't applied a function to enough arguments?) \n which unfortunately makes total sense. ApplicativeDo desugars into\n foos = (\\bar baz -> mkFoo bar baz) <$> bars <*> bazs \n which is trying to use fmap to make an intermediate Set (Baz -> Foo). However, I cannot see a theoretical reason this could not desugar into this instead\n foos = liftA2 mkFoo bars bazs \n given a binding\n liftA2 :: Ord c=> (a -> b -> c) -> Set a -> Set b -> Set c liftA2 f as bs = Set.map (uncurry f) (Set.cartesianProduct as bs) \n So it seems like what I want to do is not unsound, but is not possible given how ApplicativeDo works. Am I wrong? If I am, what can I do? If not, has this limitation of ApplicativeDo been discussed anywhere else? Thanks!\n    submitted by    /u/sccrstud92  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/ohyinf/can_i_make_make_sets_with_qualifieddo_blocks/",
+          "publishedOn": "2021-07-11T05:23:16.000Z",
+          "wordCount": 872,
+          "title": "Can I make make Sets with QualifiedDo blocks while ApplicativeDo is enabled (and desugaring applicatively)?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/ohqh2j/library_for_dealing_with_dates_far_in_the_past/",
+          "author": null,
+          "description": "I'm looking for a library for dealing with times and dates far in the past ~1200-1650 A.D.\n I'm familiar with time and hodatime, but they're not really what I'm looking for.\n I'd like support for inputting/outputting Julian calendar and Muslim calendar dates, but that's not strictly speaking necessary.\n    submitted by    /u/sadbasilisk  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/ohqh2j/library_for_dealing_with_dates_far_in_the_past/",
+          "publishedOn": "2021-07-10T20:41:40.000Z",
+          "wordCount": 205,
+          "title": "Library for dealing with dates far in the past"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/ohk4se/request_for_code_review_pollingcache/",
           "author": null,
           "description": "Over the past couple of weeks, I've been tinkering with an idea for a very simple library to facilitate background polling that I would like to use in one of my personal projects. This is the first library that I'm considering uploading to Hackage. Would greatly appreciate any feedback!\n https://github.com/jkaye2012/polling-cache\n    submitted by    /u/_software_engineer  \n [link]   [comments]",
@@ -1424,132 +1460,6 @@
           "publishedOn": "2021-06-12T09:55:19.000Z",
           "wordCount": 830,
           "title": "Should compiler error codes be opaque numbers or readable strings?"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/ny0bma/haskell_and_the_elegant_attack/",
-          "author": null,
-          "description": "submitted by    /u/circleglyph  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/ny0bma/haskell_and_the_elegant_attack/",
-          "publishedOn": "2021-06-12T06:27:18.000Z",
-          "wordCount": 340,
-          "title": "Haskell and the elegant attack."
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxz72g/debugging_ghc_hanging_on_compile/",
-          "author": null,
-          "description": "As a preface, I am using GHC 8.10.4, and I've read a few posts about hang ups with this version of GHC. My main build tool is Stack so using stack build --fast works just fine, while running stack build (using -O2) does causes the hang up. Some of the suggested comments from the similar posts say to sprinkle in some {- OPTIONS_GHC -O1 -} on the offending files to allow it compile. However, I can't seem to find the right one to use it on. \n My question is: How do I debug this compiler issue? My terminal always hangs up after it prints [ 9 of 17] Compiling Display. Is this the offending file? Or is it something that comes after? \n Are there any options I can pass to the compiler to get some more verbose output to diagnose the issue?\n Thanks\n EDIT: I've done some brief testing as per /u/manpacket suggested. Display.hs seems to be the offending file. \n The testing is by no means robust and is simply using stack clean && stack build each time. The left hand side indicates which instance definitions have had their undefined definition returned to normal. \n The timings are as follows:\n all undefined - 18.8s storeLoc - 18.9s storeLoc/OperandType - 18.5s storeLoc/OperandType/Operand - 22.7s storeLoc/OperandType/OpCode - 31.8s storeLoc/OperandType/Instruction - 18.8s storeLoc/OperandType/Instruction/CPUState - 43.2s storeLoc/OperandType/CPUState - 42.8s \n It seems as though the issue stems from the repeated use of <>?\n The github repo is here if you want to take a look.\n    submitted by    /u/Drsooch  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxz72g/debugging_ghc_hanging_on_compile/",
-          "publishedOn": "2021-06-12T05:11:47.000Z",
-          "wordCount": 395,
-          "title": "Debugging GHC hanging on compile."
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxue6z/splitmixdistributions_random_samplers_for_some/",
-          "author": null,
-          "description": "submitted by    /u/Opposite-Platypus-99  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxue6z/splitmixdistributions_random_samplers_for_some/",
-          "publishedOn": "2021-06-12T00:34:04.000Z",
-          "wordCount": 144,
-          "title": "splitmix-distributions: Random samplers for some common distributions, based on splitmix."
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxsy00/ann_ghcup_01151_darwin_aarch64_and_windows_support/",
-          "author": null,
-          "description": "Following the recent 0.1.15 release candidate, here's the final release: Changelog\n Thanks to u/bgamari for hunting down a rather nasty bug on Darwin aarch64 and u/jneira for extensively testing window support.\n Since ghcup executables on windows have been flagged by various security vendors, we'll only release the powershell script.\n Run it like so (in powershell):\n Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-WebRequest -UseBasicParsing https://www.haskell.org/ghcup/sh/bootstrap-haskell.ps1 | Invoke-Expression \n    submitted by    /u/maerwald  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxsy00/ann_ghcup_01151_darwin_aarch64_and_windows_support/",
-          "publishedOn": "2021-06-11T23:16:48.000Z",
-          "wordCount": 202,
-          "title": "[ANN] GHCup 0.1.15.1 Darwin aarch64 and Windows support"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxrgns/opticslenses_tutorial/",
-          "author": null,
-          "description": "Hello:)\n Looking for a good and useful tutorial about optics and lenses. I found some but most of them are some code snippets that a) do not work OoB in GHCI and b) are just some code snippets and no code to read, write off or some exercises with examples.\n Any hint is much appreciated. Thanks:)\n    submitted by    /u/ItIsEBoi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxrgns/opticslenses_tutorial/",
-          "publishedOn": "2021-06-11T22:02:22.000Z",
-          "wordCount": 350,
-          "title": "Optics/Lenses Tutorial"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxq7nm/so_i_just_finished_the_haskell_book_what_next/",
-          "author": null,
-          "description": "I'm an iOS developer by trade, and I feel like learning Haskell and FP has helped me think more about pureness (or being honest).\n I recently finished the Haskell book (the purple one) and would like to learn more, possibly through actually building something. \n What would be a good next step? Do you guys have any recommendations?\n I feel like I need to learn more theory. Also, I'm still confused about transformers, natural transformation, to name a few.\n    submitted by    /u/Ok_Concern3654  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxq7nm/so_i_just_finished_the_haskell_book_what_next/",
-          "publishedOn": "2021-06-11T21:04:42.000Z",
-          "wordCount": 317,
-          "title": "So I just finished the Haskell book. What next?"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxoe0r/a_tale_of_two_tails/",
-          "author": null,
-          "description": "submitted by    /u/Bodigrim  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxoe0r/a_tale_of_two_tails/",
-          "publishedOn": "2021-06-11T19:41:57.000Z",
-          "wordCount": 123,
-          "title": "A tale of two tails"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxn0nk/rfc_a_new_cabal_user_guide_haskell_foundation/",
-          "author": null,
-          "description": "submitted by    /u/emilypii  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxn0nk/rfc_a_new_cabal_user_guide_haskell_foundation/",
-          "publishedOn": "2021-06-11T18:38:09.000Z",
-          "wordCount": 121,
-          "title": "RFC: A new Cabal user guide - Haskell Foundation"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxkko3/how_well_bottom_values_correspond_to_undefined/",
-          "author": null,
-          "description": "Recently I read the ACM Queue article titled \"Schrodinger's code\" concerning undefined behaviors in C so I started to wonder if Haskell has them and how many.\n So quickly I found that obviously Haskell does have them here and there. There are a bunch of unsafe functions, and FFI, etc.\n What baffles me, however, is that C compilers work on the assumption that paths contain UBs are not reachable so the compilers can aggressively remove code paths and optimize code. I personally think this means (if Haskell did the same) all code paths containing bottom values are removed. This actually makes sense in a non-strict language, because the semantics of the remaining parts remain unchanged.\n Therefore, I'm asking here the question, how well do bottom values relate to UBs (or LLVM undef?) My knowledge about Haskell is still limited so maybe this similarity is just superficial and there's no serious conclusion can be drawn here.\n Another question is: will GHC actually do the same kind of optimizations? If yes, how are they justified? If no, why not? I once encountered <<loop>> (my intent was exactly making it loop). But for other scenarios the bottom values seem to be preserved, and they are even used to cancel tasks (async exceptions).\n edit: The last question is baffling me. If the bottom value can be somehow \"caught\" like exceptions, are they really bottom values?\n    submitted by    /u/ekd123  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxkko3/how_well_bottom_values_correspond_to_undefined/",
-          "publishedOn": "2021-06-11T16:51:18.000Z",
-          "wordCount": 813,
-          "title": "How well bottom values correspond to undefined behaviors in C?"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxik5c/zurihac_how_to_move_a_400person_hackathon_online/",
-          "author": null,
-          "description": "submitted by    /u/jaspervdj  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxik5c/zurihac_how_to_move_a_400person_hackathon_online/",
-          "publishedOn": "2021-06-11T15:24:08.000Z",
-          "wordCount": 132,
-          "title": "[ZuriHac] How to move a 400-person hackathon online"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxdvxn/the_genuine_sieve_of_eratosthenes/",
-          "author": null,
-          "description": "submitted by    /u/alexeyr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxdvxn/the_genuine_sieve_of_eratosthenes/",
-          "publishedOn": "2021-06-11T11:38:18.000Z",
-          "wordCount": 180,
-          "title": "The Genuine Sieve of Eratosthenes"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxdqzb/issue_267_haskell_weekly_newsletter/",
-          "author": null,
-          "description": "submitted by    /u/haskellweekly  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxdqzb/issue_267_haskell_weekly_newsletter/",
-          "publishedOn": "2021-06-11T11:30:11.000Z",
-          "wordCount": 126,
-          "title": "Issue 267 :: Haskell Weekly newsletter"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxdf0t/sending_data_to_a_python_subprocess_without/",
-          "author": null,
-          "description": "Okay r/Haskell this is going to take some staging so please bear with me.\n I've endeavoured to write a little Haskell chess web service that works like this: it receives a pair of an FEN string -- a string that fully describes the state of a chess position -- and an UCI string -- a string that describes a chess move -- and returns an SVG representation of the position, highlighting the last position as described by the UCI string.\n Even though Haskell has the excellent https://hackage.haskell.org/package/chessIO, it lacks features of the amazing https://python-chess.readthedocs.io/en/latest/index.html, especially the coveted exports to .SVG! So I am trying to fill the gap by consuming the Python library as a child process of my Haskell program: ``` {-# LANGUAGE OverloadedStrings #-}\n impor…",
-          "link": "https://www.reddit.com/r/haskell/comments/nxdf0t/sending_data_to_a_python_subprocess_without/",
-          "publishedOn": "2021-06-11T11:10:51.000Z",
-          "wordCount": 670,
-          "title": "Sending data to a Python subprocess without closing stdin handle"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nxd7fm/generating_abstracts_for_hakyll_articles/",
-          "author": null,
-          "description": "submitted by    /u/frasertweedale  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nxd7fm/generating_abstracts_for_hakyll_articles/",
-          "publishedOn": "2021-06-11T10:58:39.000Z",
-          "wordCount": 123,
-          "title": "Generating abstracts for Hakyll articles"
         }
       ]
     },
@@ -1558,6 +1468,24 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/oi3o4m/http4s_cats_effect_acquiring_and_releasing/",
+          "author": null,
+          "description": "Let's say we have a custom object that uses BlazeClientBuilder. I want to create a Resource out of that custom type, meanwhile properly acquiring and releasing BlazeClientBuilder. How can I do that? I know BlazeClientBuilder has its own Resource implementation, but it doesn't seem to have an access to the respective phases.\n    submitted by    /u/AstraVulpes  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/oi3o4m/http4s_cats_effect_acquiring_and_releasing/",
+          "publishedOn": "2021-07-11T12:35:25.000Z",
+          "wordCount": 326,
+          "title": "[http4s] [cats effect] Acquiring and releasing BlazeClientBuilder manually"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/oi0u7k/part_5_zioaccess_getting_started_with_zio_in/",
+          "author": null,
+          "description": "submitted by    /u/agilesteel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/oi0u7k/part_5_zioaccess_getting_started_with_zio_in/",
+          "publishedOn": "2021-07-11T08:38:21.000Z",
+          "wordCount": 116,
+          "title": "Part 5 - ZIO.access - Getting Started with ZIO in Scala3"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/ohkfap/a_technique_for_proving_type_relationships_in/",
           "author": null,
@@ -2475,51 +2403,6 @@
           "publishedOn": "2021-06-13T01:05:40.000Z",
           "wordCount": 573,
           "title": "Why does a type class for an instance of a trait need `with` in the type signature? (Scala 2.12.13)"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/ny09e0/which_is_more_efficient_iozio_or_kotlin_coroutines/",
-          "author": null,
-          "description": "For asynchronous server-side applications, CPU, latency and memory-wise.\n Did anyone do any tests?\n    submitted by    /u/Scf37  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/ny09e0/which_is_more_efficient_iozio_or_kotlin_coroutines/",
-          "publishedOn": "2021-06-12T06:22:49.000Z",
-          "wordCount": 432,
-          "title": "Which is more efficient - IO/ZIO or Kotlin coroutines?"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/nxjija/sbtscala3_configure_sbt_so_that_some_file_are/",
-          "author": null,
-          "description": "Hi,\n I have an issue with my program which uses macro, some file are cached (to avoid useless recompiling), but with Scala3 macro some file are not recompiled when they should. Is it possible to always recompile some files ?\n    submitted by    /u/lepaincestbon  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/nxjija/sbtscala3_configure_sbt_so_that_some_file_are/",
-          "publishedOn": "2021-06-11T16:05:29.000Z",
-          "wordCount": 182,
-          "title": "[SBT,Scala3] Configure SBT so that some file are always recompiled"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/nxikad/scalasbt_and_play_application_issue_in_routing/",
-          "author": null,
-          "description": "I am updating sbt,scala and play versions from older to newer versions. As per suggestions I am doing step by step like below :\n Play SBT Scala\n 2.3.0 0.13.15 2.10.3\n 2.4.0 0.13.15 2.11.12 Currently in this step\n 2.6.0 1.3.0 2.12.13\n 2.7.0 1.3.0 2.12.13\n I am facing issues in routing : I got many issues like Action Not Found, application.conf not found . these I resolved some how by placing routes and application.conf in my project structure\n total 64\n drwxrwxr-x 4 nikitha nikitha 4096 May 14 14:51 .svn\n -rw-rw-r-- 1 nikitha nikitha 60 May 14 14:51 .gitignore\n -rw-rw-r-- 1 nikitha nikitha 6341 May 14 14:51 UPGRADE.txt\n drwxrwxr-x 2 nikitha nikitha 4096 May 14 14:51 doc\n drwxrwxr-x 4 nikitha nikitha 4096 May 14 14:51 scripts\n drwxrwxr-x 12 nikitha nikitha 4096 May 14 14:51 modules\n -rw-rw-r…",
-          "link": "https://www.reddit.com/r/scala/comments/nxikad/scalasbt_and_play_application_issue_in_routing/",
-          "publishedOn": "2021-06-11T15:24:19.000Z",
-          "wordCount": 438,
-          "title": "Scala,Sbt and Play application issue in routing for multi module project"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/nxersc/video_on_block_structure_syntax_including_scala_3/",
-          "author": null,
-          "description": "submitted by    /u/tjpalmer  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/nxersc/video_on_block_structure_syntax_including_scala_3/",
-          "publishedOn": "2021-06-11T12:26:01.000Z",
-          "wordCount": 232,
-          "title": "Video on block structure syntax, including Scala 3"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/nxbpob/fullfledged_scala_3_application_example_need/",
-          "author": null,
-          "description": "Hi.\n I rewrote my scala2 full-fledged demo app to scala3 improving many aspects including DI, stateful and stateless tests, and more.\n I'd like to get feedback on what could be done better and of course I hope it could be useful for newer members of Scala community.\n https://github.com/scf37/fpscala2/\n    submitted by    /u/Scf37  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/nxbpob/fullfledged_scala_3_application_example_need/",
-          "publishedOn": "2021-06-11T09:20:46.000Z",
-          "wordCount": 152,
-          "title": "Full-fledged scala 3 application example - need feedback"
         }
       ]
     },
@@ -3118,51 +3001,6 @@
           "publishedOn": "2021-06-12T14:46:49.000Z",
           "wordCount": 255,
           "title": "Org Agenda Duplicating each entry 4 times"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/nxxs1b/get_a_list_of_all_toplevel_headings_in_a_file/",
-          "author": null,
-          "description": "I've been searching around with describe-function but nothing obvious is coming up. Is there a native org function which would return a list of all the headings in a given file?\n    submitted by    /u/codethrasher  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/nxxs1b/get_a_list_of_all_toplevel_headings_in_a_file/",
-          "publishedOn": "2021-06-12T03:45:46.000Z",
-          "wordCount": 223,
-          "title": "Get a list of all top-level headings in a file?"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/nxrepk/question_can_sublists_be_bulleted_with_letters/",
-          "author": null,
-          "description": "Hi,\n The ordered list functionality is great. Is there a way to make the sublist bullets letters rather than numbers, e.g.\n 1\\. First list item.\n a. first child item (these lines should actually be indented but I don't know how to do this in reddit)\n b. second child item\n ​\n Instead of what orgmode currently does, which is:\n 1\\. First list item.\n  \nfirst child item\n second child item\n  \n​\n Thanks.\n    submitted by    /u/za66  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/nxrepk/question_can_sublists_be_bulleted_with_letters/",
-          "publishedOn": "2021-06-11T22:00:01.000Z",
-          "wordCount": 219,
-          "title": "question: Can sublists be bulleted with letters?"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/nxl3rh/agenda_filtered_by_parent_heading_todo_keyword/",
-          "author": null,
-          "description": "Hi guys,\n I’ve just setup my first org-mode file and in it I have a hierarchy of headings as follows: Area -> Project -> Task\n Each of the levels above have unique keywords. \n Now when it comes to agenda views is it possible to only show tasks whose parent (project) has a particular TODO keyword as well as having a particular keyword themselves. \n For example only show “NEXT” tasks for “CURRENT” projects?\n I’m sure that there must be a way to do this, but my searches have been fruitless - I’m guessing that I’m not using the correct terminology. \n Thanks in advance!\n    submitted by    /u/practicalSloth  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/nxl3rh/agenda_filtered_by_parent_heading_todo_keyword/",
-          "publishedOn": "2021-06-11T17:14:30.000Z",
-          "wordCount": 212,
-          "title": "Agenda filtered by parent heading TODO keyword"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/nxie4u/q_about_orgcapture_for_journal_entry/",
-          "author": null,
-          "description": "I already have org-journal set up in a way that works for me. Here's what I have:\n (setq org-journal-dir (concat org-directory \"/Journal/\")) (setq org-journal-file-format \"%Y-%m\") (setq org-journal-file-type 'monthly) \n So I get a new journal file every month. My question is, how would I create an org-capture template to achieve this same behavior?\n    submitted by    /u/pixpop  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/nxie4u/q_about_orgcapture_for_journal_entry/",
-          "publishedOn": "2021-06-11T15:16:54.000Z",
-          "wordCount": 285,
-          "title": "Q about org-capture for journal entry"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/nxbp6j/customize_faces_across_multiple_todo_sequences/",
-          "author": null,
-          "description": "Hi all,\n I'm a complete noob and am trying to customize the faces of my TODO keywords. I've dug around and can easily find out how to do this for when you have 1 sequence of TODO keywords, however I'm struggling when it comes to multiple.\n Here is a snippet from my init.el file for reference:\n (setq org-todo-keywords '((sequence \"AOFR\" \"|\" \"AOFR.DONE\" \"AOFR.CANCELLED\") (sequence \"PROJ.URG\" \"PROJ.PER\" \"PROJ.CUR\" \"PROJ.FLW\" \"PROJ.FUT\" \"PROJ.SDM\" \"|\" \"PROJ.DONE\" \"PROJ.CANC\") (sequence \"NEXT\" \"WAITING\" \"LATER\" \"SOMEDAY\" \"|\" \"DONE\" \"CANCELLED\"))) (setq org-todo-keyword-faces '((\"AOFR\" . \"gray\"))) \n    submitted by    /u/practicalSloth  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/nxbp6j/customize_faces_across_multiple_todo_sequences/",
-          "publishedOn": "2021-06-11T09:19:51.000Z",
-          "wordCount": 282,
-          "title": "Customize faces across multiple TODO sequences"
         }
       ]
     },
@@ -3171,6 +3009,33 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/wikinforg-20210711.302.el",
+          "author": null,
+          "description": "The wikinforg package has been updated to version 20210711.302.",
+          "link": "https://melpa.org/#/wikinforg",
+          "publishedOn": "2021-07-11T03:02:00.000Z",
+          "wordCount": 105,
+          "title": "wikinforg (20210711.302) --- Org-mode wikinfo integration"
+        },
+        {
+          "id": "https://melpa.org/packages/nav-flash-20210711.217.el",
+          "author": null,
+          "description": "The nav-flash package has been updated to version 20210711.217.",
+          "link": "https://melpa.org/#/nav-flash",
+          "publishedOn": "2021-07-11T02:17:00.000Z",
+          "wordCount": 105,
+          "title": "nav-flash (20210711.217) --- Briefly highlight the current line"
+        },
+        {
+          "id": "https://melpa.org/packages/leaf-keywords-20210711.156.el",
+          "author": null,
+          "description": "The leaf-keywords package has been updated to version 20210711.156.",
+          "link": "https://melpa.org/#/leaf-keywords",
+          "publishedOn": "2021-07-11T01:56:00.000Z",
+          "wordCount": 105,
+          "title": "leaf-keywords (20210711.156) --- Additional leaf.el keywords for external packages"
+        },
         {
           "id": "https://melpa.org/packages/base16-theme-20210710.1645.tar",
           "author": null,
@@ -4511,6 +4376,15 @@
           "publishedOn": "2021-06-25T11:00:00.000Z",
           "wordCount": 105,
           "title": "cider (20210625.1100) --- Clojure Interactive Development Environment that Rocks"
+        },
+        {
+          "id": "https://melpa.org/packages/yascroll-20210625.803.el",
+          "author": null,
+          "description": "The yascroll package has been updated to version 20210625.803.",
+          "link": "https://melpa.org/#/yascroll",
+          "publishedOn": "2021-06-25T08:03:00.000Z",
+          "wordCount": 105,
+          "title": "yascroll (20210625.803) --- Yet Another Scroll Bar Mode"
         },
         {
           "id": "https://melpa.org/packages/poly-markdown-20210625.803.el",
@@ -5924,69 +5798,6 @@
           "publishedOn": "2021-06-12T08:47:00.000Z",
           "wordCount": 105,
           "title": "unicode-math-input (20210612.847) --- Insert Unicode math symbols using TeX notation"
-        },
-        {
-          "id": "https://melpa.org/packages/code-cells-20210612.755.el",
-          "author": null,
-          "description": "The code-cells package has been updated to version 20210612.755.",
-          "link": "https://melpa.org/#/code-cells",
-          "publishedOn": "2021-06-12T07:55:00.000Z",
-          "wordCount": 105,
-          "title": "code-cells (20210612.755) --- Work with code split into cells, including Jupyter notebooks"
-        },
-        {
-          "id": "https://melpa.org/packages/babel-20210612.640.el",
-          "author": null,
-          "description": "The babel package has been updated to version 20210612.640.",
-          "link": "https://melpa.org/#/babel",
-          "publishedOn": "2021-06-12T06:40:00.000Z",
-          "wordCount": 105,
-          "title": "babel (20210612.640) --- interface to web translation services such as Babelfish"
-        },
-        {
-          "id": "https://melpa.org/packages/languagetool-20210611.2310.tar",
-          "author": null,
-          "description": "The languagetool package has been updated to version 20210611.2310.",
-          "link": "https://melpa.org/#/languagetool",
-          "publishedOn": "2021-06-11T23:10:00.000Z",
-          "wordCount": 105,
-          "title": "languagetool (20210611.2310) --- LanguageTool integration for grammar and spell check"
-        },
-        {
-          "id": "https://melpa.org/packages/launchctl-20210611.2243.el",
-          "author": null,
-          "description": "The launchctl package has been updated to version 20210611.2243.",
-          "link": "https://melpa.org/#/launchctl",
-          "publishedOn": "2021-06-11T22:43:00.000Z",
-          "wordCount": 105,
-          "title": "launchctl (20210611.2243) --- Interface to launchctl on Mac OS X."
-        },
-        {
-          "id": "https://melpa.org/packages/q-mode-20210611.2044.el",
-          "author": null,
-          "description": "The q-mode package has been updated to version 20210611.2044.",
-          "link": "https://melpa.org/#/q-mode",
-          "publishedOn": "2021-06-11T20:44:00.000Z",
-          "wordCount": 105,
-          "title": "q-mode (20210611.2044) --- A q editing mode"
-        },
-        {
-          "id": "https://melpa.org/packages/gemini-mode-20210611.1833.el",
-          "author": null,
-          "description": "The gemini-mode package has been updated to version 20210611.1833.",
-          "link": "https://melpa.org/#/gemini-mode",
-          "publishedOn": "2021-06-11T18:33:00.000Z",
-          "wordCount": 105,
-          "title": "gemini-mode (20210611.1833) --- A simple highlighting package for text/gemini"
-        },
-        {
-          "id": "https://melpa.org/packages/fountain-mode-20210611.1228.tar",
-          "author": null,
-          "description": "The fountain-mode package has been updated to version 20210611.1228.",
-          "link": "https://melpa.org/#/fountain-mode",
-          "publishedOn": "2021-06-11T12:28:00.000Z",
-          "wordCount": 105,
-          "title": "fountain-mode (20210611.1228) --- Major mode for screenwriting in Fountain markup"
         }
       ]
     },
@@ -5995,6 +5806,51 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/oi78lp/request_for_elisp_to_adjust_both_font_and_size/",
+          "author": null,
+          "description": "Hello Everyone. I'm using Emacs everywhere - on my linux laptop and work mac laptop, and whenever I get a chance I'll use my large monitor for better screen real estate. I'm determined to use one init.el file, rather than maintaining several.\n I find I need to adjust the default font anytime I switch machines or screen sizes. On the Mac, I want Emacs to use Menlo, but on Linux I want FiraCode. When I'm not plugged into the monitor, I want size 11, but I need it the font at size 14 on large resolutions (i.e., greater than 1600).\n I'm just starting to learn elisp, so I get into trouble pretty quickly. I was hoping to craft something like the following, but also taking into account (string-equal system-type \"darwin\"). and swapping FiraCode for Menlo in that situation.\n ;; set the font size based on resolution (if (> (x-display-pixel-width) 1600) (add-to-list 'initial-frame-alist '(font . \"Fira Code-11\")) (add-to-list 'default-frame-alist '(font . \"Fira Code-14\"))) \n Then, it occurred to me that I'm not unique in my situation, and I should just ask if anyone else has Elisp that handles this situation. Will you Emacs wizards share Elisp where you handle this sort of thing?\n In the meantime, I'm off to find a good Elisp tutorial so I won't need to ask for this kind of help in the future. Much appreciated.\n    submitted by    /u/cmjennings  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/oi78lp/request_for_elisp_to_adjust_both_font_and_size/",
+          "publishedOn": "2021-07-11T16:08:38.000Z",
+          "wordCount": 441,
+          "title": "Request For Elisp To Adjust Both Font and Size Based on Resolution and OS"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/oi2pxn/macos_finder_show_in_emacs/",
+          "author": null,
+          "description": "submitted by    /u/xenodium  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/oi2pxn/macos_finder_show_in_emacs/",
+          "publishedOn": "2021-07-11T11:22:28.000Z",
+          "wordCount": 202,
+          "title": "macOS: Finder -> \"Show in Emacs\""
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ohzl92/emacsdashboard_relative_file_paths/",
+          "author": null,
+          "description": "Hi all, is there a variable or config I can set in emacs-dashboard that will use relative file paths? Right now I have both a windows and a linux emacs I'm trying to learn/use org-mode for and the Windows recentf file that's storing the recent files to display uses absolute paths and it's linked via a pcloud directory so it ruins the recents on my linux homedirectoy mirror.\n    submitted by    /u/DocInLA  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ohzl92/emacsdashboard_relative_file_paths/",
+          "publishedOn": "2021-07-11T06:49:00.000Z",
+          "wordCount": 448,
+          "title": "emacs-dashboard relative file paths"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ohxw1s/org_agenda_elements/",
+          "author": null,
+          "description": "submitted by    /u/defalias  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ohxw1s/org_agenda_elements/",
+          "publishedOn": "2021-07-11T04:36:30.000Z",
+          "wordCount": 307,
+          "title": "Org Agenda -- Elements"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ohxi7o/how_to_make_packages_in_emacs_from_beginner_to/",
+          "author": null,
+          "description": "I want to make emacs packages like those great peoples have made like\n https://github.com/abo-abo/hydra/\n https://github.com/dengste/minimap\n https://github.com/bbatsov/projectile\n https://github.com/Fuco1/smartparens\n https://github.com/magnars/multiple-cursors.el\n evil mode\n ​\n I also want to make something new for emacs.\n But i dont know how to start and not only start,\n I dont know how to make these projects production based. \n I'm doing solely for community purpose to like emacs.\n I need your help.\n ​\n ​\n If you have made any emacs popular packages,\n would you please give me your story how you made it? \n What resources did you followed to master it?\n Please provide a detail, which sites did you gone , which did you followed , \n while learning to make packages and learn.\n ​\n ​\n I'm asking this because when i learn books on emacs, I would only know basic instead of making some project based practical extension, I will be stuck like i' here learning python and not making anything. \n ​\n PLEASE HELP\n Thank you\n    submitted by    /u/pochva_puki  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ohxi7o/how_to_make_packages_in_emacs_from_beginner_to/",
+          "publishedOn": "2021-07-11T04:07:35.000Z",
+          "wordCount": 869,
+          "title": "How to make packages in emacs? from beginner to advance? PLEASE HELP"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/ohpmhy/what_html_tags_do_the_emacs_help_pages_use_for/",
           "author": null,
@@ -9072,123 +8928,6 @@
           "publishedOn": "2021-06-12T10:32:00.000Z",
           "wordCount": 618,
           "title": "use-package :bind blocks the default keybindings for ebib-biblio. Without :bind they work (but I don't get my own ones with :bind). Why is this happening and how can I fix it?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ny14mn/emacs_vs_modern_ides/",
-          "author": null,
-          "description": "I have been using emacs for an year now mostly for Clojure development with little bit of golang and python here and there. When i started using emacs here i convinced myself that - it makes me more productive by allowing me to do everything from keyboard - multi language support with packages - highly customisable with thousands of packages and config. - suited for clojure development. - org mode \n But lately i have been thinking if i was wrong or if my assumptions still holds true, today ides like vs code provide all the above features in a fast modern looking ide.\n So does the question of Emacs vs Modern IDEs boils down to asthetic choice between modern vs classic/vintage or is there any real advantage in using Emacs today.\n    submitted by    /u/randowonderer  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ny14mn/emacs_vs_modern_ides/",
-          "publishedOn": "2021-06-12T07:24:37.000Z",
-          "wordCount": 1852,
-          "title": "Emacs vs Modern IDEs"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxzwxy/enhanced_ui_in_emacs/",
-          "author": null,
-          "description": "Please take a look at the screenshots of bashtop (example). I'd say it is one of those terminal applications that have a great user interface.\n What if we can have these for emacs? Well, we have something similar. For example, bui and tui.el. However, afaik the first one only supports multiple columns, in contrast to bashtop where multiple windows of arbitrary size are supported. The second one does not have a screenshot, but it seems a bit promising too.\n TLDR I hope to have/make a general UI for emacs. Any hints?\n    submitted by    /u/stuudente  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxzwxy/enhanced_ui_in_emacs/",
-          "publishedOn": "2021-06-12T05:58:54.000Z",
-          "wordCount": 236,
-          "title": "Enhanced UI in emacs."
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxxoeo/what_are_the_benefits_of_emacs_over_vim/",
-          "author": null,
-          "description": "submitted by    /u/cntx  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxxoeo/what_are_the_benefits_of_emacs_over_vim/",
-          "publishedOn": "2021-06-12T03:39:55.000Z",
-          "wordCount": 1839,
-          "title": "What Are The Benefits Of Emacs Over Vim?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxxnvg/basic_wysiwyg_printing_in_gnu_emacs/",
-          "author": null,
-          "description": "​\n Text file (left) converted to PS file (right)\n  \nRun M-x ps-print-buffer-with-faces to send output to printer.\n Run C-u M-x ps-print-buffer-with-faces to send output to file (PS format).\n  \nCode: https://gitlab.com/atamariya/emacs/tree/dev\n More details https://lifeofpenguin.blogspot.com/2021/06/basic-wysiwyg-printing-in-gnu-emacs.html\n    submitted by    /u/atamariya  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxxnvg/basic_wysiwyg_printing_in_gnu_emacs/",
-          "publishedOn": "2021-06-12T03:39:02.000Z",
-          "wordCount": 197,
-          "title": "Basic WYSIWYG printing in GNU Emacs"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxrfiw/how_can_i_make_my_macro_take_multiple_args/",
-          "author": null,
-          "description": "Hello, I have a small question, how can I turn this:\n ``` (my-macro \"foo0\" my-variable \"bar0\")\n (my-macro \"foo1\" my-variable \"bar1\")\n (my-macro \"foo2\" my-variable \"bar2\")\n (my-macro \"foo3\" my-variable \"bar3\")\n (my-macro \"foo4\" my-variable \"bar4\") ```\n into this:\n  (my-macro-or-function?-at-once '((\"foo0\" my-variable \"bar0\") (\"foo1\" my-variable \"bar1\") (\"foo2\" my-variable \"bar2\") (\"foo3\" my-variable \"bar3\") (\"foo4\" my-variable \"bar4\"))) \n    submitted by    /u/ZZhanChi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxrfiw/how_can_i_make_my_macro_take_multiple_args/",
-          "publishedOn": "2021-06-11T22:00:50.000Z",
-          "wordCount": 508,
-          "title": "How can I make my macro take multiple args?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxli6i/rename_linked_file_under_cursor/",
-          "author": null,
-          "description": "I want to rename some files on a disk which are linked to an org file. And I am wondering maybe somebody have some custom interactive function for such task/workflow.\n The link to a file look like this:\n  [[file:~/Dropbox/SomeFolder/Images/some-long-file-name-min-193x300.png]] \n The perfect workflow for me would be like so:\n  \nPlace cursor on the link\n press M-x my-rename-file \n type a new name in a prompt\n get renamed file on the disk and updated link in org file (something like in example below).\n  \n [[file:~/Dropbox/SomeFolder/Images/new-file-name.png]] \n    submitted by    /u/Howre  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxli6i/rename_linked_file_under_cursor/",
-          "publishedOn": "2021-06-11T17:31:33.000Z",
-          "wordCount": 443,
-          "title": "Rename linked file under cursor"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxlhsy/typescript_development_with_emacs/",
-          "author": null,
-          "description": "Hi folks,\n Spent a couple of days now looking at various options for typescript development. Specifically, I'm interested in some refactoring workflows (extraction, renaming etc).\n There's js2-refactor. It relies on js2-mode which appears to be..quirky? It's using it's own internal linter which doesn't seem to support all of the latest TypeScript features.\n I'm now looking at LSP-mode with typescript, but there doesn't seem to be any support for refactoring.\n How are you coding typescript with emacs? Is there robust refactoring support?\n Thanks!\n    submitted by    /u/trae  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxlhsy/typescript_development_with_emacs/",
-          "publishedOn": "2021-06-11T17:31:10.000Z",
-          "wordCount": 176,
-          "title": "Typescript development with emacs"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxjnyq/comment_style_on_webmode/",
-          "author": null,
-          "description": "With web-mode, I want comment style in .tsx to use // for typescript code (instead of /* */)\n I got that to work with \n (setq-default web-mode-comment-formats '((\"java\" . \"/*\") (\"javascript\" . \"//\") (\"jsx\" . \"//\") (\"tsx\" . \"//\") (\"php\" . \"/*\"))) \n but for JSX elements, I still want it to use {/* <Element> */} - \n for example, if I have a `.tsx` file with \n <Element> function() </Element> \n I still want \n <Element> {/* function() *} </Element> \n but it currently does \n <Element> // function() </Element> \n This // causes compilation errors. How do I get around this?\n    submitted by    /u/PigsDogsAndSheep  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxjnyq/comment_style_on_webmode/",
-          "publishedOn": "2021-06-11T16:11:57.000Z",
-          "wordCount": 187,
-          "title": "Comment Style on web-mode"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxeznz/transient_subprefix_command_and_optionally/",
-          "author": null,
-          "description": "Hi there,\n I'm now learning transient and trying to achieve the following:\n I want to show my main transient, with couple of commands (these are called suffix commands from what I understand)I want \"command a\" (let's say with binding a) to do either\n  \nDWIM - ie just run some function (here is where I have the problem, I cannot make it show again the main transient window)\n Show a transient with extra options about this command\n  \nAnd in both cases I want to then fallback to the \"root\" transient again, displaying all the commands.\n I implemented this action as another prefix command (sub-prefix as it appears on transient's terminology) by providing a body to the transient command \n (interactive \"P\") (if arg (progn ;; when this happens (called wit ha prefix-arg) ;; I can set opts and run th…",
-          "link": "https://www.reddit.com/r/emacs/comments/nxeznz/transient_subprefix_command_and_optionally/",
-          "publishedOn": "2021-06-11T12:37:55.000Z",
-          "wordCount": 465,
-          "title": "Transient - sub-prefix command and optionally showing transient"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxesqj/security_of_the_melpa_repository_and_emacs/",
-          "author": null,
-          "description": "I've been reading some discussions recently about the security of the Melpa repository, on Reddit and not. \n The official faq also recommends to install only packages that we can trust.\n I don't know how much of this is still relevant, but I was wondering if any of you for programming use Emacs vanilla as it is without third party packages or do you limit yourself to some of them and which ones would you recommend? \n I'm asking especially to those who don't have time to always review every update and have to weigh the risks.\n Thanks!\n    submitted by    /u/loquat-01  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxesqj/security_of_the_melpa_repository_and_emacs/",
-          "publishedOn": "2021-06-11T12:27:27.000Z",
-          "wordCount": 888,
-          "title": "Security of the Melpa repository and Emacs vanilla for programming"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxdn1l/lsp_mode_code_completion_not_working/",
-          "author": null,
-          "description": "I've installed lsp-mode and am having trouble getting code completion working for PHP.\n I tried https://emacs-lsp.github.io/lsp-mode/page/lsp-php/ and that worked the first time it was called each editing session and then not afterwards.\n I tried https://emacs-lsp.github.io/lsp-mode/page/lsp-intelephense/ and that didn't work at all.\n I tried https://emacs-lsp.github.io/lsp-mode/page/lsp-serenata/ and that also did not work at all, but the information as to how to set up emacs to work with it seems lacking (how is emacs supposed to know it should even be calling it?) so I might not have it set up correctly.\n Has anyone with experience of using this for PHP development got any ideas?\n    submitted by    /u/Few-Spare-644  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxdn1l/lsp_mode_code_completion_not_working/",
-          "publishedOn": "2021-06-11T11:23:57.000Z",
-          "wordCount": 447,
-          "title": "LSP Mode code completion not working"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxcwso/list_of_orgmode_structural_blocks/",
-          "author": null,
-          "description": "Where can I find a list of the structural blocks that are available by default? I know of #+BEGIN_SRC, #+BEGIN_EXAMPLE, etc. I want to know what else is available, and how to add a custom one (for example, I want #+BEGIN_FOO and #+END_FOO to be exported a certain way for HTML and for LaTeX).\n    submitted by    /u/lelanthran  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxcwso/list_of_orgmode_structural_blocks/",
-          "publishedOn": "2021-06-11T10:39:17.000Z",
-          "wordCount": 187,
-          "title": "List of org-mode structural blocks?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nxbfc4/automatically_center_new_emacs_windows_aka_frames/",
-          "author": null,
-          "description": "submitted by    /u/self  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nxbfc4/automatically_center_new_emacs_windows_aka_frames/",
-          "publishedOn": "2021-06-11T09:00:37.000Z",
-          "wordCount": 123,
-          "title": "Automatically Center New Emacs Windows (Aka Frames) on Screen"
         }
       ]
     },
@@ -9197,6 +8936,15 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "1897@/discussions",
+          "author": "Dilan_Zelsky",
+          "description": "Reading Christian Tietze's and Sascha Fast's blog posts on the importance of tracking inspired me to track how many Zettels I create.\nI figured that keeping a list of Zettels created daily would be useless without a workflow to integrate it in. So, I watched Brian Crain's presentation on optimizing productivity, which was cited in one of the blog posts from the Zettelkasten blog. Also, I read this article from the Quantified Self website that I found along the way.\nI decided that I want to do something similar to Brian Crain. From tracking how many pomodori he completed, he gained the ability to achieve two things: notice a standard for his good days/weeks/months/quarters/years, and compare how well he did with how well he is doing. I want to achieve the same from tracking how many Zettels I create.\nFrom looking at his setup, I'd have to track the following:\nTotal from a year\nTotal from the first to the fourth quarters\nMonthly average\nWeekly average\nNumber of weeks in which I get my weekly average or above it\nDaily average\nNumber of days in which I get my daily average or above it\nHe tracked more, but this is all I could understand from his presentation and slides.\nMy problem is setting up an user interface to manage all of this in a way that is simple and allows me to get every item easily. Brian Crain didn't talk much about his setup. Also, I have zero knowledge in using spreadsheets. So the question is: How do I achieve what I want to accomplish?\nReally appreciate any help you can give me.",
+          "link": "https://forum.zettelkasten.de/discussion/1897/need-help-in-tracking-zettels-created",
+          "publishedOn": "2021-07-10T21:38:29.000Z",
+          "wordCount": 1360,
+          "title": "Need help in tracking Zettels created"
+        },
         {
           "id": "1896@/discussions",
           "author": "Will",
@@ -9457,15 +9205,6 @@
           "publishedOn": "2021-06-13T01:57:29.000Z",
           "wordCount": 877,
           "title": "Bibliographic Notes"
-        },
-        {
-          "id": "1866@/discussions",
-          "author": "zhanzh3ng",
-          "description": "Anyone ever looked into whether Nabokov or Greene were inspired by Luhmann or was Luhmann perhaps inspired by Nabokov? Both of these authors (N and G) made/make prolific use of not only notecards but also non-linear forms of writing their books, that is, jumping around and writing only what they feel like writing about at that time.  At go time, they simply pull out their note cards, arrange them in specific orders that make sense and then add or remove bits here and there to produce their books.",
-          "link": "https://forum.zettelkasten.de/discussion/1866/vladimir-nabokov-and-robert-greene",
-          "publishedOn": "2021-06-11T19:05:44.000Z",
-          "wordCount": 222,
-          "title": "Vladimir Nabokov and Robert Greene"
         }
       ]
     }
