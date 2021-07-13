@@ -49,6 +49,51 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/ojlutn/classless_ghcgeneric_with_typereflection/",
+          "author": null,
+          "description": "Code is here:\n  \ngist\n  \nI recently made a post about deriving GADTs with DerivingVia and it got me thinking if I could implement generic definitions without so much boilerplate. The standard way of defining such a generic instance with GHC.Generics is to define a type class\n class GBinaryPut f where gput :: f t -> Put \n with an instance for each of the polynomial functor building blocks\n instance GBinaryPut V1 where gput _ = pure () instance GBinaryPut U1 where gput U1 = pure () instance (GBinaryPut a, GBinaryPut b) => GBinaryPut (a :*: b) where gput (x :*: y) = gput x <> gput y instance GBinaryPut a => GBinaryPut (M1 i c a) where gput = gput . unM1 instance Binary a => GBinaryPut (K1 i a) where gput = put . unK1 \n So I thought if there was a nicer way of writing this. generics-sop alread…",
+          "link": "https://www.reddit.com/r/haskell/comments/ojlutn/classless_ghcgeneric_with_typereflection/",
+          "publishedOn": "2021-07-13T18:35:48.000Z",
+          "wordCount": 692,
+          "title": "Classless GHC.Generic with Type.Reflection"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/ojk63k/smallest_cat_utility_thats_ever_existed/",
+          "author": null,
+          "description": "Essentially, a friend of mine was like \"How do you even read a file in a purely functional language?\"\n So I sat down with him and wrote a program that is essentially the cat tool without all the bloat like --help and stuff: take filename in, read the file, print it out. And that program literally takes two lines of Haskell code. It came out so concise without me even trying that I just had to share it with you.\n import System.Environment (getArgs) main = getArgs >>= (readFile . head) >>= putStrLn \n It's actually just one line of useful code if you exclude the import statement. Show me a language that can do it more elegantly! I'll wait...\n    submitted by    /u/sharpvik  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/ojk63k/smallest_cat_utility_thats_ever_existed/",
+          "publishedOn": "2021-07-13T17:15:28.000Z",
+          "wordCount": 498,
+          "title": "Smallest 'cat' utility (that's ever existed?)"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/oje9k9/cast_haskell_values_with_witch/",
+          "author": null,
+          "description": "submitted by    /u/taylorfausak  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/oje9k9/cast_haskell_values_with_witch/",
+          "publishedOn": "2021-07-13T12:10:47.000Z",
+          "wordCount": 371,
+          "title": "Cast Haskell values with Witch"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/oj5csy/i_want_coerce_to_make_my_newtype_problems/",
+          "author": null,
+          "description": "Today I was writing some code with newtypes. I was writing code with the whole unwrap-modify-wrap pattern.\n ​\n newtype Foo = Foo { unFoo :: Char } myFunc = Foo . doSomething . unFoo \n I had another newtype. Pretty soon I had single lines with multiple wrappings and unwrappings. E.g.:\n newtype Bar = Bar { unBar :: String } somePolymorphicFunc :: Int -> a -> [a] -> [a] modify (Bar . somePolymorphicFunc x (unFoo y) . unBar) \n I didn't like this line. Then it hit me: dealing with newtypes was supposed to be a solved problem. Instead I could write:\n ​\n modify (coerce somePolymorphicFunc x y) \n And it would magically work, right?\n ​\n Wrong. While GHC could tell I wanted to turn somePolymorphicFunc into an Int -> Bar -> Foo -> Foo, it didn't know what type to coerce it from. I'd have to write.\n ​…",
+          "link": "https://www.reddit.com/r/haskell/comments/oj5csy/i_want_coerce_to_make_my_newtype_problems/",
+          "publishedOn": "2021-07-13T01:34:03.000Z",
+          "wordCount": 1754,
+          "title": "I want `coerce` to make my newtype problems disappear. It stubbornly refuses."
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/oj5br4/any_good_uses_for_logict_extended_with_shift_and/",
+          "author": null,
+          "description": "As I continue to dig into continuations I wondered if I could add shift and reset to LogicT. The immediate problem I ran into is that LogicT uses a forall r. internally and so even though you can write shift and reset, you can't actually use the lambda you get from calling shift.\n So the first thing I did was to change LogicT to expose r:\n newtype LogicT r m a = LogicT { unLogicT :: (a -> m r -> m r) -> m r -> m r} \n Then I quickly copied over a bunch of the definitions in Control.Monad.Logic no problem. I had to generalize the types of course to add r but it was trivial to do. There's a few things I haven't converted yet like msplit, but I don't expect to run into any issues.\n I ended up with these shift/reset operators:\n resetT :: MonadFail m => LogicT r m r -> LogicT r' m r resetT = lif…",
+          "link": "https://www.reddit.com/r/haskell/comments/oj5br4/any_good_uses_for_logict_extended_with_shift_and/",
+          "publishedOn": "2021-07-13T01:32:13.000Z",
+          "wordCount": 3561,
+          "title": "Any good uses for LogicT extended with shift and reset?"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/oiwl6z/templatehaskell_performance_tips/",
           "author": null,
           "description": "submitted by    /u/ephrion  \n [link]   [comments]",
@@ -1406,42 +1451,6 @@
           "publishedOn": "2021-06-14T09:26:34.000Z",
           "wordCount": 209,
           "title": "📈 Trending Haskell Projects (based on growth of GitHub stars)"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nzcl2d/which_lsp_should_i_use_for_haskell/",
-          "author": null,
-          "description": "I am a beginner in Haskell, and I want to set up a LSP for my development environment. I am using neovim for my development, and I found that there are many LSP avaliable for Haskell, namely hie. gchide and hls. Which one is the most completed in terms of features? Which one should use?\n    submitted by    /u/howtostudycantonese  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nzcl2d/which_lsp_should_i_use_for_haskell/",
-          "publishedOn": "2021-06-14T02:37:22.000Z",
-          "wordCount": 255,
-          "title": "Which LSP should I use for Haskell?"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nz5hym/ann_haskelllanguageserver120_has_been_released/",
-          "author": null,
-          "description": "limited support for GHC 9.0.1 \n  support for GHC 8.10.5 \n  many fixes and new features for wingman\n  \nhttps://github.com/haskell/haskell-language-server/releases/tag/1.2.0\n    submitted by    /u/jneira  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nz5hym/ann_haskelllanguageserver120_has_been_released/",
-          "publishedOn": "2021-06-13T20:43:17.000Z",
-          "wordCount": 492,
-          "title": "[ANN] haskell-language-server-1.2.0 has been released!"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nz52kr/monad_traversable_a_little_less_boilerplate/",
-          "author": null,
-          "description": "Summary: So a few weeks ago I noticed a simple pattern when I was doing some IO (Maybe a) stuff.\n maybeSomething <- ioStuff case maybeSomething of Nothing -> return Nothing Just a -> fmap Just $ do moreIOStuff a \n I found a way of combining >>= and traverse so I could just do this instead\n ioStuff >$>= \\a -> do moreIOStuff a \n which saves at least a little boilerplate code, but I spent way too much time finding useless patterns (because of my curiosity and I couldn't find any of these functions on hoogle) and making the rest of this post.\n https://github.com/ashleyluna/monad-traversables\n So, I was doing that and other similar patterns that involved 2 Functors and using at least 1 as a Monad, but I didn't want to use Monad Transformers because I wasn't transforming both the IO and Maybe la…",
-          "link": "https://www.reddit.com/r/haskell/comments/nz52kr/monad_traversable_a_little_less_boilerplate/",
-          "publishedOn": "2021-06-13T20:23:01.000Z",
-          "wordCount": 1398,
-          "title": "Monad + Traversable = A Little Less Boilerplate"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/nyxma9/ihp_v0110_has_just_been_released/",
-          "author": null,
-          "description": "submitted by    /u/_query  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/nyxma9/ihp_v0110_has_just_been_released/",
-          "publishedOn": "2021-06-13T14:35:09.000Z",
-          "wordCount": 130,
-          "title": "IHP v0.11.0 has just been released 🎉"
         }
       ]
     },
@@ -1450,6 +1459,33 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/ojlxv1/coursera_course_updated_to_scala_3_yet/",
+          "author": null,
+          "description": "If not, is there any alternatives?\n Thank you in advance.\n    submitted by    /u/randomchinesepal  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/ojlxv1/coursera_course_updated_to_scala_3_yet/",
+          "publishedOn": "2021-07-13T18:39:48.000Z",
+          "wordCount": 116,
+          "title": "coursera course updated to Scala 3 yet?"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/ojihja/programming_with_functions_8_monads/",
+          "author": null,
+          "description": "submitted by    /u/makingthematrix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/ojihja/programming_with_functions_8_monads/",
+          "publishedOn": "2021-07-13T15:54:13.000Z",
+          "wordCount": 106,
+          "title": "Programming with Functions #8: Monads"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/ojgowf/getting_back_into_scala_and_professional_life/",
+          "author": null,
+          "description": "Heya all.\n I have a long history as a software developer, both in commercial environments and in academic research labs (mostly C, Scheme/LISP, Python, some Java). Back in 2013 I got into Spark and Scala working for a startup and kind of burned out by 2015. I decided to try new things and bought a farm and spent the last 5-6 years growing food, working outside etc. However, I find myself wanting to go back and at least pick up contracts/gigs to make some additional income, invest more into my retirement etc.\n It has been 6 years since I looked at Scala and I know things have changed since.\n A few questions: 1) what is the easiest/best way to get back in the game and refresh/catch up on everything that happened in the language? and 2) will anyone even consider me after a multi-year unrelated gap in my resume? When I \"retired\", I was at the senior level but obviously do not expect to get back at that level (no ego here). What is the best way to approach this - where do I look, how do I approach potential employers?\n Thanks!\n    submitted by    /u/notgoingtoagree  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/ojgowf/getting_back_into_scala_and_professional_life/",
+          "publishedOn": "2021-07-13T14:26:27.000Z",
+          "wordCount": 1078,
+          "title": "Getting back into Scala and professional life"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/oix6qe/configuring_metals_for_emacs_on_ubuntu/",
           "author": null,
@@ -2394,33 +2430,6 @@
           "publishedOn": "2021-06-14T12:35:43.000Z",
           "wordCount": 91,
           "title": "This week in #Scala (Jun 14, 2021)"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/nzh9pt/is_there_a_framework_like_blazor_server/",
-          "author": null,
-          "description": "I've looked at various templating engines and Scala.js frameworks/APIs, Twirl etc., but all of them appear to be either purely client-side or server-side. Does anything like this exist on the JVM? \n In some ways it feels like using a template engine, but the end-user experience is much nicer, because data is streamed from the server and everything is written on/for the backend. Almost, like a hybrid between, say, Twirl and Scala.JS/Laminar, except that client-server communication appears to be entirely transparent to the developer. \n https://www.youtube.com/watch?v=8DNgdphLvag&t=30s&ab_channel=IAmTimCorey\n    submitted by    /u/BiteConsistent7979  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/nzh9pt/is_there_a_framework_like_blazor_server/",
-          "publishedOn": "2021-06-14T07:28:22.000Z",
-          "wordCount": 186,
-          "title": "Is there a framework like Blazor Server?"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/nzekh8/sbt_154_released/",
-          "author": null,
-          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/nzekh8/sbt_154_released/",
-          "publishedOn": "2021-06-14T04:29:01.000Z",
-          "wordCount": 93,
-          "title": "sbt 1.5.4 released"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/nyuwf4/side_effectful_ddd_factory_in_scala/",
-          "author": null,
-          "description": "Hi all,\n The construction of my aggregate is side-effectful. I need to go to the DB, check for some invariants, then decide if I can construct it or not.\n While with side effect-free construction, I'd just create a smart constructor in a companion objects. For example:\n ```scala case class Aggregate(...)\n object Aggregate { def create(...): Either[Error, Aggregate] = ??? } ```\n Since now my creation is side effectful, I consider a few options:\n Option #1 - separate class for the factory\n ```scala case class Aggregate(...)\n class AggregateFactory[F[_]](repository: Repository[F]) { def create(...): F[Either[Error, Aggregate]] = ??? } ```\n Then I'd just pass AggregateFactory around where needed.\n Option #2 - curried smart constructor\n ```scala case class Aggregate(...)\n object Aggregate { def create[F[_]](repository: Repository[F])(...): F[Either[Error, Aggregate]] = ??? } ```\n and then I could pass around just the partially applied create function, e.g.\n scala def factory[F[_]]: ... => F[Either[Error, Aggregate]] = Aggregate.create(repository)(_) \n What do you think is the most idiomatic approach to the side-effectful construction?\n    submitted by    /u/lam_bd85  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/nyuwf4/side_effectful_ddd_factory_in_scala/",
-          "publishedOn": "2021-06-13T12:06:52.000Z",
-          "wordCount": 353,
-          "title": "Side effectful DDD factory in Scala"
         }
       ]
     },
@@ -2615,6 +2624,24 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/ojf4on/possible_to_execute_an_org_source_block_from/",
+          "author": null,
+          "description": "Is there an easy way to execute the source block that I'm editing from the Org-Src mode buffer? Otherwise I have to C-c ' every time to go back to the Org document, run the cell, then C-c ' again to open the Org-Src buffer.\n    submitted by    /u/shaqfooVA  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/ojf4on/possible_to_execute_an_org_source_block_from/",
+          "publishedOn": "2021-07-13T13:03:11.000Z",
+          "wordCount": 199,
+          "title": "Possible to execute an Org source block from inside its Org-Src buffer?"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/oj6d13/both_local_and_remote_have_been_modified/",
+          "author": null,
+          "description": "I'm constantly getting this error using Orgzly with Dropbox and Doom Emacs on a Mac. Does anyone have any advice? It's driving me crazy.\n    submitted by    /u/zoeey123  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/oj6d13/both_local_and_remote_have_been_modified/",
+          "publishedOn": "2021-07-13T02:34:24.000Z",
+          "wordCount": 268,
+          "title": "Both Local and Remote Have Been Modified"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/oiui2v/how_to_paste_slack_message_into_orgmode_with/",
           "author": null,
@@ -3010,24 +3037,6 @@
           "publishedOn": "2021-06-14T10:07:10.000Z",
           "wordCount": 202,
           "title": "Integrating org protocol with qutebrowser"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/nz7hi1/managing_family_chores/",
-          "author": null,
-          "description": "I'm trying to set up a system in org-mode to manage my family's daily chores. I figured org-habit would be the best starting point, but I have a few ideas I'm not sure how to implement because I'm pretty new.\n First, I want to assign the same chore (TODO item) to different family members on different days. Say, Mom does the dishes on Monday, I do them Tuesday, one of the children does them Wednesday, etc...\n Second, I want to understand how to build a break down in org-agenda to view the whole chore list for a day, week, etc, or by individual.\n Any links to read or suggestions would be a big help, thanks!\n    submitted by    /u/pyooma  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/nz7hi1/managing_family_chores/",
-          "publishedOn": "2021-06-13T22:16:03.000Z",
-          "wordCount": 420,
-          "title": "Managing Family Chores"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/nyvzgb/orgtransclusion_alpha_v020_demo_8/",
-          "author": null,
-          "description": "submitted by    /u/nobiot  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/nyvzgb/orgtransclusion_alpha_v020_demo_8/",
-          "publishedOn": "2021-06-13T13:09:25.000Z",
-          "wordCount": 179,
-          "title": "Org-transclusion (alpha v0.2.0) Demo #8"
         }
       ]
     },
@@ -3036,6 +3045,69 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/tracking-20210713.1609.tar",
+          "author": null,
+          "description": "The tracking package has been updated to version 20210713.1609.",
+          "link": "https://melpa.org/#/tracking",
+          "publishedOn": "2021-07-13T16:09:00.000Z",
+          "wordCount": 105,
+          "title": "tracking (20210713.1609) --- Buffer modification tracking"
+        },
+        {
+          "id": "https://melpa.org/packages/circe-20210713.1609.tar",
+          "author": null,
+          "description": "The circe package has been updated to version 20210713.1609.",
+          "link": "https://melpa.org/#/circe",
+          "publishedOn": "2021-07-13T16:09:00.000Z",
+          "wordCount": 105,
+          "title": "circe (20210713.1609) --- Client for IRC in Emacs"
+        },
+        {
+          "id": "https://melpa.org/packages/evil-snipe-20210713.1456.el",
+          "author": null,
+          "description": "The evil-snipe package has been updated to version 20210713.1456.",
+          "link": "https://melpa.org/#/evil-snipe",
+          "publishedOn": "2021-07-13T14:56:00.000Z",
+          "wordCount": 105,
+          "title": "evil-snipe (20210713.1456) --- emulate vim-sneak & vim-seek"
+        },
+        {
+          "id": "https://melpa.org/packages/helm-switch-shell-20210713.1440.el",
+          "author": null,
+          "description": "The helm-switch-shell package has been updated to version 20210713.1440.",
+          "link": "https://melpa.org/#/helm-switch-shell",
+          "publishedOn": "2021-07-13T14:40:00.000Z",
+          "wordCount": 105,
+          "title": "helm-switch-shell (20210713.1440) --- A Helm source for switching between shell buffers"
+        },
+        {
+          "id": "https://melpa.org/packages/better-jumper-20210713.1426.el",
+          "author": null,
+          "description": "The better-jumper package has been updated to version 20210713.1426.",
+          "link": "https://melpa.org/#/better-jumper",
+          "publishedOn": "2021-07-13T14:26:00.000Z",
+          "wordCount": 105,
+          "title": "better-jumper (20210713.1426) --- configurable jump list"
+        },
+        {
+          "id": "https://melpa.org/packages/company-fuzzy-20210713.727.el",
+          "author": null,
+          "description": "The company-fuzzy package has been updated to version 20210713.727.",
+          "link": "https://melpa.org/#/company-fuzzy",
+          "publishedOn": "2021-07-13T07:27:00.000Z",
+          "wordCount": 105,
+          "title": "company-fuzzy (20210713.727) --- Fuzzy matching for `company-mode'"
+        },
+        {
+          "id": "https://melpa.org/packages/good-scroll-20210712.1206.tar",
+          "author": null,
+          "description": "The good-scroll package has been updated to version 20210712.1206.",
+          "link": "https://melpa.org/#/good-scroll",
+          "publishedOn": "2021-07-12T12:06:00.000Z",
+          "wordCount": 105,
+          "title": "good-scroll (20210712.1206) --- Good pixel line scrolling"
+        },
         {
           "id": "https://melpa.org/packages/string-inflection-20210712.755.el",
           "author": null,
@@ -5726,105 +5798,6 @@
           "publishedOn": "2021-06-14T12:12:00.000Z",
           "wordCount": 105,
           "title": "idris-mode (20210614.1212) --- Major mode for editing Idris code"
-        },
-        {
-          "id": "https://melpa.org/packages/crossword-20210614.633.el",
-          "author": null,
-          "description": "The crossword package has been updated to version 20210614.633.",
-          "link": "https://melpa.org/#/crossword",
-          "publishedOn": "2021-06-14T06:33:00.000Z",
-          "wordCount": 105,
-          "title": "crossword (20210614.633) --- Download and play crossword puzzles"
-        },
-        {
-          "id": "https://melpa.org/packages/elpa-mirror-20210614.302.el",
-          "author": null,
-          "description": "The elpa-mirror package has been updated to version 20210614.302.",
-          "link": "https://melpa.org/#/elpa-mirror",
-          "publishedOn": "2021-06-14T03:02:00.000Z",
-          "wordCount": 105,
-          "title": "elpa-mirror (20210614.302) --- Create local package repository from installed packages"
-        },
-        {
-          "id": "https://melpa.org/packages/shellcop-20210614.254.el",
-          "author": null,
-          "description": "The shellcop package has been updated to version 20210614.254.",
-          "link": "https://melpa.org/#/shellcop",
-          "publishedOn": "2021-06-14T02:54:00.000Z",
-          "wordCount": 105,
-          "title": "shellcop (20210614.254) --- Analyze info&error in shell-mode"
-        },
-        {
-          "id": "https://melpa.org/packages/edts-20210613.2119.tar",
-          "author": null,
-          "description": "The edts package has been updated to version 20210613.2119.",
-          "link": "https://melpa.org/#/edts",
-          "publishedOn": "2021-06-13T21:19:00.000Z",
-          "wordCount": 105,
-          "title": "edts (20210613.2119) --- Erlang Development Tool Suite"
-        },
-        {
-          "id": "https://melpa.org/packages/dyncloze-20210613.1956.tar",
-          "author": null,
-          "description": "The dyncloze package has been updated to version 20210613.1956.",
-          "link": "https://melpa.org/#/dyncloze",
-          "publishedOn": "2021-06-13T19:56:00.000Z",
-          "wordCount": 105,
-          "title": "dyncloze (20210613.1956) --- Language alternatives self-testing"
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-java-20210613.1810.tar",
-          "author": null,
-          "description": "The lsp-java package has been updated to version 20210613.1810.",
-          "link": "https://melpa.org/#/lsp-java",
-          "publishedOn": "2021-06-13T18:10:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-java (20210613.1810) --- Java support for lsp-mode"
-        },
-        {
-          "id": "https://melpa.org/packages/chronometrist-key-values-20210613.1606.tar",
-          "author": null,
-          "description": "The chronometrist-key-values package has been updated to version 20210613.1606.",
-          "link": "https://melpa.org/#/chronometrist-key-values",
-          "publishedOn": "2021-06-13T16:06:00.000Z",
-          "wordCount": 105,
-          "title": "chronometrist-key-values (20210613.1606) --- add key-values to Chronometrist data"
-        },
-        {
-          "id": "https://melpa.org/packages/js2-mode-20210613.1605.tar",
-          "author": null,
-          "description": "The js2-mode package has been updated to version 20210613.1605.",
-          "link": "https://melpa.org/#/js2-mode",
-          "publishedOn": "2021-06-13T16:05:00.000Z",
-          "wordCount": 105,
-          "title": "js2-mode (20210613.1605) --- Improved JavaScript editing mode"
-        },
-        {
-          "id": "https://melpa.org/packages/dylan-20210613.1431.tar",
-          "author": null,
-          "description": "The dylan package has been updated to version 20210613.1431.",
-          "link": "https://melpa.org/#/dylan",
-          "publishedOn": "2021-06-13T14:31:00.000Z",
-          "wordCount": 105,
-          "title": "dylan (20210613.1431) --- Dylan editing modes"
-        },
-        {
-          "id": "https://melpa.org/packages/diredc-20210613.1423.el",
-          "author": null,
-          "description": "The diredc package has been updated to version 20210613.1423.",
-          "link": "https://melpa.org/#/diredc",
-          "publishedOn": "2021-06-13T14:23:00.000Z",
-          "wordCount": 105,
-          "title": "diredc (20210613.1423) --- Extensions for dired"
-        },
-        {
-          "id": "https://melpa.org/packages/wanderlust-20210613.950.tar",
-          "author": null,
-          "description": "The wanderlust package has been updated to version 20210613.950.",
-          "link": "https://melpa.org/#/wanderlust",
-          "publishedOn": "2021-06-13T09:50:00.000Z",
-          "wordCount": 105,
-          "title": "wanderlust (20210613.950) --- Yet Another Message Interface on Emacsen"
         }
       ]
     },
@@ -5833,6 +5806,69 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ojng5e/how_to_set_up_emacs_and_geiser_for_proper_scheme/",
+          "author": null,
+          "description": "Hello everyone,\n TL;DR: How to get M-. and M-, to work in geiser / guile the way they work for emacs lisp?\n I hope I chose the right community to ask this. Feel free to tell me if I didn't, and suggest where to ask otherwise. I am an aspiring lisp / scheme hacker. One thing that I would really get into is gnu guix, the distro which is powered by the guile programming language. \n So far, all my attempts to combine emacs and geiser whilst hacking guix have gone suboptimally. The main thing that doesn't work for me is the ability to jump to a symbol's definition using M-. or M-,. This is what I have used browsing emacs lisp code, and I feel this is instrumental to learning the language and how stuff works when you kinda know the basics, but not more than that.\n Thus, I would love to know how I would have to set guile and geiser up so that I will be able to use that most useful function.\n Maybe I am missing something super obvious here that I have not mentioned. Please, if this is the case, feel free to point me to it!\n Have a good day, fellows!\n    submitted by    /u/olivuser  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ojng5e/how_to_set_up_emacs_and_geiser_for_proper_scheme/",
+          "publishedOn": "2021-07-13T19:51:59.000Z",
+          "wordCount": 315,
+          "title": "How to set up emacs and geiser for proper scheme / guile hacking"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ojm71g/emacs_tramp_over_aws_ssm_apis/",
+          "author": null,
+          "description": "submitted by    /u/self  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ojm71g/emacs_tramp_over_aws_ssm_apis/",
+          "publishedOn": "2021-07-13T18:52:18.000Z",
+          "wordCount": 113,
+          "title": "Emacs TRAMP over AWS SSM APIs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ojca7q/nicer_org_ids/",
+          "author": null,
+          "description": "Hi all, just wanted to share a thing I made for creating nicer org ids to link to.\n The good thing about org ids is that they allow linking to headlines even if you move things around (when you split off a headline into a new file, say). The bad thing is the ids are UUIDs meaning they contain no information whatsoever on what they’re actually for. This is annoying when you’re editing a link (IMHO).\n So I made something that creates human readable links. This turns out to be a bit involved, as generating UUIDs is stuck somewhere deep inside another function you really don’t want to mess with (separation of concerns apparently is not a thing in org-id code?).\n What it does is when you store a link ( C-c l) it checks whether there already is an ID property. If there isn’t, it creates a new on…",
+          "link": "https://www.reddit.com/r/emacs/comments/ojca7q/nicer_org_ids/",
+          "publishedOn": "2021-07-13T09:48:37.000Z",
+          "wordCount": 603,
+          "title": "Nicer org ids"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/oj7dv5/in_detail_my_workflows_for_programming_note/",
+          "author": null,
+          "description": "I've written something that I wish existed when I was at the beginning of exploring emacs: a full breakdown of how I program in emacs (vue, react, python,etc), how I use org-mode to organize my todos and time tracking, and how I do basic IDE stuff like search and replace, window management, etc in emacs. I've also included installation and configuration instructions for everything I do in emacs. \n According to my clock-table, this apparently took me 24 hours and 39 minutes to write lol. We're in lockdown here in Taiwan so there's shit else to do. \n Anyway here's the link\n I don't have any kind of ads or tracking on my blog, I don't know really what my objective is for maintaining it but I feel a compulsion to do so and it feels productive to write blogposts, so I'm not going to question it further /shrug\n Topics covered:\n Basic IDE Needs Frame, Window, and Buffer Management Helm, or, Magic Emacs Command Suggestion and Listing Mechanism Finding Files and Text Within Projects Finding and Replacing Text Managing Git Programming a Vanilla HTML, CSS, Javascript Project Programming a Vue, Typescript, SCSS Project Programming a React, Typescript, Styled Components Project Programming a Python Project Tracking Tasks and Time Taking Notes (for class and learning) Journaling Checking Email Reading the News \n    submitted by    /u/komali_2  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/oj7dv5/in_detail_my_workflows_for_programming_note/",
+          "publishedOn": "2021-07-13T03:37:10.000Z",
+          "wordCount": 1169,
+          "title": "In detail: my workflows for programming, note taking, journaling, time and task tracking, and staying organized with emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/oj5e6g/how_to_use_tramp/",
+          "author": null,
+          "description": "I'm attempting to use tramp to edit files on the raspberry pi, how do I get it to work? I'm typing C-x C-f '/ssh:rootUsername@ip:/', but the second I type the final slash, emacs freezes until I press C-g. What could I be doing wrong? I should add I've shared ssh keys, which works flawlessly in the terminal.\n ​\n Edit: fix was found here: https://blog.karssen.org/2016/03/02/fixing-emacs-tramp-mode-when-using-zsh/\n ​\n needed to use it on the local and remote shell (which both use zsh)!\n    submitted by    /u/agenttiny200  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/oj5e6g/how_to_use_tramp/",
+          "publishedOn": "2021-07-13T01:36:27.000Z",
+          "wordCount": 372,
+          "title": "how to use tramp?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/oj1vbk/maximize_window_vertically/",
+          "author": null,
+          "description": "Often I find I'm working in a window that I find too short, and I want to delete the window(s) above it so that it can be vertically maximized. Dos anyone have a good way of doing this? I know there are many window management packages out there, but I have not found this particular functionality & I will be honest, I have tons of `(use-package)` declarations in my startup that I don't really understand; I'd like to avoid adding more of them!\n    submitted by    /u/titaniumbones  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/oj1vbk/maximize_window_vertically/",
+          "publishedOn": "2021-07-12T22:16:41.000Z",
+          "wordCount": 227,
+          "title": "maximize window vertically?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/oizw1u/how_can_i_set_my_weekly_orgjournal_file_to/",
+          "author": null,
+          "description": "I just started doing journals after learning Emacs and Org for a week, and I've settled on a style that works for me as someone with ADHD. I'd like to be able to start a new weekly journal with the same style as I've made myself, just to save some work and keep things consistent. I know I'd have to edit my .emacs for this, and the syntax mostly makes sense to me, but I have no idea where to start. Any help is appreciated, thank you!\n The template I'd like to set, with the dates automatically set for the week each time:\n https://i.imgur.com/ynSrKxz.png\n    submitted by    /u/beefy_synths  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/oizw1u/how_can_i_set_my_weekly_orgjournal_file_to/",
+          "publishedOn": "2021-07-12T20:38:44.000Z",
+          "wordCount": 378,
+          "title": "How can I set my weekly org-journal file to generate with this template?"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/oizpz8/mu4e_composing_a_reply_sometimes_freezes_the/",
           "author": null,
@@ -8883,132 +8919,6 @@
           "publishedOn": "2021-06-14T09:13:13.000Z",
           "wordCount": 179,
           "title": "How to open org-agenda on a fixed size?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nzfjye/snazzygruvbox/",
-          "author": null,
-          "description": "submitted by    /u/CAPSLOCK_BAD  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nzfjye/snazzygruvbox/",
-          "publishedOn": "2021-06-14T05:29:09.000Z",
-          "wordCount": 557,
-          "title": "snazzy+gruvbox="
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nza47u/upgraded_from_26_to_27_minibuffer_trippled_in_size/",
-          "author": null,
-          "description": "Edit: I fixed it. It was the package powerline, which modifies the way the minibuffer looks. I just disabled it.\n I've upgraded to 27.2 (Windows). My minibuffer has trippled in size (vertically). \n I've tried this to no avail:\n (setq resize-mini-windows nil) \n I specifically get my emacs windows binaries from here if it matters: https://vigou3.gitlab.io/emacs-modified-windows/\n Anyone know how to fix this minibuffer problem?\n    submitted by    /u/eu-guy  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nza47u/upgraded_from_26_to_27_minibuffer_trippled_in_size/",
-          "publishedOn": "2021-06-14T00:26:16.000Z",
-          "wordCount": 234,
-          "title": "Upgraded from 26 to 27: minibuffer trippled in size"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nz8gjx/treemacs_on_doom_emacs/",
-          "author": null,
-          "description": "I have treemacs open on startup of doom emacs and It won't open the dashboard and when it opens it has a *scratch* file.\n any help?\n    submitted by    /u/jamdvs  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nz8gjx/treemacs_on_doom_emacs/",
-          "publishedOn": "2021-06-13T23:02:44.000Z",
-          "wordCount": 124,
-          "title": "Treemacs on doom emacs"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nz87ob/i_enabled_centaurtabs_in_doom_emacs_and_i_feel/",
-          "author": null,
-          "description": "At least it's not evil-mode!\n This is a joke of course. Centaur-tabs is a great package, and I can see it becoming a nifty part of my workflow, but can't help think about how buffer-focused emacs is, and yet, tabs are a pretty standard feature in every editor and browser now. I think the tab-bar is a great visual indicator of the open buffers. And DOOM seems to have some nice integrations for it. \n Thanks for coming to my TED talk.\n Edit - yes, I've leaned into the buffer-centric workflow for a year or more now but tab-bar mode or whatever it is that centaur-tabs offers works for me. https://xkcd.com/1172/\n    submitted by    /u/PigsDogsAndSheep  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nz87ob/i_enabled_centaurtabs_in_doom_emacs_and_i_feel/",
-          "publishedOn": "2021-06-13T22:50:42.000Z",
-          "wordCount": 516,
-          "title": "I enabled centaur-tabs in DOOM emacs and I feel like a sinner"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nz81os/emacs_on_linux/",
-          "author": null,
-          "description": "I left Linux over a decade ago for OSX. I started using Emacs about 10 years ago.\n I started fooling around with Linux the other day (Pop OS). I just assumed that installing Emacs via 'apt' would provide me with Emacs 27.x... No dice.\n To keep up to date on Emacs are people really building from source? Is there a package repo that keeps an up to date version?\n If I'm going to build it myself are there any options I should consider. It's a bit embarrassing that I'm so used to the install and go experience I've been getting with Emacs on the Mac.\n Edit: Turns out it was org-tempo and org-indent-mode, both of which I believe I added for Emacs 27... I can't remember if I upgraded to 27 for a specific reason or not on OS X, so I can forget ahead with 26 for now with those disabled.\n Thanks all.\n    submitted by    /u/moxxon  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nz81os/emacs_on_linux/",
-          "publishedOn": "2021-06-13T22:42:39.000Z",
-          "wordCount": 778,
-          "title": "Emacs on Linux?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nz52te/announce_dyncloze_v_02/",
-          "author": null,
-          "description": "dyncloze is an emacs module (offered via Melpa) for testing yourself on language learning. The core idea is that you can take any piece of text in emacs, and form \"clozes\" (an Anki terminology), that erase the work in question and let you guess what it should be. For example, you can test, in English \"in\" vs. \"on\", and every location of those words will be replaced by a cloze, denoted by \"[ ]\" and you are led through each of them and asked to guess each one. At the end, it tells you how well you did.\n In version 0.1, we started with the ability just to test two or more words against each other. With this version, 0.2 (just submitted, not yet updated on Melpa), we add the ability to use regex's for testing. That opens the ability to do more useful testing, at least with European languages that have a lot of word variants and word-ending grammatical bits.\n I've added two example files, one for Spanish, one for Portuguese to demonstrate. You can load them up and try out functions such as dyncloze-es-ser-estar, which will let you guess every variant of ser and estar (\"eras\", \"fui\", \"está\", \"estaba\", etc.), but you just choose which of the verbs it belongs to: ser or estar. There's a similar function that lets you choose between perfect and imperfect tenses.\n If you'd like to contribute, please open pull requests for the language you are studying with more examples (or fix up an issues with the ones I have).\n    submitted by    /u/ahyatt  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nz52te/announce_dyncloze_v_02/",
-          "publishedOn": "2021-06-13T20:23:20.000Z",
-          "wordCount": 353,
-          "title": "Announce: dyncloze v. 0.2"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nz4ehz/universal_negative_key_cm_not_working_in_iterm_on/",
-          "author": null,
-          "description": "I'm running Emacs (from Homebrew) in iTerm2(build 3.4.8) on Mac OS Big Sur(11.4), When trying universal negative key C-M-- in Emacs it said \"C-M-_ is undefined\", not sure how to make this work since this is quite important key chord to maintain the tempo.\n ​\n It seems that only M-- works, C-- is C-_ which is undo command instead.\n Any ideas? Thanks a lot.\n ​\n https://preview.redd.it/1xbrtace83571.png?width=1062&format=png&auto=webp&s=bee776434fec2122aad6d467c85f3406083bd236\n    submitted by    /u/Gosin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nz4ehz/universal_negative_key_cm_not_working_in_iterm_on/",
-          "publishedOn": "2021-06-13T19:52:52.000Z",
-          "wordCount": 187,
-          "title": "Universal negative key C-M-- not working in iTerm on Mac OS Big Sur"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nz15gz/emacs_running_in_the_browser/",
-          "author": null,
-          "description": "submitted by    /u/coolstuff39  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nz15gz/emacs_running_in_the_browser/",
-          "publishedOn": "2021-06-13T17:18:33.000Z",
-          "wordCount": 426,
-          "title": "Emacs running in the browser"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nz0he3/question_about_text_rendering/",
-          "author": null,
-          "description": "Does anyone have the feeling that text in emacs (GUI) doesn't look as good as vscode? There's something about them or the color theme that looks slightly grainy and not as crisp.\n    submitted by    /u/ianzen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nz0he3/question_about_text_rendering/",
-          "publishedOn": "2021-06-13T16:47:31.000Z",
-          "wordCount": 161,
-          "title": "Question about text rendering"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nyzqvt/emacs_font_problem_with_ibm_plex_mono/",
-          "author": null,
-          "description": "I installed IBM Plex Mono in my system. Other all editors, terminals etc. work normal. But emacs doesn't start with this font. I tried change font settings via emacs menu and .emacs file. It doesn't works.\n screenshot\n    submitted by    /u/eayavas  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nyzqvt/emacs_font_problem_with_ibm_plex_mono/",
-          "publishedOn": "2021-06-13T16:13:30.000Z",
-          "wordCount": 222,
-          "title": "Emacs Font Problem with IBM Plex Mono"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nywzip/counselrg_fails_to_search_chinese_characters/",
-          "author": null,
-          "description": "I work on Emacs 27.2 of win10 but find counsel-rg fails to search Chinese Characters:\n It reports \"No Matches found\" when search \"洞见\" (which means insights)\n https://preview.redd.it/3xxvuxvre1571.png?width=617&format=png&auto=webp&s=e91f911b7dcfd15fd324c88cf0ae28715099271d\n But it works perfectly from windows-terminal's command line:\n ​\n https://preview.redd.it/5l4zep7hf1571.png?width=772&format=png&auto=webp&s=37e8fd78730e1bd195562e09ee71410439d4e5d2\n What's the problem it might be?\n rg --version ripgrep 13.0.0 (rev af6b6c543b) \n ​\n    submitted by    /u/AbstProcDo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nywzip/counselrg_fails_to_search_chinese_characters/",
-          "publishedOn": "2021-06-13T14:02:06.000Z",
-          "wordCount": 173,
-          "title": "counsel-rg fails to search Chinese Characters"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nyw3ay/is_there_a_way_to_configure_my_python_interpreter/",
-          "author": null,
-          "description": "Hello everybody! I want to set my python interpreter to run inside docker. Pycharm has this instructions. Is this something that can be done in Emacs?\n To give more context, I want to run my tests inside the docker environment and debugger (pdb) with a correct project mapping (so my local path can point to the remote path when debugging and viceversa)\n Any help would be greatly appreciated. Thank you!\n    submitted by    /u/Rogergonzalez21  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nyw3ay/is_there_a_way_to_configure_my_python_interpreter/",
-          "publishedOn": "2021-06-13T13:15:22.000Z",
-          "wordCount": 340,
-          "title": "Is there a way to configure my Python interpreter to be inside a docker container like in Pycharm?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nyw1ei/orgtransclusion_alpha_v020_demo_8/",
-          "author": null,
-          "description": "submitted by    /u/nobiot  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nyw1ei/orgtransclusion_alpha_v020_demo_8/",
-          "publishedOn": "2021-06-13T13:12:33.000Z",
-          "wordCount": 434,
-          "title": "Org-transclusion (alpha v0.2.0) Demo #8"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/nyvtxv/atp_an_experimental_package_for_fast_and/",
-          "author": null,
-          "description": "Hello! I present to you my first emacs package - atp. It's intended as a component for writing text editing commands and augmenting modal editing modes. Its main feature is the ability to automatically recognize and highlight things at point and apply commands to highlighted things or active region.\n I started working on this package because I was lookig for a new approach that would help me save a couple of keystrokes on each common task such as copying and pasting text, evaluation of lisp expressions and shell-commands, changing letter case, etc.\n For a year I used a wonderful package \"expand-region\" for that purpose. Despite it being very smart and useful, it requires 2 actions to select an object under the point. First, the user must navigate to the desired location, and then call er/expand-region to select an object. I thought that the second step was redundant and decided to write a package that will work without it.\n At this moment atp is unstable because it was written in a hurry and my knowledge of elisp and emacs internals isn't great. I just wanted to write something usable as soon as I could to check the viability of the chosen approach. Here is a repo and a video that demonstrates how atp works in the context of a tiny modal editing mode.\n https://github.com/tre-flip/atp\n http://ctrl-c.club/~treflip/atp.mp4\n What do you think about it?\n    submitted by    /u/KnightOfTribulus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/nyvtxv/atp_an_experimental_package_for_fast_and/",
-          "publishedOn": "2021-06-13T13:01:07.000Z",
-          "wordCount": 633,
-          "title": "atp - an experimental package for fast and intuitive text editing"
         }
       ]
     },
