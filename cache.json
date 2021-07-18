@@ -49,6 +49,33 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/omt3hg/does_this_newtype_exist_in_some_library/",
+          "author": null,
+          "description": "Consider this newtype:\n newtype Stacked f a = Stacked { unStacked :: forall r. f r -> f (a, r) } deriving Functor \n With this you can define an Applicative instance for any Functor:\n instance Functor f => Applicative (Stacked f) where pure x = Stacked (fmap (x,)) Stacked p <*> Stacked q = Stacked (fmap (\\(f, (x, y)) -> (f x, y)) . p . q) \n Here the tuples that are returned form a sort of stack which can be pushed to as in the pure function and popped as in the definition of <*>.\n I found this pattern in the future parsers described in Section 4.6 of \"Combinator parsing: a short tutorial\". Their Pf st a is coercible to Stacked (ReaderT st Steps) a.\n Does this newtype already exist in some library?\n This also reminds me a bit of monoidal functors. Is there some connection to category theory here?\n    submitted by    /u/Noughtmare  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/omt3hg/does_this_newtype_exist_in_some_library/",
+          "publishedOn": "2021-07-18T15:49:50.000Z",
+          "wordCount": 711,
+          "title": "Does this newtype exist in some library?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/omt2yl/this_is_so_hard_to_post_why_my_last_three_blog/",
+          "author": null,
+          "description": "submitted by    /u/gaverhae  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/omt2yl/this_is_so_hard_to_post_why_my_last_three_blog/",
+          "publishedOn": "2021-07-18T15:49:07.000Z",
+          "wordCount": 489,
+          "title": "This is so hard to post: why my last three blog posts are wrong and how I screwed up trying to benchmark Haskell code."
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/omcavl/quicksearch_a_tool_for_comparing_sets_of_names/",
+          "author": null,
+          "description": "Hey all, this is my first serious attempt at making something in Haskell and I'd really appreciate any feedback you might have, be it whether something is not idiomatic Haskell or if there's a simpler/better way to accomplish something. https://github.com/osoleve/Name-QuickSearch\n The purpose of the tool is to allow for fast matching of names (or other short natural language strings) against another set of names using fuzzy similarity metrics, letting you get, say, the highest scoring name out of a set of hundreds of thousands using Jaro-Winkler in under a second. Most of the speed is achieved using a token-matching heuristic, where the similarity scores are only computed between pairs of names sharing an entire token, with token inventories being precomputed and stored in a hashmap.\n It works pretty much exactly as I want so far, but as a Haskell beginner I'm sure there are improvements that can be made, and I figured this would be a good place to ask.\n Thanks in advance!\n    submitted by    /u/osoleve  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/omcavl/quicksearch_a_tool_for_comparing_sets_of_names/",
+          "publishedOn": "2021-07-17T20:40:48.000Z",
+          "wordCount": 473,
+          "title": "QuickSearch, a tool for comparing sets of names [newbie]"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/om8m6d/how_to_simply_do_opaleye_field_type_conversion/",
           "author": null,
           "description": "When defining a custom record type to match some table, I sometimes want to use record field types other than the default ones assumed by opaleye.\n E.g. for a (Field SqlNumeric), I don't want to use a Scientific in the Haskell record type when the scale of the postgresql NUMERIC field is 0; it makes more sense to use Integer instead of Scientific. Similarly, if a column is of a domain that constrains the value to be non-negative, it may make more sense to use an unsigned type such as Word64 instead of Int64.\n Consider the following code:  data Rec' a b = Rec { a :: a, b :: b } type Rec1 = Rec' Scientific Scientific type Rec2 = Rec' Integer Integer type RecField = Rec' (Field SqlNumeric) (Field SqlNumeric) $(makeAdaptorAndInstance \"pRec\" ''Rec') recTable :: Table RecField RecField recTable = table \"rec\" (pRec Rec { a = tableField \"a\", b = tableField \"b\" }) \n If I try to use selectTable recTable and runSelect to read a [Rec1] it's fine, but if I try to read a [Rec2], I get a compilation error (No instance for (Opaleye.Internal.RunQuery.DefaultFromField SqlNumeric Integer). How can I simply map the table to a record type that uses Integer instead of Scientific without adding much boilerplate? I only need to read the tables, not write to them.\n    submitted by    /u/Syncopat3d  \n [link]   [comments]",
@@ -1352,78 +1379,6 @@
           "publishedOn": "2021-06-19T09:47:36.000Z",
           "wordCount": 245,
           "title": "[video] Ollie Charles: Rel8, a new database access library for Haskell"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/o37arn/stackage_nightly_is_updated_to_ghc901/",
-          "author": null,
-          "description": "submitted by    /u/juhp  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/o37arn/stackage_nightly_is_updated_to_ghc901/",
-          "publishedOn": "2021-06-19T03:40:00.000Z",
-          "wordCount": 229,
-          "title": "Stackage Nightly is updated to ghc-9.0.1"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/o340d5/32_bit_install/",
-          "author": null,
-          "description": "How do I install GHC on 32 bit Alpine Linux?\n    submitted by    /u/biigberry  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/o340d5/32_bit_install/",
-          "publishedOn": "2021-06-19T00:17:34.000Z",
-          "wordCount": 148,
-          "title": "32 bit install"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/o2ta9r/zurihac_ghc_ama_submit_your_questions/",
-          "author": null,
-          "description": "Have you ever had a technical question about GHC you didn't get a good answer for?\n Tomorrow, Saturday June 19, 17:00 Zurich time, there will be a GHC ask-me-anything panel discussion.\n It will be live-streamed on YouTube on the ZuriHac channel.\n We will have Simon Peyton-Jones and Ben Gamari on the panel as GHC developers, and we need you to ask them questions!\n You can ask your questions:\n  \nLive via the ZuriHac Discord, channel #ghc-panel-discussion\n Live via the libera.chat IRC channel #ghc; prefix your question with nh2: ZuriHac GHC AMA question:\n Here any time (I will collect the questons until 1 hour before the event)\n  \nThe questions will read to the panelists during the event.\n We'd like to get technical questions about GHC, e.g. “how does class instance lookup work?”, not so much personal questions like “how long have you worked on GHC?”.\n  \nZuriHac is the world's largest Haskell Hackathon. It is free to join, and this year it is remote, so you can join simply by registering on https://zfoh.ch/zurihac2021/ Registering will send you the Discord invite, in case you want to ask your questions there.\n    submitted by    /u/nh2_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/o2ta9r/zurihac_ghc_ama_submit_your_questions/",
-          "publishedOn": "2021-06-18T16:26:04.000Z",
-          "wordCount": 287,
-          "title": "ZuriHac GHC AMA: Submit your questions!"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/o2t6gh/i_made_hideout_a_service_for_private_persistent/",
-          "author": null,
-          "description": "What is Hideout?\n  \nHideout is a self-hosted service that makes private, persistent chat rooms possible. It requires no installation or account creation. Unlike disposable chat, a Hideout room preserves privacy without expiring.\n The GitHub repo contains a detailed introduction, and guides for hosting, building, and contributing: https://github.com/techmindful/hideout\n A video demo can be watched here: https://vimeo.com/564494164.\n A demo instance is running at hideout-demo.com. Uptime is expected to be unstable. Do not trust it for your own private conversations.\n Language stack is Haskell/Elm. Haskell, Elm, and the privacy community need more killer apps! Hideout tries to be as pretty and feature-rich as possible, so that when people opt for privacy, they won't be getting a lackluster alternative.\n    submitted by    /u/techmindful  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/o2t6gh/i_made_hideout_a_service_for_private_persistent/",
-          "publishedOn": "2021-06-18T16:23:06.000Z",
-          "wordCount": 247,
-          "title": "I made Hideout, a service for private, persistent chat rooms"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/o2qsiy/zurihac_officially_starts_in_a_hour_live_stream/",
-          "author": null,
-          "description": "submitted by    /u/instantdoctor  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/o2qsiy/zurihac_officially_starts_in_a_hour_live_stream/",
-          "publishedOn": "2021-06-18T14:47:35.000Z",
-          "wordCount": 160,
-          "title": "ZuriHac officially starts in a hour - Live stream link of the first talk"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/o2qf6w/single_data_declaration_introducing_more_type/",
-          "author": null,
-          "description": "https://wiki.haskell.org/Constructor\n  \nA data declaration introduces one or more type constructors and one or more value constructors for each type constructor.\n  \nOut of curiosity, in what syntax can \"more\" type constructors be defined in \"a\" data declaration?\n    submitted by    /u/complyue  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/o2qf6w/single_data_declaration_introducing_more_type/",
-          "publishedOn": "2021-06-18T14:30:17.000Z",
-          "wordCount": 368,
-          "title": "Single \"data declaration\" introducing \"more type constructors\" ?"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/o2mxq8/job_haskell_developer_chordify/",
-          "author": null,
-          "description": "Hello everyone,\n Chordify is hiring again! This post might look familiar to you if you've been around here for a while. That's because I posted about a vacancy we had back in October. Since then, we've hired two new developers, but we're still expanding!\n Chordify is a music platform that you can use to automatically detect the chords in any song you like. This way we help musicians to play all of their favourite music in an easy and intuitive way. You can try it at https://chordify.net\n Now, the backend for our website and apps, that are used by millions of people worldwide, is written in Haskell! We serve the user using primarily Servant, Persistent and Esqueleto. We also have a custom Redis caching layer and use an advanced Cloud Haskell setup to distribute our chord analysis computations.\n We are quickly becoming an autonomous workforce, meaning there is pretty much no hierarchy, and we are looking to expand our fast-growing team with a pro-active, independent and creative functional programmer to further improve Chordify. You'd get the opportunity to work with advanced type systems to power a website that serves millions.\n More information and a form to apply can be found at https://jobs.chordify.net. If you have any questions, feel free to ask them in this thread, or reach out to me at [rik@chordify.net](mailto:rik@chordify.net).\n We strive for diversity in our team, and encourage people of all backgrounds and genders to apply.\n One more thing, this is explicitly NOT a remote job. We expect our new colleague to come work with us at our (new!) office in Utrecht, The Netherlands.\n    submitted by    /u/RikvanToor  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/o2mxq8/job_haskell_developer_chordify/",
-          "publishedOn": "2021-06-18T11:28:59.000Z",
-          "wordCount": 649,
-          "title": "[JOB] Haskell Developer @Chordify"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/o2mtq5/issue_268_haskell_weekly_newsletter/",
-          "author": null,
-          "description": "submitted by    /u/haskellweekly  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/o2mtq5/issue_268_haskell_weekly_newsletter/",
-          "publishedOn": "2021-06-18T11:22:52.000Z",
-          "wordCount": 126,
-          "title": "Issue 268 :: Haskell Weekly newsletter"
         }
       ]
     },
@@ -1432,6 +1387,42 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/omwk0s/this_week_in_scala_jul_19_2021/",
+          "author": null,
+          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/omwk0s/this_week_in_scala_jul_19_2021/",
+          "publishedOn": "2021-07-18T18:41:55.000Z",
+          "wordCount": 95,
+          "title": "This week in #Scala (Jul 19, 2021)"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/omk0bq/a_question_about_case_classes/",
+          "author": null,
+          "description": "Hi, I am new to scala and I have been trying to understand case classes and I came across this\n case class Block(b1: Pos, b2: Pos):\n // Additional Methods\n case class Pos(row: Int, col: Int):\n // Additional Methods \n val b = Block(Pos(0, 0), Pos(0,1))\n val c = Pos(0,0)\n b == c // Returns False \n My question is how are b and c being compared, if they are different case classes ? Does scala assume they are of the same type ?\n    submitted by    /u/Buggi_San  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/omk0bq/a_question_about_case_classes/",
+          "publishedOn": "2021-07-18T04:58:04.000Z",
+          "wordCount": 270,
+          "title": "A question about case classes"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/omh6qw/part_6_ziohas_getting_started_with_zio_in_scala3/",
+          "author": null,
+          "description": "submitted by    /u/agilesteel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/omh6qw/part_6_ziohas_getting_started_with_zio_in_scala3/",
+          "publishedOn": "2021-07-18T01:43:00.000Z",
+          "wordCount": 142,
+          "title": "Part 6 - zio.Has - Getting Started with ZIO in Scala3"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/omcly8/help_getting_a_function_to_work_with_spark_sql/",
+          "author": null,
+          "description": "Ok I'm brand new in scala and i'm having trouble trying to define a function to get an array of all of the neighbors of a given cell in a 500x500 grid. Currently my table is:\n  \n Cell: Int num_point: Int \n  \n I would like to make the table:\n  \n Cell: Int num_point: Int neighbor_cells: Array[Int] \n  \n I thought I had followed to right formula to create a function but i'm getting errors everywhere about top level specifiers (which is literally a useless error i might add) I believe what I have done is no different than how the main function is declared but mine just doesn't work. Anyone able to help me figure out what's up. I set it up as best as I could (coming from a background of C++)\n import org.apache.spark.sql.{DataFrame, SQLContext, SparkSession} import org.apache.spark.sql.functions.…",
+          "link": "https://www.reddit.com/r/scala/comments/omcly8/help_getting_a_function_to_work_with_spark_sql/",
+          "publishedOn": "2021-07-17T20:57:23.000Z",
+          "wordCount": 476,
+          "title": "Help getting a function to work with Spark SQL"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/okxazl/an_intro_to_the_scala_presentation_compiler/",
           "author": null,
@@ -2295,51 +2286,6 @@
           "publishedOn": "2021-06-19T19:09:37.000Z",
           "wordCount": 281,
           "title": "Implementing generic types"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/o32i2u/scala_parsing_combinators_problem/",
-          "author": null,
-          "description": "Hi all, I'm making a free time project with Scala 3 and scala parsing combinators, following this guide, added to project with sbt with: scala libraryDependencies += \"org.scala-lang.modules\" %% \"scala-parser-combinators\" % \"2.0.0\" \n I have a Lexer that compile, but the parser give me this error: method ~ in class Parser has changed semantics in version SpecificScalaVersion(2,9,0,Final): The call-by-name argument is evaluated at most once per constructed Parser object, instead of on every need that arises during parsing. on this line of code: ```scala import scala.util.parsing.input.Positional\n sealed trait AbstractSyntaxTree extends Positional\n sealed trait Instruction extends AbstractSyntaxTree\n final case class Label(text: String) extends Instruction\n package svm.parser\n import scala.util.parsing.combinator.Parsers import scala.util.parsing.input.{NoPosition, Position, Reader} import svm.{ParserError, Location} import svm.lexer._\n object SVMParser extends Parsers {\n def label: Parser[Label] = positioned { identifier ~ COL() ^ { case IDENTIFIER(s) ~ _ => Label(s) } } } ```\n This is the output of sbt compile: scala [error] -- [E114] Syntax Error: /home/ap/Documents/scala/simple-stack-virtual-machine/src/main/scala/svm/parser/SVMParser.scala:59:15 [error] 59 | identifier ~ COL() ^^ { case IDENTIFIER(s) ~ _ => Label(s) } [error] | ^^^^^^^^^^^^ [error] | |method ~ in class Parser has changed semantics in version SpecificScalaVersion(2,9,0,Final): The call-by-name argument is evaluated at most once per constructed Parser object, instead of on every need that arises during parsing. [error] Explanation [error] =========== [error] The |method ~ in class Parser is marked with @migration indicating it has changed semantics [error] between versions and the -Xmigration settings is used to warn about constructs [error] whose behavior may have changed since version change. \n I'm using wrong the ~ operator?\n    submitted by    /u/Euphoric_Emergency_7  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/o32i2u/scala_parsing_combinators_problem/",
-          "publishedOn": "2021-06-18T22:57:46.000Z",
-          "wordCount": 348,
-          "title": "Scala Parsing Combinators Problem"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/o2xv6s/scala_212213_which_driverlibrary_recommend_for/",
-          "author": null,
-          "description": "Just that, what library do you recommend for connecting to Cassandra?\n Thanks for your feedback.\n    submitted by    /u/gustavo-mnz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/o2xv6s/scala_212213_which_driverlibrary_recommend_for/",
-          "publishedOn": "2021-06-18T19:14:45.000Z",
-          "wordCount": 124,
-          "title": "Scala, 2.12/2.13, which driver/library recommend for connecting to Cassandra"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/o2r34e/scala_type_classes_from_scratch/",
-          "author": null,
-          "description": "submitted by    /u/elastiknn  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/o2r34e/scala_type_classes_from_scratch/",
-          "publishedOn": "2021-06-18T15:01:08.000Z",
-          "wordCount": 85,
-          "title": "Scala Type Classes from Scratch"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/o2o9ya/programming_in_scala_5th_edition/",
-          "author": null,
-          "description": "Hi Guys, Did anyone here purchase the \"Programming in Scala, 5th edition\" which is updated for Scala 3?\n  \nHow is it?\n Would you recommend buying it?\n  \nLink for the book: https://www.artima.com/shop/programming_in_scala_5ed\n Thanks\n    submitted by    /u/tharindudg  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/o2o9ya/programming_in_scala_5th_edition/",
-          "publishedOn": "2021-06-18T12:45:33.000Z",
-          "wordCount": 177,
-          "title": "Programming in Scala, 5th Edition"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/o2le70/unclear_type_mismatching/",
-          "author": null,
-          "description": "Hello, can anyone explain this error and what causes it ?\n https://preview.redd.it/9oh0fk41xz571.png?width=1197&format=png&auto=webp&s=5a1aa459472c5be0b35bd2125908d6909a04c7c1\n partitionFlow .map(new PopularityFlowProcessFunction()) .windowAll(TumblingProcessingTimeWindows.of(Time.seconds(5))) .process(new ProcessAllWindowFunction[(String, Int), Map[String, Double], TimeWindow] { override def process(context: Context, elements: Iterable[(String, Int)], out: Collector[Map[String, Double]]): Unit = { val counts: Int = elements.size val result: Map[String, Double] = elements .groupBy((in: (String, Int)) => in._1) .map((elem: (String, Iterable[(String, Int)])) => (elem._1, elem._2.reduce((v1: (String, Int), v2: (String, Int)) => v1._2 + v2._2))) .map((elem: (String, Int)) => (elem._1, (elem._2 / counts).toDouble)) out.collect(result) } }) \n Code looks like this. This mapping looks quite clear to me and I cant understand why is there type misamatching.\n    submitted by    /u/puch001  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/o2le70/unclear_type_mismatching/",
-          "publishedOn": "2021-06-18T09:49:00.000Z",
-          "wordCount": 295,
-          "title": "Unclear type mismatching/"
         }
       ]
     },
@@ -2383,15 +2329,6 @@
           "publishedOn": "2021-06-19T15:49:40.000Z",
           "wordCount": 186,
           "title": "Halogen: How to force rerender after modifying state?"
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/o2ohyj/reject_promise_with_json_error/",
-          "author": null,
-          "description": "I have to use a js lib that wants me to reject a promise with a json object:\n { requeue: true } \n I've been trying to use Variant approach (inspired by https://github.com/justinwoo/purescript-chirashi)\n type MyError = Variant (ErrorRow ()) type ErrorRow r = ( requeue :: Boolean | r ) case foo of Right h -> h Left _ -> Aff.throwError $ mkVariantError (inj (Proxy :: Proxy \"requeue\") true) \n But all I could get was:\n {\"variant\":{\"type\":\"requeue\",\"value\":true},\"message\":\"VariantError\"} \n Is there an easy way to do this? Thanks for any tips.\n    submitted by    /u/wtfisthiswitchery  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/o2ohyj/reject_promise_with_json_error/",
-          "publishedOn": "2021-06-18T12:57:13.000Z",
-          "wordCount": 189,
-          "title": "Reject promise with json error"
         }
       ]
     },
@@ -2488,9 +2425,9 @@
       ]
     },
     {
-      "title": "Alexis King's Blog: Alexis King's Blog",
+      "title": "Alexis King’s Blog",
       "feedUrl": "http://lexi-lambda.github.io/feeds/all.atom.xml",
-      "siteUrl": "http://lexi-lambda.github.io/feeds/all.atom.xml",
+      "siteUrl": "https://lexi-lambda.github.io/",
       "articles": []
     },
     {
@@ -2498,6 +2435,15 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/omcc82/orggithooks_export_and_tangle_when_you_commit_new/",
+          "author": null,
+          "description": "I created some quick (but literate woo!) scripts to make it easy to automatically tangle and export each time I commit. The generated files are automatically appended to the commit.\n This is handy for generating README.md from README.org which I hope can reduce vendor lock in for org-uses who right now might feel a bit locked into to forgets (like GitHub) that \"natively\" support Org.\n https://git.sr.ht/~mplscorwin/org-git-hooks\n PS, tagging this as an \"elisp-library\" but it's essentially equal parts shell and elisp.\n    submitted by    /u/mplscorwin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/omcc82/orggithooks_export_and_tangle_when_you_commit_new/",
+          "publishedOn": "2021-07-17T20:42:54.000Z",
+          "wordCount": 213,
+          "title": "org-git-hooks - export and tangle when you commit (new project)"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/olztxn/how_to_use_org_mode_for_lecture_notes_cs_and/",
           "author": null,
@@ -2857,6 +2803,42 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/ob-restclient-20210718.2008.el",
+          "author": null,
+          "description": "The ob-restclient package has been updated to version 20210718.2008.",
+          "link": "https://melpa.org/#/ob-restclient",
+          "publishedOn": "2021-07-18T20:08:00.000Z",
+          "wordCount": 105,
+          "title": "ob-restclient (20210718.2008) --- org-babel functions for restclient-mode"
+        },
+        {
+          "id": "https://melpa.org/packages/all-the-icons-ibuffer-20210718.1726.el",
+          "author": null,
+          "description": "The all-the-icons-ibuffer package has been updated to version 20210718.1726.",
+          "link": "https://melpa.org/#/all-the-icons-ibuffer",
+          "publishedOn": "2021-07-18T17:26:00.000Z",
+          "wordCount": 105,
+          "title": "all-the-icons-ibuffer (20210718.1726) --- Display icons for all buffers in ibuffer"
+        },
+        {
+          "id": "https://melpa.org/packages/weblio-20210718.1410.el",
+          "author": null,
+          "description": "The weblio package has been updated to version 20210718.1410.",
+          "link": "https://melpa.org/#/weblio",
+          "publishedOn": "2021-07-18T14:10:00.000Z",
+          "wordCount": 105,
+          "title": "weblio (20210718.1410) --- Look up Japanese words on Weblio.jp"
+        },
+        {
+          "id": "https://melpa.org/packages/bibtex-completion-20210718.1044.el",
+          "author": null,
+          "description": "The bibtex-completion package has been updated to version 20210718.1044.",
+          "link": "https://melpa.org/#/bibtex-completion",
+          "publishedOn": "2021-07-18T10:44:00.000Z",
+          "wordCount": 105,
+          "title": "bibtex-completion (20210718.1044) --- A BibTeX backend for completion frameworks"
+        },
+        {
           "id": "https://melpa.org/packages/weyland-yutani-theme-20210717.1820.el",
           "author": null,
           "description": "The weyland-yutani-theme package has been updated to version 20210717.1820.",
@@ -3179,6 +3161,33 @@
           "publishedOn": "2021-07-14T18:07:00.000Z",
           "wordCount": 105,
           "title": "theme-looper (20210714.1807) --- Loop thru the available color-themes"
+        },
+        {
+          "id": "https://melpa.org/packages/phpstan-20210714.1805.el",
+          "author": null,
+          "description": "The phpstan package has been updated to version 20210714.1805.",
+          "link": "https://melpa.org/#/phpstan",
+          "publishedOn": "2021-07-14T18:05:00.000Z",
+          "wordCount": 105,
+          "title": "phpstan (20210714.1805) --- Interface to PHPStan"
+        },
+        {
+          "id": "https://melpa.org/packages/flymake-phpstan-20210714.1805.el",
+          "author": null,
+          "description": "The flymake-phpstan package has been updated to version 20210714.1805.",
+          "link": "https://melpa.org/#/flymake-phpstan",
+          "publishedOn": "2021-07-14T18:05:00.000Z",
+          "wordCount": 105,
+          "title": "flymake-phpstan (20210714.1805) --- Flymake backend for PHP using PHPStan"
+        },
+        {
+          "id": "https://melpa.org/packages/flycheck-phpstan-20210714.1805.el",
+          "author": null,
+          "description": "The flycheck-phpstan package has been updated to version 20210714.1805.",
+          "link": "https://melpa.org/#/flycheck-phpstan",
+          "publishedOn": "2021-07-14T18:05:00.000Z",
+          "wordCount": 105,
+          "title": "flycheck-phpstan (20210714.1805) --- Flycheck integration for PHPStan"
         },
         {
           "id": "https://melpa.org/packages/commentary-theme-20210714.1757.el",
@@ -3523,6 +3532,15 @@
           "title": "citeproc (20210709.602) --- A CSL 1.0.1 Citation Processor"
         },
         {
+          "id": "https://melpa.org/packages/burly-20210709.415.tar",
+          "author": null,
+          "description": "The burly package has been updated to version 20210709.415.",
+          "link": "https://melpa.org/#/burly",
+          "publishedOn": "2021-07-09T04:15:00.000Z",
+          "wordCount": 105,
+          "title": "burly (20210709.415) --- Save and restore frame/window configurations with buffers"
+        },
+        {
           "id": "https://melpa.org/packages/bufler-20210709.247.tar",
           "author": null,
           "description": "The bufler package has been updated to version 20210709.247.",
@@ -3613,6 +3631,15 @@
           "title": "nnreddit (20210708.43) --- Gnus Backend For Reddit"
         },
         {
+          "id": "https://melpa.org/packages/capnp-mode-20210707.2310.el",
+          "author": null,
+          "description": "The capnp-mode package has been updated to version 20210707.2310.",
+          "link": "https://melpa.org/#/capnp-mode",
+          "publishedOn": "2021-07-07T23:10:00.000Z",
+          "wordCount": 105,
+          "title": "capnp-mode (20210707.2310) --- Major mode for editing Capn' Proto Files"
+        },
+        {
           "id": "https://melpa.org/packages/evil-collection-20210707.1929.tar",
           "author": null,
           "description": "The evil-collection package has been updated to version 20210707.1929.",
@@ -3685,6 +3712,15 @@
           "title": "face-shift (20210707.1127) --- Shift the colour of certain faces"
         },
         {
+          "id": "https://melpa.org/packages/insert-kaomoji-20210707.1126.tar",
+          "author": null,
+          "description": "The insert-kaomoji package has been updated to version 20210707.1126.",
+          "link": "https://melpa.org/#/insert-kaomoji",
+          "publishedOn": "2021-07-07T11:26:00.000Z",
+          "wordCount": 105,
+          "title": "insert-kaomoji (20210707.1126) --- Easily insert kaomojis"
+        },
+        {
           "id": "https://melpa.org/packages/ess-20210707.917.tar",
           "author": null,
           "description": "The ess package has been updated to version 20210707.917.",
@@ -3710,6 +3746,15 @@
           "publishedOn": "2021-07-07T02:55:00.000Z",
           "wordCount": 105,
           "title": "pyim (20210707.255) --- A Chinese input method support quanpin, shuangpin, wubi, cangjie and rime."
+        },
+        {
+          "id": "https://melpa.org/packages/nix-mode-20210706.2217.tar",
+          "author": null,
+          "description": "The nix-mode package has been updated to version 20210706.2217.",
+          "link": "https://melpa.org/#/nix-mode",
+          "publishedOn": "2021-07-06T22:17:00.000Z",
+          "wordCount": 105,
+          "title": "nix-mode (20210706.2217) --- Major mode for editing .nix files"
         },
         {
           "id": "https://melpa.org/packages/dap-mode-20210706.1828.tar",
@@ -3791,6 +3836,15 @@
           "publishedOn": "2021-07-06T12:25:00.000Z",
           "wordCount": 105,
           "title": "hledger-mode (20210706.1225) --- A mode for writing journal entries for hledger."
+        },
+        {
+          "id": "https://melpa.org/packages/logms-20210706.1128.el",
+          "author": null,
+          "description": "The logms package has been updated to version 20210706.1128.",
+          "link": "https://melpa.org/#/logms",
+          "publishedOn": "2021-07-06T11:28:00.000Z",
+          "wordCount": 105,
+          "title": "logms (20210706.1128) --- Log message with clickable links to context"
         },
         {
           "id": "https://melpa.org/packages/consult-20210706.1114.tar",
@@ -5420,114 +5474,6 @@
           "publishedOn": "2021-06-19T09:05:00.000Z",
           "wordCount": 105,
           "title": "lsp-ui (20210619.905) --- UI modules for lsp-mode"
-        },
-        {
-          "id": "https://melpa.org/packages/lua-mode-20210619.652.tar",
-          "author": null,
-          "description": "The lua-mode package has been updated to version 20210619.652.",
-          "link": "https://melpa.org/#/lua-mode",
-          "publishedOn": "2021-06-19T06:52:00.000Z",
-          "wordCount": 105,
-          "title": "lua-mode (20210619.652) --- a major-mode for editing Lua scripts"
-        },
-        {
-          "id": "https://melpa.org/packages/agda2-mode-20210619.545.tar",
-          "author": null,
-          "description": "The agda2-mode package has been updated to version 20210619.545.",
-          "link": "https://melpa.org/#/agda2-mode",
-          "publishedOn": "2021-06-19T05:45:00.000Z",
-          "wordCount": 105,
-          "title": "agda2-mode (20210619.545) --- interactive development for Agda, a dependently typed functional programming language"
-        },
-        {
-          "id": "https://melpa.org/packages/format-all-20210619.533.el",
-          "author": null,
-          "description": "The format-all package has been updated to version 20210619.533.",
-          "link": "https://melpa.org/#/format-all",
-          "publishedOn": "2021-06-19T05:33:00.000Z",
-          "wordCount": 105,
-          "title": "format-all (20210619.533) --- Auto-format C, C++, JS, Python, Ruby and 50 other languages"
-        },
-        {
-          "id": "https://melpa.org/packages/window-purpose-20210619.122.tar",
-          "author": null,
-          "description": "The window-purpose package has been updated to version 20210619.122.",
-          "link": "https://melpa.org/#/window-purpose",
-          "publishedOn": "2021-06-19T01:22:00.000Z",
-          "wordCount": 105,
-          "title": "window-purpose (20210619.122) --- Purpose-based window management for Emacs"
-        },
-        {
-          "id": "https://melpa.org/packages/borg-20210618.2112.tar",
-          "author": null,
-          "description": "The borg package has been updated to version 20210618.2112.",
-          "link": "https://melpa.org/#/borg",
-          "publishedOn": "2021-06-18T21:12:00.000Z",
-          "wordCount": 105,
-          "title": "borg (20210618.2112) --- assimilate Emacs packages as Git submodules"
-        },
-        {
-          "id": "https://melpa.org/packages/spacemacs-theme-20210618.2001.tar",
-          "author": null,
-          "description": "The spacemacs-theme package has been updated to version 20210618.2001.",
-          "link": "https://melpa.org/#/spacemacs-theme",
-          "publishedOn": "2021-06-18T20:01:00.000Z",
-          "wordCount": 105,
-          "title": "spacemacs-theme (20210618.2001) --- Color theme with a dark and light versions"
-        },
-        {
-          "id": "https://melpa.org/packages/vterm-20210618.1922.tar",
-          "author": null,
-          "description": "The vterm package has been updated to version 20210618.1922.",
-          "link": "https://melpa.org/#/vterm",
-          "publishedOn": "2021-06-18T19:22:00.000Z",
-          "wordCount": 105,
-          "title": "vterm (20210618.1922) --- Fully-featured terminal emulator"
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-treemacs-20210618.1722.tar",
-          "author": null,
-          "description": "The lsp-treemacs package has been updated to version 20210618.1722.",
-          "link": "https://melpa.org/#/lsp-treemacs",
-          "publishedOn": "2021-06-18T17:22:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-treemacs (20210618.1722) --- LSP treemacs"
-        },
-        {
-          "id": "https://melpa.org/packages/k8s-mode-20210618.1540.tar",
-          "author": null,
-          "description": "The k8s-mode package has been updated to version 20210618.1540.",
-          "link": "https://melpa.org/#/k8s-mode",
-          "publishedOn": "2021-06-18T15:40:00.000Z",
-          "wordCount": 105,
-          "title": "k8s-mode (20210618.1540) --- Major mode for Kubernetes configuration file"
-        },
-        {
-          "id": "https://melpa.org/packages/language-id-20210618.1532.el",
-          "author": null,
-          "description": "The language-id package has been updated to version 20210618.1532.",
-          "link": "https://melpa.org/#/language-id",
-          "publishedOn": "2021-06-18T15:32:00.000Z",
-          "wordCount": 105,
-          "title": "language-id (20210618.1532) --- Library to work with programming language identifiers"
-        },
-        {
-          "id": "https://melpa.org/packages/grep-a-lot-20210618.1420.el",
-          "author": null,
-          "description": "The grep-a-lot package has been updated to version 20210618.1420.",
-          "link": "https://melpa.org/#/grep-a-lot",
-          "publishedOn": "2021-06-18T14:20:00.000Z",
-          "wordCount": 105,
-          "title": "grep-a-lot (20210618.1420) --- manages multiple search results buffers for grep.el"
-        },
-        {
-          "id": "https://melpa.org/packages/ob-swiftui-20210618.856.el",
-          "author": null,
-          "description": "The ob-swiftui package has been updated to version 20210618.856.",
-          "link": "https://melpa.org/#/ob-swiftui",
-          "publishedOn": "2021-06-18T08:56:00.000Z",
-          "wordCount": 105,
-          "title": "ob-swiftui (20210618.856) --- Org babel functions for SwiftUI evaluation"
         }
       ]
     },
@@ -5536,6 +5482,69 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/omxl6n/config_for_orgroam_v2/",
+          "author": null,
+          "description": "Org-roam moved to v2 officially yesterday. It's a breaking change, so I spent some time on migration today. Had it almost set except for the integration with org-protocol. Here's my config that works for me. Hopefully it will be helpful for some of you.\n ``` (setq org-roam-directory (file-truename \"~/org-roam\")) (make-directory org-roam-directory 'parents) (setq org-roam-verbose t) (setq org-roam-db-location (concat org-roam-directory \"/.database/org-roam.db\")) ;; (setq +org-roam-open-buffer-on-find-file nil) ; deprecated for v2 ;; (setq org-roam-db-update-idle-seconds 30) ; deprecated for v2 ;; (setq org-roam-graph-viewer \"qutebrowser\") ; deprecated for v2\n ;; Redefining some part of the slug generator. (cl-defmethod org-roam-node-slug ((node org-roam-node)) \"Return the slug of NODE.\" (le…",
+          "link": "https://www.reddit.com/r/emacs/comments/omxl6n/config_for_orgroam_v2/",
+          "publishedOn": "2021-07-18T19:34:13.000Z",
+          "wordCount": 536,
+          "title": "Config for org-roam v2"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/omro8i/noob_elisp_question/",
+          "author": null,
+          "description": "What's the equivalent of this python function?\n  def hello_world(): return \"hello world\"  \n I feel like this one is wrong because I'm using message \n  (defun hello-world() (message \"hello world\")) \n Since elisp returns the last evaluated value, is there an alternative to message I should use here?\n    submitted by    /u/AFewSentientNeurons  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/omro8i/noob_elisp_question/",
+          "publishedOn": "2021-07-18T14:36:32.000Z",
+          "wordCount": 562,
+          "title": "Noob elisp question"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/omp9hs/doom_emacs_not_recognizing_packages_from_virtual/",
+          "author": null,
+          "description": "Hello guys, a emacs and doom-emacs newbie here. I recently installed emacs and doom-emacs and I wanted to make doom-emacs ready for python development just like pycharm or vscode with autocompletions and code navigations atleast. So, I followed this link from the official documentation and installed mspyls as the language server for emacs. It did work and it does give me autocompletion for the inbuilt modules but for third party libraries like pandas and numpy it gives me a :\n unable to import pandas/numpy [import-error] \n I've install pyenv in emacs for pyenv-mode as well as installed pyenv in my machine. I've activated the environment through emacs and emacs shows the name of the environment as well as the version of python in the bottom right corner. I've also installed pandas and numpy in that environment but emacs is not able to recognize the packages.\n Screenshot of emacs with pyenv:\n ​\n Screenshot of emacs with pyenv\n Screenshot of packages in virtual environment created using pyenv:\n ​\n Screenshot of packages in virtual environment created using pyenv\n Also, I've tried some other links like this where packages like pyvenv is suggested. Although I've managed to install pyvenv and also create/activate the virtual environment from it and also install pandas and numpy in the virtual environment, emacs is not able to import third party packages.\n Screenshot of emacs with pyvenv:\n Screenshot of emacs with pyvenv\n Screenshot of packages in virtual environment created using pyvenv:\n Screenshot of packages in virtual environment created using pyvenv\n Any help would be appreciated to resolve this error.\n    submitted by    /u/sugat009  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/omp9hs/doom_emacs_not_recognizing_packages_from_virtual/",
+          "publishedOn": "2021-07-18T12:03:28.000Z",
+          "wordCount": 513,
+          "title": "Doom emacs not recognizing packages from virtual environment"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/omnds3/calc_formulas_all_you_need_to_know/",
+          "author": null,
+          "description": "submitted by    /u/tonyaldon  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/omnds3/calc_formulas_all_you_need_to_know/",
+          "publishedOn": "2021-07-18T09:31:51.000Z",
+          "wordCount": 321,
+          "title": "Calc formulas, all you need to know"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/omgh6w/new_to_emacs_and_i_have_a_question/",
+          "author": null,
+          "description": "Is there inbuilt functionality or package that requests root permissions when editing files that are required to be edited as root or with a program like sudo?\n    submitted by    /u/TheAngryGamer444  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/omgh6w/new_to_emacs_and_i_have_a_question/",
+          "publishedOn": "2021-07-18T00:54:41.000Z",
+          "wordCount": 241,
+          "title": "New to emacs, and I have a question"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/omgf1s/working_with_emacs_and_orgmode/",
+          "author": null,
+          "description": "I've discovered that Emacs and/or Org-Mode is a \"rabbit hole\" (there's an actual post about this in this group). \n ​\n <Insert obligatory experience disclosure here> : I'm not an expert at either Emacs or Org-mode. \n But Org-mode and Emacs are both very large systems, and sometimes I feel like they really are so large, and so complex - that there is a trap, of tinkering with E/O and never getting anything done (of value-add). \n However - playing devil's advocate - building / configuring org-mode / emacs is alot like building your own light saber / becoming a jedi: incredibly powerful tools / processes, but in the wrong hands, they are worthless, or dangerous. Only when used correctly can they help you actually get real work done. \n It hasn't taken me long to figure out that the only real way to \"master\" (use competently) org-mode/emacs is to just dive in, figure out what YOU want out of your management system, and go for it. \n if you find your self at a dead end, it's probably not a limitation of the system, but a limitation on your specificity of your goal / problem. \n However complex, labyrinth-ian both systems get, they will never be outpaced by other \"note taking \" apps . \n Why? \n ​\n because org-mode and emacs are both more about the processing of text than simply note-taking. \n ​\n I really think that the future of org-mode however, is to move away from some of the architectural constraints of emacs.\n    submitted by    /u/SpellLegitimate  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/omgf1s/working_with_emacs_and_orgmode/",
+          "publishedOn": "2021-07-18T00:50:41.000Z",
+          "wordCount": 667,
+          "title": "Working with Emacs and Org-Mode"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/omcd0h/orggithooks_export_and_tangle_when_you_commit_new/",
+          "author": null,
+          "description": "submitted by    /u/mplscorwin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/omcd0h/orggithooks_export_and_tangle_when_you_commit_new/",
+          "publishedOn": "2021-07-17T20:44:13.000Z",
+          "wordCount": 568,
+          "title": "org-git-hooks - export and tangle when you commit (new project)"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/omaf2d/best_syntax_highlighting_package/",
           "author": null,
@@ -8370,105 +8379,6 @@
           "publishedOn": "2021-06-19T12:24:52.000Z",
           "wordCount": 241,
           "title": "How to utilize native compilation on Emacs 28 for arbitrary files?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o38h2i/orgmode_auctex_how_do_u_specify_package_files_to/",
-          "author": null,
-          "description": "So I'm using org-mode to write my notes and occasionally I insert a latex code block when org-mode itself isn't enough. In those situations I use org-edit-special which pops me into a latex buffer with the contents of the code block, but because auctex doesnt see the usepackage headers that are available on export, it doesn't load any of the cool macros or environments I have set up for completion. Does anyone have a workaround for this?\n Edit:\n Here's something that works for now:\n elisp (add-hook 'org-src-mode-hook (defun org-src-setup-auctex () (when (eq major-mode 'latex-mode) (apply #'TeX-run-style-hooks (mapcar #'cadr org-latex-packages-alist))))) \n    submitted by    /u/emax-gomax  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o38h2i/orgmode_auctex_how_do_u_specify_package_files_to/",
-          "publishedOn": "2021-06-19T04:50:57.000Z",
-          "wordCount": 330,
-          "title": "Org-mode + auctex, how do u specify package files to load macros from?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o33r6z/how_do_i_swap_mreturn_and_return_in_orgmode/",
-          "author": null,
-          "description": "Problem\n If I have a list and I hit return, I want it to add a new item to the list (instead of adding notes to said item). M-return has the functionality I want, but I want it to be mapped to return.\n Basically, I want to swap M-return and return in org-mode.\n What I've tried\n I have tried a handful of things, which have all failed. \n  \nhttps://www.reddit.com/r/emacs/comments/agpl8b/anyone_using_doom_succeeded_in_rebinding_return/ (nothing happens when I try the solution in this)\n trying to rebind keys in my config.el\n  \n​\n (map! :desc \"Fix return\" \"<return>\" #'+default/newline-below) (map! :after org :map evil-org-mode-map :n [return] #'+default/newline-below) (map! :after org :map org-mode-map :n [return] #'+default/newline-below) (map! :after org :map evil-org-mode-map :n [return] #'evil-org-open-below) (map! :after org :map evil-org-mode-map :n [return] #'org-meta-return) \n System Information\n  \nmacOS Big Sur 11.4\n DOOM v2.0.9\n GNU Emacs 27.2 (build 1, x86_64-apple-darwin20.4.0, Carbon Version 164 AppKit 2022.44) of 2021-05-25\n  \n   submitted by    /u/jsjoeio  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o33r6z/how_do_i_swap_mreturn_and_return_in_orgmode/",
-          "publishedOn": "2021-06-19T00:02:51.000Z",
-          "wordCount": 573,
-          "title": "How do I swap M-return and return in org-mode?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o30epy/ive_got_a_profile_of_the_memory_hog_now_what_do_i/",
-          "author": null,
-          "description": "I'm not much of an emacs performance sleuth. I ran the profiler, and I found out what seems to be eating so much of my memory. I paste the relevant portions below. What should I do now to track down the actual cause of the problem? My OS says Emacs is consuming 11GB of memory and slowly growing. \n - redisplay_internal (C function) 113,253,715 100% - debug 113,253,715 100% - recursive-edit 112,871,245 99% - command-execute 83,509,800 73% - call-interactively 83,508,744 73% - funcall-interactively 83,507,816 73% - helm-M-x 63,966,323 56% - helm-M-x-read-extended-command 63,966,323 56% - helm 63,695,203 56% - apply 63,693,123 56% - helm 63,693,123 56% - apply 63,693,123 56% - helm-internal 63,693,123 56% - helm-read-from-minibuffer 41,956,719 37% - read-from-minibuffer 34,253,868 30% - timer-…",
-          "link": "https://www.reddit.com/r/emacs/comments/o30epy/ive_got_a_profile_of_the_memory_hog_now_what_do_i/",
-          "publishedOn": "2021-06-18T21:13:27.000Z",
-          "wordCount": 883,
-          "title": "I've got a profile of the memory hog. Now what do I do?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o2zyo5/moldable_emacs_exploring_json_with_viewsmolds/",
-          "author": null,
-          "description": "Hi there, finally I stole some time to:\n  \npublish my moldable-emacs code (very early release actually, just for the brave users)\n sort my ideas about the vision of the mode\n show how to explore JSON with it\n  \nMaybe this will be interesting to you too!\n (By the way, I shared earlier how to use this to list all code duplication in a source code buffer.)\n    submitted by    /u/AndreaSomePostfix  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o2zyo5/moldable_emacs_exploring_json_with_viewsmolds/",
-          "publishedOn": "2021-06-18T20:52:04.000Z",
-          "wordCount": 659,
-          "title": "Moldable Emacs: Exploring JSON with views/molds"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o2zkks/add_autoloading_usepackage_keywords_to_a_fork_of/",
-          "author": null,
-          "description": "Hello!\n As in the title; I have forked general.el to add a few autoloaded keywords of my own, by using the :general keyword use-package functions as a template. However, this bit of code, originally used for :general, is not working (read \"not being autoloaded\"):\n emacs-lisp (defun use-package-handler/:gone (name _keyword args rest state) \"Use-package handler for :gone.\" (use-package-concat (use-package-process-keywords name rest state) `(,@(mapcar (lambda (arglist) ;; Note: prefix commands are not valid functions (if (or (functionp (car arglist)) (macrop (car arglist))) `(,@arglist :package ',name) `(general-def (:keymaps '(global aiern-insert-state-map aiern-normal-state-map)) ,@arglist :package ',name))) (plist-get args :arglists))))) \n The part I have changed is the general-def bit, by adding (:keymaps '(global aiern-insert-state-map aiern-normal-state-map)). When demanding the package, it works fine. Am I missing anything here? I've also copied the use-package-autoloads/:general and use-package-handler/:general functions as well, which are exactly the same, and renaming them appropriately.\n Thank you kindly for the help!\n    submitted by    /u/ShadowRylander  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o2zkks/add_autoloading_usepackage_keywords_to_a_fork_of/",
-          "publishedOn": "2021-06-18T20:32:57.000Z",
-          "wordCount": 257,
-          "title": "Add autoloading use-package keywords to a fork of general.el"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o2zeek/how_do_you_enable_prettiermode_and_other/",
-          "author": null,
-          "description": "I have an issue where my .dir-locals are getting bigger and bigger, namely due to my current projects using prettier in quite a few different major modes. But also due to specific eglot setups. Enabling prettier and eglot for the relevant major-mode would work in these projects, but would start becoming annoying in the others.\n In trying to move most of the logic to my Emacs configuration and have less duplicates in each of my project roots, I tried the following:\n ;; path/to/my/project/.dir-locals.el ((nil . ((me/eglot-p . t) (me/prettier-p . t)))) ;; dotemacs.el (use-package prettier :preface (defvar-local me/prettier-p nil \"Should prettier be enabled?\") :hook (web-mode . me/prettier-mode-maybe) :config (put 'me/prettier-p 'safe-local-variable #'booleanp)) (defun me/prettier-mode-maybe () \"Enable `prettier-mode' when the prettier executable is found locally.\" (when me/prettier-p (prettier-mode))) \n The issue with that is that dir-local variables are taken into account after web-mode-hook has kicked in, even with nil when no major-mode is specified. So me/prettier-p is always nil in me/prettier-mode-maybe.\n A second attempt, ignoring dir-local variables altogether, looked like this:\n (defun me/prettier-mode-maybe () \"Enable `prettier-mode' when the prettier executable is found locally.\" (when-let ((command (shell-command-to-string \"npm list -p prettier\")) (prettier-p (length> (string-trim-right command) 0))) (prettier-mode))) \n Which is obviously too slow to be acceptable.\n What are your preferred methods to avoid having to copy the same .dir-locals.el every time you start a similar project or even reinstall your machine(s)? That was actually my case btw: I realized while reinstalling my machine how much stuff I had to copy around after cloning all my repositories.\n    submitted by    /u/TheFrenchPoulp  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o2zeek/how_do_you_enable_prettiermode_and_other/",
-          "publishedOn": "2021-06-18T20:24:54.000Z",
-          "wordCount": 361,
-          "title": "How do you enable prettier-mode and other project-specific modes?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o2xd2k/binding_keys_beginner_questions/",
-          "author": null,
-          "description": "The documentation and Google didn't help...\n I have three problems that I cannot fix, if possible, can you help?\n  \nClose Emacs win LWin+Q\n What I tried:\n (global-set-key (kbd \"s-q\") 'kill-emacs)\n Open shell with ` (tilde key below esc) and if already open, close with ` (tilde key below esc)\n What I tried:\n (global-set-key [f1] 'shell)\n  \n   submitted by    /u/According_Title2355  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o2xd2k/binding_keys_beginner_questions/",
-          "publishedOn": "2021-06-18T18:53:23.000Z",
-          "wordCount": 155,
-          "title": "Binding keys, beginner questions."
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o2vnq5/emacs_window_manager_like_i3/",
-          "author": null,
-          "description": "Why nobody was able to create a window manager inside Emacs?\n When I create multiple windows (ctrl+x 3, ctrl+x 2) I find it difficult to navigate to the third, fourth or fifth window. Is there a solution?\n Thank you! :)\n    submitted by    /u/According_Title2355  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o2vnq5/emacs_window_manager_like_i3/",
-          "publishedOn": "2021-06-18T17:40:10.000Z",
-          "wordCount": 240,
-          "title": "Emacs window manager like I3"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o2uzwn/emacs_configuration_for_cc/",
-          "author": null,
-          "description": "Hi folks, I'm very new to Emacs world. I just started to use Emacs for my daily life, configure it a little bit and I love Emacs very much. My question is, is there any beginner-friendly good tutorial to how can I customize my Emacs setup for C/C++ development?\n    submitted by    /u/RennisDitchie  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o2uzwn/emacs_configuration_for_cc/",
-          "publishedOn": "2021-06-18T17:22:27.000Z",
-          "wordCount": 317,
-          "title": "Emacs configuration for C/C++"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o2tkkm/switching_from_gnus_to_mu4e/",
-          "author": null,
-          "description": "Has someone here made this switch? Relatively new to working with email on emacs, but I have previously set up gnus on my primary machine to send/receive mail from my gmail account. \n I've setup mu4e on another machine, but I would like to use it on the gnus machine. Is there any way I can do this without having to setup offlineimap again? I don't think that gnus actually stores emails locally so perhaps that's not possible...\n    submitted by    /u/nonreligious  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o2tkkm/switching_from_gnus_to_mu4e/",
-          "publishedOn": "2021-06-18T16:35:50.000Z",
-          "wordCount": 212,
-          "title": "Switching from gnus to mu4e?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/o2rmo4/how_to_add_border_between_tabbar_and_window/",
-          "author": null,
-          "description": "As title, I want to add a border between tab-bar and the top of window, how can I do this?\n ​\n ​\n https://preview.redd.it/r4nsb553l1671.png?width=1920&format=png&auto=webp&s=c3d2564e00ad45552c4e71c6ea7a9e22d7fad188\n    submitted by    /u/s930054123  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/o2rmo4/how_to_add_border_between_tabbar_and_window/",
-          "publishedOn": "2021-06-18T15:25:01.000Z",
-          "wordCount": 195,
-          "title": "How to add border between tab-bar and window?"
         }
       ]
     },
