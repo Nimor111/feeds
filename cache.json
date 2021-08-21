@@ -40,15 +40,6 @@
           "publishedOn": "2021-07-29T12:00:00.000Z",
           "wordCount": 766,
           "title": "Issue 274"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/273.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nWhat skills will give you an edge in 2022? (ad)\nTake the Developer Nation survey and share your views about the most important coding skills, tools, and platforms for 2022. You will get a virtual goody bag with free resources, plus a chance to win a new smartphone, a laptop, licenses, Amazon vouchers and more.\nKalvad - Dev + Ops Agency (ad)\nKalvad is a Dubai based tech agency. We talk Python, Elixir and Haskell. Tell us about your scaling and monitoring problems.\nCheap interpreter, part 5: mea culpa by Gary Verhaegen\nWhile trying to write a faster version, I inadvertently discovered that…",
-          "link": "https://haskellweekly.news/issue/273.html",
-          "publishedOn": "2021-07-22T12:00:00.000Z",
-          "wordCount": 732,
-          "title": "Issue 273"
         }
       ]
     },
@@ -57,6 +48,42 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/p8yr89/lengthlimited_of_symbol_typelits/",
+          "author": null,
+          "description": "I've been looking to see if I could create a wrapper-kind over Symbol that would essentially correspond to type-level Chars -- that is, limit the length of the underlying string to 1.\n My first thought was to just use Symbol with an added restriction based on CmpSymbol; however, the ordering embedded in that type family is (sensibly) lexicographic, meaning that there's no way to bound Symbols purely by length.\n Beyond that, it seems 'feasible' to just manually embed the character-Symbols I'd want to use in a GADT; that would, however, be quite difficult to maintain, to say nothing about implementation arduousness / code elegance.\n From there, I've found myself more or less at a loss; from what I understand, there's no way to set these restrictions up at the value-level of the string, and I'm not sure if there are any other tools available to layer them on at the type-level. Is this even possible and, if so, how might I want to go about it?\n    submitted by    /u/testing35  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/p8yr89/lengthlimited_of_symbol_typelits/",
+          "publishedOn": "2021-08-21T20:33:24.000Z",
+          "wordCount": 282,
+          "title": "Length-limited of Symbol typelits?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/p8uj64/making_xmonad_menus_with_dhall/",
+          "author": null,
+          "description": "submitted by    /u/locallycompact  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/p8uj64/making_xmonad_menus_with_dhall/",
+          "publishedOn": "2021-08-21T16:31:19.000Z",
+          "wordCount": 214,
+          "title": "Making XMonad menus with dhall"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/p8iheg/i_dont_understand_how_state_works/",
+          "author": null,
+          "description": "So I'm at the LYAH chapter on the State monad. I think I get the basic concept:\n You have a monad containing a tuple. One element is the value of the monad, the other is the environment:\n State (val, env)\n Since the value of State is the first element of the tuple, >>= should return the first element of the tuple, like so:\n m >>= f = (\\State (x, _) -> f x) m\n This is not what's said in the book; it's just what i understand from what i know about monads. Maybe I'm wrong. And I'm certainly am, because >>= and return are defined in the book like so:\n  \ninstance Monad (State s) where\n  return x = State $ \\s -> (x,s) \n  (State h) >>= f = State $ \\s -> let (a, newState) = h s \n  (State g) = f a \n in g newState \n  \nFirst, what is that return? What is that lambda? What is that 's' parameter? Doesn…",
+          "link": "https://www.reddit.com/r/haskell/comments/p8iheg/i_dont_understand_how_state_works/",
+          "publishedOn": "2021-08-21T01:37:28.000Z",
+          "wordCount": 1270,
+          "title": "I don't understand how State works"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/p8elcq/converting_list_function_to_a_set_function/",
+          "author": null,
+          "description": "Hi all,\n I have an issue with my recursive function - I built it as a List function (i.e. \"returns\" a List) but now I need to turn it into a function that returns a Set.\n My custom data is:\n data Exp = Const Int | Comp String [Exp] deriving (Show) \n Using this data I can do the following:\n let x = Comp \"a\" [Const 1, Comp \"b\" [], Comp \"c\" [Comp \"d\" [], Const 2]] \n My List function looks like this:\n collection :: Exp -> [String] collection (Const n) = [] collection (Comp n args) | Data.List.null args = [n] | otherwise = union [n] (concat (fmap collection args)) \n ​\n Running on GHCi, my output is:\n *Main> let x = Comp \"a\" [Const 1, Comp \"b\" [], Comp \"c\" [Comp \"d\" [], Const 2]] *Main> let w = collection x *Main> w [\"a\",\"b\",\"c\",\"d\"] *Main> :t w w :: [String] \n What I now need is something like this:\n *Main> let v = fromList w *Main> :t v v :: Set String \n ​\n My failed attempt looks like this:\n collection :: Exp -> Set String collection (Const n) = empty collection (Comp n args) | Data.List.null args = Data.Set.singleton n | otherwise = fromList (union [n] (concat (fmap collection args))) \n ​\n Obviously, this isn't working as I'm passing a [a] into a Set [a] function but I don't know how to work this one out.\n ​\n Thanks,\n Asian Guy\n    submitted by    /u/thatasianguy42  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/p8elcq/converting_list_function_to_a_set_function/",
+          "publishedOn": "2021-08-20T21:39:02.000Z",
+          "wordCount": 915,
+          "title": "Converting List function to a Set function"
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/p8d8yy/trouble_with_ghcup_error_the_version_bin_of_the/",
           "author": null,
@@ -298,6 +325,24 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/p8u5ln/scalqa_void_request_pattern/",
+          "author": null,
+          "description": "Scalqa has a special void request type \\/ with a singleton object implementation, which is also named \\/. It is used to request a void instance of any type (where supported) in concise and readable manner. \n For example:\n import scalqa.{*, given} // Scala val v: Vector[Long] = \\/ // vs. Vector.empty val v: Seq[Float] = \\/ // vs. Seq.empty val j: java.util.List[String] = \\/ val f: (Int,String) => Unit = \\/ // vs. (_,_) => () val l: List[String] = \\/ // vs. Nil val o: Option[Int] = \\/ // vs. None val s: String = \\/ // vs. \"\" // Scalqa val c: Collection[Double] = \\/ val o: Opt[String] = \\/ val v: ~[Double] = \\/ val b: Byte.Collection = \\/ val i: Int.Opt = \\/ val k: Long.>< = \\/ \n Generally, if we create a type with void implementation, then we must define implicit void request mapping.\n class Foo object Foo: private object Void extends Foo implicit inline def implicitFrom(v: \\/): Foo = Void // now it works: val f: Foo = \\/ \n Due to the fact that def impliciteFrom is inlined, the \\/ resolution is a zero cost call.\n Take a look at real life usage examples: code1, code2, code3, code4, code5.\n \\/ is by far the most used Scalqa general request, but there are many others.\n    submitted by    /u/edolgy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/p8u5ln/scalqa_void_request_pattern/",
+          "publishedOn": "2021-08-21T16:09:35.000Z",
+          "wordCount": 310,
+          "title": "Scalqa: Void Request Pattern"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/p8p1e6/since_playframework_has_stalled_in_development/",
+          "author": null,
+          "description": "It seems that Play Framework is not actively developed anymore. There has been no release in the past months, and commits are rare (just Scala steward). It even lacks Scala 3 support. Anyone willing to provide some background why such drop in activity? I am actually very sad, since I loved play a lot (although it was a bit bloated with the final jar).\n I know akka-http is not a proper web framework, but it might work for me, since all connections to my server are done via websockets.\n However, I think these things will still be needed:\n  \nSessions (jwt)\n Routing and reverse routing\n Assets and asset fingerprinting\n Handling websockets with an Actor\n  \nDid anyone attempt such a migration, and how did you fill these gaps? Is there a way to do migration gradually, rather than all at once?\n    submitted by    /u/Weary-Nectarine-4191  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/p8p1e6/since_playframework_has_stalled_in_development/",
+          "publishedOn": "2021-08-21T10:18:34.000Z",
+          "wordCount": 773,
+          "title": "Since PlayFramework has stalled in development, any tips on migrating to akka-http?"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/p85sf0/scala_3_typeclasses_how_to_derive_on_the_return/",
           "author": null,
@@ -655,15 +700,6 @@
           "publishedOn": "2021-07-26T12:06:13.000Z",
           "wordCount": 222,
           "title": "PureScript Community Migrating from Slack to Discord"
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/opfj95/newtype_conversion/",
-          "author": null,
-          "description": "I am extremely new to purescript and I am getting quite frustrated trying to find answers to simple questions online. I was hired to managed an existing codebase in purescript so I already have tons of existing code I need to work around. I have a newtype called ContentKey that derives from String. I then have a FFI returning a string. How if possible do I convert that string from a string to a ContentKey?\n Thanks in advance.\n    submitted by    /u/anybody226  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/opfj95/newtype_conversion/",
-          "publishedOn": "2021-07-22T15:00:00.000Z",
-          "wordCount": 450,
-          "title": "Newtype conversion"
         }
       ]
     },
@@ -752,6 +788,24 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/p8rai2/can_i_take_advantage_of_the_tags_stored_in_the/",
+          "author": null,
+          "description": "Hello, I decided to archive and rip all my Audio CDs to FLAC. I have all the necessary metadata in the FLAC files such as disc number, label, catalog number, etc.. but I would love to have all the information stored in an Org document as well because I believe that it is easier to navigate an Org file.\n Even though FLAC files can contain any metadata, the Vorbis specification allows that, most modern music players are unable to display tags such as catalog number so If I ever need that information I need to open each album in a separate tag viewer software which is more cumbersome than having all the information in an Org file.\n Here is an image, the way I organize the albums in Org mode: https://ibb.co/c1H6Rmd\n I was just wondering if there is a way to do a search like: display all headings that contain the name \"Atlantic\" in the \"LABEL\" tag.\n So, my question is basically if is there a way to take advantage of those drawer properties somehow in searching. It is not something very important for me but it would be cool if it's possible.\n    submitted by    /u/zoliky  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/p8rai2/can_i_take_advantage_of_the_tags_stored_in_the/",
+          "publishedOn": "2021-08-21T13:17:14.000Z",
+          "wordCount": 378,
+          "title": "Can I take advantage of the tags stored in the org drawers?"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/p8o7tm/gui_for_org_files_in_windows/",
+          "author": null,
+          "description": "tldr: I use Orgzly on Android and would like a similar GUI for Windows (I'd sync a single org file between both using Syncthing). Any suggestions?\n I know this question is really about org files, rather than org mode. If there's another more appropriate sub for this please let me know.\n I've been using Orgzly on Android for some time and really like the simplicity. I didn't know about org mode before that. Although I admire the idea of a pure text based approach, I personally do need some kind of GUI, like Orgzly.\n    submitted by    /u/MyNameIsNotMarcos  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/p8o7tm/gui_for_org_files_in_windows/",
+          "publishedOn": "2021-08-21T09:02:14.000Z",
+          "wordCount": 444,
+          "title": "GUI for org files in Windows?"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/p8bd7v/how_do_you_include_a_src_block_in_an_export_block/",
           "author": null,
@@ -985,6 +1039,51 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/doom-modeline-20210821.917.tar",
+          "author": null,
+          "description": "The doom-modeline package has been updated to version 20210821.917.",
+          "link": "https://melpa.org/#/doom-modeline",
+          "publishedOn": "2021-08-21T09:17:00.000Z",
+          "wordCount": 105,
+          "title": "doom-modeline (20210821.917) --- A minimal and modern mode-line"
+        },
+        {
+          "id": "https://melpa.org/packages/org-mime-20210821.341.el",
+          "author": null,
+          "description": "The org-mime package has been updated to version 20210821.341.",
+          "link": "https://melpa.org/#/org-mime",
+          "publishedOn": "2021-08-21T03:41:00.000Z",
+          "wordCount": 105,
+          "title": "org-mime (20210821.341) --- org html export for text/html MIME emails"
+        },
+        {
+          "id": "https://melpa.org/packages/learn-ocaml-20210820.2243.el",
+          "author": null,
+          "description": "The learn-ocaml package has been updated to version 20210820.2243.",
+          "link": "https://melpa.org/#/learn-ocaml",
+          "publishedOn": "2021-08-20T22:43:00.000Z",
+          "wordCount": 105,
+          "title": "learn-ocaml (20210820.2243) --- Emacs frontend for learn-ocaml"
+        },
+        {
+          "id": "https://melpa.org/packages/lms-20210820.2200.el",
+          "author": null,
+          "description": "The lms package has been updated to version 20210820.2200.",
+          "link": "https://melpa.org/#/lms",
+          "publishedOn": "2021-08-20T22:00:00.000Z",
+          "wordCount": 105,
+          "title": "lms (20210820.2200) --- Squeezebox / Logitech Media Server frontend"
+        },
+        {
+          "id": "https://melpa.org/packages/lsp-sonarlint-20210820.2044.tar",
+          "author": null,
+          "description": "The lsp-sonarlint package has been updated to version 20210820.2044.",
+          "link": "https://melpa.org/#/lsp-sonarlint",
+          "publishedOn": "2021-08-20T20:44:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-sonarlint (20210820.2044) --- Emacs Sonarlint lsp client"
+        },
+        {
           "id": "https://melpa.org/packages/org-roam-20210820.1857.tar",
           "author": null,
           "description": "The org-roam package has been updated to version 20210820.1857.",
@@ -1001,6 +1100,15 @@
           "publishedOn": "2021-08-20T17:47:00.000Z",
           "wordCount": 105,
           "title": "embark (20210820.1747) --- Conveniently act on minibuffer completions"
+        },
+        {
+          "id": "https://melpa.org/packages/async-20210820.1740.tar",
+          "author": null,
+          "description": "The async package has been updated to version 20210820.1740.",
+          "link": "https://melpa.org/#/async",
+          "publishedOn": "2021-08-20T17:40:00.000Z",
+          "wordCount": 105,
+          "title": "async (20210820.1740) --- Asynchronous processing in Emacs"
         },
         {
           "id": "https://melpa.org/packages/homebrew-mode-20210820.1735.el",
@@ -2801,6 +2909,114 @@
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/emacs/comments/p8yhh7/how_to_make_attr_latex_option_global/",
+          "author": null,
+          "description": "I had just figured out how to make the babel source code block pretty using minted and set the ATTR_LATEX: :options frame=single. I understand that I need to put the ATTR_LATEX part before my BEGIN_SRC. It works but I have a lot of babel source codes (50+), is there a way to make this argument global instead of going back every single block and add? By global, I mean somehow put the option at the top of the document.\n    submitted by    /u/maxle0312  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8yhh7/how_to_make_attr_latex_option_global/",
+          "publishedOn": "2021-08-21T20:17:22.000Z",
+          "wordCount": 184,
+          "title": "How to make ATTR_LATEX option global?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8xrjg/highlight_text_in_two_buffers_at_the_same_time/",
+          "author": null,
+          "description": "I want to highlight a string in two buffers, two different files side by side. In Vim I can just do a regex search and it will be done automatically. How would I go about this in Emacs?\n    submitted by    /u/cyphzr0  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8xrjg/highlight_text_in_two_buffers_at_the_same_time/",
+          "publishedOn": "2021-08-21T19:34:36.000Z",
+          "wordCount": 152,
+          "title": "Highlight text in two buffers at the same time."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8v7jr/repeatersel_easily_define_groups_of_repeatmaps/",
+          "author": null,
+          "description": "submitted by    /u/mmarshall540  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8v7jr/repeatersel_easily_define_groups_of_repeatmaps/",
+          "publishedOn": "2021-08-21T17:09:31.000Z",
+          "wordCount": 520,
+          "title": "Repeaters.el: Easily define groups of repeat-maps, and associate them with commands."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8t6tx/rmail_decrypting_email_with_rmail_how_do_i_save/",
+          "author": null,
+          "description": "When receiving an unencrypted email and viewing it on Rmail, I get the option to save the file\n ``` [1:text/plain Show]\n [2:image/jpeg Show Save:My_attachment.jpg (400kB)] ```\n However, when I receive an encrypted message, and decrypt it with M-x rmail-epa-decrypt, I get to see the plaintext of all the email, with the multipart/mixed Content-Type, the email's body and then another part with the attachment as base64, without option to save it.\n ``` Content-Type: multipart/mixed;boundary=---------------------WHATEVER\n -----------------------WHATEVER Content-Transfer-Encoding: quoted-printable Content-Type: text/plain;charset=utf-8\n The body of my message -----------------------WHATEVER Content-Type: image/jpeg; filename=\"My_attachment.jpg\"; name=\"My_attachment.jpg\" Content-Transfer-Encoding: base64 Content-Disposition: attachment; filename=\"My_attachment.jpg\"; name=\"My_attachment.jpg\" ```\n Is there a way of changing this behavior and getting an option to save the image? When using encrypted email, it makes it impossible for me to open attached files.\n    submitted by    /u/civia121  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8t6tx/rmail_decrypting_email_with_rmail_how_do_i_save/",
+          "publishedOn": "2021-08-21T15:14:00.000Z",
+          "wordCount": 249,
+          "title": "[RMAIL] Decrypting email with rmail, how do I save the attachments?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8sxha/suggestions_wanted_best_place_to_learn_emacs/",
+          "author": null,
+          "description": "Hi colleagues, can anyone suggest the best resource for learning customizing emacs with elisp these days, if one is new to emacs, but is experienced in lisp? I'm not sure how out of date some of the older resources are and so on. \n thanks!\n    submitted by    /u/tremendous-machine  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8sxha/suggestions_wanted_best_place_to_learn_emacs/",
+          "publishedOn": "2021-08-21T14:59:37.000Z",
+          "wordCount": 474,
+          "title": "Suggestions wanted, best place to learn emacs elisp these days?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8sb28/why_does_tangling_my_config_from_an_org_file/",
+          "author": null,
+          "description": "This is kind of a weird one, and I'm super interested (in both an academic and practical sense) in figuring out why it's happening - here's a pastebin of my stripped down config file.\n Basically, I'm an evil user who's been writing functions for org-agenda and using general to bind them. I switched from my literate config to just a plain init.el because I found it simpler and wanted to modularize my config, and to my surprise the org-agenda bindings I'd declared using general suddenly became overridden by stuff in the evil-org package. (In the config I pasted, if you comment out the :after org in the org-agenda block, then \"c T\" will call a timer function from evil-org instead of the test function I define)\n I assumed that my literate config demanded org on startup, which also demanded evi…",
+          "link": "https://www.reddit.com/r/emacs/comments/p8sb28/why_does_tangling_my_config_from_an_org_file/",
+          "publishedOn": "2021-08-21T14:21:59.000Z",
+          "wordCount": 623,
+          "title": "Why does tangling my config from an org file prevent keybinds from being overridden?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8oytq/suggestions_wanted_keyboard_navigation_for/",
+          "author": null,
+          "description": "I've always wanted to navigate pdf files using the keyboard like other Emacs buffers -- so I wrote a minor mode for pdf-tools that allows this. See here.\n Since this is my first major piece of elisp code, I'd welcome any kind of suggestions on coding style, bad practices to avoid, and other improvements. \n Also, the whole thing has a major Achilles' heel: To display the cursor it is added as a highlight into the pdf page object, which is then rendered as an image together with the rest of the page and displayed in Emacs. Each update of the cursor position hence requires a full re-rendering of the pdf page, which is quite slow at high resolutions. If anyone knows of a better way to do this, that would be fantastic!\n    submitted by    /u/orgtre  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8oytq/suggestions_wanted_keyboard_navigation_for/",
+          "publishedOn": "2021-08-21T10:11:47.000Z",
+          "wordCount": 328,
+          "title": "Suggestions wanted: Keyboard navigation for pdf-tools"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8ou3k/new_package_eva_the_emacsbased_virtual_assistant/",
+          "author": null,
+          "description": "submitted by    /u/meedstrom  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8ou3k/new_package_eva_the_emacsbased_virtual_assistant/",
+          "publishedOn": "2021-08-21T09:59:42.000Z",
+          "wordCount": 551,
+          "title": "New package: Eva, the Emacs-based Virtual Assistant"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8opad/autocomplete_popup_menu_for_whispering_of_valid/",
+          "author": null,
+          "description": "I'm using doom emacs. If I type a local path, it is validated with red and blue color. If the path is valid; text is blue. \n Is it possible to show autocomplete popup menu for filling subdirectories and files? \n Is it necessary some plugin, can you provide the example of configuration for doom?\n    submitted by    /u/raven2cz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8opad/autocomplete_popup_menu_for_whispering_of_valid/",
+          "publishedOn": "2021-08-21T09:47:12.000Z",
+          "wordCount": 279,
+          "title": "Autocomplete popup menu for whispering of valid path"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8my7j/weird_characters_eg_â200220_are_displayed_when/",
+          "author": null,
+          "description": "​\n Weird characters\n When I open the same page in the terminal there are no extra characters displayed. I installed and configured unicode-fonts but did not help.\n    submitted by    /u/cellularRotor  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8my7j/weird_characters_eg_â200220_are_displayed_when/",
+          "publishedOn": "2021-08-21T07:06:31.000Z",
+          "wordCount": 331,
+          "title": "Weird characters (eg: â\\200\\220) are displayed when browsing man pages in Emacs."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8kf6n/make_flycheck_error_list_popup_whenever_error/",
+          "author": null,
+          "description": "I don't want to run flycheck-list-errors each time to check new errors, so is that possible?\n    submitted by    /u/Baker_Electrical  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8kf6n/make_flycheck_error_list_popup_whenever_error/",
+          "publishedOn": "2021-08-21T03:47:05.000Z",
+          "wordCount": 127,
+          "title": "Make flycheck error list pop-up whenever error occur"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/p8fwgv/jest_diff/",
+          "author": null,
+          "description": "I am moving back to emacs from webstorm. \n Webstorm has a great feature where the jest (javascript testing framework) output can be shown in a diff window to easily compare the result and the expected result. \n The emacs-jest library is awesome. So, I just need to get the output from jest and throw it into an ediff buffer and I should be good (I think). \n Has anyone done this or have any advice if I am on the right track?\n This would be a great feature to have for web developers in emacs.\n    submitted by    /u/6112115  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/p8fwgv/jest_diff/",
+          "publishedOn": "2021-08-20T22:53:59.000Z",
+          "wordCount": 308,
+          "title": "Jest - Diff"
+        },
+        {
           "id": "https://www.reddit.com/r/emacs/comments/p8424p/if_you_have_trouble_learning_and_retaining_emacs/",
           "author": null,
           "description": "submitted by    /u/vale_fallacia  \n [link]   [comments]",
@@ -3050,6 +3266,15 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "1931@/discussions",
+          "author": "instant",
+          "description": "I use Typora to edit some of my Markdown files, and it creates temporary files with the filename note~.md. The problem is that The Archive seems to load these files into its DB, so although they are not present anymore, I get super annoying \"Problems during archive initialization, not a note: note~.md\" messages.\nIs there any setting that I can use to ignore these files, or at least prevent this error message from popping up?",
+          "link": "https://forum.zettelkasten.de/discussion/1931/problems-during-archive-initialization",
+          "publishedOn": "2021-08-21T16:36:55.000Z",
+          "wordCount": 208,
+          "title": "Problems during archive initialization"
+        },
         {
           "id": "1930@/discussions",
           "author": "System",
