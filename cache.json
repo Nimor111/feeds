@@ -49,6 +49,69 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/pbd6al/what_does_mean_in_haskell/",
+          "author": null,
+          "description": "I had no success googling it\n    submitted by    /u/storyglitch  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pbd6al/what_does_mean_in_haskell/",
+          "publishedOn": "2021-08-25T15:08:58.000Z",
+          "wordCount": 153,
+          "title": "What does \"{..}\" mean in Haskell?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pbd0rq/valida_v1_release_profunctorial_applicative/",
+          "author": null,
+          "description": "Hey folks, some of you may remember my original post about valida. I decided to just pull in the profunctors dependency and instance it instead of homerolling a specialized version of contravariance. Check it out on github!\n The API now has more composition potential since everything is done with just a profunctorial applicative validator! Here's a small example (with totally made up data types and validation scenarios!)-\n import Data.Char (isAlphaNum) import Data.List.NonEmpty (NonEmpty) import Data.Maybe (isJust) import Text.Read (readMaybe) import Valida data ReqMethod = GET | POST | PUT | PATCH | DELETE deriving (Read, Show) data RequestOptsInp = ReqOptsInp { riPath :: String , riMethod :: Maybe String , riPayload :: Maybe [Int] } deriving (Show) data RequestOpts = ReqOpts { rPath :: String , rMethod :: ReqMethod , rPayload :: Maybe [Int] } deriving (Show) data ReqOptsErr = EmptyPath | InvalidPath | InvalidMethod | NoEvenElement deriving (Show) -- | Validator for each field in ReqOptsInp - built using 'Validator' combinators. optsValidator :: Validator (NonEmpty ReqOptsErr) RequestOptsInp RequestOpts optsValidator = ReqOpts -- Path should only contain valid characters and not be empty string. <$> riPath -?> (notEmpty EmptyPath <> onlyContains isValidPath InvalidPath) -- Method, if provided, should be equal to the stringified version of a 'ReqMethod'. -- If not provided, default to GET. -- Technically, this is parsing, not validating - but it's just an example :) <*> riMethod -?> fmap read (failureUnless isValidMethod InvalidMethod) `withDefault` GET -- Payload, if provided, should contain at least one even number. <*> riPayload -?> optionally (atleastContains even NoEvenElement) where isValidPath = (||) <$> isAlphaNum <*> flip elem \"-._~:/?#[]@!$&'()*+,;=\" isValidMethod = isJust . (readMaybe :: String -> Maybe ReqMethod) \n    submitted by    /u/Phantom569  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pbd0rq/valida_v1_release_profunctorial_applicative/",
+          "publishedOn": "2021-08-25T15:01:17.000Z",
+          "wordCount": 421,
+          "title": "Valida v1 release: profunctorial applicative validation with elegance in mind!"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pb8zci/super_easy_monads/",
+          "author": null,
+          "description": "I have had a realisation.\n For the OO programmer, one can think of monads as a general case of optional chaining.\n This may be a mathematical over-simplification, however, it's an easy way to think of monads.\n Like optionals in swift:\n  if let johnsStreet = john.residence?.address?.street { print(\"John's street name is \\(johnsStreet).\") } else { print(\"Unable to retrieve the address.\") } // Prints \"Unable to retrieve the address.\" \n Just 20 >>= half >>= half >>= half ... Nothing \n I guess the extra piece is that monads allow one to specify specific rules for \"progress\" to continue rather than just being nil/nothing, but its pretty close right?\n Whatcha think?\n    submitted by    /u/anonXMR  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pb8zci/super_easy_monads/",
+          "publishedOn": "2021-08-25T11:06:00.000Z",
+          "wordCount": 2146,
+          "title": "Super easy monads"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pb8oim/limit_my_swap_function_to_only_accept_numbers_help/",
+          "author": null,
+          "description": "My swap function is like this: \n swap(x,y) = (y,x) \n I want to write the Type so that it is restricted to only Num's. \n This is too general: swap :: (b, a) -> (a, b)\n I try to do something like this swap :: Num a,b => (b, a) -> (a, b) but it does not work, is it possible to do this?\n    submitted by    /u/Hadse  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pb8oim/limit_my_swap_function_to_only_accept_numbers_help/",
+          "publishedOn": "2021-08-25T10:43:54.000Z",
+          "wordCount": 273,
+          "title": "Limit my swap function to only accept numbers. Help."
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pb83fu/name_of_operation/",
+          "author": null,
+          "description": "There must be a name for this (or this kind of) operation or even a generalization of it. But I can't find anything in Hoogle.\n I would expect some kind of zipWith that also works on list of lists.\n someThing :: [a] -> [[b]] -> [[a]] someThing _ [] = [] someThing as (bs:moreBs) = take (length bs) as : someThing (drop (length bs) as) moreBs \n    submitted by    /u/thebt995  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pb83fu/name_of_operation/",
+          "publishedOn": "2021-08-25T09:58:59.000Z",
+          "wordCount": 442,
+          "title": "Name of operation"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pb6l6h/conferencehaskell_love_2021/",
+          "author": null,
+          "description": "Hi Haskellers,\n Kindly reminder: https://haskell.love is taking place in 16 days. \n The conference is free to attend, held online, with the best schedule you can imagine (talks by: Simon Peyton-Jones, Alejandro Serrano Mena, Andrew Boardman, Andrew Lelechenko, Anton Kholomiov, Brent Yorgey, Chris Penner, Dmitrii Kovanikov, Gergő Érdi, Gershom Bazerman, Ivan Gromakovskii, Jan Christopher Vogt, Jeremy Gibbons, Joseph Morag, Marcin Szamotulski, Mikael Tönnberg, Noon van der Silk, Rebecca Skinner, Ryan Orendorff, Stephanie Weirich, Thomas Tuegel, Veronika Romashkina). \n If you don't have a good excuse to skip the event then grab your ticket!\n ​\n https://preview.redd.it/zd4tx4iqlgj71.png?width=455&format=png&auto=webp&s=87210426e4e34cf425e74e6aa45312de2f8f27a2\n    submitted by    /u/IdaBzo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pb6l6h/conferencehaskell_love_2021/",
+          "publishedOn": "2021-08-25T07:49:14.000Z",
+          "wordCount": 395,
+          "title": "[conference]Haskell Love 2021"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/paz2kj/what_is_an_idiomatic_way_to_provide_different/",
+          "author": null,
+          "description": "I'm pretty new to Haskell and asking myself how to solve the following problem. I have a simple data structre like this: \n data Document = Document { title :: String, content :: [String], wordCount :: Int } \n I want to have besides the default constructor where I have to provide a title and the content another one where I just have to provide the title and the content or just the title. And I also want to have a constructor function that creates out of a completely different data structure a Document. \n I find it pretty nasty to name all these constructor functions differently. Especially since I encountered this problem with a lot of different data structures. So I decided to use ad-hoc polymorphism provided by a generic type-class: \n class Factory a b where create :: a -> b \n Which I use like this: \n instance Factory String ([String] -> Document) where create title words = Document { title = title, words = words, wordCount = 0 } instance Factory String Document where create title = Document { title = title, words = [], wordCount = 0 } instance Factory RawDocument Document where create RawDocument{..} = create title (splitOn \" \" content) \n Now I can use simply the create function everywhere with the defined input types. And it scales nicely with all my data structures. \n Do you see any problems with this approach? I'm really not sure if I'm missing something. \n I'm just facing one problem:\n - Either I define the factories in the same module as the data structure, but then I need to live with the name shadowing warnings for values like title and words (I would hate to name them differently since they describe the same thing)\n - Or I have a separate Factory-Module but then I have to live with the orphan instance warnings. Which is also pretty nasty \n What do you recommend?\n    submitted by    /u/thebt995  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/paz2kj/what_is_an_idiomatic_way_to_provide_different/",
+          "publishedOn": "2021-08-24T23:32:50.000Z",
+          "wordCount": 2108,
+          "title": "What is an Idiomatic way to provide different ways of initializing a data structure?"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/paucl6/what_is_flag_wall/",
           "author": null,
           "description": "Hi! I'm new here. What is the flag -Wall that we open with ghci? How does it work?\n    submitted by    /u/DrewIOF  \n [link]   [comments]",
@@ -361,6 +424,33 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/pbfgi4/functional_scala_2021_opens_call_for_proposals/",
+          "author": null,
+          "description": "submitted by    /u/jdegoes  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pbfgi4/functional_scala_2021_opens_call_for_proposals/",
+          "publishedOn": "2021-08-25T17:02:16.000Z",
+          "wordCount": 120,
+          "title": "Functional Scala 2021 opens call for proposals (Dec 2-3, London & online)"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/pbeyb4/how_is_scala_as_microservicesbased_backend_for/",
+          "author": null,
+          "description": "Hello, I'm slowly building new version control service for selfhosting called libreforge, in style of gitea sourcehut etc. but built from microservices where user can e.g. completely disable pull requests, issues and other parts in his instance. Here I'm comming to listen opionions and suggestions about frameworks and tools, should I use something like chaos or logom? or is there something better? I want it to be only backend where user has free hand to easly create his own frontend in whatever language/framework he wants.\n    submitted by    /u/HeavyRain266  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pbeyb4/how_is_scala_as_microservicesbased_backend_for/",
+          "publishedOn": "2021-08-25T16:36:57.000Z",
+          "wordCount": 195,
+          "title": "How is scala as microservices-based backend for web service?"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/pb7kor/scala_3_difficulties/",
+          "author": null,
+          "description": "Hey I'm new to Scala and have been teaching myself the last couple weeks and just had some questions about Scala 3. I really like the new syntax of the language but had issues with the compiler and just generally find it difficult to create new projects and build new things. It felt like to me that Scala 2 was just much easier to build things in. Do other share this same feeling or are there maybe tips or tricks I could use to make the whole process easier. I am working on a macbook btw. \n Thanks!\n    submitted by    /u/keinblock  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pb7kor/scala_3_difficulties/",
+          "publishedOn": "2021-08-25T09:14:51.000Z",
+          "wordCount": 459,
+          "title": "Scala 3 Difficulties"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/pas4l3/how_to_use_specific_map_type_depending_on_key_type/",
           "author": null,
@@ -772,24 +862,6 @@
           "publishedOn": "2021-07-28T21:48:54.000Z",
           "wordCount": 181,
           "title": "Does anyone know of purescript libraries for audio synthesis, or has successfully used purescript in conjunction with js libraries like Tonejs? If yes, what are your findings and recommendations?"
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/os42yg/ann_functional_design_and_architecture_second/",
-          "author": null,
-          "description": "submitted by    /u/graninas  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/os42yg/ann_functional_design_and_architecture_second/",
-          "publishedOn": "2021-07-26T17:52:06.000Z",
-          "wordCount": 661,
-          "title": "[ANN] Functional Design and Architecture: Second Edition (Manning Publications)"
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/orxc1i/purescript_community_migrating_from_slack_to/",
-          "author": null,
-          "description": "The PureScript teams are moving from the Functional Programming Slack to our dedicated PureScript Discord server. You can join here: https://purescript.org/chat\n The Slack channel will continue to exist, but as an unofficial gathering space only. To learn more about why we're migrating to Discord, please see this announcement:https://discourse.purescript.org/t/migrating-to-discord/2493\n See you in there!\n    submitted by    /u/saylu  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/orxc1i/purescript_community_migrating_from_slack_to/",
-          "publishedOn": "2021-07-26T12:06:13.000Z",
-          "wordCount": 222,
-          "title": "PureScript Community Migrating from Slack to Discord"
         }
       ]
     },
@@ -866,6 +938,15 @@
       "siteUrl": "https://tweag.io",
       "articles": [
         {
+          "id": "https://tweag.io/blog/2021-08-25-icfp2/",
+          "author": null,
+          "description": "Daily ICFP\nSeveral Tweagers all agreed to gather notes here about our\nICFP (International Conference on Functional\nProgramming) experiences. We plan to publish these notes every evening.\nDay 2 - Tuesday\nThese notes follow Noon, Arnaud, and Richard through their day at ICFP,\nroughly in order.\nRichard — Watched the video for Symbolic and Automatic Differentiation\nof\nLanguages,\nby Conal Elliott. Conal’s papers and talks are always\nvery insightful — because they are always very simple. Conal has a\nremarkable knack for taking problems that seem complex and reducing them to\ntheir essence — often, a simple compositional language. This work fits very\nmuch in this vein, describing how we can derive parsers for a language\nstraight from its definition. The talk is gentle and mind-blowing all at the\ns…",
+          "link": "https://tweag.io/blog/2021-08-25-icfp2/",
+          "publishedOn": "2021-08-25T00:00:00.000Z",
+          "wordCount": 1111,
+          "title": "Daily ICFP: Day 2"
+        },
+        {
           "id": "https://tweag.io/blog/2021-08-24-icfp1/",
           "author": null,
           "description": "Daily ICFP\nSeveral Tweagers all agreed to gather notes here about our\nICFP (International Conference on Functional\nProgramming) experiences. We plan to publish these notes every evening.\nDay 1 - Monday\nThese notes follow Noon, Arnaud, and Richard through their day at ICFP,\nroughly in order.\nRichard — Calculating Dependently-Typed Compilers (Functional\nPearl)\nStarted my day at 6:30am in order to attend the Q&A for Calculating\nDependently-Typed Compilers (Functional Pearl), by Mitchell Pickard and\nGraham Hutton, of the University of Nottingham. (I watched the video itself\nlast night.) This is a very cool paper about a technique for deriving a\nproved-correct compiler by construction. The main example in the talk was\nabout compiling a simple expression language to a stack machine. The\ncorrectn…",
@@ -905,6 +986,42 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pbco1b/how_to_remove_tags_from_the_list_or_file/",
+          "author": null,
+          "description": "Can you please teach me how to remove a certain tag from the file?\n    submitted by    /u/kartisri  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pbco1b/how_to_remove_tags_from_the_list_or_file/",
+          "publishedOn": "2021-08-25T14:43:02.000Z",
+          "wordCount": 196,
+          "title": "How to remove Tags from the list or file."
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pb6upz/how_to_add_orglinkparameters_that_play_well_with/",
+          "author": null,
+          "description": "submitted by    /u/tschaubless  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pb6upz/how_to_add_orglinkparameters_that_play_well_with/",
+          "publishedOn": "2021-08-25T08:12:03.000Z",
+          "wordCount": 332,
+          "title": "How to add org-link-parameters that play well with embark (wrt bibtex-actions) in Org mode 9.4.4?"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pb2jop/source_blocks_how_to_load_into_a_var_from_a_file/",
+          "author": null,
+          "description": "I use vars in source blocks all the time. \n Here's a trivial example:\n #+name: words #+begin_example json {\"words\": [\"Mauris\", \"felis\", \"velit\", \"tristique\", \"imperdiet\"]} #+end_example #+begin_src http :var data=words POST http://localhost:3000/process-words Content-Type: application/json ${data} #+end_src \n Now, I can't figure out two things:\n 1) How can I chain the data through multiple blocks? e.g.:\n #+name: names #+begin_example json [\"David\", \"Anna\", \"Stephen\", \"Bob\", \"Alice\"] #+end_example #+name: words_and_names #+begin_example json :var names-data=names {\"words\": [\"Mauris\", \"felis\", \"velit\", \"tristique\", \"imperdiet\"], \"names\": ${names-data}} #+end_example #+begin_src sh :var data=words_and_names :results verbatim echo ${data} #+end_src #+RESULTS: : {\"words\": [\"Mauris\", \"felis\", \"velit\", \"tristique\", \"imperdiet\"], \"names\": ${names-data}} \n As you can see, that sadly doesn't work. Is that even possible?\n 2) Also, is it possible to load something into a var from a file, instead of another block?\n    submitted by    /u/ilemming  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pb2jop/source_blocks_how_to_load_into_a_var_from_a_file/",
+          "publishedOn": "2021-08-25T02:59:03.000Z",
+          "wordCount": 851,
+          "title": "Source blocks: How to load into a var from a file?"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/paxc5a/help_im_new_to_orgmode_and_im_apparently_a_dummy/",
+          "author": null,
+          "description": "I am a longtime vim user who has been taking baby steps into emacs because I want to use org-mode. I have tried both doom emacs and spacemacs at points in the past but they've never really \"stuck\". I've since been trying to use my own minimal init.el in the hopes of better understanding how things work, and gaining more control over my setup.\n I have figured out some things. I have been using an org-mode file for a couple months now for personal notes and some TODOs, but I need some help.\n I can create a TODO item, and I can transition it to DELEGATED with C-c C-t g, but I don't know to save the notes that I'm prompted for! I've been looking at the org-mode manual https://orgmode.org/org.html#Tracking-TODO-state-changes and I don't know how to save my notes. The manual says\n  \nTo record a …",
+          "link": "https://www.reddit.com/r/orgmode/comments/paxc5a/help_im_new_to_orgmode_and_im_apparently_a_dummy/",
+          "publishedOn": "2021-08-24T21:59:03.000Z",
+          "wordCount": 847,
+          "title": "Help, I'm new to Org-mode and I'm apparently a dummy"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/pa5ejq/how_to_hide_grid_times_which_have_tasks_scheduled/",
           "author": null,
@@ -1137,6 +1254,60 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/flycheck-20210825.1804.tar",
+          "author": null,
+          "description": "The flycheck package has been updated to version 20210825.1804.",
+          "link": "https://melpa.org/#/flycheck",
+          "publishedOn": "2021-08-25T18:04:00.000Z",
+          "wordCount": 105,
+          "title": "flycheck (20210825.1804) --- On-the-fly syntax checking"
+        },
+        {
+          "id": "https://melpa.org/packages/org-runbook-20210825.1544.tar",
+          "author": null,
+          "description": "The org-runbook package has been updated to version 20210825.1544.",
+          "link": "https://melpa.org/#/org-runbook",
+          "publishedOn": "2021-08-25T15:44:00.000Z",
+          "wordCount": 105,
+          "title": "org-runbook (20210825.1544) --- Org mode for runbooks"
+        },
+        {
+          "id": "https://melpa.org/packages/github-explorer-20210825.1440.el",
+          "author": null,
+          "description": "The github-explorer package has been updated to version 20210825.1440.",
+          "link": "https://melpa.org/#/github-explorer",
+          "publishedOn": "2021-08-25T14:40:00.000Z",
+          "wordCount": 105,
+          "title": "github-explorer (20210825.1440) --- Explore a GitHub repository on the fly"
+        },
+        {
+          "id": "https://melpa.org/packages/doct-20210825.453.el",
+          "author": null,
+          "description": "The doct package has been updated to version 20210825.453.",
+          "link": "https://melpa.org/#/doct",
+          "publishedOn": "2021-08-25T04:53:00.000Z",
+          "wordCount": 105,
+          "title": "doct (20210825.453) --- DOCT: Declarative Org capture templates"
+        },
+        {
+          "id": "https://melpa.org/packages/monroe-20210824.2348.el",
+          "author": null,
+          "description": "The monroe package has been updated to version 20210824.2348.",
+          "link": "https://melpa.org/#/monroe",
+          "publishedOn": "2021-08-24T23:48:00.000Z",
+          "wordCount": 105,
+          "title": "monroe (20210824.2348) --- Yet another client for nREPL"
+        },
+        {
+          "id": "https://melpa.org/packages/cl-format-20210824.2016.tar",
+          "author": null,
+          "description": "The cl-format package has been updated to version 20210824.2016.",
+          "link": "https://melpa.org/#/cl-format",
+          "publishedOn": "2021-08-24T20:16:00.000Z",
+          "wordCount": 105,
+          "title": "cl-format (20210824.2016) --- CL format routine."
+        },
         {
           "id": "https://melpa.org/packages/counsel-edit-mode-20210824.1504.el",
           "author": null,
@@ -3008,6 +3179,105 @@
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/emacs/comments/pbibsa/product_pdf_or_other_output_from_emacs_buffer/",
+          "author": null,
+          "description": "I program in c++ in emacs with a bunch of custom font-lock/prettify-symbols mode customizations that let me basically do what is called \"literate programming\" in emacs. Basically, attractive formatted text mingled with actual code that compiles. This is mainly accomplished by a set of special commenting conventions that control fonts and whether the c++ \"//\" comment characters are displayed or the comments are just shown as bare text. I also have markup in comments and mathematical symbol display in unicode. \n ​\n The code looks pretty normal if you just display it as text or are using an IDE without my customizations.\n This works and looks great. The only problem is the only way I can share the results are through screenshots or if someone is running emacs with the same customizations. But…",
+          "link": "https://www.reddit.com/r/emacs/comments/pbibsa/product_pdf_or_other_output_from_emacs_buffer/",
+          "publishedOn": "2021-08-25T19:22:16.000Z",
+          "wordCount": 487,
+          "title": "Product PDF or other output from emacs buffer?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pbg9z0/modelineposnel_evil_column_index_not_starting_at/",
+          "author": null,
+          "description": "Hi,\n I want to modify the modeline to display only what I need: the buffer name, the point line and column number and the number of characters and lines in the region when it is active. I am using evil.\n From what I understood, the default modeline can provide the buffer name and the point line and column number. If I want the number of characters and lines in a region, modeline-posn.el is one of the solutions.\n  \nMy 1st problem is that when I use modeline-posn.el, it looks like (setq column-number-indicator-zero-based nil) is not taken into account anymore. Indeed, when I put the point in the 1st column, I expect to see in the modeline that the point is in column 1 but I see 0.\n \nMy second problem (I do not know if it is related to the 1st one) is that when I enter the evil visual state, …",
+          "link": "https://www.reddit.com/r/emacs/comments/pbg9z0/modelineposnel_evil_column_index_not_starting_at/",
+          "publishedOn": "2021-08-25T17:42:32.000Z",
+          "wordCount": 708,
+          "title": "modeline-posn.el + evil: column index not starting at 1 and wrong character counting in region"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pbcap8/ann_alphapapataxyel_programmable_taxonomical/",
+          "author": null,
+          "description": "submitted by    /u/github-alphapapa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pbcap8/ann_alphapapataxyel_programmable_taxonomical/",
+          "publishedOn": "2021-08-25T14:25:12.000Z",
+          "wordCount": 387,
+          "title": "[ANN] alphapapa/taxy.el: Programmable taxonomical hierarchy for arbitrary objects"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pba1e1/how_do_i_increase_visible_indentation_without/",
+          "author": null,
+          "description": "Hi, I would like to increase the amount of indentation when I'm coding by 1.5-2x, or something along those lines. Actually setting the indentation width to more space characters would make all formatters and other programmers upset. I also think that formatting according to my preference on file open, then formatting back to the default on commit, could lead to unwanted whitespace changes and, again, make other programmers upset. Is there a way to fake increase the indentation width? I use spaces, so is there a way to only increase the width of spaces when I'm coding, that is efficient enough to deal with the large number of spaces that tend to exist in most files?\n    submitted by    /u/gnpwhm  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pba1e1/how_do_i_increase_visible_indentation_without/",
+          "publishedOn": "2021-08-25T12:17:00.000Z",
+          "wordCount": 396,
+          "title": "How do I increase visible indentation without formatting the buffer?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pb6w2z/weekly_tips_tricks_c_thread/",
+          "author": null,
+          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n See this search for previous \"Weekly Tips, Tricks, &c. Thread\"s.\n Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pb6w2z/weekly_tips_tricks_c_thread/",
+          "publishedOn": "2021-08-25T08:15:17.000Z",
+          "wordCount": 290,
+          "title": "Weekly Tips, Tricks, &c. Thread"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pb6paq/how_to_add_orglinkparameters_that_play_well_with/",
+          "author": null,
+          "description": "Hi there! \n I'm currently using Emacs 27.2 with built-in Org mode (9.4.4) and so far, I am quite satisfied with my patch-work org citation solution. And yes, that is without using the newly introduced org cite framework **exited NPC noises** (see tecosaur's July digest).\n Currently my setup (simplified for the sake of argument) involves the addition of a org-link-parameter:\n (add-to-list 'org-link-parameters '(\"cite\" :follow embark-act)) \n and following B. D'Arcus' suggested bibtex-actions configuration I add an action-keymap pair to embark:\n (add-to-list 'embark-keymap-alist '(bib-reference . bibtex-actions-map)) \n BUT, since this is not Org 9.5 with all its' tremendous linking support, I am not able to connect my custom org-link parameter to the embark action, which is unfortunate...\n I have tried it with the :keymap keyword (in org-link-parameters), but I think I'm at the wrong place. I guess I'll have to extend the :follow part, but somehow I have difficulties to connect the dots.\n Any help would be greatly appreciated and let me know if you need more information!\n    submitted by    /u/tschaubless  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pb6paq/how_to_add_orglinkparameters_that_play_well_with/",
+          "publishedOn": "2021-08-25T07:59:35.000Z",
+          "wordCount": 1051,
+          "title": "How to add org-link-parameters that play well with embark (wrt bibtex-actions) in Org mode 9.4.4?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pb2m04/transientdefineinfix_macro_help/",
+          "author": null,
+          "description": "I'm trying to figure out how to call (transient-define-infix) with a generated name, but I'm stuck because my elisp macro fu is weak.\n What I'm trying to do is something like this: (transient-define-infix (intern \"cc/test-infix-name\") ()), but that results in the error progn: Wrong type argument: symbolp, (intern \"cc/test-infix-name\"). I've tried a few different quoting variations and can't figure it out, and at this point I'm not even sure that it's possible.\n Doing (defalias (intern \"cc/test-generate-foo\") 'cc/test-foo) works, so I assume the issue is with quoting/evaluation within the transient-define-infix macro. Here's the implementation of that:\n (defmacro transient-define-infix (name _arglist &rest args) \"Define NAME as a transient infix command. ARGLIST is always ignored and reserv…",
+          "link": "https://www.reddit.com/r/emacs/comments/pb2m04/transientdefineinfix_macro_help/",
+          "publishedOn": "2021-08-25T03:02:41.000Z",
+          "wordCount": 583,
+          "title": "transient-define-infix macro help"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pb1huo/elfeedytdl_download_your_youtube_entries_in/",
+          "author": null,
+          "description": "submitted by    /u/Qardat  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pb1huo/elfeedytdl_download_your_youtube_entries_in/",
+          "publishedOn": "2021-08-25T01:54:28.000Z",
+          "wordCount": 118,
+          "title": "elfeed-yt-dl: Download your YouTube entries in elfeed as video/audio files"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pawpst/hacking_icons_into_orgmode/",
+          "author": null,
+          "description": "Hi all,\n I just made the first bit of personal config of emacs that I am a bit proud of (I jhave just taken up emacs quite recently). Happy to take any comment about it :)\n https://thibautbenjamin.github.io/emacs/org-icons\n    submitted by    /u/Odd-Theory-7122  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pawpst/hacking_icons_into_orgmode/",
+          "publishedOn": "2021-08-24T21:26:10.000Z",
+          "wordCount": 284,
+          "title": "Hacking icons into org-mode"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pawooi/im_writing_a_command_with_ivyread_how_can_i_make/",
+          "author": null,
+          "description": "I'm writing a package for interacting with emacs-w3m with ivy. I want functions like ivy-w3m-switch-buffer to inherit the settings -- especially the actions -- of their standard counterparts, so that for example ivy-w3m-switch-buffer should have the same actions available as ivy-switch-buffer does (or perhaps counsel-switch-buffer).\n This is for two reasons:\n  \nDon't duplicate code! The vast majority of the two functions will be the same, better to inherit if possible (and track/inherit bug fixes and improvements as they come along) than to write it twice.\n If the user has defined their own specific settings for the parent function -- like a custom action for ivy-switch-buffer, they shouldn't have to add them again to the new function. User shouldn't have to duplicate either.\n  \nIs there a standard way to do this? Or perhaps just a standard way of getting these settings for a given function, so that I could just interpolate them into my definition of the new one?\n TIA!\n    submitted by    /u/Jack-o-tall-tales  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pawooi/im_writing_a_command_with_ivyread_how_can_i_make/",
+          "publishedOn": "2021-08-24T21:24:34.000Z",
+          "wordCount": 438,
+          "title": "I'm writing a command with ivy-read. (How) can I make it inherit the actions (and possibly other settings) of another ivy command?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/paw6zu/emacs_repl_in_a_webpage_just_stumbled_upon_it_by/",
+          "author": null,
+          "description": "submitted by    /u/arthurno1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/paw6zu/emacs_repl_in_a_webpage_just_stumbled_upon_it_by/",
+          "publishedOn": "2021-08-24T21:00:04.000Z",
+          "wordCount": 127,
+          "title": "Emacs repl in a web-page - just stumbled upon it by a mistake"
+        },
+        {
           "id": "https://www.reddit.com/r/emacs/comments/pavjxj/how_to_make_compilegotoerror_use_the_current/",
           "author": null,
           "description": "I'm trying to make my emacs bindings consistent across packages so at the moment I want some way to make compile-goto-error open the error in the current window instead of splitting the view and showing it in a side window. But I can't seem to figure out how. There doesn't seem to be a convenient option or editor feature I can exploit. Does anyone have any tips?\n    submitted by    /u/emax-gomax  \n [link]   [comments]",
@@ -3429,6 +3699,33 @@
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
         {
+          "id": "1935@/discussions",
+          "author": "bradfordfournier",
+          "description": "I'm curious if anyone has experience with a dual-zettelkasten format.  So far, it hasn't caused any (major) problems.\nIf I write a \"good\" zettle diligently and feel too lazy to rewrite the full note in digital form, particularly a note with lots of diagrams (mathematics, etc) I'll resort to the following...\nWorkflow: Physical to Digital\nScan the zettle making sure its readable\nCreate a zettle with the same id and title in digital form\nInsert the scan as a large image\nWrite the header in digital form (using a physical-scan-template) this is quick\nWrite any links in digital form\nWrite a one-sentence summary in digital form.\nLiberally use NON-hashed tags for keywords in the scanned text for easy searching.\nKeep the physical copy and add to physical slipbox\nAt some point, if I get around to it, I will slowly convert notes that have been post-semi-digitized per the above into purely digital form.\nI find the above most helpful when doing mathematics: the diagrams of category theory can take lots of time to write in latex. So if you have a particularly well-formed note with lots of notation, then I've found this method can work out fine in the short-term.  The most important items -- by trial and error -- from above are 5 6 and 7 so as to preserve the ability to search, link, and see a short summary.\nWorkflow: Digital to Physical (perhaps this is a bit obsessive)\nAt the end of each day collect the digitally created zettels from that day (easy with timestamp ID)\nPrint them out 2-per page and cut in half\nAdd to physical slipbox\nAlways maintain a printed copy of any index or structure notes.\nNow you have a synchronized digital and physical slipbox. Its not perfect but sometimes the good enough, is.",
+          "link": "https://forum.zettelkasten.de/discussion/1935/mixing-physical-and-digital-zettels-so-far-so-not-terrible-my-workflow",
+          "publishedOn": "2021-08-25T15:19:59.000Z",
+          "wordCount": 679,
+          "title": "Mixing physical and digital zettels: so far so not terrible -- my workflow"
+        },
+        {
+          "id": "1934@/discussions",
+          "author": "bradfordfournier",
+          "description": "As many of you know I am new to Zettelkasten.\nI'm curious how the interplay between sparing use of folders and \"types\" (a finite small set of tags on the form) -- for example, when taking notes on a book I consider this a buffer note (I use the haskell type syntax ::buffer ) and place it in my /fleeting notes folder. Fleeting contains anything from ::buffer notes to extracted highlights, to temporary documents etc.\nThis might become a ::literature note if the ideas in the ::buffer note are reworked to be my own (personal reactions -- things it reminds me of etc)\nFinally a literature note becomes ::permanent (and goes in the /zettelkasten folder) when I have massaged it (into one or more) atomic, conceptual, not directly derivative -- but still, of course, referenced and possibly linked to …",
+          "link": "https://forum.zettelkasten.de/discussion/1934/share-your-folders-and-note-types-here-are-mine",
+          "publishedOn": "2021-08-25T14:38:54.000Z",
+          "wordCount": 1441,
+          "title": "Share your folders and note \"types\"  -- here are mine"
+        },
+        {
+          "id": "1933@/discussions",
+          "author": "joegilder",
+          "description": "So I use The Archive + Dropbox for everything (Plus 1Writer for iOS).\nDoes anyone know a creative way to get \"Hey Siri\" to create a note for me?\nI know iOS Shortcuts can create the note in 1Writer, but I still have to type the content.\nI'd like a hands-free way to use Siri while driving to add a text file with \"#inbox\" directly to my Zettelkasten folder in Dropbox.\nI know Drafts lets me export TO Dropbox, but I'd love a way for it to show up right there in one step, similar to how I can create a note in the Apple Notes app directly from Siri.\nI use Keyboard Maestro, if that's helpful.\nAny ideas?",
+          "link": "https://forum.zettelkasten.de/discussion/1933/hey-siri",
+          "publishedOn": "2021-08-25T01:03:34.000Z",
+          "wordCount": 470,
+          "title": "Hey Siri..."
+        },
+        {
           "id": "1932@/discussions",
           "author": "Dilan_Zelsky",
           "description": "I've been around in this forum for quite a while now, but I just realized that I haven't properly introduced myself yet.\nHowdy! I'm Dilan Zelsky, an 18 years old trans woman possibly with ADHD, and a writer as a side-effect of maintaining a Zettelkasten. My pronouns are she/her.\nI've been a workaholic for a few years now, but a couple of days ago I decided that I want to quit. I have a lot of interests, but I choose to take up a few to keep things simple until I can do proper research on hobbies. My current hobbies are:\nReading. I love learning new things. However, it wasn't enjoyable until I met the Zettelkasten Method, so I had always procrastinated on it. Thanks @sfast and @ctietze for all the effort you put into the blog and this forum! In specific, reading to me boils down to: 1) Read…",
@@ -3598,15 +3895,6 @@
           "publishedOn": "2021-07-29T17:23:34.000Z",
           "wordCount": 969,
           "title": "org-roam (Emacs Zettelkasten Package) Version 2 Released"
-        },
-        {
-          "id": "1907@/discussions",
-          "author": "bradfordfournier",
-          "description": "(new to zk)\nGiven all the discussion of how L-style ID's can be association-brittle relative to using just links, I was wondering if the following has an implementation in any digital system.\nI'd like the following:  an L-style ref to \"position-sequence\" extended to differentiate between paths through the sequence --based on context --  in which one context path may share some im/proper subset of the other.\nExample: given say \nHere we have the shared edge (xa,xb) = (1b,1ba). And indeed it would be stultifying to assume that the meaning in context2 is partially identical to context1 simply because of the shared referential sub-structure.\nQuestion: for the advocates of links only: is there a simple way to differentiate multiple referential contexts. I.e., to allow for the same edge/link to be given different meaning.\nThis could be via named links -- not just links named for their nodes, or multi-links, or some in-note context to mimic this behavior.\nDoes such a thing exist?",
-          "link": "https://forum.zettelkasten.de/discussion/1907/multi-edges-named-links-sub-graph-a-means-of-capturing-fluid-associations",
-          "publishedOn": "2021-07-27T01:48:04.000Z",
-          "wordCount": 4907,
-          "title": "Multi-edges / Named Links / Sub-graph : a means of capturing fluid associations"
         }
       ]
     }
