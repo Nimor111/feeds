@@ -58,6 +58,87 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/pcuxic/a_pattern_for_accumulating_pieces_of_a_product/",
+          "author": null,
+          "description": "I'll give a quick example of what I am talking about, first.\n You have a product type:\n  data MyProduct = MyProduct { productFoo :: Foo , productBar :: Bar , productBaz :: Baz } \n and some way to isolate each \"piece\" of that product type:\n  data SomePiece = PieceFoo Foo | PieceBar Bar | PieceBaz Baz \n With this example in mind, imagine you have a (possibly infinite) list of SomePiece, and you would like to construct a MyProduct as soon as possible. Perhaps, this means that whenever you encounter a piece in your list, you hold onto it and ignore future pieces of that type, or you possibly drop the old piece in favor of the new piece of the same type, or perform some kind of combining function on the pieces. Whenever you have all the pieces needed to construct a MyProduct, you do so and stop pulling off the list.\n Of course, you also have to take into account the possibility that the list terminates before we receive all the required pieces, so we wrap the return type in Maybe:\n  constructMyProduct :: [SomePiece] -> Maybe MyProduct constructMyProduct = undefined \n What are some good solutions to this problem? Are there any general solutions, that will work for other product types with different numbers of arguments? A library or portion of a library that focuses on this would be ideal.\n    submitted by    /u/hololeap  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pcuxic/a_pattern_for_accumulating_pieces_of_a_product/",
+          "publishedOn": "2021-08-27T20:03:22.000Z",
+          "wordCount": 359,
+          "title": "A pattern for accumulating \"pieces\" of a product type?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pcu4mf/call_for_reviews_switch_text_to_utf8_announcements/",
+          "author": null,
+          "description": "submitted by    /u/emilypii  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pcu4mf/call_for_reviews_switch_text_to_utf8_announcements/",
+          "publishedOn": "2021-08-27T19:21:54.000Z",
+          "wordCount": 135,
+          "title": "Call for reviews: switch Text to UTF8 - Announcements"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pcpd7j/ghc_8107_is_now_available_the_glasgow_haskell/",
+          "author": null,
+          "description": "submitted by    /u/n00bomb  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pcpd7j/ghc_8107_is_now_available_the_glasgow_haskell/",
+          "publishedOn": "2021-08-27T15:17:12.000Z",
+          "wordCount": 138,
+          "title": "GHC 8.10.7 is now available - The Glasgow Haskell Compiler"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pcnie5/new_haskell_book_preview_looking_for_feedback/",
+          "author": null,
+          "description": "Hi everyone! We got back to working on \"Magical Haskell\" book, finished the first 5 chapters (about 5 more are coming up), and would very much appreciate the feedback of the community.\n The book has a goal of teaching Haskell gently, using lots of visuals and pictures, but from the first principles - so NO imperative patterns, but functional thinking, Types, building up powerful abstractions naturally to develop intuition. We have by now invented a Functor as well as a Bifunctor, Applicative and Monad are coming up :)\n The book is available here: https://leanpub.com/magicalhaskell\n Any feedback / comments / suggestions are highly appreciated!\n    submitted by    /u/jhoxray  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pcnie5/new_haskell_book_preview_looking_for_feedback/",
+          "publishedOn": "2021-08-27T13:37:05.000Z",
+          "wordCount": 233,
+          "title": "New Haskell book preview - looking for feedback!"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pchv3g/fcfcomposite_typelevel_computation_for_composite/",
+          "author": null,
+          "description": "submitted by    /u/locallycompact  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pchv3g/fcfcomposite_typelevel_computation_for_composite/",
+          "publishedOn": "2021-08-27T06:34:01.000Z",
+          "wordCount": 132,
+          "title": "fcf-composite - Type-level computation for composite using first-class-families"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pch65i/convert_io_utctime_to_localtimezone_and_print_out/",
+          "author": null,
+          "description": "This is the current output\n long long@ahaxu.com 2021-08-27 03:44:56.966989 UTC long+1 long+1@ahaxu.com 2021-08-27 03:45:06.91683 UTC \n I wanna covert to LocalTimeZone as bellow (local time with timezone)\n long long@ahaxu.com 2021-08-27 12:33:35.971301+07 long+1 long+1@ahaxu.com 2021-08-27 12:33:35.971301+07 \n Bellow is my sample code\n {-# LANGUAGE OverloadedStrings #-} module Sandbox where import Database.PostgreSQL.Simple import Database.PostgreSQL.Simple.FromRow import Database.PostgreSQL.Simple.Time import Data.Time import Control.Monad main :: IO () main = do putStrLn \"connecting to db ...\" conn <- connect defaultConnectInfo { connectHost = \"127.0.0.1\" , connectDatabase = \"test_db\" , connectUser = \"test\" , connectPassword = \"secret\" } users <- getAllUsers conn forM_ users $ \\user -> print user putStrLn \"done\" data User = User { name::String , email::String , createdAt::UTCTimestamp } instance Show User where show u = name u ++ \"\\t\" ++ email u ++ \"\\t\"++ show(createdAt u) instance FromRow User where fromRow = User <$> field <*> field <*> field getAllUsers :: Connection -> IO [User] getAllUsers conn = query_ conn \"SELECT u.name, u.email, u.created_at from users u\" UTCTimeZoneToLocalTimeZone :: UTCTime -> IO LocalTime UTCTimeZoneToLocalTimeZone utcTz= getCurrentTimeZone >>= \\tz -> return $ utcToLocalTime tz utcTz \n The function UTCTimeZoneToLocalTimeZone aim to convert UTCTime to IO LocalTime. but I don't know how to combine this into main function or instance Show of User. I guess there should be some transformation step in the middle, but idk how to do. Can you please help, to print out as expected output as below\n long long@ahaxu.com 2021-08-27 12:33:35.971301+07 long+1 long+1@ahaxu.com 2021-08-27 12:33:35.971301+07 \n    submitted by    /u/CucumberCareful1693  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pch65i/convert_io_utctime_to_localtimezone_and_print_out/",
+          "publishedOn": "2021-08-27T05:43:25.000Z",
+          "wordCount": 1201,
+          "title": "Convert `IO UTCTime` to `LocalTimeZone` and print out to stdout"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pcfilm/parallel_and_concurrent_haskell_8_years_later/",
+          "author": null,
+          "description": "Is this book still a good intro to parallel and concurrency in Haskell? Are there any notable supplementary resources for the topic?\n I ask because I myself am trying to design an application that needs to be heavily concurrent (e.g., scanning client emails to do text analysis for malicious content) and the concurrent section of the book seems to be a nice survey of the various strategies (like STM or actor).\n    submitted by    /u/the_unquiet  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pcfilm/parallel_and_concurrent_haskell_8_years_later/",
+          "publishedOn": "2021-08-27T03:48:43.000Z",
+          "wordCount": 320,
+          "title": "Parallel and Concurrent Haskell, 8 Years Later"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pcf9be/i_cant_find_a_solution_to_this_problem_involving/",
+          "author": null,
+          "description": "Hi guys, I've recently tried to install hlint through stack, but the terminal said that the plan of instalation couldn't be completed, so it made some recommendations about extra-deps I should add in the yaml file. I got every recommendation the terminal suggested, but now it has informed that there are a same package name being used in multiple local packages.\n i've detailed better my situation here: https://stackoverflow.com/questions/68946922/trying-to-install-hlint-by-stack-got-same-package-name-error\n If u guys need any more information, I can give it. i just need to solve this. Thank a lot to anyone who pays attention.\n    submitted by    /u/PedroVini2003  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pcf9be/i_cant_find_a_solution_to_this_problem_involving/",
+          "publishedOn": "2021-08-27T03:32:13.000Z",
+          "wordCount": 828,
+          "title": "I can't find a solution to this problem involving stack install"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pcd77v/haskell_appreciation_post/",
+          "author": null,
+          "description": "I have been learning Haskell for about a month now. It is a wonderful language. I am constantly surprised at how simple it is, once you've wrapped your head around evaluation, algebras, and higher-order functions. The more I learn, the more I am aghast at how messy the OOP paradigm can be. Haskell has types and typeclasses, and that's it! No need for interfaces, sub/super classes, constructors, scoped variables, none of that stuff.\n I love Haskell!\n    submitted by    /u/unreas0nable  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pcd77v/haskell_appreciation_post/",
+          "publishedOn": "2021-08-27T01:27:21.000Z",
+          "wordCount": 1293,
+          "title": "Haskell appreciation post"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/pc6lb3/issue_278_haskell_weekly_newsletter/",
           "author": null,
           "description": "submitted by    /u/haskellweekly  \n [link]   [comments]",
@@ -487,6 +568,51 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/pcuqcy/help_with_single_value_validated_types/",
+          "author": null,
+          "description": "If I wanted to define a type Foo such that Foo is really an Int with values expected within a range - is there a way to do this without needing to wrap the value (and instead behave more like a primitive type)?\n So instead of:\n val x = Foo(value=20) if (x.value > 10) ... \n You could instead do:\n val x: Foo = 20 if (x > 10) ... \n and so on.\n    submitted by    /u/DanManPanther  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pcuqcy/help_with_single_value_validated_types/",
+          "publishedOn": "2021-08-27T19:53:22.000Z",
+          "wordCount": 170,
+          "title": "Help with Single Value Validated Types"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/pcso0z/whats_the_maturity_level_of_scalajs/",
+          "author": null,
+          "description": "For people who are familiar with both Scala and Javascript, would you feel comfortable basing a whole company's frontend codebase around ScalaJS, or is it not quite ready for that yet?\n    submitted by    /u/iamiamwhoami  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pcso0z/whats_the_maturity_level_of_scalajs/",
+          "publishedOn": "2021-08-27T18:05:56.000Z",
+          "wordCount": 244,
+          "title": "What's the maturity level of ScalaJS?"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/pcsmae/new_outwatch_documentation_based_on_mdoc/",
+          "author": null,
+          "description": "submitted by    /u/fxdz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pcsmae/new_outwatch_documentation_based_on_mdoc/",
+          "publishedOn": "2021-08-27T18:03:35.000Z",
+          "wordCount": 102,
+          "title": "New outwatch documentation based on mdoc"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/pcha4i/whats_the_best_seq_subclass_in_2021/",
+          "author": null,
+          "description": "Imagine you're constructing & returning Seq[T] without knowledge of how it'll be used. \n Should you internally use List (via List.newBuilder), Vector (via Vector.newBuilder), or another data type to construct the Seq?\n    submitted by    /u/champabaybrady  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pcha4i/whats_the_best_seq_subclass_in_2021/",
+          "publishedOn": "2021-08-27T05:51:49.000Z",
+          "wordCount": 274,
+          "title": "What's the best Seq subclass in 2021?"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/pc9k5y/scalajsdom_120_released_this_is_the_first_release/",
+          "author": null,
+          "description": "submitted by    /u/japgolly  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pc9k5y/scalajsdom_120_released_this_is_the_first_release/",
+          "publishedOn": "2021-08-26T21:56:35.000Z",
+          "wordCount": 144,
+          "title": "scala-js-dom 1.2.0 released! - This is the first release with love from new maintainers and we'll be focusing on 2.0.0 next"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/pc3b8s/scala_code_review_culture_rant_and_discussion/",
           "author": null,
@@ -961,15 +1087,6 @@
           "publishedOn": "2021-08-01T18:17:32.000Z",
           "wordCount": 883,
           "title": "Getting error for seemingly simple code. What am I doing wrong please?"
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/otjvei/does_anyone_know_of_purescript_libraries_for/",
-          "author": null,
-          "description": "submitted by    /u/ctenbrinke  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/otjvei/does_anyone_know_of_purescript_libraries_for/",
-          "publishedOn": "2021-07-28T21:48:54.000Z",
-          "wordCount": 181,
-          "title": "Does anyone know of purescript libraries for audio synthesis, or has successfully used purescript in conjunction with js libraries like Tonejs? If yes, what are your findings and recommendations?"
         }
       ]
     },
@@ -978,6 +1095,15 @@
       "feedUrl": "https://serokell.io/blog.rss.xml",
       "siteUrl": "https://serokell.io/blog",
       "articles": [
+        {
+          "id": "https://serokell.io/blog/interview-with-andrew-boardman",
+          "author": "hi+gintsdreimanis@serokell.io (Gints Dreimanis)",
+          "description": "What is the Haskell Foundation, and what are its goals? Learn more by reading our interview with Andrew Boardman, the Executive Director of the Haskell Foundation.",
+          "link": "https://serokell.io/blog/interview-with-andrew-boardman",
+          "publishedOn": "2021-08-26T00:00:00.000Z",
+          "wordCount": 1175,
+          "title": "Haskell Foundation: Interview with Andrew Boardman"
+        },
         {
           "id": "https://serokell.io/blog/benefits-of-no-code-applications",
           "author": "hi+yuliagavrilova@serokell.io (Yulia Gavrilova)",
@@ -1046,6 +1172,15 @@
       "siteUrl": "https://tweag.io",
       "articles": [
         {
+          "id": "https://tweag.io/blog/2021-08-27-icfp4/",
+          "author": null,
+          "description": "Daily ICFP\nSeveral Tweagers all agreed to gather notes here about our\nICFP (International Conference on Functional\nProgramming) experiences. We plan to publish these notes every evening.\nDay 4 - Thursday\nThese notes follow Noon and Richard through their day at ICFP,\nroughly in order. (The talks are not publicly posted at the time\nof publication of this post, but we expect they will be over the\ncoming weeks.)\nNoon — Second to last day of ICFP. I’m becoming sad that it’s\ngoing to be over! But that said, I’m really looking forward to today!\nI feel a bit relaxed as well, because from my timezone (UK) I get a bit\nof a break in the morning (as I’m starting my day at the Haskell track.)\nChesskell: A Two-Player Game at the Type Level, by Toby Bailey and Michael Gale\nNoon\nWhat if you were taught ch…",
+          "link": "https://tweag.io/blog/2021-08-27-icfp4/",
+          "publishedOn": "2021-08-27T00:00:00.000Z",
+          "wordCount": 1231,
+          "title": "Daily ICFP: Day 4"
+        },
+        {
           "id": "https://tweag.io/blog/2021-08-26-icfp3/",
           "author": null,
           "description": "Daily ICFP\nSeveral Tweagers all agreed to gather notes here about our\nICFP (International Conference on Functional\nProgramming) experiences. We plan to publish these notes every evening.\nDay 3 - Wednesday\nThese notes follow Noon, Arnaud, and Richard through their day at ICFP,\nroughly in order.\nNoon — On Continuation-Passing Transformations and Expected Cost Analysis\nDiscussion of the difficulty of costing probabilistic algorithms (i.e. you don’t know what it will do.)\nTurns out using continuations makes it a bit easier to reason about (I didn’t quite follow the trick that makes it true),\nBut, it gives a way to think compute average-cost analysis, which seems pretty useful!\nNoon — Automatic Amortized Resource Analysis with the Quantum Physicist’s Method\nQuantum physics? I’m interested.\n“Thi…",
@@ -1094,6 +1229,15 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pcbwx6/habit_not_advancing_day_after_a_day_is_missed/",
+          "author": null,
+          "description": "So I'm tracking my habits... first few days went great and after I switched the state to DONE, it would advance the scheduled day to tomorrow. After a few days I missed a day... Now when I complete the habit for the day and rebuild the agenda view, it's still showing as TODO for today... Is this expected behavior? Is it expecting me to complete the habit 2x in one day to make up for the missed day?\n Confused. Any help appreciated.\n Solved: I put +1d ... should have been .+1d\n    submitted by    /u/blutrients96  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pcbwx6/habit_not_advancing_day_after_a_day_is_missed/",
+          "publishedOn": "2021-08-27T00:09:24.000Z",
+          "wordCount": 281,
+          "title": "Habit Not Advancing Day After A Day Is Missed"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/pc4ypn/adding_another_item_to_a_numbered_list/",
           "author": null,
@@ -1380,6 +1524,78 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/hl-todo-20210827.1925.el",
+          "author": null,
+          "description": "The hl-todo package has been updated to version 20210827.1925.",
+          "link": "https://melpa.org/#/hl-todo",
+          "publishedOn": "2021-08-27T19:25:00.000Z",
+          "wordCount": 105,
+          "title": "hl-todo (20210827.1925) --- highlight TODO and similar keywords"
+        },
+        {
+          "id": "https://melpa.org/packages/ipcalc-20210827.1422.el",
+          "author": null,
+          "description": "The ipcalc package has been updated to version 20210827.1422.",
+          "link": "https://melpa.org/#/ipcalc",
+          "publishedOn": "2021-08-27T14:22:00.000Z",
+          "wordCount": 105,
+          "title": "ipcalc (20210827.1422) --- IP subnet calculator"
+        },
+        {
+          "id": "https://melpa.org/packages/org-chef-20210827.1342.tar",
+          "author": null,
+          "description": "The org-chef package has been updated to version 20210827.1342.",
+          "link": "https://melpa.org/#/org-chef",
+          "publishedOn": "2021-08-27T13:42:00.000Z",
+          "wordCount": 105,
+          "title": "org-chef (20210827.1342) --- Cookbook and recipe management with org-mode."
+        },
+        {
+          "id": "https://melpa.org/packages/lispy-20210827.854.tar",
+          "author": null,
+          "description": "The lispy package has been updated to version 20210827.854.",
+          "link": "https://melpa.org/#/lispy",
+          "publishedOn": "2021-08-27T08:54:00.000Z",
+          "wordCount": 105,
+          "title": "lispy (20210827.854) --- vi-like Paredit"
+        },
+        {
+          "id": "https://melpa.org/packages/theme-looper-20210827.424.el",
+          "author": null,
+          "description": "The theme-looper package has been updated to version 20210827.424.",
+          "link": "https://melpa.org/#/theme-looper",
+          "publishedOn": "2021-08-27T04:24:00.000Z",
+          "wordCount": 105,
+          "title": "theme-looper (20210827.424) --- A package for switching themes in Emacs interactively"
+        },
+        {
+          "id": "https://melpa.org/packages/ace-pinyin-20210827.355.el",
+          "author": null,
+          "description": "The ace-pinyin package has been updated to version 20210827.355.",
+          "link": "https://melpa.org/#/ace-pinyin",
+          "publishedOn": "2021-08-27T03:55:00.000Z",
+          "wordCount": 105,
+          "title": "ace-pinyin (20210827.355) --- Jump to Chinese characters using avy or ace-jump-mode"
+        },
+        {
+          "id": "https://melpa.org/packages/geben-20210827.342.tar",
+          "author": null,
+          "description": "The geben package has been updated to version 20210827.342.",
+          "link": "https://melpa.org/#/geben",
+          "publishedOn": "2021-08-27T03:42:00.000Z",
+          "wordCount": 105,
+          "title": "geben (20210827.342) --- DBGp protocol frontend, a script debugger"
+        },
+        {
+          "id": "https://melpa.org/packages/sketch-themes-20210826.1816.tar",
+          "author": null,
+          "description": "The sketch-themes package has been updated to version 20210826.1816.",
+          "link": "https://melpa.org/#/sketch-themes",
+          "publishedOn": "2021-08-26T18:16:00.000Z",
+          "wordCount": 105,
+          "title": "sketch-themes (20210826.1816) --- Sketch color themes"
+        },
         {
           "id": "https://melpa.org/packages/org-notifications-20210826.1721.tar",
           "author": null,
@@ -3403,6 +3619,141 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcue1v/how_to_embed_handwritten_content_in_your_orgroam/",
+          "author": null,
+          "description": "submitted by    /u/_MagicScience_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcue1v/how_to_embed_handwritten_content_in_your_orgroam/",
+          "publishedOn": "2021-08-27T19:35:34.000Z",
+          "wordCount": 115,
+          "title": "How to embed handwritten content in your org-roam site"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcsusf/svgclockmode_an_svg_analog_clock_for_emacs/",
+          "author": null,
+          "description": "submitted by    /u/ramin-honary-xc  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcsusf/svgclockmode_an_svg_analog_clock_for_emacs/",
+          "publishedOn": "2021-08-27T18:15:36.000Z",
+          "wordCount": 109,
+          "title": "svg-clock-mode: an SVG analog clock for Emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcpe2k/emacsdevel_gitlab_migration_discussion/",
+          "author": null,
+          "description": "submitted by    /u/nv-elisp  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcpe2k/emacsdevel_gitlab_migration_discussion/",
+          "publishedOn": "2021-08-27T15:18:26.000Z",
+          "wordCount": 988,
+          "title": "Emacs-devel: Gitlab Migration Discussion"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcoyjs/new_package_consultbibtex/",
+          "author": null,
+          "description": "Mohsin Kaleem has just released consult-bibtex. It is a consult/completing-read interface for bibtex-completion, very similar to ivy-bibtex or helm-bibtex. Right now, it's just on github.\n    submitted by    /u/scbagley  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcoyjs/new_package_consultbibtex/",
+          "publishedOn": "2021-08-27T14:55:36.000Z",
+          "wordCount": 198,
+          "title": "New package consult-bibtex"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcnmbv/timeblocking/",
+          "author": null,
+          "description": "Hi,\n I use timeblocking to plan my days one week at a time. I used to use thunderbird, and with the lightning extension I got a very clear, graphical interface for planning out my week (synced using a google calendar) and adjusting the time-blocks dynamically during the week.\n I recently moved to mu4e and in terms of emails, it is absolutely and utterly fantastic. However, I have not been able to find a good planning replacement. I know and use org-gcal which is very good in terms of syncing with google calendar. However, I really miss the ease with which I could view my time-blocks. org-gcal has a weekly view mode, but it does not have any way of showing 'blocks' of time - every event is just a single line (which often doesn't fit in the column).\n I know the emacs universe is too vast for any one person to know and try all the packages. So, I would like to ask for tips and suggestions from people on here. If you time-block using emacs and would like to share how you go about doing it, I'd be very interested to know.\n Cheers\n    submitted by    /u/MrEyff  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcnmbv/timeblocking/",
+          "publishedOn": "2021-08-27T13:43:17.000Z",
+          "wordCount": 306,
+          "title": "Timeblocking"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcn9b1/loading_packages_manually_through_initel/",
+          "author": null,
+          "description": "I'm redoing my init.el file, and I want to have more control/understanding about what it's actually doing. I also want to make my .emacs.d more portable and have all the packages I used installed manually so I can take it with me wherever I go. I downloaded and unzipped the git repo for expand-region into a folder called ~/.emacs.d/offline-packages and I added this to my init.el file\n ```\n (add-to-list 'load-path \"~/.emacs.d/offline-packages/\")\n (load 'expand-region)\n (require 'expand-region)\n ;; bind C-= to expand-region\n (global-set-key (kbd \"C-=\") 'er/expand-region)\n ```\n but when I reload my init.el file I get this error\n ```\n Wrong type argument: stringp, expand-region\n ```\n Does anyone know what this means?\n    submitted by    /u/Fibreman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcn9b1/loading_packages_manually_through_initel/",
+          "publishedOn": "2021-08-27T13:22:36.000Z",
+          "wordCount": 228,
+          "title": "Loading packages manually through init.el"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcmnhw/emacs_autocompletion_change_language/",
+          "author": null,
+          "description": "Hi,\n I am a Doom Emacs user and in my Emacs, company-mode is installed, which results on autocompletion showing during every text that I write, usually Markdown and Orgmode files. Nice! Looks usefull.\n Is there any way to change the completion setting of company-mode to support the Dutch language?\n    submitted by    /u/boelenz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcmnhw/emacs_autocompletion_change_language/",
+          "publishedOn": "2021-08-27T12:47:49.000Z",
+          "wordCount": 266,
+          "title": "Emacs autocompletion, change language?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcjrkq/draw_svg_in_gnu_emacs/",
+          "author": null,
+          "description": "​\n https://preview.redd.it/x11g8h2cavj71.png?width=1122&format=png&auto=webp&s=9e52c89b384deddee0c9bf0941d855f21a0d0726\n Code: https://gitlab.com/atamariya/emacs/-/blob/dev/lisp/svg.el\n    submitted by    /u/atamariya  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcjrkq/draw_svg_in_gnu_emacs/",
+          "publishedOn": "2021-08-27T09:13:27.000Z",
+          "wordCount": 232,
+          "title": "Draw SVG in GNU Emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcjb90/reformat_paragraph/",
+          "author": null,
+          "description": "submitted by    /u/Kaligule  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcjb90/reformat_paragraph/",
+          "publishedOn": "2021-08-27T08:34:08.000Z",
+          "wordCount": 467,
+          "title": "Reformat paragraph"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcf2g7/taxyel_example_application_diredy_groups_files_in/",
+          "author": null,
+          "description": "submitted by    /u/github-alphapapa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcf2g7/taxyel_example_application_diredy_groups_files_in/",
+          "publishedOn": "2021-08-27T03:20:03.000Z",
+          "wordCount": 140,
+          "title": "taxy.el: Example application \"Diredy\", groups files in Dired buffer by size and type"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pce8f4/dired_ellipses_in_square_brackets_before_file/",
+          "author": null,
+          "description": "Hello!\n I would like to know what mode dired may be in in the attached screenshot.\n Thank you kindly for the help!\n https://preview.redd.it/jcze32buatj71.png?width=3240&format=png&auto=webp&s=c784b17e2ffb34f5be35b9733fa63da09b584511\n    submitted by    /u/ShadowRylander  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pce8f4/dired_ellipses_in_square_brackets_before_file/",
+          "publishedOn": "2021-08-27T02:29:18.000Z",
+          "wordCount": 161,
+          "title": "Dired: Ellipses in Square Brackets before file / directory names"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pcdw6r/what_is_your_most_productive_emacs_shortcut/",
+          "author": null,
+          "description": "I recently stumbled across this infamous stack overflow question where the question asker poses the following question: What is the way you use Vim that makes you more productive than with a contemporary editor? \n I'd like to ask the same thing to the emacs crowd. What is the way that you use emacs that makes you more productive than with a contemporary editor?\n    submitted by    /u/getting-rained-on  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pcdw6r/what_is_your_most_productive_emacs_shortcut/",
+          "publishedOn": "2021-08-27T02:08:53.000Z",
+          "wordCount": 736,
+          "title": "What is your most productive emacs shortcut?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pca1lt/keybindings_confusion/",
+          "author": null,
+          "description": "Hello.\n I am newbie emacs user. I use Doom Emacs and it is absolutely beatiful.\n But keybindings kinda' confusing to me. I wanted to add a keybinding opens treemacs\n I've tried like that but it didn't work.\n (map! \"<SPC-f>\" #'treemacs)\n can you explain me?\n    submitted by    /u/ChemistryIsTheBest  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pca1lt/keybindings_confusion/",
+          "publishedOn": "2021-08-26T22:22:24.000Z",
+          "wordCount": 285,
+          "title": "Keybindings Confusion"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pc97ku/how_do_you_set_a_british_english_dictionairy_for/",
+          "author": null,
+          "description": "How do you set a British English dictionairy for Emacs?\n    submitted by    /u/gluesniffmonkey  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pc97ku/how_do_you_set_a_british_english_dictionairy_for/",
+          "publishedOn": "2021-08-26T21:38:02.000Z",
+          "wordCount": 225,
+          "title": "How do you set a British English dictionairy for Emacs?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pc8xx0/customize_the_org_latex_preview_command_for_a/",
+          "author": null,
+          "description": "The org mode has the fantastic latex preview function, which I have used a lot. Now I want some diagrams drawn by Metapost, which requires run LaTeX twice. The default setting obviously does not do this. Is there a way that I can make org-preview run latex twice in a certain file?\n    submitted by    /u/linwaytin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pc8xx0/customize_the_org_latex_preview_command_for_a/",
+          "publishedOn": "2021-08-26T21:23:38.000Z",
+          "wordCount": 254,
+          "title": "Customize the org latex preview command for a single file"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/pc7k9g/the_rise_of_userhostile_software/",
           "author": null,
