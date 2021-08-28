@@ -2,10 +2,452 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2021-08-27T20:36:30.057Z</updated>
+    <updated>2021-08-28T20:35:41.514Z</updated>
     <generator>osmosfeed 1.11.0</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[When is a package considered to be "loaded" for the purposes of "eval-after-load"?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pdgu2i/when_is_a_package_considered_to_be_loaded_for_the/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pdgu2i/when_is_a_package_considered_to_be_loaded_for_the/"/>
+        <updated>2021-08-28T20:03:37.000Z</updated>
+        <summary type="html"><![CDATA[use-package's :after causes the configuration of a package to be wrapped in an eval-after-load block, and it's causing some unexpected timing issues with which package has its configuration done first. Notably, if I do:
+ (use-package evil-org :after org ... ;;config for evil-org ) (use-package evil-org-agenda :after (org evil-org) ... ;;config for evil-org-agenda ) (use-package org-agenda :after (org evil-org evil-org-agenda) ... ;;config for org-agenda ) 
+ ... and then call org-agenda, the order of configuration is 1. org-agenda, 2. evil-org-agenda, 3. evil-org - the opposite order of what I'd expect.
+ Here's a pastebin of my config with the use-package macros expanded and cleaned up a bit, so if someone would be willing to help me understand the life cycle, I'd really appreciate it. I think I understand the beginning:
+  
+I call org-agenda using C-c a
+ org-agenda requires org and triggers org's loading
+ The eval-after-load 'org block in evil-org's block is triggered and does its setup of hooks. At this point, evil-org isn't truly loaded yet, since its config block inside an eval-after-load 'evil-org doesn't run.
+  
+However, after this point I'm lost. We've just established that evil-org isn't loaded, but the next thing to run is the stuff inside org-agenda's config block, which requires (org evil-org evil-org-agenda) to be loaded - which implies we skipped both the eval-after-load 'evil-org mentioned above as well as evil-org-agenda's config block, which only required (org evil-org).
+ The documentation for eval-after-load specifies that if FILE is loaded, the body is evaluated immediately afterwards. How then is it possible for org, evil-org, and evil-org-agenda to go from unloaded to loaded without triggering the stuff inside (use-package 'evil-org ...) or (use-package 'evil-org-agenda ...) first?
+    submitted by    /u/summetria  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Ox-slimhtml no longer in archives?]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/pdg67z/oxslimhtml_no_longer_in_archives/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/pdg67z/oxslimhtml_no_longer_in_archives/"/>
+        <updated>2021-08-28T19:26:12.000Z</updated>
+        <summary type="html"><![CDATA[Previously, between https://melpa.org/packages/ and https://elpa.gnu.org/packages/ I was able to install ox-slimhtml. I understand the old org archive is deprecated and org-contrib is getting its own repo, but slimhtml isn't in https://elpa.nongnu.org/nongnu/ either. Is there another place where this is getting moved or is the only option to clone the git repo?
+    submitted by    /u/AblatedSprocket  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[xah-lookup (20210828.1910) --- look up word on internet.]]></title>
+        <id>https://melpa.org/packages/xah-lookup-20210828.1910.el</id>
+        <link href="https://melpa.org/#/xah-lookup"/>
+        <updated>2021-08-28T19:10:00.000Z</updated>
+        <summary type="html"><![CDATA[The xah-lookup package has been updated to version 20210828.1910.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[HLS and neovim lspconfig for single files]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/pdfjql/hls_and_neovim_lspconfig_for_single_files/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/pdfjql/hls_and_neovim_lspconfig_for_single_files/"/>
+        <updated>2021-08-28T18:50:47.000Z</updated>
+        <summary type="html"><![CDATA[Is it possible to get HLS support for single .hs files using nvim-lspconfig?
+ I used a different client for lsp previously and got hls working. Now I wanted to try out nvims built in lsp client and lspconfig to get something quickly up and running.
+ However, it seems that this only works in projects which use stack or have certain kinds of files like hie.yaml.
+ I am just trying out some basic things, in single files and would love to get HLS running this way.
+    submitted by    /u/Migeil  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How extensible is emacs?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pdfgs5/how_extensible_is_emacs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pdfgs5/how_extensible_is_emacs/"/>
+        <updated>2021-08-28T18:46:07.000Z</updated>
+        <summary type="html"><![CDATA[Hi. Couple days ago I saw a video on youtube about EXWM, that blew my mind. So I thought to switch from dwm to EXWM, but I never used emacs, I'm learning it now, that's quite easy. The thing that most impressed me besides emacs in itself was the Lisp language, such a cool language!
+ I switched from Windows to Linux because it is more flexible and it lets you customize a lot of things. I wish to have a Dynamic OS, but with Tilling Window Manager like dwm It is a tough task to achieve, so maybe EXWM + Emacs can do what I want.
+ But before I dive into the emacs world I have a few questions:
+ Can I have a statusbar integrated with modeline likes this:
+ https://preview.redd.it/s6wkhsea65k71.png?width=1047&format=png&auto=webp&s=7d4846e51146409e7d25a78866773027c67e44e2
+ Can I have custom mini-buffers that does stuff like show a playlist of music/videos and support custom formatting style and images?
+ Can I have an image frame in different workspaces as background and still be able to write text? Its similar to the concept of setting a wallpaper with feh or hsetroot and make emacs transparent, but on emacs buffers instead on the X11 thing. There are some DEs that allow you to have different wallpapers per workspace.
+ I know I can intercept a function call and adds other funcionality, like change the wallpaper with hsetroot. But doing like that I would see my wallpapers behind the emacs, I want to see like if I had spawned sxiv in a buffer with EXWM.
+ Since emacs is a GUI application, I believe all of this is possible. I don't care If I will have to write 1000 lines of e-lisp or more, if this is possible, I will do my best to accomplish it.
+    submitted by    /u/Inphynithus  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[org-alert (20210828.1822) --- Notify org deadlines via notify-send]]></title>
+        <id>https://melpa.org/packages/org-alert-20210828.1822.el</id>
+        <link href="https://melpa.org/#/org-alert"/>
+        <updated>2021-08-28T18:22:00.000Z</updated>
+        <summary type="html"><![CDATA[The org-alert package has been updated to version 20210828.1822.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[helm-ls-git (20210828.1812) --- list git files.]]></title>
+        <id>https://melpa.org/packages/helm-ls-git-20210828.1812.el</id>
+        <link href="https://melpa.org/#/helm-ls-git"/>
+        <updated>2021-08-28T18:12:00.000Z</updated>
+        <summary type="html"><![CDATA[The helm-ls-git package has been updated to version 20210828.1812.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dockerfile-mode (20210828.1805) --- Major mode for editing Docker's Dockerfiles]]></title>
+        <id>https://melpa.org/packages/dockerfile-mode-20210828.1805.el</id>
+        <link href="https://melpa.org/#/dockerfile-mode"/>
+        <updated>2021-08-28T18:05:00.000Z</updated>
+        <summary type="html"><![CDATA[The dockerfile-mode package has been updated to version 20210828.1805.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Whipping Up a Quick Emacs Helper Function for Hugo // Take on Rules]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pddil1/whipping_up_a_quick_emacs_helper_function_for/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pddil1/whipping_up_a_quick_emacs_helper_function_for/"/>
+        <updated>2021-08-28T16:58:54.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/takeonrules  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[orca (20210828.1639) --- Org Capture]]></title>
+        <id>https://melpa.org/packages/orca-20210828.1639.el</id>
+        <link href="https://melpa.org/#/orca"/>
+        <updated>2021-08-28T16:39:00.000Z</updated>
+        <summary type="html"><![CDATA[The orca package has been updated to version 20210828.1639.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[sculpture-themes (20210828.1634) --- Themes with vivid colors]]></title>
+        <id>https://melpa.org/packages/sculpture-themes-20210828.1634.tar</id>
+        <link href="https://melpa.org/#/sculpture-themes"/>
+        <updated>2021-08-28T16:34:00.000Z</updated>
+        <summary type="html"><![CDATA[The sculpture-themes package has been updated to version 20210828.1634.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MultiParameter Typeclass Constraints]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/pdbppt/multiparameter_typeclass_constraints/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/pdbppt/multiparameter_typeclass_constraints/"/>
+        <updated>2021-08-28T15:21:35.000Z</updated>
+        <summary type="html"><![CDATA[Hello,
+ I have been on a small personal mission to try to understand Haskell's type system a bit better by inspecting how & why GHC arrives at particular type errors in my code.
+ I have a bigger program that I am trying to understand (and will likely post at some point), but I have isolated a small piece that I can ask an intelligent question of.
+ I have this script:
+ ```haskell
+ !/usr/bin/env stack
+ -- stack --resolver lts-18.5 exec ghci --package mtl
+ {-# LANGUAGE FlexibleContexts #-}
+ import Control.Monad.Except (MonadError, runExceptT) import Control.Monad.Reader (MonadReader)
+ main :: IO () main = pure ()
+ action :: (MonadReader env m, MonadError Char (t m), MonadReader Double (t m)) => t m [Integer] action = undefined
+ a :: (MonadReader env m) => m (Either Char [Integer]) a = runExce…]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[(Temporarily) Disabling error parsing in compilation mode]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pdbk7d/temporarily_disabling_error_parsing_in/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pdbk7d/temporarily_disabling_error_parsing_in/"/>
+        <updated>2021-08-28T15:13:23.000Z</updated>
+        <summary type="html"><![CDATA[Is there a way to temporarily disable parsing the buffer for errors in compilation mode without doing something obnoxious like removing all the patterns from the compilation errors alist?
+ I have a data-build process that I run as a compilation, and the error checking matches a time stamp as an error, and tries to open a file based on it, which is a pain. I could find the exact pattern that's doing the match and remove it—it's likely that I don't need it for anything I'm doing anyway—but honestly, there are zero times when I want that buffer parsed for errors. I just want to shut them off while the compilation is running, and then I'll turn them back on after.
+    submitted by    /u/vjgoh  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to plot org-agenda-clockreport?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pdbamn/how_to_plot_orgagendaclockreport/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pdbamn/how_to_plot_orgagendaclockreport/"/>
+        <updated>2021-08-28T14:59:09.000Z</updated>
+        <summary type="html"><![CDATA[I am using doom emacs. Dose anybody has plotted this before for example with a histogramm diagramm or in a pie chart?
+ | schedule.org| *File time* | *4d 11:22* | | | |
+ | | Projects | 4d 11:22 | | | |
+ | | \_ Management | | 2:01 | | |
+ | | \_ Time overview | | | 1:11 | |
+ | | \_ Money overview | | | 0:04 | |
+ | | \_ ledger | | | | 0:04 |
+  
+   
+ ​
+ https://preview.redd.it/7x93i3pd54k71.png?width=1303&format=png&auto=webp&s=37cccab6024c1b9921957911e170ee5e5c53d82c
+ Has anybody a fast way or done this before?
+    submitted by    /u/argsmatter  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Symbol’s value as variable is void: lsp-mode-map, I can't seem to fix this error, and it's not letting me run M-x eval-buffer, any tips on how to fix this error:]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pdb0mn/symbols_value_as_variable_is_void_lspmodemap_i/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pdb0mn/symbols_value_as_variable_is_void_lspmodemap_i/"/>
+        <updated>2021-08-28T14:43:18.000Z</updated>
+        <summary type="html"><![CDATA[Setting up helm fixed this issue: https://www.reddit.com/r/emacs/comments/pd43n5/im_having_an_emacs_javalsp_issue/
+ But, it also caused this other issue as well.
+ Thanks in advance for the help!
+ Helm specific .emacs config:
+ ;;-------------------------------------------------
+ ;; Helm is an Emacs framework for incremental completions and narrowing selections:
+ (use-package helm
+ :defer t
+ :bind
+ ​
+ (("M-x" . helm-M-x)
+ ("C-x C-f" . helm-find-files)
+ :map helm-map
+ ("C-j" . helm-next-line)
+ ("C-k" . helm-previous-line))
+ ​
+ (:map lsp-mode-map
+ ([remap xref-find-apropos] . helm-lsp-workspace-symbol))
+ ​
+ (:map helm-command-map
+ ("C-c h" . helm-execute-persistent-action))
+ ​
+ :config (helm-mode))
+ ​
+ ;; for helm-lsp:
+ ;; (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol)
+ ​
+ ;; helm language-server integration:
+ (use-package helm-lsp
+ :defer t)
+ ;;-------------------------------------------------
+    submitted by    /u/zeta_00  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[System Crafters bringing some light about the EXWM situation]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pd8prz/system_crafters_bringing_some_light_about_the/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pd8prz/system_crafters_bringing_some_light_about_the/"/>
+        <updated>2021-08-28T12:14:14.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/Hrothehun  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to duplicate the current frame and open windows?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pd7b7i/how_to_duplicate_the_current_frame_and_open/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pd7b7i/how_to_duplicate_the_current_frame_and_open/"/>
+        <updated>2021-08-28T10:19:25.000Z</updated>
+        <summary type="html"><![CDATA[Hi!
+ Is there a way to duplicate the current frame and open windows?
+ Most of the time, my Emacs window takes up half the screen, but sometimes I need to temporarily add buffers from the project to the screen and I want to do this in another frame so as not to waste time closing additional buffers.
+ I'm tried many approach, but the new frame only opens one buffer. And new frame shifted from original position. Any help is greatly appreciated.
+ (defun bss/duplicate-frame () (interactive) (let* ( (frame (selected-frame)) (fw (frame-width)) (fh (frame-height)) (fp (frame-position)) ) ;; (frame-configuration-to-register ?1) (window-configuration-to-register ?1) ;; (setq my-window-list (current-frame-configuration)) ;; (make-frame-command) (setq frame (make-frame)) ;; (select-frame frame) (select-frame-set-input-focus frame) ;; (set-frame-configuration my-window-list) (set-frame-width frame fw nil nil) (set-frame-height frame fh nil nil) (set-frame-position (car fp) (cdr fp)) (jump-to-register ?1) ;; (jump-to-frame-config-register ?1) )) 
+    submitted by    /u/bravosierrasierra  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[New project: ayeQ: A toolbox for working with IQ modulation]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/pd65de/new_project_ayeq_a_toolbox_for_working_with_iq/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/pd65de/new_project_ayeq_a_toolbox_for_working_with_iq/"/>
+        <updated>2021-08-28T08:33:17.000Z</updated>
+        <summary type="html"><![CDATA[Hello Haskell!
+ I've recently started working on a project that allows the creation of IQ files that can be plaid back through SDRs (code here). Heavily influenced by GNURadio, this project allows easy modulation/synthesis of data on the command line and it makes use of the Pipes library, keeping the runtime memory footprint as low as possible.
+ I'm looking to extend this by adding:
+  
+More modulation types
+ Demodulation
+ A set of components that can be composed together at runtime.
+  
+That last point is an interesting one. I'm aware that Pipes speed mainly comes from fusion optimisation. I was thinking that it would be nice to have something similar to gcc's libgccjit, allowing JIT optimisation of a composed pipeline, increasing performance. Another nice side-effect of this approach is that by using the type system, you could have runtime typechecking of the pipeline, preventing uncomposable components to be connected. I couldn't find anything in GHC that facilities this unfortunately.
+ Feedback appreciated!
+    submitted by    /u/hexagonal-sun  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[modus-themes (20210828.756) --- Highly accessible themes (WCAG AAA)]]></title>
+        <id>https://melpa.org/packages/modus-themes-20210828.756.tar</id>
+        <link href="https://melpa.org/#/modus-themes"/>
+        <updated>2021-08-28T07:56:00.000Z</updated>
+        <summary type="html"><![CDATA[The modus-themes package has been updated to version 20210828.756.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Workflow for busy UG / CS major.]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/pd5kke/workflow_for_busy_ug_cs_major/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/pd5kke/workflow_for_busy_ug_cs_major/"/>
+        <updated>2021-08-28T07:41:10.000Z</updated>
+        <summary type="html"><![CDATA[Hi I'm working part-time, studying and I'm a TA as well. My schedule is pretty hectic, I want to learn other people's workflow who are in a similar boat, so I can replicate it.
+ Thanks.
+    submitted by    /u/whoisthisman69  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[orgtbl-join (20210828.715) --- join columns from another table]]></title>
+        <id>https://melpa.org/packages/orgtbl-join-20210828.715.el</id>
+        <link href="https://melpa.org/#/orgtbl-join"/>
+        <updated>2021-08-28T07:15:00.000Z</updated>
+        <summary type="html"><![CDATA[The orgtbl-join package has been updated to version 20210828.715.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Glean -System for collecting, deriving and querying facts about source code]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/pd49bp/glean_system_for_collecting_deriving_and_querying/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/pd49bp/glean_system_for_collecting_deriving_and_querying/"/>
+        <updated>2021-08-28T05:49:43.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/n00bomb  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[I'm having an emacs java-lsp issue:]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pd43n5/im_having_an_emacs_javalsp_issue/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pd43n5/im_having_an_emacs_javalsp_issue/"/>
+        <updated>2021-08-28T05:36:47.000Z</updated>
+        <summary type="html"><![CDATA[Hello there, I'm having an issue getting the spring java builder to initialize a java project. I already have a java-lsp and it's related packages in it's github repo setup. Anyways, when I run 
+ lsp-java-spring-initializer 
+ , it returns this error? 
+ error in process sentinel: Symbol’s value as variable is void: helm-map 
+ , why is this error occurrin and how do I fix it?
+ ​
+ Research website links:
+ https://github.com/emacs-lsp/lsp-java#sts4-integration-experimental
+ https://xpressrazor.wordpress.com/2020/11/04/java-programming-in-emacs/
+ ​
+ Thanks in advance for the help!
+    submitted by    /u/zeta_00  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Control key is sticky in graphical mode]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pd1frv/control_key_is_sticky_in_graphical_mode/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pd1frv/control_key_is_sticky_in_graphical_mode/"/>
+        <updated>2021-08-28T02:24:33.000Z</updated>
+        <summary type="html"><![CDATA[Hello!
+ How do I disable this functionality in graphical mode?
+ Thank you kindly for the help!
+    submitted by    /u/ShadowRylander  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Is there anybody out there willing to teach hands-on?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/pd0kno/is_there_anybody_out_there_willing_to_teach/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/pd0kno/is_there_anybody_out_there_willing_to_teach/"/>
+        <updated>2021-08-28T01:28:40.000Z</updated>
+        <summary type="html"><![CDATA[I'm looking for a hands on teacher of Haskell.
+    submitted by    /u/bunupthesess  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Help! How to access files in a gs bucket by using Scala in a dataproc job?]]></title>
+        <id>https://www.reddit.com/r/scala/comments/pd0ezs/help_how_to_access_files_in_a_gs_bucket_by_using/</id>
+        <link href="https://www.reddit.com/r/scala/comments/pd0ezs/help_how_to_access_files_in_a_gs_bucket_by_using/"/>
+        <updated>2021-08-28T01:18:25.000Z</updated>
+        <summary type="html"><![CDATA[Hi, I have read that there is embedded the Google Cloud Connector within any dataproc instance, but I don't really can find how can I access a file that is in a specific bucket. Isn't there any easy way to read that file within the Scala code? Should I use the Java library to use the gcs sdk?
+ Thank you in advance, I'd appreciate any help!
+    submitted by    /u/irvinra18  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[Dependent types] Can pi types be usefully thought of as cross-sections of sum types?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/pcxvu0/dependent_types_can_pi_types_be_usefully_thought/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/pcxvu0/dependent_types_can_pi_types_be_usefully_thought/"/>
+        <updated>2021-08-27T22:42:50.000Z</updated>
+        <summary type="html"><![CDATA[I just read through part of the transcript of the latest podcast[1] of Haskell Weekly, "Dependent types with Vladislav Zavialov", until they were (I think) done talking about sigma and pi types. Still confused, I bounced to Wikipedia[2]. At this point I think I understand what they are, and how they differ.
+ Suppose A is a type in some collection of types U, and B is a type family from A to U. That is, an input to B is some member of the type A, and an output from B is an entire type from U. Then:
+ (1) Sigma [x:A] B(x) is the collection of pairs (x,y) for x:A and y:B(x).
+ (2) Pi [x:A] B(x) is the collection of function-like things mapping every input x:A to some y:B(x).
+ (3) Therefore, every element of a pi type can be seen as a cross section of the corresponding sigma type.
+ If (3) is correct, then the title of this post is wrong -- the title suggests that the pi type itself, rather than each of its members, is a cross section of the corresponding sigma type.
+ Have I understood?
+ [1] https://haskellweekly.news/episode/51.html
+ [2] https://en.wikipedia.org/wiki/Dependent_type
+    submitted by    /u/JeffreyBenjaminBrown  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Solving Expression Problem for simple interpreter]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/pcx4cx/solving_expression_problem_for_simple_interpreter/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/pcx4cx/solving_expression_problem_for_simple_interpreter/"/>
+        <updated>2021-08-27T21:59:30.000Z</updated>
+        <summary type="html"><![CDATA[I have been reading about Expression Problem, and I found this comment on r/haskell, which leads to this online discussion, where the main idea is following:
+  
+a widely known Haskell solution to the expression problem, is to lift all constructors to the type level, and use type classes to implement cases where you'd normally use pattern matching. The solution presented in this paper essentially makes this the canonical method of pattern matching, ie. pattern matching is reduced to dictionary dispatch. The connections to OO vtables is obvious I hope.
+  
+I decided to give it a try and implement a simple interpreter that doesn't have an Expression Problem (which means that both types and operations can be added without modifying existing code).
+ This is a simple implementation I started with…]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Interactive tangling with org?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/pcvynr/interactive_tangling_with_org/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/pcvynr/interactive_tangling_with_org/"/>
+        <updated>2021-08-27T20:58:10.000Z</updated>
+        <summary type="html"><![CDATA[Hi everyone
+ Is there a way of doing an interactive tangling with orgmode? What I want is to place a specific string in a code block and then have org ask with what to place the string with when tangling the file.
+ I looked in the babel manual but found nothing of the sort.
+ Thanks.
+    submitted by    /u/ElCondorHerido  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[A pattern for accumulating "pieces" of a product type?]]></title>
         <id>https://www.reddit.com/r/haskell/comments/pcuxic/a_pattern_for_accumulating_pieces_of_a_product/</id>
@@ -6264,48 +6706,6 @@ and I get
  [link]   [comments]]]></summary>
         <author>
             <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Serokell at ICFPC 2021: Rust, TypeScript, and Brain Wall]]></title>
-        <id>https://serokell.io/blog/serokell-icfpc-2021</id>
-        <link href="https://serokell.io/blog/serokell-icfpc-2021"/>
-        <updated>2021-07-30T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[On July 9-12, three Serokellers took part in ICFPC 2021 as part of team TBD. Read this article to learn how the team solved this year's task.]]></summary>
-        <author>
-            <name>hi@serokell.io (Serokell staff)</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-roam (Emacs Zettelkasten Package) Version 2 Released]]></title>
-        <id>1910@/discussions</id>
-        <link href="https://forum.zettelkasten.de/discussion/1910/org-roam-emacs-zettelkasten-package-version-2-released"/>
-        <updated>2021-07-29T17:23:34.000Z</updated>
-        <summary type="html"><![CDATA[org-roam (Emacs Zettelkasten Package) Version 2 Released
-                   
-A Zettelkasten is a personal tool for thinking and writing that creates an interconnected web of thought. Its emphasis is on connection and not mere collection of ideas.
-Read the full story here]]></summary>
-        <author>
-            <name>System</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Issue 274]]></title>
-        <id>https://haskellweekly.news/issue/274.html</id>
-        <link href="https://haskellweekly.news/issue/274.html"/>
-        <updated>2021-07-29T12:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Welcome to another issue of Haskell Weekly!
-Haskell is a safe, purely functional programming language with a fast, concurrent runtime.
-This is a weekly summary of what’s going on in its community.
-Featured
-Static analysis using Haskell and Datalog by Luc Tielen
-In today’s post, I will give a step-by-step tutorial how you can write sophisticated analyses in Soufflé Datalog controlled by Haskell using the souffle-haskell library.
-Bridging a typed and an untyped world by Christoph Hermann
-Most recently: we were trying to bridge the gap between Haskell and Redis. Here we’ll discuss two iterations of our Redis library for Haskell, nri-redis.
-Composable Data Validation with Haskell by Ben Levy & Christian Charukiewicz
-In order to meet the above requirements, we decided to write a small embedded …]]></summary>
-        <author>
-            <name>Haskell Weekly</name>
         </author>
     </entry>
 </feed>
