@@ -40,15 +40,6 @@
           "publishedOn": "2021-08-19T12:00:00.000Z",
           "wordCount": 758,
           "title": "Issue 277"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/276.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nA Brief Intro to Monad Transformers by Solomon Bothwell\nA few friends have recently asked about literature introducing Monad Transformers. The best introduction I have found was in Haskell Programming From First Principles. If you don’t have, or want to purchase, this book, then here is a brief explanation with examples.\nA brief intro to MTL by Jappie Klooster\nThat blogpost inspired me to write this, because I can’t find a succinct description on how to use MTL. I learned MTL by staring at reflex for days, if not weeks.\nCast Values with Witch by Haskell Weekly Podcast\nBack from summer br…",
-          "link": "https://haskellweekly.news/issue/276.html",
-          "publishedOn": "2021-08-12T12:00:00.000Z",
-          "wordCount": 721,
-          "title": "Issue 276"
         }
       ]
     },
@@ -57,6 +48,51 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pmczf3/how_are_typeclass_names_functor_monoid_etc_used/",
+          "author": null,
+          "description": "I'm a beginner and a bit confused about how typeclass names, like Functor or Monoid, are used in speech.\n To make my question more concrete, consider the following examples:\n  \nThe set of all values of type f a and the operation fmap :: (a -> b) -> f a -> f b together form an algebra (algebraic structure) which is a Functor. An algebra is considered to be a Functor when it has one operation fmap which satisfies certain laws.\n If there exists an operation fmap :: (a -> b) -> f a -> f b, then the type constructor f is called a functor.\n The function fmap :: (a -> b) -> f a -> f b is called a functor.\n  \nWhich of these sentences are correct?\n My intuition is that the first example, describing an algebra formed by the pair (values of f a, fmap), is the most correct/universal, and similar thing…",
+          "link": "https://www.reddit.com/r/haskell/comments/pmczf3/how_are_typeclass_names_functor_monoid_etc_used/",
+          "publishedOn": "2021-09-11T18:44:28.000Z",
+          "wordCount": 733,
+          "title": "How are typeclass names (Functor, Monoid, etc) used in speech?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pm7rcr/cs_syd_json_vulnerability_in_haskells_aeson/",
+          "author": null,
+          "description": "submitted by    /u/NorfairKing2  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pm7rcr/cs_syd_json_vulnerability_in_haskells_aeson/",
+          "publishedOn": "2021-09-11T13:49:03.000Z",
+          "wordCount": 665,
+          "title": "CS SYD - JSON Vulnerability in Haskell's Aeson library"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pm6g5w/an_ideal_datamodelfirst_development_approach_for/",
+          "author": null,
+          "description": "submitted by    /u/jhoxray  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pm6g5w/an_ideal_datamodelfirst_development_approach_for/",
+          "publishedOn": "2021-09-11T12:20:55.000Z",
+          "wordCount": 774,
+          "title": "An Ideal Data-Model-First Development Approach for the real-world apps"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/plx3he/annrfc_constraintrules/",
+          "author": null,
+          "description": "constraint-rules provides a way to extend GHC's type checker with custom rules without having to write your own type checker plugin. See https://github.com/YellPika/constraint-rules for more info and some example code.\n The plugin is in a usable state but I have yet to publish it on Hackage because it's still a bit rough around the edges (error locations are sometimes wrong, it probably doesn't handle dependent kinds properly, the test suite is lacking, there's not enough documentation, etc). If any brave souls are willing to give it a spin, I would appreciate any feedback.\n    submitted by    /u/YellPika  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/plx3he/annrfc_constraintrules/",
+          "publishedOn": "2021-09-11T00:28:33.000Z",
+          "wordCount": 1385,
+          "title": "[ANN/RFC] constraint-rules"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pluj73/using_gadts_with_datakinds_for_type_level_data/",
+          "author": null,
+          "description": "I'm trying to use a GADT with DataKinds, as shown below\n {-# LANGUAGE KindSignatures, DataKinds, GADTs #-} module NewGadt where data ExprType = Var | Nest data Expr (a :: ExprType) where ExprVar :: String -> Expr Var ExprNest :: Expr a -> Expr Nest data BaseExpr = BaseExprVar String | BaseExprNest BaseExpr translate :: BaseExpr -> Expr a translate (BaseExprVar id) = ExprVar id translate (BaseExprNest expr) = ExprNest $ translate expr \n Compile error:\n /home/elijah/code/monty/src/NewGadt.hs:15:32: error: • Couldn't match type ‘a’ with ‘'Var’ ‘a’ is a rigid type variable bound by the type signature for: bexprToExpr :: forall (a :: ExprType). BaseExpr -> Expr a at src/NewGadt.hs:14:1-33 Expected type: Expr a Actual type: Expr 'Var • In the expression: ExprVar id In an equation for ‘bexprToExpr’: bexprToExpr (BaseExprVar id) = ExprVar id • Relevant bindings include bexprToExpr :: BaseExpr -> Expr a (bound at src/NewGadt.hs:15:1) | 15 | bexprToExpr (BaseExprVar id) = ExprVar id | ^^^^^^^^^^ \n I would like to do this so certain functions can only work on a specific type of expr, for example:\n printVariable :: Expr Var -> IO () printVariable (ExprVar id) = putStrLn id printNested :: Expr Nest -> IO () printNested (ExprNest inner) = putStrLn \"nested expression\" printExpr :: Expr a -> IO () printExpr expr@ExprVar {} = printVariable expr printExpr expr@ExprNest {} = printNested expr \n And of course, calling printVariable with an Expr Nest should fail compilation.\n Is there a way I can have the translate function return Expr a like this? Or is this an inappropriate usage of DataKinds & GADTs?\n ^ repost from https://stackoverflow.com/questions/69138268/using-gadts-with-datakinds-for-type-level-data-constructor-constraints-in-functi\n    submitted by    /u/elimirks  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pluj73/using_gadts_with_datakinds_for_type_level_data/",
+          "publishedOn": "2021-09-10T21:53:04.000Z",
+          "wordCount": 1061,
+          "title": "Using GADTs with DataKinds for type level data constructor constraints in functions"
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/plr86x/any_luck_crosscompiling_stack_or_cabal_projects/",
           "author": null,
@@ -425,6 +461,15 @@
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/scala/comments/pm57ky/a_collection_of_the_best_scala_tutorials_for/",
+          "author": null,
+          "description": "I have compiled a list of the best Scala tutorials for beginners to learn to build imperative, logical, functional, and OOP skills.\n    submitted by    /u/gandhiN  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pm57ky/a_collection_of_the_best_scala_tutorials_for/",
+          "publishedOn": "2021-09-11T10:45:04.000Z",
+          "wordCount": 132,
+          "title": "A Collection of the Best Scala Tutorials For Beginners"
+        },
+        {
           "id": "https://www.reddit.com/r/scala/comments/plldf1/is_microservices_architecture_the_silver_bullet/",
           "author": null,
           "description": "Some of you might find this blog post interesting.\n    submitted by    /u/scalac_io  \n [link]   [comments]",
@@ -718,15 +763,6 @@
           "publishedOn": "2021-08-13T20:49:17.000Z",
           "wordCount": 400,
           "title": "Anyone using doom emacs? Care to help with the configuration or share their config?"
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/p3daa7/can_i_ask_for_the_code_review/",
-          "author": null,
-          "description": "I'm actually learning this language for a couple of months now. I don't have any experience with Haskell. And I don't have any colleagues or developers around to discuss the idioms or Haskell/PureScript way to code. I'm solving the AoC puzzles to learn and try to get used to it. I think the AoC 2020 d4 puzzle is the one of the best puzzles to practice how to parse and process the data after parsing. Here is my code. Can I have a code review for the idioms or a better way to use this language?\n https://github.com/mattdamon108/aoc-purescript/blob/main/src/aoc2020/D4.purs\n    submitted by    /u/moondaddi80  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/p3daa7/can_i_ask_for_the_code_review/",
-          "publishedOn": "2021-08-13T01:13:16.000Z",
-          "wordCount": 485,
-          "title": "Can I ask for the code review?"
         }
       ]
     },
@@ -878,6 +914,60 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pmbg43/is_there_an_api_for_getting_the_properties_under/",
+          "author": null,
+          "description": "Is there an API for getting _only_the properties in a specific block?\n ** Export Locations :PROPERTIES: :EXPORT_FILE_NAME_01: file1 :EXPORT_FILE_NAME_02: file2 :EXPORT_FILE_NAME_03: file3 :EXPORT_FILE_NAME_04: file4 :END: \n So with the cursor in a block like this only (\"EXPORT_FILE_NAME_01\" . \"file1\",\"EXPORT_FILE_NAME_01\" . \"file1\", \"...\") will be returned.\n (org-entry-properties (point)) includes values like CATEGORY, PRIORITY AND ITEM which I don't want.\n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pmbg43/is_there_an_api_for_getting_the_properties_under/",
+          "publishedOn": "2021-09-11T17:19:31.000Z",
+          "wordCount": 197,
+          "title": "Is there an API for getting the PROPERTIES under a headline?"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pm7co5/does_the_orgelementapi_have_a_role_in_executing/",
+          "author": null,
+          "description": "submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pm7co5/does_the_orgelementapi_have_a_role_in_executing/",
+          "publishedOn": "2021-09-11T13:22:49.000Z",
+          "wordCount": 170,
+          "title": "Does the org-element-api have a role in executing babel blocks, or is it just building syntax trees for org documents?"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pm5pls/what_setting_exists_to_expand_all_drawers_when/",
+          "author": null,
+          "description": "Having to expand PROPERTIES, LOGBOOK and other drawers is something I have become rather tired of.\n Is there some setting which automatically expands all of them when you expand the headline?\n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pm5pls/what_setting_exists_to_expand_all_drawers_when/",
+          "publishedOn": "2021-09-11T11:24:33.000Z",
+          "wordCount": 207,
+          "title": "What setting exists to expand all drawers when you tab a headline to expand it?"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pm5be8/use_clocktable_in_source_block/",
+          "author": null,
+          "description": "I have a clocktable that looks like this:\n ```\n +BEGIN: clocktable :maxlevel 2 :scope file-with-archives :link t :tstart \"2021-08-31\" :tags t :sort (1 . ?a)\n +CAPTION: Clock summary at [2021-09-11 Sat 11:53]\n | Tags | Headline | Time | | |---------------------+-------------------------------------+---------+------| | | Total time | 00:42 | | |---------------------+-------------------------------------+---------+------| | | [[file:/home/me/some.org::*Tasks][Tasks]] | 00:42 | | | a | _ [[file:home/me/some.org::*First Task][First Task]] | | 0:18 | | a, b | _ [[file:home/me/some.org::*Second Task][Second Task]] | | 0:24 | |---------------------+-------------------------------------+---------+------|\n +END:\n ```\n How can I reference the table inside a source block? Adding a #+NAME: doesn't seem to be sufficient.\n    submitted by    /u/heyarne  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pm5be8/use_clocktable_in_source_block/",
+          "publishedOn": "2021-09-11T10:53:53.000Z",
+          "wordCount": 222,
+          "title": "Use clocktable in source block"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pm0nnu/repeat_tasks_every_workday/",
+          "author": null,
+          "description": "Hello,\n The `++1d` in org timestamp repeats the task every day. Is there an \"every workday\" repeater? I.e. Mon-Fri only?\n    submitted by    /u/CGenie  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pm0nnu/repeat_tasks_every_workday/",
+          "publishedOn": "2021-09-11T04:28:44.000Z",
+          "wordCount": 220,
+          "title": "Repeat tasks every workday?"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/plv9qf/what_is_the_elegant_way_to_execute_a_source_code/",
+          "author": null,
+          "description": "I need to execute a source code block programatically, ie the cursor must retain its current position after execution.\n What I have in mind is give the block a name, search for the name, move the cursor 2 lines down to execute org-ctrl-c-ctrl-c, then return to the original location because I used save-excursion.\n Is there some existing API for this task?\n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/plv9qf/what_is_the_elegant_way_to_execute_a_source_code/",
+          "publishedOn": "2021-09-10T22:34:53.000Z",
+          "wordCount": 748,
+          "title": "What is the elegant way to execute a source code block programatically?"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/plhaur/has_the_way_orgpriority_are_set_been_changed/",
           "author": null,
@@ -1129,6 +1219,51 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/geiser-gauche-20210911.1041.tar",
+          "author": null,
+          "description": "The geiser-gauche package has been updated to version 20210911.1041.",
+          "link": "https://melpa.org/#/geiser-gauche",
+          "publishedOn": "2021-09-11T10:41:00.000Z",
+          "wordCount": 105,
+          "title": "geiser-gauche (20210911.1041) --- Gauche scheme support for Geiser"
+        },
+        {
+          "id": "https://melpa.org/packages/flycheck-objc-clang-20210911.1023.el",
+          "author": null,
+          "description": "The flycheck-objc-clang package has been updated to version 20210911.1023.",
+          "link": "https://melpa.org/#/flycheck-objc-clang",
+          "publishedOn": "2021-09-11T10:23:00.000Z",
+          "wordCount": 105,
+          "title": "flycheck-objc-clang (20210911.1023) --- Flycheck: Objective-C support using Clang"
+        },
+        {
+          "id": "https://melpa.org/packages/rg-20210911.839.tar",
+          "author": null,
+          "description": "The rg package has been updated to version 20210911.839.",
+          "link": "https://melpa.org/#/rg",
+          "publishedOn": "2021-09-11T08:39:00.000Z",
+          "wordCount": 105,
+          "title": "rg (20210911.839) --- A search tool based on ripgrep"
+        },
+        {
+          "id": "https://melpa.org/packages/popper-20210911.55.el",
+          "author": null,
+          "description": "The popper package has been updated to version 20210911.55.",
+          "link": "https://melpa.org/#/popper",
+          "publishedOn": "2021-09-11T00:55:00.000Z",
+          "wordCount": 105,
+          "title": "popper (20210911.55) --- Summon and dismiss buffers as popups"
+        },
+        {
+          "id": "https://melpa.org/packages/pandoc-mode-20210910.2043.tar",
+          "author": null,
+          "description": "The pandoc-mode package has been updated to version 20210910.2043.",
+          "link": "https://melpa.org/#/pandoc-mode",
+          "publishedOn": "2021-09-10T20:43:00.000Z",
+          "wordCount": 105,
+          "title": "pandoc-mode (20210910.2043) --- Minor mode for interacting with Pandoc"
+        },
+        {
           "id": "https://melpa.org/packages/proof-general-20210910.1656.tar",
           "author": null,
           "description": "The proof-general package has been updated to version 20210910.1656.",
@@ -1163,6 +1298,15 @@
           "publishedOn": "2021-09-10T12:44:00.000Z",
           "wordCount": 105,
           "title": "flycheck-swift3 (20210910.1244) --- Flycheck: Swift support for Apple swift-mode"
+        },
+        {
+          "id": "https://melpa.org/packages/company-ledger-20210910.250.el",
+          "author": null,
+          "description": "The company-ledger package has been updated to version 20210910.250.",
+          "link": "https://melpa.org/#/company-ledger",
+          "publishedOn": "2021-09-10T02:50:00.000Z",
+          "wordCount": 105,
+          "title": "company-ledger (20210910.250) --- Fuzzy auto-completion for Ledger & friends"
         },
         {
           "id": "https://melpa.org/packages/emms-20210910.154.tar",
@@ -2998,6 +3142,78 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pmd720/is_the_default_displaybuffer_logic_secretly_good/",
+          "author": null,
+          "description": "Coming from a vim + tmux background, the way display-buffer chooses to pop-up or overwrite existing windows can be kind of annoying. At first, I just set display-buffer-base-action to prefer putting buffers in the current window. Then, I started thinking about e.g. help buffers - I actually did want them to pop up sometimes, because I didn't want to have to create a new window, switch to it, and then open help every time I wanted to look up a function. However, after spending an hour working on getting display-buffer-alist to demonstrate my desired behavior, I realized I had created a really similar configuration to the default display-buffer logic.\n At this point, I started to wonder if the problem was just with me - maybe my problem with windows is that I don't grok buffers. Maybe there's a Zen of window management where - when magit appears on top of the mu4e buffer with the commit hash your lead was telling you to look at, or help pops up and squishes the window with your code into a postage stamp - a more seasoned graybeard would react with equanimity, recognizing that carefully cultivated window configurations were ephemeral, but that their contents are everlasting, and be able to retrieve and reorder things without getting annoyed or losing flow.\n Or, maybe display-buffer just sucks. I'm interested to hear what more experienced users think!\n    submitted by    /u/summetria  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pmd720/is_the_default_displaybuffer_logic_secretly_good/",
+          "publishedOn": "2021-09-11T18:56:31.000Z",
+          "wordCount": 337,
+          "title": "Is the default \"display-buffer\" logic secretly good?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pm8qac/is_it_possible_to_use_doom_emacss_version_of/",
+          "author": null,
+          "description": "I really would love to pin certain packages to a specific commit. I can’t find a fork of straight or something where it is implemented and my lisp is to bad to implement it based on dooms version.\n    submitted by    /u/joelsas  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pm8qac/is_it_possible_to_use_doom_emacss_version_of/",
+          "publishedOn": "2021-09-11T14:47:59.000Z",
+          "wordCount": 328,
+          "title": "Is it possible to use doom emacs‘s version of straight in vanilla emacs?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pm8ojm/projectile_how_to_switch_between_related_files_eg/",
+          "author": null,
+          "description": "I tried to set below expression in .dir-locals.el but it doesn't work. Projectile says, 'no other file found'. What am I doing wrong?\n ((nil . ((setq my/related-files (list (projectile-related-files-fn-extensions :other '(\"html\" \"css\" \"js\")) ))\n )))\n (projectile-register-project-type ;; ... :related-files-fn my/related-files)\n Projectile doc link\n    submitted by    /u/eyes_on_camera  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pm8ojm/projectile_how_to_switch_between_related_files_eg/",
+          "publishedOn": "2021-09-11T14:45:03.000Z",
+          "wordCount": 185,
+          "title": "Projectile: How to switch between related files, eg. index.html, index.js, index.css?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pm4dhf/cc_cc_turned_into_prefix_key_in_org_mode/",
+          "author": null,
+          "description": "Hi,\n Today when trying to check some checkboxes in an org file, using C-c C-c as I always do it no longer worked. Instead I get C-c C-c- in the Minibuffer, like it is now treating C-c C-c as a prefix key in Org..?\n It seems to be something in my Init files, as it works as expected with emacs -q and then loading same Org file, but I can't for my life figure out what change might have caused this.\n And it seems Org related as C-c C-c works as expected in other modes (i.e. does nothing C-c C-c is undefined in ordinary text file)\n *Sigh* ... Any ideas where I could look?\n \n When asking in r/orgmode it was suggested to try with which-key mode, which I did. But only difference is then I get\n C-c C-c- which-key: There are no keys to show\n in Minibuffer when I do the C-c C-c on the checkboxes..?\n    submitted by    /u/w0wt1p  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pm4dhf/cc_cc_turned_into_prefix_key_in_org_mode/",
+          "publishedOn": "2021-09-11T09:33:32.000Z",
+          "wordCount": 369,
+          "title": "C-c C-c turned into \"prefix key\" in org mode?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pm33pe/emacs_as_repl/",
+          "author": null,
+          "description": "Quite literally, although maybe not very useful I just love how literally it is\n ```\n $ emacs --batch --eval \"(while t (print (eval (read))))\" Lisp expression: (defun factorial (x) (if (> x 0) (* (factorial (1- x)) x) 1)) factorial Lisp expression: (factorial 5) 120 Lisp expression: Error reading from stdin \n ```\n (I pressed ^D at the last input)\n It's a bit useful for me as I'm experimenting shipping batch mode emacs as Elisp interpreter for Elisp applications.\n    submitted by    /u/BlueFlo0d  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pm33pe/emacs_as_repl/",
+          "publishedOn": "2021-09-11T07:43:43.000Z",
+          "wordCount": 360,
+          "title": "Emacs as REPL"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/plxcuf/orgmode_anki_incremental_reading_inspired_by/",
+          "author": null,
+          "description": "For a few days I've been experimenting with Anki and SuperMemo (Spaced Repetition Software).\n One thing that is cool in SuperMemo is that I can import a long document and extract a few parts to create flashcards. Although anki-editor can export an org-mode tree to Anki cards, I would need to change all the notes I've taken (with org-roam) and adapt the structure to create cards.\n I thought that the cards should be as close as possible to the notes so I created a special-block called #+BEGIN_ANKI that has other special blocks for the card fields.\n The block looks like this:\n #+ATTR_DECK: Test #+ATTR_TYPE: Cloze #+ATTR_TAGS: incremental-reading emacs #+BEGIN_ANKI org #+ATTR_FIELD: Text #+BEGIN_FIELD {{c1::Observer pattern}} is a Software Design Pattern in which an object, named the ~subject~, maintains a list of its dependents, called {{c2::~observers~}}, and notifies them automatically of any state changes, usually by calling one of their methods. #+END_FIELD #+END_ANKI \n I created a package org-mode-incremental-reading that sends this block to Anki (through anki-connect) so I can learn/remember all my notes.\n I'm sharing this package so that it may help someone who also uses org-mode for notes and Anki.\n    submitted by    /u/FloppyEggplant  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/plxcuf/orgmode_anki_incremental_reading_inspired_by/",
+          "publishedOn": "2021-09-11T00:46:06.000Z",
+          "wordCount": 393,
+          "title": "org-mode + Anki - incremental reading inspired by SuperMemo"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/plx8i0/ediff_setup_windows_problems/",
+          "author": null,
+          "description": "At work, I'm forced to use an old version of Emacs: GNU Emacs 23.1.1.\n Two things about ediff:\n 1) I'm using ediff-window-setup-function to be ediff-setup-windows-plain. What I want and expect is to have, upon ediff invocation, two \"windows\" onto the two buffers being diff'ed that take up almost all of the frame and a one-line \"window\" for the Control Frame. Instead, I get five windows: the one I invoked ediff from takes a quarter of the frame, a duplicate of that takes a quarter, the Ediff Control Frame takes a quarter, and the two buffers being diff'ed each take an eighth. Yuk! Can anyone figure out how to make this do what I want?\n 2) I have noticed that when it has invoked in that ugly configuration, I can get the configuration to the way I want by hitting \"|\" twice. \"|\" is bound to ediff-toggle-split. So I tried to work around the issue by doing:\n (defun fix-ediff-windows () (interactive)\n (message \"FEW\")\n (ediff-toggle-split)\n (ediff-toggle-split)\n )\n (add-hook 'ediff-after-setup-windows-hooks 'fix-ediff-windows)\n but it appears that somehow this hook is not being honored. If I describe-variable on ediff-after-setup-windows-hooks, it does show that it has the value fix-ediff-windows, but upon invoking ediff, there is no message \"FEW\" and the ediff-toggle-split's are not invoked.\n Can anyone figure out a solution to either issue?\n    submitted by    /u/Any_Catch_3307  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/plx8i0/ediff_setup_windows_problems/",
+          "publishedOn": "2021-09-11T00:38:05.000Z",
+          "wordCount": 340,
+          "title": "ediff setup windows problems"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/plv66g/ubiquitous_capture_with_chromeos/",
+          "author": null,
+          "description": "Has anyone been successful implementing system wide org-capture w/ keybinding in chromebooks?\n https://raw.githubusercontent.com/karlicoss/dotemacs/master/bin/gemacsclient works well in Win10 and I suspect in Linux as well but unsure about CB given the Linux containers.\n ​\n Any pointers?\n    submitted by    /u/iyer2016  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/plv66g/ubiquitous_capture_with_chromeos/",
+          "publishedOn": "2021-09-10T22:29:02.000Z",
+          "wordCount": 131,
+          "title": "Ubiquitous capture with ChromeOS?"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/pls1c7/orgindentmode_deactivating_how_to_debug/",
           "author": null,
