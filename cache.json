@@ -40,15 +40,6 @@
           "publishedOn": "2021-08-26T12:00:00.000Z",
           "wordCount": 720,
           "title": "Issue 278"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/277.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nGHC 8.10.6 is now available by Zubin Duggal\nThe GHC team is very pleased to announce the availability of GHC 8.10.6. Source and binary distributions are available at the usual place. This is a bugfix release, fixing many issues present in GHC 8.10.5.\nAbstraction in Reflex and CodeWorld by Chris Smith\nI’ve put together a neat example lately of using FRP (Functional Reactive Programming) to cleanly separate and model the interactions of the pieces of an interactive application: in this case, an RPN (Reverse Polish Notation) calculator.\nAnnouncing Spectacle — A language for Writing and Chec…",
-          "link": "https://haskellweekly.news/issue/277.html",
-          "publishedOn": "2021-08-19T12:00:00.000Z",
-          "wordCount": 758,
-          "title": "Issue 277"
         }
       ]
     },
@@ -57,6 +48,24 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pqnc5q/generalizing_getx_for_hlist/",
+          "author": null,
+          "description": "Hi folks,\n I am playing around with heterogenous lists. I'd like to be able to get an item from the list. I have written the following functions:\n ```haskell getFirst :: HList (e : es) -> e getFirst (HCons e _) = e\n getSecond :: HList (e : a : es) -> a getSecond = getFirst . rest\n getThird :: HList (e : a : b : es) -> b getThird = getSecond . rest\n rest :: HList (e : es) -> HList es rest (HCons _ es) = es ```\n Now, I'd like to generalize them using a type class:\n haskell class GetIdx (idx :: Nat) where getIdx :: HList (Els idx) -> El (Els idx) idx \n I have come to the conclusion that it is impossible to write a proper signature for the getIdx method, because a type family must reduce to a concrete type. In other words, I cannot have the following type family:\n ```haskell\n -- For \"Els 0\", I am naively copying the relevant part of the type signature from \"getFirst\" above. type family Els idx where Els 0 = (e : es) Els n = e : Els (n - 1) ```\n Is my conclusion that it is impossible to write a getIdx function such that it an be called like getIdx @1 myHList correct? Is my reasoning for why it is impossible to do so also correct?\n    submitted by    /u/f0rgot  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/pqnc5q/generalizing_getx_for_hlist/",
+          "publishedOn": "2021-09-18T14:22:44.000Z",
+          "wordCount": 633,
+          "title": "Generalizing getX for HList"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/pqhivm/type_class_backend_how_to_evolve_with_class/",
+          "author": null,
+          "description": "I have been thinking of ways to evolve an implementation (backend) of a type class without affecting user code. It's been rolling in my head for a while and I'm looking for feedback and examples. A good example is the functor hierarchy: all the functor type classes are unified by a general FunctorOf interface but they are defined separately for now. We want to be able to generalize existing type classes without modifying every instance. It should be backwards compatible.\n Functor = FunctorOf (->) (->) Contravariant = FunctorOf (<˗) (->) Bifunctor = FunctorOf (->) (->) (->) Profunctor = FunctorOf (<˗) (->) (->) FFunctor = FunctorOf (~>) (->) Filterable = FunctorOf (Kleisli Maybe) (->) \n I imagine a feature where we can mark one type class as a backend for another class, but to GHC they are …",
+          "link": "https://www.reddit.com/r/haskell/comments/pqhivm/type_class_backend_how_to_evolve_with_class/",
+          "publishedOn": "2021-09-18T06:51:33.000Z",
+          "wordCount": 1052,
+          "title": "Type class backend: how to evolve with class"
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/pq2yi0/newbie_type_check_question/",
           "author": null,
@@ -794,6 +803,24 @@
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/scala/comments/pqkczs/making_sense_of_scalas_regex_syntax/",
+          "author": null,
+          "description": "So, I was watching a popular Spark using Scala tutorial on Udemy and there I came across this syntax for regex matching:\n val theUltimateAnswer: String = \"To life, the universe, and everything is 42.\" val pattern = \"\"\".* ([\\d]+).*\"\"\".r val pattern(answerString) = theUltimateAnswer \n I am beginner in Scala but I have some knowledge of programming with other languages and this syntax does not make sense to me because it should have been the other way round no?\n Like given below:\n val theUltimateAnswer: String = \"To life, the universe, and everything is 42.\" val pattern = \"\"\".* ([\\d]+).*\"\"\".r val answerString = pattern(theUltimateAnswer) \n ​\n Apologies if I have posted a duplicate question, I have searched related topics but I am getting no relevant results which explain this weird syntax.\n    submitted by    /u/indie_mumbai  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pqkczs/making_sense_of_scalas_regex_syntax/",
+          "publishedOn": "2021-09-18T10:58:58.000Z",
+          "wordCount": 473,
+          "title": "Making sense of Scala's regex syntax"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/pqjed7/akka_became_the_defacto_solution_for_scala_web/",
+          "author": null,
+          "description": "So...\n Back in the past, something around 2013, we had amazing libs like Scalatra, Finatra, Finagle, Finch, Akka and Play(blergh) in scala ecosystem.\n In that time developers, at least me, used to write code around Finatra or Finagle and now it seems like everything is built around Akka.\n Why Akka became the de-facto solution?\n    submitted by    /u/gbrennon  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/pqjed7/akka_became_the_defacto_solution_for_scala_web/",
+          "publishedOn": "2021-09-18T09:36:24.000Z",
+          "wordCount": 1392,
+          "title": "Akka became the de-facto solution for Scala web development?"
+        },
+        {
           "id": "https://www.reddit.com/r/scala/comments/ppznwf/singleton_types_scala_tutorial/",
           "author": null,
           "description": "submitted by    /u/kubukoz  \n [link]   [comments]",
@@ -1305,6 +1332,24 @@
       "siteUrl": "https://www.reddit.com/r/purescript/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/purescript/comments/pqs5e8/help_with_simple_dependency_problem/",
+          "author": null,
+          "description": "I suck with dependency stuff :( Nothing ever seems to work and I can never seem to understand why. I'm trying to spago build this tictactoe game. What I've done so far is spago init and added a few dependencies to spago.dhall, which now looks like this\n , dependencies = [ \"console\" , \"effect\" , \"prelude\" , \"psci-support\" , \"debug\" , \"css\" , \"arrays\" , \"integers\" , \"maybe\" , \"tuples\" , \"halogen\" , \"foldable-traversable\" ] \n Running build again I get the following errors: https://pastebin.com/cUutNNn4\n What, why? Debug.Trace comes from package debug and Halogen.HTML.CSS comes from package halogen, both of which I have there.\n What do I need to do please?\n Is there any tool that can take a look at the import statements used in a project and solve the dependencies based on that?\n    submitted by    /u/puzzle-game  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/purescript/comments/pqs5e8/help_with_simple_dependency_problem/",
+          "publishedOn": "2021-09-18T18:51:08.000Z",
+          "wordCount": 478,
+          "title": "Help with simple dependency problem"
+        },
+        {
+          "id": "https://www.reddit.com/r/purescript/comments/pqipw4/what_toolsmethods_do_you_use_for_debugging/",
+          "author": null,
+          "description": "I'm using the following debug function for print statements while debugging.\n import Prelude import Effect.Console (log) import Effect.Unsafe (unsafePerformEffect) debug :: forall a. String -> a -> a debug msg = snd $ unsafePerformEffect $ log msg snd :: forall a b. a -> b -> b snd _ b = b \n This would then be used as follows\n myFuncBeingDebugged a b c = \"test: \" <> show a # debug $ someOtherFunc $ b c bla... \n Are there ways to improve the debugging experience? (I'm using VSCode if that matters)\n    submitted by    /u/ctenbrinke  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/purescript/comments/pqipw4/what_toolsmethods_do_you_use_for_debugging/",
+          "publishedOn": "2021-09-18T08:35:19.000Z",
+          "wordCount": 227,
+          "title": "What tools/methods do you use for debugging?"
+        },
+        {
           "id": "https://www.reddit.com/r/purescript/comments/pndnyq/graphical_drawing_package/",
           "author": null,
           "description": "I am interested in developing an application with pursecript that would work with diagrams drawn by the user. I'm looking for a library/package that would provide the drawing functionality for me to minimise development time. I'm thinking of functionality somewhat like Microsoft Visio (e.g. place shapes, connect shapes, move shapes, autorouting of connectors etc.). \n Are there any libraries/packages either natively or wrapped in purescript? Failing that, are there any suitable javascript libraries I could use through FFI?\n Everything I've found myself is either a dead project, intended for data display (i.e. graphs), static (i.e. closer to MS Paint than Visio) or contains too much functionality (e.g. more general rendering libraries for games or multimedia). I'd rather not roll my own if I can help it :)\n Any help or advice you could provide would be appreciated.\n    submitted by    /u/RisingMaverick  \n [link]   [comments]",
@@ -1454,6 +1499,24 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pqnl38/how_to_stop_orgagenda_scrolling_after_refile/",
+          "author": null,
+          "description": "I am having a weird problem, org-agenda scrolls the screen down after refilling. \n ​\n In the below screenshots I show a before and after. All I did was refile one entry under the block \"To Refile\"\n Before\n ​\n After\n ​\n This is moderately annoying, any help would be greatly appreciated!\n    submitted by    /u/JustinSilverman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pqnl38/how_to_stop_orgagenda_scrolling_after_refile/",
+          "publishedOn": "2021-09-18T14:37:13.000Z",
+          "wordCount": 173,
+          "title": "How to Stop Org-Agenda Scrolling after Refile"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/pqll6j/a_solution_to_see_a_really_long_file/",
+          "author": null,
+          "description": "HI, I am trying since few days org mode and have millions of lines of documents. The idea would be to read ONE document really long in 4 or 5 different columns. I noticed that if I open an emacs instance I do not need too much width, so I can exploit the height of my laptop enlarging vertically the file, but the height is limited to around 25 cms in a laptop. Because org does not wrap the content on default, I can open an instance vertically in 1/5 of the screen width, so 4/5 of the screen are not used at all! There is an option to open a subsection on the right of the first instance, but why not opening different columns and see all the long document or almost, so that in one single screen we may have an outline on 2-3- 4 or even 5 columns on almost all the document. So that we may scroll one column for instance the second and so the all the columns also scroll accordingly, so that we can see for instance almost all the chapters of a huge book , then could open some paragraphs title of chapter 33 and 56, and compare them together, move content in seconds etc. The simple idea is that people say mindmaps give more an helicopter vision of all the document(and in fact mind maps take all the screen), everyone in the org community debates if files should have links or stay in a single file.Why not giving to the users the possibility to open multiple columns with scrolling integration, so that the user can see huge documents with a glance, be more creative, modify things, search occurrences, it would be genial imo, because org supports different colors per level on default, and would be really easy to spot the structure and be more efficient, combine new ideas creatively, never miss the big picture, etc\n    submitted by    /u/ndrokky  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/pqll6j/a_solution_to_see_a_really_long_file/",
+          "publishedOn": "2021-09-18T12:32:28.000Z",
+          "wordCount": 514,
+          "title": "A solution to see a really long file?"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/pq6rs3/new_logo/",
           "author": null,
@@ -1956,6 +2019,78 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/org-notifications-20210918.1827.tar",
+          "author": null,
+          "description": "The org-notifications package has been updated to version 20210918.1827.",
+          "link": "https://melpa.org/#/org-notifications",
+          "publishedOn": "2021-09-18T18:27:00.000Z",
+          "wordCount": 105,
+          "title": "org-notifications (20210918.1827) --- Creates notifications for org-mode entries"
+        },
+        {
+          "id": "https://melpa.org/packages/org-jira-20210918.1741.tar",
+          "author": null,
+          "description": "The org-jira package has been updated to version 20210918.1741.",
+          "link": "https://melpa.org/#/org-jira",
+          "publishedOn": "2021-09-18T17:41:00.000Z",
+          "wordCount": 105,
+          "title": "org-jira (20210918.1741) --- Syncing between Jira and Org-mode."
+        },
+        {
+          "id": "https://melpa.org/packages/ox-textile-20210918.1656.el",
+          "author": null,
+          "description": "The ox-textile package has been updated to version 20210918.1656.",
+          "link": "https://melpa.org/#/ox-textile",
+          "publishedOn": "2021-09-18T16:56:00.000Z",
+          "wordCount": 105,
+          "title": "ox-textile (20210918.1656) --- Textile Back-End for Org Export Engine"
+        },
+        {
+          "id": "https://melpa.org/packages/general-20210918.1525.tar",
+          "author": null,
+          "description": "The general package has been updated to version 20210918.1525.",
+          "link": "https://melpa.org/#/general",
+          "publishedOn": "2021-09-18T15:25:00.000Z",
+          "wordCount": 105,
+          "title": "general (20210918.1525) --- Convenience wrappers for keybindings."
+        },
+        {
+          "id": "https://melpa.org/packages/elx-20210918.1436.el",
+          "author": null,
+          "description": "The elx package has been updated to version 20210918.1436.",
+          "link": "https://melpa.org/#/elx",
+          "publishedOn": "2021-09-18T14:36:00.000Z",
+          "wordCount": 105,
+          "title": "elx (20210918.1436) --- extract information from Emacs Lisp libraries"
+        },
+        {
+          "id": "https://melpa.org/packages/spell-fu-20210918.1123.el",
+          "author": null,
+          "description": "The spell-fu package has been updated to version 20210918.1123.",
+          "link": "https://melpa.org/#/spell-fu",
+          "publishedOn": "2021-09-18T11:23:00.000Z",
+          "wordCount": 105,
+          "title": "spell-fu (20210918.1123) --- Fast & light spelling highlighter"
+        },
+        {
+          "id": "https://melpa.org/packages/doct-20210917.2228.el",
+          "author": null,
+          "description": "The doct package has been updated to version 20210917.2228.",
+          "link": "https://melpa.org/#/doct",
+          "publishedOn": "2021-09-17T22:28:00.000Z",
+          "wordCount": 105,
+          "title": "doct (20210917.2228) --- DOCT: Declarative Org capture templates"
+        },
+        {
+          "id": "https://melpa.org/packages/org-gtd-20210917.2157.el",
+          "author": null,
+          "description": "The org-gtd package has been updated to version 20210917.2157.",
+          "link": "https://melpa.org/#/org-gtd",
+          "publishedOn": "2021-09-17T21:57:00.000Z",
+          "wordCount": 105,
+          "title": "org-gtd (20210917.2157) --- An implementation of GTD"
+        },
         {
           "id": "https://melpa.org/packages/mb-url-20210917.1715.tar",
           "author": null,
@@ -4403,6 +4538,60 @@
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/emacs/comments/pqqs69/since_1992_an_8000_lines_long_oldstyle_emacs/",
+          "author": null,
+          "description": "submitted by    /u/de_sonnaz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pqqs69/since_1992_an_8000_lines_long_oldstyle_emacs/",
+          "publishedOn": "2021-09-18T17:34:41.000Z",
+          "wordCount": 130,
+          "title": "Since 1992, an 8,000 lines long, old-style .emacs, still currently updated [Karl Fogel]"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pqnl5s/what_is_your_home_row/",
+          "author": null,
+          "description": "I've been trying to learn evil mode and though I'm a touch typer I realized that I have my own version of home row. For instance, My left pinkie sits on CapsLock (remapped to Control) and left index sits on \"f\". My right index sits on \"k\" while my right pinkie sits on Enter. That leave most of the middle of the home row open and doesn't translate so well to speed when using vi movement keys.\n I attribute this weird home row to a handful of things:\n 1) I use Thinkpad keyboards with Trackpoint exclusvely and leaving the middle of the home row open makes it easier to reach the Trackpoint.\n 2) Remapping of CapsLock resulted in left hand shifting further left.\n 3) Much time at a terminal resulted in right hand shifting all the way to the right so as to hit Enter to execute commands.\n So, basically, I'm home row + Emacs + UNIX. \n How about others?\n    submitted by    /u/fumpeddorado  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pqnl5s/what_is_your_home_row/",
+          "publishedOn": "2021-09-18T14:37:20.000Z",
+          "wordCount": 393,
+          "title": "What is your \"home row\"?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pql20q/preferred_monospace_font/",
+          "author": null,
+          "description": "What are some good monospace fonts to use in emacs?\n Here are my criteria:\n  \nNothing too fancy (no Monofur or Terminus)\n Should have good differentiability between similar characters ((I, l, and 1), (i, j, and l)).\n Should have italic face\n Free (open source and cost)\n  \nPreferred, but not needed:\n  \nLigatures\n Nerd Font Variant\n  \n​\n Currently, JetBrains Mono and Hasklig are two that meet all my criteria. I have tried Fira Code, but it seems to index ligatures wrong.\n ​\n Edit: I have tried these and feel like they are not for me:\n  \nHack\n Fira Code/Mono\n Victor Mono\n Mononoki\n IBM Plex Mono\n Anonymous Pro\n  \n   submitted by    /u/3rdRealm  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pql20q/preferred_monospace_font/",
+          "publishedOn": "2021-09-18T11:54:01.000Z",
+          "wordCount": 627,
+          "title": "Preferred Monospace Font?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pqekp7/emacs_configuration_for_rails_w_doom/",
+          "author": null,
+          "description": "I'm here to share my Ruby On Rails configuration. I 've done a lot of tweaks to improve the experience for Rails Developers (and a lot of functions to refact too). \n Link: https://github.com/otavioschwanck/doom-emacs-on-rails\n    submitted by    /u/otavioschwanck  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pqekp7/emacs_configuration_for_rails_w_doom/",
+          "publishedOn": "2021-09-18T03:04:58.000Z",
+          "wordCount": 137,
+          "title": "Emacs Configuration for Rails (w/ doom)"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pqdjs0/state_if_emacs_for_modern_web_dev/",
+          "author": null,
+          "description": "I was heavily into emacs back in 2013 but gave up once I realized how far behind and sparse the plugins, linting, etc.. were for specific language that I needed to use. This was due to how obscure emacs was compared to Vim or Sublime, etc...\n ​\n Has that changed now though?\n    submitted by    /u/dev_hmmmmm  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pqdjs0/state_if_emacs_for_modern_web_dev/",
+          "publishedOn": "2021-09-18T01:55:15.000Z",
+          "wordCount": 399,
+          "title": "State if Emacs for modern web dev?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/pq9jz7/are_there_any_anticipated_problems_for_users_of/",
+          "author": null,
+          "description": "submitted by    /u/argtri  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/pq9jz7/are_there_any_anticipated_problems_for_users_of/",
+          "publishedOn": "2021-09-17T21:47:31.000Z",
+          "wordCount": 193,
+          "title": "Are there any anticipated problems for users of GUI Emacs and org-mode in Windows 11?"
+        },
+        {
           "id": "https://www.reddit.com/r/emacs/comments/pq7u56/gccemacs_sudden_error_on_mac_os/",
           "author": null,
           "description": "I have recently updated to MacOs BigSur.\n I have noticed this error just today after using GccEmacs for months.\n The same error for multiple packages.\n Compiling /Users/mymac/.emacs.d/elpa/modus-themes-20210916.703/modus-themes.el... ld: library not found for -lSystem collect2: error: ld returned 1 exit status libgccjit.so: error: error invoking gcc driver \n I have\n (cond ((eq system-type 'darwin) (setenv \"LIBRARY_PATH\" \"/Applications/Emacs.app/Contents/MacOS/lib/gcc/11:/Applications/Emacs.app/Contents/MacOS/lib/lib/gcc/11/gcc/x86_64-apple-darwin19/11_2_0\"))) \n Emacs version\n GNU Emacs 28.0.50 (build 1, x86_64-apple-darwin19.6.0, NS appkit-1894.60 Version 10.15.7 (Build 19H524)) of 2021-08-09 \n Anyone has the similar issue? How do I fix this?\n    submitted by    /u/csemacs  \n [link]   [comments]",
@@ -5462,6 +5651,15 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "1965@/discussions",
+          "author": "Pitale",
+          "description": "Hey there, I'm new to the ZettelKasten method.\n ).\nAlso, I spend a lot of time writing those notes, around half an hour per note, sometimes for two hours a day. I have a lot of spare time for the last month, but it is going to change. How much time do you spend on each note? How much time it takes you to decide to where to put the note in the ZettelKasten?\nLast question, I have 13 index notes out 100. That sounds okay?",
+          "link": "https://forum.zettelkasten.de/discussion/1965/questions-that-arise-after-a-month-of-zettelkasten",
+          "publishedOn": "2021-09-18T13:43:27.000Z",
+          "wordCount": 394,
+          "title": "Questions that arise after a month of ZettelKasten"
+        },
         {
           "id": "1964@/discussions",
           "author": "Will",
