@@ -49,6 +49,33 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/q7d2zo/thunks_sharing_laziness_the_haskell_heap/",
+          "author": null,
+          "description": "submitted by    /u/Serokell  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q7d2zo/thunks_sharing_laziness_the_haskell_heap/",
+          "publishedOn": "2021-10-13T15:02:45.000Z",
+          "wordCount": 134,
+          "title": "Thunks, Sharing, Laziness: The Haskell Heap Visualized"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q7cu1a/welltyped_blog_ghc_activities_for_augustseptember/",
+          "author": null,
+          "description": "submitted by    /u/bgamari  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q7cu1a/welltyped_blog_ghc_activities_for_augustseptember/",
+          "publishedOn": "2021-10-13T14:51:18.000Z",
+          "wordCount": 421,
+          "title": "[Well-Typed Blog] GHC Activities for August/September 2021"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q73kt9/how_will_monad_programming_languages_like_haskell/",
+          "author": null,
+          "description": "submitted by    /u/vichu2000  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q73kt9/how_will_monad_programming_languages_like_haskell/",
+          "publishedOn": "2021-10-13T04:32:32.000Z",
+          "wordCount": 321,
+          "title": "How will Monad programming languages like Haskell be helpful in the fields of artificial intelligence? Can Haskell be a production-ready language?"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/q6tpme/dependencies_difference_between_cabal_and_stack/",
           "author": null,
           "description": "I'm working on a pretty interesting project right now and I'm having different results depending on the build tool used: with cabal, the test suite fails but it passes with stack.\n My guess is that there must be some dependency version difference. So far I tried to \"dump\" the dependencies used by cabal using cabal freeze, and stack ls dependencies when using stack. An issue that I found is that while cabal uses my system-wide GHC (8.8.4), stack uses the GHC version defined by the resolver (8.6.5). Then, different base versions result in very different dependencies versions.\n Nevertheless, the test suite passes if I build the project using stack test --system-ghc (it uses GHC 8.8.4). I'm not really sure what dependencies are being used in this case (GHC 8.8.4 base or stack resolver base?). Running stack ls dependencies --system-ghc results in an error.\n So, how can I figure out why I get different results when building with the same GHC but different build tools?\n    submitted by    /u/valcron1000  \n [link]   [comments]",
@@ -632,6 +659,51 @@
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/scala/comments/q7ikg2/why_are_we_so_miserly_about_starring_github/",
+          "author": null,
+          "description": "We have many really great projects in Scala ecosystem, which must have taken great efforts to build.\n And it seems that most of us are actually using these projects. Then why are we so miserly about indicating our interest in projects.\n I can understand the low \"stars\" on following nice things as these not really highly relevant to Scala community.\n  \n twitter / finagle 8,100  \n  \n Angel-ML / angel 6,400  \n  apache / zeppelin 5,400  \n  gatling / gatling 5,300  \n  polynote / polynote 4,200  \n  intel-analytics / BigDL 3,800  \n  microsoft / SynapseML 2,400  \n  spotify / scio 2,200  \n  almond-sh / almond 1,400  \n \n But what about the following, which have always been to focus of almost all conferences, talks, blogs and what not.\n  \n milessabin / shapeless 3,200  \n  \n zio / zio 3,000  \n  circe / circe 2,200  \n  http4s / http4s 2,100  \n  typelevel / fs2 1,900  \n  getquill / quill 1,900  \n  tpolecat / doobie 1,900  \n  optics-dev / Monocle 1,400  \n  typelevel / cats-effect 1,300  \n  scalameta / scalafmt 1,100  \n \n Are there really only 1,300 people who care about cats-effect ?\n Are there really only 1,100 people using scalafmt ?\n And I discovered just now that scalqa/scalqa has just 56 stars. yes, just 56!!\n Just why ? It's really funny compared to other comminities where even poc projects get more than 5,000 stars.\n    submitted by    /u/D_4rch4ng3l  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/q7ikg2/why_are_we_so_miserly_about_starring_github/",
+          "publishedOn": "2021-10-13T19:22:33.000Z",
+          "wordCount": 699,
+          "title": "Why are we so miserly about \"starring\" github projects."
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/q7caoe/scalqa_creating_new_numerical_types/",
+          "author": null,
+          "description": "JVM primitive numerical types are limited to Byte, Short, Int, Long, Float and Double. For over two decades everyone was forced to use those primitives, whenever computational performance was important. Luckily, with Scala3 there is a choice.\n Let's define an opaque type Price, which will have all the functionality of a Float, will be as fast as a Float, but will be distinct from a Float. We will need to import Scalqa.\n import scalqa.{*,given} type Price = Price.TYPE.DEF object Price extends Float.Opaque.Data.Numerical[Price](\"Price\"): inline def apply(inline v: Float): Price = v.toOpaque override def value_tag(v:Price) : String = \"$\"+v.toFloat extension(inline x: Price) // Optional custom methods inline def isNotExpensive: Boolean = x < 100 object TYPE: opaque type DEF <: Float.Opaque = Float.Opaque \n By extending Float.Opaque.Data.Numerical Price inherits numerical methods which match those for a Float primitive. Even better, all those methods are inlined, so when used, they will be reduced to primitive calls.\n Consider the following example:\n  var price : Price = Price(9.99f) var primitive: Float = 5.99f price = price * 2 primitive = primitive * 2 \n when de-compiled to Java, it is clear: the Price is treated same as a Float:\n  float price = 9.99F; float primitive = 5.99F; price *= (float)2; primitive *= (float)2; \n We can use Price with the same ease as a primitive without any concern for impact on performance.\n On the other hand Price is distinct from a Float, so the following will fail.\n  def discount(v: Price): Price = v * 0.75f discount(5.99f) // Fails // Type Mismatch Error: // Found: (5.99f : Float) // Required: Price \n    submitted by    /u/edolgy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/q7caoe/scalqa_creating_new_numerical_types/",
+          "publishedOn": "2021-10-13T14:25:30.000Z",
+          "wordCount": 360,
+          "title": "Scalqa - Creating New Numerical Types"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/q76wlr/functional_programming_with_scala3/",
+          "author": null,
+          "description": "Hey Redditors, are there any good resources to learn Functional Programing in Scala3 ? Thanks for your replies!\n    submitted by    /u/HeroAAXC  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/q76wlr/functional_programming_with_scala3/",
+          "publishedOn": "2021-10-13T08:42:53.000Z",
+          "wordCount": 146,
+          "title": "Functional Programming with Scala3"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/q76u5h/advantages_of_scala/",
+          "author": null,
+          "description": "Hey Reddit, because of the decision my university made I am going to learn functional Scala instead of an other language. Unfortunately it's really hard to motivate myself to learn that new language as I was learning rust-lang until now. What are the advantages of Scala especially compared to Rust-lang?\n Thanks for your replies!\n    submitted by    /u/HeroAAXC  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/q76u5h/advantages_of_scala/",
+          "publishedOn": "2021-10-13T08:37:06.000Z",
+          "wordCount": 816,
+          "title": "Advantages of Scala"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/q750r5/help_with_complex_mapping_functions/",
+          "author": null,
+          "description": "Hello, I'm completely new to Scala so I can have a bit of trouble knowing where to start with some things.\n So I've got two text files to load as RDDs, one is called dict and another is called wordlist:\n val wordlist = sc.textFile(\"text.txt\") val dict = sc.textFile(\"dictionary.txt) \n dictionary.txt is a text file of every single verb and its different forms, like this:\n abash,abash,abashed,abashed,abashes,abashing abate,abate,abated,abated,abates,abating abide,abide,abode,abode,abides,abiding absorb,absorb,absorbed,absorbed,absorbs,absorbing accept,accept,accepted,accepted,accepts,accepting accompany,accompany,accompanied,accompanied,accompanies,accompanying ... \n while text.txt is a list of random verbs, like this:\n spilling pretend pretend pretend guards guards guards laden laden laden e…",
+          "link": "https://www.reddit.com/r/scala/comments/q750r5/help_with_complex_mapping_functions/",
+          "publishedOn": "2021-10-13T06:13:03.000Z",
+          "wordCount": 527,
+          "title": "Help with complex mapping functions"
+        },
+        {
           "id": "https://www.reddit.com/r/scala/comments/q6lpng/beginner_scala_project_examples/",
           "author": null,
           "description": "Does anyone have/know code examples of very simple pure functional Scala programs? (For example to-do list, snake, chess, weight conversion, rock paper scissor)\n I want to see some beginner projects for inspiration, and try to play with it and run them :)\n    submitted by    /u/bare_et_spoergsmaal  \n [link]   [comments]",
@@ -1177,15 +1249,6 @@
           "publishedOn": "2021-09-18T08:35:19.000Z",
           "wordCount": 289,
           "title": "What tools/methods do you use for debugging?"
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/pndnyq/graphical_drawing_package/",
-          "author": null,
-          "description": "I am interested in developing an application with pursecript that would work with diagrams drawn by the user. I'm looking for a library/package that would provide the drawing functionality for me to minimise development time. I'm thinking of functionality somewhat like Microsoft Visio (e.g. place shapes, connect shapes, move shapes, autorouting of connectors etc.). \n Are there any libraries/packages either natively or wrapped in purescript? Failing that, are there any suitable javascript libraries I could use through FFI?\n Everything I've found myself is either a dead project, intended for data display (i.e. graphs), static (i.e. closer to MS Paint than Visio) or contains too much functionality (e.g. more general rendering libraries for games or multimedia). I'd rather not roll my own if I can help it :)\n Any help or advice you could provide would be appreciated.\n    submitted by    /u/RisingMaverick  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/pndnyq/graphical_drawing_package/",
-          "publishedOn": "2021-09-13T11:39:46.000Z",
-          "wordCount": 263,
-          "title": "Graphical Drawing Package"
         }
       ]
     },
@@ -1220,15 +1283,6 @@
           "publishedOn": "2021-09-21T00:00:00.000Z",
           "wordCount": 1432,
           "title": "Introduction to Polynomial Regression Analysis"
-        },
-        {
-          "id": "https://serokell.io/blog/lorentz-type-safe-storage-migrations",
-          "author": "hi+kostyaivanov@serokell.io (Kostya Ivanov)",
-          "description": "In this article, we'll look at how you can make storage migratable in Lorentz, our Haskell eDSL for the Michelson smart contract language.",
-          "link": "https://serokell.io/blog/lorentz-type-safe-storage-migrations",
-          "publishedOn": "2021-09-14T00:00:00.000Z",
-          "wordCount": 2162,
-          "title": "Lorentz: Type-Safe Storage Migrations"
         }
       ]
     },
@@ -1274,6 +1328,51 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q7jfp2/new_video_scimax_orgdb_searching_for_things_in/",
+          "author": null,
+          "description": "submitted by    /u/jkitchin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q7jfp2/new_video_scimax_orgdb_searching_for_things_in/",
+          "publishedOn": "2021-10-13T20:03:51.000Z",
+          "wordCount": 143,
+          "title": "New video: scimax - org-db: searching for things in your org-files"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q7gkya/new_video_scimax_electronic_notebook_in_emacs/",
+          "author": null,
+          "description": "submitted by    /u/jkitchin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q7gkya/new_video_scimax_electronic_notebook_in_emacs/",
+          "publishedOn": "2021-10-13T17:49:21.000Z",
+          "wordCount": 140,
+          "title": "New video: scimax - electronic notebook in #Emacs with #orgmode"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q7bsyl/new_video_scimax_formatting_strings_in_elisp/",
+          "author": null,
+          "description": "submitted by    /u/jkitchin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q7bsyl/new_video_scimax_formatting_strings_in_elisp/",
+          "publishedOn": "2021-10-13T14:01:18.000Z",
+          "wordCount": 134,
+          "title": "New video: scimax - formatting strings in elisp"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q7bpwc/how_to_have_orgmode_footnotes_per_entry/",
+          "author": null,
+          "description": "I arrange my orgmode notes as single files with lots of entries. This works great for me because emacs is more buffer-oriented than directory-oriented, so all the emacs search commands optimize for single-file approaches (eg search all headlines in my tech/blog file for the keyword of that Linux function I've forgotten how to use).\n The single problem I have is footnotes. From the documentation you have two options: inline or in a file-wide section. My footnotes are often too long to fit inline, so I can change the name of that section but CANNOT make a section-per-entry arrangement, which is what I really want. The way I have worked around this with my blog is to always have the entry I am publishing at the top of the file, so using org-footnote-new finds that entries footnote section first and inserts things where I want them to be. I've used this compromise successfully for quite some time, but it depends on the fact that you are not going to add footnotes to anything but the top entry.\n Now I am converting footnotes in a non-orgmode date made by someone else, and moving the elements to the top of the file is not an option. Does anyone know of a way of implementing an entry-by-entry footnote section (say, for every * entry, or every ** entry as the case may be) without moving the single entry to the top of the buffer? The goal is for each entry to have a working footnote section of its own, which works nicely with org-footnote-action.\n    submitted by    /u/WorldsEndless  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q7bpwc/how_to_have_orgmode_footnotes_per_entry/",
+          "publishedOn": "2021-10-13T13:57:40.000Z",
+          "wordCount": 607,
+          "title": "How to have orgmode footnotes per entry?"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q7bf72/can_no_longer_collapse_things/",
+          "author": null,
+          "description": "So I recently installed org-helm and org-roam and now whenever I open any old org file (not in my org-roam path for example) the file starts with everything expanded and even if I hit tab on the headlines they won't collapse. Quite vexing and difficult to google-for. I mentioned those recent installs mainly because that's the only thing I can think of, but I haven't been able to find anything that says that's a side effect.\n EDIT: Okay I can Shift-Tab and collapse everything. But org-cycle seems to be something else.\n EDIT: Oh yeah I also upgraded emacs/org-mode, so I could use roam, so that may have something to do with it.\n EDIT: FIXED IT IT WAS EVIL MODE YOU DEVIL: https://jeffkreeftmeijer.com/emacs-evil-org-tab/\n    submitted by    /u/derpderpderp69  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q7bf72/can_no_longer_collapse_things/",
+          "publishedOn": "2021-10-13T13:41:56.000Z",
+          "wordCount": 261,
+          "title": "Can no longer collapse things"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/q6r5tp/new_video_series_around_mogmodeish_topics/",
           "author": null,
@@ -1632,6 +1731,78 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/project-mode-line-tag-20211013.1954.el",
+          "author": null,
+          "description": "The project-mode-line-tag package has been updated to version 20211013.1954.",
+          "link": "https://melpa.org/#/project-mode-line-tag",
+          "publishedOn": "2021-10-13T19:54:00.000Z",
+          "wordCount": 105,
+          "title": "project-mode-line-tag (20211013.1954) --- Display a buffer's project in its mode line"
+        },
+        {
+          "id": "https://melpa.org/packages/company-shell-20211013.1725.el",
+          "author": null,
+          "description": "The company-shell package has been updated to version 20211013.1725.",
+          "link": "https://melpa.org/#/company-shell",
+          "publishedOn": "2021-10-13T17:25:00.000Z",
+          "wordCount": 105,
+          "title": "company-shell (20211013.1725) --- Company mode backend for shell functions"
+        },
+        {
+          "id": "https://melpa.org/packages/kiwix-20211013.1558.tar",
+          "author": null,
+          "description": "The kiwix package has been updated to version 20211013.1558.",
+          "link": "https://melpa.org/#/kiwix",
+          "publishedOn": "2021-10-13T15:58:00.000Z",
+          "wordCount": 105,
+          "title": "kiwix (20211013.1558) --- Searching offline Wikipedia through Kiwix."
+        },
+        {
+          "id": "https://melpa.org/packages/faff-theme-20211013.1554.el",
+          "author": null,
+          "description": "The faff-theme package has been updated to version 20211013.1554.",
+          "link": "https://melpa.org/#/faff-theme",
+          "publishedOn": "2021-10-13T15:54:00.000Z",
+          "wordCount": 105,
+          "title": "faff-theme (20211013.1554) --- Light Emacs color theme on cornsilk3 background"
+        },
+        {
+          "id": "https://melpa.org/packages/helm-xref-20211013.1538.el",
+          "author": null,
+          "description": "The helm-xref package has been updated to version 20211013.1538.",
+          "link": "https://melpa.org/#/helm-xref",
+          "publishedOn": "2021-10-13T15:38:00.000Z",
+          "wordCount": 105,
+          "title": "helm-xref (20211013.1538) --- Helm interface for xref results"
+        },
+        {
+          "id": "https://melpa.org/packages/emms-20211013.1353.tar",
+          "author": null,
+          "description": "The emms package has been updated to version 20211013.1353.",
+          "link": "https://melpa.org/#/emms",
+          "publishedOn": "2021-10-13T13:53:00.000Z",
+          "wordCount": 105,
+          "title": "emms (20211013.1353) --- The Emacs Multimedia System"
+        },
+        {
+          "id": "https://melpa.org/packages/mb-url-20211013.611.tar",
+          "author": null,
+          "description": "The mb-url package has been updated to version 20211013.611.",
+          "link": "https://melpa.org/#/mb-url",
+          "publishedOn": "2021-10-13T06:11:00.000Z",
+          "wordCount": 105,
+          "title": "mb-url (20211013.611) --- Multiple Backends for Emacs URL package"
+        },
+        {
+          "id": "https://melpa.org/packages/embark-consult-20211012.1921.el",
+          "author": null,
+          "description": "The embark-consult package has been updated to version 20211012.1921.",
+          "link": "https://melpa.org/#/embark-consult",
+          "publishedOn": "2021-10-12T19:21:00.000Z",
+          "wordCount": 105,
+          "title": "embark-consult (20211012.1921) --- Consult integration for Embark"
+        },
         {
           "id": "https://melpa.org/packages/rustic-20211012.1547.tar",
           "author": null,
@@ -4069,6 +4240,150 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7g7qt/need_live_lossage_for_your_emacs_conf/",
+          "author": null,
+          "description": "Starting to take over maintenance on command-log-mode. Point your package manager to this repo, clm-toggle and done.\n https://github.com/positron-solutions/command-log-mode\n Using this package to stream is a little easier to read and especially more helpful if you were just casting keys. Command names make it very easy to figure out where to go hack. You can't always C-h k when you're dealing with the minibuffer or some weird modal package or using a command dispatcher like ivy or transient.\n Seeing the stream of function names is so helpful to get oriented faster. You might be questioning if the default org map overrides arrows (it does). Running with the log open quickly illuminates how your bindings and modes are all wired.\n Open issues or PR's to add more commands! I was going to add a minibuffer toggle and a way to pause logging (to preserve the mode state while hiding and stopping logging). Out of time tonight but I'll get around to anything nobody beats me to.\n The existing implementation was using global hooks instead of setting up hooks in the mode. It's more on the road to being a well behaved package now.\n Not on Melpa yet since I probably need to file an issue to take over the recipe.\n    submitted by    /u/Psionikus  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7g7qt/need_live_lossage_for_your_emacs_conf/",
+          "publishedOn": "2021-10-13T17:32:02.000Z",
+          "wordCount": 317,
+          "title": "Need live lossage for your Emacs Conf presentation? (I did)"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7fjbi/failed_to_define_function_w_elc_files/",
+          "author": null,
+          "description": "Hey all.\n I'm having consistent, but intermittent, problems with functions not being defined in .elc files. Here's an example.\n  Debugger entered--Lisp error: (error \"Autoloading file /Users/jabrahms/.emacs.d/elpa/lsp-ui-20210904.2037/lsp-ui.elc failed to define function lsp-ui\") \n This isn't an lsp specific issue. It happens regularly with different files. My normal path is to delete the .elc files and restart, but it's risen to the point of \"Ugh. This sucks.\" so I want to fix it.\n Any clues why this is happening and how to prevent it?\n One suggestion I found suggested that it was caused by shadows in my load path. When I do M-x list-load-path-shadows, it outputs this.. which seems fine?\n ``` /Users/jabrahms/.emacs.d/elpa/magit-20210928.1325/magit-section-pkg hides /Users/jabrahms/.emacs.d/elpa/magit-section-20210829.1849/magit-section-pkg /Users/jabrahms/.emacs.d/elpa/soap-client-3.2.0/soap-client hides /Applications/Emacs.app/Contents/Resources/lisp/net/soap-client /Users/jabrahms/.emacs.d/elpa/soap-client-3.2.0/soap-inspect hides /Applications/Emacs.app/Contents/Resources/lisp/net/soap-inspect /Users/jabrahms/.emacs.d/elpa/seq-2.23/seq hides /Applications/Emacs.app/Contents/Resources/lisp/emacs-lisp/seq\n 4 Emacs Lisp load-path shadowings were found ```\n Any help appreciated.\n    submitted by    /u/justinabrahms  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7fjbi/failed_to_define_function_w_elc_files/",
+          "publishedOn": "2021-10-13T16:59:41.000Z",
+          "wordCount": 281,
+          "title": "Failed to define function w/ .elc files?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7dq0t/doom_font_not_available/",
+          "author": null,
+          "description": "Hello, I have just recently installed emacs with doom, and was playing around with the config.el file because I didn't like the default font. I found where to change the font, but for some reason whenever I do SPC-h-r-f to reload the font, I get an error: set-face-attribute: Font not available: #<font-spec nil nil JetBrains\\ Mono\\ nil nil nil nil nil 24 nil nil nil nil>\n and the code to set the font is:\n (setq doom-font (font-spec :family \"JetBrains Mono NF\" :size 24)\n doom-variable-pitch-font (font-spec :family \"Monospace\" :size 22))\n Could anyone please tell me how to fix this?\n Thanks!\n    submitted by    /u/DroagonDog  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7dq0t/doom_font_not_available/",
+          "publishedOn": "2021-10-13T15:34:00.000Z",
+          "wordCount": 261,
+          "title": "[DOOM] Font not available"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7dmms/is_there_a_way_to_exit_out_of_the_listactions/",
+          "author": null,
+          "description": "Recently started using helm with emacs. Am obviously hitting a lot of mistaken tabs. I get that there is a learning curve but things would go much smoother if I could easily exit out of the actions list that tab pulls up and go back to the query I was typing. Does there exist a shortcut to do that? Or is there a way to easily add one?\n    submitted by    /u/Time-Abalone-3918  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7dmms/is_there_a_way_to_exit_out_of_the_listactions/",
+          "publishedOn": "2021-10-13T15:29:20.000Z",
+          "wordCount": 225,
+          "title": "Is there a way to exit out of the list-actions screen in helm?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7co08/warning_about_magit_after_setting_up_orgreveal/",
+          "author": null,
+          "description": "Hi there, emacs NooB here (I've been using basic org-functionality for GTD for about a year)\n I am now using emacs more heavily for research at work (nice and fast). I have recovered from a permissions issue yesterday, but have now created myself new problems by trying to setup reveal.js to output some research via org-reveal.\n I'm on Ubuntu 20.04 via WSL 1, (Doom) emacs 27.1\n Following the instructions here I setup Org-reveal. \n I now get a warning about magit-section. \n Error in private config: config.el, (file-missing Cannot open load file No such file or directory magit-section) \n Doom doctor tells me the following, but I'm baffled.\n :~$ doom doctor The doctor will see you now... > Checking your Emacs version... > Checking for Emacs config conflicts... > Checking for great Emacs features... > Checking for private config conflicts... > Checking for stale elc files... > Checking Doom Emacs... x There was an unexpected error Message: File is missing Data: (file-missing . \"Cannot open load file\") Backtrace: (require magit-section) (eval-buffer #<buffer *load*-230718> nil \"/home/user/.emacs.d/.local/str (load-with-code-conversion \"/home/user/.emacs.d/.local/straight/build-27. (require magit-git nil t) (byte-code \"\\300\\301!\\210\\300\\302!\\210\\300\\303\\304\\305#\\210\\300\\306\\304\\30 (require git-commit) (eval-buffer #<buffer *load*-622009> nil \"/home/user/.emacs.d/.local/str (load-with-code-conversion \"/home/user/.emacs.d/.local/straight/build-27. (require magit) (byte-code \"\\300\\301!\\210\\300\\302!\\210\\300\\303!\\210\\300\\304!\\210\\305\\306!\\ ! Extended backtrace logged to .emacs.d/.local/doom.error.log \n Any help would be appreciated.\n    submitted by    /u/AlternativeKooky9407  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7co08/warning_about_magit_after_setting_up_orgreveal/",
+          "publishedOn": "2021-10-13T14:43:11.000Z",
+          "wordCount": 432,
+          "title": "Warning about magit after setting up org-reveal"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7am1c/presenting_with_emacs_typedriven_api_design_in/",
+          "author": null,
+          "description": "submitted by    /u/kusut  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7am1c/presenting_with_emacs_typedriven_api_design_in/",
+          "publishedOn": "2021-10-13T12:59:14.000Z",
+          "wordCount": 135,
+          "title": "Presenting with emacs -- \"Type-Driven API Design in Rust\" by Will Crichton"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7a2lt/do_different_versions_of_emacs_recompile_elc/",
+          "author": null,
+          "description": "Hi guys, My emacs has been quite slow (esp. with lsp-mode/lsp-dart), I've downloaded gccemacs to hoping for some performance gain... I noticed that it took around 129 secs to startup ((emacs-init-time))); I tried it again, and this time, it took around 5.7 secs so I think it was compiling the .el files on the first run. Next thing I did was to start the normal emacs build to compare; This took around 150 - 200 secs, but like 10-12 secs on subsequent launches. When I tried gccemacs again, It took just as long as the first time again.\n It seems that the .elc files are not fully compatible between the two and so they are recompiled... Is there anything I can do about this? I'd love to use the gccemacs, but doesn't seem to be stable yet as I keep on getting comp warnings pop up in a Warnings buffer which is disturbing.\n I thought gccemacs would compile down to .eln while the normal emacs would compile to elc\n My gccemacs is v28.0.5 and normal emacs is like v27.2 Thanks in advance.\n    submitted by    /u/hungry_m8  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7a2lt/do_different_versions_of_emacs_recompile_elc/",
+          "publishedOn": "2021-10-13T12:27:58.000Z",
+          "wordCount": 621,
+          "title": "Do different versions of Emacs recompile .elc files differently? GccEmacs vs Emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7963w/nλno_agenda_is_on_elpa/",
+          "author": null,
+          "description": "submitted by    /u/Nicolas-Rougier  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7963w/nλno_agenda_is_on_elpa/",
+          "publishedOn": "2021-10-13T11:31:55.000Z",
+          "wordCount": null,
+          "title": "NΛNO agenda is on ELPA (https://elpa.gnu.org/packages/nano-agenda.html)"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q792jg/looking_for_evilmode_resources_for_non_vim_users/",
+          "author": null,
+          "description": "I'm interested in the editing features brought by evil-mode and would like to integrate them into my workflow early in my learning of Emacs.\n I read the documentation and noctuid's evil-guide and they are great but are more oriented towards vim users, the second one also being too technical for an emacs beginner (I'm not a programmer).\n The vim documentation is very interesting but I would love to find something like a beginner guide for evil-mode.\n    submitted by    /u/oyoumademedoit  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q792jg/looking_for_evilmode_resources_for_non_vim_users/",
+          "publishedOn": "2021-10-13T11:25:25.000Z",
+          "wordCount": 502,
+          "title": "Looking for evil-mode resources for non vim users emacs beginners"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q788ib/questions_about_emacs/",
+          "author": null,
+          "description": "Hi! I'm considering getting into Emacs for knowledge management and note-taking using org-mode and org-roam and see how it compares to Obsidian.\n I have three questions:\n  \nHow can I use Emacs on mobile and sync across all of my devices? I need cross-platform usability, especially since I plan to use it on both my iPhone and iPad. I've tried Beorg, but it seems like it's only for task management.\n How can I integrate it with modern apps and services (e.g. Readwise)? This is something that Obsidian has, which I want to implement in Emacs if it's possible.\n What does Emacs have over Obsidian? Has anyone here switched from Obsidian to Emacs?\n  \nThanks.\n    submitted by    /u/better-vessel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q788ib/questions_about_emacs/",
+          "publishedOn": "2021-10-13T10:27:31.000Z",
+          "wordCount": 2152,
+          "title": "Questions about Emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q77vuo/how_do_i_fix_the_electric_pair_indentation_for_a/",
+          "author": null,
+          "description": "After inserting empty line between brackets i got such result, is it possible to configure (without advices) electric pair mode for correct indentation? I have such result for any mode that i have.\n https://preview.redd.it/d3at52rsx6t71.png?width=1582&format=png&auto=webp&s=0e8954044705224efdc21d96775f467d76bfc14a\n    submitted by    /u/darkawower  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q77vuo/how_do_i_fix_the_electric_pair_indentation_for_a/",
+          "publishedOn": "2021-10-13T10:01:30.000Z",
+          "wordCount": 298,
+          "title": "How do I fix the electric pair indentation for a closed bracket?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q76kok/weekly_tips_tricks_c_thread/",
+          "author": null,
+          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n See this search for previous \"Weekly Tips, Tricks, &c.\" Threads.\n Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q76kok/weekly_tips_tricks_c_thread/",
+          "publishedOn": "2021-10-13T08:15:22.000Z",
+          "wordCount": 221,
+          "title": "Weekly Tips, Tricks, &c. Thread"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q766fp/strange_behavior_when_defining_a_thingatpoint/",
+          "author": null,
+          "description": "Hi everyone,\n I use Doom Emacs with Evil and the +everywhere flag. I read Wiki pages with eww and I would like jump to urls with the same visual approach as evilem-motion-*, i.e., where the candidates are prefixed by letters.\n Defining the motion\n I followed the definition of the evilem-motion-* motions to create a new one based on shr-next-link:\n (after! evil-easymotion (evilem-make-motion evilem-motion-shr-next-link #'shr-next-link :scope 'line)) (map! :after eww :map eww-mode-map (:prefix \"g\" :n \"<tab>\" #'evilem-motion-shr-next-link)) \n Which works as intended, but only highlight links in the current line while I wanted to highlight all the links in the window. This happend because I am using :scope 'line.\n Defining the window scope\n I managed to understand what was the scope handled by evil-easymotion, i.e., everything recognised by the thing-at-point function. But I didn't find any predefined thing matching the window. Thus, I have created a new one:\n (defun window-bounds-of-window-at-point () \"Return the start and end points of a window.\" (save-excursion (message \"%d-%d\" (window-start) (window-end)) (cons (window-start) (window-end)))) (put 'window 'bounds-of-thing-at-point 'window-bounds-of-window-at-point) \n And then I changed the scope of evilem-motion-shr-next-link from 'line to 'window.\n Problem\n Everything work well, except that (window-end) returns a different value when I run evilem-motion-shr-next-link via the eval prompt, i.e., pp-eval-expression, or via my keybinding.\n For instance, on (eww \"https://www.emacswiki.org/emacs/IntegerAtPoint\") with the cursor at the beginning, the debuging message in window-bounds-of-window-at-point returns:\n  \n1-870 via the keybinding\n \n1-1531 via the eval prompt\n \n Questions\n  \nDoes someone know why there is this difference between the two approaches to call the function?\n \nIs there a simpler and more efficient solution to what I am doing?\n \n Thank you in advance!\n Edit: Fix the formatting\n    submitted by    /u/Zar_Rok  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q766fp/strange_behavior_when_defining_a_thingatpoint/",
+          "publishedOn": "2021-10-13T07:43:07.000Z",
+          "wordCount": 368,
+          "title": "Strange behavior when defining a thing-at-point scope for evilem-motion."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q754kk/shortening_the_date_so_its_only_the_last_two/",
+          "author": null,
+          "description": "How can I create a snippet that can give me the date in YY-MM-DD-HH-MM, instead of YYYY-MM-DD-HH-MM ? Currently I'm using the line format-time-string \"%Y-%m-%d-%H-%M and it's giving me the four digit YYYY instead of the two digit YY\n    submitted by    /u/manylights  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q754kk/shortening_the_date_so_its_only_the_last_two/",
+          "publishedOn": "2021-10-13T06:21:11.000Z",
+          "wordCount": 235,
+          "title": "Shortening the date so it's only the last two digits, YY not YYYY"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q72o9k/searching_in_ascendingdescending_order/",
+          "author": null,
+          "description": "I'm wondering if Emacs supports the ability to search certain tags, by increasing / decreasing order. I'm planning on using date/time tags as such: <20211012113150> when writing in the appropriate heading, in one document. Would it be possible to search all entries, such that they show up in ascending order? the tag <20211012113150> represents the date and time in the format <YYYYMMDDHHMMSS>, and I'd be putting a tag each time I write in the different headings/subheadings. I'd like to be able to scroll chronologically through the different entries, and as such it would be useful if I can perform this type of search.\n I'm currently using Swiper as my main method of searching, is it possible to perform this type of search in Swiper?\n Also, is there a problem with how I'm planning on keeping my entries separated by topic, and tagging them so that I'd be able to search them chronologically? How many lines can one document contain before it's too much for Emacs to properly process?\n    submitted by    /u/manylights  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q72o9k/searching_in_ascendingdescending_order/",
+          "publishedOn": "2021-10-13T03:36:16.000Z",
+          "wordCount": 333,
+          "title": "Searching in Ascending/Descending order?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q72bdy/trying_to_run_a_python_process_but_im_getting/",
+          "author": null,
+          "description": "Hi, I'm trying to run this function described here https://emacs.stackexchange.com/a/35683/11700\n I have an sql statement highlighted when running the command but the highlighted text gets replaced by \n Traceback (most recent call last): File \"<string>\", line 1, in <module> ImportError: No module named sqlparse \n I've tested sqlparse in my terminal by opening a Python 3.7 REPL and the example here https://pypi.org/project/sqlparse/ works fine. Any idea why my emacs process doesn't seem to be able to find the package?\n For reference, I'm on macOS 11.6, spacemacs, and I open an emacs frame by typing emacs in my terminal.\n    submitted by    /u/covertbeginner2  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q72bdy/trying_to_run_a_python_process_but_im_getting/",
+          "publishedOn": "2021-10-13T03:13:46.000Z",
+          "wordCount": 261,
+          "title": "Trying to run a python process but I'm getting package not found"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/q6tduz/automated_org_mode_website_publishing_with_github/",
           "author": null,
