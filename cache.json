@@ -6,6 +6,15 @@
       "siteUrl": "https://haskellweekly.news/newsletter.atom",
       "articles": [
         {
+          "id": "https://haskellweekly.news/issue/285.html",
+          "author": null,
+          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nGHC activities report: August – September 2021 by Well-Typed\nThis is the eighth edition of our GHC activities report where we describe the work on GHC and related projects that we are doing at Well-Typed. The current edition covers roughly the months of August and September 2021.\nHow to protect aeson code from hash flooding by Fraser Tweedale\nA new aeson release addresses the hash flooding issue, but you need more than a version bump to ensure your programs are protected. This post outlines how aeson addressed the vulnerability and what action you need to take.\nPattern-matching-based AST…",
+          "link": "https://haskellweekly.news/issue/285.html",
+          "publishedOn": "2021-10-14T12:00:00.000Z",
+          "wordCount": 569,
+          "title": "Issue 285"
+        },
+        {
           "id": "https://haskellweekly.news/issue/284.html",
           "author": null,
           "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nHaskell series part 5 by Pierre Guillemot\nThis is the fifth article of a series on the functional language Haskell for beginners. In this article we are covering pattern matching and guards.\nTuple Prelude by Mitchell Vitez\nA Template Haskell Adventure\nClang-based GHC 9, done easy by Koz Ross\nFor various reasons, you might want a Clang-based GHC on a platform where Clang is not the default compiler.\nData.Map.Strict.Map is not a strict map by Tom Ellis\nI was surprised when I learned that Data.Map.Strict.Map is not strict. Its laziness has serious consequences for attempts at space leak fre…",
@@ -48,6 +57,96 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q87dw7/is_there_a_better_way_to_implement_this_depth/",
+          "author": null,
+          "description": "I am trying to implement some functions on graphs which are like this:\n ``` module Graph.Algorithms where\n import Data.Set (Set) import qualified Data.Set as Set\n foldGraph :: Ord v => (v -> x -> x) -- operation -> x -- initial value -> [v] -- initial states -> (v -> [v]) -- successors -> x -- final value foldGraph op init inits succ = go Set.empty inits where go _ [] = init go sofar (v:vs) | Set.member v sofar = go sofar vs | otherwise = v op (go (Set.insert v sofar) ((succ v) ++ vs))\n collectGraph :: Ord v => (v -> [x]) -- result at each vertex -> [v] -- initial vertices -> (v -> [v]) -- successors -> [x] collectGraph forv = foldGraph (\\v x -> forv v ++ x) []\n reachability :: Ord v => [v] -- initial states -> (v -> [v]) -- successors -> (v -> Bool) -- final states -> Bool reachability inits succ final = foldGraph (\\v x -> final v || x) False inits succ ```\n Is this the best way to implement these algorithms? I plan to use this on graphs whose vertices are something like (Maybe Int, Maybe Int, Bool).\n I feel that this implementation is taking way too long on bigger (but not so big) graphs. For example, consider\n reachability [1] (\\x -> [x + 1]) ( == 100000000)\n When I run this on GHCi, it blows up (takes a huge amount of RAM). But a python implementation using python's set returns like within 100 seconds or so.\n How can I improve on the performance of these algorithms?\n    submitted by    /u/agnishom  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q87dw7/is_there_a_better_way_to_implement_this_depth/",
+          "publishedOn": "2021-10-14T19:53:13.000Z",
+          "wordCount": 585,
+          "title": "Is there a better way to implement this Depth First Search like algorithm?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q85qrw/hf_technical_track_elections_results_2021/",
+          "author": null,
+          "description": "submitted by    /u/emilypii  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q85qrw/hf_technical_track_elections_results_2021/",
+          "publishedOn": "2021-10-14T18:32:01.000Z",
+          "wordCount": 129,
+          "title": "HF Technical Track Elections Results - 2021"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q81mfw/issue_285_haskell_weekly_newsletter/",
+          "author": null,
+          "description": "submitted by    /u/haskellweekly  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q81mfw/issue_285_haskell_weekly_newsletter/",
+          "publishedOn": "2021-10-14T15:07:33.000Z",
+          "wordCount": 126,
+          "title": "Issue 285 :: Haskell Weekly newsletter"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q7ytoj/is_there_a_good_way_to_run_an_inner_parser_with/",
+          "author": null,
+          "description": "I have a situation where I want to run a Megaparsec parser on a string that is the result of another Megaparsec action (not a final parse result). As an example, suppose I want to apply my expression parser on the contents of a Haskell-style line comment block within a larger program:\n -- x + -- y + z \n Since I don't want my expression parser to worry about linebreaks being followed by --, the best approach I can come up with is to have a parser that extracts the contents of the line comment block, discards the -- prefixes, and then parses the resulting string. I can run the top-level parse function to essentially invoke a sub-parser, but this raises some questions:\n  \nHow do I best propagate any parse errors to the top parser?\n How do I obtain the file name of the input?\n Is there another way to do this?\n  \nInstead of running an entirely new inner parser, I might also be able to play games with stateInput, but I'm not sure what the rules are for messing about with the state at that level.\n    submitted by    /u/Athas  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q7ytoj/is_there_a_good_way_to_run_an_inner_parser_with/",
+          "publishedOn": "2021-10-14T12:37:29.000Z",
+          "wordCount": 600,
+          "title": "Is there a good way to run an inner parser with Megaparsec?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q7yi2f/easy_way_to_locally_navigate_into_source_code_of/",
+          "author": null,
+          "description": "When programming in JS or PHP, given that their package managers (npm/composer) actually download the source under /node_modules/ or /vendor/ ... in most editors/IDEs, from your own project's source code that references any packages, you can just ctrl-click something you imported from them, to navigate into the package's source code.\n Is there some simple way to do this with Haskell?\n Or is it completely different given that it's a compiled language? \n I see can under ~/.cabal/store/ that it contains packages I've used in a project. But it looks to all be binary .hi files. Does the source code not even exist on my computer?\n If I want to navigate the package locally in my editor, obviously I can find it on github/etc and download a copy. But is that basically the only way to get a local copy of the source? Or is there something more efficient for packages that I'm already using in a project?\n I know you can browse on Hackage in your web browser, which is cool... but nowhere near as efficient as my normal editor where I do all my code navigating normally.\n I'm using vscode, and Cabal.\n    submitted by    /u/r0ck0  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q7yi2f/easy_way_to_locally_navigate_into_source_code_of/",
+          "publishedOn": "2021-10-14T12:17:26.000Z",
+          "wordCount": 695,
+          "title": "Easy way to locally navigate into source code of packages from Hackage?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q7w6ta/comonad_question/",
+          "author": null,
+          "description": "The definition of Comonad looks like this:\n class Functor w => Comonad w where extract :: w a -> a duplicate :: w a -> w (w a) extend :: (w a -> b) -> w a -> w b {-# MINIMAL extract, (duplicate | extend) #-} \n It seems to me in many instances you could simply define:\n duplicate wa = fmap (\\_ -> wa) wa extend wab wa = fmap (\\_ -> wab wa) wa \n Is this true for all instances? If so, the class is a lot less interesting than it seems.\n    submitted by    /u/AshleyYakeley  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q7w6ta/comonad_question/",
+          "publishedOn": "2021-10-14T09:29:07.000Z",
+          "wordCount": 1068,
+          "title": "Comonad Question"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q7vqdt/how_to_double_click_hs_files/",
+          "author": null,
+          "description": "At university computers I can just double click onto .hs files and it'll execute the program\n ​\n how do I recreate this on my home computer???\n    submitted by    /u/OkUse2449  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q7vqdt/how_to_double_click_hs_files/",
+          "publishedOn": "2021-10-14T08:51:04.000Z",
+          "wordCount": 177,
+          "title": "How to double click .hs files"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q7ta8o/create_a_function_ved_that_will_only_remove_the/",
+          "author": null,
+          "description": "You must use recursion to define ted and you must do so from “scratch”. That is, other than the cons operator, head, tail, and comparisons, you should not use any functions from the Haskell library.\n This is what I have so far\n ted :: Ord a => [a] -> [a] ted xs = go (maximum xs) xs where go _ [] = [] go m (x:xs) | m == x = go m xs | otherwise = x : go m xs \n The program is to satisfy all these conditions.\n ted\n ted :: Ord a => [a] -> [a]\n HW> ted [3,9,2,8,7,1,9,9,6]\n [3,9,2,8,7,1,9,6]\n HW> ted []\n []\n *HW> ted [1001,9,4,13,2]\n [9,4,13,2]\n HW> ted [1001,9,4002,13,4002]\n [1001,9,4002,13]\n *HW> ted [1001]\n []\n *HW> ted [\"Fido\",\"Ginger\",\"Rover\",\"Rover\"]\n [\"Fido\",\"Ginger\",\"Rover\"]\n    submitted by    /u/Xxavier359  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q7ta8o/create_a_function_ved_that_will_only_remove_the/",
+          "publishedOn": "2021-10-14T05:32:46.000Z",
+          "wordCount": 515,
+          "title": "create a function ved that will only remove the last occurrence of the largest item in the list using recursion"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q7r13b/mergesort_in_hakell/",
+          "author": null,
+          "description": "This might not be a new thing for many of you but in my last video I had made casual remarks about how easily you can define your own mergesort function instead of the sort function in Data.List module. Well, I took a stab at it and made an episode out of it on YouTube.\n Link to the video - https://youtu.be/ZRTOgoeQuXU\n Do check it out and as always, any feedback is highly appreciated. Thanks in advance!!\n    submitted by    /u/crygnusproductions  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q7r13b/mergesort_in_hakell/",
+          "publishedOn": "2021-10-14T03:04:33.000Z",
+          "wordCount": 273,
+          "title": "Mergesort in Hakell..."
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/q7mrt2/use_list_comprehension_to_remove_all_occurrences/",
+          "author": null,
+          "description": "Use list comprehension to define a Haskell function Ted that takes a list of Ord items and removes all occurrences of the largest item in the list. Given the empty list, Ted should return the empty list.\n This is my code\n import Data.List \n import Data.Function\n Ted :: Ord a => [a] -> [a]\n    submitted by    /u/Xxavier359  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/q7mrt2/use_list_comprehension_to_remove_all_occurrences/",
+          "publishedOn": "2021-10-13T22:55:45.000Z",
+          "wordCount": 624,
+          "title": "Use list comprehension to remove all occurrences of the largest item in list"
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/q7d2zo/thunks_sharing_laziness_the_haskell_heap/",
           "author": null,
@@ -658,6 +757,15 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/q85nu1/new_to_scala/",
+          "author": null,
+          "description": "Hey,\n I just took a job that was largely JVM-focused. I'm not new to the JVM; I've done previous work in Java (1.6/Android) and spent a large chunk of time writing Clojure. My previous work has been in Haskell, which I liked. I guess my question is: Is Scala worth it now? I have a larger Java codebase I'll be integrating with, and I get to choose what JVM technologies to use, and other folks have expressed interest in Scala as well. I'd feel guilty for pushing Clojure on them, just because I know it, but I've also been there and done that, and I like types now.\n Coming from Haskell, are there functional libraries I should build upon but allow for escape hatch style mutability for some of my not so functional teammates? We're a small team, and pedagogy will be a part of the gig. \n I'm looking for honest opinions of the language and what essential reading material/libraries would be for someone more comfortable with FP in general. I'm not opposed to pragmatism either; it's one thing I like about Scala. It seems like there's a lot of excellent libraries because of the existing JVM ecosystem.\n Thanks!\n    submitted by    /u/casecorp  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/q85nu1/new_to_scala/",
+          "publishedOn": "2021-10-14T18:27:53.000Z",
+          "wordCount": 418,
+          "title": "New to Scala"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/q7ikg2/why_are_we_so_miserly_about_starring_github/",
           "author": null,
@@ -1298,6 +1406,15 @@
       "siteUrl": "https://tweag.io",
       "articles": [
         {
+          "id": "https://tweag.io/blog/2021-10-13-homomorphic-testing/",
+          "author": null,
+          "description": "Almost a million years ago, I was dealing with some sinister bugs inside the\ndata structures in linear-base and to stop the nightmares I decided to just\ntest the specification of the data structures themselves. I ended up using\nsomething that I’ve been calling denotational homomorphic testing. In this\npost, I’ll walk through how I ended up with this and why this is legitimately helpful.\nOur Toy Example\nLet’s consider a toy example which corresponds to one of the data structures I\nwas working with; see PR #263. How shall we test a specification of a simple Set\nimplementation shown below?\n-- Constructors / Modifers\nempty :: Set a\ninsert :: Keyed a => a -> Set a -> Set a\ndelete :: Keyed a => a -> Set a -> Set a\nintersect :: Keyed a => Set a -> Set a -> Set a\nunion :: Keyed a => Set a -> Set a…",
+          "link": "https://tweag.io/blog/2021-10-13-homomorphic-testing/",
+          "publishedOn": "2021-10-13T00:00:00.000Z",
+          "wordCount": 1830,
+          "title": "Denotational Homomorphic Testing"
+        },
+        {
           "id": "https://tweag.io/blog/2021-09-30-better-integrator-hmc/",
           "author": null,
           "description": "Hamiltonian Monte Carlo (HMC) is a MCMC sampling algorithm which proposes new states based on the simulation of Hamilton’s equations of motion.\nOne of the main ingredients of this algorithm is its integration scheme — how the equations are discretized and its solutions found.\nThe standard choice for this is the classical leapfrog.\nIn this blog post we present our empirical investigation of U7U_7U7​ — an algorithm that is computationally more expensive, but also more accurate.\nThis trade-off is not a simple one (after all, more precision implies less tries), but our explorations show that this is a promising algorithm, which can outperform leapfrog in some cases.\nWe don’t suppose previous knowledge of integration methods, but in case you are new to HMC or MCMC methods, a good starting point…",
@@ -1328,6 +1445,51 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q830vs/how_to_include_the_id_links_into_your_orgroam/",
+          "author": null,
+          "description": "submitted by    /u/mklsls  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q830vs/how_to_include_the_id_links_into_your_orgroam/",
+          "publishedOn": "2021-10-14T16:17:44.000Z",
+          "wordCount": 515,
+          "title": "How to include the ID links into your org-roam directory publish"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q82k5v/new_video_scimax_orgdb_searching_for_things_in/",
+          "author": null,
+          "description": "submitted by    /u/jkitchin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q82k5v/new_video_scimax_orgdb_searching_for_things_in/",
+          "publishedOn": "2021-10-14T15:55:15.000Z",
+          "wordCount": 421,
+          "title": "New video: scimax - org-db: searching for things in org files"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q80kog/flowcharts_in_org_mode_help_needed/",
+          "author": null,
+          "description": "Hey all, emacs noob here. I am trying to add a flowchart to my org-mode doc. I am following this guide: https://orgmode.org/worg/org-tutorials/org-dot-diagrams.html however it does not work for me.\n Software:\n - OS: MacOS 11.6 - emacs: GNU Emacs 27.2 via brew - dot: dot - graphviz version 2.49.1 (20210923.0004) - pdftex: pdfTeX 3.141592653-2.6-1.40.22 (TeX Live 2021) \n The error I get is:\n Symbol’s function definition is void: org-babel-execute:dot \n If I add to my initialization file\n (org-babel-do-load-languages 'org-babel-load-languages '((dot . t) (emacs-lisp . t))) (require 'cl) \n I get:\n Symbol’s value as variable is void: params \n Any Idea how to move forward? Im thinking the documentation is out of date or not for the versions I have :(\n    submitted by    /u/av-annonch  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q80kog/flowcharts_in_org_mode_help_needed/",
+          "publishedOn": "2021-10-14T14:13:19.000Z",
+          "wordCount": 237,
+          "title": "Flowcharts in org mode [Help needed]"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q7olkd/od2ae_convert_orgdrill_entries_to_ankieditor/",
+          "author": null,
+          "description": "submitted by    /u/telotortium  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q7olkd/od2ae_convert_orgdrill_entries_to_ankieditor/",
+          "publishedOn": "2021-10-14T00:39:54.000Z",
+          "wordCount": 141,
+          "title": "od2ae — Convert org-drill entries to anki-editor entries"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/q7ofq5/have_you_ever_switched_from_orgmode_to_another/",
+          "author": null,
+          "description": "Hi,\n I'm wondering if anyone's moved from org-mode to other note-taking systems, such as a personal wiki, or markdown in vim, or switched and switched back to org-mode. What caused you to switch? If you switched back, why?\n Thanks.\n    submitted by    /u/gollyned  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/q7ofq5/have_you_ever_switched_from_orgmode_to_another/",
+          "publishedOn": "2021-10-14T00:29:59.000Z",
+          "wordCount": 919,
+          "title": "Have you ever switched from org-mode to another markup language? Have you ever switched back again?"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/q7jfp2/new_video_scimax_orgdb_searching_for_things_in/",
           "author": null,
@@ -1732,6 +1894,114 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/create-link-20211014.1617.el",
+          "author": null,
+          "description": "The create-link package has been updated to version 20211014.1617.",
+          "link": "https://melpa.org/#/create-link",
+          "publishedOn": "2021-10-14T16:17:00.000Z",
+          "wordCount": 105,
+          "title": "create-link (20211014.1617) --- Smart format link generator"
+        },
+        {
+          "id": "https://melpa.org/packages/line-reminder-20211014.1534.el",
+          "author": null,
+          "description": "The line-reminder package has been updated to version 20211014.1534.",
+          "link": "https://melpa.org/#/line-reminder",
+          "publishedOn": "2021-10-14T15:34:00.000Z",
+          "wordCount": 105,
+          "title": "line-reminder (20211014.1534) --- Line annotation for changed and saved lines"
+        },
+        {
+          "id": "https://melpa.org/packages/worf-20211014.1207.tar",
+          "author": null,
+          "description": "The worf package has been updated to version 20211014.1207.",
+          "link": "https://melpa.org/#/worf",
+          "publishedOn": "2021-10-14T12:07:00.000Z",
+          "wordCount": 105,
+          "title": "worf (20211014.1207) --- A warrior does not press so many keys! (in org-mode)"
+        },
+        {
+          "id": "https://melpa.org/packages/lispy-20211014.1136.tar",
+          "author": null,
+          "description": "The lispy package has been updated to version 20211014.1136.",
+          "link": "https://melpa.org/#/lispy",
+          "publishedOn": "2021-10-14T11:36:00.000Z",
+          "wordCount": 105,
+          "title": "lispy (20211014.1136) --- vi-like Paredit"
+        },
+        {
+          "id": "https://melpa.org/packages/playerctl-20211014.856.el",
+          "author": null,
+          "description": "The playerctl package has been updated to version 20211014.856.",
+          "link": "https://melpa.org/#/playerctl",
+          "publishedOn": "2021-10-14T08:56:00.000Z",
+          "wordCount": 105,
+          "title": "playerctl (20211014.856) --- Control your music player (e.g. Spotify) with playerctl"
+        },
+        {
+          "id": "https://melpa.org/packages/pyvenv-20211014.707.el",
+          "author": null,
+          "description": "The pyvenv package has been updated to version 20211014.707.",
+          "link": "https://melpa.org/#/pyvenv",
+          "publishedOn": "2021-10-14T07:07:00.000Z",
+          "wordCount": 105,
+          "title": "pyvenv (20211014.707) --- Python virtual environment interface"
+        },
+        {
+          "id": "https://melpa.org/packages/rime-20211014.548.tar",
+          "author": null,
+          "description": "The rime package has been updated to version 20211014.548.",
+          "link": "https://melpa.org/#/rime",
+          "publishedOn": "2021-10-14T05:48:00.000Z",
+          "wordCount": 105,
+          "title": "rime (20211014.548) --- Rime input method"
+        },
+        {
+          "id": "https://melpa.org/packages/evil-nerd-commenter-20211014.455.tar",
+          "author": null,
+          "description": "The evil-nerd-commenter package has been updated to version 20211014.455.",
+          "link": "https://melpa.org/#/evil-nerd-commenter",
+          "publishedOn": "2021-10-14T04:55:00.000Z",
+          "wordCount": 105,
+          "title": "evil-nerd-commenter (20211014.455) --- Comment/uncomment lines efficiently. Like Nerd Commenter in Vim"
+        },
+        {
+          "id": "https://melpa.org/packages/doct-20211014.244.el",
+          "author": null,
+          "description": "The doct package has been updated to version 20211014.244.",
+          "link": "https://melpa.org/#/doct",
+          "publishedOn": "2021-10-14T02:44:00.000Z",
+          "wordCount": 105,
+          "title": "doct (20211014.244) --- DOCT: Declarative Org capture templates"
+        },
+        {
+          "id": "https://melpa.org/packages/transient-20211013.2148.tar",
+          "author": null,
+          "description": "The transient package has been updated to version 20211013.2148.",
+          "link": "https://melpa.org/#/transient",
+          "publishedOn": "2021-10-13T21:48:00.000Z",
+          "wordCount": 105,
+          "title": "transient (20211013.2148) --- Transient commands"
+        },
+        {
+          "id": "https://melpa.org/packages/tab-bar-groups-20211013.2012.el",
+          "author": null,
+          "description": "The tab-bar-groups package has been updated to version 20211013.2012.",
+          "link": "https://melpa.org/#/tab-bar-groups",
+          "publishedOn": "2021-10-13T20:12:00.000Z",
+          "wordCount": 105,
+          "title": "tab-bar-groups (20211013.2012) --- Tab groups for the tab bar"
+        },
+        {
+          "id": "https://melpa.org/packages/cascading-dir-locals-20211013.1955.el",
+          "author": null,
+          "description": "The cascading-dir-locals package has been updated to version 20211013.1955.",
+          "link": "https://melpa.org/#/cascading-dir-locals",
+          "publishedOn": "2021-10-13T19:55:00.000Z",
+          "wordCount": 105,
+          "title": "cascading-dir-locals (20211013.1955) --- Apply all (!) .dir-locals.el from root to current directory"
+        },
+        {
           "id": "https://melpa.org/packages/project-mode-line-tag-20211013.1954.el",
           "author": null,
           "description": "The project-mode-line-tag package has been updated to version 20211013.1954.",
@@ -1739,6 +2009,24 @@
           "publishedOn": "2021-10-13T19:54:00.000Z",
           "wordCount": 105,
           "title": "project-mode-line-tag (20211013.1954) --- Display a buffer's project in its mode line"
+        },
+        {
+          "id": "https://melpa.org/packages/tab-bar-lost-commands-20211013.1945.el",
+          "author": null,
+          "description": "The tab-bar-lost-commands package has been updated to version 20211013.1945.",
+          "link": "https://melpa.org/#/tab-bar-lost-commands",
+          "publishedOn": "2021-10-13T19:45:00.000Z",
+          "wordCount": 105,
+          "title": "tab-bar-lost-commands (20211013.1945) --- The \"lost commands\" of the tab bar"
+        },
+        {
+          "id": "https://melpa.org/packages/tab-bar-echo-area-20211013.1942.el",
+          "author": null,
+          "description": "The tab-bar-echo-area package has been updated to version 20211013.1942.",
+          "link": "https://melpa.org/#/tab-bar-echo-area",
+          "publishedOn": "2021-10-13T19:42:00.000Z",
+          "wordCount": 105,
+          "title": "tab-bar-echo-area (20211013.1942) --- Display tab names of the tab bar in the echo area"
         },
         {
           "id": "https://melpa.org/packages/company-shell-20211013.1725.el",
@@ -4241,6 +4529,159 @@
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/emacs/comments/q87eg8/lspmode_javascript_node_es2020_import_problem/",
+          "author": null,
+          "description": "I have node project (type: module in package.json) and I use typescript lang server.\n want to make this work: import { scaleBand } from \"d3-scale\"; but can't figure out how. require-ing it works fine.\n autocomplete and lsp-find-definition don't work, with the latter giving this error\n helm-M-x-execute-command: Wrong type argument: (or eieio-object class), #s(xref-item #(\"export function scaleBand<Domain extends { toString(): string } = string>(\" 16 25 (face highlight)) #s(xref-file-location \"/Users/xxx/Library/Caches/typescript/4.2/node_modules/@types/d3-scale/index.d.ts\" 2517 16)), obj \n edit: \n eldoc works, no the symbol's type is known to lsp. autocomplete is actually OK.\n however it's not about import vs. require. The destructuring seems to cause the problem. Doing like bellow causes no errors, but still does not navigate to the definition inside the d3-scale module.\n import d3_scale from \"d3-scale\"; const { scaleBand } = d3_scale; \n ​\n    submitted by    /u/gdanov  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q87eg8/lspmode_javascript_node_es2020_import_problem/",
+          "publishedOn": "2021-10-14T19:53:59.000Z",
+          "wordCount": 235,
+          "title": "lsp-mode + javascript + node es2020 import problem"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q84i70/ann_hippiecompletingread_hippieexpand_but_with/",
+          "author": null,
+          "description": "submitted by    /u/a-c-d-w  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q84i70/ann_hippiecompletingread_hippieexpand_but_with/",
+          "publishedOn": "2021-10-14T17:29:45.000Z",
+          "wordCount": 120,
+          "title": "[ANN] hippie-completing-read: hippie-expand, but with completing-read"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q8496m/forge_v03_released/",
+          "author": null,
+          "description": "I am excited to announce the release of Forge version 0.3.\n More information can be found on my blog and in the release notes.\n    submitted by    /u/tarsius_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q8496m/forge_v03_released/",
+          "publishedOn": "2021-10-14T17:17:16.000Z",
+          "wordCount": 141,
+          "title": "Forge v0.3 released"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q82zci/how_to_include_the_id_links_into_your_orgroam/",
+          "author": null,
+          "description": "I was following this helpful video from System Crafters (https://youtu.be/AfkrzFodoNw).\n The only thing that I had some troubles was to export my org-roam ID links. \n Tinkering a little with the build-site.el from the video, I did some changes to make it work. \n I want to share with the community if anyone find it useful. \n ;; Set the package installation directory so that packages aren't stored in the ;; ~/.emacs.d/elpa path. (require 'package) (setq package-user-dir (expand-file-name \"./.packages\")) (setq package-archives '((\"melpa\" . \"https://melpa.org/packages/\") (\"elpa\" . \"https://elpa.gnu.org/packages/\") (\"org\" . \"https://orgmode.org/elpa/\"))) ;; Initialize the package system (package-initialize) ;; (unless package-archive-contents ;; (package-refresh-contents)) (package-refresh-cont…",
+          "link": "https://www.reddit.com/r/emacs/comments/q82zci/how_to_include_the_id_links_into_your_orgroam/",
+          "publishedOn": "2021-10-14T16:15:32.000Z",
+          "wordCount": 478,
+          "title": "How to include the ID links into your org-roam directory publish"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q82y9m/lspmode_running_too_many_sessions/",
+          "author": null,
+          "description": "I have perspective-el loaded in my init file and it's working fine, but I'm noticing that a session of lsp is being started for each perspective I have defined (in my case, it's 5 perspectives). After a while this slows emacs down to an unusable speed.\n Is there some way to only start lsp sessions for active perspectives, or more generally, active buffers and pause/stop sessions when they \"go to the background\"?\n    submitted by    /u/codethrasher  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q82y9m/lspmode_running_too_many_sessions/",
+          "publishedOn": "2021-10-14T16:14:06.000Z",
+          "wordCount": 173,
+          "title": "lsp-mode: running too many sessions"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q81mun/lispy_lispyville_for_javascript/",
+          "author": null,
+          "description": "Does anyone know of anything similar to lispy for non-lisp languages? I work in JavaScript a lot for work, and every single time I find myself missing the nice editing paradigm that lispy provides for me over my normal evil tricks.\n    submitted by    /u/HollowTreeBear  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q81mun/lispy_lispyville_for_javascript/",
+          "publishedOn": "2021-10-14T15:08:07.000Z",
+          "wordCount": 176,
+          "title": "Lispy / Lispyville for JavaScript?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7yqxi/org_orgroam_conceptual_setupsplit_question/",
+          "author": null,
+          "description": "tl;dr; Do most people set their org-roam-directory to be the same as org-dictionary? And those that do not - why not?\n I have used pure org for my note taking & TODOs so far. However I do think I would benefit from org-roam/zettelkasten for subset of what I need - keeping a personal knowledge base (debugging history, analyzing problems, keeping track of stuff that has a potentially longer-term benefit, more wishy-washy \"plans\").\n What triggered this question was the fact that org-roam does not reuse org directory but has a separate variable for its roam directory. So I wondered if there was a reason to have org files that are not also roam files. One reason that came up was that the number of roam files can grow significantly and org-agenda would get slower and slower. So...\n My current setup idea is this:\n  \nI separate out org files from roam (or rather have roam files in a subdirectory of org directory)\n Use roam for knowledge-base, journal etc\n I generally won't do TODOs etc in roam files, but instead have a TODOs/Schedules in ordinary org (and these files are going to be part of agenda files)\n  \nBasically - use org-roam for idea/note taking that might or might not be related to tasks but don't actually mix tasks into the zettels. Zettels could be referenced/linked to from tasks if needed (i.e. if some information/knowledge could be useful to get the task done)\n I read through https://www.reddit.com/r/emacs/comments/hg2m5s/zettelkastenorgroamorgbrain_is_crap/ as an example of discussion of problems/benefits (though I realize that's for roam v1 and quite out of date I expect most problems to be the same currently).\n Does anyone use a similar split? How is it? What would I miss (I can imagine referencing agenda items from zettels might be useful etc). If you think I should just merge the two and use org-roam - how do you deal with agenda? Fixed set of agenda files (subset of roam files)?\n Hope the above makes sense...\n ​\n Edit: Added TL;DR\n    submitted by    /u/podtatranec  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7yqxi/org_orgroam_conceptual_setupsplit_question/",
+          "publishedOn": "2021-10-14T12:33:01.000Z",
+          "wordCount": 922,
+          "title": "Org & Org-Roam conceptual setup/split question"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7xwwa/emacs_subreddit_statistics/",
+          "author": null,
+          "description": "submitted by    /u/lochydjango  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7xwwa/emacs_subreddit_statistics/",
+          "publishedOn": "2021-10-14T11:39:15.000Z",
+          "wordCount": 120,
+          "title": "emacs Subreddit Statistics"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7wfjo/whats_your_longest_uptime_for_emacs/",
+          "author": null,
+          "description": "Mine is currently 8 days and running. is there any specific tips to avoid for preventing crashes ?\n    submitted by    /u/pspiagicw  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7wfjo/whats_your_longest_uptime_for_emacs/",
+          "publishedOn": "2021-10-14T09:49:22.000Z",
+          "wordCount": 836,
+          "title": "What's your longest uptime for Emacs?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7v2ef/structural_editing_for_ocaml_in_emacs/",
+          "author": null,
+          "description": "submitted by    /u/Gopiandcoshow  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7v2ef/structural_editing_for_ocaml_in_emacs/",
+          "publishedOn": "2021-10-14T07:56:10.000Z",
+          "wordCount": 339,
+          "title": "Structural editing for OCaml in Emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7uog4/tabbar_in_macos_may_be_coming/",
+          "author": null,
+          "description": "submitted by    /u/nnenneplex  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7uog4/tabbar_in_macos_may_be_coming/",
+          "publishedOn": "2021-10-14T07:22:13.000Z",
+          "wordCount": 207,
+          "title": "tab-bar in macOS may be coming🤞"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7ultg/help_me_get_emacs_to_compile_and_run_the_program/",
+          "author": null,
+          "description": "submitted by    /u/Crafty-Cranberry9808  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7ultg/help_me_get_emacs_to_compile_and_run_the_program/",
+          "publishedOn": "2021-10-14T07:15:43.000Z",
+          "wordCount": 762,
+          "title": "Help me get Emacs to compile and run the program on macOS like this."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7ty5p/svg_widget_in_gnu_emacs/",
+          "author": null,
+          "description": "​\n ![img](f75h0j1zzct71 \"(Left) SVG widget in Emacs buffer (Right) SVG image \")\n Now you can use SVG widget in GNU Emacs. That is, use an SVG image or fragment as background for push-button widget in Emacs buffer. You can also specify the width and height of the widget for finer control. Generally speaking, you can use any type of image for this purpose. But SVG suits best because you can draw widget of any size without any distortion.\n Code: https://gitlab.com/atamariya/emacs/-/blob/dev/lisp/svg.el\n Details: https://lifeofpenguin.blogspot.com/2021/10/svg-widget-in-gnu-emacs.html\n    submitted by    /u/atamariya  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7ty5p/svg_widget_in_gnu_emacs/",
+          "publishedOn": "2021-10-14T06:23:30.000Z",
+          "wordCount": 236,
+          "title": "SVG widget in GNU Emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7sppm/does_dartserver_still_work_are_eglot_and_lspmode/",
+          "author": null,
+          "description": "Hi guys,\n I'm trying to develop flutter apps with emacs, I've tried lsp-mode + lsp-dart and it worked just fine... my only problem was that it was too slow, my emacs was very laggy (it might be the lsp server that is slow, but at least I could be able C-n C-p continually without lag while emacs waits for server response)... it had lots of features which probably contributed to this.\n I found dart-server which seems like it only requires dartanalyzer and not also dart language server, I tried it on a single test file and some features works. However, when I tried it with my flutter project it didn't work although it booted up the dartanalyzer I'm wondering if dart-server still works or is a viable option for dart/flutter dev in emacs.\n Also, what're your thoughts on eglot, does it stay out of my way until I request for features just like dart-server (e.g. C-c ? to give details about symbol under point, or M-/ for auto completions, rather than constant popups in miniframes and the echo area)\n This subreddit has been so helpful in my journey with emacs... thank you all\n EDIT:: sorry for wasting your time, after trying a few times, dart-server seems to work in the flutter project (also some things still aren't working, like flycheck support and intelligent completion with M-/). However, I'm still curious about eglot... I'd like some of the lsp features, but mainly on-demand\n    submitted by    /u/hungry_m8  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7sppm/does_dartserver_still_work_are_eglot_and_lspmode/",
+          "publishedOn": "2021-10-14T04:52:35.000Z",
+          "wordCount": 469,
+          "title": "Does dart-server still work? Are eglot and lsp-mode the only options for dart?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7omgz/od2ae_convert_orgdrill_entries_to_ankieditor/",
+          "author": null,
+          "description": "submitted by    /u/telotortium  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7omgz/od2ae_convert_orgdrill_entries_to_ankieditor/",
+          "publishedOn": "2021-10-14T00:41:28.000Z",
+          "wordCount": 131,
+          "title": "od2ae — Convert org-drill entries to anki-editor entries"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7lumw/dashboard_flycheck_dotemacs_hell/",
+          "author": null,
+          "description": "I decided to try out the dashboard package. Flukey, because I don't much go in for gingerbread, but I'd seen it mentioned a couple times & thought, \"Why not?\"\n Installed it, put some simple config in the init, restarted. Hmm. What did I do wrong? Restarted, it showed up this time. Well, it looked okay, nothing special. I clicked out of it into an org file. It took a minute to register. WTH? Buffer-face-mode was gone! I was in an org file with default Emacs faces. This is messed up. Let me restart again.\n Whoa. I'm getting a Flycheck error now, and faces are still wrong. Well, this doesn't fly. I'll comment out the dashboard stuff. WTH? The buffer's read-only! I toggle read-only, modeline shows file is writable, yeah, no. Let me switch to a different buffer. WTH? C-x b doesn't work! I'm flummoxed. I'm starting to hate on dashboard.\n Close the program. Start from a command line emacs -Q. That still works, anyway. Get to the init file, comment out the dashboard stuff, restart. Yeah, okay, great - I have my key bindings and my faces back. But, dashboard is the gift that keeps on giving. I still have the Flycheck error - \n Wrong type argument: symbolp, (flycheck-mode-set-explicitly)\n Where did that come from? It wasn't here yesterday. And hey, guess what? A recursive grep for flycheck-mode-set-explicitly through all the files in elpa comes up empty.\n $ ls -R */*.el | xargs grep 'flycheck-mode-set-explicitly'\n It doesn't get any better than this.\n Actually, it does. I reluctantly decide to go to the Flycheck page and submit an issue, try to find out where this is coming from. Hahaha! Joke's on me. They don't handle issues from Windows. They dump them into a bucket and if someone comes along & handles them, great. In the meantime...\n In the meantime, I switch to Flymake.\n Afterward, I listened to \"Not Just the Tudors\" podcasts for three hours to regain my equilibrium. God, I love Emacs.\n    submitted by    /u/naugiedoggie  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7lumw/dashboard_flycheck_dotemacs_hell/",
+          "publishedOn": "2021-10-13T22:06:55.000Z",
+          "wordCount": 685,
+          "title": "Dashboard, Flycheck, dotEmacs Hell"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/q7lsfd/inconsistency_between_evilsurround_and_vimsurround/",
+          "author": null,
+          "description": "Using vim-surround, if you have the text\n you say hello world and i say it back ^ \n ...with your cursor on the character the carat indicates, then enter ys2aw\", you end up with the line\n you say \"hello world\" and i say it back \n However, in Emacs, when evil-surround is enabled, if you take the same initial line and perform the same keystrokes, you instead end up with\n you say \"hello world \"and i say it back \n Is this a known issue, or expected behavior in some way?\n I stripped down my init.el so that the only lines in it require and enable evil and evil-surround, so I can't see how my configuration would be the problem. I wasn't able to find any reference to any similar issues on the Github though, which is surprising to me if other people are experiencing it; it seems like a pretty common command to run.\n If anyone else can reproduce this behavior, let me know so I know I'm not crazy!\n Edit: \n A different means of achieving the same effect as desired is referenced in this issue: #25\n Also, after reading TFM and understanding how the aw and iw motions work, I agree with /u/bugamn that evil-surround has the most consistent behavior; since I like homogeneity (I always enable evil-want-Y-yank-to-eol), I don't really feel the need to raise an issue. If anyone else finds this irksome though, feel free to copy the text of this post to your heart's content if you do want to raise one.\n    submitted by    /u/summetria  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/q7lsfd/inconsistency_between_evilsurround_and_vimsurround/",
+          "publishedOn": "2021-10-13T22:03:50.000Z",
+          "wordCount": 546,
+          "title": "Inconsistency between evil-surround and vim-surround?"
+        },
+        {
           "id": "https://www.reddit.com/r/emacs/comments/q7g7qt/need_live_lossage_for_your_emacs_conf/",
           "author": null,
           "description": "Starting to take over maintenance on command-log-mode. Point your package manager to this repo, clm-toggle and done.\n https://github.com/positron-solutions/command-log-mode\n Using this package to stream is a little easier to read and especially more helpful if you were just casting keys. Command names make it very easy to figure out where to go hack. You can't always C-h k when you're dealing with the minibuffer or some weird modal package or using a command dispatcher like ivy or transient.\n Seeing the stream of function names is so helpful to get oriented faster. You might be questioning if the default org map overrides arrows (it does). Running with the log open quickly illuminates how your bindings and modes are all wired.\n Open issues or PR's to add more commands! I was going to add a minibuffer toggle and a way to pause logging (to preserve the mode state while hiding and stopping logging). Out of time tonight but I'll get around to anything nobody beats me to.\n The existing implementation was using global hooks instead of setting up hooks in the mode. It's more on the road to being a well behaved package now.\n Not on Melpa yet since I probably need to file an issue to take over the recipe.\n    submitted by    /u/Psionikus  \n [link]   [comments]",
@@ -5606,6 +6047,15 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2001@/discussions",
+          "author": "rikasukenik",
+          "description": "I use Tiddlywiki for my Zettelkaten and some of my Tiddlers (aka Zettels) are quite long. I title the Tiddler with a unique piece of information, in my own words, and then I include a description and resources. Some of my Tiddlers get very long...maybe too long. Is there a best practice for length?",
+          "link": "https://forum.zettelkasten.de/discussion/2001/best-practice-for-zettel-length",
+          "publishedOn": "2021-10-14T16:54:38.000Z",
+          "wordCount": 367,
+          "title": "Best Practice for Zettel length"
+        },
         {
           "id": "2000@/discussions",
           "author": "nealc",
