@@ -49,6 +49,33 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/rb8a3y/frp_in_the_osabe_wav_editor/",
+          "author": null,
+          "description": "submitted by    /u/paul_schnapp  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/rb8a3y/frp_in_the_osabe_wav_editor/",
+          "publishedOn": "2021-12-07T20:11:09.000Z",
+          "wordCount": 141,
+          "title": "FRP in the osabe WAV editor"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/rar8eg/advent_of_code_2021_day_07/",
+          "author": null,
+          "description": "https://adventofcode.com\n    submitted by    /u/taylorfausak  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/rar8eg/advent_of_code_2021_day_07/",
+          "publishedOn": "2021-12-07T05:01:11.000Z",
+          "wordCount": 2104,
+          "title": "Advent of Code 2021 day 07"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/ralrbx/i_made_a_playlist_of_7_hours_of_chill_synth_music/",
+          "author": null,
+          "description": "Here\n Bonus\n    submitted by    /u/Iampacificjanjan  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/ralrbx/i_made_a_playlist_of_7_hours_of_chill_synth_music/",
+          "publishedOn": "2021-12-07T00:12:06.000Z",
+          "wordCount": 212,
+          "title": "I made a playlist of 7 hours of chill synth music to lift you up and motivate you while coding/developing. If you are also into this, share yours!"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/racju5/creating_instance_for_bounded_list_sequence/",
           "author": null,
           "description": "data Letters = A | B | C deriving (Eq, Ord, Bounded, Enum, Show) instance (Eq a, Ord a, Bounded a, Enum a) => Enum [a] where succ = reverse . succ' . reverse where succ' :: [a] -> [a] succ' (x:xs) | x < (maxBound :: a) = (succ x) : xs | x == (maxBound) && xs /= [] = (minBound :: a) : (succ' xs) class (Eq a, Ord a, Enum a, Bounded a) => Buildable a where build :: a -> a -> [a] build start end = reverse $ build' start end [] where build' :: a -> a -> [a] -> [a] build' x y l | x >= (minBound :: a) && x <= y && x < (maxBound :: a) = build' (succ x) y l++[x] | x >= (minBound :: a) && x <= y && x == (maxBound :: a) = l++[x] | otherwise = l instance Buildable Letters \n I have defined succ so that it can be applied to all permutation of [Letters] with a ordered sequence like this:\n succ [A,A,A] = [A,A,B] succ [A,A,B] = [A,A,C] succ [A,A,C] = [A,B,A] ... succ [C,C,B] = [C,C,C] -- succ [C,C,C] is not defined \n build in Buildable is given the start and end value, it builds a ordered list of every element in the set including start and end:\n build A B = [A,B] build B C = [B,C] build A C = [A,B,C] \n ​\n How do I apply Buildable on [Letters] such that I can call build like this:\n build [A] [B] = [[A],[B]] build [A,A] [B,B] = [[A,A],[A,B],[B,A],[B,B]] build [A,A,A] [A,A,C] = [[A,A,A],[A,A,B],[A,A,C]] build [B,B,C] [B,C,C] = [[B,B,C],[B,C,A],[B,C,B],[B,C,C]] \n It seems like I have to define what maxBound and minBound is for [Letters] if I do instance Buildable [a]. How do I do that?\n    submitted by    /u/iloveyoufah  \n [link]   [comments]",
@@ -1928,42 +1955,6 @@
           "publishedOn": "2021-11-08T12:13:34.000Z",
           "wordCount": 118,
           "title": "IHP v0.16.0 has been released 🎉"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/qp11iq/haskell_folding_exercises/",
-          "author": null,
-          "description": "Hi guys, I've been learning haskell for school and I have an exercise Im trying to do where I have to implement a function firstWhen :: (a -> Bool) -> [a] -> Maybe a, \n the function is meant to return Just n if n is the first member that satisfies the condition and Nothing if no member satisfies the condition. So my first thought is to use foldl since it will check everything from the left to the right and I have my accumulator set to Nothing. \n My current implementation is: \n firstWhen p = foldl (\\acc x -> if p x then Just x else Nothing ) Nothing\n The problem is it always returns the result for the final member. is there some way to make the function return the first member that satisfies the condition and then stop iterating? or am I thinking about this the wrong way? Thanks in advance for any tips or gentle nudges in the right direction :)\n    submitted by    /u/TJP1609  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/qp11iq/haskell_folding_exercises/",
-          "publishedOn": "2021-11-07T23:46:19.000Z",
-          "wordCount": 380,
-          "title": "Haskell folding exercises"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/qow9za/lyah_beginner_questions/",
-          "author": null,
-          "description": "Hey guys,\n I am currently trying to learn some haskell by going throught he LYAH book and got two questions.\n ​\n 1) I think it was written when Applicative was not required for the Monad typeclass. It states in this capter (http://learnyouahaskell.com/for-a-few-monads-more) that there are some functions that do the same as the functions on Functors. But specifically written for Monads (e.g. liftM and fmap; ap and <*>).\n  \nWhich ones are you using?\n Is there a rule of thumb?\n Perhaps something like \"always liftM when the value is an instance of Monad and only fmap when it is an instance of Applicative and not of Monad?\"\n  \n​\n 2) There is a small task to do this tightrope walker example (http://learnyouahaskell.com/a-fistful-of-monads) with the Either type instead of the Maybe type.Thats what I did here and wondered if I could use the state Monad in combination with the Either Monad to clean up the code by avoiding all these ```first <- landLeft start second <- landLeft first etc..```\n  \nIs this possible? ( I did not yet fully grasp the State Monad stuff, so it would also be a decent practice I guess)\n  \n​\n ​\n thanks in advance!\n    submitted by    /u/prrxddq  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/qow9za/lyah_beginner_questions/",
-          "publishedOn": "2021-11-07T19:50:35.000Z",
-          "wordCount": 466,
-          "title": "LYAH beginner questions"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/qola4j/how_to_map_element_of_a_list_into_a_list_of_tuples/",
-          "author": null,
-          "description": "Hey, let's say I have following list of numbers and I want them to add to a list of tuples where the second tuple member will always be a constant string of \"ID\". How to go about that?\n ids = [1,2,3,4]\n I wanna achieve the following:\n tupleList :: [(Int, String)]\n tupleList = map (\\x -> x \"ID\") ids -- [(1 , \"ID\"), (2 , \"ID\"), (3 , \"ID\"), ....]\n    submitted by    /u/Ok-Cow-3198  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/qola4j/how_to_map_element_of_a_list_into_a_list_of_tuples/",
-          "publishedOn": "2021-11-07T09:42:34.000Z",
-          "wordCount": 713,
-          "title": "How to map element of a list into a list of tuples"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/qoksb6/question_why_getting_stack_overflow/",
-          "author": null,
-          "description": "this is my first time learning Haskell.\n i am trying to implement this simple function but getting this stack overflow exception\n can anyone help me to figure out what am i doing wrong here\n Haskell\n i tried the same implementation in other languages and its working just fine\n ​\n JavaScript\n    submitted by    /u/rimaa_nahk  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/qoksb6/question_why_getting_stack_overflow/",
-          "publishedOn": "2021-11-07T09:03:02.000Z",
-          "wordCount": 627,
-          "title": "[Question] why getting stack overflow"
         }
       ]
     },
@@ -1972,6 +1963,42 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/rb78t7/ive_entered_a_state_of_helplessness_while/",
+          "author": null,
+          "description": "submitted by    /u/Dear_Event7900  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/rb78t7/ive_entered_a_state_of_helplessness_while/",
+          "publishedOn": "2021-12-07T19:24:53.000Z",
+          "wordCount": 165,
+          "title": "I've entered a state of helplessness while learning scala"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/rb02bv/why_does_this_work/",
+          "author": null,
+          "description": "trait Calc { def foo (x : Int) : Int }\n // weird ... I seem to be able to assign a function as an instance of Calc -- ?\n val whyDoesThisWork : Calc = (x : Int) => x * 2\n val whyDoesThisWork: Calc = Lambda$1333/0x00000008011ca840@9f2376f\n whyDoesThisWork.foo(123)\n val res0: Int = 246\n    submitted by    /u/meaty_and  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/rb02bv/why_does_this_work/",
+          "publishedOn": "2021-12-07T14:12:44.000Z",
+          "wordCount": 143,
+          "title": "Why does this work?"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/rawj06/scala_native_042/",
+          "author": null,
+          "description": "submitted by    /u/sideEffffECt  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/rawj06/scala_native_042/",
+          "publishedOn": "2021-12-07T10:52:51.000Z",
+          "wordCount": 124,
+          "title": "Scala Native 0.4.2"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/rahrej/jam_010_is_out_with_new_syntax_and_more_features/",
+          "author": null,
+          "description": "Jam - incredibly simple DI Scala library\n https://github.com/yakivy/jam#changelog\n Changelog:\n  \nfix import ambiguity: jam.tree.brew was renamed to jam.brewRec\n fix method overload ambiguity: jam.brew(f) was renamed to jam.brewWith(f)\n allow passing an instance to brew from (instead of this): jam.brewFrom\n various refactorings and cleanups\n  \n   submitted by    /u/yakivy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/rahrej/jam_010_is_out_with_new_syntax_and_more_features/",
+          "publishedOn": "2021-12-06T21:07:19.000Z",
+          "wordCount": 271,
+          "title": "Jam 0.1.0 is out with new syntax and more features"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/racqsz/constraint_that_a_type_is_an_explicit_union/",
           "author": null,
@@ -2691,33 +2718,6 @@
           "publishedOn": "2021-11-08T11:09:47.000Z",
           "wordCount": 658,
           "title": "Beginners Question. Please be kind and try to explain"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/qp8cfl/scala_at_scale_at_databricks/",
-          "author": null,
-          "description": "submitted by    /u/lihaoyi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/qp8cfl/scala_at_scale_at_databricks/",
-          "publishedOn": "2021-11-08T07:13:06.000Z",
-          "wordCount": 269,
-          "title": "Scala at Scale at Databricks"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/qoyh9m/this_week_in_scala_nov_8_2021/",
-          "author": null,
-          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/qoyh9m/this_week_in_scala_nov_8_2021/",
-          "publishedOn": "2021-11-07T21:38:13.000Z",
-          "wordCount": 97,
-          "title": "This week in #Scala (Nov 8, 2021)"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/qov9o4/on_the_future_of_akka_and_lightbend/",
-          "author": null,
-          "description": "submitted by    /u/kpws  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/qov9o4/on_the_future_of_akka_and_lightbend/",
-          "publishedOn": "2021-11-07T19:01:27.000Z",
-          "wordCount": 94,
-          "title": "On the future of Akka and Lightbend"
         }
       ]
     },
@@ -2876,6 +2876,15 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/rb1ams/fix_broken_link_after_moverename_linked_file/",
+          "author": null,
+          "description": "File links break all the time, for instance after reorganize your directory structure. This can take many time to fix broken link manually. I need a solution to prevent all file reference in my org-agenda-files are broken.\n My current solution to prevent the issue is to use hardlink in org-agenda-files ```\n assume I want add /a/b/c.org into emacs variable org-agenda-files\n mkdir ~/.emacs.d/org-agenda-files\n create hardlink of c.org in dir org-agenda-files\n ln /a/b/c.org ~/.emacs.d/org-agenda-files/c.org \n add ~/.emacs.d/org-agenda-files/c.org to emacs variable org-agenda-files\n ```\n However, this solution has some limit. For instance, - the absolute path of \"c.org\" become ~/.emacs.d/org-agenda-files/c.org. So its relative link are broken.\n LinkTek propose a much better solution: https://linktek.com/do-this-one-trick-and-never-worry-about-broken-file-links-again/\n  \nLinkTek creates an additional association between the parent file and each of its child files. LinkFixer Advanced uses that secondary association to quickly and automatically fix all the links that get broken by whatever changes someone makes to your files.\n  \nWhat solution you use for the problem of broken link? Exist an implementation of solution proposed by LinkTek for org mode?\n    submitted by    /u/terhyrzht  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/rb1ams/fix_broken_link_after_moverename_linked_file/",
+          "publishedOn": "2021-12-07T15:11:23.000Z",
+          "wordCount": 622,
+          "title": "Fix broken link after move/rename linked file"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/r9iwph/wrong_number_of_arguments_in_the/",
           "author": null,
@@ -3307,6 +3316,24 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/soccer-20211207.1623.tar",
+          "author": null,
+          "description": "The soccer package has been updated to version 20211207.1623.",
+          "link": "https://melpa.org/#/soccer",
+          "publishedOn": "2021-12-07T16:23:00.000Z",
+          "wordCount": 105,
+          "title": "soccer (20211207.1623) --- Fixtures, results, table etc for soccer"
+        },
+        {
+          "id": "https://melpa.org/packages/oer-reveal-20211207.956.tar",
+          "author": null,
+          "description": "The oer-reveal package has been updated to version 20211207.956.",
+          "link": "https://melpa.org/#/oer-reveal",
+          "publishedOn": "2021-12-07T09:56:00.000Z",
+          "wordCount": 105,
+          "title": "oer-reveal (20211207.956) --- OER with reveal.js, plugins, and org-re-reveal"
+        },
+        {
           "id": "https://melpa.org/packages/lsp-ui-20211206.1840.tar",
           "author": null,
           "description": "The lsp-ui package has been updated to version 20211206.1840.",
@@ -3332,6 +3359,15 @@
           "publishedOn": "2021-12-06T16:34:00.000Z",
           "wordCount": 105,
           "title": "vagrant (20211206.1634) --- Manage a vagrant box from emacs"
+        },
+        {
+          "id": "https://melpa.org/packages/tree-sitter-langs-20211206.1616.tar",
+          "author": null,
+          "description": "The tree-sitter-langs package has been updated to version 20211206.1616.",
+          "link": "https://melpa.org/#/tree-sitter-langs",
+          "publishedOn": "2021-12-06T16:16:00.000Z",
+          "wordCount": 105,
+          "title": "tree-sitter-langs (20211206.1616) --- Grammar bundle for tree-sitter"
         },
         {
           "id": "https://melpa.org/packages/evil-textobj-tree-sitter-20211206.310.tar",
@@ -3433,6 +3469,15 @@
           "title": "eacl (20211205.122) --- Auto-complete lines by grepping project"
         },
         {
+          "id": "https://melpa.org/packages/ghub-20211205.17.tar",
+          "author": null,
+          "description": "The ghub package has been updated to version 20211205.17.",
+          "link": "https://melpa.org/#/ghub",
+          "publishedOn": "2021-12-05T00:17:00.000Z",
+          "wordCount": 105,
+          "title": "ghub (20211205.17) --- Minuscule client libraries for Git forge APIs."
+        },
+        {
           "id": "https://melpa.org/packages/aes-20211204.2348.el",
           "author": null,
           "description": "The aes package has been updated to version 20211204.2348.",
@@ -3494,6 +3539,15 @@
           "publishedOn": "2021-12-04T13:56:00.000Z",
           "wordCount": 105,
           "title": "citre (20211204.1356) --- Ctags IDE on the True Editor"
+        },
+        {
+          "id": "https://melpa.org/packages/org-ref-20211204.1322.tar",
+          "author": null,
+          "description": "The org-ref package has been updated to version 20211204.1322.",
+          "link": "https://melpa.org/#/org-ref",
+          "publishedOn": "2021-12-04T13:22:00.000Z",
+          "wordCount": 105,
+          "title": "org-ref (20211204.1322) --- citations, cross-references and bibliographies in org-mode"
         },
         {
           "id": "https://melpa.org/packages/puni-20211204.1256.el",
@@ -3602,6 +3656,15 @@
           "publishedOn": "2021-12-03T14:18:00.000Z",
           "wordCount": 105,
           "title": "lean-mode (20211203.1418) --- A major mode for the Lean 3 language"
+        },
+        {
+          "id": "https://melpa.org/packages/org-roam-bibtex-20211203.1348.tar",
+          "author": null,
+          "description": "The org-roam-bibtex package has been updated to version 20211203.1348.",
+          "link": "https://melpa.org/#/org-roam-bibtex",
+          "publishedOn": "2021-12-03T13:48:00.000Z",
+          "wordCount": 105,
+          "title": "org-roam-bibtex (20211203.1348) --- Org Roam meets BibTeX"
         },
         {
           "id": "https://melpa.org/packages/cov-20211203.416.el",
@@ -3782,6 +3845,15 @@
           "publishedOn": "2021-12-01T19:06:00.000Z",
           "wordCount": 105,
           "title": "fanyi (20211201.1906) --- Not only English-Chinese translator"
+        },
+        {
+          "id": "https://melpa.org/packages/deadgrep-20211201.1747.el",
+          "author": null,
+          "description": "The deadgrep package has been updated to version 20211201.1747.",
+          "link": "https://melpa.org/#/deadgrep",
+          "publishedOn": "2021-12-01T17:47:00.000Z",
+          "wordCount": 105,
+          "title": "deadgrep (20211201.1747) --- fast, friendly searching with ripgrep"
         },
         {
           "id": "https://melpa.org/packages/lsp-docker-20211201.1657.el",
@@ -4331,6 +4403,15 @@
           "publishedOn": "2021-11-25T19:34:00.000Z",
           "wordCount": 105,
           "title": "el-secretario (20211125.1934) --- Unify all your inboxes with the Emacs secretary"
+        },
+        {
+          "id": "https://melpa.org/packages/pomm-20211125.1806.tar",
+          "author": null,
+          "description": "The pomm package has been updated to version 20211125.1806.",
+          "link": "https://melpa.org/#/pomm",
+          "publishedOn": "2021-11-25T18:06:00.000Z",
+          "wordCount": 105,
+          "title": "pomm (20211125.1806) --- Yet another Pomodoro timer implementation"
         },
         {
           "id": "https://melpa.org/packages/auto-highlight-symbol-20211125.747.el",
@@ -5987,132 +6068,6 @@
           "publishedOn": "2021-11-08T09:43:00.000Z",
           "wordCount": 105,
           "title": "org-roam-timestamps (20211108.943) --- Keep track of modification times for org-roam"
-        },
-        {
-          "id": "https://melpa.org/packages/dracula-theme-20211108.749.tar",
-          "author": null,
-          "description": "The dracula-theme package has been updated to version 20211108.749.",
-          "link": "https://melpa.org/#/dracula-theme",
-          "publishedOn": "2021-11-08T07:49:00.000Z",
-          "wordCount": 105,
-          "title": "dracula-theme (20211108.749) --- Dracula Theme"
-        },
-        {
-          "id": "https://melpa.org/packages/ruby-json-to-hash-20211108.351.el",
-          "author": null,
-          "description": "The ruby-json-to-hash package has been updated to version 20211108.351.",
-          "link": "https://melpa.org/#/ruby-json-to-hash",
-          "publishedOn": "2021-11-08T03:51:00.000Z",
-          "wordCount": 105,
-          "title": "ruby-json-to-hash (20211108.351) --- Convert JSON to Hash and play with the keys"
-        },
-        {
-          "id": "https://melpa.org/packages/rails-routes-20211108.347.el",
-          "author": null,
-          "description": "The rails-routes package has been updated to version 20211108.347.",
-          "link": "https://melpa.org/#/rails-routes",
-          "publishedOn": "2021-11-08T03:47:00.000Z",
-          "wordCount": 105,
-          "title": "rails-routes (20211108.347) --- Search for and insert rails routes"
-        },
-        {
-          "id": "https://melpa.org/packages/recur-20211108.219.el",
-          "author": null,
-          "description": "The recur package has been updated to version 20211108.219.",
-          "link": "https://melpa.org/#/recur",
-          "publishedOn": "2021-11-08T02:19:00.000Z",
-          "wordCount": 105,
-          "title": "recur (20211108.219) --- Tail call optimization"
-        },
-        {
-          "id": "https://melpa.org/packages/all-the-icons-20211108.7.tar",
-          "author": null,
-          "description": "The all-the-icons package has been updated to version 20211108.7.",
-          "link": "https://melpa.org/#/all-the-icons",
-          "publishedOn": "2021-11-08T00:07:00.000Z",
-          "wordCount": 105,
-          "title": "all-the-icons (20211108.7) --- A library for inserting Developer icons"
-        },
-        {
-          "id": "https://melpa.org/packages/python-pytest-20211107.2245.el",
-          "author": null,
-          "description": "The python-pytest package has been updated to version 20211107.2245.",
-          "link": "https://melpa.org/#/python-pytest",
-          "publishedOn": "2021-11-07T22:45:00.000Z",
-          "wordCount": 105,
-          "title": "python-pytest (20211107.2245) --- helpers to run pytest"
-        },
-        {
-          "id": "https://melpa.org/packages/realgud-20211107.2210.tar",
-          "author": null,
-          "description": "The realgud package has been updated to version 20211107.2210.",
-          "link": "https://melpa.org/#/realgud",
-          "publishedOn": "2021-11-07T22:10:00.000Z",
-          "wordCount": 105,
-          "title": "realgud (20211107.2210) --- A modular front-end for interacting with external debuggers"
-        },
-        {
-          "id": "https://melpa.org/packages/finito-20211107.1925.tar",
-          "author": null,
-          "description": "The finito package has been updated to version 20211107.1925.",
-          "link": "https://melpa.org/#/finito",
-          "publishedOn": "2021-11-07T19:25:00.000Z",
-          "wordCount": 105,
-          "title": "finito (20211107.1925) --- View and collect books"
-        },
-        {
-          "id": "https://melpa.org/packages/request-20211107.1907.el",
-          "author": null,
-          "description": "The request package has been updated to version 20211107.1907.",
-          "link": "https://melpa.org/#/request",
-          "publishedOn": "2021-11-07T19:07:00.000Z",
-          "wordCount": 105,
-          "title": "request (20211107.1907) --- Compatible layer for URL request"
-        },
-        {
-          "id": "https://melpa.org/packages/ein-20211107.1724.tar",
-          "author": null,
-          "description": "The ein package has been updated to version 20211107.1724.",
-          "link": "https://melpa.org/#/ein",
-          "publishedOn": "2021-11-07T17:24:00.000Z",
-          "wordCount": 105,
-          "title": "ein (20211107.1724) --- Emacs IPython Notebook"
-        },
-        {
-          "id": "https://melpa.org/packages/symbolist-20211107.1615.el",
-          "author": null,
-          "description": "The symbolist package has been updated to version 20211107.1615.",
-          "link": "https://melpa.org/#/symbolist",
-          "publishedOn": "2021-11-07T16:15:00.000Z",
-          "wordCount": 105,
-          "title": "symbolist (20211107.1615) --- List and interactively unbind Emacs Lisp symbols"
-        },
-        {
-          "id": "https://melpa.org/packages/package-lint-20211107.1614.tar",
-          "author": null,
-          "description": "The package-lint package has been updated to version 20211107.1614.",
-          "link": "https://melpa.org/#/package-lint",
-          "publishedOn": "2021-11-07T16:14:00.000Z",
-          "wordCount": 105,
-          "title": "package-lint (20211107.1614) --- A linting library for elisp package authors"
-        },
-        {
-          "id": "https://melpa.org/packages/ox-reveal-20211107.1121.el",
-          "author": null,
-          "description": "The ox-reveal package has been updated to version 20211107.1121.",
-          "link": "https://melpa.org/#/ox-reveal",
-          "publishedOn": "2021-11-07T11:21:00.000Z",
-          "wordCount": 105,
-          "title": "ox-reveal (20211107.1121) --- reveal.js Presentation Back-End for Org Export Engine"
-        },
-        {
-          "id": "https://melpa.org/packages/flycheck-languagetool-20211107.1001.el",
-          "author": null,
-          "description": "The flycheck-languagetool package has been updated to version 20211107.1001.",
-          "link": "https://melpa.org/#/flycheck-languagetool",
-          "publishedOn": "2021-11-07T10:01:00.000Z",
-          "wordCount": 105,
-          "title": "flycheck-languagetool (20211107.1001) --- Flycheck support for LanguageTool"
         }
       ]
     },
@@ -6121,6 +6076,141 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rb34hx/arrow_keys_in_terminal_emacs/",
+          "author": null,
+          "description": "Hi Emacs friends,\n been trying to solve this issue for quite a while now (google, posts). I swear, I did everything short of asking it here.\n Different terminal emulators as well (Terminal, iTerm2, kitty). I am on macOS.\n I would love to use my arrow keys in the non gui version of Emacs but they seem to be weirdly mapped:\n ​\n UP:\n esc-map O\n global-map C-t f F\n global-map M-O\n and then A\n (GUI Emacs: evil-previous-line)\n \n Down:\n esc-map O\n global-map C-t f F\n global-map M-O\n and then B\n (GUI Emacs: evil-next-line)\n \n Right:\n esc-map O\n global-map C-t f F\n global-map M-O\n and then C\n (GUI Emacs: evil-forward-char)\n \n Left:\n esc-map O\n global-map C-t f F\n global-map M-O\n and then C\n (GUI Emacs: evil-backward-char)\n ​\n ​\n I have tried few remapping by suggestions that do not work at all – currently:\n ​\n (unless (display-graphic-p)\n (progn\n (defvar arrow-keys-map (make-sparse-keymap) \"Keymap for arrow keys\")\n (define-key esc-map \"O\" arrow-keys-map)\n (define-key arrow-keys-map \"A\" 'previous-line)\n (define-key arrow-keys-map \"B\" 'next-line)\n (define-key arrow-keys-map \"C\" 'forward-char)\n (define-key arrow-keys-map \"D\" 'backward-char)))\n ​\n Nope. Doesn't work.\n HELP.\n    submitted by    /u/aimebertrand  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rb34hx/arrow_keys_in_terminal_emacs/",
+          "publishedOn": "2021-12-07T16:48:39.000Z",
+          "wordCount": 225,
+          "title": "Arrow keys in Terminal Emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rb2nei/from_tmux_vim/",
+          "author": null,
+          "description": "Hello everyone, I'm trying to switch (once again, 2nd try) from my tmux, vim setup, to emacs. Mostly because I do common lisp development, but I have 2 relative big issues regarding my workflow. First, on every project I have a script that builds tmux session with corresponding services running (redis, postgresdb, vim, custom services, etc) I guess I can simulate this using a elisp file on each project? Is that possible? . Second, I use a lot M-x compile command, but my root keeps moving on each window. It's different than vim, that the root is where I executed vim. On the other hand, SLIME is really cool, and I'm really eager to use org-mode more when I solve this 2 issues. Thank you!\n    submitted by    /u/diegogub2  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rb2nei/from_tmux_vim/",
+          "publishedOn": "2021-12-07T16:20:11.000Z",
+          "wordCount": 441,
+          "title": "from tmux + vim"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rb18af/tls_connection_to_melpaorg443_insecure/",
+          "author": null,
+          "description": "I'm getting a TLS error from melpa.org; xubuntu 20.04, emacs pre-test 28.0.90:\n https://www.reddit.com/96aa0eda-02d4-4d84-bb2f-404b167a2cdd (sorry, I didn't embed the image correctly but the error message is in the title of the post)\n gnutls-cli --tofu melpa.org gives\n ```` - Certificate[2] info:\n  \nsubject CN=ISRG Root X1,O=Internet Security Research Group,C=US', issuerCN=DST Root CA X3,O=Digital Signature Trust Co.', serial 0x4001772137d4e942b8ee76aa3c640ab7, RSA key 4096 bits, signed using RSA-SHA256, activated 2021-01-20 19:14:03 UTC', expires2024-09-30 18:14:03 UTC', pin-sha256=\"C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=\"\n \nStatus: The certificate is NOT trusted. The certificate chain uses expired certificate.\n \n ```` At the same time, both firefox and google-chrome report that melpa.org is secure. I don't understand security infrastructure well enough to debug this. Does anyone have suggestions for next steps? Thanks!\n    submitted by    /u/rmcd1024  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rb18af/tls_connection_to_melpaorg443_insecure/",
+          "publishedOn": "2021-12-07T15:08:25.000Z",
+          "wordCount": 342,
+          "title": "TLS connection to melpa.org:443 insecure; fingerprint has changed"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rb14o2/org_message_options/",
+          "author": null,
+          "description": "Hi all,\n I'm trying to change my default options to my org-msg emails. I can't seem to be able to do that though. Im using dokm emacs and here is my config:\n Also I'm trying to setup org-msg, but I can't seem to get my org-msg-options working for my mails. Do you guys have any idea what the problem could be? This is my config:\n  (setq org-msg-options \"html-postamble:nil H:5 num:nil something:nil ^:{} toc:nil author:nil email:nil \\\\n:t\" org-msg-startup \"hidestars indent inlineimages\" org-msg-greeting-fmt \"\\nHi%s,\\n\\n\" org-msg-greeting-name-limit 3 org-msg-default-alternatives '((new . (text html)) (reply-to-html . (text html)) (reply-to-text . (text))) org-msg-convert-citation t org-msg-signature \"\") \n    submitted by    /u/Distinct-Score-1133  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rb14o2/org_message_options/",
+          "publishedOn": "2021-12-07T15:03:38.000Z",
+          "wordCount": 186,
+          "title": "Org message options"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rb0zrp/how_to_find_missing_require_forms_in_emacs_lisp/",
+          "author": null,
+          "description": "When writing Emacs Lisp programs, is it possible to automatically insert require forms?\n If not, is there an easy way to find out which ones you need to add? I have caught a bunch using elint-current-buffer, and compilation helps, but these are a bit clumsy.\n    submitted by    /u/vatansiz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rb0zrp/how_to_find_missing_require_forms_in_emacs_lisp/",
+          "publishedOn": "2021-12-07T14:57:47.000Z",
+          "wordCount": 231,
+          "title": "How to find missing (require ...) forms in Emacs Lisp? Can you automatically insert them?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rayq0p/emacs_pgtk_wayland_high_cpu_usage/",
+          "author": null,
+          "description": "Did anyone else notice high cpu usage of emacs compiled with pgtk runing in native wayland?\n I am running it under -Q and the process go up and down at around 30/40% of a single core on a non beefy laptop even idled with no buffer open.\n I am guessing this is inherent on how wayland protocol works where emacs+pgtk spend its time doing the redrawing?\n    submitted by    /u/chmouelb  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rayq0p/emacs_pgtk_wayland_high_cpu_usage/",
+          "publishedOn": "2021-12-07T13:01:31.000Z",
+          "wordCount": 201,
+          "title": "emacs + pgtk wayland high cpu usage"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/raw8py/any_packages_or_shared_elisp_bits_adding_embark/",
+          "author": null,
+          "description": "Inspired by recent, well-known articles on Embark and on Avy, I've started testing Embark over the past few days - and it's already turning into the interface I always wanted and only sort of knew I needed. While it's extremely useful out-of-the-box, I've already found a few cases where I would want to use it but can't, because it doesn't understand the construct at point. Examples:\n  \nOrg mode timestamps - to provide operations like activate/inactivate, change, pop calendar to that date, bump by repeater, etc.\n \nOrg mode headlines - pretty much everything you can do on those, that Org mode has bound to countless weird keys. Including \"speed commands\", most of which could work without quitting the Embark \"prompter\", the way e.g. navigating to next/prev symbol works.\n \nOrg mode tables - embark-cycle could be able to switch between cell, row, column, whole table (perhaps also stopping at \"rowgroup\", \"column group\" and \"subtable\", which would be rectangular areas that are bound by hlines and column group markers) - each of those would have its own contextual commands available. For example, \"eval formula\", so one doesn't have to remember reference syntax and how many times to press C-u before pressing C-c =.\n \nSyntactic elements and expressions in programming language modes, allowing for e.g. language-specific actions.\n \n From the looks of it, it's not that hard to write any - the tricky bit being target classifiers. I'm going to take a stab at adding some classifiers and action keymaps for things I commonly interact with - but I'd like to avoid repeating work that might already be done better. Hence my question: are there any \"extension packages\" that enable Embark to recognize more target types? Or, are any of you already using hand-written ones (and if yes, can you share them)?\n    submitted by    /u/TeMPOraL_PL  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/raw8py/any_packages_or_shared_elisp_bits_adding_embark/",
+          "publishedOn": "2021-12-07T10:33:08.000Z",
+          "wordCount": 788,
+          "title": "Any packages or shared elisp bits adding Embark classifiers and actions?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ravvf7/normally_when_i_start_to_learn_something_new_i/",
+          "author": null,
+          "description": "submitted by    /u/string111  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ravvf7/normally_when_i_start_to_learn_something_new_i/",
+          "publishedOn": "2021-12-07T10:07:23.000Z",
+          "wordCount": 529,
+          "title": "Normally when I start to learn something new, I get a book that teaches me about it. For Emacs, I have not done this for years. It is time to learn it inside out."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rasp65/in_your_words_what_is_emacs/",
+          "author": null,
+          "description": "We have all seen Emacs be described as so many different things: a text editor, not just a text editor, an operating system, a Lisp interpreter, and a *million other things.\n Describing what Emacs is can be super difficult, as it is different things to different people. Some use it for programming or general writing, some for organisation, project management, email, web browsing, controlling media, and a **million more things. Basically, people use Emacs for whatever they want, which is fantastic! \n This makes it difficult to describe what exactly Emacs is to people outside our friendly little circle. Other editors can be described nearly completely with a short familiar phrase. Vim is an efficient text editor, VSCode is a powerful modern IDE, Vi is a last resort. But Emacs doesn't have a consistent and universally agreeable short description. \n My question is, what is Emacs to you? How would you describe it succinctly to someone who has heard about it, but not sure what all the fuss is about? \n My humble submission would be: \"the whatever you want text interface.\"\n *Mild exaggeration, but you get the picture\n ** Under exaggeration :)\n    submitted by    /u/azfrak  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rasp65/in_your_words_what_is_emacs/",
+          "publishedOn": "2021-12-07T06:30:45.000Z",
+          "wordCount": 515,
+          "title": "In your words, what is Emacs?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/raqfhe/some_themes_cannot_italicize_comments/",
+          "author": null,
+          "description": "Hello, I am facing difficulties in trying to italicize commens for some themes. For instance, I am using the vscode-dark-plus theme. I tried to do a M-x customize-face for the font-lock-comment-face , and still could not get the theme to italicize my comment. Is there a way around this?\n    submitted by    /u/Artistic-Boss-2430  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/raqfhe/some_themes_cannot_italicize_comments/",
+          "publishedOn": "2021-12-07T04:15:36.000Z",
+          "wordCount": 180,
+          "title": "Some themes cannot italicize comments."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rapk9f/me_emacs_autism_and_adhd/",
+          "author": null,
+          "description": "NOTE: I usually use emacs in the CLI, not in the GUI.\n I found out about emacs some months back. When I initially tried out emacs; it felt complicated to use. After I practiced emacs over time; I started to like emacs.\n  \nI could use lynx inside emacs to form a psuedomultitab browser. Eventually I learned that emacs has a built-in browser eww. I favored that browser over lynx.\n \nIt was nice to be able to containerize workspaces, like for programming, school work, miscellaneous stuff, and just general browsing without having to deal with floating windows.\n \n I have Autism and ADHD; emacs helps with dealing with Autism, because it does not give much lack of sensory information; emacs is hyperresponsive, unlike VSCode, so it does not hurt my eyes when I try to do heavy-load tasks.\n emacs also helps with ADHD, since I can easily organize stuff with org-mode. I can also easily navigate buffers without a pointing device; I am uncomfortable with pointing devices (mouses and touchpads), despite using them for 11 years. Pointing devices seem to really mess with me and I can't control them as well (as I can with a keyboard).\n EDIT: My only complaint is that I wish I could display images in CLI emacs, like running viu on links to images after eww finishes loading. That complaint is not a criticism on emacs itself though.\n    submitted by    /u/Amicdict  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rapk9f/me_emacs_autism_and_adhd/",
+          "publishedOn": "2021-12-07T03:29:36.000Z",
+          "wordCount": 1411,
+          "title": "Me, emacs, Autism, and ADHD."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ramxwx/how_to_use_colors_outside_of_the_256_that_comes/",
+          "author": null,
+          "description": "Initially, I thought using hex values like #042e3a would grant me more freedom to choose the color but it turns out that apparently emacs will try to find the closest color it has when you supply a color that is not in its own color set.\n    submitted by    /u/whatisa_sky  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ramxwx/how_to_use_colors_outside_of_the_256_that_comes/",
+          "publishedOn": "2021-12-07T01:13:19.000Z",
+          "wordCount": 448,
+          "title": "How to use colors outside of the 256 that comes with the package?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ram6jz/i_need_some_help_on_how_to_use_emacs_for/",
+          "author": null,
+          "description": "Hello there,\n I'm doing Python web development in emacs using lsp-mode(I want to switch over to eglot-mode eventually when the pull-requests get pushed and html/css/js work automatically with elgot-mode, so keep this in mind) as the IDE for the Python and HTML files, which is working great. But when doing Jinja/Django specific syntax(for example in an HTML file), the auto-completion does not work? Is there an lsp-mode/eglot-mode for this to be used with use-package?\n If not then is there a way to declare web-mode in a use-package, where this functionality can be set, in which the corresponding Jinja/Django engine is activated based on a corresponding hook?\n I'd prefer to stick with the .py and .html extensions, but if that's not possible, the I could try out extensions like .djhtml to be used in the web-mode hook in the declared use-package.\n Thanks in advance for the help!\n    submitted by    /u/zeta_00  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ram6jz/i_need_some_help_on_how_to_use_emacs_for/",
+          "publishedOn": "2021-12-07T00:33:59.000Z",
+          "wordCount": 351,
+          "title": "I need some help on how to use Emacs for Jinja/Django development with lsp-mode/eglot-mode:"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/raif60/ebib_cant_format_anything_except_the_k_spec_in/",
+          "author": null,
+          "description": "I use ebib and citar. Both are awesome, but have different defaults when creating notes files for bibliographic entries. I wanted to unify them (so that my notes would always be of the same format). So I defined a wrapper function:\n (defun my/citar-ebib-notes-format-wrapper (key _entry _filepath) \"Wrapper so that citar's notes function can inherit from ebib's. \n Passes KEY to ebib--notes-fill-template', along with the value ofebib--cur-db' if defined, or the first item of `ebib-preload-bib-files' if not. _ENTRY and _FILEPATH are ignored.\" (require 'ebib-notes) (if-let ((cell (ebib--notes-create-new-note key (or ebib--cur-db (car ebib-preload-bib-files))))) (progn (display-buffer (car cell)) (goto-char (cdr cell)))))\n This only works while ebib is running. While it's not running I get an error message format-spec: Invalid format character: ‘%T, which is strange, because the formatting seems to rely on ebib-notes-template-specifiers, which I don't change, and which is initialised in ebib-notes.el (so should be available when the body of the function runs). Changing the notes template variable so that it doesn't include %T helps, and iterating on this reveals that the formatter errors for all specifiers except %K, which it handles fine. I'm very confused.\n I've tried everything I can think of to get this to work, to no avail. What's going on? Any help greatly appreciated!\n    submitted by    /u/Jack-o-tall-tales  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/raif60/ebib_cant_format_anything_except_the_k_spec_in/",
+          "publishedOn": "2021-12-06T21:35:47.000Z",
+          "wordCount": 332,
+          "title": "Ebib can't format anything except the %K spec in notes strings until I open, what's going on?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rahh0g/new_errors_with_installing_org/",
+          "author": null,
+          "description": "Just today I startted getting the following errors after using straight to pull the most recent version of org.\n Error (use-package): org/:config: Symbol’s function definition is void: org-element-cache-reset [2 times]\n Error (use-package): evil-embrace/:catch: Symbol’s value as variable is void: org-org-menu\n WARNING: No org-loaddefs.el file could be found from where org.el is loaded.\n You need to run \"make\" or \"make autoloads\" from Org lisp directory\n The only notable parts of my config related to installing org are as follows:\n (require 'package) (setq package-archives '((\"gnu\" . \"https://elpa.gnu.org/packages/\") (\"melpa\" . \"https://melpa.org/packages/\") (\"nongnu\" . \"https://elpa.nongnu.org/nongnu/\"))) \n and\n (straight-use-package 'org) (straight-use-package '(org-contrib :type git :host github :repo \"emacsmirror/org-contrib\")) \n I Know there have been some recent changes with org mode installation and I have seen some posts here but I have gotten confused and can't seem to figure out what I am doing wrong. Notably, I have not changed anything in my config lately that I would imaging would have anything to do with installing org....\n ​\n EDIT: I take it back. \n I did recently add \n :hook (org-mode . turn-on-org-cdlatex)\n and removing that line does seem to fix things but I have no idea why. \n Any help would be most appreciated.\n    submitted by    /u/JustinSilverman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rahh0g/new_errors_with_installing_org/",
+          "publishedOn": "2021-12-06T20:54:57.000Z",
+          "wordCount": 311,
+          "title": "New errors with installing org"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/ragr00/solving_an_advent_of_code_problem/",
           "author": null,
@@ -9225,78 +9315,6 @@
           "publishedOn": "2021-11-08T09:08:20.000Z",
           "wordCount": 424,
           "title": "Emacs nativecomp slow downs"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/qp66dt/configuring_emacs_terminal_as_fast_as_vim/",
-          "author": null,
-          "description": "Hi guyz , I really love emacs but I use terminal over GUI. But have some problems here. Neovim modeline , tree, terminal interface are cooler that terminal emacs.\n Other thing is how to make it faster as performance ? I use emacsclient still need more performance.\n So any packages that would help me?\n Regards.\n    submitted by    /u/cakartantyr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/qp66dt/configuring_emacs_terminal_as_fast_as_vim/",
-          "publishedOn": "2021-11-08T04:40:54.000Z",
-          "wordCount": 391,
-          "title": "Configuring Emacs Terminal as fast as vim"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/qp4igb/emacs_org_capture_2021_11_08_081246/",
-          "author": null,
-          "description": "submitted by    /u/unixbhaskar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/qp4igb/emacs_org_capture_2021_11_08_081246/",
-          "publishedOn": "2021-11-08T02:59:36.000Z",
-          "wordCount": 129,
-          "title": "Emacs Org Capture 2021_11_08_08:12:46"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/qp491n/i_need_some_tips_with_setting_up_emacs_for/",
-          "author": null,
-          "description": "Hello there,\n 1st of all, I don't mean for blog posts, like emacs's org2blog package. I mean to actually develop the wordpress site itself by coding in emacs.\n Is there a simple way to do this?\n I'm guessing I'll need ssh, tramp, git, ftps, etc... to set this up?\n Thanks in advance for the help!\n    submitted by    /u/zeta_00  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/qp491n/i_need_some_tips_with_setting_up_emacs_for/",
-          "publishedOn": "2021-11-08T02:44:26.000Z",
-          "wordCount": 163,
-          "title": "I need some tips with setting up emacs for wordpress development:"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/qp3to1/a_question_about_emacs_package_org2blog/",
-          "author": null,
-          "description": "Hello there,\n I am planning on creating python blog posts in my wordpress site, by using code snippets from python projects that I develop in emacs.\n Anyways, my question is would the emacs package org2blog be a good solution for my use-case?\n Basically I'm going to insert Python code blocks as well as screenshots of my Python projects into the wordpress blog, then explain that stuff in the wordpress blog. Would org2blog be a good for this?\n I need to the code to be synax highlighted, and I want to be able to use custom themes for the code blocks.\n Thanks again for the help!\n    submitted by    /u/zeta_00  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/qp3to1/a_question_about_emacs_package_org2blog/",
-          "publishedOn": "2021-11-08T02:20:10.000Z",
-          "wordCount": 335,
-          "title": "A question about emacs package org2blog:"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/qp2sxf/anyone_with_macos_monterey_on_an_m1/",
-          "author": null,
-          "description": "Edit: emacs-plus and the devel version of emacs-mac now have patches to obviate this. A patch has been proposed upstream and we are awaiting feedback from the original author before it can be merged.\n ​\n Unfortunately, it looks like macOS Monterey regressed the performance of vfork, which means magit is once again slow and gets slower the more packages you have loaded. See https://lists.gnu.org/archive/html/bug-gnu-emacs/2017-04/msg00201.html\n I'm curious if anyone out there has an M1 Mac w/ Monterey and Emacs 27.2 or greater and would be willing to run this and report back the timing information:\n (benchmark 100 '(call-process \"/usr/bin/true\" nil nil nil))\n Thanks!\n    submitted by    /u/hmeh922  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/qp2sxf/anyone_with_macos_monterey_on_an_m1/",
-          "publishedOn": "2021-11-08T01:23:27.000Z",
-          "wordCount": 898,
-          "title": "Anyone with macOS Monterey on an M1?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/qp05yj/in_multisection_org_mode_documents_do_you_use_one/",
-          "author": null,
-          "description": "I'd be interested in hearing how others handle the following question on using org headers and sub-headers.\n Suppose you have an Org file for some purpose -- a particular project, notes on a topic, a draft document, etc. For argument's sake, let's say it's for a project called XXX, and the file itself is project_xxx.org. And suppose you want several sections. For example: a Description, a list of Tasks, a Journal area, a list of References, etc. Given that, there are at least two ways of setting up the org headings. \n You could simply have the sections be level 1 headings, like this:\n * Description * Tasks * Journal * References \n But that means that what make those four sectional headings all belong to Project XXX is nothing more than the fact that they all happen to be in the file projec…",
-          "link": "https://www.reddit.com/r/emacs/comments/qp05yj/in_multisection_org_mode_documents_do_you_use_one/",
-          "publishedOn": "2021-11-07T23:00:37.000Z",
-          "wordCount": 1518,
-          "title": "In multi-section Org Mode documents, do you use one top-level heading, or several?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/qoz84d/mouse_forward_and_back_buttons_on_emacs_gui/",
-          "author": null,
-          "description": "I am trying to get Emacs GUI to recognize mouse forward and back buttons, but with C-h k, and mouse forward/back button, I don't see it registering anything. Any solutions on how to get Emacs GUI to recognize these buttons on my mouse? I have a Razer Deathadder and a mac.\n    submitted by    /u/avindroth  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/qoz84d/mouse_forward_and_back_buttons_on_emacs_gui/",
-          "publishedOn": "2021-11-07T22:14:05.000Z",
-          "wordCount": 252,
-          "title": "Mouse Forward and Back Buttons on Emacs GUI"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/qoslj5/automatic_text_size_adjustment_per_display/",
-          "author": null,
-          "description": "Are there good options for automatically adjusting text size for a frame based on the current display?\n I didn't find anything so I made a small package textsize that currently fits my needs quite well. It automatically chooses a font point size for the default face for the current frame, based on:\n  \nmonitor resolution: if it's lower res, typically want a smaller point size\n pixel pitch: higher point size on finer pitch screens\n manual per-frame adjustment available to shift the calculated value\n  \nFor me there is one current omission where automatic adjustment is fired via window-size-change-functions, which does not fire if the resolution is unchanged. e.g. Going from my 1080p laptop to a 1080p external. The only options I've seen for that require polling, which feels kind of distasteful. Anyone know of triggers I might catch for that?\n I could add rules around monitor size and/or frame size, though personally I haven't particularly wanted it. The manual adjustment is available for transient needs.\n I'd welcome comments both on the functionality, how I achieved it.\n  \nIs this reinventing another wheel I didn't find? This EmacsWiki page outlines some details but I didn't see automatic adjustment.\n \nI feel like my coding of 'thresholds' is clunky and a little obtuse - are the Elisp examples of something similar that's cleaner and clearer?\n \nMy default pixel pitch thresholds are guesses, as my day-to-day doesn't have a lot of variation on that.\n \n If you want to try it, load textsize.el and run (textsize-setup), and move things between disparate monitors (providing their resolution isn't the same!). Tweak the customizations and let me know if you think the defaults could be better or if you would want other rules.\n I can put it on MELPA if there's interest, but I feel like it could do with a bit more depth.\n    submitted by    /u/wjcferguson  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/qoslj5/automatic_text_size_adjustment_per_display/",
-          "publishedOn": "2021-11-07T16:57:01.000Z",
-          "wordCount": 480,
-          "title": "Automatic text size adjustment per display"
         }
       ]
     },
@@ -9305,6 +9323,15 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2056@/discussions",
+          "author": "System",
+          "description": "Live Zettelkasten Session on Dec 10th (Episode 7)\n                   \nTune in on 2021-12-10, 7:30 p.m. CEST, for episode 7\nRead the full story here",
+          "link": "https://forum.zettelkasten.de/discussion/2056/live-zettelkasten-session-on-dec-10th-episode-7",
+          "publishedOn": "2021-12-07T11:39:32.000Z",
+          "wordCount": 219,
+          "title": "Live Zettelkasten Session on Dec 10th (Episode 7)"
+        },
         {
           "id": "2055@/discussions",
           "author": "joegilder",
@@ -9574,24 +9601,6 @@
           "publishedOn": "2021-11-10T14:58:41.000Z",
           "wordCount": 314,
           "title": "Tim Berners-Lee on webs of notes from the original proposal for WWW"
-        },
-        {
-          "id": "2024@/discussions",
-          "author": "Will",
-          "description": "v1.7.4 (199)\nWhen the editor window is less than the width specified in the preferences, the text does not wrap appropriately. The is no horizontal scroll bar in this condition. My mouse does horizontal scrolling so I can demo the problem easier.\nThis is a pain, especially in the two window mode on the laptop. I looked to see is if I could find where to turn on and off wrapping but no luck. Maybe I've missed this setting.\nNot a problem in Version 1.7.3 (197)",
-          "link": "https://forum.zettelkasten.de/discussion/2024/bug-editor-window-not-wrapping-text-once-layout-breaks",
-          "publishedOn": "2021-11-07T16:43:59.000Z",
-          "wordCount": 517,
-          "title": "[BUG] Editor window not wrapping text (once layout breaks)"
-        },
-        {
-          "id": "2024@/discussions",
-          "author": "Will",
-          "description": "v1.7.4 (199)\nWhen the editor window is less than the width specified in the preferences, the text does not wrap appropriately. The is no horizontal scroll bar in this condition. My mouse does horizontal scrolling so I can demo the problem easier.\nThis is a pain, especially in the two window mode on the laptop. I looked to see is if I could find where to turn on and off wrapping but no luck. Maybe I've missed this setting.\nNot a problem in Version 1.7.3 (197)",
-          "link": "https://forum.zettelkasten.de/discussion/2024/bug-report-editor-window-not-wrapping",
-          "publishedOn": "2021-11-07T16:43:59.000Z",
-          "wordCount": 246,
-          "title": "**Bug Report** Editor window not wrapping"
         }
       ]
     }
