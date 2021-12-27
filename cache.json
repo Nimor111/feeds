@@ -49,6 +49,78 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/rpw9gy/multiple_small_questions_related_to_mapping_over/",
+          "author": null,
+          "description": "I have two functions, 'f1, f2 :: [String] -> String, and a functiong :: String -> Int. I would like to create a new function of type[String] -> Maybe (Int, Int)`. (This came up as part of working with my AOC template, and seemed like a good opportunity to learn something; the actual functions have much longer names.)\n I have the following different equivalent working approaches, in order of discovery:\n  \\s -> Just (g $ f1 s, g $ f2 s) Just . \\s -> (g $ f1 s, g $ f2 s) Just . liftM2 (,) (g . f1) (g . f2) Just . bimap g g . liftM2 (,) f1 f2 --- Bifunctors Just . over both g . liftM2 (,) f1 f2 --- Control.Lens \n This brought up a few different questions for me. - I haven't used liftM2 before; I came to it when I gave pointfree.io the expression above it. Looking at the type, I see liftM2 :: M…",
+          "link": "https://www.reddit.com/r/haskell/comments/rpw9gy/multiple_small_questions_related_to_mapping_over/",
+          "publishedOn": "2021-12-27T20:17:01.000Z",
+          "wordCount": 517,
+          "title": "Multiple small questions related to mapping over a tuple."
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/rpvxln/implementing_a_functional_language_with_graph/",
+          "author": null,
+          "description": "https://thma.github.io/posts/2021-12-27-Implementing-a-functional-language-with-Graph-Reduction.html\n I've just published a new Blog Post on a classic implementation technique for lazy functional programming: combinatory logic based graph-reduction engine.\n The implementation is structured into three parts:\n  \nA λ-calculus parser from A Combinatory Compiler which was extended to cover a tiny functional language based on the untyped λ-calculus.\n A compiler from λ-calculus to combinatory logic combinators (S,K,I,B,C and Y) which is based on bracket-abstraction and some optimization rules.\n A graph-reducer. Combinator terms are allocated into a graph data-structure. Which is then reduced by applying combinator graph-reduction. The destructive inplace reduction of the graph is made possible by using STRef\n mutable references.\n  \n   submitted by    /u/thma32  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/rpvxln/implementing_a_functional_language_with_graph/",
+          "publishedOn": "2021-12-27T20:02:21.000Z",
+          "wordCount": 217,
+          "title": "Implementing a Functional Language with Graph Reduction"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/rpriun/print_binary_search_tree_in_a_tree_like_structure/",
+          "author": null,
+          "description": "I created a binary search tree and tried to print the binary search tree with this instance\n data Tree a = Nil | Node (Tree a) a (Tree a) instance Show a => Show (Tree a) where show t = intercalate \"\\n\" (map snd (draw t)) draw :: Show a => Tree a -> [(Int,String)] draw Nil = [(1,\"*\")] draw (Node Nil x Nil) = [(1,show x)] draw (Node tl x tr) = zip (repeat 0) (map shiftl (draw tl)) ++ [(1,show x ++ \"-+\")] ++ zip (repeat 2) (map shiftr (draw tr)) where shiftl (0,x) = spaces ++ \" \" ++ x shiftl (1,x) = spaces ++ \"+-\" ++ x shiftl (2,x) = spaces ++ \"| \" ++ x shiftr (0,x) = spaces ++ \"| \" ++ x shiftr (1,x) = spaces ++ \"+-\" ++ x shiftr (2,x) = spaces ++ \" \" ++ x spaces = replicate (length (show x) ) ' ' \n Now I want to print it horizontally, which i am not able to do so. I want to print the binary search tree like this picture below. (Sorry for the low quality of the picture but you get the idea). How can i do it ?\n ​\n https://preview.redd.it/aabp5f2g64881.jpg?width=343&format=pjpg&auto=webp&s=3eabb06ef3eab3997cbaa7d9f68258b809da3cd2\n    submitted by    /u/Soham-Chatterjee  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/rpriun/print_binary_search_tree_in_a_tree_like_structure/",
+          "publishedOn": "2021-12-27T16:45:27.000Z",
+          "wordCount": 508,
+          "title": "Print Binary Search Tree in a tree like structure in Haskell"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/rpqpy9/binary_conversion_of_numbers_8_bytes/",
+          "author": null,
+          "description": "Hello everyone, as a means to learn Haskell I've decided to write a very basic Web3 implementation in it, everything has been great so far but I'm having a really hard time trying to encode integers that are greater than 8 bytes because of the data types. I've come across some useful libraries but settled on using Data.Binary. Here's an example of something I want to do in Elixir:\n ```elixir\n This just gives you a 32 bytes representation of that number\n <<3214000000000000000000::signed-256>>\n  \n<<0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 174, 59,\n  \n53, 195, 127, 137, 120, 0, 0>>\n ```\n On Haskell I've tried and it works with smaller numbers (Whatever fits into Int64), but with bigger ones:\n ```haskell\n B64.encode $ BL.toStrict $ runPut $ putInt64be 3214000000000000000000\n <interactive>:61:48: warning: [-Woverflowed-literals]\n Literal 3214000000000000000000 is out of the Int range -9223372036854775808..9223372036854775807\n \"AAB4iX/DNTs=\"\n ```\n Which does not give me the correct representation since the value is out of bounds (I think the number it sticks with is 4266531174538018816 (maxBound :: Int64) rather than the one I passed)\n ​\n So, I wanted to ask, what are my options to encode these numbers in the same way I can do on the first Elixir example? Is there a technique I'm missing?\n    submitted by    /u/Aguxez  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/rpqpy9/binary_conversion_of_numbers_8_bytes/",
+          "publishedOn": "2021-12-27T16:07:59.000Z",
+          "wordCount": 537,
+          "title": "Binary conversion of numbers > 8 bytes"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/rpmjz6/ann_conduitaeson_parsing_large_or_even_infinite/",
+          "author": null,
+          "description": "During last five years it was twice that I had to figure out how parse JSON in streaming fashion. I figured that I release a library, so I don't have to figure it out again some years in the future. I suspect this library might be useful to others too, since it is likely that I am not the only who ran into such problem. In my particular situation use cases were:\n  \nParse a very large JSON file, contents of which was one very big top level dictionary with millions of key value pairs. My requirement was that I needed to modify each individual key/value pair without affecting memory overheaad.\n Continuously parse an infinite stream of log entries from a service called logentries.com where each entry was formatted as JSON and delimited by a newline.\n  \nconduit-aeson is capable of handling both of these use cases and probably others as well. See haddock for examples and documentation. Here is one such example:\n ```\n  \n  \n:set -XOverloadedStrings :set -XTypeApplications import Conduit let input = \"{ \\\"foo\\\": 1, \\\"bar\\\": 2, \\\"baz\\\": 3 }\" runConduit $ yield input .| conduitObject @String @Int .| printC (\"foo\",1) (\"bar\",2) (\"baz\",3) ```\n  \n  \n   submitted by    /u/kuleshevich  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/rpmjz6/ann_conduitaeson_parsing_large_or_even_infinite/",
+          "publishedOn": "2021-12-27T12:31:47.000Z",
+          "wordCount": 362,
+          "title": "[ANN]: conduit-aeson - parsing large or even infinite JSON encoded streams"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/rpkqqn/re_could_not_deduce_num_a_arising_from_the/",
+          "author": null,
+          "description": "I had (Num a) but it was telling me the same thing.\n 0 is a sub-type of Num isn't it?\n • Could not deduce (Num a) arising from the literal ‘0’ from the context: Ord a bound by the type signature for: median :: forall a. Ord a => [a] -> a at UnitTSExtensions.hs:116:1-29 Possible fix: add (Num a) to the context of the type signature for: median :: forall a. Ord a => [a] -> a • In the expression: 0 In an equation for ‘median’: median [] = 0 | 117 | median [] = 0\n  \\--median median :: (Ord a) => \\[a\\] -> a median \\[\\] = 0 median xs = sortedXs !! midOfArr where sortedXs = sort xs midOfArr = (length xs) \\`div\\` 2 \n    submitted by    /u/webNoob13  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/rpkqqn/re_could_not_deduce_num_a_arising_from_the/",
+          "publishedOn": "2021-12-27T10:35:46.000Z",
+          "wordCount": 928,
+          "title": "re: Could not deduce (Num a) arising from the literal ‘0’"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/rp8648/is_haskell_suited_for_simulator_game_logic/",
+          "author": null,
+          "description": "I am new to Haskell. My motivation for learning is mostly curiosity. I’ve heard that it’s a different way of thinking about problems and solutions and I am giving it a try. \n I am also interested in building a simulation engine for game like Majesty (a medival game where all characters are autonomous). Would this be something that would make sense to do in Haskell? I’m not talking about the graphics or other components. As a noob it seems that each unit/node will carry a lot of state so maybe not. But I want to hear from someone who knows about Haskell\n    submitted by    /u/hipsydoodle  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/rp8648/is_haskell_suited_for_simulator_game_logic/",
+          "publishedOn": "2021-12-26T23:00:57.000Z",
+          "wordCount": 621,
+          "title": "Is Haskell suited for simulator game logic?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/rp5wl6/ghci_error_messages/",
+          "author": null,
+          "description": "I'm studying Haskell with \"Learn you a Haskell for Great Good!\"\n I'm at page 30, where there's an example of an error message from ghci when running: read \"4\"\n I just noticed that if I run it in my ghci I get a totally different feedback: instead of the expected\n \"Ambiguous type variable 'a' in the contstraint:...\"\n I get a totally different response:\n \"*** Exception: Prelude.read: no parse\"\n I'm not sure if this is expected or if it's something related to my installation of Haskell.\n For the record: I installed Haskell (version 9.0.1) through stack.\n    submitted by    /u/ironj  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/rp5wl6/ghci_error_messages/",
+          "publishedOn": "2021-12-26T21:14:54.000Z",
+          "wordCount": 255,
+          "title": "ghci error messages"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/rp2k3q/how_to_write_generic_function_over_different/",
           "author": null,
           "description": "Hi, I am new to haskell so this might be a noob question.\n Let's say I have a function\n haskell sequenceMaybe :: [Maybe a] -> Maybe [a]  This allows me to do things like haskell sequenceMaybe [Just 1, Just 4]  where a is inferred to be Int. All is well\n But what if I have an array like haskell [Just 1, Just \"mystring\"]  is there a way to write a function that will abstract over all these types? I only need a function that return true if any of the Maybes is Nothing, or false otherwise. So I do not need any constraint on the inner type.\n Many thanks!\n    submitted by    /u/bxsx0074  \n [link]   [comments]",
@@ -2072,33 +2144,6 @@
           "publishedOn": "2021-11-28T09:07:08.000Z",
           "wordCount": 187,
           "title": "Amazonka 2.0.0-rc1 is ready for testing"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/r3r6nq/i_cant_figure_out_how_to_do_a_function_new_to/",
-          "author": null,
-          "description": "Hello, I come here to ask for help after about 8 frustrating hours trying to solve this exercise, so please help me figure this out.\n I am trying to recursively look in a list of pairs where one element of the pair is a product and the second element is 2 numbers representing its position on the shelves [ (meat,(4,5)) , (soap,(6,7)) , (wine,(4.3)) ] and verify if in any situation I end up with 2 products on the same spot on the shelf.\n ​\n Basically I dont care what the product is, my only concern is that 2 things dont end up trying to be restocked on the same position on the shelves.\n ​\n I have the shelves and the products set has data types so for example I know that Products can only be Milk, Wine, Soap, Eggs, Butter....like 10 more, and That ShelfPos is (Int,Int).\n ​\n What I have been trying to do is has requested on the exercise.\n ​\n positionIsFree :: [(Products, ShelfPos)] -> Bool\n ​\n positionIsFree [ ] = True\n positionIsFree (( products, shelfpos) : [ ] ) = True\n positionIsFree (( p, (x,y)) : ( p2, (x2,y2)) : t) | x == x2 && y == y2 = False\n --------(reddit formating is hard)---------------| otherwise = positionIsFree ((p, (x,y)) : t )\n ​\n This works for the first pair, it runs the list and sees if it causes any conflict. If it doesnt Id like to restart the process with the second pair. The problem I am runing in is whenever I finish doing this I cant restart again since I trew away all my list on the otherwise step.\n I tried to do this backwards, like always comparing the last element, but I end up runing into a types problem where it says it expects a Bool and is getting a list.\n ​\n Thank you for your time reading this.\n    submitted by    /u/KerbalFrog  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/r3r6nq/i_cant_figure_out_how_to_do_a_function_new_to/",
-          "publishedOn": "2021-11-28T00:29:36.000Z",
-          "wordCount": 1674,
-          "title": "I cant figure out how to do a function (new to programing)"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/r3nf0o/how_performant_is_haskell_how_hard_do_you_have_to/",
-          "author": null,
-          "description": "I’ve tried looking into this question, and so far I understand that using overloaded strings and strictness are good ways to improve performance. However, I don’t understand how fast Haskell is relative to other languages. Some claim that it is slower than Python; others claim that it can be as fast as or faster than C. The programming language benchmark game suggests that Haskell is roughly as fast as Java and C#, but this is complicated by the extensive use of foreign libraries in those languages. \n What does this subreddit think?\n    submitted by    /u/average_emacs_user  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/r3nf0o/how_performant_is_haskell_how_hard_do_you_have_to/",
-          "publishedOn": "2021-11-27T21:27:58.000Z",
-          "wordCount": 2118,
-          "title": "How performant is Haskell? How hard do you have to try to make it performant?"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/r3h4t7/need_some_help_with_this/",
-          "author": null,
-          "description": "So don't know how to make this function, i'v been trying a few days but nothing works, (the funtion is into run, the asign type). There are also other function which i don't know how to do them, but first i want to figure out how to do the run -> Asig funtion, thanks anyone trying to help\n {-# OPTIONS_GHC -fno-warn-tabs #-}\n {-#LANGUAGE GADTs#-}\n {-# OPTIONS_GHC -Wno-incomplete-patterns #-}\n module Prog where \n -- Variables y expresiones\n type Var = String\n data Exp where { V :: Var -> Exp;\n I :: Int -> Exp;\n (:+):: Exp -> Exp -> Exp;\n (:-):: Exp -> Exp -> Exp;\n (:*):: Exp -> Exp -> Exp } deriving(Eq,Show)\n data BExp where { T :: BExp;\n F :: BExp;\n (:&&):: BExp -> BExp -> BExp;\n (:||):: BExp -> BExp -> BExp;\n Not :: BExp -> BExp;\n (:==):: Exp -> Exp -> BExp } deriving(Eq,Show)\n -- Se defin…",
-          "link": "https://www.reddit.com/r/haskell/comments/r3h4t7/need_some_help_with_this/",
-          "publishedOn": "2021-11-27T16:34:19.000Z",
-          "wordCount": 933,
-          "title": "Need some help with this!!!"
         }
       ]
     },
@@ -2107,6 +2152,24 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/rp7k8x/this_week_in_scala_dec_27_2021/",
+          "author": null,
+          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/rp7k8x/this_week_in_scala_dec_27_2021/",
+          "publishedOn": "2021-12-26T22:31:58.000Z",
+          "wordCount": 97,
+          "title": "This week in #Scala (Dec 27, 2021)"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/rp572k/sbt_160_released/",
+          "author": null,
+          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/rp572k/sbt_160_released/",
+          "publishedOn": "2021-12-26T20:39:48.000Z",
+          "wordCount": 130,
+          "title": "sbt 1.6.0 released"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/rnk9rh/scala_3_native_support_was_published/",
           "author": null,
@@ -2979,15 +3042,6 @@
           "publishedOn": "2021-11-28T12:18:57.000Z",
           "wordCount": 164,
           "title": "Best internet archive for scholarly articles/research papers?"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/r3x8mm/what_libraries_do_you_use_for_machine_learning/",
-          "author": null,
-          "description": "I like programing in scala and I am the guy who wants to become an expert in scala even if I am not this moment. Since my job has been related to data I have started getting a focus to machine learning. Of course I know python is epic but I also know scala can do this like python. I found out spark and smile are good libraries for big data and machine learning, but I couldn't find proper libraries for data visualization. Yeap. smile has good visualization libraries based on swing and vega lite. At this moment I wonder other scala programmers how to work and which library you like. Is it impossible for scala to overcome python in this fields?\n    submitted by    /u/jake_nanohuman  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/r3x8mm/what_libraries_do_you_use_for_machine_learning/",
-          "publishedOn": "2021-11-28T05:54:03.000Z",
-          "wordCount": 447,
-          "title": "What libraries do you use for machine learning and data visualizing in scala?"
         }
       ]
     },
@@ -2996,6 +3050,15 @@
       "feedUrl": "https://reddit.com/r/purescript/.rss",
       "siteUrl": "https://www.reddit.com/r/purescript/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/purescript/comments/rpf3i9/formless_3_rfc/",
+          "author": null,
+          "description": "submitted by    /u/saylu  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/purescript/comments/rpf3i9/formless_3_rfc/",
+          "publishedOn": "2021-12-27T04:51:23.000Z",
+          "wordCount": 92,
+          "title": "Formless 3 (RFC)"
+        },
         {
           "id": "https://www.reddit.com/r/purescript/comments/rkr2eb/new_core_team_members_core_collaborators_for/",
           "author": null,
@@ -3146,6 +3209,33 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/rpwezf/custom_link_to_sparse_tree/",
+          "author": null,
+          "description": "In a previous post How to count tags co-occurrences in a buffer and put them in a matrix I talked about a simple way to \"link\" to a sparse tree. \n So, if you have a \"tagA\" and like to see where it appears in the buffer, just create a link as 'tag-sparse:tag' and follow it. \n Here it is the custom type link. :)\n #+begin_src emacs-lisp (org-add-link-type \"tag-sparse\" 'em/sparse-tree-tag-link) (defun em/sparse-tree-tag-link (tag) \"Makes a sparse-tree from the linked tag.\" (org-occur tag)) #+end_src \n That's it. Short, simple and sweet. I hope someone finds it useful. :)\n Best regards...\n    submitted by    /u/edumerco  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/rpwezf/custom_link_to_sparse_tree/",
+          "publishedOn": "2021-12-27T20:23:50.000Z",
+          "wordCount": 210,
+          "title": "Custom link to sparse tree"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/rpu1yy/how_to_count_tags_cooccurrences_in_a_buffer_and/",
+          "author": null,
+          "description": "Dear fellow Orgers...\n TLDR: how to count tags in a buffer and put them in a matrix where each cell counts the co-occurrences of both tags in a heading?\n The long story: thematic analysis is a quite common technique used to synthesize meaning in texts (those interested in a brief but good introduction, please peek https://www.scribbr.com/methodology/thematic-analysis/). In short, once done each idea in a text is marked by a tag, and then you can synthesize a text by it's tags (of course, we can also group them, but that comes after) and different texts can be compared by it's found tags.\n As we all know, emacs is a great operating system and comes not only with org-mode but also with a decent editor ;) so it was a logical idea to use both to do thematic analysis. And in the end, it seems t…",
+          "link": "https://www.reddit.com/r/orgmode/comments/rpu1yy/how_to_count_tags_cooccurrences_in_a_buffer_and/",
+          "publishedOn": "2021-12-27T18:39:04.000Z",
+          "wordCount": 1020,
+          "title": "How to count tags co-occurrences in a buffer and put them in a matrix"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/rpmeyt/dynamic_aggreagations_like_in_tiddlywiki/",
+          "author": null,
+          "description": "During the last months, me and my girlfriend moved our note taking, planning etc. from TiddlyWiki to Emacs OrgMode and so far we both like it. But there is one big thing im missing: \"dynamic aggregation\".\n In TiddlyWiki I can automatically query and format many information throughout the Wiki. Easy tasks like displaying a table of all D&D sessions is achievable with the column mode, but how about more complex aggreagations? For my studies, I created tiddlers for every subject including information for CP, semester, and category. In my overview, each semester is listed as seperate heading with the subjects being displayed by category as description lists and the CP summed up for each category. Please refer to the screenshot.\n In TiddlyWiki I can use filter expressions to select any tiddler (entry) from the wiki and extract data from it. This data can be transformed into arbitrary HTML, which is rendered when the article is visited. This query and transformation is done in the Wiki's own syntax, which is a part of the reason I wanted to switch to Emacs.\n How would I recreate this in OrgMode? I'm okay with having all information in one file and don't mind to learn elisp. What I would like to have is the information to be displayed inline (not in another buffer) and being able to use all or most of OrgModes usual formatting options.\n    submitted by    /u/neunzehnhundert97  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/rpmeyt/dynamic_aggreagations_like_in_tiddlywiki/",
+          "publishedOn": "2021-12-27T12:23:01.000Z",
+          "wordCount": 562,
+          "title": "Dynamic aggreagations like in TiddlyWiki"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/row0kl/orgcapture_datetree_as_previous_day/",
           "author": null,
@@ -3559,6 +3649,114 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/apheleia-20211227.1800.el",
+          "author": null,
+          "description": "The apheleia package has been updated to version 20211227.1800.",
+          "link": "https://melpa.org/#/apheleia",
+          "publishedOn": "2021-12-27T18:00:00.000Z",
+          "wordCount": 105,
+          "title": "apheleia (20211227.1800) --- Reformat buffer stably"
+        },
+        {
+          "id": "https://melpa.org/packages/session-async-20211227.1609.el",
+          "author": null,
+          "description": "The session-async package has been updated to version 20211227.1609.",
+          "link": "https://melpa.org/#/session-async",
+          "publishedOn": "2021-12-27T16:09:00.000Z",
+          "wordCount": 105,
+          "title": "session-async (20211227.1609) --- Asynchronous processing in a forked process session"
+        },
+        {
+          "id": "https://melpa.org/packages/el-patch-20211226.2106.tar",
+          "author": null,
+          "description": "The el-patch package has been updated to version 20211226.2106.",
+          "link": "https://melpa.org/#/el-patch",
+          "publishedOn": "2021-12-26T21:06:00.000Z",
+          "wordCount": 105,
+          "title": "el-patch (20211226.2106) --- Future-proof your Elisp"
+        },
+        {
+          "id": "https://melpa.org/packages/ox-report-20211226.2004.el",
+          "author": null,
+          "description": "The ox-report package has been updated to version 20211226.2004.",
+          "link": "https://melpa.org/#/ox-report",
+          "publishedOn": "2021-12-26T20:04:00.000Z",
+          "wordCount": 105,
+          "title": "ox-report (20211226.2004) --- Export your org file to minutes report PDF file"
+        },
+        {
+          "id": "https://melpa.org/packages/leaf-20211226.1633.el",
+          "author": null,
+          "description": "The leaf package has been updated to version 20211226.1633.",
+          "link": "https://melpa.org/#/leaf",
+          "publishedOn": "2021-12-26T16:33:00.000Z",
+          "wordCount": 105,
+          "title": "leaf (20211226.1633) --- Simplify your init.el configuration, extended use-package"
+        },
+        {
+          "id": "https://melpa.org/packages/mpv-20211226.1112.el",
+          "author": null,
+          "description": "The mpv package has been updated to version 20211226.1112.",
+          "link": "https://melpa.org/#/mpv",
+          "publishedOn": "2021-12-26T11:12:00.000Z",
+          "wordCount": 105,
+          "title": "mpv (20211226.1112) --- control mpv for easy note-taking"
+        },
+        {
+          "id": "https://melpa.org/packages/caml-20211226.27.tar",
+          "author": null,
+          "description": "The caml package has been updated to version 20211226.27.",
+          "link": "https://melpa.org/#/caml",
+          "publishedOn": "2021-12-26T00:27:00.000Z",
+          "wordCount": 105,
+          "title": "caml (20211226.27) --- Caml mode for GNU Emacs"
+        },
+        {
+          "id": "https://melpa.org/packages/base16-theme-20211225.2032.tar",
+          "author": null,
+          "description": "The base16-theme package has been updated to version 20211225.2032.",
+          "link": "https://melpa.org/#/base16-theme",
+          "publishedOn": "2021-12-25T20:32:00.000Z",
+          "wordCount": 105,
+          "title": "base16-theme (20211225.2032) --- Collection of themes built on combinations of 16 base colors"
+        },
+        {
+          "id": "https://melpa.org/packages/leaf-manager-20211225.624.el",
+          "author": null,
+          "description": "The leaf-manager package has been updated to version 20211225.624.",
+          "link": "https://melpa.org/#/leaf-manager",
+          "publishedOn": "2021-12-25T06:24:00.000Z",
+          "wordCount": 105,
+          "title": "leaf-manager (20211225.624) --- Configuration manager for leaf based init.el"
+        },
+        {
+          "id": "https://melpa.org/packages/evil-terminal-cursor-changer-20211225.600.el",
+          "author": null,
+          "description": "The evil-terminal-cursor-changer package has been updated to version 20211225.600.",
+          "link": "https://melpa.org/#/evil-terminal-cursor-changer",
+          "publishedOn": "2021-12-25T06:00:00.000Z",
+          "wordCount": 105,
+          "title": "evil-terminal-cursor-changer (20211225.600) --- Change cursor shape and color by evil state in terminal"
+        },
+        {
+          "id": "https://melpa.org/packages/all-the-icons-20211225.506.tar",
+          "author": null,
+          "description": "The all-the-icons package has been updated to version 20211225.506.",
+          "link": "https://melpa.org/#/all-the-icons",
+          "publishedOn": "2021-12-25T05:06:00.000Z",
+          "wordCount": 105,
+          "title": "all-the-icons (20211225.506) --- A library for inserting Developer icons"
+        },
+        {
+          "id": "https://melpa.org/packages/kubernetes-evil-20211225.300.el",
+          "author": null,
+          "description": "The kubernetes-evil package has been updated to version 20211225.300.",
+          "link": "https://melpa.org/#/kubernetes-evil",
+          "publishedOn": "2021-12-25T03:00:00.000Z",
+          "wordCount": 105,
+          "title": "kubernetes-evil (20211225.300) --- Kubernetes keybindings for evil-mode."
+        },
+        {
           "id": "https://melpa.org/packages/theme-anchor-20211224.2042.el",
           "author": null,
           "description": "The theme-anchor package has been updated to version 20211224.2042.",
@@ -3566,6 +3764,15 @@
           "publishedOn": "2021-12-24T20:42:00.000Z",
           "wordCount": 105,
           "title": "theme-anchor (20211224.2042) --- Apply theme in current buffer only"
+        },
+        {
+          "id": "https://melpa.org/packages/cmake-font-lock-20211224.2006.el",
+          "author": null,
+          "description": "The cmake-font-lock package has been updated to version 20211224.2006.",
+          "link": "https://melpa.org/#/cmake-font-lock",
+          "publishedOn": "2021-12-24T20:06:00.000Z",
+          "wordCount": 105,
+          "title": "cmake-font-lock (20211224.2006) --- Advanced, type aware, highlight support for CMake"
         },
         {
           "id": "https://melpa.org/packages/svg-tag-mode-20211224.1824.el",
@@ -3748,6 +3955,15 @@
           "title": "org-autolist (20211222.445) --- Improved list management in org-mode"
         },
         {
+          "id": "https://melpa.org/packages/posframe-20211222.256.tar",
+          "author": null,
+          "description": "The posframe package has been updated to version 20211222.256.",
+          "link": "https://melpa.org/#/posframe",
+          "publishedOn": "2021-12-22T02:56:00.000Z",
+          "wordCount": 105,
+          "title": "posframe (20211222.256) --- Pop a posframe (just a frame) at point"
+        },
+        {
           "id": "https://melpa.org/packages/geiser-guile-20211222.245.tar",
           "author": null,
           "description": "The geiser-guile package has been updated to version 20211222.245.",
@@ -3910,6 +4126,15 @@
           "title": "telega (20211220.1758) --- Telegram client (unofficial)"
         },
         {
+          "id": "https://melpa.org/packages/projectile-20211220.1144.el",
+          "author": null,
+          "description": "The projectile package has been updated to version 20211220.1144.",
+          "link": "https://melpa.org/#/projectile",
+          "publishedOn": "2021-12-20T11:44:00.000Z",
+          "wordCount": 105,
+          "title": "projectile (20211220.1144) --- Manage and navigate projects in Emacs easily"
+        },
+        {
           "id": "https://melpa.org/packages/prettify-math-20211220.1009.tar",
           "author": null,
           "description": "The prettify-math package has been updated to version 20211220.1009.",
@@ -4061,6 +4286,15 @@
           "publishedOn": "2021-12-18T17:46:00.000Z",
           "wordCount": 105,
           "title": "eshell-info-banner (20211218.1746) --- System information as your Eshell banner"
+        },
+        {
+          "id": "https://melpa.org/packages/ox-hugo-20211218.1728.tar",
+          "author": null,
+          "description": "The ox-hugo package has been updated to version 20211218.1728.",
+          "link": "https://melpa.org/#/ox-hugo",
+          "publishedOn": "2021-12-18T17:28:00.000Z",
+          "wordCount": 105,
+          "title": "ox-hugo (20211218.1728) --- Hugo Markdown Back-End for Org Export Engine"
         },
         {
           "id": "https://melpa.org/packages/mu4e-views-20211218.1653.el",
@@ -6050,78 +6284,6 @@
           "publishedOn": "2021-11-28T13:56:00.000Z",
           "wordCount": 105,
           "title": "keymap-utils (20211128.1356) --- keymap utilities"
-        },
-        {
-          "id": "https://melpa.org/packages/etherpad-20211128.106.tar",
-          "author": null,
-          "description": "The etherpad package has been updated to version 20211128.106.",
-          "link": "https://melpa.org/#/etherpad",
-          "publishedOn": "2021-11-28T01:06:00.000Z",
-          "wordCount": 105,
-          "title": "etherpad (20211128.106) --- Interface to the Etherpad API"
-        },
-        {
-          "id": "https://melpa.org/packages/decide-20211127.2248.el",
-          "author": null,
-          "description": "The decide package has been updated to version 20211127.2248.",
-          "link": "https://melpa.org/#/decide",
-          "publishedOn": "2021-11-27T22:48:00.000Z",
-          "wordCount": 105,
-          "title": "decide (20211127.2248) --- rolling dice and other random things"
-        },
-        {
-          "id": "https://melpa.org/packages/smart-compile-20211127.1702.el",
-          "author": null,
-          "description": "The smart-compile package has been updated to version 20211127.1702.",
-          "link": "https://melpa.org/#/smart-compile",
-          "publishedOn": "2021-11-27T17:02:00.000Z",
-          "wordCount": 105,
-          "title": "smart-compile (20211127.1702) --- an interface to `compile'"
-        },
-        {
-          "id": "https://melpa.org/packages/ox-pandoc-20211127.1430.el",
-          "author": null,
-          "description": "The ox-pandoc package has been updated to version 20211127.1430.",
-          "link": "https://melpa.org/#/ox-pandoc",
-          "publishedOn": "2021-11-27T14:30:00.000Z",
-          "wordCount": 105,
-          "title": "ox-pandoc (20211127.1430) --- An Org-mode exporter using pandoc"
-        },
-        {
-          "id": "https://melpa.org/packages/python-insert-docstring-20211127.1232.el",
-          "author": null,
-          "description": "The python-insert-docstring package has been updated to version 20211127.1232.",
-          "link": "https://melpa.org/#/python-insert-docstring",
-          "publishedOn": "2021-11-27T12:32:00.000Z",
-          "wordCount": 105,
-          "title": "python-insert-docstring (20211127.1232) --- Python Google docstring inserter"
-        },
-        {
-          "id": "https://melpa.org/packages/scroll-on-drag-20211127.1220.el",
-          "author": null,
-          "description": "The scroll-on-drag package has been updated to version 20211127.1220.",
-          "link": "https://melpa.org/#/scroll-on-drag",
-          "publishedOn": "2021-11-27T12:20:00.000Z",
-          "wordCount": 105,
-          "title": "scroll-on-drag (20211127.1220) --- Interactive scrolling"
-        },
-        {
-          "id": "https://melpa.org/packages/go-translate-20211127.1059.tar",
-          "author": null,
-          "description": "The go-translate package has been updated to version 20211127.1059.",
-          "link": "https://melpa.org/#/go-translate",
-          "publishedOn": "2021-11-27T10:59:00.000Z",
-          "wordCount": 105,
-          "title": "go-translate (20211127.1059) --- Translation framework supports multiple engines such as Google/Bing/DeepL"
-        },
-        {
-          "id": "https://melpa.org/packages/graphql-mode-20211127.1023.el",
-          "author": null,
-          "description": "The graphql-mode package has been updated to version 20211127.1023.",
-          "link": "https://melpa.org/#/graphql-mode",
-          "publishedOn": "2021-11-27T10:23:00.000Z",
-          "wordCount": 105,
-          "title": "graphql-mode (20211127.1023) --- Major mode for editing GraphQL schemas"
         }
       ]
     },
@@ -6130,6 +6292,114 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpwdb9/creating_multiple_cursors_from_symbol_under_point/",
+          "author": null,
+          "description": "I've discovered iedit, which allows me to C-; over any string and edit all occurrences of it simultaneously, à la multiple-cursors. The default behaviour is that, by pressing C-; only once, it selects all occurences of the string in the whole buffer. Is there a way to expand the selection to each new match one at a time? For those familiar with, I'm basically trying to replicate Sublime Text's functionality when you Ctrl/Cmd-D over any string.\n iedit documentation mentions that \"Many other work flows to highlight occurrences are possible, for example, (...) incremental selection\", which sounds exactly like what I want. But looking through the documentation, available functions, and even the source code, I couldn't find the answer.\n Thaks for any help.\n    submitted by    /u/mC_mC_mC_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpwdb9/creating_multiple_cursors_from_symbol_under_point/",
+          "publishedOn": "2021-12-27T20:21:45.000Z",
+          "wordCount": 220,
+          "title": "Creating multiple cursors from symbol under point"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpt5um/hsminormode_hstogglehiding_seems_broken_in/",
+          "author": null,
+          "description": "In css-mode, if I enable hs-minor-mode and start folding blocks with hs-toggle-hiding, I cannot unfold it with hs-toggle-hiding again. I can reproduce this in emacs -Q, just try folding this in css-mode with hs-toggle-hiding (after turning on hs-minor-mode):\n p { margin: 1rem 0; } \n For reference, this is the definition of hs-toggle-hiding:\n (defun hs-toggle-hiding (&optional e) \"Toggle hiding/showing of a block. See `hs-hide-block' and `hs-show-block'. Argument E should be the event that triggered this action.\" (interactive) (hs-life-goes-on (posn-set-point (event-end e)) (if (hs-already-hidden-p) (hs-show-block) (hs-hide-block)))) \n This is happening because for some reason (posn-set-point (event-end nil)) (as e is nil when hs-toggle-hiding is run as a command) would move point to somewhere that makes hs-already-hidden-p always return nil.\n Currently I'm patching the function in my config by only running posn-set-point if e is non-nil:\n (when e (posn-set-point (event-end e))) \n which fixes it.\n  \nI can't imagine I'm the only person who has encountered this issue. Is this a known issue and has it perhaps been fixed in Emacs 28?\n    submitted by    /u/flyin1501  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpt5um/hsminormode_hstogglehiding_seems_broken_in/",
+          "publishedOn": "2021-12-27T18:00:08.000Z",
+          "wordCount": 264,
+          "title": "hs-minor-mode (hs-toggle-hiding) seems broken in css-mode (Emacs 27.2)"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpsxf8/can_emacs_use_window_system_on_terminal_frame/",
+          "author": null,
+          "description": "Hi,\n I'm trying to set org-level-* height(font size) differently for each level(doom emacs, config.el):\n (after! org (set-face-attribute 'org-level-1 nil :height 1.75)) \n But it displays different height only on frame that uses window-system. I'm using OSX so ns\n , in this case.\n When I use frame on terminal(iTerm) it displays default height.\n I think it should work with iTerm since iTerm is also uses graphical display.\n But the result of (window-system)or (display-graphic-p) is nil\n Is it not possible to start emacs on terminal with window system?\n    submitted by    /u/petech1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpsxf8/can_emacs_use_window_system_on_terminal_frame/",
+          "publishedOn": "2021-12-27T17:49:30.000Z",
+          "wordCount": 229,
+          "title": "Can emacs use window system on terminal frame? (doom-emacs, iTerm)"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpqsqq/your_plans_for_2022_and_beyond/",
+          "author": null,
+          "description": "In 2022 I aim to become more accustomed with the Linux Kernal and to finally become fluent in the C programming language, with emacs as my environment for doing that. But there are so many fields open to us now. I'd love to hear what your plans are for next year and beyond..\n    submitted by    /u/JohnNeedsTherapy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpqsqq/your_plans_for_2022_and_beyond/",
+          "publishedOn": "2021-12-27T16:11:44.000Z",
+          "wordCount": 409,
+          "title": "Your plans for 2022 and beyond.."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpo0bm/finally_vim_in_gnu_emacs_video/",
+          "author": null,
+          "description": "submitted by    /u/atamariya  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpo0bm/finally_vim_in_gnu_emacs_video/",
+          "publishedOn": "2021-12-27T13:53:52.000Z",
+          "wordCount": 145,
+          "title": "Finally Vim in GNU Emacs!!! (Video)"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpl9in/why_emacs_uses_the_word_yank_for_paste/",
+          "author": null,
+          "description": "According to the Merriam-Webster dictionary, the word is more suited for copy/cut (like in vi/vim) than paste (Emacs).\n Does anybody knows or have references for why this specific word was chosen?\n Is this some mistake carried through times?\n    submitted by    /u/mwzx  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpl9in/why_emacs_uses_the_word_yank_for_paste/",
+          "publishedOn": "2021-12-27T11:11:08.000Z",
+          "wordCount": 1078,
+          "title": "Why Emacs uses the word yank for paste?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpl1cl/clone_a_package_from_git_repo/",
+          "author": null,
+          "description": "Hello, maybe this is too trivial to ask, but is this a method which only exists in other configurations of Emacs or comes in Emacs as well. I am using this language package which is not in MELPA yet, so I am installing it like below. Also, are there any issues that one has to be aware using this method of cloning packages like this. Again, sorry if this is too obvious to ask.\n (package! sclang-mode :recipe (:host github :repo \"supercollider/scel\" :files (\"el/*.el\"))) \n    submitted by    /u/Express-Net-8731  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpl1cl/clone_a_package_from_git_repo/",
+          "publishedOn": "2021-12-27T10:56:10.000Z",
+          "wordCount": 269,
+          "title": "Clone a package from Git repo"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpk3of/custom_theme_in_emacs/",
+          "author": null,
+          "description": "Hi everyone,\n I'm currently switching python IDE to move to full emacs. I'm therefore trying to take with me the few things I really liked from my former python IDE (Spyder) and add all the new features that made me move to emacs.\n One important step for me is to replicate the Spyder Dark Theme within Emacs (because I like it, am used to it and am not really satisfied with other ones I tried so far). What I have, is the spec of the theme that you can see in the screenshot attached.\n Unfortunately now I am really stuck in how to proceed to convert those hex colors to an emacs custom theme, as a complete emacs newbie... Any help would be much appreciated!\n ​\n Have a nice holiday season!\n https://preview.redd.it/onz91enj52881.png?width=1047&format=png&auto=webp&s=ac2ef3746d9032fd78f719725d24b094c97f4cb7\n    submitted by    /u/wehrad  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpk3of/custom_theme_in_emacs/",
+          "publishedOn": "2021-12-27T09:55:17.000Z",
+          "wordCount": 357,
+          "title": "Custom theme in emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rphl36/dynamic_c_snippet_i_wrote/",
+          "author": null,
+          "description": "I don't know if this is something that's okay to post here, but I figure I'll give it a shot. I wrote this C++ Yasnippet script a few months ago, and I use it basically every day.\n # -*- mode: snippet -*- # name: function # key: fn # contributor: conscat # -- ${3:$(map-void yas-text \"void \" \"auto \")}${1:name}($2)${3:$(map-void yas-text \"\" \" -> \")}$3 { $0 } \n The most interesting part is map-void, which I define like this:\n (defun map-void (check replace-t replace-f) (interactive) (if (string= check \"\") replace-t replace-f)) \n Here's what it does:\n I type fn, then press TAB. That expands into this (white space a little different). The | represents my cursor:\n void |func() {}\n I can type in a function name here. I press TAB again:\n void foo(|) {}\n Now I can type in a parameter list, and TAB again:\n void foo(int moo)| {}\n Now here's the cool part. If I type in anything, a -> is automatically inserted, and the void at the front becomes auto!\n auto foo(int moo) -> boo|{}\n And then I TAB into the body of my function and type the rest. I know it's not that crazy, but it's the ability to just do these kind of neat hacks that makes me appreciate Emacs so much.\n    submitted by    /u/KittyKutie  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rphl36/dynamic_c_snippet_i_wrote/",
+          "publishedOn": "2021-12-27T07:12:50.000Z",
+          "wordCount": 348,
+          "title": "Dynamic C++ Snippet I Wrote"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rphhze/running_emacsclient_t_open_in_terminal_instead_of/",
+          "author": null,
+          "description": "Title basically. I installed emacs-mac. Running: emacs and emacsclient -t open it up in the terminal, as expected. Running /Applications/Emacs.app/Contents/MacOS/Emacs opens a gui.\n I expected emacsclient -c to open up a GUI attached to the emacs daemon. But that command too opens it up in the terminal.\n Thanks\n Edit (tl;dr): how do I open Emacs in GUI attached to the emacs daemon.\n    submitted by    /u/Err000r__1010  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rphhze/running_emacsclient_t_open_in_terminal_instead_of/",
+          "publishedOn": "2021-12-27T07:07:44.000Z",
+          "wordCount": 283,
+          "title": "Running emacsclient -t open in terminal instead of GUI."
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpe8us/ann_titlecaseel_titlecase_things_in_emacs/",
+          "author": null,
+          "description": "submitted by    /u/a-c-d-w  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpe8us/ann_titlecaseel_titlecase_things_in_emacs/",
+          "publishedOn": "2021-12-27T04:06:20.000Z",
+          "wordCount": 389,
+          "title": "[ANN] Titlecase.el : Titlecase things in Emacs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/rpak95/project_level_bookmarks_access_between_sessions/",
+          "author": null,
+          "description": "Are there any packages that support bookmarks that can be saved to disk, stored per \"project\" (where a project is a projectile/ffip/vc-repository - for example).\n The bm package looks like it might be configurable per-project, although it would require some hacking to support that, and even more hacking to support it properly (to support multiple projects loaded in a single emacs session).\n Another limitation of bm is it only exposes bookmarks in open buffers, again, I can hack in support to show all stored bookmarks for the repository I'm working on, but this isn't trivial - it may be simpler to use a package that already supports this.\n    submitted by    /u/ideasman_42  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/rpak95/project_level_bookmarks_access_between_sessions/",
+          "publishedOn": "2021-12-27T00:57:54.000Z",
+          "wordCount": 509,
+          "title": "Project level bookmarks? (access between sessions)"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/rp44zl/buffer_made_up_from_grep_results_gatherscatter/",
           "author": null,
@@ -9135,132 +9405,6 @@
           "publishedOn": "2021-11-28T11:41:45.000Z",
           "wordCount": 395,
           "title": "Emacspeak on remote machine?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3wdgg/to_join_the_emacs_community_it_seems_to_me_i_have/",
-          "author": null,
-          "description": "I have tried basic keymapping hackery on vanilla emacs and ergo-mode. Seems that C-x is used in half the keybindings - remapping them all ain't possible. Ergo-mode uses M-x. Frankly I'd rather deal with vanilla emacs than try to understand the 'magic' in ergo-mode. \n So am I right? We have to disavow C-x for cut and C-c for paste? - My daughter says it won't take too long to relearn. Is she right?\n    submitted by    /u/Realistic-Resident-9  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3wdgg/to_join_the_emacs_community_it_seems_to_me_i_have/",
-          "publishedOn": "2021-11-28T05:02:43.000Z",
-          "wordCount": 1359,
-          "title": "To join the emacs community, it seems to me I have to say goodbye to C-x as I used to know it."
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3vipy/why_are_emacs_indents_so_fucking_awful/",
-          "author": null,
-          "description": "In every other text editor I've used, I've never had to think about indents. In emacs, on the other hand, it is a constant battle. For example, right now i'm editing a solidity file with a two space indent, emacs of course tries to ident to four spaces, and i have no idea how to change this. This is always made even worse by electric ident mode's insane \"reindent the current line when you press enter\" behavior - I literally cannot imagine thinking that was a good idea.\n ​\n Why is emacs so shitty?\n    submitted by    /u/just_the_anus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3vipy/why_are_emacs_indents_so_fucking_awful/",
-          "publishedOn": "2021-11-28T04:13:29.000Z",
-          "wordCount": 534,
-          "title": "Why are emacs indents so fucking awful?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3v2x8/presumable_incompatibility_within_my_emacs_file/",
-          "author": null,
-          "description": "I am trying to set up pylsp and have a key shortcut to create dedicated shells in python. The code for the dedicated shell looks like this:\n (defun my-python-start-or-switch-repl (&optional msg) \"Start and/or switch to the REPL.\" (interactive \"p\") (if (python-shell-get-process) (python-shell-switch-to-shell) (progn (run-python (python-shell-calculate-command) t t) (python-shell-switch-to-shell) ) ) ) \n The code that binds the key to that is\n (add-hook 'python-mode-hook (lambda () (define-key python-mode-map (kbd \"C-c !\") 'my-python-start-or-switch-repl)) ) \n which I got all from here \n The code to setup pylsp I got it from this video (29:51) and he also shares his github page and it looks like this (1):\n (use-package python-mode :ensure t :hook (python-mode . lsp-deferred) :custom (python-shell-interpreter \"python\")) \n It all works nicely: I get autocomplete and the other features and can run C-c ! to have dedicated shells. However, once I close emacs with M-x kill-emacs and open it again, and then I run C-c ! to have the dedicated shell I get the error: Symbol's function definition is void: python-shell-get-process \n I tested not defining (1) and just the code that gives the dedicated shells and it does not have that behavior, namely, I can close emacs, open it again and the dedicated shells can still be launched with C-c ! . That tells me, the problem is generated when I introduce (1), but I am not sure why and more importantly how to fix it. I'd appreciate any help.\n    submitted by    /u/carlml  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3v2x8/presumable_incompatibility_within_my_emacs_file/",
-          "publishedOn": "2021-11-28T03:49:23.000Z",
-          "wordCount": 504,
-          "title": "Presumable incompatibility within my .emacs file"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3sqb8/emacs_272_build_strange_error_with_fingerprint/",
-          "author": null,
-          "description": "I'm trying to build emacs from source (Centos 7 has a very old emacs), and i'm getting a strange error when compiling fingerprint.o \n fingerprint.c:66:3: fatal error: opening dependency file deps/fingerprint.d: No such file or directory }; ^ \n I checked this file inside and I found something annoying\n volatile unsigned char fingerprint[] = { 0xDE, 0x86, 0xBB, 0x99, 0xFF, 0xF5, 0x46, 0x9A, 0x9E, 0x3F, 0x9F, 0x5D, 0x9A, 0xDF, 0xF0, 0x91, 0xBD, 0xCD, 0xC1, 0xE8, 0x0C, 0x16, 0x1E, 0xAF, 0xB8, 0x6C, 0xE2, 0x2B, 0xB1, 0x24, 0xCE, 0xB0, }; \n As you can see this array has a trailing comma. This array comes from \n shuf -i 0-255 -n 32 -r | awk '{printf \" 0x%.02X,\\n\", $0}' \n and output has a trailing comma too\n  0x8B, 0x74, 0x47, 0x92, 0x34, 0x61, 0xFE, 0x6B, 0x27, 0xDB, 0x4E, 0x78, 0x6F, 0xD6, 0x37, 0x2D, 0x60, 0xF1, 0x0B, 0x79, 0xD7, 0xBC, 0xC3, 0x21, 0x9E, 0x4E, 0x63, 0x05, 0x1D, 0xB5, 0x63, 0x93, \n Is this correct? is this trailing comma normal, or something in my OS is misconfigured.\n    submitted by    /u/InternalImpact2  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3sqb8/emacs_272_build_strange_error_with_fingerprint/",
-          "publishedOn": "2021-11-28T01:47:20.000Z",
-          "wordCount": 295,
-          "title": "emacs 27.2 build strange error with fingerprint"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3lot2/replace_some_key_words_by_svg_icons/",
-          "author": null,
-          "description": "Currently I use prettify-symbol-mode to replace TODO, DONE and some other key words in org modes with symbols from all-the-icons.\n This way has some limitations, like it allows the symbols are one-character. For some key words like BEGIN_SRC and END_SRC, I want a line so that the SRC block is singled out. \n The package https://github.com/rougier/svg-lib can generate good svg icons. Is there a way to use those svg icons to replace the key words? Or there is some performance issue and it is not recommended?\n Thank you.\n    submitted by    /u/linwaytin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3lot2/replace_some_key_words_by_svg_icons/",
-          "publishedOn": "2021-11-27T20:06:19.000Z",
-          "wordCount": 318,
-          "title": "Replace some key words by svg icons?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3ko3x/new_release_gitlab_support_in_code_review/",
-          "author": null,
-          "description": "Hello all!\n I cut a new release in Code Review including basic Gitlab support, a table with feature parity between Github and Gitlab is available here. I am not a Gitlab user myself therefore I appreciate all the feedback from actual users on how we can improve this going forward.\n This first week I received good feedbacks on features and was able to deliver some bug fixes, thanks for all the reporters.\n More details in the CHANGELOG.\n ​\n Next, bitbucket...\n    submitted by    /u/bartuka  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3ko3x/new_release_gitlab_support_in_code_review/",
-          "publishedOn": "2021-11-27T19:18:20.000Z",
-          "wordCount": 279,
-          "title": "[New Release] Gitlab support in Code Review"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3islt/move_the_precision_pixel_scrolling_feature_to/",
-          "author": null,
-          "description": "submitted by    /u/saarin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3islt/move_the_precision_pixel_scrolling_feature_to/",
-          "publishedOn": "2021-11-27T17:52:14.000Z",
-          "wordCount": 138,
-          "title": "Move the precision pixel scrolling feature to pixel-scroll.el"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3ikqn/dired_in_a_vertical_split/",
-          "author": null,
-          "description": "I have a file open in a single window. I want to open dired in a vertical split (file in one window and the dired window beside it).\n I see the function dired-other-window, but this opens dired in a horizontal split (dired window below open file). I suspect this has to do with these two variables:\n (setq split-height-threshold 0)\n (setq split-width-threshold nil)\n I can't for the life of me understand how these work. C-h v on either variable is just unparseable to my simple mind.\n    submitted by    /u/BobKoss  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3ikqn/dired_in_a_vertical_split/",
-          "publishedOn": "2021-11-27T17:42:02.000Z",
-          "wordCount": 392,
-          "title": "Dired in a vertical split"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3gav6/help_wanted_multiple_text_output_from_shell_with/",
-          "author": null,
-          "description": "I think its impossible to fix, but might be somebody already did it.\n When i use vterm for docker build (or yarn build) vterm can correct handle animation inside stdout (by removing previous symbols and insert a new one). But when i run `dockerfile-build-buffer` or precommit hook inside magit i see a lot of new lines and symbols\n (only time should be changed, but i see new output)\n dockerfile-build-buffer\n Same build inside vterm\n https://preview.redd.it/r2kpxbbrk5281.jpg?width=2562&format=pjpg&auto=webp&s=2c03991d5df9bd1746925c563d61ed9fef065ceb\n magit precommit hook with yarn build\n Same build inside vterm\n ​\n I tried to figure out if it possible to redirect this output to the vterm handler, but i without any luck. Its not a big deal, but its a bit annoying\n    submitted by    /u/darkawower  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3gav6/help_wanted_multiple_text_output_from_shell_with/",
-          "publishedOn": "2021-11-27T15:53:24.000Z",
-          "wordCount": 373,
-          "title": "[Help Wanted] multiple text output from shell with stdout animation"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3gajn/looking_for_a_good_mpd_client_in_emacs/",
-          "author": null,
-          "description": "Hello\n I've been using ncmpcpp and mpd for a while now after I figured out how to configure them (i even wrote a blogpost about it), but since I am always in emacs I find inconvenient to have to always quit emacs to control my music. so I am looking for an mpd client on emacs.\n now there are a few solutions that come to mind:\n  \nuse vterm and open ncmpcpp from that: too much work + vterm is slower than a regular terminal\n use the mpc client that comes with emacs : the mpc client is sooo bad there doesnt seem to be a way to even stop the music (I am talking about the mpc gui inside of emacs, not the seperate commands like mpc-stop, mpc-pause etc..)\n use something else entriely like emms: emms is too slow and I generally want to stay within mpd \n  \nso what I want is, an mpd client that has a usubl interface and that is made specifically for emacs (i.e not running from vterm or something else) and just to clarify I don't want a 1 to 1 clone, I just want something that works.\n thanks in advance\n spcbfr\n    submitted by    /u/spcbfr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3gajn/looking_for_a_good_mpd_client_in_emacs/",
-          "publishedOn": "2021-11-27T15:52:56.000Z",
-          "wordCount": 406,
-          "title": "Looking for a good mpd client in emacs"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3fa5k/no_sound_only_in_emacs/",
-          "author": null,
-          "description": "Hello,I have been using Emacs on Windows for a while, and I really liked the audible bell effect (when you press C-g, or when you press undefined keys / unknown commands).Recently, I switched to GNU/Linux (Debian 11 to be exact) and installed Emacs there (I have not included my customization yet, it is a fresh install), but there was no sound at all, even though the system has no problems playing sounds in other applications.\n visible-bell is nil, beep does not produce sound, play-sound does not work.\n I also tested Emacs on Ubuntu 20.04, NixOS 21.05 and Debian 11 in a VM. The Emacs on the Ubuntu machine worked perfectly, but Emacs on the NixOS and Debian 11 machines did not have sound.\n On all 3 machines, lspci | grep -i audio gives the same output:\n 00:1b.0 Audio device: Intel Corporation 82801I (ICH9 Family) HD Audio Controller (rev 03) \n Also, aplay -l gives the same output:\n **** List of PLAYBACK Hardware Devices **** card 0: Intel [HDA Intel], device 0: Generic Analog [Generic Analog] Subdevices: 1/1 Subdevice #0: subdevice #0 \n Just like the host machine, other applications' sound works fine on all 3 VMs, it is just Emacs without sound, so I don't really think it is a driver issue that only Ubuntu solved (but this is just my guess, I could be wrong). \n I did not find this issue online, have you encountered this problem before? The closest thing I found was this post but I don't think it is applicable to my case.\n What can I do? Thanks for any info you can provide!\n    submitted by    /u/NoPea7317  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3fa5k/no_sound_only_in_emacs/",
-          "publishedOn": "2021-11-27T15:01:55.000Z",
-          "wordCount": 525,
-          "title": "No sound only in emacs"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3dzcw/findfileatpoint_in_acewindow_selected_window/",
-          "author": null,
-          "description": "I'd like to use ffap (to open files/dirs) in windows I select with ace-window (https://github.com/abo-abo/ace-window). Similar to what aw-switch-buffer-in-window and aw-switch-buffer-other-window do, but with find-file-at-point instead of buffer selection. Crucially, point means point when the function is called.\n I made a minor modification to ffap-other-window and it works:\n  (defun my-ffap-ace-window (filename) \"Like `ffap-other-window', window selected via ace window.\" (interactive (list (ffap-prompter nil \" other window\"))) (pcase (save-window-excursion (find-file-at-point filename)) ((or (and (pred bufferp) b) `(,(and (pred bufferp) b) . ,_)) (ace-select-window) (switch-to-buffer b) ))) \n However, this function first does the ffap selection and then asks for the window. For consistency with the other ace- and aw- functions I'd like it to first select the window and then do the ffap thing.\n I've tried hacking this with several approaches (saving excursion first, then selecting the window with aw-select and then finding the file; trying to modify this find-file-ace-window, https://stackoverflow.com/a/47624310 , which makes dired's open in other window use ace-window; modifying aw-switch-buffer-other-window) but my elisp ignorance is getting me nowhere.\n Is this easily doable?\n    submitted by    /u/rdiaz02  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3dzcw/findfileatpoint_in_acewindow_selected_window/",
-          "publishedOn": "2021-11-27T13:52:26.000Z",
-          "wordCount": 370,
-          "title": "find-file-at-point in ace-window selected window"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3ahhm/how_to_emulate_vim_relative_line_numbers_with/",
-          "author": null,
-          "description": "To start with, I've done a bit of looking around and have found a bunch of places where similar questions have been asked (namely here, here, and here) and I still have not found a solution for this. Yes I'm using evil.\n ​\n TL;DR...\n ---------------------------------------------------------------------------------------------------------------\n I would like to emulate vim's relative line numbers where with folded text the line numbers don't skip numbers (as is the case in visual line numbers), word wrapping doesn't create \"fake\" line numbers for the wrapped text (as is the case with relative/normal line numbers), and the numbers for lines are presented in a relative manner where your current line number is shown on the current line and the numbers count up from one both above and below the…",
-          "link": "https://www.reddit.com/r/emacs/comments/r3ahhm/how_to_emulate_vim_relative_line_numbers_with/",
-          "publishedOn": "2021-11-27T10:00:47.000Z",
-          "wordCount": 921,
-          "title": "How to emulate vim relative line numbers with both word wrapping and folding."
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/r3abry/how_to_launch_emacs_from_command_line_in_macos/",
-          "author": null,
-          "description": "I am new to Emacs and I am running it on macOS. I use the GUI app, but I frequently want to launch it from the command line. With VS Code, if I ran code {filename} it would launch VS Code (or use the existing copy running) and open the file I want to edit. It would then exit the code command so I could continue to use the terminal.\n If I run emacs {filename}, a new instance of the Emacs GUI is launched (even if there is an existing instance) and the command does not exit until I quit the GUI instance that is spawned. That isn't the largest problem - I can always open a new tab, but I would prefer it to not do so. I would also like it if the file I opened was added as a buffer to the existing instance of the GUI if one is already open.\n Is this possible to do? I tried to do some searching on my own first, but I'm not even sure what terms to use for the searches and I (obviously) not been successful so far.\n Thanks for any help :)\n    submitted by    /u/BarbarianGeek  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/r3abry/how_to_launch_emacs_from_command_line_in_macos/",
-          "publishedOn": "2021-11-27T09:49:37.000Z",
-          "wordCount": 706,
-          "title": "How to launch Emacs from command line in macos and not have it wait to exit?"
         }
       ]
     },
