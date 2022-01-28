@@ -58,6 +58,51 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/setomt/should_optimizations_be_allowed_to_make_your/",
+          "author": null,
+          "description": "Suppose we want to compare the length of two lists.\n The intuitive approach would be to just compute the length of both lists and then check whether that number is equal for both lists.\n However, if one list is much longer than the other, that this would cause unnecessary work.\n The faster approach would be to use a function like this:\n eqLength :: [a] -> [b] -> Bool eqLength (_:xs) (_:ys) = eqLength xs ys eqLength [] [] = True eqLength _ _ = False \n This has complexity O(min(n,m)) where n and m are the lengths, as opposed to O(n + m).\n So a rewrite rule in GHC that rewrites (length xs == length ys) -> eqLength xs ys might seem to make sense performance wise. \n But there is an issue: For lists that have infinite length, computing the length loops indefinitely, where as the eqLength function does not.\n The behavior of the program would therefore be different.\n Do you think such optimizations are sane for the compiler to do?\n    submitted by    /u/SureSun5678  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/setomt/should_optimizations_be_allowed_to_make_your/",
+          "publishedOn": "2022-01-28T15:46:02.000Z",
+          "wordCount": 884,
+          "title": "Should optimizations be allowed to make your program more lazy?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/seh52v/can_you_have_a_choice_of_type_in_a_function/",
+          "author": null,
+          "description": "For example, if I have the following signature:\n myFunction :: Names -> State -> CodeType\n The function takes a Names type and a State type and returns a CodeType, correct?\n Is it possible to edit the function to take a Names type or a People type as its first argument?\n Something like:\n myFunction :: (Names,People) -> State->CodeType\n ​\n Thanks for your responses in advance. I am trying to learn Haskell.\n    submitted by    /u/jamesjean2001  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/seh52v/can_you_have_a_choice_of_type_in_a_function/",
+          "publishedOn": "2022-01-28T03:37:06.000Z",
+          "wordCount": 649,
+          "title": "Can you have a choice of type in a function signature?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/seh2oy/what_does_this_syntax_mean/",
+          "author": null,
+          "description": "getOutCall :: (OOProgram r) => Name -> GeneralState (Statement r)\n    submitted by    /u/jamesjean2001  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/seh2oy/what_does_this_syntax_mean/",
+          "publishedOn": "2022-01-28T03:33:31.000Z",
+          "wordCount": 242,
+          "title": "What does this syntax mean?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/sedlgs/what_does_this_syntax_mean/",
+          "author": null,
+          "description": "RenderThis a => [(Component, String)]\n    submitted by    /u/jamesjean2001  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/sedlgs/what_does_this_syntax_mean/",
+          "publishedOn": "2022-01-28T00:43:02.000Z",
+          "wordCount": 262,
+          "title": "What does this syntax mean?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/sea0tn/how_do_i_load_a_variable_with_values_from_a_text/",
+          "author": null,
+          "description": "Suppose I have a type \"Person\" with a name and an age. I have a txt file with people, and each line looks like this:\n Brian 30\n Carol 31\n ...\n I want to load each person from the txt file into Haskell for processing.\n In C++, I can do something like:\n Person loadPerson(string personString)\n {\n stringstream ss;\n ss << personString;\n string personName;\n ss >> personName;\n int personAge;\n ss >> personAge;\n return Person(personName,personAge);\n }\n What about in Haskell?\n    submitted by    /u/Comprehensive-Ad3963  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/sea0tn/how_do_i_load_a_variable_with_values_from_a_text/",
+          "publishedOn": "2022-01-27T22:04:19.000Z",
+          "wordCount": 800,
+          "title": "How do I load a variable with values from a text file?"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/se15bg/dependent_types_in_haskell_sort_of/",
           "author": null,
           "description": "submitted by    /u/sridfr  \n [link]   [comments]",
@@ -1874,24 +1919,6 @@
           "publishedOn": "2021-12-30T10:54:32.000Z",
           "wordCount": 198,
           "title": "What is this operator \":<\" ?"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/rrwj7x/what_is_the_best_way_to_report_a_ghc_bug/",
-          "author": null,
-          "description": "I have observed some strange GHC behavior while working on my $DAYJOB project that I'd like to report as an issue on the GHC bug tracker. To do so, I intend to prepare a minimal case that reproduces the issue on the compiler version that the GHC developers would most prefer. I'm having trouble doing that though:\n 1) Which is the GHC version that would be the most useful for GHC developers? 8.10.7, the one the majority of the users currently use (me included)? 9.2.1 which is the latest stable release? Or GHC HEAD? \n 2) Unless the answer to (1) above is GHC 8.10.7, what's the easiest way to obtain that GHC version, very preferably without polluting my system globally? I've built GHC HEAD using the great nix-shell provided by https://github.com/alpmestan/ghc.nix, which allowed me to build it without installing any system dependencies globally. But I can't figure out how to run the resulting GHC, I have ./inplace/bin/runghc which I can use to interpret .hs files and I have ./inplace/bin/ghc-stage2, but that one results in a billion linker errors when I try to compile anything. I've also tried installing GHC versions via ghcup, but that one also fails because I think I'm supposed to install some system dependencies, but I really don't like doing that if at all possible.\n It might be a good idea to update the report a bug page in the GHC wiki with this information. This subreddit is probably not the best place to ask these questions, but I'm also not sure where best to engage with the GHC developers.\n Thanks for any pointers!\n    submitted by    /u/enobayram  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/rrwj7x/what_is_the_best_way_to_report_a_ghc_bug/",
-          "publishedOn": "2021-12-30T08:16:29.000Z",
-          "wordCount": 782,
-          "title": "What is the best way to report a GHC bug?"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/rrpnoy/recommended_resources_for_learning_category/",
-          "author": null,
-          "description": "Hello haskellers,\n I know this question has been asked in the past, but I'm hoping to get a more modern answer :')\n Are there any recommended resources for learning category theory and haskell?\n Some background info, I have a math undergrad degree, and I had fun with the pure math, proofs, theorems, etc. so I'd love to dive deeper into the formal math behind category theory.\n After graduating, I've had a few different roles before landing a software engineer position about 6 months ago... mainly working with JavaScript/TypeScript/node.js.\n I've also worked through the JavaScript Mostly Adequate Guide to FP, which further piqued my interest in FP, also learned some basic Clojure and used it for Advent of Code this year.\n Has anyone worked through the MIT course, Programming with Categories? Does this seem like a good place to start? Leafing through the textbook, it seems to strike a good balance between the formal math and introducing haskell basics. I was thinking of working through it, then work through a more in-depth haskell resource after (i.e. learn you a haskell or something).\n What did you use to learn category theory and/or haskell?\n Thanks in advance for your input!\n    submitted by    /u/moonlighter69  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/rrpnoy/recommended_resources_for_learning_category/",
-          "publishedOn": "2021-12-30T02:12:29.000Z",
-          "wordCount": 1724,
-          "title": "Recommended resources for learning category theory/haskell"
         }
       ]
     },
@@ -1900,6 +1927,42 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/seubj4/mit_6824_distributed_systems_study_group_kickoff/",
+          "author": null,
+          "description": "submitted by    /u/MasGui  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/seubj4/mit_6824_distributed_systems_study_group_kickoff/",
+          "publishedOn": "2022-01-28T16:15:34.000Z",
+          "wordCount": 214,
+          "title": "MIT 6.824: Distributed Systems study group Kickoff Saturday 29th of January at 9h00 EST"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/sera5w/how_to_compile_some_code_against_an_unversioned/",
+          "author": null,
+          "description": "There was a bug fix recently I am interested in testing out. This hasn't made it into any RC or milestone version yet. How would I go about compiling my code against this bug-fixed scala code?\n Happy to use SBT or direct compilation\n    submitted by    /u/beleaguered_penguin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/sera5w/how_to_compile_some_code_against_an_unversioned/",
+          "publishedOn": "2022-01-28T13:52:00.000Z",
+          "wordCount": 188,
+          "title": "How to compile some code against an unversioned snapshot of the scala compiler?"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/seofsk/babel_internationalization_i18n_for_scala/",
+          "author": null,
+          "description": "I own created a Scala i18n library and (after many failed attempts) am finally happy with how it is taking shape. The core idea is to leverage compile-time safety when dealing with i18n files. This is achieved by decoding the translations into case classes and by providing a type safe alternative to printf/MessageFormat which are usually used for String value injection. I consider the library to be highly experimental; the load module in particular is likely to undergo significant changes, error messages and documentation are to be improved. So I wouldn't exactly recommend adopting it just‏‏‎‏‏‎‏‏‎‏‏‎­yet, but am very keen for feedback. https://github.com/slozzer/babel\n    submitted by    /u/sleepysimplicity_259  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/seofsk/babel_internationalization_i18n_for_scala/",
+          "publishedOn": "2022-01-28T11:11:47.000Z",
+          "wordCount": 303,
+          "title": "Babel: Internationalization (i18n) for Scala applications?"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/seaygr/new_career/",
+          "author": null,
+          "description": "Hello guys.\n I was a developer for 2 decades, including asp.net/c# for 16 years. I quit a few years back for early retirement, but I found myself totally bored at home so I learned scala and apache spark for fun. Is that skillset enough to get some work in scala from home? Or would I need to learn kubernetes, akka, zio, cats or other tools?\n Which tools are most valued with scala?\n Thanks in advance for your input.\n    submitted by    /u/Tricky_Ad7760  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/seaygr/new_career/",
+          "publishedOn": "2022-01-27T22:45:17.000Z",
+          "wordCount": 533,
+          "title": "New career"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/sdc7ez/best_places_to_work/",
           "author": null,
@@ -2646,15 +2709,6 @@
           "publishedOn": "2021-12-30T10:58:44.000Z",
           "wordCount": 261,
           "title": "Scala Monad Option.size"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/rrext6/mit_6824_distributed_systems_study_group/",
-          "author": null,
-          "description": "Hi All, I'm taking a classic graduate course from MIT https://pdos.csail.mit.edu/6.824/ on my own (I'm not enrolled, just doing the course independently). There are 4 different labs in Go lang I plan to redo in Scala (MapReduce, Raft, Fault-tolerant Key/Value Service, Sharded Key/Value Service). There is also a bunch of lectures available on YouTube: https://pdos.csail.mit.edu/6.824/schedule.html. I would like to know if there is any interest in forming a study group to motivate each other to complete this course and work on the labs together.\n    submitted by    /u/MasGui  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/rrext6/mit_6824_distributed_systems_study_group/",
-          "publishedOn": "2021-12-29T18:28:38.000Z",
-          "wordCount": 177,
-          "title": "MIT 6.824: Distributed Systems study group"
         }
       ]
     },
@@ -2751,6 +2805,15 @@
       "feedUrl": "https://serokell.io/blog.rss.xml",
       "siteUrl": "https://serokell.io/blog",
       "articles": [
+        {
+          "id": "https://serokell.io/blog/functional-programming-and-web3-with-brooklyn-zelenka",
+          "author": "hi+jonnmostovoy@serokell.io (Jonn Mostovoy)",
+          "description": "Our first guest on the Functional Futures podcast was Brooklyn Zelenka, the co-founder & CTO of FISSION. Listen to our interview with her to find out more about functional programming, the Witchcraft library, and the good and bad sides of Web3.",
+          "link": "https://serokell.io/blog/functional-programming-and-web3-with-brooklyn-zelenka",
+          "publishedOn": "2022-01-28T00:00:00.000Z",
+          "wordCount": 6426,
+          "title": "Functional Futures: Functional Programming and Web3 with Brooklyn Zelenka"
+        },
         {
           "id": "https://serokell.io/blog/typed-template-haskell-in-ghc-9",
           "author": "hi+heitortoledolassarotedepaula@serokell.io (Heitor Toledo Lassarote de Paula)",
@@ -3388,15 +3451,6 @@
           "publishedOn": "2022-01-01T09:19:32.000Z",
           "wordCount": 772,
           "title": "PSA: Default branch of Org repo changed to \"main\""
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/rruunf/are_there_table_formula_limitations_to_orgreaddate/",
-          "author": null,
-          "description": "Why are there different results from org-read-date in a Calc formula (via TBLFM) compared to a source block?\n #+begin_src elisp (list (list (org-read-date nil nil \"today\") \"today\") (list (org-read-date nil nil \"-Thu\") \"last Thursday\") (list (format-time-string \"%A %m/%d/%Y\" (org-read-date nil t \"-Thu\")) \"*correct*\")) #+end_src #+RESULTS: | 2021-12-29 | today | | 2021-12-23 | last Thursday | | Thursday 12/23/2021 | *correct* | | Date: | Wednesday 12/29/2021 | *incorrect?* | #+TBLFM: $2='(format-time-string \"%A %m/%d/%Y\" (org-read-date nil t \"-Thu\")) #+begin_src elisp (list (list (emacs-version)) (list (replace-regexp-in-string \"/home/.*?/\" \"/home/ELIDED/\" (org-version nil t)))) #+end_src #+RESULTS: | GNU Emacs 27.2 (build 1, x86_64-suse-linux-gnu, GTK+ Version 3.24.20, cairo version 1.16.0) | | Org mode version 9.5.2 (9.5.2-gfbff08 @ /home/ELIDED/.emacs.d/elpa/org-9.5.2/) | \n    submitted by    /u/Visual_Bumblebee_555  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/rruunf/are_there_table_formula_limitations_to_orgreaddate/",
-          "publishedOn": "2021-12-30T06:35:16.000Z",
-          "wordCount": 237,
-          "title": "Are there table formula limitations to org-read-date?"
         }
       ]
     },
@@ -3405,6 +3459,60 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/elisp-refs-20220128.1736.el",
+          "author": null,
+          "description": "The elisp-refs package has been updated to version 20220128.1736.",
+          "link": "https://melpa.org/#/elisp-refs",
+          "publishedOn": "2022-01-28T17:36:00.000Z",
+          "wordCount": 105,
+          "title": "elisp-refs (20220128.1736) --- find callers of elisp functions or macros"
+        },
+        {
+          "id": "https://melpa.org/packages/subatomic-theme-20220128.1615.el",
+          "author": null,
+          "description": "The subatomic-theme package has been updated to version 20220128.1615.",
+          "link": "https://melpa.org/#/subatomic-theme",
+          "publishedOn": "2022-01-28T16:15:00.000Z",
+          "wordCount": 105,
+          "title": "subatomic-theme (20220128.1615) --- Low contrast bluish color theme"
+        },
+        {
+          "id": "https://melpa.org/packages/dired-view-data-20220128.1527.el",
+          "author": null,
+          "description": "The dired-view-data package has been updated to version 20220128.1527.",
+          "link": "https://melpa.org/#/dired-view-data",
+          "publishedOn": "2022-01-28T15:27:00.000Z",
+          "wordCount": 105,
+          "title": "dired-view-data (20220128.1527) --- View data from dired via ESS and R"
+        },
+        {
+          "id": "https://melpa.org/packages/password-store-otp-20220128.1320.el",
+          "author": null,
+          "description": "The password-store-otp package has been updated to version 20220128.1320.",
+          "link": "https://melpa.org/#/password-store-otp",
+          "publishedOn": "2022-01-28T13:20:00.000Z",
+          "wordCount": 105,
+          "title": "password-store-otp (20220128.1320) --- Password store (pass) OTP extension support"
+        },
+        {
+          "id": "https://melpa.org/packages/annotate-20220128.1118.el",
+          "author": null,
+          "description": "The annotate package has been updated to version 20220128.1118.",
+          "link": "https://melpa.org/#/annotate",
+          "publishedOn": "2022-01-28T11:18:00.000Z",
+          "wordCount": 105,
+          "title": "annotate (20220128.1118) --- annotate files without changing them"
+        },
+        {
+          "id": "https://melpa.org/packages/languagetool-20220127.2215.tar",
+          "author": null,
+          "description": "The languagetool package has been updated to version 20220127.2215.",
+          "link": "https://melpa.org/#/languagetool",
+          "publishedOn": "2022-01-27T22:15:00.000Z",
+          "wordCount": 105,
+          "title": "languagetool (20220127.2215) --- LanguageTool integration for grammar and spell check"
+        },
         {
           "id": "https://melpa.org/packages/soria-theme-20220127.1004.tar",
           "author": null,
@@ -3847,6 +3955,15 @@
           "title": "json-par (20220122.352) --- Minor mode for structural editing of JSON"
         },
         {
+          "id": "https://melpa.org/packages/jsonnet-mode-20220121.2109.el",
+          "author": null,
+          "description": "The jsonnet-mode package has been updated to version 20220121.2109.",
+          "link": "https://melpa.org/#/jsonnet-mode",
+          "publishedOn": "2022-01-21T21:09:00.000Z",
+          "wordCount": 105,
+          "title": "jsonnet-mode (20220121.2109) --- Major mode for editing jsonnet files"
+        },
+        {
           "id": "https://melpa.org/packages/espotify-20220121.2057.el",
           "author": null,
           "description": "The espotify package has been updated to version 20220121.2057.",
@@ -3917,6 +4034,15 @@
           "publishedOn": "2022-01-21T10:15:00.000Z",
           "wordCount": 105,
           "title": "ox-jira (20220121.1015) --- JIRA Backend for Org Export Engine"
+        },
+        {
+          "id": "https://melpa.org/packages/org-mime-20220121.847.el",
+          "author": null,
+          "description": "The org-mime package has been updated to version 20220121.847.",
+          "link": "https://melpa.org/#/org-mime",
+          "publishedOn": "2022-01-21T08:47:00.000Z",
+          "wordCount": 105,
+          "title": "org-mime (20220121.847) --- org html export for text/html MIME emails"
         },
         {
           "id": "https://melpa.org/packages/gmpl-mode-20220121.631.el",
@@ -6752,177 +6878,6 @@
           "publishedOn": "2021-12-30T09:54:00.000Z",
           "wordCount": 105,
           "title": "nov (20211230.954) --- Featureful EPUB reader mode"
-        },
-        {
-          "id": "https://melpa.org/packages/clojure-mode-extra-font-locking-20211230.817.el",
-          "author": null,
-          "description": "The clojure-mode-extra-font-locking package has been updated to version 20211230.817.",
-          "link": "https://melpa.org/#/clojure-mode-extra-font-locking",
-          "publishedOn": "2021-12-30T08:17:00.000Z",
-          "wordCount": 105,
-          "title": "clojure-mode-extra-font-locking (20211230.817) --- Extra font-locking for Clojure mode"
-        },
-        {
-          "id": "https://melpa.org/packages/julia-repl-20211230.814.el",
-          "author": null,
-          "description": "The julia-repl package has been updated to version 20211230.814.",
-          "link": "https://melpa.org/#/julia-repl",
-          "publishedOn": "2021-12-30T08:14:00.000Z",
-          "wordCount": 105,
-          "title": "julia-repl (20211230.814) --- A minor mode for a Julia REPL"
-        },
-        {
-          "id": "https://melpa.org/packages/solo-jazz-theme-20211230.40.el",
-          "author": null,
-          "description": "The solo-jazz-theme package has been updated to version 20211230.40.",
-          "link": "https://melpa.org/#/solo-jazz-theme",
-          "publishedOn": "2021-12-30T00:40:00.000Z",
-          "wordCount": 105,
-          "title": "solo-jazz-theme (20211230.40) --- The Solo-Jazz color theme"
-        },
-        {
-          "id": "https://melpa.org/packages/cloud-theme-20211229.2131.el",
-          "author": null,
-          "description": "The cloud-theme package has been updated to version 20211229.2131.",
-          "link": "https://melpa.org/#/cloud-theme",
-          "publishedOn": "2021-12-29T21:31:00.000Z",
-          "wordCount": 105,
-          "title": "cloud-theme (20211229.2131) --- A light colored theme"
-        },
-        {
-          "id": "https://melpa.org/packages/citar-20211229.2102.tar",
-          "author": null,
-          "description": "The citar package has been updated to version 20211229.2102.",
-          "link": "https://melpa.org/#/citar",
-          "publishedOn": "2021-12-29T21:02:00.000Z",
-          "wordCount": 105,
-          "title": "citar (20211229.2102) --- Citation-related commands for org, latex, markdown"
-        },
-        {
-          "id": "https://melpa.org/packages/notmuch-20211229.1824.tar",
-          "author": null,
-          "description": "The notmuch package has been updated to version 20211229.1824.",
-          "link": "https://melpa.org/#/notmuch",
-          "publishedOn": "2021-12-29T18:24:00.000Z",
-          "wordCount": 105,
-          "title": "notmuch (20211229.1824) --- run notmuch within emacs"
-        },
-        {
-          "id": "https://melpa.org/packages/sayid-20211229.1802.el",
-          "author": null,
-          "description": "The sayid package has been updated to version 20211229.1802.",
-          "link": "https://melpa.org/#/sayid",
-          "publishedOn": "2021-12-29T18:02:00.000Z",
-          "wordCount": 105,
-          "title": "sayid (20211229.1802) --- sayid nREPL middleware client"
-        },
-        {
-          "id": "https://melpa.org/packages/reazon-20211229.1733.tar",
-          "author": null,
-          "description": "The reazon package has been updated to version 20211229.1733.",
-          "link": "https://melpa.org/#/reazon",
-          "publishedOn": "2021-12-29T17:33:00.000Z",
-          "wordCount": 105,
-          "title": "reazon (20211229.1733) --- miniKanren for Emacs"
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-julia-20211229.1534.tar",
-          "author": null,
-          "description": "The lsp-julia package has been updated to version 20211229.1534.",
-          "link": "https://melpa.org/#/lsp-julia",
-          "publishedOn": "2021-12-29T15:34:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-julia (20211229.1534) --- Julia support for lsp-mode"
-        },
-        {
-          "id": "https://melpa.org/packages/pfuture-20211229.1513.el",
-          "author": null,
-          "description": "The pfuture package has been updated to version 20211229.1513.",
-          "link": "https://melpa.org/#/pfuture",
-          "publishedOn": "2021-12-29T15:13:00.000Z",
-          "wordCount": 105,
-          "title": "pfuture (20211229.1513) --- a simple wrapper around asynchronous processes"
-        },
-        {
-          "id": "https://melpa.org/packages/treemacs-perspective-20211229.1448.el",
-          "author": null,
-          "description": "The treemacs-perspective package has been updated to version 20211229.1448.",
-          "link": "https://melpa.org/#/treemacs-perspective",
-          "publishedOn": "2021-12-29T14:48:00.000Z",
-          "wordCount": 105,
-          "title": "treemacs-perspective (20211229.1448) --- Perspective integration for treemacs"
-        },
-        {
-          "id": "https://melpa.org/packages/treemacs-persp-20211229.1448.el",
-          "author": null,
-          "description": "The treemacs-persp package has been updated to version 20211229.1448.",
-          "link": "https://melpa.org/#/treemacs-persp",
-          "publishedOn": "2021-12-29T14:48:00.000Z",
-          "wordCount": 105,
-          "title": "treemacs-persp (20211229.1448) --- Persp-mode integration for treemacs"
-        },
-        {
-          "id": "https://melpa.org/packages/treemacs-icons-dired-20211229.1448.el",
-          "author": null,
-          "description": "The treemacs-icons-dired package has been updated to version 20211229.1448.",
-          "link": "https://melpa.org/#/treemacs-icons-dired",
-          "publishedOn": "2021-12-29T14:48:00.000Z",
-          "wordCount": 105,
-          "title": "treemacs-icons-dired (20211229.1448) --- Treemacs icons for dired"
-        },
-        {
-          "id": "https://melpa.org/packages/toc-mode-20211229.1334.el",
-          "author": null,
-          "description": "The toc-mode package has been updated to version 20211229.1334.",
-          "link": "https://melpa.org/#/toc-mode",
-          "publishedOn": "2021-12-29T13:34:00.000Z",
-          "wordCount": 105,
-          "title": "toc-mode (20211229.1334) --- Manage outlines/table of contents of pdf and djvu documents"
-        },
-        {
-          "id": "https://melpa.org/packages/gnuplot-20211229.1333.tar",
-          "author": null,
-          "description": "The gnuplot package has been updated to version 20211229.1333.",
-          "link": "https://melpa.org/#/gnuplot",
-          "publishedOn": "2021-12-29T13:33:00.000Z",
-          "wordCount": 105,
-          "title": "gnuplot (20211229.1333) --- Major-mode and interactive frontend for gnuplot"
-        },
-        {
-          "id": "https://melpa.org/packages/org-journal-20211229.1312.el",
-          "author": null,
-          "description": "The org-journal package has been updated to version 20211229.1312.",
-          "link": "https://melpa.org/#/org-journal",
-          "publishedOn": "2021-12-29T13:12:00.000Z",
-          "wordCount": 105,
-          "title": "org-journal (20211229.1312) --- a simple org-mode based journaling mode"
-        },
-        {
-          "id": "https://melpa.org/packages/fsharp-mode-20211229.1121.tar",
-          "author": null,
-          "description": "The fsharp-mode package has been updated to version 20211229.1121.",
-          "link": "https://melpa.org/#/fsharp-mode",
-          "publishedOn": "2021-12-29T11:21:00.000Z",
-          "wordCount": 105,
-          "title": "fsharp-mode (20211229.1121) --- Support for the F# programming language"
-        },
-        {
-          "id": "https://melpa.org/packages/python-mode-20211229.1002.tar",
-          "author": null,
-          "description": "The python-mode package has been updated to version 20211229.1002.",
-          "link": "https://melpa.org/#/python-mode",
-          "publishedOn": "2021-12-29T10:02:00.000Z",
-          "wordCount": 105,
-          "title": "python-mode (20211229.1002) --- Python major mode"
-        },
-        {
-          "id": "https://melpa.org/packages/eide-20211229.844.tar",
-          "author": null,
-          "description": "The eide package has been updated to version 20211229.844.",
-          "link": "https://melpa.org/#/eide",
-          "publishedOn": "2021-12-29T08:44:00.000Z",
-          "wordCount": 105,
-          "title": "eide (20211229.844) --- IDE interface"
         }
       ]
     },
@@ -6931,6 +6886,105 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sevs6t/package_that_treats_prettified_symbols_or_other/",
+          "author": null,
+          "description": "I use prettify-symbols mode heavily in my c++ code to map multicharacter operators to unicode.\n I also do things like map FLT_MAX to the infinity symbol, \"alpha\" to the alpha symbol, etc.\n I would like to have it that when I use the delete or backspace key on such a symbol, that rather than deleting one character of the underlying ascii text, it would delete the whole region of text that has that display attribute. \n So, for instance, if I type \"FLT_MAX\" and it maps to the unicode infinity symbol, backspace wouldn't delete the 'X' at the end of that string, but rather the whole word \"FLT_MAX\".\n I think I can code something like that myself possibly, by looking at the display attribute of the text before the cursor, but was wondering if someone had already done this.\n Thanks for any help!\n    submitted by    /u/ChristopherHGreen  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sevs6t/package_that_treats_prettified_symbols_or_other/",
+          "publishedOn": "2022-01-28T17:22:13.000Z",
+          "wordCount": 265,
+          "title": "Package that treats prettified symbols (or other regions with a \"display\" attribute) as single chars for deletion"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sev0ux/package_similar_to_vim_visual_modenormal_mode_and/",
+          "author": null,
+          "description": "Hi There!\n I'm converting my work flow entirely to emacs. I normally use tmux to ssh to a machine, and most of the time there are commands that I run that output plain text on the terminal. Most of the time the output I need to copy and paste but only some sections of it. This is where tmux's copy mode comes in handy, because I can now select/copy only portions of the contents(very similar to vim's visual mode). \n Is this possible to do in emacs? \n Requirements:\n  \nmultiple windows(tabbed like tmux)\n ssh from emacs\n while in that ssh session enter into a mode very similar to vim's normal/visual mode, so I can copy portions of text as well as search through the shell output.\n  \nThanks!\n    submitted by    /u/vpntun0x  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sev0ux/package_similar_to_vim_visual_modenormal_mode_and/",
+          "publishedOn": "2022-01-28T16:48:03.000Z",
+          "wordCount": 716,
+          "title": "Package similar to vim Visual mode/Normal mode and tmux?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/set1jv/elisp_when_clause_behaving_differently_inside_hook/",
+          "author": null,
+          "description": "Hello, I am trying to setup a org-roam-capture-new-node-hook, that will add a property to a daily/journal file automatically. while skipping other types of notes.\n here's the function I have\n (defun my/org-roam-dailies--daily-note-p (file) \"Return t if FILE is an Org-roam daily-note, nil otherwise. If FILE is not specified, use the current buffer's file-path.\" (when-let ((path (expand-file-name file)) (directory (expand-file-name org-roam-dailies-directory org-roam-directory))) (setq path (expand-file-name path)) (f-descendant-of-p path directory))) \n When I call this normally, I get expected response.\n (when (my/org-roam-dailies--daily-note-p \"/path/to/org/roam/daily/2022-01-26.org\") \"Cool\") : Cool \n But when I call this from the custom hook function,\n (defun my/add-auto-props-to-org-roam-dailies () \"Add properties to org-roam daily entry automatically\" (unless (file-exists-p (buffer-file-name)) (when (my/org-roam-dailies--daily-note-p (buffer-file-name)) (unless (org-find-property \"header-args:ledger\") (org-roam-add-property (concat (file-name-as-directory (ledger-path-relative-to-org)) (file-name-base (buffer-file-name)) \".ledger\") \"header-args:ledger\") (org-roam-add-property \":tangle\" \"header-args:ledger\"))))) (add-hook! 'org-roam-capture-new-node-hook #'my/add-auto-props-to-org-roam-dailies) \n This does not seem to work as expected. The call to my/org-roam-dailies--daily-note-p seem to return nil for all files. Am I missing something here?\n if I remove the check (call for my/org-roam-dailies--daily-note-p), the property gets added correctly for all files, so rest of the code is working as intended.\n P.S. ledger-path-relative-to-org is a custom function that returns a relative path to where I expect the ledger files to get tangled.\n    submitted by    /u/engineerwolf  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/set1jv/elisp_when_clause_behaving_differently_inside_hook/",
+          "publishedOn": "2022-01-28T15:15:19.000Z",
+          "wordCount": 362,
+          "title": "[elisp] when clause behaving differently inside hook"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/seqvbp/slow_image_display/",
+          "author": null,
+          "description": "My Emacs become really slow when displaying images, specially in .org files with inline-images. I don't know if it's a common thing, so how do I improve that?\n Obs: I have Emacs with native compilation, so in general my Emacs performs really well, but not with images displaying\n    submitted by    /u/Hastrack  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/seqvbp/slow_image_display/",
+          "publishedOn": "2022-01-28T13:31:17.000Z",
+          "wordCount": 445,
+          "title": "Slow image display"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sel9md/weird_scrolling_behavior/",
+          "author": null,
+          "description": "submitted by    /u/CherrrySzczery  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sel9md/weird_scrolling_behavior/",
+          "publishedOn": "2022-01-28T07:38:56.000Z",
+          "wordCount": 363,
+          "title": "Weird scrolling behavior"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/seklzr/whats_the_best_way_to_learn_emacs/",
+          "author": null,
+          "description": "Before I start I just want to apologize if this is a \"noob\" question, I'm just trying to learn.\n ​\n I've used Doom Emacs for a few months now, and from what I've seen, it is EXTREMELY powerful, so I *want* to use it. But here's the problem for me. Some other programs, like VS Code are less powerful, but far, far easier for beginners. For instance the wide array of tutorial videos on YouTube, the way you change keybindings, or the way you download extra packages.\n I think that Emacs can be far more powerful than VS Code, provided you have the proper knowledge about how it works. A great example of this is dired, it's so good that for a while I used it as my main file-manager. What's the best way to go about learning Emacs though? Should I just stop using Doom Emacs, download GNU Emacs and learn that way?\n    submitted by    /u/SteveTheGreate  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/seklzr/whats_the_best_way_to_learn_emacs/",
+          "publishedOn": "2022-01-28T06:55:16.000Z",
+          "wordCount": 1722,
+          "title": "What's the best way to learn Emacs?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sek7af/how_to_show_formatting_characters_only_near_the/",
+          "author": null,
+          "description": "Some modern editors (like Obsidian) have this cool feature that when you navigate the cursor near formatted text it will show the formatting characters (like *foo*, /bar/) and otherwise just render them without showing the formatters.\n I was wondering how we can do something like this in Emacs. Is there any package for this or do you guys have any tips on how I could make such a thing?\n    submitted by    /u/moriturius  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sek7af/how_to_show_formatting_characters_only_near_the/",
+          "publishedOn": "2022-01-28T06:28:56.000Z",
+          "wordCount": 227,
+          "title": "How to show formatting characters only near the cursor?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/seg8u0/is_there_any_package_to_generate_treestructured/",
+          "author": null,
+          "description": "I'm looking for something that transforms something like this:\n * foo ** bar *** foobar \n into this:\n  foo └── bar └── fooobar \n Something like the Ascii Tree Generator extension (https://github.com/aprilandjan/vscode-ascii-tree-generator).\n I found some packages like syntree and graph.el, but I'm looking for something that could work based on a simplified structure, like an org list.\n Thanks.\n    submitted by    /u/josior  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/seg8u0/is_there_any_package_to_generate_treestructured/",
+          "publishedOn": "2022-01-28T02:51:47.000Z",
+          "wordCount": 183,
+          "title": "Is there any package to generate tree-structured lists?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/seew8u/just_want_to_install_an_old_version_of_emacs_on/",
+          "author": null,
+          "description": "I've been at this for an hour-- can't figure it out.\n I've seen https://emacsformacosx.com/builds but this is for the graphical version.\n `brew install emacs@25` doesn't work.\n Is there a way to get an old terminal version of emacs? \n EDIT: If anyone sees this later, the solution was that I needed to call a more specific version\n in my case \n MacOS /Applications/Emacs.app/Contents/MacOS/Emacs-x86_64-10_9 -nw\n Running on Apple Silicone \n    submitted by    /u/Yamochao  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/seew8u/just_want_to_install_an_old_version_of_emacs_on/",
+          "publishedOn": "2022-01-28T01:44:51.000Z",
+          "wordCount": 302,
+          "title": "Just want to install an old version of emacs on MacOS"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sed9oy/native_compilation_vs_virus_scanners/",
+          "author": null,
+          "description": "Here's a pitfall for the --with-native-compilation option which I'd not previously considered...\n My work changed its anti-virus software, and my native-comp Emacs init time increased from ~2 seconds to ~15 seconds, because the libraries are now all native code and the virus-scanner goes to work on every one of them.\n Subsequent starts were fast (2-3 seconds) while the scanner had things cached, but later on they will be slow again.\n If you mostly only run Emacs once per session, that's probably not an issue; otherwise it's another thing to consider.\n If you're using a native-comp build and loading libraries seems slow, this is a potential reason for that.\n    submitted by    /u/7890yuiop  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sed9oy/native_compilation_vs_virus_scanners/",
+          "publishedOn": "2022-01-28T00:27:29.000Z",
+          "wordCount": 806,
+          "title": "Native compilation vs virus scanners"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/se8vq6/how_to_install_emacs_emacsmacport_using_brew_and/",
+          "author": null,
+          "description": "I'm brand new to macos, emacs, brew, cask, etc. I come from Windows support, and have some Unix command line and scripting background. But the brew installation framework is confusing as hell to me. After some research, it seems like I should use something like one of the following to install emacs:\n  \nbrew tap railwaycat/emacsmacport\n brew install emacs-mac\n  \nOR\n  \nbrew tap railwaycat/emacsmacport\n brew install --cask emacs-mac. \n  \nWhat's the difference? Also, are there any other options that I should include when installing? (Also note that I want to learn org-mode.)\n A couple people on another thread suggested I install like one of these:\n  \nbrew install emacs-mac --with-rsvg --with-natural-title-bar --with-starter --with-mac-metal --with-glib --with-imagemagick\n \nhttps://github.com/mclear-tools/build-emacs-macos\n \n Note: I don't really understand the above options very well. I don't know what --whit-mac-metal means.\n    submitted by    /u/TooflessSnek  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/se8vq6/how_to_install_emacs_emacsmacport_using_brew_and/",
+          "publishedOn": "2022-01-27T21:15:05.000Z",
+          "wordCount": 1032,
+          "title": "How to install emacs emacsmacport using brew and railwaycat?"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/se19w5/checkboxes_overlay_in_beamer_latex/",
           "author": null,
@@ -10269,51 +10323,6 @@
           "publishedOn": "2021-12-30T09:11:16.000Z",
           "wordCount": 317,
           "title": "Which functions prompts for the password in Emacs' mini-buffer? (mini-frame-mode)"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rrstjx/adjusting_font_size_for_parsed_tokens_in_color/",
-          "author": null,
-          "description": "While trying to make the switch back to emacs from vscode. I have this issue. I've created my own colorschemes in vscode with customized fonts per language tokens. \n Where i can easily adjust font size, colors, or any attributes for tokens in a .json file, and by inspecting tokens in the editor with (Ctrl+Shift+P) (for Editor Tokens and Scopes in the Command Palette). I can specify in the json for any token category in the textmate grammar any font size, color, attribute etc.....\n Can the same be accomplished in emacs, and what resources/links should I be looking at to work on porting over my colorscheme for this?\n    submitted by    /u/realfuckingdd  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rrstjx/adjusting_font_size_for_parsed_tokens_in_color/",
-          "publishedOn": "2021-12-30T04:47:17.000Z",
-          "wordCount": 300,
-          "title": "Adjusting Font size for parsed tokens in color scheme in emacs?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rrc7r7/emacs_for_you_a_72_line_emacs_to_quickly_set_up/",
-          "author": null,
-          "description": "submitted by    /u/susam  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rrc7r7/emacs_for_you_a_72_line_emacs_to_quickly_set_up/",
-          "publishedOn": "2021-12-29T16:34:46.000Z",
-          "wordCount": 919,
-          "title": "Emacs for You - A 72 line ~/.emacs to quickly set up vanilla Emacs for general purpose editing and programming"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rr8qfb/save_current_windows_in_highest_resolution/",
-          "author": null,
-          "description": "Hey all, what is the best way to save the entire window as highest resolution image file (not just each buffer). I think a screenshot will not provide the best available resolution on a Mac machine. I know htmlfontify-buffer but this is cumbersome as it saves one buffer each time.\n    submitted by    /u/Express-Net-8731  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rr8qfb/save_current_windows_in_highest_resolution/",
-          "publishedOn": "2021-12-29T13:56:19.000Z",
-          "wordCount": 147,
-          "title": "Save current windows in highest resolution"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rr7u8o/working_penel_lsp_server_an_early_demo_an_ai/",
-          "author": null,
-          "description": "So the idea is that no matter what you're doing the LSP server generates documentation and refactoring tools for whatever you're looking at -- whether you're surfing the web through emacs, looking at photos, talking to people, or writing code. And should also be able to plug this into other editors. One LSP server for everything. So far you can only try it out from within the docker container. Start pen, open a text file, python, elisp, etc. and run lsp. Anyway, I'm going to continue working on this into next year.\n https://semiosis.github.io/posts/a-prompting-lsp-server-for-any-language-or-context-using-large-language-models/\n    submitted by    /u/mullikine  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rr7u8o/working_penel_lsp_server_an_early_demo_an_ai/",
-          "publishedOn": "2021-12-29T13:09:33.000Z",
-          "wordCount": 342,
-          "title": "Working Pen.el LSP server. An early demo - An AI overlay for everything -- async and parallelised"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rr43vk/surf_browser_in_gnu_emacs/",
-          "author": null,
-          "description": "​\n https://preview.redd.it/j07g8r6l4g881.png?width=1122&format=png&auto=webp&s=9bea6b352f638a8fc0fe5e373121c2f703d8edfc\n Surf is the only browser that supports XEmbed protocol. So now you can use it in GNU Emacs to browse rich web.\n Details: https://lifeofpenguin.blogspot.com/2021/12/browser-in-gnu-emacs.html\n    submitted by    /u/atamariya  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rr43vk/surf_browser_in_gnu_emacs/",
-          "publishedOn": "2021-12-29T09:22:20.000Z",
-          "wordCount": 331,
-          "title": "Surf Browser in GNU Emacs"
         }
       ]
     },
@@ -10322,6 +10331,15 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2113@/discussions",
+          "author": "ctietze",
+          "description": "202201282057 Turn of DS_Store files on network shares\n#macos #network #samba\nTurn of .DS_Store file writing (via https://support.apple.com/en-us/HT208209):\ndefaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE\n\nEspecially useful to not get on the nerves of Windows user who usually see the .DS_Store files.",
+          "link": "https://forum.zettelkasten.de/discussion/2113/zettel-feedback-turn-of-ds-store-files-on-network-shares",
+          "publishedOn": "2022-01-28T20:26:34.000Z",
+          "wordCount": 270,
+          "title": "[Zettel Feedback] Turn of DS_Store files on network shares"
+        },
         {
           "id": "2112@/discussions",
           "author": "Sociopoetic",
@@ -10654,33 +10672,6 @@
           "publishedOn": "2021-12-31T20:24:58.000Z",
           "wordCount": 191,
           "title": "The Archive 101"
-        },
-        {
-          "id": "2072@/discussions",
-          "author": "Will",
-          "description": "I'm working on my \"adulting.\" I'm reviewing and setting habits to help guide me in times of lower clarity. Looking at ideas for creating a tool for thinking, I came up with a tool that prompts me to refine the edits to zettel titles and 'summary relevance.'\nThis 'tool for thinking' results from a python program tied to Keyboard Maestro that prompts me to review titles and summaries of the last ten days of newly created zettel. As an anchor, it is tied to my practice of morning journaling. It reminds me and makes it convenient to examine each zettel title and the one-sentence 'relevance' statement to see if it makes sense and stands up to scrutiny. This is added to the bottom of that template. (pictured below) Automatic, easy peasy, the cognitive load of the initiating behavior habit off-loaded to the computer. This is not an excuse for not editing the body of each zettel. A new zettel will be on the list for ten days. That means ten opportunities for giving the zettel some love.\nI'm unsettled on the format. In its current form it is a bit hard to read. I will make changes for readability.\nIf you're interested in how this is done, have questions about my use-case, or just want to chat let me know.\nBelow are pictured titles and a one-sentence summary/meaning of the zettel I'm working on. These are the ideas I'm currently wrestling with. They represent a ten-day window of new zettel.\nThis is generated with nothing held back. I would love to talk to you about anything on this list. If any of this is of interest to you, please start a thread here, DM me, or get in touch via email.",
-          "link": "https://forum.zettelkasten.de/discussion/2072/zettel-grappling",
-          "publishedOn": "2021-12-29T18:22:58.000Z",
-          "wordCount": 454,
-          "title": "Zettel grappling"
-        },
-        {
-          "id": "2071@/discussions",
-          "author": "Jasminejiang88",
-          "description": "Hello everyone,\nI'm new here. I just want to ask a very simple question. Can Archive be synced into cloud or something? Since I'm afraid that if my Mac breaks down, I'll lose all of my notes.\nLook forward to your reply.",
-          "link": "https://forum.zettelkasten.de/discussion/2071/can-archive-be-synced",
-          "publishedOn": "2021-12-29T13:29:35.000Z",
-          "wordCount": 233,
-          "title": "Can Archive be synced?"
-        },
-        {
-          "id": "2070@/discussions",
-          "author": "System",
-          "description": "Zettelkasten Method, 2nd Edition Teaser: Declare Software Independence to Unshackle Your Mind\n                   \nThe things you own, end up owning you -- here's a teaser for the introduction to the upcoming book release\nRead the full story here",
-          "link": "https://forum.zettelkasten.de/discussion/2070/zettelkasten-method-2nd-edition-teaser-declare-software-independence-to-unshackle-your-mind",
-          "publishedOn": "2021-12-29T10:04:57.000Z",
-          "wordCount": 188,
-          "title": "Zettelkasten Method, 2nd Edition Teaser: Declare Software Independence to Unshackle Your Mind"
         }
       ]
     }
