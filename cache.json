@@ -40,15 +40,6 @@
           "publishedOn": "2022-01-06T12:00:00.000Z",
           "wordCount": 652,
           "title": "Issue 297"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/296.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nGHC 9.0.2 is now available by Zubin Duggal\nThe GHC developers are very happy to at long last announce the availability of GHC 9.0.2. GHC 9.0.2 adds first class AArch64/Darwin support using the LLVM backend, as well as fixing a number of critical correctness bugs with the 9.0.1 release, along with numerous improvements to compiler performance and memory usage.\ntext-2.0 with UTF8 is finally released! by Andrew Lelechenko\nI’m happy to announce that text-2.0 with UTF-8 underlying representation has been finally released.\nFast Counting with PostgreSQL and Haskell by Jezen Thomas\nIdeally, the …",
-          "link": "https://haskellweekly.news/issue/296.html",
-          "publishedOn": "2021-12-30T12:00:00.000Z",
-          "wordCount": 637,
-          "title": "Issue 296"
         }
       ]
     },
@@ -57,6 +48,69 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/sfpbpf/return_maximum_pair_from_list_of_pairs/",
+          "author": null,
+          "description": "I'm trying to determine the product of each pair from a list of pairs and return the pair that possesses the maximum product. For example:\n maximumPair [(7,1),(5,4)] = (5,4)\n The code that I have written:\n maximumPair [] = []\n maximumPair ((x,y):xys) = max (x + y) (maximumPair xys)\n However, this is giving me a slew of errors. What is going wrong?\n ​\n Errors:\n Non type-variable argument in the constraint: Num [t] (Use FlexibleContexts to permit this) • When checking the inferred type maximumPair :: forall t. (Num [t], Ord t) => [([t], [t])] -> [t] \n Whenever I remove the line maximumPair [] = []:\n error: • No instance for (Num (t0, t1)) arising from a use of ‘maximumPair’ • In the first argument of ‘(==)’, namely ‘maximumPair [(7, 1), (5, 4)]’ In the expression: maximumPair [(7, 1), (5, 4)…",
+          "link": "https://www.reddit.com/r/haskell/comments/sfpbpf/return_maximum_pair_from_list_of_pairs/",
+          "publishedOn": "2022-01-29T19:15:24.000Z",
+          "wordCount": 1303,
+          "title": "Return maximum pair from list of pairs?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/sfn5d8/roll_your_own_instances/",
+          "author": null,
+          "description": "I as a beginner am so used to simply doing deriving and getting an automatic default Enum, Eq, and Ord that I don't really know how to create instances of these by hand. For example, if I have \n data MyColor = MyRed | MyGreen | MyBlue deriving Show \n and I only allow myself Show, what would the code for the instances for Enum, Eq, and Ord look like? Especially the superclass constraint situation, i.e., how do they \"nest?\" So how does Haskell automatically figure out these instances when using the default deriving trick?\n    submitted by    /u/teilchen010  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/sfn5d8/roll_your_own_instances/",
+          "publishedOn": "2022-01-29T17:36:58.000Z",
+          "wordCount": 1425,
+          "title": "Roll your own instances"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/sfldp2/typenat_constraint_issues/",
+          "author": null,
+          "description": "Hi, I am trying to figure out how to get the following excerpt to compile. Haskell complains that it can't deduce that (1 <= n + 1). It seems that given the constraint (1 <= n), it should be able to deduce this. Obviously you can give that (1 <= n +1) but then it complains about (1 <= (n + 1) + 1). Is there a way of writing this as an inductive proof or something similar? My guess that there would be some way of using coercions to achieve this but am struggling to find any resources that are helpful. Thanks in advance.\n ​\n {-# LANGUAGE DataKinds, GADTs, TypeFamilies, TypeOperators, StandaloneKindSignatures, UndecidableInstances, LambdaCase #-} import GHC.TypeLits fooInt :: (1 <= n) => Foo n -> Int fooInt = \\case Foo1 -> 1 Foo2 f1 f2 -> fooInt f1 + fooInt f2 Foo3 b f -> barInt b + fooInt f barInt :: (1 <= n) => Bar n -> Int barInt = \\case Bar1 -> 1 Bar2 b1 b2 -> barInt b1 + barInt b2 type FooBar :: * -> * type family FooBar a where FooBar (Foo n) = Bar (n + 1) data Foo :: Nat -> * where Foo1 :: Foo n Foo2 :: Foo n -> Foo n -> Foo n Foo3 :: (a ~ Foo n) => FooBar a -> a -> Foo n data Bar :: Nat -> * where Bar1 :: Bar n Bar2 :: Bar n -> Bar n -> Bar n lift :: Foo n -> FooBar (Foo n) lift = \\case Foo1 -> Bar1 Foo2 f1 f2 -> Bar2 (lift f1) (lift f2) Foo3 b f -> Bar2 b (lift f) \n ​\n * Could not deduce: (1 <=? (n + 1)) ~ 'True arising from a use of `barInt' from the context: 1 <= n bound by the type signature for: fooInt :: forall (n :: Nat). (1 <= n) => Foo n -> Int at Main.hs:8:1-34 * In the first argument of `(+)', namely `barInt b' In the expression: barInt b + fooInt f In a case alternative: Foo3 b f -> barInt b + fooInt f * Relevant bindings include fooInt :: Foo n -> Int (bound at Main.hs:9:1) | 12 | Foo3 b f -> barInt b + fooInt f | \n    submitted by    /u/samtoth  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/sfldp2/typenat_constraint_issues/",
+          "publishedOn": "2022-01-29T16:16:16.000Z",
+          "wordCount": 527,
+          "title": "TypeNat constraint issues"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/sfgsev/what_happened_with_githubs_semantic_project/",
+          "author": null,
+          "description": "I'm just curious. It seems there hasn't been much activity in https://github.com/github/semantic\n Is GitHub still using semantic it to power some code navigation features?\n Has it been abandoned or is there some successor project that has taken its place?\n Is there any writeup / lessons learned about this project?\n    submitted by    /u/JackSchpeck  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/sfgsev/what_happened_with_githubs_semantic_project/",
+          "publishedOn": "2022-01-29T12:02:59.000Z",
+          "wordCount": 198,
+          "title": "What happened with GitHub's semantic project?"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/sfghnz/mlabs_is_hiring_haskell_developers_and_delivery/",
+          "author": null,
+          "description": "Description\n We are one of the leading Haskell consultancies in the fintech, blockchain and AI space, with a passion for Haskell and open source software. We are looking for a remote Haskeller to join our team.\n If you are excited about Haskell, about robust and clean software and are up for a new challenge, you’ve come to the right place!\n We have Haskell developer roles from Junior to Senior, as well as roles in Delivery Management.\n As a Haskell Developer your role may include: \n - Building and testing smart contracts, traditional applications\n - Helping to define best practices with new application architectures\n - Building tools and libraries to support application development\n - Working in emerging technologies\n - For Senior and Intermediates: Systems Design, Formal Verification, Sec…",
+          "link": "https://www.reddit.com/r/haskell/comments/sfghnz/mlabs_is_hiring_haskell_developers_and_delivery/",
+          "publishedOn": "2022-01-29T11:43:40.000Z",
+          "wordCount": 453,
+          "title": "MLabs is Hiring Haskell Developers and Delivery Managers 100% Remote, Worldwide, Internships places also available!"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/sf3qp9/ann_new_haskelllanguageserver_release_1600/",
+          "author": null,
+          "description": "Time for a new and exciting hls release:\n  \nIt includes three brand new plugins: \n Alternate number literals thanks to @drsooch\n Qualify imported names thanks to @eddiemundo\n New plugin to support selection range (aka double click text selection) thanks to @kokobd\n \n Finally hls supports ghc 9.2.1 \n Including core features and many plugins\n Thanks to a great collective effort coordinated by @pepeiborra and with the help of @wz1000, @mpickering and @alanz among others\n \n Hls now also supports ghc 9.0.2 with all plugins but the stylish-haskell formatter \n Including the wingman plugin thanks to @isovector and @anka-213\n \n And many many fixes and performance improvements, thanks to all contributors!\n  \nDeprecation notice for 1.6.0\n  \nAs we noted in the previous release we have dropped support for ghc versions 8.10.5 and 8.8.3 in this release \n We recommend upgrading ghc to the last minor version: 8.8.4 or 8.10.7\n You can read more about ghc deprecation policy and schedule here\n \n After this release: \n We will remove all project stack.yaml's but two: one for last lts and other for nightly. Temporary we could keep one more stack yaml when nightly upgrades the ghc version, to help in the transition\n We will remove the install script which lives here\n If you want to install hls from source we recommend using ghcup. Download it and run ghcup compile hls --help to get more info about.\n \n  \n   submitted by    /u/jneira  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/sf3qp9/ann_new_haskelllanguageserver_release_1600/",
+          "publishedOn": "2022-01-28T23:20:40.000Z",
+          "wordCount": 583,
+          "title": "[ANN] New haskell-language-server release: 1.6.0.0"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/sf2e1f/does_anybody_have_in_mind_a_good_way_how_to_show/",
+          "author": null,
+          "description": "Probably something other than this https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/haskell.html\n Maybe anyone has real experience of migrating the project from JVM to Haskell or something similar?\n The target audience is a manager, former software engineer 45+ who doesn't touch a code for 5+ years.\n Or another average type of person who makes decisions in an average enterprise in your mind.\n Thank you.\n    submitted by    /u/visortelle  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/sf2e1f/does_anybody_have_in_mind_a_good_way_how_to_show/",
+          "publishedOn": "2022-01-28T22:20:47.000Z",
+          "wordCount": 1198,
+          "title": "Does anybody have in mind a good way how to show people not familiar with Haskell that it's really fast?"
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/setomt/should_optimizations_be_allowed_to_make_your/",
           "author": null,
@@ -1856,69 +1910,6 @@
           "publishedOn": "2021-12-31T19:51:01.000Z",
           "wordCount": 252,
           "title": "Type Classes on Type Variables Bindings"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/rsmn3f/looking_for_a_hairshirt_wearing_uncle_bobdoes/",
-          "author": null,
-          "description": "submitted by    /u/Acrobatic_Hippo_7312  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/rsmn3f/looking_for_a_hairshirt_wearing_uncle_bobdoes/",
-          "publishedOn": "2021-12-31T05:40:20.000Z",
-          "wordCount": 605,
-          "title": "Looking for a \"Hair-shirt wearing\" Uncle Bob!!Does anyone write about clean coding, and refactoring for Haskell"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/rsl0an/solving_puzzle_using_haskell/",
-          "author": null,
-          "description": "So my wife gave me puzzle. In the same hour I thrown off everything about who did it and where to find tips and solutions (actually, I even doesn't remember if I had this information) and took it apart without trying to remember. Then I waited for some time to forget everything and then I found that this puzzle is a bit more complex than I thought about it.\n So I decided to write some code (surely using Haskell) to solve it. And today I did it.\n Here is repository:\n https://github.com/DKurilo/crest-18-puzzle/\n But I have a question: is it possible to make it faster and not using so much memory?\n    submitted by    /u/YetAnotherChosenOne  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/rsl0an/solving_puzzle_using_haskell/",
-          "publishedOn": "2021-12-31T04:08:29.000Z",
-          "wordCount": 483,
-          "title": "Solving puzzle using Haskell"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/rskiqe/so_how_do_i_use_monads_to_make_an_application/",
-          "author": null,
-          "description": "Sorry for the wall of text, but I've been reading a lot of guides and not really getting the answer I need. If anyone wants to help a complete newcomer, I could really use it.\n I've read some monad tutorials/lectures and I think I have a beginner's understanding. Basically what I took away was \"without unsafePerformIO, which you should not use, Monad types like M a can't be converted to a. Instead you compose your Monad functions with pure functions using operators like <$> or >>=.\" I also think I understand this distinction between \"pure\" and \"monad\" functions helps the haskell compiler be extremely cool.\n That sounds really good, but I'm having trouble understanding how to structure an application around this. I'm trying to teach myself Haskell by writing an interactive fiction game. So far I have an RPG-style dice roller written, but it's deterministic. I'm creating a seed from the system time inside of a do, using the <- operator. I then use (basically) randomRs (_,_) (mkStdGen seed). Because I used do and I wasn't sure what to do after that though, so I tried using unsafePerformIO and I'm almost certain this is why my dice roller rolls the same numbers every time.\n Do I have to make all my roll-processing functions and the entire skill system speak IO Int and pass up and down an updated stdGen? I am pretty sure the answer is \"no,\" since I can use bind to invoke pure functions. But if that's true, I'm not sure how to apply that while designing a whole application.\n I guess what I'm unsure of is how to structure something larger than a few functions around all of this. Does anyone have any favorite guides or wisdom about the big-picture structure of an application written in Haskell?\n    submitted by    /u/fdc_willard  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/rskiqe/so_how_do_i_use_monads_to_make_an_application/",
-          "publishedOn": "2021-12-31T03:42:38.000Z",
-          "wordCount": 2467,
-          "title": "So, how do I use monads to make an application? (Complete with a Debugging Problem)"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/rs78zr/building_ihp_projects_with_cabal/",
-          "author": null,
-          "description": "submitted by    /u/ringingraptor  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/rs78zr/building_ihp_projects_with_cabal/",
-          "publishedOn": "2021-12-30T17:34:39.000Z",
-          "wordCount": 115,
-          "title": "Building IHP Projects with Cabal"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/rs6jd7/issue_296_haskell_weekly_newsletter/",
-          "author": null,
-          "description": "submitted by    /u/haskellweekly  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/rs6jd7/issue_296_haskell_weekly_newsletter/",
-          "publishedOn": "2021-12-30T17:04:28.000Z",
-          "wordCount": 118,
-          "title": "Issue 296 :: Haskell Weekly newsletter"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/rs3zfu/how_to_work_with_haskell_without_having_a_phd_or/",
-          "author": null,
-          "description": "This is something I was thinking about for quite some while now. \n I'm an undergrad student very interested in Haskell and functional programming in general. Doing some stuff in my spare time, however, isn't quite satisfying and I want to learn more, especially how it would look to write actual production Haskell. \n That is why I would like to apply for an internship or job in Haskell. But here comes the problem: \n All job offers for Haskell programmers either require years of experience with Haskell in production and/or a PhD. \n I think this is a problem because: \n  \nIf nobody offers a job for beginners to work with Haskell, how does the community want to get new people who have worked years in Haskell that don't come from academia? \n \nHow will there be more programmers writing Haskell in…",
-          "link": "https://www.reddit.com/r/haskell/comments/rs3zfu/how_to_work_with_haskell_without_having_a_phd_or/",
-          "publishedOn": "2021-12-30T15:12:07.000Z",
-          "wordCount": 1408,
-          "title": "How to work with Haskell without having a PhD or years of experience?"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/rrz3no/what_is_this_operator/",
-          "author": null,
-          "description": "Title\n    submitted by    /u/portw  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/rrz3no/what_is_this_operator/",
-          "publishedOn": "2021-12-30T10:54:32.000Z",
-          "wordCount": 198,
-          "title": "What is this operator \":<\" ?"
         }
       ]
     },
@@ -1927,6 +1918,60 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/sfpmad/publishing_a_library/",
+          "author": null,
+          "description": "I'm new to scala and mostly have a python background.\n When publishing a library to a central location do you publish a fat JAR including your dependencies or just the JAR of your source code?\n If just the source code, when someone integrates the library into their sbt project, does sbt automatically download/resolve the library's dependencies or do you need to do something else to make this happen?\n In python you have a setup.py file where you specify your library dependencies that pip will install with your source code with the \"depends_on\" parameter when pip installs your library.\n    submitted by    /u/Own-Commission-3186  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/sfpmad/publishing_a_library/",
+          "publishedOn": "2022-01-29T19:29:10.000Z",
+          "wordCount": 213,
+          "title": "Publishing a library"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/sfm56i/fault_tolerant_distributed_and_highload_scala/",
+          "author": null,
+          "description": "Hi, I recently decided to go back to FP / Akka Scala (I've been absent in the space since 2019, still programming in Scala but more on OOP side). I have a lot of experience recently in distributed computing using Spark or Flink and I really like how these frameworks solve many issues that could go wrong in reality (offering automatic node failure recovery, effectively-once semantics etc).\n I started exploring ZIO and Akka Streams lately and I feel like there would be a lot of burden to run distributed computation using either of those. Especially to solve the issues I mentioned earlier. For me both of these focus mostly on single-node applications that would not scale in reality. I see that by the use of Fibers I can achieve high resource utilization on a single node. I can imagine buildin…",
+          "link": "https://www.reddit.com/r/scala/comments/sfm56i/fault_tolerant_distributed_and_highload_scala/",
+          "publishedOn": "2022-01-29T16:52:01.000Z",
+          "wordCount": 568,
+          "title": "Fault tolerant, distributed and high-load Scala concerns"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/sfl127/python_in_scala_ide/",
+          "author": null,
+          "description": "Hi all, So in my Scala IDE, at some points I need to use some python code, is there any way to load a python file or any proper way to do that.\n    submitted by    /u/SpiritMaleficent21  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/sfl127/python_in_scala_ide/",
+          "publishedOn": "2022-01-29T16:00:10.000Z",
+          "wordCount": 160,
+          "title": "Python in scala IDE"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/sfkiyq/algorithms_and_data_structures_in_scala/",
+          "author": null,
+          "description": "is there a great resource, book or library‍ on classic Algorithms and Data Structures in Scala, e.g. similar in scope and quality to Sedgewick Algorithms in Java https://algs4.cs.princeton.edu/home/ I found a very helpful section on algorithms implementation in /u/lihaoyi superb Hand-On Scala Programming book , but unfortunately it's only a few pages (p.107-121). And most other books provide algorithms just an illustration for some neat language feature. The thing is, to get a job as Scala developer these days (in competitive firms) one needs to be a competitive programmer, master of Leetcode, and Scala doesn't seem to have strong ecosystem in that regard as Java, Python or C++. Edit: in DIY spirit and as a learning exercise i'm thinking of translating Sedgewick Algorithms from Java to idiomatic functional Scala, if anyone wants to join this effort or aware of similar ones please let me know Edit 2 (in regards to comments on 'reinventing the wheel' below): if Scala is so great as a language and functional programming flagship, where are all the libraries of functionally implemented algorithms replacing conventional CLRS style imperative/mutable implementations?\n    submitted by    /u/Icy_Egg9244  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/sfkiyq/algorithms_and_data_structures_in_scala/",
+          "publishedOn": "2022-01-29T15:36:00.000Z",
+          "wordCount": 591,
+          "title": "Algorithms and Data Structures in Scala;"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/sf4wy8/scala_api_data_placement_in_apache_spark/",
+          "author": null,
+          "description": "Hi guys, how I can get some more details information about the scala api usage in Apache Spark data placement. How we use it it actually.\n    submitted by    /u/SpiritMaleficent21  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/sf4wy8/scala_api_data_placement_in_apache_spark/",
+          "publishedOn": "2022-01-29T00:14:11.000Z",
+          "wordCount": 120,
+          "title": "SCALA API Data Placement in Apache Spark"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/sf4txg/scala_setup_in_ubuntu/",
+          "author": null,
+          "description": "Hi guys, does apache spark installation and scala installation is same in Ubuntu or not? Do you guys have any blog or resource to setup scala in Ubuntu, complete setup.\n    submitted by    /u/SpiritMaleficent21  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/sf4txg/scala_setup_in_ubuntu/",
+          "publishedOn": "2022-01-29T00:10:17.000Z",
+          "wordCount": 337,
+          "title": "Scala setup in Ubuntu"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/seubj4/mit_6824_distributed_systems_study_group_kickoff/",
           "author": null,
@@ -2682,33 +2727,6 @@
           "publishedOn": "2021-12-31T18:36:38.000Z",
           "wordCount": 87,
           "title": "granularity of testing"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/rsfbl5/notes_about_loading_configuration_examples_for/",
-          "author": null,
-          "description": "submitted by    /u/AlexITC  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/rsfbl5/notes_about_loading_configuration_examples_for/",
-          "publishedOn": "2021-12-30T23:23:58.000Z",
-          "wordCount": 108,
-          "title": "Notes about loading configuration | Examples for Play Framework"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/rsdkac/fun_with_type_level_default_parameters/",
-          "author": null,
-          "description": "submitted by    /u/kag0  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/rsdkac/fun_with_type_level_default_parameters/",
-          "publishedOn": "2021-12-30T22:04:53.000Z",
-          "wordCount": 110,
-          "title": "Fun with type level default parameters"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/rrz5y7/scala_monad_optionsize/",
-          "author": null,
-          "description": "I have an object which contains Some(x), where x is a list. When i do Some(x). size it returns 1 which i understand because it is a monad, but how do i actually find out the size of list x when i have Some(x)?\n    submitted by    /u/awwsomw  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/rrz5y7/scala_monad_optionsize/",
-          "publishedOn": "2021-12-30T10:58:44.000Z",
-          "wordCount": 261,
-          "title": "Scala Monad Option.size"
         }
       ]
     },
@@ -2885,6 +2903,24 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/sfniu3/browserbased_productivity_and_pkm_with_emacs/",
+          "author": null,
+          "description": "submitted by    /u/tconfrey  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/sfniu3/browserbased_productivity_and_pkm_with_emacs/",
+          "publishedOn": "2022-01-29T17:54:07.000Z",
+          "wordCount": 174,
+          "title": "Browser-based Productivity and PKM with emacs, org-mode, LogSeq and BrainTool"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/sfkf2z/newbie_could_someone_share_a_latex_template_for/",
+          "author": null,
+          "description": "submitted by    /u/joaquimgsn  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/sfkf2z/newbie_could_someone_share_a_latex_template_for/",
+          "publishedOn": "2022-01-29T15:30:37.000Z",
+          "wordCount": 195,
+          "title": "Newbie: could someone share a LaTeX template for org-mode?"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/se5wts/creating_a_daily_document_in_orgmode/",
           "author": null,
@@ -3460,6 +3496,105 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/hover-20220129.1935.el",
+          "author": null,
+          "description": "The hover package has been updated to version 20220129.1935.",
+          "link": "https://melpa.org/#/hover",
+          "publishedOn": "2022-01-29T19:35:00.000Z",
+          "wordCount": 105,
+          "title": "hover (20220129.1935) --- Package to use hover with flutter"
+        },
+        {
+          "id": "https://melpa.org/packages/tree-sitter-langs-20220129.1702.tar",
+          "author": null,
+          "description": "The tree-sitter-langs package has been updated to version 20220129.1702.",
+          "link": "https://melpa.org/#/tree-sitter-langs",
+          "publishedOn": "2022-01-29T17:02:00.000Z",
+          "wordCount": 105,
+          "title": "tree-sitter-langs (20220129.1702) --- Grammar bundle for tree-sitter"
+        },
+        {
+          "id": "https://melpa.org/packages/tsc-20220129.1630.tar",
+          "author": null,
+          "description": "The tsc package has been updated to version 20220129.1630.",
+          "link": "https://melpa.org/#/tsc",
+          "publishedOn": "2022-01-29T16:30:00.000Z",
+          "wordCount": 105,
+          "title": "tsc (20220129.1630) --- Core Tree-sitter APIs"
+        },
+        {
+          "id": "https://melpa.org/packages/tree-sitter-20220129.1630.tar",
+          "author": null,
+          "description": "The tree-sitter package has been updated to version 20220129.1630.",
+          "link": "https://melpa.org/#/tree-sitter",
+          "publishedOn": "2022-01-29T16:30:00.000Z",
+          "wordCount": 105,
+          "title": "tree-sitter (20220129.1630) --- Incremental parsing system"
+        },
+        {
+          "id": "https://melpa.org/packages/netease-cloud-music-20220129.1500.tar",
+          "author": null,
+          "description": "The netease-cloud-music package has been updated to version 20220129.1500.",
+          "link": "https://melpa.org/#/netease-cloud-music",
+          "publishedOn": "2022-01-29T15:00:00.000Z",
+          "wordCount": 105,
+          "title": "netease-cloud-music (20220129.1500) --- Netease Cloud Music client"
+        },
+        {
+          "id": "https://melpa.org/packages/citar-20220129.1313.tar",
+          "author": null,
+          "description": "The citar package has been updated to version 20220129.1313.",
+          "link": "https://melpa.org/#/citar",
+          "publishedOn": "2022-01-29T13:13:00.000Z",
+          "wordCount": 105,
+          "title": "citar (20220129.1313) --- Citation-related commands for org, latex, markdown"
+        },
+        {
+          "id": "https://melpa.org/packages/cfrs-20220129.1149.el",
+          "author": null,
+          "description": "The cfrs package has been updated to version 20220129.1149.",
+          "link": "https://melpa.org/#/cfrs",
+          "publishedOn": "2022-01-29T11:49:00.000Z",
+          "wordCount": 105,
+          "title": "cfrs (20220129.1149) --- Child-frame based read-string"
+        },
+        {
+          "id": "https://melpa.org/packages/envrc-20220129.1031.el",
+          "author": null,
+          "description": "The envrc package has been updated to version 20220129.1031.",
+          "link": "https://melpa.org/#/envrc",
+          "publishedOn": "2022-01-29T10:31:00.000Z",
+          "wordCount": 105,
+          "title": "envrc (20220129.1031) --- Support for `direnv' that operates buffer-locally"
+        },
+        {
+          "id": "https://melpa.org/packages/doom-modeline-20220129.1017.tar",
+          "author": null,
+          "description": "The doom-modeline package has been updated to version 20220129.1017.",
+          "link": "https://melpa.org/#/doom-modeline",
+          "publishedOn": "2022-01-29T10:17:00.000Z",
+          "wordCount": 105,
+          "title": "doom-modeline (20220129.1017) --- A minimal and modern mode-line"
+        },
+        {
+          "id": "https://melpa.org/packages/frog-jump-buffer-20220129.539.el",
+          "author": null,
+          "description": "The frog-jump-buffer package has been updated to version 20220129.539.",
+          "link": "https://melpa.org/#/frog-jump-buffer",
+          "publishedOn": "2022-01-29T05:39:00.000Z",
+          "wordCount": 105,
+          "title": "frog-jump-buffer (20220129.539) --- The fastest buffer-jumping Emacs lisp package around."
+        },
+        {
+          "id": "https://melpa.org/packages/git-link-20220128.2343.el",
+          "author": null,
+          "description": "The git-link package has been updated to version 20220128.2343.",
+          "link": "https://melpa.org/#/git-link",
+          "publishedOn": "2022-01-28T23:43:00.000Z",
+          "wordCount": 105,
+          "title": "git-link (20220128.2343) --- Get the GitHub/Bitbucket/GitLab URL for a buffer location"
+        },
+        {
           "id": "https://melpa.org/packages/elisp-refs-20220128.1736.el",
           "author": null,
           "description": "The elisp-refs package has been updated to version 20220128.1736.",
@@ -3584,6 +3719,15 @@
           "publishedOn": "2022-01-26T14:04:00.000Z",
           "wordCount": 105,
           "title": "elfeed-protocol (20220126.1404) --- Provide fever/newsblur/owncloud/ttrss protocols for elfeed"
+        },
+        {
+          "id": "https://melpa.org/packages/notmuch-20220126.1122.tar",
+          "author": null,
+          "description": "The notmuch package has been updated to version 20220126.1122.",
+          "link": "https://melpa.org/#/notmuch",
+          "publishedOn": "2022-01-26T11:22:00.000Z",
+          "wordCount": 105,
+          "title": "notmuch (20220126.1122) --- run notmuch within emacs"
         },
         {
           "id": "https://melpa.org/packages/popper-20220126.844.tar",
@@ -4126,6 +4270,15 @@
           "title": "buffer-ring (20220120.124) --- Rings and tori for buffer navigation"
         },
         {
+          "id": "https://melpa.org/packages/eide-20220119.2125.tar",
+          "author": null,
+          "description": "The eide package has been updated to version 20220119.2125.",
+          "link": "https://melpa.org/#/eide",
+          "publishedOn": "2022-01-19T21:25:00.000Z",
+          "wordCount": 105,
+          "title": "eide (20220119.2125) --- IDE interface"
+        },
+        {
           "id": "https://melpa.org/packages/timu-spacegrey-theme-20220119.2057.el",
           "author": null,
           "description": "The timu-spacegrey-theme package has been updated to version 20220119.2057.",
@@ -4268,6 +4421,15 @@
           "publishedOn": "2022-01-17T20:47:00.000Z",
           "wordCount": 105,
           "title": "ox-hugo (20220117.2047) --- Hugo Markdown Back-End for Org Export Engine"
+        },
+        {
+          "id": "https://melpa.org/packages/solo-jazz-theme-20220117.2009.el",
+          "author": null,
+          "description": "The solo-jazz-theme package has been updated to version 20220117.2009.",
+          "link": "https://melpa.org/#/solo-jazz-theme",
+          "publishedOn": "2022-01-17T20:09:00.000Z",
+          "wordCount": 105,
+          "title": "solo-jazz-theme (20220117.2009) --- The Solo-Jazz color theme"
         },
         {
           "id": "https://melpa.org/packages/ox-clip-20220117.1909.el",
@@ -6752,132 +6914,6 @@
           "publishedOn": "2021-12-31T09:07:00.000Z",
           "wordCount": 105,
           "title": "worf (20211231.907) --- A warrior does not press so many keys! (in org-mode)"
-        },
-        {
-          "id": "https://melpa.org/packages/speechd-el-20211231.758.tar",
-          "author": null,
-          "description": "The speechd-el package has been updated to version 20211231.758.",
-          "link": "https://melpa.org/#/speechd-el",
-          "publishedOn": "2021-12-31T07:58:00.000Z",
-          "wordCount": 105,
-          "title": "speechd-el (20211231.758) --- Client to speech synthesizers and Braille displays."
-        },
-        {
-          "id": "https://melpa.org/packages/pdf-tools-20211231.658.tar",
-          "author": null,
-          "description": "The pdf-tools package has been updated to version 20211231.658.",
-          "link": "https://melpa.org/#/pdf-tools",
-          "publishedOn": "2021-12-31T06:58:00.000Z",
-          "wordCount": 105,
-          "title": "pdf-tools (20211231.658) --- Support library for PDF documents"
-        },
-        {
-          "id": "https://melpa.org/packages/counsel-at-point-20211231.139.el",
-          "author": null,
-          "description": "The counsel-at-point package has been updated to version 20211231.139.",
-          "link": "https://melpa.org/#/counsel-at-point",
-          "publishedOn": "2021-12-31T01:39:00.000Z",
-          "wordCount": 105,
-          "title": "counsel-at-point (20211231.139) --- Context sensitive project search"
-        },
-        {
-          "id": "https://melpa.org/packages/arxiv-mode-20211231.100.tar",
-          "author": null,
-          "description": "The arxiv-mode package has been updated to version 20211231.100.",
-          "link": "https://melpa.org/#/arxiv-mode",
-          "publishedOn": "2021-12-31T01:00:00.000Z",
-          "wordCount": 105,
-          "title": "arxiv-mode (20211231.100) --- Read and search for articles on arXiv.org"
-        },
-        {
-          "id": "https://melpa.org/packages/elfeed-score-20211231.54.tar",
-          "author": null,
-          "description": "The elfeed-score package has been updated to version 20211231.54.",
-          "link": "https://melpa.org/#/elfeed-score",
-          "publishedOn": "2021-12-31T00:54:00.000Z",
-          "wordCount": 105,
-          "title": "elfeed-score (20211231.54) --- Gnus-style scoring for Elfeed"
-        },
-        {
-          "id": "https://melpa.org/packages/multi-project-20211230.2223.el",
-          "author": null,
-          "description": "The multi-project package has been updated to version 20211230.2223.",
-          "link": "https://melpa.org/#/multi-project",
-          "publishedOn": "2021-12-30T22:23:00.000Z",
-          "wordCount": 105,
-          "title": "multi-project (20211230.2223) --- Find files, compile, and search for multiple projects."
-        },
-        {
-          "id": "https://melpa.org/packages/fit-text-scale-20211230.2002.el",
-          "author": null,
-          "description": "The fit-text-scale package has been updated to version 20211230.2002.",
-          "link": "https://melpa.org/#/fit-text-scale",
-          "publishedOn": "2021-12-30T20:02:00.000Z",
-          "wordCount": 105,
-          "title": "fit-text-scale (20211230.2002) --- Fit text by scaling"
-        },
-        {
-          "id": "https://melpa.org/packages/counsel-20211230.1909.el",
-          "author": null,
-          "description": "The counsel package has been updated to version 20211230.1909.",
-          "link": "https://melpa.org/#/counsel",
-          "publishedOn": "2021-12-30T19:09:00.000Z",
-          "wordCount": 105,
-          "title": "counsel (20211230.1909) --- Various completion functions using Ivy"
-        },
-        {
-          "id": "https://melpa.org/packages/lispy-20211230.1833.tar",
-          "author": null,
-          "description": "The lispy package has been updated to version 20211230.1833.",
-          "link": "https://melpa.org/#/lispy",
-          "publishedOn": "2021-12-30T18:33:00.000Z",
-          "wordCount": 105,
-          "title": "lispy (20211230.1833) --- vi-like Paredit"
-        },
-        {
-          "id": "https://melpa.org/packages/org-starter-20211230.1606.el",
-          "author": null,
-          "description": "The org-starter package has been updated to version 20211230.1606.",
-          "link": "https://melpa.org/#/org-starter",
-          "publishedOn": "2021-12-30T16:06:00.000Z",
-          "wordCount": 105,
-          "title": "org-starter (20211230.1606) --- A basic configuration framework for org mode"
-        },
-        {
-          "id": "https://melpa.org/packages/hydra-20211230.1404.tar",
-          "author": null,
-          "description": "The hydra package has been updated to version 20211230.1404.",
-          "link": "https://melpa.org/#/hydra",
-          "publishedOn": "2021-12-30T14:04:00.000Z",
-          "wordCount": 105,
-          "title": "hydra (20211230.1404) --- Make bindings that stick around."
-        },
-        {
-          "id": "https://melpa.org/packages/yaml-mode-20211230.1126.el",
-          "author": null,
-          "description": "The yaml-mode package has been updated to version 20211230.1126.",
-          "link": "https://melpa.org/#/yaml-mode",
-          "publishedOn": "2021-12-30T11:26:00.000Z",
-          "wordCount": 105,
-          "title": "yaml-mode (20211230.1126) --- Major mode for editing YAML files"
-        },
-        {
-          "id": "https://melpa.org/packages/goto-chg-20211230.1101.el",
-          "author": null,
-          "description": "The goto-chg package has been updated to version 20211230.1101.",
-          "link": "https://melpa.org/#/goto-chg",
-          "publishedOn": "2021-12-30T11:01:00.000Z",
-          "wordCount": 105,
-          "title": "goto-chg (20211230.1101) --- Go to last change"
-        },
-        {
-          "id": "https://melpa.org/packages/nov-20211230.954.el",
-          "author": null,
-          "description": "The nov package has been updated to version 20211230.954.",
-          "link": "https://melpa.org/#/nov",
-          "publishedOn": "2021-12-30T09:54:00.000Z",
-          "wordCount": 105,
-          "title": "nov (20211230.954) --- Featureful EPUB reader mode"
         }
       ]
     },
@@ -6886,6 +6922,114 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sfoqj6/problem_with_reading_reddit_from_elfeed/",
+          "author": null,
+          "description": "I really like elfeed, it's really convenient to use one program to read news and feeds and save them in org files. But! I faced with this problem.\n When I read reddit, the text gets very narrow, and it's very annoying when reading this kind of content.\n (The picture below is me reading this subreddit https://www.reddit.com/r/Popular_Science_Ru.rss).\n I did not make any special settings for elfeed. \n https://preview.redd.it/7feegi2y9oe81.jpg?width=3794&format=pjpg&auto=webp&s=d8d258c247e7a7dbae449dd8b8d8c560b6dbd3ae\n Perhaps someone has encountered something like this?\n    submitted by    /u/darkawower  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sfoqj6/problem_with_reading_reddit_from_elfeed/",
+          "publishedOn": "2022-01-29T18:48:59.000Z",
+          "wordCount": 199,
+          "title": "Problem with reading reddit from elfeed"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sfmh7k/does_anyone_know_a_package_similar_to_this_plugin/",
+          "author": null,
+          "description": "submitted by    /u/LuisHGH  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sfmh7k/does_anyone_know_a_package_similar_to_this_plugin/",
+          "publishedOn": "2022-01-29T17:06:23.000Z",
+          "wordCount": 159,
+          "title": "Does anyone know a package similar to this plugin?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sfjths/is_it_possible_to_search_text_into_ocred_pdfs_how/",
+          "author": null,
+          "description": "Greetings, I’m looking for a good App for knowledge management. I’ve seen many tutorials of Org-Mode and Emacs, and maybe it worths a try.\n But because I work with many academic researches, I collect lots of PDFs and I need to find text inside of them.\n Is it possible with Mode and Emacs? How?\n Thank you!\n    submitted by    /u/IvanCyb  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sfjths/is_it_possible_to_search_text_into_ocred_pdfs_how/",
+          "publishedOn": "2022-01-29T15:00:37.000Z",
+          "wordCount": 218,
+          "title": "Is it possible to search text into OCRed PDFs? How?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sfgfcg/what_is_the_purpose_of_withmailutils_and_should_i/",
+          "author": null,
+          "description": "My need is simple. I want to be able to read and reply to google mails in Emacs. I'm trying to build emacs 29 now. So my first question is:\n 1. Should I use --with-mailutils while building emacs (Or not) for that ?\n I raised this query on IRC emacs and many people mentioned it's not required, but didn't explain clearly why. If it's not required, and If I can setup a client by just adding some mail handling packages later on, then,\n 2. I'm wondering what is the use of --with-mailutils, while building ?\n Now that's not the only confusion. I've went through the MailUtils page (assuming that's what emacs will be building, if I specify the option). It mentions that it provides rich set of utilities for mail handling, so why would anyone say not to use it. Does it make Emacs bulky or anything. Idk. I'm just assuming (since they said no). Can anyone please explain me these things to clear the confusion.\n    submitted by    /u/AniketGM  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sfgfcg/what_is_the_purpose_of_withmailutils_and_should_i/",
+          "publishedOn": "2022-01-29T11:39:39.000Z",
+          "wordCount": 600,
+          "title": "What is the purpose of --with-mailutils and should I use it if I want to setup a mail client ?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sfcl70/notmuch_like_mode_to_search_through_pdfs/",
+          "author": null,
+          "description": "I have a bunch of searchable pdfs. Is there something which works simular to notmuch (especially automatic tagging) where I can search through all my pdfs in emacs.\n    submitted by    /u/StillerHarpo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sfcl70/notmuch_like_mode_to_search_through_pdfs/",
+          "publishedOn": "2022-01-29T07:10:11.000Z",
+          "wordCount": 556,
+          "title": "notmuch like mode to search through pdfs"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sfa6c6/questions_about_implementing_vscode_emmet_like/",
+          "author": null,
+          "description": "Greetings,\n In Emacs I'm using Eglot as a language server, and it now supports HTML, CSS, and JavaScript really well. The only thing that I'm missing, is how to setup Emmet in Emacs to work alongside Eglot. Having nice scripts will make it easier for me, like when writing HTML templates.\n Attached below is my config passed to VSCode's settings.json file(different syntax but close):\n `\n userSettings =\n {\n \"emmet.triggerExpansionOnTab\" = true;\n \"emmet.showSuggestionsAsSnippets\" = true;\n \"emmet.showExpandedAbbreviation\" = \"always\";\n \"editor.snippetSuggestions\" = \"top\";\n \"files.associations\" =\n {\n \"*html\" = \"html\";\n };\n \"emmet.includeLanguages\" = \n {\n \"javascript\" = \"html\";\n \"django-html\" = \"html\";\n };\n };\n `\n So what Emacs packages and use-package/ELisp configurations will I need to get this equivalent Emmet functionality in Emacs.\n Thanks in advance for the help.\n    submitted by    /u/zeta_00  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sfa6c6/questions_about_implementing_vscode_emmet_like/",
+          "publishedOn": "2022-01-29T04:44:56.000Z",
+          "wordCount": 341,
+          "title": "Questions about implementing VSCode Emmet like web development functionality in Emacs:"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sf9usc/questions_about_python_elpy_and/",
+          "author": null,
+          "description": "Hello there, I have Python setup with EIN in Emacs, which I'm very happy with. But, I'd like to add IDE like features to this setup. EIN's documentation says Elpy is fully supported, but I'm not sure how to set it up with my Python/EIN setup?\n If you could paste a link to good documentation specific to this, or paste some snippets below, I use the emacs package use-package, so I understand that the most.\n Note: I searched this online, but I can't find specific documentation on setting up Elpy to work with Python/EIN, so that's why I'm asking here.\n Thanks in advance for the help.\n    submitted by    /u/zeta_00  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sf9usc/questions_about_python_elpy_and/",
+          "publishedOn": "2022-01-29T04:26:39.000Z",
+          "wordCount": 198,
+          "title": "Questions about Python Elpy and Emacs-IPython-Notebook:"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sf5no0/escalate_your_helm_searches/",
+          "author": null,
+          "description": "submitted by    /u/AndreaSomePostfix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sf5no0/escalate_your_helm_searches/",
+          "publishedOn": "2022-01-29T00:50:30.000Z",
+          "wordCount": 204,
+          "title": "Escalate your helm searches!"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sf4tk0/is_there_any_easier_way_to_type_parens/",
+          "author": null,
+          "description": "Hi!\n I write Clojure and common Lisp and have been feeling tired to type parens by shift+8 all the time. Is there any easier way to type it? It'd be even better to be able to just use one key so I'm not sure if it is possible. Please enlighten me if you have any clue.\n Thanks.\n    submitted by    /u/drrnmk  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sf4tk0/is_there_any_easier_way_to_type_parens/",
+          "publishedOn": "2022-01-29T00:09:50.000Z",
+          "wordCount": 545,
+          "title": "Is there any easier way to type parens"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sf4pw7/anyone_had_luck_with_lspltex/",
+          "author": null,
+          "description": "I'm trying to use lsp-ltex, but I'm getting stuck on some pretty basic things.\n  \nIt can't seem to update the language server past 14.0.0, even though 15.2.0 is the newest version\n It won't ignore words from a dictionary file, even when I put it in the .vscode directory that the ltex-ls docs indicate it looks for automatically\n It won't add words to the dictionary, even with the \"add words\" code action.\n  \nHas anyone got their emacs.d file where they've got lsp-ltex configured with any/all of these solved? Or is it just not really ready to be used?\n Thanks!\n    submitted by    /u/jmite  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sf4pw7/anyone_had_luck_with_lspltex/",
+          "publishedOn": "2022-01-29T00:05:08.000Z",
+          "wordCount": 185,
+          "title": "Anyone had luck with lsp-ltex?"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sf407p/autocomplete_and_directory_navigation/",
+          "author": null,
+          "description": "I have been using doom emacs to edit code and I noticed that I am not getting autocomplete suggestions? However when I am just writing regular text I will get completions? Is there some sort of package or something I am supposed to install for this?\n Also is there any other way of doing directory navigation other than “SPC .”? I thinking something similar to NERDTree in vim?\n    submitted by    /u/PortalToTheWeekend  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sf407p/autocomplete_and_directory_navigation/",
+          "publishedOn": "2022-01-28T23:32:42.000Z",
+          "wordCount": 156,
+          "title": "Autocomplete and directory navigation"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/sf2oc6/templemacs/",
+          "author": null,
+          "description": "Made a temple-os theme inspired by tsoding riced TempleOS\n ​\n https://preview.redd.it/r7916qjq9ie81.png?width=3833&format=png&auto=webp&s=12299047e7d53084b6127b5995a11e922d953df4\n    submitted by    /u/Barbaloot_Suit  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/sf2oc6/templemacs/",
+          "publishedOn": "2022-01-28T22:33:52.000Z",
+          "wordCount": 596,
+          "title": "Temple-macs"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/sevs6t/package_that_treats_prettified_symbols_or_other/",
           "author": null,
@@ -10188,141 +10332,6 @@
           "publishedOn": "2021-12-31T08:58:59.000Z",
           "wordCount": 585,
           "title": "MOMACS: FINALLY A BEGINNER FRIENDLY EMACS"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rspaih/c_dev_clangd_or_ccls_for_lspmode/",
-          "author": null,
-          "description": "I have to work with some fairly large code-bases, so I want something that can handle that. The features I care about most are code-completion and code navigation (i.e., jumping to a symbol's definition).\n Between clangd and ccls I can't really decide which would be better for me? Most of the threads I've seen discussing the two are years old. \n ​\n Which do you all prefer and why? Thanks!\n    submitted by    /u/hangingpawns  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rspaih/c_dev_clangd_or_ccls_for_lspmode/",
-          "publishedOn": "2021-12-31T08:27:40.000Z",
-          "wordCount": 536,
-          "title": "C++ dev: clangd or ccls for lsp-mode?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rslrj0/why_indicateemptylines_variable_doc_calls_the/",
-          "author": null,
-          "description": "The doc for (setq-default indicate-empty-lines t) is confusing for me. C-h v indicate-empty-lines tells \"Visually indicate empty lines after the buffer end.\" But how can you have empty lines after the buffer end? There is nothing after the buffer end!\n Take a look at this screenshot: https://i.imgur.com/tzcDdYKl.png Line 10 is the last line of the buffer. There is nothing after Line 10. The fringe bitmap indicator shows the void (limbo?) after the end of the buffer. But the doc refers to this void (limbo lines) as \"empty lines\". Why?\n Aren't Lines 6-10 empty lines? Lines 6-10 are actual lines that contain nothing but \\n. Aren't these the empty lines - the blank lines?\n Isn't everything after Line 10 limbo? visual representation of lines that don't exist / end of buffer? Help me understand the Emacs terminology? Why lines that don't exist are called \"empty lines\"?\n    submitted by    /u/eminent101  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rslrj0/why_indicateemptylines_variable_doc_calls_the/",
-          "publishedOn": "2021-12-31T04:50:11.000Z",
-          "wordCount": 702,
-          "title": "Why indicate-empty-lines variable doc calls the lines that don't exist as \"empty lines\"?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rsjtfj/ideas_for_quick_emacs_entry_of_orders_to_buysell/",
-          "author": null,
-          "description": "I'm on a Mac (El Capitan). With a little recent help from the emacs.stackexchange.com forum participants, I have written up a few Emacs functions to refresh the TD Ameritrade access token for its API, and to submit custom buy/sell orders for equities (although it could be for options trading too, but that's not my cup of tea). At some point in the future, I hope to write Lisp code to stream TDA data using the API and make trading decisions from within Emacs. For the near foreseeable future, however, I'll be relying upon watching the Thinkorswim desktop application to make decisions to buy/sell. Screen real estate is precious, as I need to see the charts, studies, order flow, etc.\n In a nutshell, I only need to tell Emacs: 50.35 RET and then perhaps 15 seconds later 51.25 RET. I have installed KeyboardMaestro, for systemwide keyboard shortcuts offering a variety of options, including executing scripts and so forth.\n I have two (2) Emacs options for order submission, either calling the curl executable, or running url-retrieve-synchronously.\n Any ideas regarding how to do this Emacs order entry quickly and save screen real estate would be greatly appreciated.\n BACKGROUND: There are certain custom orders available through TDA that cannot be executed programmatically from within Thinkorswim, but that should be possible through the API. Speed is the key as I am interested in momentum trades with high volatility.\n    submitted by    /u/lawlist  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rsjtfj/ideas_for_quick_emacs_entry_of_orders_to_buysell/",
-          "publishedOn": "2021-12-31T03:05:43.000Z",
-          "wordCount": 474,
-          "title": "Ideas for quick Emacs entry of orders to buy/sell equities ..."
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rsj5li/what_is_the_correct_way_to_enable_pasting_into_a/",
-          "author": null,
-          "description": "Hello there,\n I'm using the Emacs packages simpleclip to copy to clipboard, and shell-pop to open up a terminal in Emacs quickly with a keybinding.\n Anyways, I can copy text from the terminal to the clipboard, but whenever I try to past into the terminal, it throws the error:\n ​\n `Buffer is read-only: #<buffer \\*ansi-term-1\\*>`\n ​\n So how do I fix this issue? I use the emacs package use-package in my .emacs config, so I'm trying to figure out what lisp code is required to fix this issue, so that I can paste into the terminal in emacs.\n ​\n Thanks in advance for the help!\n    submitted by    /u/zeta_00  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rsj5li/what_is_the_correct_way_to_enable_pasting_into_a/",
-          "publishedOn": "2021-12-31T02:32:10.000Z",
-          "wordCount": 461,
-          "title": "What is the correct way to enable pasting into a terminal in Emacs?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rsiv45/ann_fillsentencescorrectlyel_fill_sentences_with/",
-          "author": null,
-          "description": "submitted by    /u/a-c-d-w  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rsiv45/ann_fillsentencescorrectlyel_fill_sentences_with/",
-          "publishedOn": "2021-12-31T02:17:34.000Z",
-          "wordCount": 414,
-          "title": "[ANN]: fill-sentences-correctly.el: Fill sentences with two spaces after a period while accepting one"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rsi1hj/ann_counselatpoint_now_on_melpa_better_ergonomics/",
-          "author": null,
-          "description": "submitted by    /u/ideasman_42  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rsi1hj/ann_counselatpoint_now_on_melpa_better_ergonomics/",
-          "publishedOn": "2021-12-31T01:36:39.000Z",
-          "wordCount": 110,
-          "title": "[ANN] counsel-at-point now on MELPA (better ergonomics for file searching)"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rsda1l/dtache_eshell_integration_of_dtache_in_eshell/",
-          "author": null,
-          "description": "Hi,\n I have previously posted about my package dtache.el, which provides detachable shell commands to Emacs users. Today I merged the dtache-eshell.el library which provides the integration of dtache with eshell, previously dtache only supported M-x shell.\n You can read more about, and see some examples of dtache-eshell in action at https://niklaseklund.gitlab.io/blog/posts/dtache_eshell/, and if you are looking for the source code you will find it here https://gitlab.com/niklaseklund/dtache :)\n    submitted by    /u/squirelpower  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rsda1l/dtache_eshell_integration_of_dtache_in_eshell/",
-          "publishedOn": "2021-12-30T21:52:51.000Z",
-          "wordCount": 183,
-          "title": "Dtache Eshell - Integration of dtache in eshell"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rs73un/emacs_its_dependencies_and_dotfile_integration/",
-          "author": null,
-          "description": "Emacs 3rd party dependencies and user home integration can be well managed using Nix. Posimacs is a published example.\n I've updated the example. It now uses nix flakes. The elisp files can be maintained as a dirty tree for happy hacking. Home manager is mainly used for the static aspects of user home integration rather than installing the elisp files read-only. I will be installing this on a Darwin machine sometime today.\n The Scheme\n  \nStraight for elisp packages & lockfiles\n Home manager for dotfiles\n Nix expressions for distributing 3rd party deps\n  \nForewarning, the Emacs lisp is not marketed as good. At anything. My git tree is dirty. I mainly use the vterm integration and Rust Analyzer.\n The Future\n  \nEmacs can maintain its own nix profile to have a self-contained set of 3rd party dependencies like language servers and dynamic modules independently of the user environment\n Emacs can generate a home manager module for programs like vterm that want home integration\n Emacs can maintain non-package elisp configuration expressions without resorting to rigid git managed structures or rapidly decaying patchworks lifted from literate org files scattered around\n  \nThe mix of tooling is the main work output of this project so far. Appreciate pointing out any work related to the Future\n    submitted by    /u/Psionikus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rs73un/emacs_its_dependencies_and_dotfile_integration/",
-          "publishedOn": "2021-12-30T17:28:39.000Z",
-          "wordCount": 300,
-          "title": "Emacs, its dependencies, and dotfile integration with Nix"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rs6nus/on_emacs_28_context_menu_and_mouseusage_in_general/",
-          "author": null,
-          "description": "submitted by    /u/geospeck  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rs6nus/on_emacs_28_context_menu_and_mouseusage_in_general/",
-          "publishedOn": "2021-12-30T17:09:33.000Z",
-          "wordCount": 316,
-          "title": "On Emacs 28 context menu and mouse-usage in general"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rs4opl/first_thing_you_configured_when_started_using/",
-          "author": null,
-          "description": "What the subject says... What was the first thing that you changed/ configured back when started using Emacs?\n On my case was getting all those pesky \"~\" backup files on one place... I hated how those splattered all around.\n    submitted by    /u/hictio  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rs4opl/first_thing_you_configured_when_started_using/",
-          "publishedOn": "2021-12-30T15:43:31.000Z",
-          "wordCount": 388,
-          "title": "First thing you configured when started using Emacs"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rs30b6/xwidgets_support_pgtk_now/",
-          "author": null,
-          "description": "Thanks to Po Lu, Emacs's pgtk port could use xwidgets to browse web pages. You don't need to install any external packages, just compile the newest source code of Emacs (at least newer than this commit by Po Lu) with \"--with-pgtk\" together with \"--with-xwidgets\" flags. Then M-x xwidget-webkit-browse-url and enter a url, you could surf the Internet via Emacs!\n For people not familiar to this: pgtk port is the feature Emacs use pure GTK, which means it could run under pure Wayland. Xwidgets is a feature that allows Emacs to display GTK and NS widgets inside buffers. Xwidgets doesn't support pgtk before, Po Lu made it support pgtk.\n    submitted by    /u/VitalyAnkh  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rs30b6/xwidgets_support_pgtk_now/",
-          "publishedOn": "2021-12-30T14:26:22.000Z",
-          "wordCount": 208,
-          "title": "Xwidgets support pgtk now"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rrzl74/how_do_i_disable_autoindent_but_not_electricity/",
-          "author": null,
-          "description": "EDIT: Never mind! The function I was looking for is M-x indent-relative. That solves my problem. I can combine that with return to make a custom function to do what I want.\n Writing a shell script, Emacs adds 4 tabs and 1 space. I don’t want this to happen. I want Emacs to go to the first character in the previous line. Emacs is going wild with auto-formatting. I want electricity. I like electricity. But I don’t like auto-formatting. That is, I don’t like tons of random tabs and spaces added for no reason.\n for in i in 1 2 <tab><tab><tab><tab><space><cursor is now here> \n I don’t want that. I want :\n for in i 1 2 <cursor is here> \n M-x electric-indent-mode doesn’t work, because then I lose electricity, which is also problematic. I like electricity, but I don’t like auto-formatting. Turning off electricity isn’t good:\n for in i 1 2 do <cursor is here> \n I want the cursor to be aligned with the do, not at the beginning of the line. Does anyone know how to do this?\n    submitted by    /u/SequentialDesign  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rrzl74/how_do_i_disable_autoindent_but_not_electricity/",
-          "publishedOn": "2021-12-30T11:23:40.000Z",
-          "wordCount": 300,
-          "title": "How do I disable auto-indent but NOT electricity?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rrzgak/orgtransclusion_111_released/",
-          "author": null,
-          "description": "Just saw that a few hours ago Org-transclusion 1.1.1 has been released and is available on ELPA.\n https://github.com/nobiot/org-transclusion\n A tip of the hat to Nobiot for writing this amazing package.\n I'd been waiting for the first release before integrating it into my workflow and now I'm out of excuses :).\n What a wonderful gift to the emacs community to end out a difficult (I would say horrible) year and end it with hope and optimism going into 2022.\n Thank you Nobiot! Happy New Year to all; wishing that your init.el file be bug free in the coming Year of The Tiger.\n    submitted by    /u/deerpig  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rrzgak/orgtransclusion_111_released/",
-          "publishedOn": "2021-12-30T11:15:17.000Z",
-          "wordCount": 466,
-          "title": "Org-transclusion 1.1.1 released"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rrzbor/how_to_insert_tabs_with_indentregion/",
-          "author": null,
-          "description": "I often need to use indent-region from indent.el to fix the indentation of code template I have from school. So I made this function :\n (defun indent-buffer () (interactive) (if (not (string= major-mode 'python-mode)) (indent-region (point-min) (point-max)) (message \"Not in python\"))) (global-set-key (kbd \"M-i\") 'indent-buffer) \n It works well but I recently found out that the default indentation is only 2 space char. I would like to have it inserting 4 chars width TABS. I tried to look in the customization group of indent.el and even used kernel coding style emacs config, which works when I press <TAB> but doesn't when using (indent-buffer).\n    submitted by    /u/Nathoufresh  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rrzbor/how_to_insert_tabs_with_indentregion/",
-          "publishedOn": "2021-12-30T11:07:31.000Z",
-          "wordCount": 318,
-          "title": "How to insert TABS with (indent-region)?"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/rrxeto/which_functions_prompts_for_the_password_in_emacs/",
-          "author": null,
-          "description": "Hej fellow 'macsers,\n TL;DR: Can you tell me which function emacs invokes to ask for auth data?\n I recently heard of mini-frame-mode and fell in love. While I see the need to have a vertical display for functions and variable descriptions (marginalia ftw!), I have always been irritated by a new buffer appearing \"out of nowhere\" on the bottom of my screen, moving the modeline etc.\n So, I have adjusted the looks of mini-frame-mode to my liking. Now, there is one piece missing: whenever I push to my git repository, mini-frame-mode opens to prompt me for my git auth data. I don't want mini-frame-mode to handle this; instead, I want the password prompt to appear in the original mini buffer on the bottom.\n I know of the mini-frame-ignore-commands variable. However, I don't know which program is evoked by emacs to ask me for the password. I tried skimming the Messages Buffer for it, but adding magit-process-username-prompt and magit-process-password-prompt to the list didn't change anything, and I was unable to find a reference to another function in the packages' code.\n Thus: can you tell me which function emacs invokes to ask for auth data?\n Have a good day, folks :)\n    submitted by    /u/olivuser  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/rrxeto/which_functions_prompts_for_the_password_in_emacs/",
-          "publishedOn": "2021-12-30T09:11:16.000Z",
-          "wordCount": 317,
-          "title": "Which functions prompts for the password in Emacs' mini-buffer? (mini-frame-mode)"
         }
       ]
     },
@@ -10331,6 +10340,15 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2114@/discussions",
+          "author": "adamcross",
+          "description": "Hi all. I'm new here. I'm a Zettelkasten enthusiast going on 6 months now. I have about 1200 zettels, mainly about note-taking itself, organic growth, psychology, risk, practice, and other things that interest me outside of work. I'm a software developer by trade.\nI thought I might introduce myself with an open-ended question. I recently transitioned from writing paper notes to using Zettlr. (Zettlr + Git just works for me.) One thing I really miss about my old paper ZK is being able to thumb through notes and stumble on things that way. In my new computerized system, I have to explicitly write links and do searches. There is no rifling aspect, and that seems like a bummer to me. Anyone have any similar thoughts? Or recommendations? I'm still working on how to organize things to capture that inherent structure that my old paper ZK had by the mere fact of two slips being near each other. I can type in 1200 slips, but that structure is essentially gone now.",
+          "link": "https://forum.zettelkasten.de/discussion/2114/hi-im-adam-how-do-you-thumb-through-a-computerized-zk",
+          "publishedOn": "2022-01-29T19:01:31.000Z",
+          "wordCount": 321,
+          "title": "Hi. I'm Adam. How do you thumb through a computerized ZK?"
+        },
         {
           "id": "2113@/discussions",
           "author": "ctietze",
