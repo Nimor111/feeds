@@ -44,16 +44,6 @@
           "wordCount": 638,
           "title": "Issue 306",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/305.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nScalable web crawling and scraping. Available on-premises or in the cloud. (ad)\nIsoxya is an extensible data processing system for crawling and scraping the internet. It is written in Haskell for speed and reliability. Isoxya is free, open-source, and packaged as a container. The JSON API is simple to control. Various plugins are available, many also open-source.\nFailing in Haskell by Jappie Klooster\nRecently I encountered some dubious error handling code. Not only was it failing, it was failing WRONG.\nHaskell (Almost) Standard Libraries by Alejandro Serrano Mena\nThis books walk you thro…",
-          "link": "https://haskellweekly.news/issue/305.html",
-          "publishedOn": "2022-03-03T12:00:00.000Z",
-          "wordCount": 556,
-          "title": "Issue 305",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,66 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/tuq21i/rfc_removing_alternative_installation_methods/",
+          "author": null,
+          "description": "The Haskell.org committee is considering removing the \"alternative installation options\" section from the downloads page of haskell.org and we seek the opinion of the community. If you would like to share your opinion we prefer that you do so on the haskell.org issue tracker, but failing that, in this comment thread is fine too.\n Background\n The downloads page of haskell.org suggests using ghcup and stack to obtain a toolchain. These two tools are widely used in the community, actively maintained and kept up-to-date. The page also provides a number of \"alternative installation options\" (see below, or on the page itself, for the list).\n The Haskell.org committee does not have the resources to ensure that these alternative installation options are kept maintained and confirmed working. We do…",
+          "link": "https://www.reddit.com/r/haskell/comments/tuq21i/rfc_removing_alternative_installation_methods/",
+          "publishedOn": "2022-04-02T18:45:35.000Z",
+          "wordCount": 832,
+          "title": "RFC: removing “alternative installation methods” from haskell.org (or finding them owners)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/tunmzu/rplace_lambda/",
+          "author": null,
+          "description": "Hello haskellers,\n We are making a lambda in r/place on the left side of the Israel flag.\n EDIT: We're starting to make a new lambda right above the old one\n Sketch (by u/robochicken11):\n https://preview.redd.it/iulbayj906r81.png?width=239&format=png&auto=webp&s=3a95ab13267d61e71f417e4fbb131e1a31ae725c\n In this section:\n ​\n https://preview.redd.it/mhjhmtuc06r81.png?width=718&format=png&auto=webp&s=50f1b433ae608f7702f7afa4b41546fdcd9a8514\n ​\n Here's the drawing. Coords are at around ( 1589,446 )\n https://preview.redd.it/uwdkigwwc5r81.png?width=319&format=png&auto=webp&s=3d0ba72d832e2c98f429d702e46d45ed0a76b0ec\n EDIT: The right-bottom corner is at (1590,445)\n EDIT: Let's expand to the square above. Rough draft\n Draft\n Target area:\n Target Area\n    submitted by    /u/tomasff02  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/tunmzu/rplace_lambda/",
+          "publishedOn": "2022-04-02T17:01:52.000Z",
+          "wordCount": 259,
+          "title": "r/place lambda",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/tulrz7/hylomorphism_to_convert_grammar_to_parser/",
+          "author": null,
+          "description": "I came up with a cute method to turn a grammar into a parser, and I wondered if it was something that people have done before.\n Basically, the idea is you unfold the grammar into a set of all the trees it produces (using a data structure built with Free), and then fold this structure into a combinator parser. For the fold and unfold, I use the recursion-schemes library (which conveniently knows exactly how to unfold and fold Free structures).\n Here's the code of a simple version. In practice, I added a fancier recursion scheme (gchrono), more use of megaparsec, and a fancier grammar, but this is the core idea:\n ```\n import Text.Megaparsec.Char (string) import qualified Data.Text as T import Text.Megaparsec (ParsecT, runParserT, errorBundlePretty, many, (<|>)) import Data.Void (Void, absurd…",
+          "link": "https://www.reddit.com/r/haskell/comments/tulrz7/hylomorphism_to_convert_grammar_to_parser/",
+          "publishedOn": "2022-04-02T15:43:29.000Z",
+          "wordCount": 830,
+          "title": "Hylomorphism to convert grammar to parser",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/tudeyo/could_this_genericssop_code_for_building_cli/",
+          "author": null,
+          "description": "Here's the example, handwritten, optparse-applicative CLI parser that I'm trying to generics-sopify-\n import Data.Functor import Options.Applicative data AllParams = FirstThing FirstParams | SecondThing SecondParams data FirstParams = MkFirstParams {fooOne :: String} data SecondParams = MkSecondParams {fooTwo :: Bool, fooThree :: ()} paramP :: ParserInfo (AllParams, FilePath) paramP = info (optP <**> helper) ( fullDesc <> progDesc \"Example CLI\" <> header \"Example CLI\" ) where optP = liftA2 (,) commandsP outputPathP commandsP = hsubparser $ mconcat [ command \"FirstThing\" $ info (firstCommand <&> FirstThing) $ fullDesc <> progDesc \"Use first with given parameters\" , command \"SecondThing\" $ info (secondCommand <&> SecondThing) $ fullDesc <> progDesc \"Use second with given parameters\" ] firstCommand = MkFirstParams <$> strOption ( long \"fooOne\" <> metavar \"String\" ) secondCommand = MkSecondParams <$> option auto ( long \"fooTwo\" <> metavar \"Bool\" ) <*> option auto ( long \"fooThree\" <> metavar \"()\" ) outputPathP = strOption ( short 'o' <> metavar \"FilePath\" <> help \"Output Path\" ) \n In general, this is pretty straightforward, AllParams is the overarching CLI type. Each constructor within designates a command subparser and its field type designates a record type containing all the options for this specific subparser.\n I'm generalizing/automating this pattern using generics-sop. The code is quite large so I'll post it in this gist.\n I'm curious whether that implementation could be simplified. By simplification, I'm mostly mean less noise. I'm curious whether there are utility functions, types and constraints provided by generics-sop already that invalidate the need for typeclasses like NSFrom and similar types I've handrolled there. I'd also be curious to know whether certain snippets could be improved in a general sense.\n    submitted by    /u/Phantom569  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/tudeyo/could_this_genericssop_code_for_building_cli/",
+          "publishedOn": "2022-04-02T07:41:52.000Z",
+          "wordCount": 571,
+          "title": "Could this generics-sop code for building CLI option parsers be simplified?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/tubcff/functional_conf_2022/",
+          "author": null,
+          "description": "submitted by    /u/n00bomb  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/tubcff/functional_conf_2022/",
+          "publishedOn": "2022-04-02T05:24:03.000Z",
+          "wordCount": 108,
+          "title": "Functional Conf 2022",
+          "imageUrl": "https://external-preview.redd.it/rUI9-uz1HLwvxptTL-rP-s2VSSphHsT1S7pNbjO0lqk.jpg?auto=webp&s=479ede143be9bbcd37c3f0390f6262556ac4e933"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/tu2drh/allwrong/",
+          "author": null,
+          "description": "submitted by    /u/mofkont  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/tu2drh/allwrong/",
+          "publishedOn": "2022-04-01T21:42:44.000Z",
+          "wordCount": 116,
+          "title": "#allwrong",
+          "imageUrl": "https://external-preview.redd.it/eQkKrHSFg6a5bZTlBIlsxhq0GgcggHu5r0jY1m1i2do.jpg?auto=webp&s=3b5f988845805abf231215aa6b581458a5dbcddd"
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/tu0aic/what_are_your_favorite_most_expressive_things_you/",
           "author": null,
@@ -1741,106 +1791,6 @@
           "wordCount": 344,
           "title": "MLabs Haskell Internship Applications closing soon!",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t6ayzs/where_can_i_find_the_formalscientificacademic/",
-          "author": null,
-          "description": "submitted by    /u/Top_Secret_1448  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t6ayzs/where_can_i_find_the_formalscientificacademic/",
-          "publishedOn": "2022-03-04T04:53:06.000Z",
-          "wordCount": 246,
-          "title": "Where can I find the formal/scientific/academic definitions of monad and monoid with explanations and examples?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t683do/question_regarding_haskell_syntax/",
-          "author": null,
-          "description": "So I'm new to Haskell and trying to wrap my head around it, coming from imperative languages it's so different I might as well have never coded in my life. I find the syntax... strange, to say the least.\n I'm trying to understand a solution for a function that detects if a String is a pangram (contains every letter of the alphabet), here it is :\n  isPangram text = all (`elem` text) ['A'..'Z'] \n What I don't understand are those parentheses, they don't make sense to me. \n As far as I can tell, elem takes 2 arguments; a character then a string. So what does (elem text) even mean? It has to do something, because if I take those parentheses out, the function no longer works. Yet (elem text) doesn't actually work on its own, so what is going on here?\n Also, all takes a list of booleans right? Assuming all is supposed to be applied to a list of booleans, I would think that (elem text) ['A'..'Z'] should get reduced to a list of booleans, but actually that code also doesn't work on its own. Where is the list of booleans all is applied to coming from, then?\n    submitted by    /u/some_clickhead  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t683do/question_regarding_haskell_syntax/",
-          "publishedOn": "2022-03-04T02:16:15.000Z",
-          "wordCount": 820,
-          "title": "Question regarding Haskell syntax",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t632wz/bytestring01130/",
-          "author": null,
-          "description": "On behalf of maintainers I'm happy to announce that bytestring-0.11.3.0 has been released. It will be a part of upcoming GHC 9.2.2.\n The focus of this release is an extended API for ShortByteString, submitted by /u/maerwald as a part of Abstract FilePath Proposal. bytestring is proud to be a part of this initiative, aimed to provide much faster and more principled FilePath type. Huge thanks to /u/maerwald for spearheading it!\n Other highlights from the changelog:\n  \nUTF-8 support: add Data.ByteString.Short.isValidUtf8 and use safe FFI for large inputs.\n Improve performance and laziness of unlines.\n Improve performance of intercalate.\n Improve allocations of singleton.\n  \nMany people contributed their time and effort to make this release happen. Just to name a few in no particular order, mostly according to git log:\n  \nAlexander Biehl\n askeblad\n Ben Gamari\n Dmitry Ivanov\n Jaro Reinders\n Johannes Waldmann\n Julian Ospald\n Koz Ross\n Matthew Craven\n Patrick Pelletier\n Simon Jakobi\n me\n  \nOn a personal note, it was not easy to work on this release with my family in a bomb shelter and friends in trenches. Stand with Ukraine, will you?\n    submitted by    /u/Bodigrim  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t632wz/bytestring01130/",
-          "publishedOn": "2022-03-03T22:10:08.000Z",
-          "wordCount": 330,
-          "title": "bytestring-0.11.3.0",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t5z5lg/flattening_nested_generic_routes_in_servant/",
-          "author": null,
-          "description": "Say we have routes: ``` data UsersRoutes route = UserRoutes { usersId :: route :- Capture \"id\" Text :> ToServant UserIdRoutes AsApi , usersAll :: route :- Get '[JSON] (Vector User) , ... }\n data UserIdRoutes route = UserIdRoutes { userIdProfile :: route :- \"profile\" :> Get '[JSON] User , userIdRemove :: route :- Delete '[PlainTest] NoContent , ... } ``` \n Then I want to extract client using:  UsersRoutes { usersId = fromServant @_ @(AsClientT ClientM) -> UserIdRoutes {..}, ..} = genericClient @_ @ClientM \n GHC politely tells me that fromServant cannot be applied to the pattern, because type mismatches.\n How can I distribute captured id to UserIdRoutes in convenient way when I want to extract client from UsersRoutes using pattern matching?\n    submitted by    /u/repaj  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t5z5lg/flattening_nested_generic_routes_in_servant/",
-          "publishedOn": "2022-03-03T19:11:00.000Z",
-          "wordCount": 228,
-          "title": "Flattening nested generic routes in Servant",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t5ycam/stclang_a_library_for_implicit_monadic_dataflow/",
-          "author": null,
-          "description": "submitted by    /u/jberryman  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t5ycam/stclang_a_library_for_implicit_monadic_dataflow/",
-          "publishedOn": "2022-03-03T18:35:03.000Z",
-          "wordCount": 117,
-          "title": "STCLang: A library for implicit monadic dataflow parallelism",
-          "imageUrl": "https://external-preview.redd.it/oaSOw2pMmrHWZTAULox_dZuKgYEaWKrvTUNvdMD9q-8.jpg?auto=webp&s=7567c0fb563c4a62059eae3d52f80543f192fb6d"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t5xbti/issue_305_haskell_weekly_newsletter/",
-          "author": null,
-          "description": "submitted by    /u/haskellweekly  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t5xbti/issue_305_haskell_weekly_newsletter/",
-          "publishedOn": "2022-03-03T17:51:03.000Z",
-          "wordCount": 113,
-          "title": "Issue 305 :: Haskell Weekly newsletter",
-          "imageUrl": "https://external-preview.redd.it/QN4ktfFMABnBF6XEPkZWKdVBmOeoKfq094xszcT0RD4.jpg?auto=webp&s=00dc4ace0e204a30ab1d7e7b788ffc3c8a4713ed"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t5wt0r/showcasing_feedfarer_bot_a_telegram_bot_for/",
-          "author": null,
-          "description": "The bot can be found here.\n It is a pet project of mine written a couple of weeks ago; it was originally for a friend but I felt it would be interesting to get some feedback from the Haskell community, feature requests and, why not, new contributors -- assuming the project is deemed interesting!\n As always, all comments welcome.\n    submitted by    /u/FreeVariable  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t5wt0r/showcasing_feedfarer_bot_a_telegram_bot_for/",
-          "publishedOn": "2022-03-03T17:28:27.000Z",
-          "wordCount": 175,
-          "title": "Showcasing \"feedfarer_bot\", a Telegram bot for consuming web feeds",
-          "imageUrl": "https://external-preview.redd.it/7TD9E38JG0tWmaP6jcZsr56_RRxWXmm6UUa6yz3KjDM.jpg?auto=webp&s=a96ba8a3d97fdd947d7d7953cfa19273b70e3f62"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t5uolz/dependency_build_cache/",
-          "author": null,
-          "description": "Sorry if this is a duplicate! I searched the‍ subreddit but didn't peer the same question. Is it possible to cache dependency builds with stack or cabal? My use case is creating a docker image that contains a working executable of our project. The build takes forever because of dependencies, it would be great to have it cached as another layer. Thanks in advance!\n    submitted by    /u/siphonsmurf69  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t5uolz/dependency_build_cache/",
-          "publishedOn": "2022-03-03T15:55:49.000Z",
-          "wordCount": 342,
-          "title": "Dependency Build Cache!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t5ts7w/applicatives_should_usually_implement_semigroup/",
-          "author": null,
-          "description": "submitted by    /u/Tekmo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t5ts7w/applicatives_should_usually_implement_semigroup/",
-          "publishedOn": "2022-03-03T15:14:46.000Z",
-          "wordCount": 341,
-          "title": "Applicatives should usually implement Semigroup and Monoid",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/t5ruqp/lowperformance_loops_in_ghc/",
-          "author": null,
-          "description": "submitted by    /u/andrewthad  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/t5ruqp/lowperformance_loops_in_ghc/",
-          "publishedOn": "2022-03-03T13:42:32.000Z",
-          "wordCount": 217,
-          "title": "Low-Performance Loops in GHC",
-          "imageUrl": "https://external-preview.redd.it/RgLAcXNUhNB2Zoc9ne-MFMk68OVdVY5EYyiW3em27mg.jpg?auto=webp&s=b5d58c342fb767082d4c4786d600ca85ff4f9184"
         }
       ]
     },
@@ -1849,6 +1799,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/tumv4n/chi_now_has_a_limited_support_for_java_syntax_and/",
+          "author": null,
+          "description": "submitted by    /u/ybamelcash  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/tumv4n/chi_now_has_a_limited_support_for_java_syntax_and/",
+          "publishedOn": "2022-04-02T16:31:08.000Z",
+          "wordCount": 229,
+          "title": "Chi now has a limited support for Java syntax (and a simple editor UI)",
+          "imageUrl": "https://external-preview.redd.it/j7QMPBwDg9Vdja4GysKwhOlxvUurAiCKYZ6IPdXPzAA.png?format=pjpg&auto=webp&s=6bf362e131dde4296ee8556d2e874686fa6e52e2"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/tu3lgf/funtores/",
+          "author": null,
+          "description": "submitted by    /u/emanuelpeg  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/tu3lgf/funtores/",
+          "publishedOn": "2022-04-01T22:36:28.000Z",
+          "wordCount": 78,
+          "title": "Funtores",
+          "imageUrl": "https://external-preview.redd.it/lTDUJ8hYSkfyLnnBy1iMDwRaQ8EdQKXTerqEDH0sGW8.jpg?auto=webp&s=f1accef33d16b5851fdfbe6ddf3f318ab5bb6db2"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/ttvz5z/are_there_any_junior_scala_developer_roles_to/",
           "author": null,
@@ -2738,16 +2708,6 @@
           "wordCount": 177,
           "title": "Debugging Scala.js",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/t61n9q/weird_issue_when_importing_an_object/",
-          "author": null,
-          "description": "So years ago I did a project with Scala and really liked it, and now that I'm very into functional programming these days I've picked it up again through a course I'm taking on Akka. I've got a lot more experience with Java & Kotlin than Scala, fyi.\n Anyway, while doing this Akka course I just decided to create a nice simple utility function within an object to abstract away all the boilerplate setup/teardown for actor systems during the course:\n package io.me.akka package io.me.akka.utils // BONUS: Not my main question, but why do we declare packages twice? import akka.actor.ActorSystem import scala.concurrent.ExecutionContext.Implicits.global object ActorSystemHandler { def useSimpleSystem(name: String, useSystem: ActorSystem => Unit): Unit = { val system = ActorSystem(name) useSystem(system) system.terminate() .map(_ => println(\"ActorSystem terminated\")) } } \n My issue is when i try to use this into one of my lesson objects, like so:\n package io.me.akka package io.me.akka.part2actors import io.me.akka.utils.ActorSystemHandler // This is the line for #2 import akka.actor.{Actor, ActorRef, Props} object ChangingActorBehavior extends App { ActorSystemHandler.useSimpleSystem(\"systemName\", system => { // Do stuff with the system }) } \n There are two main issues that occur:\n  \nWhen I type the name ActorSystemHandler, I get the option to auto-import it like usual in IntelliJ. However, when I actually click that option, nothing happens. The IntelliJ auto-import fails to do anything.\n I go ahead and manually add the import statement, as can be seen above. However, \"io.me.akka\" part of the import is shaded in that grayish color that IntelliJ uses to indicate something is not necessary.\n  \nI'm hoping someone can clarify the above points for me. Manually adding the import results in code that will compile/run, but I feel like I'm doing something wrong. Thanks.\n    submitted by    /u/Droid2Win  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/t61n9q/weird_issue_when_importing_an_object/",
-          "publishedOn": "2022-03-03T21:02:36.000Z",
-          "wordCount": 569,
-          "title": "Weird issue when importing an object",
-          "imageUrl": null
         }
       ]
     },
@@ -2889,6 +2849,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/tup6p3/orgmodern_modern_org_style/",
+          "author": null,
+          "description": "submitted by    /u/9bladed  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/tup6p3/orgmodern_modern_org_style/",
+          "publishedOn": "2022-04-02T18:07:23.000Z",
+          "wordCount": 145,
+          "title": "org-modern: Modern Org Style",
+          "imageUrl": "https://external-preview.redd.it/2N0NZwrZ7qdd_m6WDiMlLQGvNuy1mQI_7IUdIa_DUWQ.jpg?auto=webp&s=e9d22afd0c3ad1b7954be5669fb46f1d88fecb50"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/tugfgy/keeping_region_selected_after_promoting_or/",
+          "author": null,
+          "description": "I've been using org-mode for years and there's one thing that's always annoyed me that I've not been able to fix. \n If I mark a region and hit eg. M-right to promote all of the headings and/or subtrees in that region, I'd like the region to remain selected, so that I can run the command again. Currently, I have to manually mark the region again to do this.\n Is there any way to keep a region selected, or to re-select it after promoting/demoting it?\n    submitted by    /u/maxkool  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/tugfgy/keeping_region_selected_after_promoting_or/",
+          "publishedOn": "2022-04-02T11:09:49.000Z",
+          "wordCount": 451,
+          "title": "Keeping region selected after promoting or demoting headings",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/tty4p2/ann_olemacsslack_added_support_for_thread_links/",
           "author": null,
@@ -3488,26 +3468,6 @@
           "wordCount": 221,
           "title": "C-c C-o Behaving Strangely",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/t6dg9k/noob_in_need_of_suggestions/",
-          "author": null,
-          "description": "i'm working on a project up-to-date and this is what I've started\n https://github.com/crinklywrappr/rivendell/blob/update-for-0.17/test.org\n ​\n I plan to switch all of the files to org-mode and use org-babel-tangle` to generate the source files.\n ​\n I would like to clean it up a bit - make it look more professional. It's missing a TOC and I have to specify the output file for every source code block. Any suggestions for improvement are appreciated.\n    submitted by    /u/ricenoob  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/t6dg9k/noob_in_need_of_suggestions/",
-          "publishedOn": "2022-03-04T07:22:51.000Z",
-          "wordCount": 178,
-          "title": "noob in need of suggestions",
-          "imageUrl": "https://external-preview.redd.it/Wl9XhQIovDIV1RpTWH9o-6HZnKDF6ljgo5gVMgHKpns.jpg?auto=webp&s=4ecd1ac21159224c4d97dec3ad25447b4ddf351c"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/t5rqn2/integrate_org_mode_agenda_into_calendar_apps/",
-          "author": null,
-          "description": "submitted by    /u/preek  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/t5rqn2/integrate_org_mode_agenda_into_calendar_apps/",
-          "publishedOn": "2022-03-03T13:36:33.000Z",
-          "wordCount": 350,
-          "title": "Integrate Org mode agenda into calendar apps",
-          "imageUrl": "https://external-preview.redd.it/Oph9EVLrJVnQ_b-jl8VCcjjZZIz0X-Vt4c-Jgft7TE8.jpg?auto=webp&s=be8fc6be7bf4f3f6c6ef162486b9e1fa4df8e095"
         }
       ]
     },
@@ -3516,6 +3476,216 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/flycheck-languagetool-20220402.1703.el",
+          "author": null,
+          "description": "The flycheck-languagetool package has been updated to version 20220402.1703.",
+          "link": "https://melpa.org/#/flycheck-languagetool",
+          "publishedOn": "2022-04-02T17:03:00.000Z",
+          "wordCount": 105,
+          "title": "flycheck-languagetool (20220402.1703) --- Flycheck support for LanguageTool",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/paren-face-20220402.1639.el",
+          "author": null,
+          "description": "The paren-face package has been updated to version 20220402.1639.",
+          "link": "https://melpa.org/#/paren-face",
+          "publishedOn": "2022-04-02T16:39:00.000Z",
+          "wordCount": 105,
+          "title": "paren-face (20220402.1639) --- a face for parentheses in lisp modes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/outline-minor-faces-20220402.1637.el",
+          "author": null,
+          "description": "The outline-minor-faces package has been updated to version 20220402.1637.",
+          "link": "https://melpa.org/#/outline-minor-faces",
+          "publishedOn": "2022-04-02T16:37:00.000Z",
+          "wordCount": 105,
+          "title": "outline-minor-faces (20220402.1637) --- Headings faces for outline-minor-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orglink-20220402.1637.el",
+          "author": null,
+          "description": "The orglink package has been updated to version 20220402.1637.",
+          "link": "https://melpa.org/#/orglink",
+          "publishedOn": "2022-04-02T16:37:00.000Z",
+          "wordCount": 105,
+          "title": "orglink (20220402.1637) --- use Org Mode links in other modes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orgit-forge-20220402.1632.el",
+          "author": null,
+          "description": "The orgit-forge package has been updated to version 20220402.1632.",
+          "link": "https://melpa.org/#/orgit-forge",
+          "publishedOn": "2022-04-02T16:32:00.000Z",
+          "wordCount": 105,
+          "title": "orgit-forge (20220402.1632) --- Org links to Forge issue buffers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orgit-20220402.1629.el",
+          "author": null,
+          "description": "The orgit package has been updated to version 20220402.1629.",
+          "link": "https://melpa.org/#/orgit",
+          "publishedOn": "2022-04-02T16:29:00.000Z",
+          "wordCount": 105,
+          "title": "orgit (20220402.1629) --- support for Org links to Magit buffers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ol-notmuch-20220402.1627.el",
+          "author": null,
+          "description": "The ol-notmuch package has been updated to version 20220402.1627.",
+          "link": "https://melpa.org/#/ol-notmuch",
+          "publishedOn": "2022-04-02T16:27:00.000Z",
+          "wordCount": 105,
+          "title": "ol-notmuch (20220402.1627) --- Links to notmuch messages",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/notmuch-transient-20220402.1625.el",
+          "author": null,
+          "description": "The notmuch-transient package has been updated to version 20220402.1625.",
+          "link": "https://melpa.org/#/notmuch-transient",
+          "publishedOn": "2022-04-02T16:25:00.000Z",
+          "wordCount": 105,
+          "title": "notmuch-transient (20220402.1625) --- Command dispatchers for Notmuch",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/notmuch-addr-20220402.1624.el",
+          "author": null,
+          "description": "The notmuch-addr package has been updated to version 20220402.1624.",
+          "link": "https://melpa.org/#/notmuch-addr",
+          "publishedOn": "2022-04-02T16:24:00.000Z",
+          "wordCount": 105,
+          "title": "notmuch-addr (20220402.1624) --- An alternative to notmuch-address.el",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/swift-helpful-20220402.1433.tar",
+          "author": null,
+          "description": "The swift-helpful package has been updated to version 20220402.1433.",
+          "link": "https://melpa.org/#/swift-helpful",
+          "publishedOn": "2022-04-02T14:33:00.000Z",
+          "wordCount": 105,
+          "title": "swift-helpful (20220402.1433) --- Show documentation for Swift programs.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ivy-hydra-20220402.1348.el",
+          "author": null,
+          "description": "The ivy-hydra package has been updated to version 20220402.1348.",
+          "link": "https://melpa.org/#/ivy-hydra",
+          "publishedOn": "2022-04-02T13:48:00.000Z",
+          "wordCount": 105,
+          "title": "ivy-hydra (20220402.1348) --- Additional key bindings for Ivy",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/hass-20220402.1326.tar",
+          "author": null,
+          "description": "The hass package has been updated to version 20220402.1326.",
+          "link": "https://melpa.org/#/hass",
+          "publishedOn": "2022-04-02T13:26:00.000Z",
+          "wordCount": 105,
+          "title": "hass (20220402.1326) --- Interact with Home Assistant",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ivy-20220402.1259.tar",
+          "author": null,
+          "description": "The ivy package has been updated to version 20220402.1259.",
+          "link": "https://melpa.org/#/ivy",
+          "publishedOn": "2022-04-02T12:59:00.000Z",
+          "wordCount": 105,
+          "title": "ivy (20220402.1259) --- Incremental Vertical completYon",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/bicycle-20220402.1036.el",
+          "author": null,
+          "description": "The bicycle package has been updated to version 20220402.1036.",
+          "link": "https://melpa.org/#/bicycle",
+          "publishedOn": "2022-04-02T10:36:00.000Z",
+          "wordCount": 105,
+          "title": "bicycle (20220402.1036) --- cycle outline and code visibility",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/auto-compile-20220402.1035.el",
+          "author": null,
+          "description": "The auto-compile package has been updated to version 20220402.1035.",
+          "link": "https://melpa.org/#/auto-compile",
+          "publishedOn": "2022-04-02T10:35:00.000Z",
+          "wordCount": 105,
+          "title": "auto-compile (20220402.1035) --- automatically compile Emacs Lisp libraries",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/counsel-20220402.953.el",
+          "author": null,
+          "description": "The counsel package has been updated to version 20220402.953.",
+          "link": "https://melpa.org/#/counsel",
+          "publishedOn": "2022-04-02T09:53:00.000Z",
+          "wordCount": 105,
+          "title": "counsel (20220402.953) --- Various completion functions using Ivy",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/evil-matchit-20220402.935.tar",
+          "author": null,
+          "description": "The evil-matchit package has been updated to version 20220402.935.",
+          "link": "https://melpa.org/#/evil-matchit",
+          "publishedOn": "2022-04-02T09:35:00.000Z",
+          "wordCount": 105,
+          "title": "evil-matchit (20220402.935) --- Vim matchit ported to Evil",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/git-identity-20220402.708.el",
+          "author": null,
+          "description": "The git-identity package has been updated to version 20220402.708.",
+          "link": "https://melpa.org/#/git-identity",
+          "publishedOn": "2022-04-02T07:08:00.000Z",
+          "wordCount": 105,
+          "title": "git-identity (20220402.708) --- Identity management for (ma)git",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/powershell-20220402.643.el",
+          "author": null,
+          "description": "The powershell package has been updated to version 20220402.643.",
+          "link": "https://melpa.org/#/powershell",
+          "publishedOn": "2022-04-02T06:43:00.000Z",
+          "wordCount": 105,
+          "title": "powershell (20220402.643) --- Mode for editing PowerShell scripts",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/harpoon-20220402.446.el",
+          "author": null,
+          "description": "The harpoon package has been updated to version 20220402.446.",
+          "link": "https://melpa.org/#/harpoon",
+          "publishedOn": "2022-04-02T04:46:00.000Z",
+          "wordCount": 105,
+          "title": "harpoon (20220402.446) --- Bookmarks on steroids",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/helm-flx-20220402.21.el",
+          "author": null,
+          "description": "The helm-flx package has been updated to version 20220402.21.",
+          "link": "https://melpa.org/#/helm-flx",
+          "publishedOn": "2022-04-02T00:21:00.000Z",
+          "wordCount": 105,
+          "title": "helm-flx (20220402.21) --- Sort helm candidates by flx score",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/just-mode-20220401.1814.el",
           "author": null,
@@ -3754,6 +3924,16 @@
           "publishedOn": "2022-03-31T16:40:00.000Z",
           "wordCount": 105,
           "title": "projectile-rails (20220331.1640) --- Minor mode for Rails projects based on projectile-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/eglot-20220331.1322.el",
+          "author": null,
+          "description": "The eglot package has been updated to version 20220331.1322.",
+          "link": "https://melpa.org/#/eglot",
+          "publishedOn": "2022-03-31T13:22:00.000Z",
+          "wordCount": 105,
+          "title": "eglot (20220331.1322) --- Client for Language Server Protocol (LSP) servers",
           "imageUrl": null
         },
         {
@@ -4574,6 +4754,16 @@
           "publishedOn": "2022-03-22T23:34:00.000Z",
           "wordCount": 105,
           "title": "diffview (20220322.2334) --- View diffs in side-by-side format",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/demap-20220322.2309.tar",
+          "author": null,
+          "description": "The demap package has been updated to version 20220322.2309.",
+          "link": "https://melpa.org/#/demap",
+          "publishedOn": "2022-03-22T23:09:00.000Z",
+          "wordCount": 105,
+          "title": "demap (20220322.2309) --- Detachable minimap package",
           "imageUrl": null
         },
         {
@@ -6835,66 +7025,6 @@
           "wordCount": 105,
           "title": "modus-themes (20220304.909) --- Highly accessible and customizable themes (WCAG AAA)",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/python-docstring-20220303.2235.tar",
-          "author": null,
-          "description": "The python-docstring package has been updated to version 20220303.2235.",
-          "link": "https://melpa.org/#/python-docstring",
-          "publishedOn": "2022-03-03T22:35:00.000Z",
-          "wordCount": 105,
-          "title": "python-docstring (20220303.2235) --- Smart Python docstring formatting",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/tubestatus-20220303.1736.el",
-          "author": null,
-          "description": "The tubestatus package has been updated to version 20220303.1736.",
-          "link": "https://melpa.org/#/tubestatus",
-          "publishedOn": "2022-03-03T17:36:00.000Z",
-          "wordCount": 105,
-          "title": "tubestatus (20220303.1736) --- Get the London Tube service status",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pretty-speedbar-20220303.1726.el",
-          "author": null,
-          "description": "The pretty-speedbar package has been updated to version 20220303.1726.",
-          "link": "https://melpa.org/#/pretty-speedbar",
-          "publishedOn": "2022-03-03T17:26:00.000Z",
-          "wordCount": 105,
-          "title": "pretty-speedbar (20220303.1726) --- Make speedbar pretty",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/protobuf-mode-20220303.1716.el",
-          "author": null,
-          "description": "The protobuf-mode package has been updated to version 20220303.1716.",
-          "link": "https://melpa.org/#/protobuf-mode",
-          "publishedOn": "2022-03-03T17:16:00.000Z",
-          "wordCount": 105,
-          "title": "protobuf-mode (20220303.1716) --- major mode for editing protocol buffers.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/docker-20220303.1411.tar",
-          "author": null,
-          "description": "The docker package has been updated to version 20220303.1411.",
-          "link": "https://melpa.org/#/docker",
-          "publishedOn": "2022-03-03T14:11:00.000Z",
-          "wordCount": 105,
-          "title": "docker (20220303.1411) --- Interface to Docker",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/consult-20220303.1408.tar",
-          "author": null,
-          "description": "The consult package has been updated to version 20220303.1408.",
-          "link": "https://melpa.org/#/consult",
-          "publishedOn": "2022-03-03T14:08:00.000Z",
-          "wordCount": 105,
-          "title": "consult (20220303.1408) --- Consulting completing-read",
-          "imageUrl": null
         }
       ]
     },
@@ -6903,6 +7033,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tup630/orgmodern_modern_org_style/",
+          "author": null,
+          "description": "submitted by    /u/9bladed  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tup630/orgmodern_modern_org_style/",
+          "publishedOn": "2022-04-02T18:06:40.000Z",
+          "wordCount": 99,
+          "title": "org-modern: Modern Org Style",
+          "imageUrl": "https://external-preview.redd.it/2N0NZwrZ7qdd_m6WDiMlLQGvNuy1mQI_7IUdIa_DUWQ.jpg?auto=webp&s=e9d22afd0c3ad1b7954be5669fb46f1d88fecb50"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tunyg3/is_there_a_vim_fugitive_style_git_blame/",
+          "author": null,
+          "description": "Fugutive is the Vim equivalent of Magit. The one thing that it has, that I'm really missing in emacs is its git blame\n Is there anything like this in emacs?\n Notable things about this screenshot (beyond the the obvious): the two viewports are synced, so if you scroll one the other scrolls. The one on the left actually has the _full_ git blame (showing the source code it's blaming) hidden off to the right. Not sure that last bit is useful. \n This visualization of git blame works WAY better for me than anything I've found yet. I'd _love_ it if one of you would say \"oh, just use ______ package to get this.\" ;) \n https://preview.redd.it/hs2dmz91f5r81.png?width=2572&format=png&auto=webp&s=30f15e4f59dbe2a3edf690712becb92565a30064\n    submitted by    /u/masukomi  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tunyg3/is_there_a_vim_fugitive_style_git_blame/",
+          "publishedOn": "2022-04-02T17:14:57.000Z",
+          "wordCount": 391,
+          "title": "is there a Vim Fugitive style git blame?",
+          "imageUrl": "https://external-preview.redd.it/zZVODqWYJjxCY1bJgDFaTfiYmStw-OwzPOFMU-9dOBk.jpg?auto=webp&s=a309de8f31659900066e1d81a4a8f8aeff8c0b9a"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tun9qi/an_experiment_to_make_diffs_easier_to_read/",
+          "author": null,
+          "description": "When a line is changed diff usually shows you one deleted line and one added line (assuming unified diffs). Would it be better if it showed only the changes within the line? There is refinement as an option, but that too gives you two lines.\n Here's an experimental package which converts a unified diff into an inline diff, collapsing changed lines into a single line where green shows the added part and reddish color shows the removed part. Here's how it looks:\n https://i.imgur.com/Jn6Tffp.png\n I made this package as an experiment to test how useful it is. Currently, it works with files under git when you compare it to the latest commited version (C-x v =), but it shouldn't be hard to make it generic. I'm just putting it here, in case someone finds this useful.\n The code: https://gist.github.com/codecoll/8791162296eb9a2d504238f5d8a121cd\n    submitted by    /u/kcin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tun9qi/an_experiment_to_make_diffs_easier_to_read/",
+          "publishedOn": "2022-04-02T16:46:55.000Z",
+          "wordCount": 280,
+          "title": "An experiment to make diffs easier to read",
+          "imageUrl": "https://external-preview.redd.it/3B0oHziVUxvN0Locp6y9QuxkpISC2iiFmwdy5h_vJ7M.png?auto=webp&s=515087f5b46346804761cc9782440885e291150a"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tumqqx/python_automatic_docstring/",
+          "author": null,
+          "description": "I've been programming in python for a few years now and recently I started in my first job as a python backend programmer. Never liked using those big IDE but, since my whole team uses VS Code, I thought to give it a go and generate the least amount of friction on the first week. Yeah, didn't like.\n BUT what I've loved was a VS Code extension named \"auto doc string\" which could automatically create a doc string and already place some information, like which arguments, what are the returns and, most important, type annotations were reflected in the doc string.\n Sure, there must be a package in emacs that could do all that, right? I have yet to found it. The closest I got was yasnippet-radical-snippets, but it doesn't support types (yet).\n Does anyone know a better tool for the job?\n    submitted by    /u/Ieremies  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tumqqx/python_automatic_docstring/",
+          "publishedOn": "2022-04-02T16:26:07.000Z",
+          "wordCount": 289,
+          "title": "Python automatic docstring?",
+          "imageUrl": "https://external-preview.redd.it/40VKOXptB-CFImCzZHWZWzlyWfsrkZUysOQc-B6QbWI.jpg?auto=webp&s=420d844667e6862201cadb59212b79d432e27c99"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tum281/contextaware_commands_completion/",
+          "author": null,
+          "description": "Let's say I'm editing a Markdown document, markdown-mode is active.\n I would like to type: M-x link TAB, and see markdown-insert-link as one of the first options in the completion list, because markdown-mode is currently active. I don't want to have to enter 'markdown', that should be inferred from the context.\n I thought that a menus commands completion could be pretty close to what I'm looking, since often menus have the most relevant commands for the active modes.\n I've found LaCarte library, that lets me execute menu-bar menu commands from the keyboard, using completion. That's pretty close to what I want, but its icycles completion is not working very well for me.\n I wonder if there other options out there? Or ideas on how to implement? (I can do some Emacs lisp).\n    submitted by    /u/mmontone  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tum281/contextaware_commands_completion/",
+          "publishedOn": "2022-04-02T15:56:02.000Z",
+          "wordCount": 442,
+          "title": "Context-aware commands completion?",
+          "imageUrl": "https://external-preview.redd.it/xecM9NVJ_Xy_ouUq0kqwLGMJXbtNF4qKVve3os64NsU.jpg?auto=webp&s=5e0084b9864a10afd6367cebe8df9c4f180568c4"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tugcus/is_there_a_way_to_show_emacs_pomodoro_time_left/",
+          "author": null,
+          "description": "submitted by    /u/anton-rs  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tugcus/is_there_a_way_to_show_emacs_pomodoro_time_left/",
+          "publishedOn": "2022-04-02T11:05:14.000Z",
+          "wordCount": 178,
+          "title": "Is there a way to show emacs pomodoro time left on i3 bar?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tuejvv/some_question_about_flycheck_and_compilation/",
+          "author": null,
+          "description": "Is it possible to parse a buffer and add the errors / warnings to flycheck without writing a backend/linter/? (why? see 2.)\n I'm using async-shell-command instead of 'compile'-command because of reasons, I managed to enable compilation-minor-mode but it doesn't go to the first error - even if set compilation-auto-jump-to-first-error to true. Invoking (first-error) in the buffer goes to the first error though.\n Can compilation-mode/minor-mode list errors and warnings in a good readable format like flycheck does without much customization?\n \n Reasons why I am not using M-x compile: I am using xcodebuild (for iOS development), when its done I check for errors or if the build succeeded. If its succeeded it will install the binary and launch the simulator and then parse the logs. If you have a connected iPhone/iPad it will install and launch it on device and start the lldb. I wanted it to be very automatic (like Xcode)\n    submitted by    /u/konrad1977  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tuejvv/some_question_about_flycheck_and_compilation/",
+          "publishedOn": "2022-04-02T09:02:34.000Z",
+          "wordCount": 312,
+          "title": "Some question about Flycheck and Compilation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tudjt3/helm_documentationquestions_regarding_nonfiltered/",
+          "author": null,
+          "description": "I have recently been playing around a bit with helm for my personal use and, though helm per se is absolutely great, i have found the lack of documentation to be extremely annoying. Now I get it, its open source etc. and just read the source code, but I have been unable to figure out quite a few things from the source.\n So, my first question: Can anybody point me towards some good helm documentation that is not the wiki(https://github.com/emacs-helm/helm/wiki), which is extremely lacking if you want to write your own sources instead of just using helm and that is not outdated (like this https://kitchingroup.cheme.cmu.edu/blog/2015/01/24/Anatomy-of-a-helm-source/).\n Then two more questions:\n  \nHow can you do multiple columns in a helm source? For example, helm-mini shows file size,name, absolute path etc., all in different columns.\n How can you show something, but not make it searchable. Say I have a special source for various user-defined commands, and I want to provide not only the name, but also a short description of it, or its keybindings etc, without including them in the filtering, like helm-M-x does.\n  \n​\n EDIT:Here the answer by the current helm maintainer (I think) -> https://github.com/emacs-helm/helm/discussions/2493 (Summary: Use :match-part to only match against parts of the options). Thanks a lot for the extremely fast answer. Also, there really needs to be a better helm documentation. It is such a great tool, but anything other than the most basic extensions requires you to dive into the source code/ask the maintainer, which is less than ideal, I think.\n    submitted by    /u/Kram33r  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tudjt3/helm_documentationquestions_regarding_nonfiltered/",
+          "publishedOn": "2022-04-02T07:51:20.000Z",
+          "wordCount": 815,
+          "title": "Helm documentation/questions regarding non-filtered info.",
+          "imageUrl": "https://external-preview.redd.it/jqEH9ptFuCvrAXc5qjUwjh2TjXZPmXxhTLr0-Bx8AHg.jpg?auto=webp&s=1d908c6adc89d7b326e83b71dcf5ff8e3815cc69"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tu9obz/gnu_hyperbole_announcement/",
+          "author": null,
+          "description": "Despite years of trying, the Hyperbole team has never been able to master the complex syntax of Lisp.\n Therefore, we have decided to decouple the system from Emacs and rewrite it in either the Sacred or Magritte language as a VS Code extension under the new name, HyperActive!\n Please consider supporting our GoFunkMe campaign as we will need a lot of psychological support and bread money to go down this path. Help make Saint IGNUcius proud.\n    submitted by    /u/rswgnu  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tu9obz/gnu_hyperbole_announcement/",
+          "publishedOn": "2022-04-02T03:46:29.000Z",
+          "wordCount": 342,
+          "title": "GNU Hyperbole Announcement",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tu9h67/in_addition_to_orgs_clockin_and_clockout_i_also/",
+          "author": null,
+          "description": "I'm JUST beginning to learn clock-in, clock-out. It seems to me that's great if you're always at your computer AND you have the discipline to always work in a clocked-in state. But I have many little or big tasks or projects around the house that I'll work on or complete, and I'd like to be able to add to the task an estimate of the amount of time I spent on it without using the clock-in/out system. \n For example, today I changed my laptop battery, worked on my digital multimeter, and then checked all my batteries in my battery drawer, threw away the bad ones. I'd like to be able to just mark these tasks as DONE and also directly (and easily) add the hours worked. I might not know the exact start and end time I worked on the project, and I don't want to have to go fudge some clock-in/out time. (Unless there's a super easy way to fudge it!) I suppose it would be something like an HOURS_WORKED property.\n And I'd also like to be able to generate a report of all such activity/time for the day, for the week, for the month, etc. Ideally, that could somehow be combined with my clock report, but I'd be happy even if it were a separate report. \n Maybe this functionality is already in clock-in/out feature set? If not, is there some package or methodology that might help me out here? (I know there is ALWAYS... SOME way for anything with org mode, of course!)\n    submitted by    /u/Status-Detective-783  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tu9h67/in_addition_to_orgs_clockin_and_clockout_i_also/",
+          "publishedOn": "2022-04-02T03:35:43.000Z",
+          "wordCount": 631,
+          "title": "In addition to org's clock-in and clock-out, I also want to just be able to say \"I worked on this task (arbitrary task) today for 30 minutes\". And report on that.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tu6xwu/emacs_orgmode_acts_weird_on_m1_mac/",
+          "author": null,
+          "description": "For some bizare reason when using orgmode it indents after any orgmode heading. Making subheads broken unless you first back space. What the heck is this? This does not occur on linux emacs installs or on windows install or on Intel mac. It does happen on brew install of emacs on M1 mac. I would love to get my normal orgmode back \n And of course the same thing happens in -nw mode. \n    submitted by    /u/sjatkins  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tu6xwu/emacs_orgmode_acts_weird_on_m1_mac/",
+          "publishedOn": "2022-04-02T01:22:30.000Z",
+          "wordCount": 198,
+          "title": "emacs orgmode acts weird on m1 mac",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/tu2t5d/doom_emacs_pyenv_not_setting_proper_environment/",
+          "author": null,
+          "description": "I have (python +lsp +pyright +pyenv +py-isort) in my doom emacs config.\n Pyenv seems to be recognized and listing my environments but when I select one and then run !python --version or lsp-workspace-restart my python version is not updated.\n Am I doing something wrong?\n    submitted by    /u/SteamingBeer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/tu2t5d/doom_emacs_pyenv_not_setting_proper_environment/",
+          "publishedOn": "2022-04-01T22:01:14.000Z",
+          "wordCount": 141,
+          "title": "Doom emacs pyenv not setting proper environment?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/ttyvta/emacs_28092_in_windows_terminal_unicode_display/",
           "author": null,
@@ -10532,116 +10782,6 @@
           "wordCount": 312,
           "title": "Can you advice prefix key",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t6br24/emacs_lisp_community_workshop_video_3_durbar/",
-          "author": null,
-          "description": "submitted by    /u/TheOfficialDTO  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t6br24/emacs_lisp_community_workshop_video_3_durbar/",
-          "publishedOn": "2022-03-04T05:37:18.000Z",
-          "wordCount": 250,
-          "title": "Emacs Lisp Community Workshop: Video 3 (Durbar)",
-          "imageUrl": "https://external-preview.redd.it/wxx5v5xhU1KVVRq14LdrvjeEKsNcJzlbVs-c-_zq_84.jpg?auto=webp&s=b36ee86e01cd8958b00d5a87b983a3ef535698d5"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t66hue/what_does_setq_packageenableatstartup_nil/",
-          "author": null,
-          "description": "Hi, I encountered these two lines while reading Purcell's config. My main problem is not knowing the differences between \"making packages available\", \"loading packages\", and \"activating packages\".\n  \n From the docs, (setq package-enable-at-startup nil) doesn't \"make installed packages available when Emacs starts\". So, does \"installed packages\" here refer to packages found in load-path? Also, what does it mean for a package to be \"available\"? Such that (require 'package) will work?\n  \n Then, (package-initialize) will \"load Emacs Lisp packages, and activate them\". So what do \"loading\" and \"activating\" here mean? Does \"loading\" here mean the same thing as (load FILE)? Then \"activating\" means (provide FEATURE)?\n  \n I've tried reading Elisp Packaging Section but still couldn't understand\n    submitted by    /u/zacque0  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t66hue/what_does_setq_packageenableatstartup_nil/",
-          "publishedOn": "2022-03-04T00:53:32.000Z",
-          "wordCount": 1381,
-          "title": "What does \"(setq package-enable-at-startup nil) (package-initialize)\" in Emacs config do?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t65i1z/total_hack_make_flyspell_red_squiggles_transient/",
-          "author": null,
-          "description": "Sometimes during casual writing I use slang, abbrevs, company names, etc that I don't want added to the dictionary. But I don't want to turn off flyspell completely and the red squiggles annoy and distract the hell out of me. So I wrote a total hack to make them transient. Enjoy. Or don't.\n Just install and call flyspell-toggle-transient-squiggle\n (defvar flyspell-transient-squiggle nil) (defun flyspell-toggle-transient-squiggle () (interactive) (setq flyspell-transient-squiggle (not flyspell-transient-squiggle)) (message \"Flyspell transient squiggle: %S\" flyspell-transient-squiggle)) (defun nuke-flyspell-squiggles (buf) (with-current-buffer buf (flyspell-delete-all-overlays))) (defadvice make-flyspell-overlay (around transient-flyspell-squiggle activate) ad-do-it (when flyspell-transient-squiggle (run-at-time \"3 sec\" nil 'nuke-flyspell-squiggles (current-buffer)))) \n    submitted by    /u/FrankLeeMadear  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t65i1z/total_hack_make_flyspell_red_squiggles_transient/",
-          "publishedOn": "2022-03-04T00:03:46.000Z",
-          "wordCount": 262,
-          "title": "Total hack: make flyspell red squiggles transient",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t659pj/34key_keyboard_with_emacs/",
-          "author": null,
-          "description": "I recently built myself a ferris sweep and I am exploring different keyboard layouts. I am set on using colemak-dh for my alphas but everything else is still a work in progress. I am interested to see what people are using! So, please share your layout if you use a small keyboard with emacs.\n    submitted by    /u/Raidriar_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t659pj/34key_keyboard_with_emacs/",
-          "publishedOn": "2022-03-03T23:52:58.000Z",
-          "wordCount": 699,
-          "title": "34-key keyboard with emacs",
-          "imageUrl": "https://external-preview.redd.it/SkiIW493D3j6izcFxM-t7OnTF24cfA49iTEXAQvlgoA.jpg?auto=webp&s=207baefc810610c16df9a827f3d341ab1ba49603"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t64zuk/a_small_transient_menu_for_customize/",
-          "author": null,
-          "description": "This adds a small menu which lets you call useful customize options and also manipulate file and directory local variables.\n ​\n Entry point to custom.el functionality\n ​\n Menu to add/delete/change file and directory local variables and property line\n This is from my personal config. I thought it might be useful for others as well but too simple to be it's own package.\n Here is the code:\n  (transient-define-prefix shk-customize-locals-menu () \"A menu to manipulate file/dir local variables\" [\"Local variables\" [\"File\" (\"fa\" \"add\" add-file-local-variable) (\"fd\" \"delete\" delete-file-local-variable) (\"*a\" \"add prop\" add-file-local-variable-prop-line) (\"*d\" \"delete prop\" delete-file-local-variable-prop-line)] [\"Dir\" (\"da\" \"add\" add-dir-local-variable) (\"dd\" \"delete\" delete-dir-local-variable)] [\"Move\" (\"df\" \"dir → file\" copy-dir-locals-to-file-locals) (\"d*\" \"dir → prop\" copy-dir-locals-to-file-locals-prop-line) (\"fd\" \"file → dir\" copy-file-locals-to-dir-locals)]]) (transient-define-prefix shk-customize-menu () \"A menu to open customize options\" [[\"Custom\" (\",\" \"List groups\" customize) (\"/\" \"Search\" customize-apropos) (\"r\" \"Rogue\" customize-rogue) (\"s\" \"Saved\" customize-saved) (\"S\" \"Unsaved\" customize-unsaved)] [\"Settings\" (\"o\" \"Option\" customize-option) (\"g\" \"Group\" customize-group) (\"f\" \"Face\" customize-face) (\"l\" \"Local variables\" shk-customize-locals-menu)]]) (global-set-key (kbd \"A-,\") 'shk-customize-menu) (global-set-key (kbd \"C-c ,\") 'shk-customize-menu) \n    submitted by    /u/kjiehs  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t64zuk/a_small_transient_menu_for_customize/",
-          "publishedOn": "2022-03-03T23:39:58.000Z",
-          "wordCount": 326,
-          "title": "A small transient menu for customize",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t5z5a5/automatically_rewrite_elispstyle_variable_name_to/",
-          "author": null,
-          "description": "Is there a package which automatically and intelligently rewrites variable-name to variableName or variable_name depending on the current major language mode? It should be intelligent enough to account for cases where you're typing within the bounds of string quotes. The more I think about this problem the more difficult I think it would be to write such a package --- perhaps none exists.\n As an example, let's suppose we're writing Python (with | as the cursor):\n Basic:\n  \nvariable-name|\n variable-name |\n variable_name | (conversion performed)\n  \nIn quotes:\n  \nvariable_name 'foo-bar|\n variable_name 'foo-bar |\n variable_name 'foo-bar | (no conversion as the user is typing within quotes)\n  \nIn f-string:\n  \nvariable_name f'foo {bar-baz|\n variable_name f'foo {bar-baz |\n variable_name f'foo {bar_baz | (conversion performed)\n  \n   submitted by    /u/CommanderThunderous  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t5z5a5/automatically_rewrite_elispstyle_variable_name_to/",
-          "publishedOn": "2022-03-03T19:10:36.000Z",
-          "wordCount": 245,
-          "title": "Automatically rewrite elisp-style variable name to camelCase/snake_case",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t5ykwc/can_i_limit_the_number_of_todo_entries_in_my/",
-          "author": null,
-          "description": "I often get overwhelmed at the number of things in my TODO list, and end up avoiding looking at it at all.\n I would like to be able to limit the number of TODO's displayed there (say 5 TODO's), and some way of moving to next/previous 5.\n Is it possible to do it in the regular org-todo-list view?\n Do I need a custom view? if so, how would I do it?\n    submitted by    /u/copperbranch  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t5ykwc/can_i_limit_the_number_of_todo_entries_in_my/",
-          "publishedOn": "2022-03-03T18:45:48.000Z",
-          "wordCount": 191,
-          "title": "Can I limit the number of TODO entries in my org-todo-list ?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t5w3dp/using_rightalt_andor_rightctrl_as_qualifier_keys/",
-          "author": null,
-          "description": "Is there any way to separately define bindings for when the right alt/ctrl keys are used as qualifiers (ie treat them differently than the left ones)? google didn't provide an obvious answer.\n I never use those keys. I would like to define at least one of them with a whole lot of bindings for entering unicode symbols (for instance, right-alt-A as the \"alpha\" symbol). I assume I'd want to set them up to act as \"super\" or \"hyper\" in emacs lingo.\n This is under windows, but I'm also interested in doing the same thing when I'm running emacs on an AWS linux box (via XMinG under windows).\n ​\n Thanks!\n    submitted by    /u/ChristopherHGreen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t5w3dp/using_rightalt_andor_rightctrl_as_qualifier_keys/",
-          "publishedOn": "2022-03-03T16:58:38.000Z",
-          "wordCount": 426,
-          "title": "Using right-alt and/or right-ctrl as qualifier keys for emacs bindings in windows (and X11)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t5oqhy/from_joplin_to_orgmode/",
-          "author": null,
-          "description": "I'm considering transitioning from Joplin to something else because of Joplin's use of a database to manage note, which I think is bloated and unnecessary. However, there are some things that I'm still not sure about when it comes to Org-mode.\n  \nIs there support for embedded images? (like markdown's ![]() image links)\n Is there a reliable way to view/edit Org files on android? Viewing should be rendered, with embedded images, not as plain text.\n  \n   submitted by    /u/JohnAntoineG  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t5oqhy/from_joplin_to_orgmode/",
-          "publishedOn": "2022-03-03T10:37:11.000Z",
-          "wordCount": 516,
-          "title": "From Joplin to Org-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t5nl9u/electricquotemode_breaks_word_boundaries/",
-          "author": null,
-          "description": "Been digging through documentation and searching the interwebs for the past couple days, looking for a solution but without much luck. The problem is this:\n I tend to have electric-quote-mode enabled when working with text and org files, for the sake of the typographic curly quotes, and I noticed that functions like forward-word and count-words-region are \"fooled\" into thinking that possessives and contractions are two words instead of one whenever the Right Single Quotation Mark (0x2019) appears inside a word as an apostrophe, becoming a \"separator\" rather than just part of the word itself.\n The straight-quote apostrophe (0x27) doesn't seem to have this problem. I found out that it's defined in the text-mode syntax table as a word constituent, so naturally I figured the easy fix would be …",
-          "link": "https://www.reddit.com/r/emacs/comments/t5nl9u/electricquotemode_breaks_word_boundaries/",
-          "publishedOn": "2022-03-03T09:15:29.000Z",
-          "wordCount": 492,
-          "title": "electric-quote-mode breaks word boundaries",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/t5nc1a/can_consult_mark_multiple_items_to_act_on_all_of/",
-          "author": null,
-          "description": "Dear community, \n I have a quick question regarding multiple selections with consult: Helm Buffer has a feature which allows selecting multiple buffers via C-SPC in order to kill those at once with M-D (see here). Does consult-buffer provide a comparable feature? If so, how could I access it? \n Furthermore, I would like to generalize the question: Given any consult-* command, how can I select multiple items and act on those with the help of embark?\n Thanks in advance!\n    submitted by    /u/ExistingProgram3883  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/t5nc1a/can_consult_mark_multiple_items_to_act_on_all_of/",
-          "publishedOn": "2022-03-03T08:57:31.000Z",
-          "wordCount": 397,
-          "title": "Can consult mark multiple items to act on all of them with embark",
-          "imageUrl": null
         }
       ]
     },
@@ -11028,36 +11168,6 @@
           "publishedOn": "2022-03-04T13:41:21.000Z",
           "wordCount": 151,
           "title": "Taurusnoises",
-          "imageUrl": null
-        },
-        {
-          "id": "2168@/discussions",
-          "author": "scottscheper",
-          "description": "One thing I realized today from reading Johannes Schmidt’s paper1 is this:\nIn Luhmann’s second ZK:\nLuhmann had 67,000 Main Notes (aka, Permanent Notes)\nAnd he had 15,000 Literature Notecards in his bibliography (usually with about 10-15 bullet points of thoughts and page numbers per book or article he read).\nThis means for each book or article he read, he only creates on average 4 to 5 main notes.\nThe other bullet points (like the other 10 bullet points) he would just make references to the book and page numbers.\nHe would go to a card about Ideology for instance and write “For more on Ideology, see Williamson p. 256” for instance.\nI think there’s an assumption out there that one ought develop every bullet point literature note they take.\nAny thoughts on this?\nhttps://pdfs.semanticscholar.org/88f8/fa9dfbc0c2b296758dd932b871917c5c775a.pdf&#160;↩︎",
-          "link": "https://forum.zettelkasten.de/discussion/2168/luhmann-s-main-note-to-literature-note-ratio",
-          "publishedOn": "2022-03-04T03:42:00.000Z",
-          "wordCount": 693,
-          "title": "Luhmann’s Main Note to Literature Note Ratio",
-          "imageUrl": null
-        },
-        {
-          "id": "2167@/discussions",
-          "author": "iamaustinha",
-          "description": "From Luhmann's article:\n\n  \nOne of the most basic presuppositions of communication is that the partners can mutually surprise each other. Only in the way can information be produced in the respective other.\nIf...we seek communication with the second mind, we must seek internal possibilities for linkings which result in the unexpected (i.e. information).\n\n\nIn digging through the forums, it seems that some believe that Luhmann (and/or the community) overstates the importance of surprise in a Zettelkasten. If you are of this belief, can you enlighten me as to why you make this claim?",
-          "link": "https://forum.zettelkasten.de/discussion/2167/to-what-extent-is-surprise-important-in-a-zettelkasten",
-          "publishedOn": "2022-03-03T17:40:11.000Z",
-          "wordCount": 560,
-          "title": "To what extent is surprise important in a Zettelkasten?",
-          "imageUrl": null
-        },
-        {
-          "id": "2166@/discussions",
-          "author": "organizer",
-          "description": "Hi,\nI checked a lot of content on this topic and everyone seems to have his/her own idea on what a zettelkasten is and that makes things extremely confusing when trying to implement it.\nI study a lot of computer science content and want to organise it but I am not sure exactly how many folders I should have(some people say two, some three, some four), for what purpose(fleeting notes, literature notes, permanent notes, hub)  and how the notes should be structured and linked.\nI apologise if what I wrote above is vague but it's extremely hard for me to phrase it.",
-          "link": "https://forum.zettelkasten.de/discussion/2166/how-can-the-original-zettelkasten-be-implemented-by-a-software-developer",
-          "publishedOn": "2022-03-03T10:57:35.000Z",
-          "wordCount": 1430,
-          "title": "How can the ORIGINAL zettelkasten be implemented by a software developer?",
           "imageUrl": null
         }
       ]
