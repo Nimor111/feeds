@@ -53,6 +53,26 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/u0m7r7/proper_use_of_exceptt/",
+          "author": null,
+          "description": "TLDR: Am I using ExceptT correctly?\n I recently understood a bit about monad transformers, so I wanted to use them in my application. I installed transformers and started in a small section of my code. The following example used to have a lot of pattern matching, and my code would drift toward the right as I added more case statements, so I refactored it using ExceptT.\n  getActivityAggregate activityId -> ExceptT.runExceptT $ do activity <- State.gets (Map.lookup activityId) <&> maybe (Left (ActivityNotFound activityId)) Right & ExceptT measurements <- State.gets (Map.findWithDefault [] activityId) <&> Right & ExceptT ActivityAggregate.build activity measurements & ExceptT.except & ExceptT.withExceptT mapError where mapError (ActivityAggregate.NoMeasurements activity) = NoMeasurements activity mapError (ActivityAggregate.MeasurementsFromAnotherActivity activity measurement) = MeasurementsFromAnotherActivity activity measurement \n I want to bring to your attention that when I have a monad containing an `Either, I wrap it in the ExceptT constructor. Am I doing this correctly? Am I missing some function that already does this? Is there a terser way of writing the same? Thanks\n    submitted by    /u/cjduncana  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/u0m7r7/proper_use_of_exceptt/",
+          "publishedOn": "2022-04-10T17:18:52.000Z",
+          "wordCount": 490,
+          "title": "Proper Use of ExceptT",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/u0331a/defining_variables/",
+          "author": null,
+          "description": "Say I want to create a variable, let us call it charBag1, of type Bag Char whose value corresponds to a bag containing the following: one copy of 'e', two copies of 'y', and one copy of 'z'\n Would this be written in Haskell code as :\n charBag1 :: Bag -> Char\n charBag 1 'e' 'y' 'y' 'z'\n ​\n or would it just be one line and look something like this?:\n charBag1 e y y z = Bag -> Char ??? Really confused on this\n    submitted by    /u/Bulker3000  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/u0331a/defining_variables/",
+          "publishedOn": "2022-04-09T21:45:39.000Z",
+          "wordCount": 614,
+          "title": "Defining Variables",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/tzy4bk/best_way_to_get_the_count_of_each_element_in_a/",
           "author": null,
           "description": "I have a list with many elements and then I have another list with one of each of those elements. I was wondering what is the best way to get a count of each element in the list in a form of a list without using the data.map importation.\n ​\n Thanks!\n    submitted by    /u/DarthGhaul  \n [link]   [comments]",
@@ -1851,126 +1871,6 @@
           "wordCount": 124,
           "title": "\"Haskell (Almost) Standard Libraries\" is now complete!",
           "imageUrl": "https://external-preview.redd.it/FV2Zfi2nQzG5FAQ8slADFxDppikfV739XQnRiIXQTNg.jpg?auto=webp&s=7a0b5280d747bda52dd6e927cbc56d8e43c498d7"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tcbdr4/calling_zig_from_haskell/",
-          "author": null,
-          "description": "submitted by    /u/ltielen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tcbdr4/calling_zig_from_haskell/",
-          "publishedOn": "2022-03-12T07:45:56.000Z",
-          "wordCount": 229,
-          "title": "Calling Zig from Haskell",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tc7g4q/any_haskelllike_languages_with_native_frp/",
-          "author": null,
-          "description": "imo FRP is so so good. Its paradigm feels extremely natural in a way beyond the complexity of its encoding would suggest. eg looking at the implementation of reflex a few times, it seems to basically implement an entire runtime system on top of haskell's runtime system.\n On one hand it's very cool that haskell is flexible enough to implement a runtime system as a library, but I wonder if there's gains to be made in something more wired in (eg in terms of optimization, simplifying compile times, simplifying types, etc.) - it always struck my as a bit hacky.\n I know elm used to have builtin FRP but dropped it (I don't recall exactly why - any insight here would help!)\n Perhaps a proper \"dataflow\" language - though my (poorly informed) impression is that these are all way more special purpose and I've been spoiled by the full power of haskell.\n What do you think?\n EDIT: Looking into it more now - I redescovered this explanation of why Elm dropped FRP. It's honestly pretty disappointing - I understand from a developer UX perspective this simplifies a lot of things, but I'm not a fan of the redux \"smash-everything-into-one-type\" pattern - and a big draw for FRP is having the control flow represent dependency locality rather than synchronizing everything on one monlithic state\n    submitted by    /u/CoBuddha  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tc7g4q/any_haskelllike_languages_with_native_frp/",
-          "publishedOn": "2022-03-12T03:31:39.000Z",
-          "wordCount": 431,
-          "title": "Any haskell-like languages with native FRP?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tc6dyw/how_do_i_specify_the_type_inside_function/",
-          "author": null,
-          "description": "Title is kinda confusing, wasn't sure how to phrase this.\n I have a type Contact defined as follows :\n type Contact = (Person, State)\n I have a function in which I want to take some information about a Person to create a new Contact (with State = Good), and add it to a list of contacts, which looks like this :\n  addContact :: Person -> [Contact] -> [Contact] addContact p c = c ++ (p, Good) \n Compiler is complaining with the following message : Couldn't match expected type [Contact] with actual type (Person, State)\n But given that I have defined that Contact is a tuple with (Person, State), how am I supposed to declare that it is indeed a Contact? I can't seem to be able to create an instance of it because it's not a data type, just a type.\n    submitted by    /u/some_clickhead  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tc6dyw/how_do_i_specify_the_type_inside_function/",
-          "publishedOn": "2022-03-12T02:29:17.000Z",
-          "wordCount": 277,
-          "title": "How do I specify the type inside function definition?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tbydrk/how_does_the_bind_operator_relate_to_binding_a/",
-          "author": null,
-          "description": "Quoting from a stackoverflow answer: https://stackoverflow.com/questions/2346872/what-does-the-symbol-mean-in-haskell\n  \n(and similarly a >>= (b >>= (c >>= d)) is equivalent to\n  \ndo r1 <- a r2 <- b r1 r3 <- c r2 d r3 \n The bind operator makes a functions input be wrapped in the same thing as the output by unwrapping the value before each chained function.\n E.G.\n https://preview.redd.it/2cqc5bow4tm81.png?width=746&format=png&auto=webp&s=03f8677e5be06e7eb8dc5661786cfc7d42b89ffc\n Is this the reverse? It unwraps rather than wraps the output. And it only works for IO types? I've got the impression that IO is special is this unique to the io type?\n    submitted by    /u/Administrator101  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tbydrk/how_does_the_bind_operator_relate_to_binding_a/",
-          "publishedOn": "2022-03-11T19:45:20.000Z",
-          "wordCount": 299,
-          "title": "How does the bind (>>=) operator relate to binding a value (<-) in a do block",
-          "imageUrl": "https://external-preview.redd.it/QgPvRTknlY3rMNDqH1k4I37XGiq9tZF_FsygC_Xht4o.jpg?auto=webp&s=8cd5e918e2bde6ca72d4445d6fc007f203689799"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tbxyxj/does_the_operator_have_any_use_if_sideeffects_are/",
-          "author": null,
-          "description": "I'm new and have only ever used the >> operator implicitly in do blocks. Currently the only cases where I do not care about a functions return value are for ones with side-effects. Also Haskell has no mutable state so if you discard a value from a pure function it has no effects, right?\n Is there any other use case for this operator?\n    submitted by    /u/Administrator101  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tbxyxj/does_the_operator_have_any_use_if_sideeffects_are/",
-          "publishedOn": "2022-03-11T19:25:54.000Z",
-          "wordCount": 290,
-          "title": "Does the >> operator have any use if side-effects are not generated",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tbxnhd/github_norfairkingfeedback_declarative_feedback/",
-          "author": null,
-          "description": "submitted by    /u/NorfairKing2  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tbxnhd/github_norfairkingfeedback_declarative_feedback/",
-          "publishedOn": "2022-03-11T19:10:42.000Z",
-          "wordCount": 155,
-          "title": "GitHub - NorfairKing/feedback: Declarative feedback loop manager",
-          "imageUrl": "https://external-preview.redd.it/40lv-Q3tzlqM2C0eL1WwcaGmIZQFoNo0om53Y8kkUJQ.jpg?auto=webp&s=b29bdea4089551bcdea2ffeb3a7a859a2a749af1"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tbumkw/implementing_a_json_linter_with_line_column/",
-          "author": null,
-          "description": "Hello Haskell-ers!\n I'm looking to implement a JSON linter and would appreciate some library / architecture suggestions. Some examples of the kind issues i'm interested in detecting are:\n  \nThe field \"base_path\", if it exists, cannot use Windows paths, must be POSIX\n The field \"date_created\" must be in ISO8601\n etc.\n  \nI'm capable of writing the linter rules (i.e. detect date formats, path formats etc.), what I need help with is the IO / initial parsing phase. I'm familiar with parser-combinators (attoparsec has been my goto previously) but never before had a use case that cares about where the parsing failed. I've also used aeson a couple of times for handling JSON.\n The defining requirement is that, once an issue has been identified, the linter must report the location of the error including line number(s) and column numbers (start and end). It can be assumed that the data is valid JSON and conforms to the expected schema (i.e. if we expect a \"date_created\" field, it'll be there. I'm interested in format/quality issues rather than validating structure / syntax.\n Otherwise, the only requirement is that it be quick / run in parallel - It must be able to run over thousands of files in a couple of minutes.\n My initial plan was to use something like pipes-aeson for IO (not used a streaming library before but seems straightforward enough) however it seems that aeson is based on attoparsec and the parse-error is just a plain string without source locations.\n So, finally, to some questions.\n  \nAnybody have recommendations for parsing JSON (quickly) while keeping track of the source-locations of each field / key / value / object etc.\n Can streaming libraries like pipes be used to process the loaded files in parallel? Pointers / articles etc. covering this would be much appreciated!\n  \n   submitted by    /u/LivewareIssue  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tbumkw/implementing_a_json_linter_with_line_column/",
-          "publishedOn": "2022-03-11T17:03:23.000Z",
-          "wordCount": 524,
-          "title": "Implementing a JSON linter with line / column numbers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tbtjxs/higherorder_abstract_syntax_for_cartesian_closed/",
-          "author": null,
-          "description": "submitted by    /u/sridfr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tbtjxs/higherorder_abstract_syntax_for_cartesian_closed/",
-          "publishedOn": "2022-03-11T16:14:35.000Z",
-          "wordCount": 119,
-          "title": "Higher-order Abstract Syntax for Cartesian Closed Categories",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tbrm72/associate_level_haskellelm_job/",
-          "author": null,
-          "description": "Caribou | Associate Fullstack Software Engineer (Elm, Haskell, Postgres, Event Sourcing) | $100,000-$120,000 | Remote, USA :us:\n https://boards.greenhouse.io/caribou/jobs/5010812003\n  \n0-2 years of experience\n You don’t have to have Elm or Haskell experience, but it will help :)\n You do need to have interest in functional programming, but you probably wouldn’t be in this subreddit if you didn’t, now would you?\n Our shared working hours are 10 AM to 3 PM Eastern, you do need to be available during those hours, though we're flexible if something comes up.\n $100,000-$120,000 but do not quote me on the compensation, that is from memory for our associate level, it could be less or more by $10,000.\n The job description is for a mid-level, we don't have an associate FP job description. But just the technologies and the level are different, everything else should be the same.\n  \nhttps://boards.greenhouse.io/caribou/jobs/5010812003\n    submitted by    /u/Auslegung  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tbrm72/associate_level_haskellelm_job/",
-          "publishedOn": "2022-03-11T14:43:53.000Z",
-          "wordCount": 329,
-          "title": "Associate level Haskell/Elm Job",
-          "imageUrl": "https://external-preview.redd.it/8klitaENsN3GyNRKzSce0L82uY1KTxHj8hHO8vfxO1E.jpg?auto=webp&s=9b2bf8e90c6ceef683ffdcb1100e9ec7641d0815"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tbo2ti/good_haskell_ide/",
-          "author": null,
-          "description": "Can you recommend any? I tried InteliJ with Haskell plugin but it doesn't work well.\n    submitted by    /u/Xodef  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tbo2ti/good_haskell_ide/",
-          "publishedOn": "2022-03-11T11:25:09.000Z",
-          "wordCount": 525,
-          "title": "Good Haskell IDE",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tbnfjv/build_issues_with_cabal/",
-          "author": null,
-          "description": "EDIT: idk what I did but now my project compiles.\n Hello,\n I am learning Haskell as part of a comp-sci course at University and have come across a wierd error when I try to build a package using cabal. \n When I run cabal install, the installation fails due to the package wai-logger-2.4.0 not being able to build due to the package cabal-doctest-1.0.9 being broken with the specific error: \n \"Could not find module Distributive.Extra.Doctest\"\n How can I fix this error?\n I have tried the following: 1. Reinstall cabal-doctest 2. Reinstall distributive 3. Delete and reinstall all cabal packages after running cabal update 4. Reinstall ghc\n Thanks in advance.\n    submitted by    /u/keijyu  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tbnfjv/build_issues_with_cabal/",
-          "publishedOn": "2022-03-11T10:40:34.000Z",
-          "wordCount": 419,
-          "title": "Build issues with cabal",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/tbn46e/out_of_memory_when_building_productprofunctors/",
-          "author": null,
-          "description": "Hi,\n I'm currently creating a project which I wanted to try using opaleye for DB access in. I have an M1 Mac with 16GB of RAM and use ghc-8.10.7 by stack-2.7.5, both installed through ghcup.\n Soon after starting to build product-profunctors, I get an error\n -- While building package product-profunctors-0.11.0.3 (scroll up to its section to see the error) using: /Users/mateusz/.stack/setup-exe-cache/aarch64-osx/Cabal-simple_mPHDZzAJ_3.2.1.0_ghc-8.10.7 --builddir=.stack-work/dist/aarch64-osx/Cabal-3.2.1.0 build --ghc-options \" -fdiagnostics-color=always\" Process exited with code: ExitFailure (-9) (THIS MAY INDICATE OUT OF MEMORY) \n When I rerun, I get the same result in a few secs. It must be very quick, as I don't see any visible spike in memory usage on monitor (it oscillates around 9-10GB). /usr/bin/time -l shows rss of 200MB, but I guess it's stack's usage, not ghc's.\n That's strange to me as I compile a 300+ deps project at my work in a similar amount of RAM without problems, and I have also compiled stack on my 4GB Raspberry Pi (which took a lot of time, but didn't outofmemory either). Is this package really that heavy, or there's something wrong with my installation?\n    submitted by    /u/Swordlash  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/tbn46e/out_of_memory_when_building_productprofunctors/",
-          "publishedOn": "2022-03-11T10:18:13.000Z",
-          "wordCount": 499,
-          "title": "Out of memory when building product-profunctors",
-          "imageUrl": null
         }
       ]
     },
@@ -1979,6 +1879,76 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/u0ni37/scala_vs_javac_code_examples/",
+          "author": null,
+          "description": "Hi,\n I'm thinking about taking up FP with Scala, but a friend advised that it's a dying language, and moreover, whatever advantages it may have had have been mostly closed by newer Java/C# that now support FP constructs like immutable data structures/fields, higher order functions, streams/LINQ, pattern matching, lambdas, generics, etc. If you are well-versed in Java or C# and Scala, can you provide code examples based on real problems that demonstrate why Scala would still make a better choice than Java/C# today for new big projects?\n Thanks.\n    submitted by    /u/RepresentativePlease  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/u0ni37/scala_vs_javac_code_examples/",
+          "publishedOn": "2022-04-10T18:18:51.000Z",
+          "wordCount": 345,
+          "title": "Scala vs Java/C# code examples",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/u0geiv/diamond_architecture_how_to_build_humongous_apps/",
+          "author": null,
+          "description": "submitted by    /u/agilesteel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/u0geiv/diamond_architecture_how_to_build_humongous_apps/",
+          "publishedOn": "2022-04-10T12:16:52.000Z",
+          "wordCount": 107,
+          "title": "Diamond Architecture - How to build HUMONGOUS apps FAST!",
+          "imageUrl": "https://external-preview.redd.it/OLe7Xaqiqrkeg61W4CnWOIzXm5s2E8O5TkCjQSzmTVw.jpg?auto=webp&s=732c9b64a8bcc5f7b551a6db55064a585bc6fcda"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/u0eebx/is_scala_for_the_impatient_outdated/",
+          "author": null,
+          "description": "Hello,\n I want to learn Scala 2. Is learning from the book \"Scala for the Impatient\" a good idea, or is it outdated? In the latter case, can you recommend something similar?\n    submitted by    /u/filippp  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/u0eebx/is_scala_for_the_impatient_outdated/",
+          "publishedOn": "2022-04-10T09:49:34.000Z",
+          "wordCount": 380,
+          "title": "Is \"Scala for the Impatient\" outdated?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/u0dyg2/ordset_v010/",
+          "author": null,
+          "description": "I'm happy to announce the first release of the ordset library\n This is an implementation of a math concept of ordered sets and maps on various kinds of domains: bounded/unbounded, continuous/discrete. In essence ordered set or map can be viewed as a collection of intervals equipped with:\n  \nefficient search method to check whether element belongs to set;\n a suite of well known transformation operators: union, intersection, inversion, zip, map, flatMap, etc.\n  \nAll implementations are thread-safe by design, cause underlying data structures are immutable and persistent (like immutable collections of standard library are).\n But please don't confuse them with standard sorted sets, here are Scastie examples to demonstrate the difference. Also some basic concepts are described in project blog.\n The project is in active development now, i will be very grateful for any feedback or contribution.\n    submitted by    /u/Eugene_Rogov  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/u0dyg2/ordset_v010/",
+          "publishedOn": "2022-04-10T09:13:36.000Z",
+          "wordCount": 209,
+          "title": "ordset v.0.1.0",
+          "imageUrl": "https://external-preview.redd.it/_kSJUfKydsJFYqz2u1_dYh_di3mh2qEO6gUttwKhou0.jpg?auto=webp&s=8eb52145814bc332ae7c6a64fa56be96ad45ea53"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/u07ma5/flowrun_executable_flowcharts/",
+          "author": null,
+          "description": "Hi all, I made this open-source editor+interpreter for flowcharts in ScalaJS: https://github.com/sacode387/FlowRun\n Website: https://flowrun.io/\n It is mainly targeted for beginners in programming. They can start with this visual representation, understand how it all works. It also generates real code for some programming languages (still WIP but usable). FlowRun is very similar to http://www.flowgorithm.org/index.html which only supports Windows.\n    submitted by    /u/sake_92  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/u07ma5/flowrun_executable_flowcharts/",
+          "publishedOn": "2022-04-10T01:58:03.000Z",
+          "wordCount": 142,
+          "title": "FlowRun - executable flowcharts",
+          "imageUrl": "https://external-preview.redd.it/lDiioBbW6Ik-3Sp-6dr7Vf6Xl-fAF1tFR-nK5Xgz2kM.jpg?auto=webp&s=04c9b045533c6c4fb1f097a476e21786cfb80419"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/u07fzn/future_of_monix/",
+          "author": null,
+          "description": "https://alexn.org/blog/2022/04/05/future-monix-typelevel/\n ​\n Thanks Alexandru. We use monix at work extensively. This news is exciting and worth sharing in reddit.\n    submitted by    /u/Yunfeng2  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/u07fzn/future_of_monix/",
+          "publishedOn": "2022-04-10T01:47:35.000Z",
+          "wordCount": 520,
+          "title": "Future of monix",
+          "imageUrl": "https://external-preview.redd.it/TXVasF7fO8GZo77Hzy_7hUCDNqqXu9cAbunuw0pPmJI.jpg?auto=webp&s=2ed8629790ae4fc3f7fecb66576f18fa31ec9d32"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/u04i6k/how_does_scala_foldleft_method_of_list_compiled/",
+          "author": null,
+          "description": "List is defined as followed\n sealed trait List[+A] case object Nil extends List[Nothing] case class Cons[A](head: A, tail: List[A]) extends List[A] sealed trait List[+A] { final def foldLeft[B](z: B)(f: (B, A) => B): B = this match { case Nil => z case Cons(head, tail) => tail.foldLeft(f(z, head))(f) } final def foldRight[B](z: B)(f: (A, B) => B): B = this match { case Nil => z case Cons(head, tail) => f(head, tail.foldRight(z)(f)) } } \n ​\n val va = List(1,2,3,4,5) val f = (x: Int, y: Int) => x + y va.foldLeft(0)(f) \n I do step by step compilation as followed.\n List(2,3,4,5).foldLeft(f(0)(1))(f) List(2,3,4,5).foldLeft(1)(f) List(3,4,5).foldLeft(f(1)(2))(f) List(3,4,5).foldLeft(3)(f) ... List(5).foldLeft(f(6)(4))(f) List(5).foldLeft(10)(f) Nil.foldLeft(f(10)(5))(f) Nil.foldLeft(15)(f) 15 \n am I correct?\n    submitted by    /u/awannaphasch2016  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/u04i6k/how_does_scala_foldleft_method_of_list_compiled/",
+          "publishedOn": "2022-04-09T22:58:51.000Z",
+          "wordCount": 248,
+          "title": "How does scala foldLeft method of List compiled? step by step",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/tzpk4q/scalas_gitter_to_discord_migration_mistake/",
           "author": null,
@@ -2818,26 +2788,6 @@
           "wordCount": 553,
           "title": "FS2 stream doesn't work as I expect it to",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/tbysmq/install_intel_sbtjava_on_mac_m1/",
-          "author": null,
-          "description": "Hello. I have work project which doesn't have all libraries compatible with arm. Intel java and sbt download all dependencies good and build the project. \n But how to install them for terminal?\n I tried brew and sdkman, no success. There was installed M1 java. Only way I have found so far is to ask IDEA to download intel java and use sbt shell there. But it works not good.\n    submitted by    /u/qafe  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/tbysmq/install_intel_sbtjava_on_mac_m1/",
-          "publishedOn": "2022-03-11T20:04:12.000Z",
-          "wordCount": 158,
-          "title": "Install intel sbt+java on Mac M1",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/tbxqsa/should_i_know_all_famous_scala_frameworks_such_as/",
-          "author": null,
-          "description": "Hi all :)\n I have 1 year of experience as a research engineer and, I am studying scala to switch my career to a distributed system(DS) engineer within this year.\n Currently, I am following the scala course of Coursera, but many posts in this subreddit mention various scala frameworks. I want to know that it is necessary to cover famous frameworks like akka, ZIO, spark.\n I am not afraid to learn, but I just want to set priorities.\n Are there some frameworks or packages, which are commonly used in scala?\n (Like node of javascript Or NumPy, scikit-learn in Python. )\n Sometimes I check a job description of scala keyword on Linkedin, but many of them do not mention what they want to an applicant (They just say like \"we prefer scala\" or \"we use scala\")\n So I am wondering where I have to focus to be a distributed system engineer.\n I studied distributed systems in graduate school, so my goal is to implement some DS toy projects using scala.\n Could I ask for advice to be a DS engineer?\n Thank you for reading :)\n    submitted by    /u/Technical-Average547  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/tbxqsa/should_i_know_all_famous_scala_frameworks_such_as/",
-          "publishedOn": "2022-03-11T19:15:01.000Z",
-          "wordCount": 426,
-          "title": "Should I know all famous scala frameworks, such as akka, ZIO, spark?",
-          "imageUrl": null
         }
       ]
     },
@@ -3528,26 +3478,6 @@
           "wordCount": 144,
           "title": "Org Agenda: keep the buffer order untouched after saving all modified org buffers",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/tbz9od/double_question_regarding_capture_templates_and/",
-          "author": null,
-          "description": "I'll actually ask the archiving question first, since it's simpler: Is there any way to break up the archive files by year, so that anything I archive this year goes to journal.org_archive2022 or similar? I'm concerned that archives may grow too big and wondered if this could be automatic or if it's just something I should do manually.\n  \nThe second question is harder (for me). I'm trying to set up my capture templates such that every day is the date in ISO format plus the day of the week, so a capture would make a subheading under 2022-03-11 FRIDAY. \n This is probably not going to be super hard, but the org manual is.... vague on how I would do it. The \"hard\" one is, I'd like to have another template that puts the subheading underneath not only the date but another subheading. So you'd wind up with:\n * 2022-03-11 FRIDAY ** Log *** Entered Subheading Text, Text [Entered at [TIMESTAMP]] \n I have no idea how to even begin to do this, because I'm not sure of several things. \n 1) How to make emacs give the initial heading as an ISO date rather than a datetree\n 2) How to make it double up on headings so I get Log\n 3) How to make this all respect my extend-day-until setting, because I go to bed WAY after midnight\n I'm meandering here but I'm hoping someone can point me in the right direction. Thank you in advance.\n    submitted by    /u/etcNetcat  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/tbz9od/double_question_regarding_capture_templates_and/",
-          "publishedOn": "2022-03-11T20:26:32.000Z",
-          "wordCount": 354,
-          "title": "Double Question regarding Capture Templates and Archiving",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/tbmrao/is_there_an_easy_way_to_get_a_summary_of/",
-          "author": null,
-          "description": "Hi,\n So I am trying to find an easy way of summarizing what I did do on a particular day or week.\n I am mostly using Todos/Tasks that I mostly complete through the Agenda view, but I also log smaller tasks, questions, stuff that showed up within the journal (C-c c j).\n What I am looking for is a way to just summarize all Todos that were closed and journal entries made on a particular day in one output.\n I looked a bit at clock table, but as I am not looking for \"time spent\" but rather \"what did I do - what was closed and logged?\" it doesn't seemt to be the right tool.\n    submitted by    /u/w0wt1p  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/tbmrao/is_there_an_easy_way_to_get_a_summary_of/",
-          "publishedOn": "2022-03-11T09:53:11.000Z",
-          "wordCount": 566,
-          "title": "Is there an easy way to get a summary of \"activities\" from Journal and Todos?",
-          "imageUrl": null
         }
       ]
     },
@@ -3556,6 +3486,76 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/taskpaper-mode-20220410.1953.el",
+          "author": null,
+          "description": "The taskpaper-mode package has been updated to version 20220410.1953.",
+          "link": "https://melpa.org/#/taskpaper-mode",
+          "publishedOn": "2022-04-10T19:53:00.000Z",
+          "wordCount": 105,
+          "title": "taskpaper-mode (20220410.1953) --- Major mode for working with TaskPaper files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ox-reveal-20220410.1533.el",
+          "author": null,
+          "description": "The ox-reveal package has been updated to version 20220410.1533.",
+          "link": "https://melpa.org/#/ox-reveal",
+          "publishedOn": "2022-04-10T15:33:00.000Z",
+          "wordCount": 105,
+          "title": "ox-reveal (20220410.1533) --- reveal.js Presentation Back-End for Org Export Engine",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/browse-kill-ring-20220410.1509.el",
+          "author": null,
+          "description": "The browse-kill-ring package has been updated to version 20220410.1509.",
+          "link": "https://melpa.org/#/browse-kill-ring",
+          "publishedOn": "2022-04-10T15:09:00.000Z",
+          "wordCount": 105,
+          "title": "browse-kill-ring (20220410.1509) --- interactively insert items from kill-ring",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ssh-tunnels-20220410.1424.tar",
+          "author": null,
+          "description": "The ssh-tunnels package has been updated to version 20220410.1424.",
+          "link": "https://melpa.org/#/ssh-tunnels",
+          "publishedOn": "2022-04-10T14:24:00.000Z",
+          "wordCount": 105,
+          "title": "ssh-tunnels (20220410.1424) --- Manage SSH tunnels",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lognav-mode-20220410.1344.el",
+          "author": null,
+          "description": "The lognav-mode package has been updated to version 20220410.1344.",
+          "link": "https://melpa.org/#/lognav-mode",
+          "publishedOn": "2022-04-10T13:44:00.000Z",
+          "wordCount": 105,
+          "title": "lognav-mode (20220410.1344) --- Navigate Log Error Messages",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/aproject-20220410.541.tar",
+          "author": null,
+          "description": "The aproject package has been updated to version 20220410.541.",
+          "link": "https://melpa.org/#/aproject",
+          "publishedOn": "2022-04-10T05:41:00.000Z",
+          "wordCount": 105,
+          "title": "aproject (20220410.541) --- Basic project framework for Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/btc-ticker-20220409.1647.el",
+          "author": null,
+          "description": "The btc-ticker package has been updated to version 20220409.1647.",
+          "link": "https://melpa.org/#/btc-ticker",
+          "publishedOn": "2022-04-09T16:47:00.000Z",
+          "wordCount": 105,
+          "title": "btc-ticker (20220409.1647) --- Shows latest bitcoin price",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/noaa-20220409.1627.el",
           "author": null,
@@ -3574,6 +3574,16 @@
           "publishedOn": "2022-04-09T13:46:00.000Z",
           "wordCount": 105,
           "title": "tok-theme (20220409.1346) --- Simple dark theme with cyberpunk aesthetics",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/wal-mode-20220409.1214.el",
+          "author": null,
+          "description": "The wal-mode package has been updated to version 20220409.1214.",
+          "link": "https://melpa.org/#/wal-mode",
+          "publishedOn": "2022-04-09T12:14:00.000Z",
+          "wordCount": 105,
+          "title": "wal-mode (20220409.1214) --- A major mode for the WAL programming language",
           "imageUrl": null
         },
         {
@@ -3604,6 +3614,16 @@
           "publishedOn": "2022-04-09T11:57:00.000Z",
           "wordCount": 105,
           "title": "docker (20220409.1157) --- Interface to Docker",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ox-gist-20220409.1117.el",
+          "author": null,
+          "description": "The ox-gist package has been updated to version 20220409.1117.",
+          "link": "https://melpa.org/#/ox-gist",
+          "publishedOn": "2022-04-09T11:17:00.000Z",
+          "wordCount": 105,
+          "title": "ox-gist (20220409.1117) --- Org mode exporter for GitHub gists",
           "imageUrl": null
         },
         {
@@ -3677,6 +3697,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/diffsync-20220408.1341.el",
+          "author": null,
+          "description": "The diffsync package has been updated to version 20220408.1341.",
+          "link": "https://melpa.org/#/diffsync",
+          "publishedOn": "2022-04-08T13:41:00.000Z",
+          "wordCount": 105,
+          "title": "diffsync (20220408.1341) --- Use diff to allow syncing of directories",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/fsharp-mode-20220408.1321.tar",
           "author": null,
           "description": "The fsharp-mode package has been updated to version 20220408.1321.",
@@ -3684,6 +3714,16 @@
           "publishedOn": "2022-04-08T13:21:00.000Z",
           "wordCount": 105,
           "title": "fsharp-mode (20220408.1321) --- Support for the F# programming language",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/all-the-icons-ivy-rich-20220408.927.el",
+          "author": null,
+          "description": "The all-the-icons-ivy-rich package has been updated to version 20220408.927.",
+          "link": "https://melpa.org/#/all-the-icons-ivy-rich",
+          "publishedOn": "2022-04-08T09:27:00.000Z",
+          "wordCount": 105,
+          "title": "all-the-icons-ivy-rich (20220408.927) --- Better experience with icons for ivy",
           "imageUrl": null
         },
         {
@@ -3797,6 +3837,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/text-categories-20220407.842.el",
+          "author": null,
+          "description": "The text-categories package has been updated to version 20220407.842.",
+          "link": "https://melpa.org/#/text-categories",
+          "publishedOn": "2022-04-07T08:42:00.000Z",
+          "wordCount": 105,
+          "title": "text-categories (20220407.842) --- Assign text categories to a buffer for mass deletion",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/stock-tracker-20220407.801.el",
           "author": null,
           "description": "The stock-tracker package has been updated to version 20220407.801.",
@@ -3857,6 +3907,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/magit-commit-mark-20220406.2314.el",
+          "author": null,
+          "description": "The magit-commit-mark package has been updated to version 20220406.2314.",
+          "link": "https://melpa.org/#/magit-commit-mark",
+          "publishedOn": "2022-04-06T23:14:00.000Z",
+          "wordCount": 105,
+          "title": "magit-commit-mark (20220406.2314) --- Support marking commits as read",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/xref-rst-20220406.2311.el",
           "author": null,
           "description": "The xref-rst package has been updated to version 20220406.2311.",
@@ -3884,6 +3944,16 @@
           "publishedOn": "2022-04-06T13:40:00.000Z",
           "wordCount": 105,
           "title": "cycle-at-point (20220406.1340) --- Cycle (rotate) the thing under the cursor",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tempel-20220406.706.el",
+          "author": null,
+          "description": "The tempel package has been updated to version 20220406.706.",
+          "link": "https://melpa.org/#/tempel",
+          "publishedOn": "2022-04-06T07:06:00.000Z",
+          "wordCount": 105,
+          "title": "tempel (20220406.706) --- Tempo templates/snippets with in-buffer field editing",
           "imageUrl": null
         },
         {
@@ -4334,6 +4404,16 @@
           "publishedOn": "2022-04-03T16:39:00.000Z",
           "wordCount": 105,
           "title": "evil-snipe (20220403.1639) --- emulate vim-sneak & vim-seek",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ghub-20220403.1248.tar",
+          "author": null,
+          "description": "The ghub package has been updated to version 20220403.1248.",
+          "link": "https://melpa.org/#/ghub",
+          "publishedOn": "2022-04-03T12:48:00.000Z",
+          "wordCount": 105,
+          "title": "ghub (20220403.1248) --- Client libraries for Git forge APIs.",
           "imageUrl": null
         },
         {
@@ -7285,116 +7365,6 @@
           "wordCount": 105,
           "title": "cape (20220312.1052) --- Completion At Point Extensions",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-tag-beautify-20220312.319.el",
-          "author": null,
-          "description": "The org-tag-beautify package has been updated to version 20220312.319.",
-          "link": "https://melpa.org/#/org-tag-beautify",
-          "publishedOn": "2022-03-12T03:19:00.000Z",
-          "wordCount": 105,
-          "title": "org-tag-beautify (20220312.319) --- Beautify Org Mode tags",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/alert-toast-20220312.229.el",
-          "author": null,
-          "description": "The alert-toast package has been updated to version 20220312.229.",
-          "link": "https://melpa.org/#/alert-toast",
-          "publishedOn": "2022-03-12T02:29:00.000Z",
-          "wordCount": 105,
-          "title": "alert-toast (20220312.229) --- Windows 10 toast notifications",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sculpture-themes-20220311.2122.tar",
-          "author": null,
-          "description": "The sculpture-themes package has been updated to version 20220311.2122.",
-          "link": "https://melpa.org/#/sculpture-themes",
-          "publishedOn": "2022-03-11T21:22:00.000Z",
-          "wordCount": 105,
-          "title": "sculpture-themes (20220311.2122) --- Themes with vivid colors",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/kubel-20220311.2051.el",
-          "author": null,
-          "description": "The kubel package has been updated to version 20220311.2051.",
-          "link": "https://melpa.org/#/kubel",
-          "publishedOn": "2022-03-11T20:51:00.000Z",
-          "wordCount": 105,
-          "title": "kubel (20220311.2051) --- Control Kubernetes with limited permissions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/matlab-mode-20220311.1955.tar",
-          "author": null,
-          "description": "The matlab-mode package has been updated to version 20220311.1955.",
-          "link": "https://melpa.org/#/matlab-mode",
-          "publishedOn": "2022-03-11T19:55:00.000Z",
-          "wordCount": 105,
-          "title": "matlab-mode (20220311.1955) --- Major mode for MATLAB(R) dot-m files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/streak-20220311.1929.el",
-          "author": null,
-          "description": "The streak package has been updated to version 20220311.1929.",
-          "link": "https://melpa.org/#/streak",
-          "publishedOn": "2022-03-11T19:29:00.000Z",
-          "wordCount": 105,
-          "title": "streak (20220311.1929) --- Track a daily streak in your Mode Line",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-table-color-20220311.1927.el",
-          "author": null,
-          "description": "The org-table-color package has been updated to version 20220311.1927.",
-          "link": "https://melpa.org/#/org-table-color",
-          "publishedOn": "2022-03-11T19:27:00.000Z",
-          "wordCount": 105,
-          "title": "org-table-color (20220311.1927) --- Add color to your org-mode table cells",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-re-reveal-20220311.1925.tar",
-          "author": null,
-          "description": "The org-re-reveal package has been updated to version 20220311.1925.",
-          "link": "https://melpa.org/#/org-re-reveal",
-          "publishedOn": "2022-03-11T19:25:00.000Z",
-          "wordCount": 105,
-          "title": "org-re-reveal (20220311.1925) --- Org export to reveal.js presentations",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-ui-20220311.1634.tar",
-          "author": null,
-          "description": "The lsp-ui package has been updated to version 20220311.1634.",
-          "link": "https://melpa.org/#/lsp-ui",
-          "publishedOn": "2022-03-11T16:34:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-ui (20220311.1634) --- UI modules for lsp-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/magik-mode-20220311.1219.tar",
-          "author": null,
-          "description": "The magik-mode package has been updated to version 20220311.1219.",
-          "link": "https://melpa.org/#/magik-mode",
-          "publishedOn": "2022-03-11T12:19:00.000Z",
-          "wordCount": 105,
-          "title": "magik-mode (20220311.1219) --- mode for editing Magik + some utils.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/hl-todo-20220311.1008.el",
-          "author": null,
-          "description": "The hl-todo package has been updated to version 20220311.1008.",
-          "link": "https://melpa.org/#/hl-todo",
-          "publishedOn": "2022-03-11T10:08:00.000Z",
-          "wordCount": 105,
-          "title": "hl-todo (20220311.1008) --- highlight TODO and similar keywords",
-          "imageUrl": null
         }
       ]
     },
@@ -7403,6 +7373,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u0lk2w/orgbabelexecutesrcblock_with_results_value_giving/",
+          "author": null,
+          "description": "Let's say I create an Org document with the following contents:\n #+begin_src R :results value data <- data.frame(list(a=c(1,2), b=c(3,4))) data #+end_src \n I then type C-c C-c to run org-babel-execute-src-block, which reports the error \"forward-sexp: Wrong type argument: markerp, nil\".\n The debugger backtrace looks like this:\n Debugger entered--Lisp error: (wrong-type-argument markerp nil) #f(compiled-function () #<bytecode -0xadf27a319dde315>)() org-babel-insert-result(((1 3) (2 4)) (\"replace\" \"value\") (\"R\" \"data <- data.frame(list(a=c(1,2), b=c(3,4)))\\ndata\" ((:colname-names) (:rowname-names) (:result-params \"replace\" \"value\") (:result-type . value) (:results . \"replace value\") (:exports . \"code\") (:session . \"none\") (:cache . \"no\") (:noweb . \"no\") (:hlines . \"no\") (:tangle . \"no\")) \"\" nil 1 \"(ref:%s)\") nil \"R\") org-babel-execute-src-block(nil (\"R\" \"data <- data.frame(list(a=c(1,2), b=c(3,4)))\\ndata\" ((:colname-names) (:rowname-names) (:result-params \"value\" \"replace\") (:result-type . value) (:results . \"value replace\") (:exports . \"code\") (:tangle . \"no\") (:hlines . \"no\") (:noweb . \"no\") (:cache . \"no\") (:session . \"none\")) \"\" nil 1 \"(ref:%s)\")) org-ctrl-c-ctrl-c(nil) funcall-interactively(org-ctrl-c-ctrl-c nil) call-interactively(org-ctrl-c-ctrl-c nil nil) command-execute(org-ctrl-c-ctrl-c) \n Any ideas on what could be causing this error and/or how I can track it down?\n Fwiw, :results output works as intended.\n    submitted by    /u/CoolioDood  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u0lk2w/orgbabelexecutesrcblock_with_results_value_giving/",
+          "publishedOn": "2022-04-10T16:48:07.000Z",
+          "wordCount": 266,
+          "title": "org-babel-execute-src-block with `:results value` giving an error",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u0hzta/bad_arabic_ligatures_and_layout_after_upgrading/",
+          "author": null,
+          "description": "Hi,\n Yesterday I upgraded from Emacs 27.1 (Installed via emacs-mac) to Emacs 28.1 (installed via Homebrew).\n Everything seems to work fine so far, except Arabic ligatures are broken: for instance, لا (ل followed by ا) only shows a broken line. با and نا are also affected, and only the first half of the ب and the ن are shown. \n لا باس\n Another thing I'm noticing is that punctuation behavior got worse: if I type a comma, for instance, it's shown at the far right of the sentence, until I type the next letter, and then the comma is where it should be.\n ​\n Is there anything I can do to fix this?\n ​\n Thank you\n ​\n Edit: attach and fix screenshot\n    submitted by    /u/pick_another_nick  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u0hzta/bad_arabic_ligatures_and_layout_after_upgrading/",
+          "publishedOn": "2022-04-10T13:50:47.000Z",
+          "wordCount": 228,
+          "title": "Bad Arabic ligatures and layout after upgrading to 28.1",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u0gzsf/emacs_does_not_autoamtically_enable_orgmode_upon/",
+          "author": null,
+          "description": "I have the following Emacs built GNU Emacs 29.0.50 (build 3, x86_64-pc-linux-gnu, GTK+ Version 3.24.20, cairo version 1.16.0)\n In my initialization file, I have the following:\n (defun emacs-workflow-open ()\n ;(interactive)\n (split-window-right)\n (other-window 1)\n (split-window-below)\n (other-window 1)\n (multi-term)\n (rename-buffer \"term-run\")\n (multi-term)\n (rename-buffer \"term-test\")\n (multi-term)\n (rename-buffer \"term\")\n (switch-to-buffer \"term-run\"))\n (add-hook 'after-init-hook #'emacs-workflow-open)\n (add-to-list 'package-archives '(\"org\" . \"https://orgmode.org/elpa/\") t)\n (find-file \"~/Dropbox/PLAN.org\")\n (setq org-roam-v2-ack t)\n (setq org-roam-directory (file-truename \"~/Dropbox/org-roam\"))\n (org-roam-db-autosync-mode)\n The issue is that PLAN.org buffer never has the org-mode enabled, and I always have to enable it manually.\n How can I fix this?\n    submitted by    /u/rawlimerick  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u0gzsf/emacs_does_not_autoamtically_enable_orgmode_upon/",
+          "publishedOn": "2022-04-10T12:54:00.000Z",
+          "wordCount": 191,
+          "title": "Emacs Does Not Autoamtically Enable Org-Mode Upon File Open",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u0egl2/symbols_function_definition_is_void/",
+          "author": null,
+          "description": "I use the repo https://bitbucket.org/mituharu/emacs-mac/ to build Emacs 28.1\n I executed sudo make install but it returns the following error\n Symbol's function definition is void: eieio-defclass-autoload make[1]: *** [bootstrap-emacs.pdmp] Error 255 make: *** [src] Error 2 \n I tried clearing all *.elc files in the repo directory, but the problem still exists\n find . -iname \"*.elc\" -type f | xargs sudo rm\n How should I resolve it?\n My Mac info\n ​\n https://preview.redd.it/kvfnszqzbos81.png?width=530&format=png&auto=webp&s=409e8c445b40a7b17af600e45adefd18e57bc800\n    submitted by    /u/nightless_hunter  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u0egl2/symbols_function_definition_is_void/",
+          "publishedOn": "2022-04-10T09:54:47.000Z",
+          "wordCount": 254,
+          "title": "Symbol's function definition is void: eieio-defclass-autoload when building Emacs 28.1 on MacOS",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u0dook/autocompletion_for_interactive_programs_in_eshell/",
+          "author": null,
+          "description": "Hi, is there a way to get autocompletion for REPL-like interactive programs like python-repl, ghci or nix-shell using eshell? Whenever I press TAB in such programs I get a pcomplete-completions-at-point failed to return valid completion data! and even though the key was sent correctly, I don't see the results on the screen e.g. in python-repl when I press tab after pri I still see pri but what's actually entered is print(.\n    submitted by    /u/The_Power_That_B  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u0dook/autocompletion_for_interactive_programs_in_eshell/",
+          "publishedOn": "2022-04-10T08:52:45.000Z",
+          "wordCount": 171,
+          "title": "Autocompletion for interactive programs in eshell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u0bojv/can_you_view_pdf_as_pure_text_in_terminal_nox/",
+          "author": null,
+          "description": "I have seen some plugins that convert pdf pages into images but is there one that converts them into text?\n    submitted by    /u/manho1e  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u0bojv/can_you_view_pdf_as_pure_text_in_terminal_nox/",
+          "publishedOn": "2022-04-10T06:20:46.000Z",
+          "wordCount": 211,
+          "title": "Can you view pdf as pure text in terminal/ nox?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u0b5tc/orgjournal_problem/",
+          "author": null,
+          "description": "I've recently installed org-journal. It seems to be correctly set up with postings for various times and days appearing when I activate the program. But when viewing the directory for posts outside of emacs it appears empty. What am I doing wrong?\n    submitted by    /u/gb095  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u0b5tc/orgjournal_problem/",
+          "publishedOn": "2022-04-10T05:44:38.000Z",
+          "wordCount": 158,
+          "title": "org-journal problem",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u09yf9/ignore_save_if_buffer_isnt_visiting_a_file/",
+          "author": null,
+          "description": "submitted by    /u/whhone  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u09yf9/ignore_save_if_buffer_isnt_visiting_a_file/",
+          "publishedOn": "2022-04-10T04:21:35.000Z",
+          "wordCount": 159,
+          "title": "Ignore save if buffer isn't visiting a file",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u06k3c/diffsync_use_diff_to_allow_syncing_of_directories/",
+          "author": null,
+          "description": "submitted by    /u/Danrobi1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u06k3c/diffsync_use_diff_to_allow_syncing_of_directories/",
+          "publishedOn": "2022-04-10T00:55:08.000Z",
+          "wordCount": 136,
+          "title": "diffsync - Use diff to allow syncing of directories",
+          "imageUrl": "https://external-preview.redd.it/2A15rV-yr79FHh4y5EOcnuq-ehJB_udnv8rXhUCU97I.jpg?auto=webp&s=b0bb0255c176bdcb5f90bf7336c82db6b29b7a71"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u068n3/foss_and_crafts_41_learning_emacs_5032_oggmp3/",
+          "author": null,
+          "description": "submitted by    /u/sachac  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u068n3/foss_and_crafts_41_learning_emacs_5032_oggmp3/",
+          "publishedOn": "2022-04-10T00:35:47.000Z",
+          "wordCount": 103,
+          "title": "FOSS and Crafts #41: Learning Emacs (50:32, ogg/mp3)",
+          "imageUrl": "https://external-preview.redd.it/4vYaxP_Jllnof2sT275Oq3ugp6AHGufKkQbcWHLFSBI.jpg?auto=webp&s=c82f339165e917da1aec5edecc733ee14c5a9fca"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u067jw/starting_your_computer_music_journey_with_clojure/",
+          "author": null,
+          "description": "submitted by    /u/sachac  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u067jw/starting_your_computer_music_journey_with_clojure/",
+          "publishedOn": "2022-04-10T00:33:57.000Z",
+          "wordCount": 117,
+          "title": "Starting your Computer Music Journey with Clojure and Overtone in Emacs",
+          "imageUrl": "https://external-preview.redd.it/IwEMhtBm9x2YtkZwJZtu0PfTSkLtPqwNWA6WW1PwlC0.jpg?auto=webp&s=1364dfe27a530c6bff85e0107821c752dd749dc0"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/u03suq/transparency_in_gnometerminal_with_custom_theme/",
+          "author": null,
+          "description": "I use a transparent gnome-terminal (lately also gnome-console). With no custom theme the background of emacs behaves exactly like the terminal. If I use tango-dark however (or any other custom theme for that matter) the background transparency is all but gone.\n Is there a way to avoid this? I tried to edit the /usr/share/emacs/27.2/etc/themes/tango-dark-theme.el or a local copy of it, but I can't find the line responsible for general background behaviour.\n    submitted by    /u/thebanicThot  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/u03suq/transparency_in_gnometerminal_with_custom_theme/",
+          "publishedOn": "2022-04-09T22:21:45.000Z",
+          "wordCount": 169,
+          "title": "Transparency in gnome-terminal with custom theme (tango-dark)",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/tzyld9/did_i_install_it_correctly/",
           "author": null,
@@ -11002,156 +11092,6 @@
           "wordCount": 104,
           "title": "versuri - the lyrics package for emacs",
           "imageUrl": "https://external-preview.redd.it/n68BHYMFUo3u3fM5AKABMjgbpw9qZrdIOedZa7dm0jM.jpg?auto=webp&s=abff31126b8e3b209ce44c72118b024312a8819d"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tcbzja/which_emacs_package_to_get_for_wayland_on_arch/",
-          "author": null,
-          "description": "emacs-gcc-wayland-devel-bin 28.0.91.151565-1 (GNU Emacs. Development native-comp branch and pgtk branch combined, served as a binary.) \n emacs-pgtk-native-comp-git 29.0.50.154614-1 (An unofficial fork combining the development branch of GNU Emacs (including native compilation) with the new rendering engine PGTK.)\n emacs-git 29.0.50.154805-1 (Development branch of GNU Emacs. As of June 2021, it includes support for native compilation merged from the Emacs' branch: feature/native-comp ) \n so emacs-git is the official development branch but it only includes native compile feature. \n emacs-gcc-wayland-devel-bin and emacs-pgtk-native-comp-git seem to include native compile AND pgtk (pure gtk which is what is needed to run emacs as a native wayland app), so between these two, which should i pick? which one are people running for using emacs natively on wayland?\n    submitted by    /u/curiousdoggo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tcbzja/which_emacs_package_to_get_for_wayland_on_arch/",
-          "publishedOn": "2022-03-12T08:29:24.000Z",
-          "wordCount": 257,
-          "title": "Which Emacs package to get for Wayland on Arch?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tcb0fn/cannot_set_the_font_firacoderetina/",
-          "author": null,
-          "description": "I am fairly new to emacs and recently started customising it following the emacs from scratch video series from system crafters. But I am stuck at the line to set the font.\n First I thought maybe I haven't installed the font so I installed it using pacman. It installed it in \"/usr/share/fonts/TTF/FiraCode-Retina\".\n Now how do I use this font in emacs?\n (set-face-attribute 'default nil :font \"?\")\n What do I put in the position of ?. I have tried putting the font name. Font name along with its absolute path. And some other variations. But everytime it just says font not found!\n Thank you for your help.\n ...\n Ok, that was a stupid mistake on my part.\n I just used \"Fira Code Retina\" and it seems to work. Sorry for the trouble!\n    submitted by    /u/unknownNano13  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tcb0fn/cannot_set_the_font_firacoderetina/",
-          "publishedOn": "2022-03-12T07:19:55.000Z",
-          "wordCount": 243,
-          "title": "Cannot Set the font \"FiraCode-Retina\"",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tc923p/profiling_performance_in_emacs/",
-          "author": null,
-          "description": "submitted by    /u/yep808  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tc923p/profiling_performance_in_emacs/",
-          "publishedOn": "2022-03-12T05:09:29.000Z",
-          "wordCount": 117,
-          "title": "Profiling Performance in Emacs",
-          "imageUrl": "https://external-preview.redd.it/F4eHvsILO3Ll0FUeXp6JZj_mVngA8jmjScMWbLrMv2c.jpg?auto=webp&s=89af2bc40b2556a1773f54a20fdca8097c144664"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tc8o4h/what_is_the_face_name_when_you_drag_select_or/",
-          "author": null,
-          "description": "Hi all. I am customizing a Nord theme. The problem is that the face for hl-line kinda looks too much like the face for when you try to select a text using evil visual mode (press V)/. If without evil mode, this same face can also be shown if you just drag select using mouse. This is what I meant on a Nord theme:\n ​\n Nothing selected, just hl-line highlighting current line\n ​\n You can barely see the word VISUAL under Visual mode in vim (pressing V)\n ​\n Again, here I drag and select the word VISUAL using the mouse. Hard to see\n To see things clearly, I use a different light theme:\n ​\n Normal with only hl-line face color\n ​\n Here you can see both the hl-line and the vim Visual/drag select very clearly.\n Question: What is that face name, he one you drag select/highlight using evil? I tried to do an M-x customize and type \"evil\" but I got are something like evil-ex-search\n Any input is greatly appreciated.\n    submitted by    /u/Artistic-Boss-2430  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tc8o4h/what_is_the_face_name_when_you_drag_select_or/",
-          "publishedOn": "2022-03-12T04:45:38.000Z",
-          "wordCount": 392,
-          "title": "What is the face name when you drag select or highlight using evil visual mode?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tc8mpv/slider_to_increasedecrease_values/",
-          "author": null,
-          "description": "I'm day-trading equities through Emacs on the left side of the screen and Thinkorswim on the right side of the screen. Orders are managed (buy / sell / replace / cancel) with Emacs. When there are a few seconds to spare, I navigate in Emacs to the order replace template (widget) and type in the new value to replace an existing order; e.g., 15.00 and C-u C-c C-c to send. [Absent a universal argument is used when I want to inspect the proposed order before sending.] Sometimes there are substantially less than a few seconds to spare, and a faster method is needed. I suppose I could use a keyboard shortcut such +/- and C-u C-c C-c to send when the value is correct.\n Thinkorswim lets a user drag the existing order bubble with the mouse (up or down) and when the user releases the mouse, the orde…",
-          "link": "https://www.reddit.com/r/emacs/comments/tc8mpv/slider_to_increasedecrease_values/",
-          "publishedOn": "2022-03-12T04:43:12.000Z",
-          "wordCount": 644,
-          "title": "Slider to increase/decrease values.",
-          "imageUrl": "https://external-preview.redd.it/iTAD-wlWOnLAMqfrh5MaXIhLoIW8CEmfC0LDi06x8OY.jpg?auto=webp&s=baf60098f69c696f51c59a8facd5f952d070e447"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tc4rc8/python_dev_in_2022/",
-          "author": null,
-          "description": "Looking for suggestions on setting up Emacs for Python dev: syntax highlighting, linting, autocomplete, etc. There’s so much variation on the web that I thought it might be easier just to ask here. Looking forward to hearing what packages/workflow works best for you, links to modern setups and init files.\n    submitted by    /u/GrqP1  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tc4rc8/python_dev_in_2022/",
-          "publishedOn": "2022-03-12T00:56:35.000Z",
-          "wordCount": 236,
-          "title": "Python dev in 2022",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tc3ntf/render_interactive_graphic_in_emacs_buffer/",
-          "author": null,
-          "description": "I'm on mac osx and kind of experimented with emacs browsers, I found that I can compile emacs with xwidget's but mac osx version is quite unstable and most other solutions depends on webkitgtk which is not exactly working on mac's, so I experiment little bit with electron offscreen rendering and I'm able to get image of site on every rerender. I managed to successfully save it to file on every rerender and then show it from there in emacs using image-mode. Question is, can I do it more directly without filesystem? Send somehow image through stdio to emacs and render using image-mode? What would you recommend?\n    submitted by    /u/ottertino415  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tc3ntf/render_interactive_graphic_in_emacs_buffer/",
-          "publishedOn": "2022-03-11T23:58:15.000Z",
-          "wordCount": 204,
-          "title": "Render interactive graphic in emacs buffer?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tc2nam/im_hitting_cx_ct_transposelines_too_often_when_i/",
-          "author": null,
-          "description": "Hacked from other examples.\n  \n(define-key org-mode-map (kbd \"C-x C-t\") 'nil)\n (define-key org-mode-map (kbd \"C-x C-t\") nil)\n (add-hook 'org-mode-hook\n '(lambda ()\n (define-key org-mode-map (kbd \"C-x C-t\") #'nil))\n  \nI'll definitely learn elisp, eventually, but I'd sure like to be sure that I don't unknowingly mess up my org file in the meantime!\n    submitted by    /u/Status-Detective-783  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tc2nam/im_hitting_cx_ct_transposelines_too_often_when_i/",
-          "publishedOn": "2022-03-11T23:05:27.000Z",
-          "wordCount": 411,
-          "title": "I'm hitting C-x C-t (transpose-lines) too often when I mean C-c C-t, so I'd like to set the former key binding to nil. I've made several attempts at the proper elisp, but to no avail. Could someone help me?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tc1r8b/my_boss_said_use_vs_code_it_will_give_side_tree/",
-          "author": null,
-          "description": "submitted by    /u/rakashraj  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tc1r8b/my_boss_said_use_vs_code_it_will_give_side_tree/",
-          "publishedOn": "2022-03-11T22:23:02.000Z",
-          "wordCount": 715,
-          "title": "My boss said use vs code it will give side tree and terminal. I did this for him.",
-          "imageUrl": "https://preview.redd.it/b52d9ti1ytm81.png?auto=webp&s=5f943c138ebc00dda7251ca0b9c5c1ba38bc8d8f"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tc1f4r/why_is_this_wrong_setq_orgidmethod_uuid/",
-          "author": null,
-          "description": "I think its default value is correct, but I wanted to set it explicitly. So I did this in init.el\n (setq org-id-method \"uuid\") \n Evidently that's not right. It doesn't work and the C-h v for the variable says something like\n Was 'uuid' now is \"uuid\" \n Can someone explain the difference between a single quoted vaule and a double quoted value, and how to explicitly set the former in elisp? Thanks!\n    submitted by    /u/Status-Detective-783  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tc1f4r/why_is_this_wrong_setq_orgidmethod_uuid/",
-          "publishedOn": "2022-03-11T22:06:51.000Z",
-          "wordCount": 199,
-          "title": "Why is this wrong: `(setq org-id-method \"uuid\")`?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tby5cs/orgmacimagepaste_paste_images_and_cropped_pdf/",
-          "author": null,
-          "description": "org-mac-image-paste — Paste images and cropped PDF clips directly into org files.\n emacs-mac only\n I've been trying to switch to Org-mode for note-taking, coming from Evernote, Notes.app, etc. I love the organizational power and security of plain text, but one thing I could never understand: why can't I just directly paste image/PDF data into an org file?\n I use this literally all the time, accumulating graphs, formulae, small screenshots, images from papers, websites, manuscripts, etc. The other key feature I needed was that cropped PDF data remained exactly that: a PDF file on disk. This is because I may later use it in talks, white-papers, etc., where preserving the vector quality is crucial.\n So, after some time trying (and failing) to convince myself such functionality must already exist, I wrote up a small package. Note that it unfortunately works only with the excellent emacs-mac variant, which provides (some) information about image data on the clipboard. I'm hopeful similar more general functionality could come to emacs/org in the future.\n    submitted by    /u/JDRiverRun  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tby5cs/orgmacimagepaste_paste_images_and_cropped_pdf/",
-          "publishedOn": "2022-03-11T19:34:09.000Z",
-          "wordCount": 306,
-          "title": "org-mac-image-paste — Paste images and cropped PDF clips directly into org files (Mac only)",
-          "imageUrl": "https://external-preview.redd.it/fNzv1AWhz02a8opk02DdnWYMNqFxWQaz3B1Rj8dHvKI.jpg?auto=webp&s=567e4ddb9a2bf25809821f15a80ea35dc40c11b2"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tbw7hs/for_those_who_live_inside_emacs_when_do_you_come/",
-          "author": null,
-          "description": "​\n I am on a journey to tried my best to live inside Emacs. (Just a fun challenge.)\n It would be much easier to live inside Emacs if I give up on JavaScript and give up on graphical dependencies.\n Just an add salt to the wound, I am using wsl2 with Ubuntu distro + window terminal + window. At times, I need to learn PowerShell command just to communicate effectively with window from within Emacs which is launched inside wsl2 Ubuntu distro.\n The problem I have now, mostly because I use either wsl2 or window are the following.\n  \nSeamlessly browse internet: Nynx should solve my problem, but I can't even install it in Ubuntu wsl2 currently. The problem is that I still want to stick with Chrome because ecosytem is more rich.\n communicating or share content with other people: I am not sure if it…",
-          "link": "https://www.reddit.com/r/emacs/comments/tbw7hs/for_those_who_live_inside_emacs_when_do_you_come/",
-          "publishedOn": "2022-03-11T18:10:19.000Z",
-          "wordCount": 1485,
-          "title": "For those who live inside Emacs, when do you come out?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tbtt5p/ill_keep_my_control_meta_escape_alt_keys_thank/",
-          "author": null,
-          "description": "submitted by    /u/samuel1604  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tbtt5p/ill_keep_my_control_meta_escape_alt_keys_thank/",
-          "publishedOn": "2022-03-11T16:26:12.000Z",
-          "wordCount": 165,
-          "title": "I'll keep my control meta escape alt keys, thank you very much",
-          "imageUrl": "https://external-preview.redd.it/ia04rO3af0hCFrev3oMc7c_U-WUFmkos9IuD4ZeZy5Q.jpg?auto=webp&s=881740d66681261f8ece547134860511a5ed8259"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tbn191/mu4e_missing_icons_in_mode_line/",
-          "author": null,
-          "description": "I have mu/mu4e 1.6.6 and all-the-icons installed, using the font DejaVu Sans Mono on ubuntu. There are a couple of icons in the mode line that have never shown up for me -- see https://imgur.com/a/NFkb1kc. My font doesn't have them I suppose. How can I work out what they are supposed to be and find a font that has them?\n    submitted by    /u/sunnyata  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tbn191/mu4e_missing_icons_in_mode_line/",
-          "publishedOn": "2022-03-11T10:12:24.000Z",
-          "wordCount": 418,
-          "title": "mu4e missing icons in mode line",
-          "imageUrl": "https://external-preview.redd.it/FpJnHFJlohyZD2jbM7XQGYU2ZKz9ClHyux_-tQJfgdU.jpg?auto=webp&s=91a3fcaf26234e4b01bdbf8a417ceb005c3e1e70"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/tbm76t/is_it_possible_to_have_an_emacs_setup_for_jupyter/",
-          "author": null,
-          "description": "Hi, \n I was a long time emacs user (5+ years), but left a few years ago at the start of my PhD, my main reason for abandoning was to move to VS code simply for easier use of jupyter notebooks. \n I need them to be easily sharable, so using ORG as a replacement isn't viable for me. \n Spell check, autocomplete and documentation are also very important to me. \n Does anyone have a good setup for editing Jupyter notebooks directly, without converting between formats in emacs? \n If so, could you share your workflow, I'd be very keen to get back into emacs. \n Thanks,\n AH\n    submitted by    /u/aaaaa_hhhhhh  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/tbm76t/is_it_possible_to_have_an_emacs_setup_for_jupyter/",
-          "publishedOn": "2022-03-11T09:12:27.000Z",
-          "wordCount": 246,
-          "title": "Is it possible to have an emacs setup for jupyter notebooks as good as VS Code?",
-          "imageUrl": null
         }
       ]
     },
@@ -11160,6 +11100,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2232@/discussions",
+          "author": "Will",
+          "description": "A writer can externalize thoughts via writing, review them and edit pieces that don't work. Write in a way that comprehends and explores relationships. Writing is the technology of thinking.\nPlease share what you have been working on or will be working on soon. Please share what you wish you'd be working on. Use this as a public accountably tool, as a way to start a conversation, and to socialize your understanding.\nPLEASE DON'T BE SHY!\n2022 Week 15\nLast Week\nSpent time developing programming chops.\nNot much success picking up my reading pace in Effective Notetaking.\nCreated a new blogging workflow.\nStarted boxing training.\nThis Week\nThis week, I'll meet with the New York Times writer Carl Zimmer as part of JAMM328.\nI'll be refining a shell script for inserting part of a note's file name as a title as the note's header.\nExpanding on and refactoring zettel stemming from my ideas about thinking in built environments.\nI will be reading some Rumi poetry that likely will stimulate ideas.\nI'm currently reading: Effective Notetaking by Fiona McPherson and One Long River of Song by Brian Doyle\nTrivia.\nThese are the titles of the last few notes I've created and am excited about. Show me yours! We are interested in seeing what you are up to, even if you have one or two newish zettel to share!\n- Architectural Traits Effect on Thinking [20220409]\n        - How does the built environment affect cognition?\n- Built environments shaped by human evolution [20220409]\n- Sascha's Helpful Critique [20220409]\n        - Critique of \"Thinking in Built Spaces 202203181638\"\n- The Restorative Nature of Windows [20220409]\n- High-ceilings Connection to Abstract Thought [20220409]\n- F-strings formatting power [20220408]\n- Insert-Title Shell Script [20220408]\n- Tipton Mining Data [20220407]",
+          "link": "https://forum.zettelkasten.de/discussion/2232/share-your-zk-plans-for-10-apr-16-apr-what-were-your-successes-from-last-week",
+          "publishedOn": "2022-04-10T19:12:19.000Z",
+          "wordCount": 472,
+          "title": "Share your ZK plans for 10 APR - 16 Apr? What were your successes from last week?",
+          "imageUrl": null
+        },
         {
           "id": "2231@/discussions",
           "author": "Annabella",
@@ -11568,16 +11518,6 @@
           "publishedOn": "2022-03-13T06:10:14.000Z",
           "wordCount": 651,
           "title": "Almost aphoristic definitions/descriptions of the Zettelkasten and the Method",
-          "imageUrl": null
-        },
-        {
-          "id": "2183@/discussions",
-          "author": "xal",
-          "description": "Hi,\nI am writing a book and would like some feedbacks and best practices from you, regarding the method and organization.\nI use now The Archive app and Google Docs.\nHere is my organization:\nI have a master file (a structure note) containing the outline of the book, ie the different chapters. Each chapter is a link in the structure note.\nIn the structure note, I put also some misc notes, like research notes.\nI put a special tag in the filename of the chapters (like @b1 for book number 1).\nI can check the total number of words up to date with the shell command: wc -w *@b1*.md\nThe step I didn't like very much is that I need to edit and compile the chapters in another tool. I use Google docs for that. Each time I find a mistake in my content, I need to modify the content in Google Docs and in The Archive app (source of my content). Not very efficient.\nPlease comment my workflow and share your practices :-)\nThanks",
-          "link": "https://forum.zettelkasten.de/discussion/2183/writing-a-book-with-the-zettelkasten-method-and-the-archive-app",
-          "publishedOn": "2022-03-11T21:01:39.000Z",
-          "wordCount": 502,
-          "title": "Writing a book with the Zettelkasten method and The Archive app",
           "imageUrl": null
         }
       ]
