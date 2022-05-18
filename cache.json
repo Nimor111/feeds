@@ -53,6 +53,56 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/usfaak/how_can_i_check_if_a_string_is_the_key_in_a/",
+          "author": null,
+          "description": "I have a function:\n getData :: DataDef -> TheState [Vars]\n getData dd = dog <- getgetDetails (getName dd) In $ delete (var dd) $ concatMap...\n and a Dictionary:\n myList :: Map String NewType\n myList = fromList [(\"String1\", StringNT1),(\"String2\", StringNT2)]\n The current getDetails function has a String as the first argument (from getName dd). Essentially getName dd creates a String and passes it as the first argument to getDetails.\n What I want to do is check if getName dd is in myList. If it is in my list, then I want the code to execute as it is, but if it is not in myList, I want getData to instead send pass arguments to getDetails2, which will be the same as getDetails but will have NewType as the first argument:\n getDetails2 (getName dd) In $ delete (var dd) $ concatMap..\n What I am looking for is something like this (in partial peudocode):\n ​\n getData :: DataDef -> TheState [Vars]\n getData dd = do\n g <- get\n let ToBeTested = getName dd\n if (myList ! ToBeTested) \n {\n getDetails2 (myList ! ToBeTested) In $ delete (var dd) $ concatMap...\n } else {\n getDetails (getName dd) In $ delete (var dd) $ concatMap...\n }\n If getName dd is in the list then execute getDetails2 with the NewType value from the key, otherwise execute the original getDetails.\n    submitted by    /u/pmdev1234  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/usfaak/how_can_i_check_if_a_string_is_the_key_in_a/",
+          "publishedOn": "2022-05-18T15:18:06.000Z",
+          "wordCount": 521,
+          "title": "How can I check if a String is the key in a dictionary, and depending on the result run one of two functions?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/usf4pu/opinions_on_the_most_elegant_way_to_recover_from/",
+          "author": null,
+          "description": "I have a bit of code that generates random valid (they may not make any sense of course but they should compile) C programs. Unfortunately I have cases where certain expression generation or statement generation rules may fail. I don't really have an elegant way to recover from these failures. I was wondering if anyone would be able to maybe give me some suggestions regarding as to how.\n Here is the start of the module:\n https://pastebin.com/MCqJ4szQ\n Here is a snippet of my code so you may understand what I am talking about:\n https://pastebin.com/iL6VQZDz \n I would prefer a better solution than to retry on failure (see line 6 of the snippet) . I would also like to generate variables when there are no valid types in the available variables, I know I could use catchError but I do think that is not as elegant as I would like.\n In addition, I do not like how I generate random integers to choose the execution path because then I need to program for the case where the generated integer goes out of bounds (even though it is hard coded to not do this). If you have better solutions, I would really appreciate hearing them.\n Thank you very much!\n Update: I will add more code as soon as I get back to my laptop, I thought the context might have been enough but I was wrong.\n    submitted by    /u/sub918  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/usf4pu/opinions_on_the_most_elegant_way_to_recover_from/",
+          "publishedOn": "2022-05-18T15:10:47.000Z",
+          "wordCount": 483,
+          "title": "Opinions on the most elegant way to recover from EitherT for a random program generator",
+          "imageUrl": "https://external-preview.redd.it/-WiKXADWH5lgU4gQv5fcDAQ9QKNBZTJ-D83BykIL2HA.jpg?auto=webp&s=07c121a0180003f7373863af66192b6ff6a937da"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/use5bt/what_are_the_rationales_of_the_functor/",
+          "author": null,
+          "description": "<$>: This one makes sense. <> kinda represents the context, and $ means function application. Thus overall it means apply function inside a context\n <*>: This one shows the context part, not sure why * though\n >>=: no clue\n  \n   submitted by    /u/nosarthur  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/use5bt/what_are_the_rationales_of_the_functor/",
+          "publishedOn": "2022-05-18T14:25:35.000Z",
+          "wordCount": 518,
+          "title": "What are the rationales of the functor, applicative, monad operator symbols?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/uryuhw/monoids_as_a_category/",
+          "author": null,
+          "description": "There is a way of viewing Monoid as a one-object Category. I want a Haskell-like name for this Category.\n -- >> Ok \"hi\" . Ok \"!\" . Ok \"!\" -- Ok \"hi!!\" type Ok :: Type -> Cat () newtype Ok m a b = Ok m \n A Category of a single object Cat () adds trivial typing to a Monoid, the values are arrows from '() to '(). It is effectively untyped as any two arrows can be composed. \n instance Monoid m => Category (Ok m) where id :: Ok m a a id = Ok mempty (.) :: Ok m b c -> Ok m a b -> Ok m a c Ok m1 . Ok m2 = Ok (m1 <> m2) -- >> Distance 10 . Distance 20 . id -- Distance 30 type Distance :: Cat () newtype Distance a b = Distance Int deriving Category via Ok (Sum Int) \n Questions:\n  \nWhat would you call the Ok type?\n  \nI like a variation of Typed to highlight that it takes an untyped Monoid and adjoins dummy types to it.\n Names like AsCategory and MonoidCat presume that it is exclusive to making Monoid a Category. It also lifts Group to Groupoid.\n \nNames like OneObject are not very descriptive. And actually nothing prevents Ok from being polymorpic in the object kind\n Ok :: Type -> Cat ob \n \n \nWould you define (>>>) = (<>) or (<<<) = (<>)?\n  \nThe regular composition operator is right-to-left, so choosing (.) = (<>) seems to flip the order.\n \nI did a poll with the results\n  \n14.9% — (>>>) = (<>) \n 12.8% — (<<<) = (<>)\n 31.9% — No right answer\n 40.4% — Doesn't matter\n  \nIt is easy enough to use Ok (Dual m) or Op (Ok m) to reverse the order but I would like justification of one choice over the other.\n \n \n    submitted by    /u/Iceland_jack  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/uryuhw/monoids_as_a_category/",
+          "publishedOn": "2022-05-17T23:01:51.000Z",
+          "wordCount": 982,
+          "title": "Monoids as a Category",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/urwyjh/convert_a_string_list_to_a_newtype_list_using_a/",
+          "author": null,
+          "description": "I have some code that defines an originalList as the concatenation of two String lists:\n originalList = keys one ++ keys two\n However I want originalList to be [NewType] instead of [String]. I need a function that converts the original [String] list into a [NewType] list.\n I have the following dictionary:\n dictList :: Map String NewType\n dictList = fromList [\n (\"string1\", String1),\n (\"string2\", String2)]\n How can I create a function for this conversion?\n newFunc :: [String] -> [NewType]\n newFunc = ...?\n Are there any libraries that can do this?\n    submitted by    /u/pmdev1234  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/urwyjh/convert_a_string_list_to_a_newtype_list_using_a/",
+          "publishedOn": "2022-05-17T21:32:13.000Z",
+          "wordCount": 364,
+          "title": "Convert a String list to a NewType list using a Dictionary.",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/urutbu/how_to_lower_an_ir/",
           "author": null,
           "description": "submitted by    /u/ltielen  \n [link]   [comments]",
@@ -1641,46 +1691,6 @@
           "wordCount": 177,
           "title": "[ANN] Hasklee - create interactive 3D objects / scenes",
           "imageUrl": "https://external-preview.redd.it/IiLSnWbccTUIbW6PI7TPy4WUfrA_Bc0aWmGYEoA4URE.jpg?auto=webp&s=a6800d213121eecdae701b9b3b1e345c4af6002a"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/u70c4c/introduction_to_doctests_in_haskell/",
-          "author": null,
-          "description": "submitted by    /u/Serokell  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/u70c4c/introduction_to_doctests_in_haskell/",
-          "publishedOn": "2022-04-19T08:37:20.000Z",
-          "wordCount": 166,
-          "title": "Introduction to Doctests in Haskell",
-          "imageUrl": "https://external-preview.redd.it/5-MCaMT8NA1jc56cBKuwu2Y95wdZDizlU9uAxYABRs0.jpg?auto=webp&s=132615f9c10ce6f97a6f802b7fc7b38ff31492ed"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/u6q05n/basic_questions_about_ghc_options/",
-          "author": null,
-          "description": "These questions are pretty basic, but I'm having a hard time making sure I'm doing things right. I have a .cabal file which I want to change in order to enable e.g. threading and optimization (https://github.com/tweag/monad-bayes/blob/master/monad-bayes.cabal). Looking at it, I don't see -O2 or -threading anywhere, so am I right in thinking those things aren't happening, or am I looking in the wrong place?\n ​\n    submitted by    /u/Limp_Step_6774  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/u6q05n/basic_questions_about_ghc_options/",
-          "publishedOn": "2022-04-18T22:57:22.000Z",
-          "wordCount": 364,
-          "title": "Basic questions about GHC options",
-          "imageUrl": "https://external-preview.redd.it/SZs8w2TEavyIB78wsJqP4wHCf8A5lRUH8iO2pIpgUKA.jpg?auto=webp&s=59f9ff540f37430d0f8c24a52f3e6c3eb6c987c4"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/u6mc4k/haskell_snap_framework/",
-          "author": null,
-          "description": "Hi!\n I followed the tutorial from Thoughtbot regarding writing a REST server in Haskell with Snap. Now, I want to parse data from this query string http://localhost:8000/sth?param=value.\n I tried with getQueryParam but doesn't seem to work.\n Code example: ```haskell -- in routes (\"/sth?param\", method GET getHandler)\n -- in getHandler getHandler = do params <- getQueryParam \"param\" modifyResponse $ setHeader \"Content-type\" \"application/json\" maybe (writeBS \"must specify echo/param in URL\") writeBS params\n ```\n Really don't know how to continue, and I need that format to be backward compatible with the API served by a server that I want to replace with the Haskel implementation.\n    submitted by    /u/23ars  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/u6mc4k/haskell_snap_framework/",
-          "publishedOn": "2022-04-18T20:13:05.000Z",
-          "wordCount": 219,
-          "title": "Haskell Snap Framework",
-          "imageUrl": "https://external-preview.redd.it/3KFwC5T2z1TGDf41eAA_ElvqZgOi7LJHzHUpnlJFQA8.jpg?auto=webp&s=73b79834b4c511d93d8f6a0d1e50ef69832a5362"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/u6burf/from_beginner_haskeller_to_finding_your_first/",
-          "author": null,
-          "description": "Hello everyone, I 've been working as a software developer for the past 9 years and in the past year I started learning Haskell and FP in general. I know enough Haskell to make some simple projects (interactive clis, web server JSON endpoints) but those are toys projects and for sure not following best Haskell practices. \n So, based on the above I have two questions. \n Firstly what are the next concepts/libraries that someone like me should learn? What are some good resources for production code best practices?\n For reference this is just a list of the things that are in my TOLEARN list. \n  \nmtl\n containers\n proper error handling\n lenses\n different preludes (RIO?)\n persistent\n conduit, pipes\n  \nSecond, what would you be more interested to see in a demo project from a potential hire? Is the use of specific libraries (like the ones above) important or would you focus more on basic language understanding?\n Looking forward for your answers!\n    submitted by    /u/miketsap  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/u6burf/from_beginner_haskeller_to_finding_your_first/",
-          "publishedOn": "2022-04-18T12:21:23.000Z",
-          "wordCount": 516,
-          "title": "From Beginner Haskeller to finding your first Haskell job.",
-          "imageUrl": null
         }
       ]
     },
@@ -1689,6 +1699,36 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/uskyg6/refer_to_child_type_in_abstract_class/",
+          "author": null,
+          "description": "Maybe this is a stupid question, and there's a better way to do what I'm trying to do. But I feel like this should be possible. \n I want to declare an abstract base class that requires its descendent classes to implement methods that return their own types.\n So for example:\n ``` abstract class Parent { def +(that: <child_type>): <child_type> }\n case class Child() extends Parent { def +(that: Child): Child = ??? } ```\n Any suggestions?\n Thanks!\n    submitted by    /u/redesckey  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/uskyg6/refer_to_child_type_in_abstract_class/",
+          "publishedOn": "2022-05-18T19:39:54.000Z",
+          "wordCount": 279,
+          "title": "Refer to child type in abstract class",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/usfocp/time_complexities_of_scala_apis/",
+          "author": null,
+          "description": "Let's say we have a list of numbers containing 1 billion numbers, what it is time and space complexity of the following code ?\n  \n​\n  list.sliding(1000, 1).map(calcMedian).toList \n  \nHow would you solve above problem in real life if it were 100 million number streams every second? how distributed computing frameworks like Akka Streams or Apache Storm deals with it efficiently? also how concurrency can be achieved so that latency is lowest ?\n \nWhere do I find bigO notations for apis like 'Sliding' and others?\n \n    submitted by    /u/anamak9  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/usfocp/time_complexities_of_scala_apis/",
+          "publishedOn": "2022-05-18T15:36:00.000Z",
+          "wordCount": 507,
+          "title": "Time complexities of Scala APIs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/urytym/you_already_know_monadic_stuff/",
+          "author": null,
+          "description": "submitted by    /u/sake_92  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/urytym/you_already_know_monadic_stuff/",
+          "publishedOn": "2022-05-17T23:01:07.000Z",
+          "wordCount": 233,
+          "title": "You already know Monad(ic) stuff",
+          "imageUrl": "https://external-preview.redd.it/Hg8czD6CiYeicJZOmgVpmTq6fPmWqaqfh1UokCeuN1w.jpg?auto=webp&s=a125c9b157580d5027650aa29c5096b23c9a9cfc"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/urfz17/why_every_year_on_stack_overflow_developer_survey/",
           "author": null,
@@ -2428,46 +2468,6 @@
           "wordCount": 248,
           "title": "Getting an error installing metals for lsp-mode",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/u6vhzx/java_to_scala_converter_online/",
-          "author": null,
-          "description": "submitted by    /u/CPROGRAMMERS  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/u6vhzx/java_to_scala_converter_online/",
-          "publishedOn": "2022-04-19T03:28:48.000Z",
-          "wordCount": 133,
-          "title": "Java to scala converter online",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/u6i4iy/how_to_grasp_the_kafka_architecture_in_10_lines/",
-          "author": null,
-          "description": "submitted by    /u/SuperUser2112  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/u6i4iy/how_to_grasp_the_kafka_architecture_in_10_lines/",
-          "publishedOn": "2022-04-18T17:09:33.000Z",
-          "wordCount": 119,
-          "title": "How to grasp the Kafka Architecture in 10 Lines | For Senior Programmers",
-          "imageUrl": "https://external-preview.redd.it/eyzJ8XDsLfIKPdCelRZYCGOx30XwdlPoTxdqi6-RI3g.jpg?auto=webp&s=6d5fc71bde5c2534ef639ac8d4d95a4da8cc87e3"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/u6gps1/scala_oofp_design_sample/",
-          "author": null,
-          "description": "submitted by    /u/alexelcu  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/u6gps1/scala_oofp_design_sample/",
-          "publishedOn": "2022-04-18T16:06:40.000Z",
-          "wordCount": 380,
-          "title": "Scala OOFP Design Sample",
-          "imageUrl": "https://external-preview.redd.it/RndDiUsi8fqoKuFPpXraItminFsMnJ00WevshSvtLe4.jpg?auto=webp&s=efdd4d4f054247e50374e5c36aa2c7b0aa375dce"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/u6bkv6/need_of_inspiration_to_say_byebye_to_my_favorite/",
-          "author": null,
-          "description": "I have been using Netbeans since 2009 I think. It doesn't support scala. The attachment to this IDE is literally the single biggest reason stopping me from jumping to scala. It is not like I haven't worked on something/anything else. I have a high resistance to learning new languages, somehow I learnt javascript, HTML, css etc. Now to move to newer domains I need to say bye-bye to IDE. Any inspirational comments, stories?\n    submitted by    /u/ivanvelikanov  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/u6bkv6/need_of_inspiration_to_say_byebye_to_my_favorite/",
-          "publishedOn": "2022-04-18T12:06:47.000Z",
-          "wordCount": 332,
-          "title": "Need of inspiration to say bye-bye to my favorite /ide",
-          "imageUrl": null
         }
       ]
     },
@@ -2542,16 +2542,6 @@
           "wordCount": 2358,
           "title": "Introduction to Haskell Typeclasses",
           "imageUrl": "https://serokell.io/files/48/opengraph.48ae26e8.04.07_normal-Typeclasses_in_Haskell.png"
-        },
-        {
-          "id": "https://serokell.io/blog/doctests-in-haskell",
-          "author": "hi@serokell.io (Serokell staff)",
-          "description": "Documenting software can be challenging, but it doesn’t always need to be so. Read this article to learn about doctests – a concept that makes the documentation process pleasant and effective.",
-          "link": "https://serokell.io/blog/doctests-in-haskell",
-          "publishedOn": "2022-04-19T00:00:00.000Z",
-          "wordCount": 1526,
-          "title": "Introduction to Doctests in Haskell",
-          "imageUrl": "https://serokell.io/files/cv/opengraph.cvi56c3k.normal-Doctests_in_Haskell.png"
         }
       ]
     },
@@ -2619,6 +2609,56 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/usks60/organize_your_life_in_plain_text_update/",
+          "author": null,
+          "description": "Hello everyone. I recently was introduced to the world of Emacs and Org mode and needless to say it has completely taken over my life. I am reading through Bernt Hansen's \"Organize Your Life in Plain Text!\" document which has been extremely helpful. However it appears the document is somewhat outdated\n I'm pretty sure it hasn't been updated since 2015 (judging by the version). The screenshots are outdated. When I add the Lisp code under section 9.1 \"Clock setup\", then I go to clock in a task with \"C-c C-x C-i\", I receive the following message in the echo area:\n Symbol’s function definition is void: bh/is-task-p\n Anyways, I am just curious: does anybody know of any documents similar to this one that are more up to date? I am very grateful to Bernt Hansen for creating this document, as it's been an enormous help to me thus far. But I would just like to see if there's any other similar documents that are up to date.\n    submitted by    /u/Top-Spend-1589  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/usks60/organize_your_life_in_plain_text_update/",
+          "publishedOn": "2022-05-18T19:31:45.000Z",
+          "wordCount": 476,
+          "title": "Organize Your Life in Plain Text! Update?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/us95pe/does_orgmode_have_nlp_natural_language_processing/",
+          "author": null,
+          "description": "For example: \n \"Walk the dog at 4:30pm on Sunday\" automatically parses to creating a task \"Walk the dog\" at 4:30pm on Sunday. \n Todoist has this feature, does org-mode also have it?\n    submitted by    /u/better-vessel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/us95pe/does_orgmode_have_nlp_natural_language_processing/",
+          "publishedOn": "2022-05-18T09:45:31.000Z",
+          "wordCount": 411,
+          "title": "Does Org-mode have NLP (Natural Language Processing)?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/us88we/how_to_create_gallery_with_orgpublish/",
+          "author": null,
+          "description": "submitted by    /u/DeltaBuffalo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/us88we/how_to_create_gallery_with_orgpublish/",
+          "publishedOn": "2022-05-18T08:36:13.000Z",
+          "wordCount": 119,
+          "title": "how to create gallery with org-publish",
+          "imageUrl": "https://external-preview.redd.it/TgfcYOz-0lwRp-W-QWby5S1vQbg7vvJ_sgEFsupIT4k.jpg?auto=webp&s=531146e629d863da2b131bc614be7d03f287b51f"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/us74fh/any_tablets_for_handwrittennotestoorgfiles/",
+          "author": null,
+          "description": "I'm curious about anyone's experience with a tablet (e.g. Samsung Galaxy Tab S6/7) that supports handwritten notes and (somehow) converting those notes to org files. I know org is simple text under the hood, but I'm more curious about a workflow. In other words:\n Does anyone write handwritten notes on a tablet and then convert those to org files? How labor intensive is it? What applications are involved?\n    submitted by    /u/codethrasher  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/us74fh/any_tablets_for_handwrittennotestoorgfiles/",
+          "publishedOn": "2022-05-18T07:09:52.000Z",
+          "wordCount": 524,
+          "title": "Any tablets for handwritten-notes-to-org-files?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/us20q0/svglib_icons_in_org_files/",
+          "author": null,
+          "description": "i saw this repository\n and i want to use thoses icons in my org files(automatically converts for example, a \"TODO\" into the referent icon), but i don't have much experience with emacs-lisp and neither org-mode (sorry for being a newbie). i tried to append (require 'svg-lib) and also i donwloaded the repository and before did it before requiring the module (i'm not sure if this is the right name)\n    submitted by    /u/DonnieSyno  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/us20q0/svglib_icons_in_org_files/",
+          "publishedOn": "2022-05-18T01:51:11.000Z",
+          "wordCount": 261,
+          "title": "svg-lib icons in org files",
+          "imageUrl": "https://external-preview.redd.it/yvGBw6khZynNGA5N4ADtlrHaMe5coiJg4R6SKa6hQAw.jpg?auto=webp&s=ef414ed61a54ac3420ad12d44a890b9bda379846"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/urfoo2/orgagenda_custom_command_view/",
           "author": null,
@@ -3267,6 +3307,96 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/vdiff-magit-20220518.1948.el",
+          "author": null,
+          "description": "The vdiff-magit package has been updated to version 20220518.1948.",
+          "link": "https://melpa.org/#/vdiff-magit",
+          "publishedOn": "2022-05-18T19:48:00.000Z",
+          "wordCount": 105,
+          "title": "vdiff-magit (20220518.1948) --- magit integration for vdiff",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/zig-mode-20220518.1715.el",
+          "author": null,
+          "description": "The zig-mode package has been updated to version 20220518.1715.",
+          "link": "https://melpa.org/#/zig-mode",
+          "publishedOn": "2022-05-18T17:15:00.000Z",
+          "wordCount": 105,
+          "title": "zig-mode (20220518.1715) --- A major mode for the Zig programming language",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/kotlin-mode-20220518.1700.tar",
+          "author": null,
+          "description": "The kotlin-mode package has been updated to version 20220518.1700.",
+          "link": "https://melpa.org/#/kotlin-mode",
+          "publishedOn": "2022-05-18T17:00:00.000Z",
+          "wordCount": 105,
+          "title": "kotlin-mode (20220518.1700) --- Major mode for kotlin",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/simpleclip-20220518.1251.el",
+          "author": null,
+          "description": "The simpleclip package has been updated to version 20220518.1251.",
+          "link": "https://melpa.org/#/simpleclip",
+          "publishedOn": "2022-05-18T12:51:00.000Z",
+          "wordCount": 105,
+          "title": "simpleclip (20220518.1251) --- Simplified access to the system clipboard",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/yaml-20220518.1229.el",
+          "author": null,
+          "description": "The yaml package has been updated to version 20220518.1229.",
+          "link": "https://melpa.org/#/yaml",
+          "publishedOn": "2022-05-18T12:29:00.000Z",
+          "wordCount": 105,
+          "title": "yaml (20220518.1229) --- YAML parser for Elisp",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-anki-20220518.1132.el",
+          "author": null,
+          "description": "The org-anki package has been updated to version 20220518.1132.",
+          "link": "https://melpa.org/#/org-anki",
+          "publishedOn": "2022-05-18T11:32:00.000Z",
+          "wordCount": 105,
+          "title": "org-anki (20220518.1132) --- Synchronize org-mode entries to Anki",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dtrt-indent-20220518.807.tar",
+          "author": null,
+          "description": "The dtrt-indent package has been updated to version 20220518.807.",
+          "link": "https://melpa.org/#/dtrt-indent",
+          "publishedOn": "2022-05-18T08:07:00.000Z",
+          "wordCount": 105,
+          "title": "dtrt-indent (20220518.807) --- Adapt to foreign indentation offsets",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/call-graph-20220518.222.tar",
+          "author": null,
+          "description": "The call-graph package has been updated to version 20220518.222.",
+          "link": "https://melpa.org/#/call-graph",
+          "publishedOn": "2022-05-18T02:22:00.000Z",
+          "wordCount": 105,
+          "title": "call-graph (20220518.222) --- Generate call graph for c/c++ functions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/rspec-mode-20220517.2325.tar",
+          "author": null,
+          "description": "The rspec-mode package has been updated to version 20220517.2325.",
+          "link": "https://melpa.org/#/rspec-mode",
+          "publishedOn": "2022-05-17T23:25:00.000Z",
+          "wordCount": 105,
+          "title": "rspec-mode (20220517.2325) --- Enhance ruby-mode for RSpec",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/mu4e-maildirs-extension-20220517.1852.el",
           "author": null,
           "description": "The mu4e-maildirs-extension package has been updated to version 20220517.1852.",
@@ -3304,6 +3434,16 @@
           "publishedOn": "2022-05-17T15:01:00.000Z",
           "wordCount": 105,
           "title": "auto-compile (20220517.1501) --- Automatically compile Emacs Lisp libraries",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-link-beautify-20220517.1208.el",
+          "author": null,
+          "description": "The org-link-beautify package has been updated to version 20220517.1208.",
+          "link": "https://melpa.org/#/org-link-beautify",
+          "publishedOn": "2022-05-17T12:08:00.000Z",
+          "wordCount": 105,
+          "title": "org-link-beautify (20220517.1208) --- Beautify Org Links",
           "imageUrl": null
         },
         {
@@ -3857,6 +3997,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/julia-snail-20220512.539.tar",
+          "author": null,
+          "description": "The julia-snail package has been updated to version 20220512.539.",
+          "link": "https://melpa.org/#/julia-snail",
+          "publishedOn": "2022-05-12T05:39:00.000Z",
+          "wordCount": 105,
+          "title": "julia-snail (20220512.539) --- Julia Snail",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/live-py-mode-20220512.34.tar",
           "author": null,
           "description": "The live-py-mode package has been updated to version 20220512.34.",
@@ -4187,6 +4337,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/el-patch-20220509.2253.tar",
+          "author": null,
+          "description": "The el-patch package has been updated to version 20220509.2253.",
+          "link": "https://melpa.org/#/el-patch",
+          "publishedOn": "2022-05-09T22:53:00.000Z",
+          "wordCount": 105,
+          "title": "el-patch (20220509.2253) --- Future-proof your Elisp",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/org-jira-20220509.2058.tar",
           "author": null,
           "description": "The org-jira package has been updated to version 20220509.2058.",
@@ -4374,6 +4534,16 @@
           "publishedOn": "2022-05-09T08:23:00.000Z",
           "wordCount": 105,
           "title": "lsp-grammarly (20220509.823) --- LSP Clients for Grammarly",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ess-20220509.801.tar",
+          "author": null,
+          "description": "The ess package has been updated to version 20220509.801.",
+          "link": "https://melpa.org/#/ess",
+          "publishedOn": "2022-05-09T08:01:00.000Z",
+          "wordCount": 105,
+          "title": "ess (20220509.801) --- Emacs Speaks Statistics",
           "imageUrl": null
         },
         {
@@ -7105,136 +7275,6 @@
           "wordCount": 105,
           "title": "zk (20220419.1204) --- Functions for working with Zettelkasten-style linked notes",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ox-pandoc-20220419.750.el",
-          "author": null,
-          "description": "The ox-pandoc package has been updated to version 20220419.750.",
-          "link": "https://melpa.org/#/ox-pandoc",
-          "publishedOn": "2022-04-19T07:50:00.000Z",
-          "wordCount": 105,
-          "title": "ox-pandoc (20220419.750) --- An Org-mode exporter using pandoc",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ein-20220419.735.tar",
-          "author": null,
-          "description": "The ein package has been updated to version 20220419.735.",
-          "link": "https://melpa.org/#/ein",
-          "publishedOn": "2022-04-19T07:35:00.000Z",
-          "wordCount": 105,
-          "title": "ein (20220419.735) --- Emacs IPython Notebook",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elisp-lint-20220419.252.el",
-          "author": null,
-          "description": "The elisp-lint package has been updated to version 20220419.252.",
-          "link": "https://melpa.org/#/elisp-lint",
-          "publishedOn": "2022-04-19T02:52:00.000Z",
-          "wordCount": 105,
-          "title": "elisp-lint (20220419.252) --- Basic linting for Emacs Lisp",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/which-key-20220419.227.el",
-          "author": null,
-          "description": "The which-key package has been updated to version 20220419.227.",
-          "link": "https://melpa.org/#/which-key",
-          "publishedOn": "2022-04-19T02:27:00.000Z",
-          "wordCount": 105,
-          "title": "which-key (20220419.227) --- Display available keybindings in popup",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/doc-show-inline-20220419.101.el",
-          "author": null,
-          "description": "The doc-show-inline package has been updated to version 20220419.101.",
-          "link": "https://melpa.org/#/doc-show-inline",
-          "publishedOn": "2022-04-19T01:01:00.000Z",
-          "wordCount": 105,
-          "title": "doc-show-inline (20220419.101) --- Show doc-strings found in external files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/icomplete-vertical-20220418.2119.tar",
-          "author": null,
-          "description": "The icomplete-vertical package has been updated to version 20220418.2119.",
-          "link": "https://melpa.org/#/icomplete-vertical",
-          "publishedOn": "2022-04-18T21:19:00.000Z",
-          "wordCount": 105,
-          "title": "icomplete-vertical (20220418.2119) --- Display icomplete candidates vertically",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/clojure-mode-20220418.2015.el",
-          "author": null,
-          "description": "The clojure-mode package has been updated to version 20220418.2015.",
-          "link": "https://melpa.org/#/clojure-mode",
-          "publishedOn": "2022-04-18T20:15:00.000Z",
-          "wordCount": 105,
-          "title": "clojure-mode (20220418.2015) --- Major mode for Clojure code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pdf-tools-20220418.1555.tar",
-          "author": null,
-          "description": "The pdf-tools package has been updated to version 20220418.1555.",
-          "link": "https://melpa.org/#/pdf-tools",
-          "publishedOn": "2022-04-18T15:55:00.000Z",
-          "wordCount": 105,
-          "title": "pdf-tools (20220418.1555) --- Support library for PDF documents",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/apropospriate-theme-20220418.1554.tar",
-          "author": null,
-          "description": "The apropospriate-theme package has been updated to version 20220418.1554.",
-          "link": "https://melpa.org/#/apropospriate-theme",
-          "publishedOn": "2022-04-18T15:54:00.000Z",
-          "wordCount": 105,
-          "title": "apropospriate-theme (20220418.1554) --- A colorful, low-contrast, light & dark theme set for Emacs with a fun name.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/stem-reading-mode-20220418.1136.el",
-          "author": null,
-          "description": "The stem-reading-mode package has been updated to version 20220418.1136.",
-          "link": "https://melpa.org/#/stem-reading-mode",
-          "publishedOn": "2022-04-18T11:36:00.000Z",
-          "wordCount": 105,
-          "title": "stem-reading-mode (20220418.1136) --- Highlight word stems for speed-reading",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/telega-20220418.1131.tar",
-          "author": null,
-          "description": "The telega package has been updated to version 20220418.1131.",
-          "link": "https://melpa.org/#/telega",
-          "publishedOn": "2022-04-18T11:31:00.000Z",
-          "wordCount": 105,
-          "title": "telega (20220418.1131) --- Telegram client (unofficial)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/wordreference-20220418.913.el",
-          "author": null,
-          "description": "The wordreference package has been updated to version 20220418.913.",
-          "link": "https://melpa.org/#/wordreference",
-          "publishedOn": "2022-04-18T09:13:00.000Z",
-          "wordCount": 105,
-          "title": "wordreference (20220418.913) --- Interface for wordreference.com",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/feature-mode-20220418.848.tar",
-          "author": null,
-          "description": "The feature-mode package has been updated to version 20220418.848.",
-          "link": "https://melpa.org/#/feature-mode",
-          "publishedOn": "2022-04-18T08:48:00.000Z",
-          "wordCount": 105,
-          "title": "feature-mode (20220418.848) --- Major mode for editing Gherkin (i.e. Cucumber) user stories",
-          "imageUrl": null
         }
       ]
     },
@@ -7243,6 +7283,206 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uslsyj/will_mu4embsync_not_work_for_gmail_after_this/",
+          "author": null,
+          "description": "I was just scrolling HN when I came by this post: https://news.ycombinator.com/item?id=31420433. It seems Google is going to disable IMAP by end of this month. Does it mean my current setup won't work in June? If Imap is gone, probably the only viable option would be to use Davmail server.\n    submitted by    /u/ndpian  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uslsyj/will_mu4embsync_not_work_for_gmail_after_this/",
+          "publishedOn": "2022-05-18T20:19:49.000Z",
+          "wordCount": 155,
+          "title": "Will mu4e+mbsync not work for Gmail after this month?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usl15u/how_to_build_an_editor_with_emacs_lisp_06/",
+          "author": null,
+          "description": "submitted by    /u/lxsameer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usl15u/how_to_build_an_editor_with_emacs_lisp_06/",
+          "publishedOn": "2022-05-18T19:43:30.000Z",
+          "wordCount": 121,
+          "title": "How to build an editor with Emacs Lisp - 06 Property & Association Lists",
+          "imageUrl": "https://external-preview.redd.it/QmhiuTEhwBXBqEHlEnLnjKbnn80Jo8-P8Ff4jJ5gGaI.jpg?auto=webp&s=c5c7e381508a9c5fb18221c2f9d24ea6e6195627"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usipqf/how_to_move_the_cursor_from_one_buffer_to_another/",
+          "author": null,
+          "description": "I used to know this key binding, but I forgot it. I recently started using evil mode, not sure if that matters. \n ​\n I'm not talking about C-x b, I don't want the current buffer to change, I want to move the cursor. \n Thanks.\n    submitted by    /u/keysus_christ  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usipqf/how_to_move_the_cursor_from_one_buffer_to_another/",
+          "publishedOn": "2022-05-18T17:56:15.000Z",
+          "wordCount": 333,
+          "title": "How to move the cursor from one buffer to another quickly",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ushfzn/python_ide_using_eglot/",
+          "author": null,
+          "description": "Anyone know of a modern tutorial for beginners teaching how to setup Emacs as a Python IDE, much like this one, using Eglot instead of Elpy?\n    submitted by    /u/International-Can107  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ushfzn/python_ide_using_eglot/",
+          "publishedOn": "2022-05-18T16:57:02.000Z",
+          "wordCount": 288,
+          "title": "Python IDE using Eglot?",
+          "imageUrl": "https://external-preview.redd.it/U9crBZ-GpAdfKx4mn1YCaWssvrEplVgupiDxixO14zA.jpg?auto=webp&s=171346680a56bc7452b1b17d66de9f9bcd9e5f5a"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usghki/living_the_eshell_dream_a_reduction_in_latency/",
+          "author": null,
+          "description": "submitted by    /u/tdodgeconsulting  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usghki/living_the_eshell_dream_a_reduction_in_latency/",
+          "publishedOn": "2022-05-18T16:12:52.000Z",
+          "wordCount": 629,
+          "title": "Living The Eshell Dream: A Reduction in Latency From 70 Seconds to 3 Seconds",
+          "imageUrl": "https://external-preview.redd.it/bB1ehPb7lrJbOeiHsg0PxEBzXnC9ZYDtefGNId5JTag.jpg?auto=webp&s=b7f4eae6d0aa8c699c969430f042c89e2d3f1da4"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usgbjq/per_project_projectcompile_history_in_projectel/",
+          "author": null,
+          "description": "this is a great feature from projectile I'm missing quite a lot lately, so I was curious if anyone had already done this or I perhaps missed something in customize-group project RET.\n It's alright to use M-r if I remember the command, but thats not the usual case lol.\n    submitted by    /u/paretoOptimalDev  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usgbjq/per_project_projectcompile_history_in_projectel/",
+          "publishedOn": "2022-05-18T16:05:16.000Z",
+          "wordCount": 144,
+          "title": "Per project project-compile history in project.el?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usf1m8/any_suggestions_for_a_common_lisp_configuration/",
+          "author": null,
+          "description": "I’m trying to determine what emacs plugins are the absolute best for Common Lisp (for things like intellisense and fly check). \n Thanks you guys!\n    submitted by    /u/taptrappapalapa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usf1m8/any_suggestions_for_a_common_lisp_configuration/",
+          "publishedOn": "2022-05-18T15:06:44.000Z",
+          "wordCount": 178,
+          "title": "Any suggestions for a Common Lisp configuration?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usdden/remove_line_number_in_vterm/",
+          "author": null,
+          "description": "I use relative line number mode for evil, how can I disable it in vterm please?\n    submitted by    /u/IcePhoneX_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usdden/remove_line_number_in_vterm/",
+          "publishedOn": "2022-05-18T13:48:45.000Z",
+          "wordCount": 159,
+          "title": "remove line number in vterm",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usbx06/is_it_possible_to_make_word_jumps_in_emacs_less/",
+          "author": null,
+          "description": "I'm starting to really use emacs for some tasks (org-mode mostly), but one thing confusing me is how eager emacs jumps/kills over words. Say, I have a few lines of code:\n  (goto-char beg-line-point) (backward-kill-word 1)) \n If my cursor is at the beginning of backward-... and I start jumping or killing words backward, what I expect (and have in, say, my VSCode editor) is first jump to beginning of text ((), then to the beginning of line, then to the closing parenthesis on the previous line, then to the end of ...-point (after t) - and only then to before p. But what I get in emacs is it jumps to before p in ...-point immediately on first press.\n Can I somehow reconfigure emacs' word recognition for it to jump words more accurately? Maybe configure word beginning/ending regexp to add symbols/newline to them?\n    submitted by    /u/artyhedgehog  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usbx06/is_it_possible_to_make_word_jumps_in_emacs_less/",
+          "publishedOn": "2022-05-18T12:37:39.000Z",
+          "wordCount": 268,
+          "title": "Is it possible to make word jumps in emacs less eager",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usbj4i/just_a_show_of_appreciation/",
+          "author": null,
+          "description": "For chocolate, org-modern and doom-modeline in particular, and org-mode, magit and so many more too. Thanks so much for contributing to the community in any way you do, it's a beautiful thing\n Have a very nice day :)\n https://preview.redd.it/j2aodsvw58091.png?width=1844&format=png&auto=webp&s=af6a8e0a05fef6813cebbf81acb957787f043f7a\n    submitted by    /u/No-Jackfruit3921  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usbj4i/just_a_show_of_appreciation/",
+          "publishedOn": "2022-05-18T12:16:45.000Z",
+          "wordCount": 151,
+          "title": "Just a show of appreciation",
+          "imageUrl": "https://external-preview.redd.it/CDJ3t0cn2m97lpwjVF5Jl-Wm4Hf1SdMs55naZwDYzsI.jpg?auto=webp&s=ae78dc70ba43231812d01921c476db9430b3b2b1"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usav37/what_exactly_is_the_mode_for_latex_documents/",
+          "author": null,
+          "description": "This seems like a silly question, but I need to know the mode for LaTeX documents. I am trying to set it up with Schlau Compile so all I need to do to produce the PDF is to hit a single key.\n Here is my configuration attempts:\n https://preview.redd.it/3dnsb5bb18091.png?width=338&format=png&auto=webp&s=8810b3b14b083d8392ff08a39152a65c56c53cd6\n Neither latex-mode nor tex-mode works. Any help or suggestions would be greately appeciated.\n    submitted by    /u/LordAlveric  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usav37/what_exactly_is_the_mode_for_latex_documents/",
+          "publishedOn": "2022-05-18T11:40:50.000Z",
+          "wordCount": 246,
+          "title": "What exactly is the mode for LaTeX documents?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/usa66x/can_you_create_gui_interfaces_and_tables_like/",
+          "author": null,
+          "description": "These screen recordings are taken in Obsidian: https://imgur.com/a/zxSrtgl \n It showcases tables and Kanban boards in Obsidian. I'm wondering if these can be done in Emacs too.\n    submitted by    /u/better-vessel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/usa66x/can_you_create_gui_interfaces_and_tables_like/",
+          "publishedOn": "2022-05-18T10:57:10.000Z",
+          "wordCount": 272,
+          "title": "Can you create GUI interfaces and tables like these?",
+          "imageUrl": "https://external-preview.redd.it/u5ab0tbyCW3bfQAZvseKiVzhdmxvFDqxX__MdgYzMNc.jpg?auto=webp&s=baf69e3b4d62b83994e5ac70742a4faaef04ea28"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/us8guw/suggestions_for_emacs_mode_that_can_do_internal/",
+          "author": null,
+          "description": "Hi\n I am new to emacs.\n I have a simple need in mind and would like to ask if there exists a mode for my requirements.\n ​\n I have a large library of txt files in the range of 1-2 millions (archival stuff).\n What I basically look for is some mode that can do something along the lines of:\n - Internal links that can reference particular paragraphs in other files (in Obsidian called 'link to blocks')\n - Transclusion\n ... and do so with the large number of files; that is to say, not a personal knowledge base, but a solid archival library.\n I have in mind pretty much what Obsidian internal links can do.\n I know there is howm, freex, and org-roam (though I've heard the latter can only handle well personal knowledge base, not a larger archive library).\n    submitted by    /u/sajmunko  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/us8guw/suggestions_for_emacs_mode_that_can_do_internal/",
+          "publishedOn": "2022-05-18T08:53:46.000Z",
+          "wordCount": 335,
+          "title": "Suggestions for emacs mode that can do internal links",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/us8fx2/change_setfaceattribute_for_a_specific_theme/",
+          "author": null,
+          "description": "I am using Protesilaos Stavrou's excellent modus-themes, and I am loving it.\n Now I'd like to add a gray background to code blocks in org-files, and I can make it work with the code below, but whenever I re-open a buffer, I need to re-evaluate the code below.\n How can I make the change permanent, without re-evaluationg my init.el file constantly?\n ;;;; add colors to code and quote blocks (setq org-fontify-quote-and-verse-blocks t) ;; https://stackoverflow.com/questions/44811679/orgmode-change-code-block-background-color ;; The example below will darken the code block by 4 percent (notice the number 4 at the last parameter) relative to the background color of your emacs theme. However, if you change your theme during editing the color of the code block will stay the same. (require 'color) (set-face-attribute 'org-block nil :background (color-darken-name (face-attribute 'default :background) 4)) ;; 4% darker \n Edit\n Apparently the theme comes with lots of customization options, see here: https://elpa.gnu.org/packages/modus-themes.html\n So M-x customize-variable RET modus-themes-org-blocks RET give me the option to change the background of org-blocks.\n    submitted by    /u/pragmat1c1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/us8fx2/change_setfaceattribute_for_a_specific_theme/",
+          "publishedOn": "2022-05-18T08:51:38.000Z",
+          "wordCount": 341,
+          "title": "Change set-face-attribute for a specific theme permanently",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/us7zae/weekly_tips_tricks_c_thread/",
+          "author": null,
+          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n See this search for previous \"Weekly Tips, Tricks, &c.\" Threads.\n Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/us7zae/weekly_tips_tricks_c_thread/",
+          "publishedOn": "2022-05-18T08:15:10.000Z",
+          "wordCount": 324,
+          "title": "Weekly Tips, Tricks, &c. Thread",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/us7ncv/gnu_emacs_as_a_lightweight_ide_rename_symbol/",
+          "author": null,
+          "description": "​\n https://preview.redd.it/zbhy7qa7w6091.png?width=1280&format=png&auto=webp&s=10d21c944215ee360efcf10eda43e9d90b4c9e36\n Video: https://youtu.be/vVyHIiwfS9c\n Details: https://lifeofpenguin.blogspot.com/2021/04/gnu-emacs-as-lightweight-ide.html\n    submitted by    /u/atamariya  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/us7ncv/gnu_emacs_as_a_lightweight_ide_rename_symbol/",
+          "publishedOn": "2022-05-18T07:49:33.000Z",
+          "wordCount": 105,
+          "title": "GNU Emacs as a lightweight IDE (Rename symbol)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/us7mho/a_demo_of_common_lisp_in_emacs_and_slime_how_to/",
+          "author": null,
+          "description": "Hi community, I started my Lisp journey with Emacs, as everybody else, and I now like Common Lisp very much. In the following video I show how to create a project, how to call the GitHub API, parse JSON, and create a binary to use our app from the terminal. I do this from Emacs and SLIME, the IDE for CL. https://www.youtube.com/watch?v=TAtwcBh1QLg \n If you wrote some Elisp, you will notice differences. For example, the REPL is different, more featureful than IELM, that I don't use that much for Elisp. We have an interactive debugger with restarts (actions we can choose, in the video I go to the source file, I re-compile the function, I come back to the debugger and I choose \"retry\", and the call passes). As a developer we can set our own restarts, of course.\n Some other things I do are: co…",
+          "link": "https://www.reddit.com/r/emacs/comments/us7mho/a_demo_of_common_lisp_in_emacs_and_slime_how_to/",
+          "publishedOn": "2022-05-18T07:47:42.000Z",
+          "wordCount": 570,
+          "title": "A demo of Common Lisp in Emacs and SLIME: how to call an API, parse JSON and build a binary: another Lisp for other purposes",
+          "imageUrl": "https://external-preview.redd.it/cBrDMJEt2gR2DAGJBPvRO5TtiUbWoecGsVSe9eSwYik.jpg?auto=webp&s=b18367add8d91cea566511a5e420cc935a8d5b79"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/us51if/please_tell_me_about_the_different_approaches_to/",
+          "author": null,
+          "description": "After seeing today's thread on Mastering Emacs' article on hippie-expand, and seeing in its comments many of the same things that have confused me for several months now, I thought it would be a good time to get this straightened out in my config once and for all.\n I know there are a lot of options for text expansion, and they each seem to have slightly different preconcepts, encouraging slightly different use.\n Emacs' built in 'skeleton' system has its own 'microsyntax'(?) and is clearly geared to popping in medium- or large-sized structures defined ahead of time, usually where certain fields have to be filled. (I also recall bemoaning how poorly-documented skeletons were, especially online...)\n I know 'yasnippet' is based on the way TextMate did it. I didn't use TextMate, so I'm not sure…",
+          "link": "https://www.reddit.com/r/emacs/comments/us51if/please_tell_me_about_the_different_approaches_to/",
+          "publishedOn": "2022-05-18T04:48:46.000Z",
+          "wordCount": 1164,
+          "title": "Please tell me about the different approaches to text expansion you can find in emacs.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/us4kg3/dead_simple_html_templating_in_emacs_lisp_202110/",
+          "author": null,
+          "description": "submitted by    /u/deltille  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/us4kg3/dead_simple_html_templating_in_emacs_lisp_202110/",
+          "publishedOn": "2022-05-18T04:18:33.000Z",
+          "wordCount": 348,
+          "title": "Dead Simple HTML Templating in Emacs Lisp (2021-10) - Transform elisp structures nearly verbatim to HTML, using elisp itself for generation, loops, etc.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/urysat/how_can_i_get_snippets_to_indent_properly_in/",
+          "author": null,
+          "description": "I'm getting extra tabs when I expand the snippets.\n    submitted by    /u/OMGMyBallsAreRed  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/urysat/how_can_i_get_snippets_to_indent_properly_in/",
+          "publishedOn": "2022-05-17T22:59:03.000Z",
+          "wordCount": 137,
+          "title": "How can I get snippets to indent properly in yaml-mode?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/uru3ix/how_do_i_dump_state_or_similar/",
           "author": null,
@@ -11212,186 +11452,6 @@
           "wordCount": 226,
           "title": "Reducing \"intensity\" of display-line-numbers-mode",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6yibf/if_you_have_never_used_wgrep_with_rgel_to_rename/",
-          "author": null,
-          "description": "this post in Org format: https://github.com/tonyaldon/posts\n email me: [aldon.tony@gmail.com](mailto:aldon.tony@gmail.com)\n message me: https://twitter.com/tonyaldon\n  \n───────────────────────────────────────────\n Hey Emacsers,\n Have you ever needed to rename a function that appears in several files?\n Let's see how we can do this with Emacs.\n In the post the fantastic rg.el, we've seen that rg.el is a nice Emacs interface to the cli ripgrep which lets us do searches for regexp in files interactively with rg command, get the results in a dedicated buffer *rg* (by default), browse those matches, modify the searches parameters and modify the matched regexps, all from within the dedicated buffer *rg*.\n In this post we see how to rename interactively a function that appears in several files usi…",
-          "link": "https://www.reddit.com/r/emacs/comments/u6yibf/if_you_have_never_used_wgrep_with_rgel_to_rename/",
-          "publishedOn": "2022-04-19T06:29:13.000Z",
-          "wordCount": 1961,
-          "title": "If you have never used wgrep with rg.el to rename a function in several files, try it | that will blow your mind",
-          "imageUrl": "https://external-preview.redd.it/QAxqYDFWr7L2YXbWhzylG0mqkItnGRhsR2-7mwFYMEM.jpg?auto=webp&s=07e615966adc040ec21b5ac39c7cd09711ef75b5"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6us62/people_using_x_should_never_use_pgtk_the_regular/",
-          "author": null,
-          "description": "submitted by    /u/spwhitton  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6us62/people_using_x_should_never_use_pgtk_the_regular/",
-          "publishedOn": "2022-04-19T02:50:56.000Z",
-          "wordCount": 526,
-          "title": "\"People using X should _never_ use PGTK. The regular X build does a much better job at supporting that than PGTK ever will.\" --PGTK core developer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6m50a/lsp_tsls_doesnt_recognize_test_directory/",
-          "author": null,
-          "description": "Good evening!\n I recently installed lsp-mode for the Node TypeScript project (using ts-ls) I'm working on at the moment, mainly just because I wanted lsp-rename. The problem is, it only works within src: If I rename a variable, then all files in src get updated, but not in my test directory, tests.\n A lead: If I delete .lsp-session-v1, then open a file in the test dir, then start LSP (and thus import the project) from that buffer, then lsp-rename (on a file in src) will also affect that one file in the test directory, but not others. ~/.emacs.d/.lsp-session-v1 contains no mention of the test file or dir in this case. It also doesn't work any more if I restart Emacs after this.\n I thought lsp-workspace-folders-add sounded good, but it doesn't appear to do anything except make it so that the rename doesn't even work across the files in src any more either.\n Tried renaming test to tests, didn't work. The fact that it searches src even though .lsp-session-v1 only mentions the root directory indicates that it has some fixed folder mappings. Adding more of these would probably be the best solution. But how do I do this? I'm not very advanced with this package or Emacs in general.\n    submitted by    /u/LemongrabThree  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6m50a/lsp_tsls_doesnt_recognize_test_directory/",
-          "publishedOn": "2022-04-18T20:04:17.000Z",
-          "wordCount": 300,
-          "title": "[LSP] `ts-ls` Doesn't Recognize Test Directory",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6lrtv/generalel_whichkey_integration_can_i_prevent/",
-          "author": null,
-          "description": "I currently have :predicate '(derived-mode-p 'dired-mode) \"/\" '(my/toggle-dired-hide-details :wk \"Dired-details\")\n defining a key-binding under a prefix in my general.el setup.\n If not in dired-mode though it still displays the \"/ -> Dired-details\" string in the mini-buffer after hitting the prefix key. \n I tried adding :major-modes '(dired-mode) to the sexp where this binding is described. Doing that yields \"/ -> nil\" in the mini-buffer for that key-binding when not in dired-mode.\n What I'd like is the binding for \"/\" under that prefix to not show up at all if not in dired-mode. Is there a way to accomplish this?\n    submitted by    /u/IuppiterStator  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6lrtv/generalel_whichkey_integration_can_i_prevent/",
-          "publishedOn": "2022-04-18T19:49:06.000Z",
-          "wordCount": 220,
-          "title": "General.el which-key integration: can I prevent display of the binding entirely based on some predicate condition?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6kouz/macos_right_option_modifier_setting_does_not_work/",
-          "author": null,
-          "description": "I have a macbook hooked up to an external monitor and use an external keyboard. I've already set it up in the MacOS terminal to use alt (option) keys as Meta in the options menu. So, I would like to disable the Right-Alt (option) key being recognised as Meta and use it to type special characters. I've found the setting (setq mac-right-option-modifier nil) and added it to my settings file (~/.emacs).\n Problem: If I launch Emacs program through Finder as any other program the setting in the .emacs works fine: \n - Left-Alt = Meta key - Right-Alt is just Alt key \n However, if I launch Emacs through the terminal (the way I would like to use it) the Right-Alt (option) key is still being recognised as Meta key. Is there a way to fix this?\n This is the setting that I have in my .emacs config file:\n (setq mac-right-option-modifier nil) \n  \nOS: MacOS Monterey\n Emacs version: 28.1\n Default MacOS terminal app for terminal\n  \n   submitted by    /u/volhodav  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6kouz/macos_right_option_modifier_setting_does_not_work/",
-          "publishedOn": "2022-04-18T19:01:03.000Z",
-          "wordCount": 318,
-          "title": "MacOS right option modifier setting does not work when using Emacs in the terminal",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6k24i/getting_a_message_about_editing_a_file_someone/",
-          "author": null,
-          "description": "So. this just started happening yesterday. When I save a file I've been editing it tells me someone else already has the file open, although it's only my laptop and the username is the same. The server name sometime changes depending on whether I've been using my VPN or not though. I'm confused since I've used the VPN many times before and this never happened, but it's extremely inconvenient. \n I can prevent using lock files I suppose but that seems like overkill, and this wasn't an issue previously. Anyone with advice would be greatly(!) appreciated :)\n    submitted by    /u/agg_sig_me  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6k24i/getting_a_message_about_editing_a_file_someone/",
-          "publishedOn": "2022-04-18T18:33:33.000Z",
-          "wordCount": 218,
-          "title": "Getting a message about editing a file \"someone else is already editing\"",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6jb22/orion_voice_to_orgmode_bot/",
-          "author": null,
-          "description": "I use org-mode to manage my life (like any sane person would do :P) and also I use Feynman technique (it is super useful, look it up if you're interested) to learn new stuff or keep up with my chain of thoughts. Originally the Feynman technique involved with writing your thoughts, questions that you have and things that you learn in a notebook and review them later. Using a notebook is really inefficient to me coz it's hard for me to carry around one to take notes. I used to leave voice messages to myself via my phone and later on manually transcribe them and move them to an org file to organize them.\n Finally I spend a bit of time and created a bot that converts telegram (just because it was easier at the moment. Otherwise it would be easy enough to create backends for the bot to use matrix or whatever) voice messages to org-mode entries and store them in an org-file. It's trainable as well. So one can train it to be more precise. Therefore the more you use it the more precise it can get.It still is rough around the edges and I need to feature tune it, but it is usable and I use it all the time. I thought other people might have the same needs as I have so it might worth sharing.\n Heads up though, the bot is in golang (coz I wanted to finish it up fast, but I have plans to create a native Emacs module for it to replace the golang implementation)\n The repository is at: https://devheroes.codes/lxsameer/Orion\n Also it comes with a text to speech engine (Rigel dir in the same repo) as well that spins up a tcp server and reads out anything that it receives over the socket. This one is trainable as well. Since I use Emacs as my window manager (thank you folks who made EXWM) I wrote a simple client that reads any text that i want in any program for me. Refer to the read me for more info and you can find the elisp client at: https://devheroes.codes/FG42/FG42/src/branch/master/core/cubes/rigel/core.el\n Hope you find it useful and looking forward to your feedback :)\n    submitted by    /u/lxsameer  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6jb22/orion_voice_to_orgmode_bot/",
-          "publishedOn": "2022-04-18T18:01:18.000Z",
-          "wordCount": 505,
-          "title": "Orion: Voice to Org-mode bot",
-          "imageUrl": "https://external-preview.redd.it/ZgKz9TPsMVPZFKAT2dhwII-1Y0uha_5KO89v8k3-rVI.jpg?auto=webp&s=1fe256558e0a893c1cf59331f563f73221231b8d"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6ihx0/desktop_notifications_not_working_on_kde/",
-          "author": null,
-          "description": "On Emacs 27.2 I am trying to get notifications to work on my KDE desktop. Please note that notifications work just fine on my XFCE desktop.\n I can reproduce the issue easily:\n ELISP> (notifications-notify) \n Which produces the following error message:\n Error: (dbus-error \"No connection to bus\" session) \n I have tried to run dbus-launch before starting emacs but I get the same behavior.\n Any ideas on what the problem is?\n    submitted by    /u/nicholas_hubbard  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6ihx0/desktop_notifications_not_working_on_kde/",
-          "publishedOn": "2022-04-18T17:26:16.000Z",
-          "wordCount": 161,
-          "title": "Desktop notifications not working on KDE",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6hwcv/strange_face_color_behavior_in_terminal_any_ideas/",
-          "author": null,
-          "description": "Edit: I think I figured it out but I'm going to leave this in case it helps someone else. The \"dimness\" of the rendered face was coming from the italic property of the face (which is not set in the face customization). All italic strings just get dimmer with any TERM configuration that doesn't support italics (like xterm-256color or screen-256color). If I set $TERM to rxvt-unicode-256color, italics actually work!\n Due to issues with WSLg in Windows 11 (a long and disappointing story), I've switched back to using emacs in the terminal. Everything works as expected, except for a couple of face colors in Org Agenda.\n Though the attribute face sample in the customize facility looks correct, the actual face is always a dimmed version of that color (and that is how it appears in Org Agenda as well). This has the effect of making the text nearly illegible in most cases, and I refuse to choose an artificially bright color here because it appears correctly on other devices.\n I have cleared all other face attributes and still this odd issue persists. I've even inspected the face applied to the preview (\"sample\") text itself in customize and nothing seems out of the ordinary.\n Why is it not displaying the color that I have chosen??\n In this image, with foreground set to brightwhite, the face sample looks gray.\n In this image, with foreground set to color-82, the face sample look like a dark green.\n I've also fiddled with the color \"themes\" of my terminal, but those settings have no effect on Emacs, it seems that Emacs is displaying exactly the colors it wants to.\n Any ideas?\n    submitted by    /u/bakuretsu  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6hwcv/strange_face_color_behavior_in_terminal_any_ideas/",
-          "publishedOn": "2022-04-18T16:59:13.000Z",
-          "wordCount": 368,
-          "title": "Strange face (color) behavior in terminal... Any ideas?",
-          "imageUrl": "https://external-preview.redd.it/wSRuT6cWHOQZjbO_4u_YKIJa8dx0wWqKFYd06jymZis.jpg?auto=webp&s=7b945d8afca6bbdf79b2ec542055b027252d616e"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6guol/solution_to_dreaded_emacs_pinky_finger_problem/",
-          "author": null,
-          "description": "The goal is to make C-x <key> and C-x C-<key> keybindings more accessible since they offer a lot of possible and useful commands, but unfortunately, keybinding itself is uncomfortable for a lot of people using standard keyboards. My solution is (in evil normal mode):\n Pressing <space> and then <key> acts as C-x <key> . implementing this is really simple:\n  (define-key evil-normal-state-map (kbd \"SPC\") (general-simulate-key \"C-x\")) \n Note: I'm using general.el package for convenience, if you know how to do the same with built-in functionality, leave a comment.\n Unfortunately there is still a lot of C-x C-<key> type of keybindings, which you still need to reach for control key after pressing space. Solution might be:\n while holding <space> press <key> acts same as C-x C-<key>. \n Examples:\n <space>-s == C-x C-s\n <space> s == C-x s\n <space>-k-a == C-x C-k C-a\n <space>-k a == C-x C-k a\n <space>-q-w e <space>-r t y == C-x C-q C-w e C-r t y\n If there is some kind of method or hack to check if <space> is held, this solution becomes possible, making imo emacs a lot less painful to use.\n    submitted by    /u/Disastrous-Camel5424  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6guol/solution_to_dreaded_emacs_pinky_finger_problem/",
-          "publishedOn": "2022-04-18T16:12:31.000Z",
-          "wordCount": 296,
-          "title": "solution to dreaded emacs pinky finger problem (may not be possible) (only works with evil)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6ct3l/is_good_idea_change_to_exwm/",
-          "author": null,
-          "description": "I use arch linux with a WM (Window Manager) called xmonad (configured in haskell) and I found EXWM, which is using Emacs like your WM, I would like to ask if anyone here has used it and if it is a good idea to switch!\n    submitted by    /u/juanchow03  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6ct3l/is_good_idea_change_to_exwm/",
-          "publishedOn": "2022-04-18T13:10:46.000Z",
-          "wordCount": 570,
-          "title": "Is good idea change to EXWM?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6c3c0/inconsistent_space_width_in_emacsplus_28/",
-          "author": null,
-          "description": "I have a problem that I think is related to space width.\n In the dashboard the text is not centered anymore, but with whitespace-mode it's fixed, since it replaces every space with another character.\n  \nwith whitespace mode active: https://imgur.com/NwfhXLX\n \nwithout: https://imgur.com/2ZeqAMZ\n \n In a regular c file, again the space width is inconsistent with the tab width (8 spaces to tab)\n  \nwith whitespace mode active: https://imgur.com/aDxdqEP\n \nwithout: https://imgur.com/l0Vkaad\n \nirony suggestions are also broken: https://imgur.com/xAtCdIb\n \n I'm using MesloLGS NF everywhere I can see inside M-x customize, and I even put :spacing m in init.el in custom-set-faces but doesn't work.\n How do you set spacing just for the space character? Are there other settings that determine font other than in customize -> faces -> basic faces -> default? How do I debut problems with font faces?\n EDIT: I've nuked my init.el file and now everything works, unfortunately I can't replicate the weird font config that caused different width spaces. :(. Extra info: deleting font cache (sudo atsutil databases -remove) did nothing.\n    submitted by    /u/acidoglutammico  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6c3c0/inconsistent_space_width_in_emacsplus_28/",
-          "publishedOn": "2022-04-18T12:34:29.000Z",
-          "wordCount": 254,
-          "title": "Inconsistent Space Width in Emacs-plus 28",
-          "imageUrl": "https://external-preview.redd.it/Fpmb1I24bnwrKAx8OQeWkG-8PoP5ajAv4KIkEYLyCpo.jpg?auto=webp&s=38ce10780ad9b5905fcaf248c5c2f54aedc30e58"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6bggl/yasnippet_conditional_expansion/",
-          "author": null,
-          "description": "Consider the following snippets:\n `# -*- mode: snippet -*- # name: tdp # key: ^^ # group: math # condition: (and (texmathp) 'auto) # -- ^{$1}$0 \n and \n # -*- mode: snippet -*- # name: set # key: set # group: math # condition: (and (texmathp) 'auto) # -- \\\\{ $1 \\\\} \n I would like to expand on different conditions. By default Yasnippet only expands at word boundaries, so for example fooset doesn't expand, you have to type a space between the snippet that you want to expand. As you can see this is a problem with the first snippet because I would like to expand x^^3 to x^{3}. I looked for a solution to this problem and found this\n  (setq yas-key-syntaxes '(yas-longest-key-from-whitespace \"w_.()\" \"w_.\" \"w_\" \"w\")) \n which let's me expand snippet on non-word boundaries. So now I can expand x^^3 to x^{3}. \n However now the problem I have is with the set snippet. I would like that the set snippet follows the default behavior because when I type \\subset the snippet is triggered when I type \"set\". Is there any way to tell yasnippet to expand the first snippet always and the second one on word boundaries?\n    submitted by    /u/Public-Fan-8904  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6bggl/yasnippet_conditional_expansion/",
-          "publishedOn": "2022-04-18T12:00:22.000Z",
-          "wordCount": 372,
-          "title": "Yasnippet conditional expansion",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6arbi/orgbabel_wrap_causes_multiple_outputs/",
-          "author": null,
-          "description": "i have the following code in my org mode document\n #+begin_src latex :file test.png :results file graphics :wrap center x = 20 #+end_src \n everytime i type C-c C-C in order to execute the code block i get another block of output so i end up with multiple blocks like:\n #+RESULTS: #+begin_center [[file:test.png]] #+end_center #+begin_center [[file:test.png]] #+end_center #+begin_center [[file:test.png]] #+end_center \n however if i remove the :wrap center it works just fine, how can i prevent this?\n    submitted by    /u/mahmooz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6arbi/orgbabel_wrap_causes_multiple_outputs/",
-          "publishedOn": "2022-04-18T11:20:00.000Z",
-          "wordCount": 253,
-          "title": "org-babel :wrap causes multiple outputs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6am4j/making_code_blocks_clear_with_the_extend_face/",
-          "author": null,
-          "description": "I'd like my org-mode code blocks to look like \"blocks\" and I'm not sure if the :extend face property can do this.\n Context\n I delineate org-mode code blocks by setting the org-block face background to a slightly different color than my default background and setting its :extend text property to make the block look a bit cleaner (extends the color change to the end of the window).\n However, I'd like the background color change to render as a block, extending only partially, rather than the way:extend normally behaves -- extending to the end of the window.\n Is this possible?\n    submitted by    /u/meme_streak  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6am4j/making_code_blocks_clear_with_the_extend_face/",
-          "publishedOn": "2022-04-18T11:10:55.000Z",
-          "wordCount": 207,
-          "title": "Making code blocks clear with the :extend face property?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6a6w0/help_with_lsp_tramp_python_virtual_environments/",
-          "author": null,
-          "description": "Hi all\n have been having trouble getting lsp-mode/eglot to work with tramp and python virtual environments. I can get lsp mode to work with tramp, but not respect python virtual environments. I have had a play around with pyvenv, but had no luck. \n My current solution is to open a separate terminal, activate virtual environment and start pylsp from there over tcp, and then connect to it with port forwarding to allow eglot to connect to it. \n Wondering if anyone has any suggestions or configuration examples on how they work with something like this. Doesn't have to be eglot either, just using it now as is easy to connect to existing lsp server with tcp.\n Cheers :)\n    submitted by    /u/azfrak  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6a6w0/help_with_lsp_tramp_python_virtual_environments/",
-          "publishedOn": "2022-04-18T10:45:32.000Z",
-          "wordCount": 265,
-          "title": "help with lsp + tramp + python virtual environments",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u6947z/just_found_this_sub/",
-          "author": null,
-          "description": "it's 4am here, can't sleep. I saw a meme on another sub about some other Linux word processor. I remember just loving Emacs in high school. Type \"emacs\" in the search bar. Feel elated as I see there is a whole Emacs community with 50 thousand people!! \n I just reinstalled Linux for the first time in like 15 years and I can't wait to muck around and have some fun doing some coding and using it for work and all that fun stuff!\n    submitted by    /u/_AEthelwulf_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u6947z/just_found_this_sub/",
-          "publishedOn": "2022-04-18T09:34:15.000Z",
-          "wordCount": 346,
-          "title": "Just found this sub!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/u68j8v/keybindings_on_macos_something_strange_going_on/",
-          "author": null,
-          "description": "Switching from windows to MacOS I encounter a strange problem.\n One of my keybindings is C-f6 to switch to fundamental mode.\n Another keybinding is C-f12 for save and exit. Not working. M-x describe-key says: \"C-f12 is undefined.\"\n Then I change it, keybinding C-f12 to switch to fundamental mode: now working! What??\n Then, another exmaple: on windows I had a keybinding C-M-<down> to unfold org headlines.\n On mac not working (yes, I have changed command to meta), but it doesnt work.\n M-x describe-keys says \"C-M-down is undefinded\", so emacs recognizes control-meta and cursor down correctly, but somehow its not linked to my custom function. Why? Why? Why?\n I'm about to explode. Tried whole night to fix/understand it ... I begin to believe my init file is haunted.\n I hope somebody has a tip for me what's going on, I would be super thankful.\n    submitted by    /u/Exciting_Bet7500  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/u68j8v/keybindings_on_macos_something_strange_going_on/",
-          "publishedOn": "2022-04-18T08:53:23.000Z",
-          "wordCount": 302,
-          "title": "Keybindings on MacOS ... something strange going on",
-          "imageUrl": null
         }
       ]
     },
@@ -11699,16 +11759,6 @@
           "wordCount": 3022,
           "title": "How to overcome the fear of forgetting ?",
           "imageUrl": "https://forum.zettelkasten.de/uploads/editor/h1/5paer2qd89li.jpg"
-        },
-        {
-          "id": "2248@/discussions",
-          "author": "System",
-          "description": "The Zettelkasten Method for Fiction Writing\n                   \nThe Zettelkasten Method will support your goals relating to both consuming and producing fiction texts. It is designed to create a thinking machine out of your notes you are already making that supports all of your thinking.\nRead the full story here",
-          "link": "https://forum.zettelkasten.de/discussion/2248/the-zettelkasten-method-for-fiction-writing",
-          "publishedOn": "2022-04-18T18:48:17.000Z",
-          "wordCount": 194,
-          "title": "The Zettelkasten Method for Fiction Writing",
-          "imageUrl": null
         }
       ]
     }
