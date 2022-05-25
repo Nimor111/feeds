@@ -53,6 +53,36 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/uxidyw/how_to_represent_bindings_in_lambda_calculus/",
+          "author": null,
+          "description": "Hello!\n I am trying to experiment with some ideas regarding type systems. That's when I arrived at the problem: using the type system to enforce guarantees about bindings inside terms.\n The simplest idea that worked very well for me was using DeBruijn indices with a Scope type. If some part of the tree was marked as Scope Term, then there was a new variable bound in that term. It's a fairly weak guarantee. I could break it at any time by simply destructuring the Scope and using it directly. But it's easy to create some functions that enforce the scoping rules.\n ``` -- The base calculus\n newtype Scope a = Scope a\n data Term = Variable Int | Function (Scope Term) | Apply Term Term\n -- Utilities for traversing the term\n type Depth = Reader Int\n run :: Depth a -> a run action = runReader actio…",
+          "link": "https://www.reddit.com/r/haskell/comments/uxidyw/how_to_represent_bindings_in_lambda_calculus/",
+          "publishedOn": "2022-05-25T14:17:14.000Z",
+          "wordCount": 1097,
+          "title": "How to represent bindings in lambda calculus terms where one of the binders binds two names?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/ux58u9/why_is_seemingly_infinite_lazy_recursion_faster/",
+          "author": null,
+          "description": "This is based on the \"nth prime\" exercism.org exercise - https://exercism.org/tracks/haskell/exercises/nth-prime\n In the code below, nth runs the unit tests on my machine about 10% more slowly than nthButFaster.\n They're both effectively doing the same comparison: is the candidate number not evenly divisible by all the known prime numbers that came before it? However the primeFinder function below knows that the starting series of primes is [2, 3] and that its first candidate is 5, so it can increment by two each time thereafter, skipping all even numbers (because two is the only even prime, and that's already in the list). Thus it cuts the number of comparisons in half, compared to the infinite series of integers that goes up one at a time from [2..] in the primes function. Maybe there's slowdown in the all from the isPrime function, or maybe it's slower to concatenate lists than it is to cons them.\n How would you explain it to a noob like me, wise Haskell users? Why is one approach faster?\n module Prime (nth, nthButFaster) where nth :: Int -> Maybe Integer nth n | n < 1 = Nothing | otherwise = Just $ primeFinder [2, 3] 5 n nthButFaster :: Int -> Maybe Integer nthButFaster n | n < 1 = Nothing | otherwise = Just $ primes !! (n - 1) primes :: [Integer] primes = woot [2..] where woot (p:xs) = p : woot [x | x<-xs, x `mod` p /= 0] primeFinder :: [Integer] -> Integer -> Int -> Integer primeFinder previousPrimes candidate n | length previousPrimes >= n = previousPrimes !! (n - 1) | isPrime previousPrimes candidate = primeFinder (previousPrimes ++ [candidate]) (candidate + 2) n | otherwise = primeFinder previousPrimes (candidate + 2) n isPrime :: [Integer] -> Integer -> Bool isPrime previousPrimes x = all (\\knownPrime -> x `mod` knownPrime /= 0) previousPrimes \n    submitted by    /u/beefzilla  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/ux58u9/why_is_seemingly_infinite_lazy_recursion_faster/",
+          "publishedOn": "2022-05-25T00:35:18.000Z",
+          "wordCount": 642,
+          "title": "Why is seemingly infinite (lazy) recursion faster?",
+          "imageUrl": "https://external-preview.redd.it/WcNKdjQDEZRh5I2QvDBAXDSEY0-Qs2Eh-1GVmntWUKA.jpg?auto=webp&s=242dc93880e494d6e86d99c5668c3a18b18456b7"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/ux159e/how_to_do_haskell_outside_of_a_stackgenerated/",
+          "author": null,
+          "description": "The other day I had this post, where I learned for the first time that stack is exclusively(?) for creating and managing projects, that what I was trying to do, i.e., just have *.hs files wherever and loading them from ghci started wherever is dysfunctional. The workaround was to do stack new, go into that directory and add whatever packages to the package.yaml, then whatever extra-deps were necessary in that stack.yaml, then do my *.hs files at my leisure, ignoring the project skeleton from then on.\n What I had been doing (per some tutorial) was creating a minimal stack.yaml in a desired directory\n resolver: lts-19.8 packages: [] extra-deps: [] \n then run stack setup, then, in my latest case\n stack build Chart-diagrams hmatrix hmatrix-gsl hmatrix-gsl-stats \n then, upon failures, add the suggested lines to the extra-deps section of the stack.yaml. This seemed to work for me before, i.e., I could go to that directory, start up ghci and it would indeed be that 9.0.2 ghci... But then just lately I couldn't get the hmatrix stuff found. So is this method I just described actually creating a whole separate Haskell system in this directory? Or is it just doing something to my global ~/.stack/global-project/... ? In general, I really just want to do *.hs files (or org-mode files) along with a ghci. Can I just add packages to the global and have them be seen? In this hmatrix case, it was bombing. Although the workaround suggestion described above to fake a project did work. What am I missing? What can I do if I just want to test stuff, work through tutorials, and not mess with the project files in .../app and .../src?\n    submitted by    /u/teilchen010  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/ux159e/how_to_do_haskell_outside_of_a_stackgenerated/",
+          "publishedOn": "2022-05-24T21:08:51.000Z",
+          "wordCount": 1170,
+          "title": "How to do Haskell outside of a stack-generated project",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/uwz9z1/how_do_i_turn_char_to_float/",
           "author": null,
           "description": "I'm a complete beginner to haskell and I have an exercise where I have to read a list of coordinates from a txt file and sort them based on their magnitude (distance from the origin point). Solving it in python was no problem but now I have to solve it for haskell as well. The biggest obstacle for my is converting these char coordinates to float numbers.\n I know how to separate them by lines and words:\n  qsort :: String -> IO () qsort file = do content <- readFile (file++\".txt\") let linesOfFiles = lines content x = map words linesOfFiles print magnitude x \n (although it gives me a parse/indentation error)\n And here's my attempt at a magnitude function:\n  magnitude :: [a] -> Float magnitude words = if length words == 3 then sqrt (sum (map (^2) (char2float words))) else 10000000000 Double \n My biggest problem right now is figuring out how to turn [char] to Floats so the sorting algorithm can actually compare them. I've only been working with imperative languages so far so naturally I find Haskell very daunting, and I haven't gotten into the sorting yet.\n    submitted by    /u/AnonCaptain0022  \n [link]   [comments]",
@@ -1731,36 +1761,6 @@
           "wordCount": 1088,
           "title": "What functional pattern allows you to create a progress bar with feedback?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/ubyqwu/lets_program_a_calculus_student/",
-          "author": null,
-          "description": "submitted by    /u/algebrartist  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/ubyqwu/lets_program_a_calculus_student/",
-          "publishedOn": "2022-04-25T23:34:51.000Z",
-          "wordCount": 458,
-          "title": "Let’s Program a Calculus Student",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/ubtfxy/ann_calligraphy_haskell_source_code_visualizer/",
-          "author": null,
-          "description": "submitted by    /u/Kootle  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/ubtfxy/ann_calligraphy_haskell_source_code_visualizer/",
-          "publishedOn": "2022-04-25T19:37:28.000Z",
-          "wordCount": 228,
-          "title": "[ANN] calligraphy - Haskell source code visualizer",
-          "imageUrl": "https://external-preview.redd.it/jHnHIe7xteHd_CT_nGVo8hv229fyF4WIIhUbW_HkIXY.jpg?auto=webp&s=419f922c7107f1edb670bca0b277a4a5b919cefd"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/ubh4bt/this_is_confusing/",
-          "author": null,
-          "description": "I'm interested in Haskell and functional programming so I decided I wanna learn Haskell. I started yesterday, but this feels like learning programming all over again... I can't even do something as simple as comparing two numbers (lol). I don't understand what I'm doing wrong.\n main :: IO () compare_nums x y = let smaller = x < y in if smaller then print (x ++ \" < \" ++ y) else print (x ++ \" > \" ++ y) main = do compare_nums 4 3 ------------------------------------------------ ERROR: * No instance for (Num [Char]) arising from the literal `4' * In the first argument of `compare_nums', namely `4' In a stmt of a 'do' block: compare_nums 4 3 In the expression: do compare_nums 4 3 | 11 | compare_nums 4 3 | ^ \n    submitted by    /u/cyb3r-inc  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/ubh4bt/this_is_confusing/",
-          "publishedOn": "2022-04-25T09:31:16.000Z",
-          "wordCount": 1530,
-          "title": "This is confusing...",
-          "imageUrl": null
         }
       ]
     },
@@ -1769,6 +1769,36 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/uxqgcb/reverse_a_map_which_has_a_set_as_its_value_using/",
+          "author": null,
+          "description": "I am trying to reverse a map that has a String as the key and a set of numbers as its value\n My goal is to create a list that contains a tuple of a number and a list of strings that had the same number in the value set\n I have this so far:\n def flipMap(toFlip: Map[String, Set[Int]]): List[(Int, List[String])] = { toFlip.flatMap(_._2).map(x => (x, toFlip.keys.toList)).toList } \n but it is only assigning every String to every Int\n ------\n this:\n val map = Map( \"A\" -> Set(1,2), \"B\" -> Set(2,3) ) \n should produce: List((1, List(A)), (2, List(A, B)), (3, List(B)))\n but is producing: List((1, List(A, B)), (2, List(A, B)), (3, List(A, B)))\n    submitted by    /u/Enlargen_the_PP  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/uxqgcb/reverse_a_map_which_has_a_set_as_its_value_using/",
+          "publishedOn": "2022-05-25T20:34:57.000Z",
+          "wordCount": 215,
+          "title": "Reverse a Map which has A Set as its value using HOF",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/uxe1dz/project_works_with_sbt_run_but_not_with_a_fat_jar/",
+          "author": null,
+          "description": "Hey! I've been trying to figure out how to buid a working fat jar but keep getting the same problem when I buid and use a fat jar, using sbt-assembly.\n I created a minimal project that still gives me the problem:\n import com.azure.identity.{AzureCliCredential, AzureCliCredentialBuilder} import com.azure.core.http.HttpClient import com.azure.core.http.okhttp.OkHttpAsyncHttpClientBuilder import okhttp3.{ConnectionPool, Dispatcher} import java.time.Duration import java.util.concurrent.{Executors, TimeUnit} object Front extends App { val credential: AzureCliCredential = new AzureCliCredentialBuilder().httpClient(buildHttpClient()).build() println(credential) def buildHttpClient(): HttpClient = { val connectionPool = new ConnectionPool(100, 2, TimeUnit.MINUTES) val dispatcher = new Dispatcher(E…",
+          "link": "https://www.reddit.com/r/scala/comments/uxe1dz/project_works_with_sbt_run_but_not_with_a_fat_jar/",
+          "publishedOn": "2022-05-25T10:04:44.000Z",
+          "wordCount": 835,
+          "title": "Project works with sbt run but not with a fat jar",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/ux83ay/hosting_options_for_scala_crud_app/",
+          "author": null,
+          "description": "Hi all, \n I'm a newcomer to Scala and was hoping to speed up my learnings by building a basic CRUD app's backend in Scala (the frontend would probably be in React, I'm experienced in that regard and can probably just use a past project template of mine). \n The database operations would not be too overly complex - basic user profiling, authentication, and what you can think of as a scheduling app. With that in mind, is there a particular type of backend structure/framework in Scala that comes to mind that would be useful to use, and are there any hosting options that come to mind along with it? \n I've read a bit about using Play to stand up the API and then hosting an image of my build on AWS' Elastic Beanstalk, but it's always hard as a newcomer who doesn't know much about the language and its frameworks to make a judgement call like this. For reference, I spend most of my regular time developing Lambdas and State Machines for a fitness application at work that uses TypeScript, to give some frame of reference.\n    submitted by    /u/TheRealKingofmice  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/ux83ay/hosting_options_for_scala_crud_app/",
+          "publishedOn": "2022-05-25T03:13:03.000Z",
+          "wordCount": 737,
+          "title": "Hosting Options for Scala CRUD App",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/uwn842/getting_a_value_is_not_a_member_of_type_parameter/",
           "author": null,
@@ -2508,26 +2538,6 @@
           "wordCount": 144,
           "title": "The semantics of code",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/uc316j/use_vim_as_a_scala_ide/",
-          "author": null,
-          "description": "submitted by    /u/wsdjeg  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/uc316j/use_vim_as_a_scala_ide/",
-          "publishedOn": "2022-04-26T03:13:54.000Z",
-          "wordCount": 176,
-          "title": "Use Vim as a Scala IDE",
-          "imageUrl": "https://external-preview.redd.it/1MePBB0hJ6c-0oNCykrpgA_hdb195gpUD7Hbk-of198.jpg?auto=webp&s=0d743d99ba166efe1eccfc0b7a6cea7c1c90fbcb"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/ubo7hz/help_me_break_the_fourth_wall/",
-          "author": null,
-          "description": "Ok, apologies for the title. \n Don't really know how to name what I'm looking for so here's an attempt at describing what I'm trying to do.\n  \nI have a bunch of case classes with N amount of vals/ contractor params. Examples: Foo(a: String, b: String), Bar(c: BigDecimal, d: Set, e: Option). And so on..\n \nI would like to have a \"rule\" or mechanism of some sort that would enforce compile time that for each companion object of these classes need to declare a corresponding val for each of it's companion class constructor parameters. \n \nLet's say I have a class ParamRules(rule1: String, rule2: String)\n \nNaive idea in my head looks like that:\n \n case class Foo(a: String, b:String)\n object Foo extends MagicMechanism(Foo) ( val a_rules = ParamRules(...) val b_rules = ParamRules(...) )\n And with that compiler is satisfied.\n If the object Foo doesn't implement a \"rule\" for one of there constructor params it fails compilation.\n  \nIt doesn't have to look like that it could be entirely different I just want to dynamically enforce this interface user to provide rule for each of the params in the class. \n  \nLet me know if I'm day dreaming, over engineering or simply having a stroke and if you need any more explanation.\n Thanks!\n    submitted by    /u/yodlowy  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/ubo7hz/help_me_break_the_fourth_wall/",
-          "publishedOn": "2022-04-25T15:48:36.000Z",
-          "wordCount": 461,
-          "title": "Help me break the fourth wall",
-          "imageUrl": null
         }
       ]
     },
@@ -2536,6 +2546,16 @@
       "feedUrl": "https://reddit.com/r/purescript/.rss",
       "siteUrl": "https://www.reddit.com/r/purescript/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/purescript/comments/uxlu3e/can_you_call_javascript_code_from_purescript/",
+          "author": null,
+          "description": "Before I start to learn Purescript I wanted to see if I could call normal Javascript libraries from it. Like three.js/babylon.js/paper.js. \n As far as I can see you have to use \"FFI bindings\", but some of these are years old, and even up to date ones leave me with a huge dependency on some package maintainer. \n Is there an easier way to do it? Thanks.\n    submitted by    /u/Faranta  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/purescript/comments/uxlu3e/can_you_call_javascript_code_from_purescript/",
+          "publishedOn": "2022-05-25T17:00:05.000Z",
+          "wordCount": 323,
+          "title": "Can you call Javascript code from Purescript without FFI bindings?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/purescript/comments/utp26q/what_is_purescript_know_why_you_should_learn_it/",
           "author": null,
@@ -2592,16 +2612,6 @@
           "wordCount": 1934,
           "title": "11 Companies That Use Haskell in Production",
           "imageUrl": "https://serokell.io/files/sf/opengraph.sfri8arc.normal-Haskell_Success_Stories.png"
-        },
-        {
-          "id": "https://serokell.io/blog/haskell-typeclasses",
-          "author": "hi+gintsdreimanis@serokell.io (Gints Dreimanis)",
-          "description": "In this article, we introduce you to typeclasses in Haskell: what they are, how they can be used, and how to define your own instances of typeclasses.",
-          "link": "https://serokell.io/blog/haskell-typeclasses",
-          "publishedOn": "2022-04-26T00:00:00.000Z",
-          "wordCount": 2358,
-          "title": "Introduction to Haskell Typeclasses",
-          "imageUrl": "https://serokell.io/files/48/opengraph.48ae26e8.04.07_normal-Typeclasses_in_Haskell.png"
         }
       ]
     },
@@ -2659,6 +2669,46 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/uxdijv/beorg_calendar_does_not_write_to_dropbox_synced/",
+          "author": null,
+          "description": "Hi all,\n I am using beorg, and the sync is good between my iphone calendar and the beorg calendar on the iphone. However, not all those calendar events are synchronized with my desktop (my org files, like inbox.org are well synchronized with my desktop, through Dropbox sync, but not the calendar events).\n Is there a way to make the beorg calendar write calendar events (even those that come from iphone calendar etc) into my dropbox org files folder, so that I can also see those events on my desktop emacs ?\n    submitted by    /u/willdvaz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/uxdijv/beorg_calendar_does_not_write_to_dropbox_synced/",
+          "publishedOn": "2022-05-25T09:25:46.000Z",
+          "wordCount": 277,
+          "title": "beorg calendar does not write to Dropbox synced files",
+          "imageUrl": "https://external-preview.redd.it/MbFUKyVT1SbFZ53FJgQfm8i_cljX5JH01zycQj1FW5U.jpg?auto=webp&s=d89c434778c48d7e4c669e10c5f6ee1df15d4ab6"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/uxbqqe/refillmode_and_org_mode/",
+          "author": null,
+          "description": "can refill-mode and org-mode play nicely together or is it impossible? when refill mode is enabled, filling occurs as you edit existing paragraphs (via after-change-functions), but for example hitting org-return does nothing. a newline is entered and then refill-mode fills it away.\n i tried to advise org-return to disable the mode temporarily, but my advice foo is not up to the task: even tho it did leave the mode disabled, a newline is still not entered.\n has anyone tamed this vicious filling mode?\n    submitted by    /u/martianh  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/uxbqqe/refillmode_and_org_mode/",
+          "publishedOn": "2022-05-25T07:08:07.000Z",
+          "wordCount": 207,
+          "title": "refill-mode and org mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/ux9f78/a_python_script_to_sync_from_google_calendar_to/",
+          "author": null,
+          "description": "Hi all,\n I was using the org-gcal package for a while, but then it stopped working. (not sure why, and I burned some time trying to get it to work per all the github issues, docs, etc).\n Per https://orgmode.org/worg/org-tutorials/org-google-sync.html, I tried using an awk script (https://github.com/msherry/ical2org), which almost did what I needed, but not quite.\n I wrote a simple python script at https://github.com/jzohrab/py-ical-to-org , using an existing python ical parsing library, and it seems to work well. At least, it's working so far, and does what little I need!\n If you have python etc set up, you can give it a shot. Cheers! jz\n https://github.com/jzohrab/py-ical-to-org\n    submitted by    /u/-jz-  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/ux9f78/a_python_script_to_sync_from_google_calendar_to/",
+          "publishedOn": "2022-05-25T04:31:37.000Z",
+          "wordCount": 346,
+          "title": "A python script to sync from Google calendar to an org file",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/ux66t1/insert_html_after_previous_but_before_new_heading/",
+          "author": null,
+          "description": "I want to be able to add HTML before a heading, but after the previous heading has had it's divs and such closed by the exporter. Is there any way to do this? If I put an html tag before the headline, it gets exported within the previous heading, which breaks the open/close matching. If I put it after, it gets exported within the contents of the outline, which also breaks unless the closing tags given are also in the same outline.\n All I basically want to do is wrap certain headings in custom HTML, but org makes it impossible to accomplish this due to not being able to insert text before a heading but after the previous. Is there any way to accomplish what I'm attempting, or would I have to advice some ox-html function?\n As far as I know HTML_HEAD refers to the head tag and HTML container only takes a single symbolic argument, not literal HTML.\n I'm on my phone, but I will post the org file with exactly what I'm trying to do when I can get to my computer.\n    submitted by    /u/MrTinyToes  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/ux66t1/insert_html_after_previous_but_before_new_heading/",
+          "publishedOn": "2022-05-25T01:26:42.000Z",
+          "wordCount": 393,
+          "title": "Insert HTML after previous but before new heading?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/uwu2ct/windmove_and_org_not_playing_nicely_after_shift/",
           "author": null,
@@ -3248,36 +3298,6 @@
           "wordCount": 148,
           "title": "org-roam-version 2.2.2 still reporting 2.2.1?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/uc7a2e/upgraded_citar_and_got_warning_messages/",
-          "author": null,
-          "description": "Just upgraded \n citar\n and got the following warnings. Should I be concerned\n ​\n In citar-latex--macro-bounds:\n citar-latex.el:139:65:Warning: reference to free variable ‘TeX-esc’\n ​\n In end of data:\n citar-latex.el:215:1:Warning: the following functions are not known to be\n defined: TeX-find-macro-boundaries, TeX-parse-macro\n ​\n In end of data:\n citar-org.el:469:1:Warning: the function ‘string-search’ is not known to be\n defined.\n    submitted by    /u/Aberfitness  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/uc7a2e/upgraded_citar_and_got_warning_messages/",
-          "publishedOn": "2022-04-26T07:50:51.000Z",
-          "wordCount": 191,
-          "title": "Upgraded Citar and got warning messages",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/uc49iu/org_habits_and_rewards/",
-          "author": null,
-          "description": "Any existing plugins/code to add rewards into org-habits\n Ie: Complete a habit 10 days in a row, unlock a reward\n Also would be cool to have rewards for projects (Todos) that get done. \n Anything out here yet or do I finally have to learn e-lisp :O\n    submitted by    /u/Cactus_Chaos  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/uc49iu/org_habits_and_rewards/",
-          "publishedOn": "2022-04-26T04:23:29.000Z",
-          "wordCount": 287,
-          "title": "Org Habits and Rewards",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/uc3xfr/orgmode_for_plant_breeding/",
-          "author": null,
-          "description": "Most of us are familiar with tree-style thinking that org-mode seamlessly enables, where a parent node has an infinite amount of tree children. From a gardening perspective this works great if you're not breeding and instead just saving seed, as you can structure the data as follows, where each subheading is a genetic descendant of the parent:\n ​\n ** San Marzano Tomato\n :PROPERTIES:\n :WHATEVER: WHATEVER\n :END:\n *** Plant 1\n :ID: sjkjlfkjh\n :YIELD: Xlbs\n [inline image]\n notes\n *** Plant 2\n :ID: oijiohiuhi\n :YIELD: Ylbs\n [inline image]\n notes\n **** Plant 2, Gen 1\n etc\n ​\n So I use emacs and org-mode for everything (of course), and being able to snap pics and add properties on the fly would be AMAZING for organizing anything cultivation related with minimal friction/overhead. Where organization and documentation tends to be most important is in breeding, and I'm unsure how I'd represent say a San Marzano and Roma cross elegantly. Of course I could create a new tree for each cross, but I recall reading org having some functionality (probably using tags and unique ID's) to make this seamless or somehow superior, I believe it was presented as a sort of directed acyclic graph using tags. Using org-mode at all for this would be great since HTML exports would be a freebie.\n ​\n This isn't complicated, but I'm just wondering how you might organize something like this so I don't have an 'a-ha' moment later and decide to restructure everything (but who am I kidding.. that's half the fun). I'm sort of thinking a tree per cross may end up best, since it'll work most naturally with org-mode, and the top level node can include inline images of each parent in the cross, and properties like :ID-FATHER:, :ID-MOTHER: etc.\n    submitted by    /u/AphexPin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/uc3xfr/orgmode_for_plant_breeding/",
-          "publishedOn": "2022-04-26T04:03:30.000Z",
-          "wordCount": 743,
-          "title": "Org-Mode for Plant Breeding?",
-          "imageUrl": null
         }
       ]
     },
@@ -3286,6 +3306,76 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/svg-tag-mode-20220525.1752.el",
+          "author": null,
+          "description": "The svg-tag-mode package has been updated to version 20220525.1752.",
+          "link": "https://melpa.org/#/svg-tag-mode",
+          "publishedOn": "2022-05-25T17:52:00.000Z",
+          "wordCount": 105,
+          "title": "svg-tag-mode (20220525.1752) --- Replace keywords with SVG tags",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/web-mode-20220525.1422.el",
+          "author": null,
+          "description": "The web-mode package has been updated to version 20220525.1422.",
+          "link": "https://melpa.org/#/web-mode",
+          "publishedOn": "2022-05-25T14:22:00.000Z",
+          "wordCount": 105,
+          "title": "web-mode (20220525.1422) --- major mode for editing web templates",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tango-plus-theme-20220525.1311.el",
+          "author": null,
+          "description": "The tango-plus-theme package has been updated to version 20220525.1311.",
+          "link": "https://melpa.org/#/tango-plus-theme",
+          "publishedOn": "2022-05-25T13:11:00.000Z",
+          "wordCount": 105,
+          "title": "tango-plus-theme (20220525.1311) --- A color theme based on the tango palette",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/timu-spacegrey-theme-20220525.1238.el",
+          "author": null,
+          "description": "The timu-spacegrey-theme package has been updated to version 20220525.1238.",
+          "link": "https://melpa.org/#/timu-spacegrey-theme",
+          "publishedOn": "2022-05-25T12:38:00.000Z",
+          "wordCount": 105,
+          "title": "timu-spacegrey-theme (20220525.1238) --- Color theme inspired by the Spacegray theme in Sublime Text",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/proof-general-20220525.1052.tar",
+          "author": null,
+          "description": "The proof-general package has been updated to version 20220525.1052.",
+          "link": "https://melpa.org/#/proof-general",
+          "publishedOn": "2022-05-25T10:52:00.000Z",
+          "wordCount": 105,
+          "title": "proof-general (20220525.1052) --- A generic Emacs interface for proof assistants",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/cliphist-20220525.1034.tar",
+          "author": null,
+          "description": "The cliphist package has been updated to version 20220525.1034.",
+          "link": "https://melpa.org/#/cliphist",
+          "publishedOn": "2022-05-25T10:34:00.000Z",
+          "wordCount": 105,
+          "title": "cliphist (20220525.1034) --- paste from clipboard managers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dumb-jump-20220524.2122.el",
+          "author": null,
+          "description": "The dumb-jump package has been updated to version 20220524.2122.",
+          "link": "https://melpa.org/#/dumb-jump",
+          "publishedOn": "2022-05-24T21:22:00.000Z",
+          "wordCount": 105,
+          "title": "dumb-jump (20220524.2122) --- Jump to definition for 50+ languages without configuration",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/webpaste-20220524.1745.el",
           "author": null,
@@ -6955,186 +7045,6 @@
           "wordCount": 105,
           "title": "super-save (20220426.1056) --- Auto-save buffers, based on your activity.",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/w3m-20220426.717.tar",
-          "author": null,
-          "description": "The w3m package has been updated to version 20220426.717.",
-          "link": "https://melpa.org/#/w3m",
-          "publishedOn": "2022-04-26T07:17:00.000Z",
-          "wordCount": 105,
-          "title": "w3m (20220426.717) --- an Emacs interface to w3m",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/shimbun-20220426.715.tar",
-          "author": null,
-          "description": "The shimbun package has been updated to version 20220426.715.",
-          "link": "https://melpa.org/#/shimbun",
-          "publishedOn": "2022-04-26T07:15:00.000Z",
-          "wordCount": 105,
-          "title": "shimbun (20220426.715) --- interfacing with web newspapers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/py-autopep8-20220426.233.el",
-          "author": null,
-          "description": "The py-autopep8 package has been updated to version 20220426.233.",
-          "link": "https://melpa.org/#/py-autopep8",
-          "publishedOn": "2022-04-26T02:33:00.000Z",
-          "wordCount": 105,
-          "title": "py-autopep8 (20220426.233) --- Use autopep8 to beautify a Python buffer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/default-font-presets-20220426.8.el",
-          "author": null,
-          "description": "The default-font-presets package has been updated to version 20220426.8.",
-          "link": "https://melpa.org/#/default-font-presets",
-          "publishedOn": "2022-04-26T00:08:00.000Z",
-          "wordCount": 105,
-          "title": "default-font-presets (20220426.8) --- Support selecting fonts from a list of presets",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/evil-tree-edit-20220425.2355.tar",
-          "author": null,
-          "description": "The evil-tree-edit package has been updated to version 20220425.2355.",
-          "link": "https://melpa.org/#/evil-tree-edit",
-          "publishedOn": "2022-04-25T23:55:00.000Z",
-          "wordCount": 105,
-          "title": "evil-tree-edit (20220425.2355) --- Evil structural editing for any language!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/evil-test-helpers-20220425.2132.el",
-          "author": null,
-          "description": "The evil-test-helpers package has been updated to version 20220425.2132.",
-          "link": "https://melpa.org/#/evil-test-helpers",
-          "publishedOn": "2022-04-25T21:32:00.000Z",
-          "wordCount": 105,
-          "title": "evil-test-helpers (20220425.2132) --- unit test helpers for Evil",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/fennel-mode-20220425.1900.tar",
-          "author": null,
-          "description": "The fennel-mode package has been updated to version 20220425.1900.",
-          "link": "https://melpa.org/#/fennel-mode",
-          "publishedOn": "2022-04-25T19:00:00.000Z",
-          "wordCount": 105,
-          "title": "fennel-mode (20220425.1900) --- A major-mode for editing Fennel code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/embark-20220425.1718.tar",
-          "author": null,
-          "description": "The embark package has been updated to version 20220425.1718.",
-          "link": "https://melpa.org/#/embark",
-          "publishedOn": "2022-04-25T17:18:00.000Z",
-          "wordCount": 105,
-          "title": "embark (20220425.1718) --- Conveniently act on minibuffer completions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/numbex-20220425.1619.el",
-          "author": null,
-          "description": "The numbex package has been updated to version 20220425.1619.",
-          "link": "https://melpa.org/#/numbex",
-          "publishedOn": "2022-04-25T16:19:00.000Z",
-          "wordCount": 105,
-          "title": "numbex (20220425.1619) --- Manage numbered examples",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/transient-dwim-20220425.1331.el",
-          "author": null,
-          "description": "The transient-dwim package has been updated to version 20220425.1331.",
-          "link": "https://melpa.org/#/transient-dwim",
-          "publishedOn": "2022-04-25T13:31:00.000Z",
-          "wordCount": 105,
-          "title": "transient-dwim (20220425.1331) --- Useful preset transient commands",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pfuture-20220425.1242.el",
-          "author": null,
-          "description": "The pfuture package has been updated to version 20220425.1242.",
-          "link": "https://melpa.org/#/pfuture",
-          "publishedOn": "2022-04-25T12:42:00.000Z",
-          "wordCount": 105,
-          "title": "pfuture (20220425.1242) --- a simple wrapper around asynchronous processes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-dart-20220425.1211.tar",
-          "author": null,
-          "description": "The lsp-dart package has been updated to version 20220425.1211.",
-          "link": "https://melpa.org/#/lsp-dart",
-          "publishedOn": "2022-04-25T12:11:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-dart (20220425.1211) --- Dart support lsp-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/orgit-20220425.1157.el",
-          "author": null,
-          "description": "The orgit package has been updated to version 20220425.1157.",
-          "link": "https://melpa.org/#/orgit",
-          "publishedOn": "2022-04-25T11:57:00.000Z",
-          "wordCount": 105,
-          "title": "orgit (20220425.1157) --- Support for Org links to Magit buffers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/company-20220425.1145.tar",
-          "author": null,
-          "description": "The company package has been updated to version 20220425.1145.",
-          "link": "https://melpa.org/#/company",
-          "publishedOn": "2022-04-25T11:45:00.000Z",
-          "wordCount": 105,
-          "title": "company (20220425.1145) --- Modular text completion framework",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/futhark-mode-20220425.1144.tar",
-          "author": null,
-          "description": "The futhark-mode package has been updated to version 20220425.1144.",
-          "link": "https://melpa.org/#/futhark-mode",
-          "publishedOn": "2022-04-25T11:44:00.000Z",
-          "wordCount": 105,
-          "title": "futhark-mode (20220425.1144) --- major mode for editing Futhark source files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/treemacs-all-the-icons-20220425.1124.el",
-          "author": null,
-          "description": "The treemacs-all-the-icons package has been updated to version 20220425.1124.",
-          "link": "https://melpa.org/#/treemacs-all-the-icons",
-          "publishedOn": "2022-04-25T11:24:00.000Z",
-          "wordCount": 105,
-          "title": "treemacs-all-the-icons (20220425.1124) --- all-the-icons integration for treemacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/magit-section-20220425.1002.tar",
-          "author": null,
-          "description": "The magit-section package has been updated to version 20220425.1002.",
-          "link": "https://melpa.org/#/magit-section",
-          "publishedOn": "2022-04-25T10:02:00.000Z",
-          "wordCount": 105,
-          "title": "magit-section (20220425.1002) --- Sections for read-only buffers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/utimeclock-20220425.939.el",
-          "author": null,
-          "description": "The utimeclock package has been updated to version 20220425.939.",
-          "link": "https://melpa.org/#/utimeclock",
-          "publishedOn": "2022-04-25T09:39:00.000Z",
-          "wordCount": 105,
-          "title": "utimeclock (20220425.939) --- Simple utility for manual time tracking",
-          "imageUrl": null
         }
       ]
     },
@@ -7143,6 +7053,166 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxqk33/lspclangddoom_doesnt_work_on_windows/",
+          "author": null,
+          "description": "I've two problems\n Let x = any C+++ standard. LSP completion can't find x:\n https://preview.redd.it/y88ayresmo191.png?width=962&format=png&auto=webp&s=04aca031eca60e6e23a6865f300f53b2bfe17ca6\n However I can see the server finds other files: \n https://preview.redd.it/vn6m5z7olo191.png?width=795&format=png&auto=webp&s=4ebcc1894165cb076db03944908423a49928dd76\n The second problem is with M-x compile. It doesn't work: \n ​\n https://preview.redd.it/8f1o8ak0oo191.png?width=420&format=png&auto=webp&s=ae3c84bb47c1cb1bb5897303aaad635974b3ddbe\n I even cannot find g++ on eshell, however I can run it normally from cmd in my path\n any help?\n    submitted by    /u/Mahdi_Amel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxqk33/lspclangddoom_doesnt_work_on_windows/",
+          "publishedOn": "2022-05-25T20:39:52.000Z",
+          "wordCount": 140,
+          "title": "[lsp][clangd][doom] doesn't work on Windows",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxqafc/has_tramp_ever_work_for_you_flawlessly/",
+          "author": null,
+          "description": "title.\n Every single time I try to use TRAMP, I'm always met with File error: Timeout reached or Emacs just plain freeze there. I'd love to edit locally files that exist remotely without any significant setback, but... yeah, for me is impossible.\n Config? well, I use Doom Emacs (which I love) and have nothing in my personal configuration related to TRAMP. In Doom, for the TRAMP hanging forever, they point to the Emacswiki, but come one! I wish stuff just work out of the box :(\n Is there any TRAMP configuration that works out of the box and flawlessly?\n    submitted by    /u/shackra  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxqafc/has_tramp_ever_work_for_you_flawlessly/",
+          "publishedOn": "2022-05-25T20:27:10.000Z",
+          "wordCount": 206,
+          "title": "Has TRAMP ever work for you flawlessly?",
+          "imageUrl": "https://external-preview.redd.it/mtOKidVXjY-_B8WXgqGQGw5WTQfO8mMFAbMvglIOvEg.jpg?auto=webp&s=0100fce57f55f34810d1666090cb73d19c5210cd"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxpkv2/gnife_an_emacs_ecosystem_for_servicing/",
+          "author": null,
+          "description": "submitted by    /u/indieterminacy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxpkv2/gnife_an_emacs_ecosystem_for_servicing/",
+          "publishedOn": "2022-05-25T19:54:07.000Z",
+          "wordCount": 112,
+          "title": "gNife, an emacs ecosystem for servicing: Knowledge-Management; and Problem Solving Workflows",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxowbx/is_there_a_way_that_i_can_keep_absolute_line/",
+          "author": null,
+          "description": "When I narrow a file down to a region containing a single function, the line numbers restart at one, and I would like to be able to make references based on the actual line number in the file.\n    submitted by    /u/ReallyRussell  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxowbx/is_there_a_way_that_i_can_keep_absolute_line/",
+          "publishedOn": "2022-05-25T19:22:08.000Z",
+          "wordCount": 167,
+          "title": "Is there a way that I can keep absolute line numbers while I have a file narrowed?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxl63z/there_are_no_29x_tags_or_branches_in_the_emacs/",
+          "author": null,
+          "description": "If so, how do you know which 29.x version you are compiling?\n    submitted by    /u/RembrandtWasAnegro  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxl63z/there_are_no_29x_tags_or_branches_in_the_emacs/",
+          "publishedOn": "2022-05-25T16:29:11.000Z",
+          "wordCount": 240,
+          "title": "There are no 29.x tags or branches in the Emacs repositories. Does that mean the current master is version 29?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxl5ws/nanoemacs/",
+          "author": null,
+          "description": "Hi all,\n I've installed the amazing nano-emacs from Nicolas Rougier, and I just have a question about the font in latex files: the headings in like \\section{my section} have the same font as regular text (I would have expected them to be in another color or in bold, as with my previous theme): is this normal or did I do something wrong in my installation ?\n Thanks a lot in advance !\n    submitted by    /u/willdvaz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxl5ws/nanoemacs/",
+          "publishedOn": "2022-05-25T16:28:56.000Z",
+          "wordCount": 191,
+          "title": "nano-emacs",
+          "imageUrl": "https://external-preview.redd.it/duGJ2XOdWd1p7k1N7Em9d_zGbuqC1MkujzRGjHmaJFQ.jpg?auto=webp&s=f29c647f71d6c182b7b750e7a8c0a26d5ec125e1"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxkd68/version_07_of_detachedel_formerly_known_as_dtache/",
+          "author": null,
+          "description": "Hello everyone :)\n I wanted to notify the community that there is a new release of my package dtache, which now also has been renamed to detached.el, or detached. For those previously not familiar with the package, the short description is \"An Emacs package to launch, and manage, detached processes\". It can be used to dispatch shell commands to an external program dtach, which allows processes to outlive Emacs.\n The new release is version 0.7, and here is a list of improvements and change that has been made:\n  \nThe development of the package has been moved to sourcehut at https://git.sr.ht/~niklaseklund/detached.el\n The configuration of the package has been drastically improved, now users simply need to call (dtache-init) to integrate with all supported packages. Of course the integration …",
+          "link": "https://www.reddit.com/r/emacs/comments/uxkd68/version_07_of_detachedel_formerly_known_as_dtache/",
+          "publishedOn": "2022-05-25T15:51:46.000Z",
+          "wordCount": 561,
+          "title": "Version 0.7 of detached.el (formerly known as dtache)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxj15i/another_projecttype_question_descending_into/",
+          "author": null,
+          "description": "I have been using projectile; it's fantastic. However, I can't for the life of me get it to descend into submodules when looking for files. Any clues for the clueless on how to fix this or how to further debug the issue?\n In the interim I have bound project-find-file-other-window to the key that's normally bound to projectile-find-file as a work-around.\n Thanks!\n    submitted by    /u/shmulkinator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxj15i/another_projecttype_question_descending_into/",
+          "publishedOn": "2022-05-25T14:48:19.000Z",
+          "wordCount": 155,
+          "title": "Another project-type question: descending into submodules",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxiufd/use_ripgrep_or_ag_in_projectel/",
+          "author": null,
+          "description": "Is it possible to use ripgrep or ag in project.el for finding matches in files? I looked around a bit and don't see how that can be done, but that may say more about my Google/Elisp-fu than the ability to do that.\n    submitted by    /u/shmulkinator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxiufd/use_ripgrep_or_ag_in_projectel/",
+          "publishedOn": "2022-05-25T14:39:16.000Z",
+          "wordCount": 333,
+          "title": "Use ripgrep or ag in project.el?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxh0dy/a_mousedriven_emacs/",
+          "author": null,
+          "description": "I know most people who browse this thread will ask me to just plug the mouse off my computer, and I certainly did that at one point in my life, but using the mouse is really comfortable when you're skimming or if the laptop is too distant to comfortably use the keyboard. The latter happens when I read and have a notebook in front of my laptop. Emacs already comes with a fair share of mouse tricks that probably go unnoticed. This thread is to (a) ask a question, (b) share things that I know, and (c) share things that you know. I've already taken a look at the mouse+.el page on EmacsWiki and I did not find anything of interest. To be clear, I'm not interested in C-M-H-S-mouse-N combinations too much since when I use the mouse, the keyboard is too far away from me to bother. The same goes for…",
+          "link": "https://www.reddit.com/r/emacs/comments/uxh0dy/a_mousedriven_emacs/",
+          "publishedOn": "2022-05-25T13:08:12.000Z",
+          "wordCount": 2025,
+          "title": "A mouse-driven Emacs?",
+          "imageUrl": "https://external-preview.redd.it/oj0GAd5w8NUTlQxCPwkXeMb0iT3voSEjbHn-lavZ-mc.jpg?auto=webp&s=e70425a48a0963eae53901df5db8bef82c7e8385"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxggqy/doom_emacsmodules/",
+          "author": null,
+          "description": "im a emacs noob and i want to use the rainbow-mode on doom emacs to highlight columms of colors. When i launch the command (rainbow-color) it shows it, but only in that specific file and not others, and everytime i open doom emacs, i have to launch again the command \n how can i do that a module always starts?, be consistent?. Thanks\n    submitted by    /u/super_momonga  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxggqy/doom_emacsmodules/",
+          "publishedOn": "2022-05-25T12:39:32.000Z",
+          "wordCount": 315,
+          "title": "Doom emacs-modules",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxeb34/drag_and_drop_images_into_org_files/",
+          "author": null,
+          "description": "I tried org-download package and while it works with normal org files it doesn't work for org roam files (don't know how since both are just org files), is there a reason for such behavior.\n    submitted by    /u/eis3nheim  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxeb34/drag_and_drop_images_into_org_files/",
+          "publishedOn": "2022-05-25T10:24:36.000Z",
+          "wordCount": 300,
+          "title": "Drag and drop images into org files.",
+          "imageUrl": "https://external-preview.redd.it/jYv23ZaGDMIXoIyWwVdwdFJLd1nV1kwTP8FnPZI-6dM.jpg?auto=webp&s=92c36a0d763de51b0fa4b8fcdac4000286c61740"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxdxmy/automatically_copying_a_subheading_to_a_different/",
+          "author": null,
+          "description": "Hi,\n I need to maintain an Orgdown file in a repository. For various reasons, I don't want to edit that file directly. I want to keep the data as a sub-heading in one of my agenda files as the \"main\" data source.\n Therefore, I'm wondering if anybody has a workflow where a certain sub-hierarchy (defined by an ID property) is automatically copied to a defined file somewhere else. This external file only contains the single sub-hierarchy and no additional content. There is no-one editing that file besides me so a \"blind\" one-directional export (overwriting the previous version) + commit is viable.\n Is there anybody who did this already?\n    submitted by    /u/publicvoit  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxdxmy/automatically_copying_a_subheading_to_a_different/",
+          "publishedOn": "2022-05-25T09:57:57.000Z",
+          "wordCount": 421,
+          "title": "(Automatically) Copying a sub-heading to a different org file",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/uxcm6i/weekly_tips_tricks_c_thread/",
+          "author": null,
+          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n See this search for previous \"Weekly Tips, Tricks, &c.\" Threads.\n Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/uxcm6i/weekly_tips_tricks_c_thread/",
+          "publishedOn": "2022-05-25T08:15:10.000Z",
+          "wordCount": 619,
+          "title": "Weekly Tips, Tricks, &c. Thread",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ux1gjr/my_own_transient_example/",
+          "author": null,
+          "description": "After asking some questions and reading docs and getting some help, I have my own example of how to build a Transient. I honestly like this a lot better for this kind of work than Hydra; Hydra is fantastic, but this saves me a lot of duplicate work that I was doing with defining keymaps to assemble the right combination of arguments to pass to build functions. My usage of lisp is what I'd consider fairly simple. I'm just trying to build a command line to feed to compile.\n ;; -*- lexical-binding: t; -*- ;; Functions for building unreal on PROJ using dir-locals (defconst +proj-target-list+ '(\"Development\" \"Debug\" \"Release\")) (defconst +proj-executable-list+ '(\"UnrealHeadertool\" \"ProjEditor\" \"ProjGame\")) (defconst +proj-platform-list+ '(\"Win64\")) (defconst +uproject-path+ \"Proj/Proj.uproject\"…",
+          "link": "https://www.reddit.com/r/emacs/comments/ux1gjr/my_own_transient_example/",
+          "publishedOn": "2022-05-24T21:23:22.000Z",
+          "wordCount": 1035,
+          "title": "My own Transient example",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ux10gb/is_emacs_works_well_with_windows/",
+          "author": null,
+          "description": "submitted by    /u/Mapuloi  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ux10gb/is_emacs_works_well_with_windows/",
+          "publishedOn": "2022-05-24T21:03:06.000Z",
+          "wordCount": 670,
+          "title": "Is emacs works well with Windows?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/uwqmy8/segmentel_porting_complex_sentence_break_rules/",
           "author": null,
@@ -10931,146 +11001,6 @@
           "publishedOn": "2022-04-26T08:43:08.000Z",
           "wordCount": 141,
           "title": "How to show Color Emoji in Windows",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/uc6rch/whats_the_difference_between_evalexpression_and/",
-          "author": null,
-          "description": "I prefer a clean frame for Emacs, so I've set frame-title-format to be empty, but whenever I resize the frame, the size of the frame is appended to the frame title. If I :Eval (setq frame-title-format \" \") the frame-title is cleared. I've checked and that should be the equivalent of eval-expression, but doing (eval-expression '(setq frame-title-format \" \")) in a hook does nothing. Using setq directly also does nothing. So what's the difference between eval-expression and :Eval? Or, what's the difference between running a command immediately and running a command via hooks?\n I've also tried (set 'frame-title-format \" \") thinking it's a scope-issue, but no luck\n    submitted by    /u/hkjels  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/uc6rch/whats_the_difference_between_evalexpression_and/",
-          "publishedOn": "2022-04-26T07:10:27.000Z",
-          "wordCount": 318,
-          "title": "What's the difference between `eval-expression` and `:Eval `?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/uc6ngm/is_there_any_other_program_like_emacs_as_in_a/",
-          "author": null,
-          "description": "Coming from vim, now I realise emacs is not just a text editor. It is a lisp interpreter and thus functions like an OS from which you can do several different things and thus use your common key binds etc across several different applications. \n ​\n Is there any other program which does this? I am not looking for an alternative. I am just curious as I never came across such a program before and why isn't this more common? Like there could be python based or C based emacs-like programs, right?\n    submitted by    /u/LowCom  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/uc6ngm/is_there_any_other_program_like_emacs_as_in_a/",
-          "publishedOn": "2022-04-26T07:02:41.000Z",
-          "wordCount": 1749,
-          "title": "Is there any other program like emacs, as in a user-space OS?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/uc4r9i/some_code_to_turn_image_data_on_the_clipboard/",
-          "author": null,
-          "description": "I've spent the past couple of days noodling with this idea-- I knew emacs could access the X11 clipboard, I knew emacs could display images, and I knew emacs could deal with the binary data behind said images fairly well, so it stood to reason it would be possible to get directly from 'screenshot' (or copy-to-clipboard image out of a web browser, etc.) to an emacs buffer with no temp-file go-between like every single emacs screenshot tool I've seen.\n (this will only work on X11, consequently)\n (defun d/clipboard-to-image-buffer () (interactive) (set-clipboard-coding-system 'raw-text) (when (get-buffer \"*emacs-ss*\") (kill-buffer \"*emacs-ss*\")) (let* ( (x-select-request-type 'image/png) (sel (gui--selection-value-internal 'CLIPBOARD)) ) (if sel (with-current-buffer-window (get-buffer-create …",
-          "link": "https://www.reddit.com/r/emacs/comments/uc4r9i/some_code_to_turn_image_data_on_the_clipboard/",
-          "publishedOn": "2022-04-26T04:54:10.000Z",
-          "wordCount": 572,
-          "title": "Some code to turn image data on the clipboard into an emacs buffer, and a question.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/uc25wx/navigating_an_enormous_code_base/",
-          "author": null,
-          "description": "​At my day job I work on a 35 year old product with literally a few hundred million lines of codes. It is essentially a mono-repo. \n There are thousands of directory trees with Makefiles. To be consistent with Emacs concepts, let's call these 'projects'. Luckily projects are rarely nested, and not in the areas I work on. There is no discipline requiring file names be unique across projects, nor even within projects. Furthermore, within any project there can be multiple unittest/ and/or pkgtest/ directories. Each such directory must contain a suite_registration.cpp. \n Most often I work within a single project and want to navigate to files in the same project. Less frequently I need to find a file in a sibling project. Unfortunately, there are ~400 siblings, though I very rarely visit more than 10. \n With recent attempts to work within Emacs' built-in tools, I wonder how I find files in this code base. Or if Emacs lacks adequate built-in tooling, what package(s) might​ help?\n    submitted by    /u/jsyjr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/uc25wx/navigating_an_enormous_code_base/",
-          "publishedOn": "2022-04-26T02:28:41.000Z",
-          "wordCount": 1435,
-          "title": "Navigating an enormous code base",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/uc0ty7/rational_emacs_update/",
-          "author": null,
-          "description": "submitted by    /u/wolfjb  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/uc0ty7/rational_emacs_update/",
-          "publishedOn": "2022-04-26T01:19:42.000Z",
-          "wordCount": 173,
-          "title": "Rational Emacs Update",
-          "imageUrl": "https://external-preview.redd.it/MEaepZS03kHx29J29J5qZA-NesH_jFLOTR4PRxqQ5d4.jpg?auto=webp&s=d3ec24483804bf27b4a57d2a7ae679d437f0559d"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ubxojv/what_do_you_use_for_very_fast_keybindings/",
-          "author": null,
-          "description": "Hi all, I was wondering if any of you had any fast keybdinding for everyday actions that are very frequently used. \n ​\n I am trying to find the keybindings that better fit my workflow but I'm really struggling with it: what I'm setting up is a very simple markdown editor and there are 4 things that i always do (bold text, italic text, math text, code text) but i just realized that the C-c prefix combinations are sooo slow for me. \n ​\n What i usually did with traditional editors was something like C-b (bold) and C-i (italic) so i was insanely fast at it. I see that many keybindings besides the C-c prefix are already taken and it looks like overriding those is frowned upon. (Plus, C-i is basically <tab>). \n ​\n So, back at the main question, is there some keybindings for some actions that you ***very*** often do use? How did you manage to set it?\n    submitted by    /u/cidra_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ubxojv/what_do_you_use_for_very_fast_keybindings/",
-          "publishedOn": "2022-04-25T22:44:02.000Z",
-          "wordCount": 1340,
-          "title": "What do you use for very fast keybindings?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ubrt2l/electricpairmode_does_not_work_as_intended_with/",
-          "author": null,
-          "description": "Hi all. I'm trying really hard to make elec-pair work for me without any success. This is a minimal config (Emacs 26.3):\n (electric-pair-mode t) (setq electric-pair--skip-whitespace nil) (setq electric-pair-skip-self nil) ;;it's hard to indent in reddit (setq electric-pair-pairs '((?\\( . ?\\)) (?\\[ . ?\\]) (?{ . ?}) (?* . ?*) (?` . ?`) (?$ . ?$))) (setq electric-pair-text-pairs '((?\\( . ?\\)) (?\\[ . ?\\]) (?{ . ?}) (?* . ?*) (?` . ?`) (?$ . ?$))) \n Basically the paired character are the brackets, the dollar sign, the backtick and the asterisk. The intended behaviour is that none of these should \"skip\". (Meaning that typing } near another } should result in }}). \n The brackes do not skip, but the other chars do skip! For example, if the point is at $|$ and i type another $ what i get is $$|. The dollar sign gets skipped! \n Also, something i notices is that the double quote char (\") gets paired even if it is not in my config file. Why is that? How should I configure electric-pair?\n    submitted by    /u/cidra_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ubrt2l/electricpairmode_does_not_work_as_intended_with/",
-          "publishedOn": "2022-04-25T18:25:43.000Z",
-          "wordCount": 284,
-          "title": "electric-pair-mode does not work as intended with $, * and `",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ubq1mh/flickers_in_native_windows_mingw_builds/",
-          "author": null,
-          "description": "Does anyone experience flickers in mingw builds when scrolling or resizing the frame?\n I've tried looking up issues from the past and it seems that it has something to do with double-buffering, but I haven't found any solution that actually works.\n I have also tried snippets of the following variation:\n (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))\n but none of them works.\n Are there any Windows users that have managed to find a solution for this?\n To be specific, I'm using Full-AOT builds from https://corwin.bru.st/emacs-28, but I've experienced the same issue with official GNU builds in the past. The same issue does not occur in WSL.\n    submitted by    /u/desgreech  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ubq1mh/flickers_in_native_windows_mingw_builds/",
-          "publishedOn": "2022-04-25T17:07:40.000Z",
-          "wordCount": 194,
-          "title": "Flickers in native Windows (mingw) builds",
-          "imageUrl": "https://external-preview.redd.it/iXyZgUOK_iOmvjAEUP7CjZlOEF0KTlfMJkRafsCMxsM.jpg?auto=webp&s=2b847cc1cfbda8731956ad15c2f7c0bc1bbdce65"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ubor4w/forge_install_issues/",
-          "author": null,
-          "description": "I'm a new emacs user and working on setting up my environment. I have magit setup and working. I want to add Forge but I'm running into a few issues. \n When I try to just do a package install of forge I get the following output: \n package-install-from-archive: https://melpa.org/packages/ghub-20220403.1248.tar: Not found and when i use M-x forge there is nothing found.\n I get the same issue if i try to do a package install on ghub itself. \n However when I go to melpa.org and search ghub This link comes up: https://melpa.org/#/ghub and the download link is https://melpa.org/packages/ghub-20220424.947.tar \n Cool it exists. What i'm not sure of how to do is make the emacs package installer reconcile this link difference so that i can run package-install on forge.\n    submitted by    /u/timmymayes  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ubor4w/forge_install_issues/",
-          "publishedOn": "2022-04-25T16:11:37.000Z",
-          "wordCount": 321,
-          "title": "Forge Install Issues",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ubljse/coming_back_to_emacsorg_after_one_year_what_a/",
-          "author": null,
-          "description": "I made a deep dive into Emacs, Orgmode, and Elisp in 2020 and migrated almost all of my writing, editing, and task-management tools to it. Spent a significant amount of time learning the ins and outs of it.\n At some point I was tempted by shiny tools like OmniFocus (a fantastic tool, no doubt), Nisus Writer, Roam Research, and some more.\n After some time I realized I have isolated islands of tools not inter-operating, and I have little to no control over these tools, at least not in a consistent way (JavaScript in Roam, Apple Script and JS in OmniFocus, etc).\n So again I came back to Emacs + Org two weeks ago, having left it for several months. Now, as if my mind has been digesting all the infos that I have accumulated the months before I left it, I suddenly feel like all pieces fall together, I am quickly hacking Emacs Lisp for my workflow automations, my fingers are flying over the keyboard (using Karabiner Elements and \"God Mode\" https://medium.com/@nikitavoloboev/karabiner-god-mode-7407a5ddc8f6) and I get sooo much more done in a way not possible by the other tools I used! Everything is connected to each other now: My writing, documenting, my task management, my text editing and every bit of a text tranformation. This is such a wonderful way to get things done.\n Thank you to all the maintainers of Emacs, Orgmode, and all the wonderful packages like ivy, counsel, org-ql, and many more!\n Also, I am very happy with this community, that has helped me get a better understanding of the ins and outs of Emacs and Elisp.\n    submitted by    /u/pragmat1c1  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ubljse/coming_back_to_emacsorg_after_one_year_what_a/",
-          "publishedOn": "2022-04-25T13:46:51.000Z",
-          "wordCount": 463,
-          "title": "Coming back to Emacs+Org after one year. What a delight!",
-          "imageUrl": "https://external-preview.redd.it/8rLuMsmdvIQCJ60GaGncLe2U9RoVeXcefxxwu2O0gyU.jpg?auto=webp&s=51fc9ed4081609dba341815d4471ae12c48253d0"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ubk6kr/emacs_consuming_cpu_in_endless_loop_what_are_my/",
-          "author": null,
-          "description": "Hi,\n On my old notebook I get this frequently (maybe a config issue), on my main machine (Emacs v26.3) I do have this behavior right now: After undoing a large deletion (during a bisect-task) GNU Emacs is consuming its one CPU core for 100%, not ending for an hour or so. I consider this an end-less loop.\n Emacs server is running as well.\n What are my options to debug what's going on? Can I somehow connect to the running instance and activate a profiler? Is there anything else besides killing the task what I can do?\n Thanks!\n Update 2022-04-25T16.21 CET: C-g did not do anything.\n    submitted by    /u/publicvoit  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ubk6kr/emacs_consuming_cpu_in_endless_loop_what_are_my/",
-          "publishedOn": "2022-04-25T12:38:24.000Z",
-          "wordCount": 339,
-          "title": "Emacs consuming CPU in end-less loop: what are my options?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ubjnwj/can_i_give_arbitrary_colors_to_my_org_headings/",
-          "author": null,
-          "description": "So I'm writing fiction using Org Mode, which is obviously incredibly useful. Each heading contains a specific scene, and in that way I always know what piece I'm writing and where if fits in the plot.\n One thing I used to do when I outlined on paper was to color my cards according to the subplot they represented, and I think that would be useful on Org as well.\n    submitted by    /u/thiscarhasfourtires  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ubjnwj/can_i_give_arbitrary_colors_to_my_org_headings/",
-          "publishedOn": "2022-04-25T12:10:06.000Z",
-          "wordCount": 209,
-          "title": "Can I give arbitrary colors to my Org headings?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ubh34y/opening_emacs_automatically_opens_terminal/",
-          "author": null,
-          "description": "Started using EMACS a few days ago, and every time I open emacs, the terminal opens up and I have no idea why. I searched for a bit but there isn't anything remotely close to what I am looking for so I was thinking that it's actually normal. Help would be appreciated, thanks!\n ​\n this is how it looks when I start up emacs\n    submitted by    /u/CozyIguana  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ubh34y/opening_emacs_automatically_opens_terminal/",
-          "publishedOn": "2022-04-25T09:29:05.000Z",
-          "wordCount": 332,
-          "title": "opening emacs automatically opens terminal",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/ubgjs3/different_mode_line_info_for_different_major_modes/",
-          "author": null,
-          "description": "I want to have column-number-mode turned on only for c-mode and no other major mode. How would I do this? When I add a hook to c-mode it changes mode line for every mode\n    submitted by    /u/yekemezek  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/ubgjs3/different_mode_line_info_for_different_major_modes/",
-          "publishedOn": "2022-04-25T08:51:36.000Z",
-          "wordCount": 212,
-          "title": "different mode line info for different major modes?",
           "imageUrl": null
         }
       ]
