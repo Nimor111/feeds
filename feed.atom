@@ -2,10 +2,408 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2022-06-08T20:37:46.104Z</updated>
+    <updated>2022-06-09T20:38:28.336Z</updated>
     <generator>osmosfeed 1.14.4</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[Is there good introduction to the parsec library for newbies?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v8p73h/is_there_good_introduction_to_the_parsec_library/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v8p73h/is_there_good_introduction_to_the_parsec_library/"/>
+        <updated>2022-06-09T19:49:11.000Z</updated>
+        <summary type="html"><![CDATA[I try to follow the articles on this page, and most of them are obsolete ... It seems their API has changed, and there is little documentations.
+ https://hackage.haskell.org/package/parsec
+ For example, I don't understand what Stream s m Char is.  Prelude Text.Parsec> :t char char :: Stream s m Char => Char -> ParsecT s u m Char 
+ My understanding of parsec all comes from this video, but there is a gap from here to the parsec library APIs. Is there any document/articles on this? Or maybe this library is not really used often?
+ https://www.youtube.com/watch?v=N9RUqGYuGfw
+    submitted by    /u/nosarthur  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[emms (20220609.1859) --- The Emacs Multimedia System]]></title>
+        <id>https://melpa.org/packages/emms-20220609.1859.tar</id>
+        <link href="https://melpa.org/#/emms"/>
+        <updated>2022-06-09T18:59:00.000Z</updated>
+        <summary type="html"><![CDATA[The emms package has been updated to version 20220609.1859.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to run python tests if you are using eglot?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/v8n0tu/how_to_run_python_tests_if_you_are_using_eglot/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/v8n0tu/how_to_run_python_tests_if_you_are_using_eglot/"/>
+        <updated>2022-06-09T18:11:31.000Z</updated>
+        <summary type="html"><![CDATA[Hi
+ I am using eglot for python (and yaml, latex). Today I was fixing some big python code base, and I realize that I have no simple way of running the tests. I did a quick search in the Emacs web site, but they recommend python-pytest or pytest or elpy, I discarded the first one since it depends on projectile (and I prefer project.el) the second one was updated four years ago and elpy seems to overlap with eglot. 
+ So I am assumming that I am doing something wrong... Currently I am using eglot AND elpy, but only using elpy for run tests ... Any advice?
+    submitted by    /u/nanounanue  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Get Things Done With Emacs]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/v8kvf9/get_things_done_with_emacs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/v8kvf9/get_things_done_with_emacs/"/>
+        <updated>2022-06-09T16:36:59.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/jandrusk  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Data modelling in Scala3 with types example]]></title>
+        <id>https://www.reddit.com/r/scala/comments/v8kf4b/data_modelling_in_scala3_with_types_example/</id>
+        <link href="https://www.reddit.com/r/scala/comments/v8kf4b/data_modelling_in_scala3_with_types_example/"/>
+        <updated>2022-06-09T16:16:13.000Z</updated>
+        <summary type="html"><![CDATA[A couple of days ago, a post was made about modelling data in Scala 3 with types, and the OP was asked "yes, but what use is it?".
+ I've developed an interesting use for this kind of thing with opaque types and inlines: https://scastie.scala-lang.org/mmmB090CRFqUgGYhpvyX9w
+ ```scala import scala.compiletime.constValue import scala.compiletime.error import scala.compiletime.ops.int.ToString import scala.util.Failure import scala.util.Success import scala.util.Try
+ //probably replaceable with IsConst, but IsConst is @experimental trait SingletonType[T]: inline val t: T
+ object SingletonType: transparent inline given [T]: SingletonType[T] = new SingletonType[T]: inline val t = constValue[T]
+ object Test: opaque type PositiveInt <: Int = Int 
+ object PositiveInt: inline def apply[T <: Int & Singleton](using s: SingletonType[T]): PositiveInt = inline if s.t >= 0 then s.t else error("Cannot interpret " + constValue[ToString[T]] + " as PositiveInt")
+ def apply(i:Int): Try[PositiveInt] = if i >= 0 then Success(i) else Failure(new Exception(s"Cannot interpret $i as PositiveInt")) 
+ import Test.PositiveInt //needed to keep the opaque type opaque
+ val a = PositiveInt[4] //val b = PositiveInt[-2] //compile-time error "Cannot interpret -2 as PositiveInt" val c: Try[PositiveInt] = PositiveInt(a) //runtime check ```
+ Please note that these kinds of checks can be extended to other types that support singletons (Strings for example). Strings are not as well supported by scala 3 when it comes to inline if, so you have to check the data at compile time using macros, making things slightly more complicated, but it still works.
+ I'm still trying to find a way to generalize this pattern, but in any case, I think it's very useful. It allows you to transform data at compile time to a more specific type, and have compile-time errors if your data doesn't match the necessary predicates.
+    submitted by    /u/markehammons  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The appeal of bidirectional type-checking]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v8jfsd/the_appeal_of_bidirectional_typechecking/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v8jfsd/the_appeal_of_bidirectional_typechecking/"/>
+        <updated>2022-06-09T15:32:00.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/rampion  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Looking for blog post about looking up/down the low/high level programming language hierarchy.]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v8jaga/looking_for_blog_post_about_looking_updown_the/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v8jaga/looking_for_blog_post_about_looking_updown_the/"/>
+        <updated>2022-06-09T15:25:18.000Z</updated>
+        <summary type="html"><![CDATA[I'm looking for a blog post I read a couple of years ago, I think it references Haskell quite a bit but it wasn't primarily about the language itself. I've been trying to find it for a while now, hopefully someone here remembers it.
+ The core idea was that when devs compare programming languages, when they look down towards lower level languages they see obvious deficiencies, but when they look up towards higher level languages they don't see the advantages and just think "huh, that's strange". For example, a Python dev would look at C and think "Clearly it's missing a GC and classes" but then look at Haskell and think "What a strange language, why would I want Monads?". But similarly, a C dev would look at Python and think "Why would anyone want a GC"?
+ This idea has stuck with me and I'd like to revisit the blog post I got it from, so any help or pointers to it would be appreciated!
+    submitted by    /u/flaghacker_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Improving Fault Tolerance with RPC Fallbacks]]></title>
+        <id>https://www.reddit.com/r/scala/comments/v8ivqp/improving_fault_tolerance_with_rpc_fallbacks/</id>
+        <link href="https://www.reddit.com/r/scala/comments/v8ivqp/improving_fault_tolerance_with_rpc_fallbacks/"/>
+        <updated>2022-06-09T15:06:31.000Z</updated>
+        <summary type="html"><![CDATA[In a large complex microservices environment, fault tolerance is a necessity since failures are inevitable. For my team we needed to ensure that our translation service would not go down and prevent anyone, who did not speak english from using our app. To do this we designed a system of retries, replicas and fallbacks to ensure that normal failures would not cause an outage. To share what we learned we put together a high level guide that also has specifics on how we made our translation service more reliable. Enjoy and please let me know if you have any feedback or questions.
+ https://doordash.engineering/2022/06/07/improving-fault-tolerance-with-rpc-fallbacks-in-doordashs-microservices/
+    submitted by    /u/leoeng9  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[commitAndReleaseBuffer error on VSCode]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v8hpf1/commitandreleasebuffer_error_on_vscode/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v8hpf1/commitandreleasebuffer_error_on_vscode/"/>
+        <updated>2022-06-09T14:10:59.000Z</updated>
+        <summary type="html"><![CDATA[For some reason I'm getting this error in the terminal whenever I type in "stack build" or "stack run":
+  
+app\Main.hs:12:24: error: 
+ Variable not in scope: (<stderr>: commitAndReleaseBuffer: invalid argument (invalid character)
+  
+My program is basically just FizzBuzz:
+  
+module Main whereimport Libmain :: IO ()main = print (fizzBuzz [1..100])
+  
+where "fizzBuzz" is defined in another file Lib.hs as:
+  
+fizzBuzz :: [Int] -> [String]fizzBuzz [] = []fizzBuzz (x:xs)| mod x 3 == 0 && mod x 5 == 0 = "FizzBuzz":fizzBuzz xs| mod x 3 == 0 = "Fizz":fizzBuzz xs| mod x 5 == 0 = "Buzz":fizzBuzz xs| otherwise = show x:fizzBuzz xs
+  
+I'm pretty new to this but I tested out the program in an online compiler and it worked there so I don't think it's a problem with the program itself.
+ EDIT: After trying "stack run" a few more times the line "module Main where" now gives the error
+  
+ghcide compiled by GHC 9.0 failed to load packages: <command line>: cannot satisfy -package FirstProject-0.1.0.0 
+ (use -v for more information). 
+ Please ensure that ghcide is compiled with the same GHC installation as the project.cradle
+  
+EDIT 2: Running "stack -v" in the project's folder gives out an error "Missing: COMMAND|FILE"
+ EDIT 3: Running "stack -v run" gives the same error
+    submitted by    /u/Andrei144  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How and why does the compiler inference this typeclass?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v8hngt/how_and_why_does_the_compiler_inference_this/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v8hngt/how_and_why_does_the_compiler_inference_this/"/>
+        <updated>2022-06-09T14:08:18.000Z</updated>
+        <summary type="html"><![CDATA[Hey, I have the following ghci output which does not make sense to me:
+ ghci> f :: (Num a, Ord b) => a -> b -> a; f = undefined ghci> :t f 1 2 f 1 2 :: Num a => a -- okay, I expect this ghci> f :: (Ord a, Num b) => a -> b -> a; f = undefined -- swap Ord and Num ghci> :t f 1 2 f 1 2 :: (Ord a, Num a) => a -- why is a also Num? 
+ can somebody explain to me why the compiler infers Num for a in the second example? Thanks
+    submitted by    /u/Necessary-You-6031  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Modern Emacs: Redux]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/v8g5g4/modern_emacs_redux/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/v8g5g4/modern_emacs_redux/"/>
+        <updated>2022-06-09T12:50:38.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/bozhidarb  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Emacs shortcut to run and compile]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/v8g2po/emacs_shortcut_to_run_and_compile/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/v8g2po/emacs_shortcut_to_run_and_compile/"/>
+        <updated>2022-06-09T12:46:41.000Z</updated>
+        <summary type="html"><![CDATA[Hi guys. I'm studying the language C in the moment in I use other terminal to run and compile. I know It is possible to to add in the .emacs (global-set-key [f4] 'compile) to compile, but I want to compile and run with only one shortcut. For example in the Geany, You can compile and run, after the compile, it is created a new window to run the file, it is possible to do anything similar in Emacs? Only to run, compile it is good start to me.
+ Sorry for the English, English it is not my native language.
+    submitted by    /u/Mycroft-l  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to dynamically create types?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v8frv2/how_to_dynamically_create_types/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v8frv2/how_to_dynamically_create_types/"/>
+        <updated>2022-06-09T12:29:59.000Z</updated>
+        <summary type="html"><![CDATA[Sorry if the title didn't make any sense.
+ I am tasked with migrating data from database A to database B continuously.
+ Database A will be pushing notifications saying "row ${id} in table ${tableName} has been updated" or, "new row ${id} created in table ${tableName}".
+ My job is to fetch this new/updated row, and create/update this same row in Database B.
+ The problem: whenever I need to fetch something from database A, I need to know its schema (unless there's an equivalent to Any in Haskell?).
+ I have about 400 tables, each with their own columns and datatypes... writing those 400 tables manually would be madness.
+ 
+ My idea is to, at the start of the application, ask database A for all its tables and their columns. 
+ So I might get hundreds of something like this:
+ sql TABLE table1 ( name VARCHAR(256) NOT NULL, age INT NOT NULL )  (parsing the SQL syntax isn't a problem)
+ which I want to convert to something like:
+  data Table1 = Table1 { name :: String , age :: Int } 
+ Then, somehow, when I get a notification like:
+ "new row ${id} created in table ${table1}",
+ I need to link this table1 to the Table1 type, so I can parse it correctly when I fetch one of its rows.
+ Is this a very stupid idea? Should I even bother type-checking this?
+ Thanks.
+    submitted by    /u/peanutbutterwnutella  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Issue 319]]></title>
+        <id>https://haskellweekly.news/issue/319.html</id>
+        <link href="https://haskellweekly.news/issue/319.html"/>
+        <updated>2022-06-09T12:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Welcome to another issue of Haskell Weekly!
+Haskell is a safe, purely functional programming language with a fast, concurrent runtime.
+This is a weekly summary of what’s going on in its community.
+Featured
+Developer Nation Survey (ad)
+Which are the most popular programming languages? Take the Developer Nation survey, share your views on the most important tools or platforms for 2022 and shape the future of the Developer Ecosystem. You will get a virtual goody bag with free resources, plus a chance to win an iPhone 13, a Samsung Galaxy S22, Amazon vouchers and more.
+Announcing Chez Grater Version 0.1 by Dan Fithian
+Announcing Chez Grater, a new open source tool for scraping recipe blogs.
+The appeal of bidirectional type-checking by Gabriella Gonzalez
+In this post I hope to explain why bidir…]]></summary>
+        <author>
+            <name>Haskell Weekly</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Haskell Weekly - Issue 319]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v8f6q7/haskell_weekly_issue_319/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v8f6q7/haskell_weekly_issue_319/"/>
+        <updated>2022-06-09T11:56:55.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/RecognitionDecent266  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Scala in the City - Medidata - 28th June - Hammersmith, London]]></title>
+        <id>https://www.reddit.com/r/scala/comments/v8ewxz/scala_in_the_city_medidata_28th_june_hammersmith/</id>
+        <link href="https://www.reddit.com/r/scala/comments/v8ewxz/scala_in_the_city_medidata_28th_june_hammersmith/"/>
+        <updated>2022-06-09T11:40:28.000Z</updated>
+        <summary type="html"><![CDATA[To all Scala Enthusiasts!
+ Medidata is proud to host - Scala in the City event this month - on the 28th of June - from 6pm to 9pm - join us for a great evening of talks and networking!
+ Sign up: https://www.meetup.com/scala-in-the-city/events/286390388/
+ Medidata is leading the digital transformation of life sciences, creating hope for millions of patients. We help generate the evidence and insights to help pharmaceutical, biotech, medical device and diagnostics companies, and academic researchers accelerate value, minimize risk, and optimize outcomes.
+ https://preview.redd.it/29akmhyr1l491.png?width=3300&format=png&auto=webp&s=94f66ee2f9fc17e6d69390e00c1a61fc22f1486b
+    submitted by    /u/Oleh_Medidata  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[HELP] sudo over ssh]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/v8d4ke/help_sudo_over_ssh/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/v8d4ke/help_sudo_over_ssh/"/>
+        <updated>2022-06-09T09:42:12.000Z</updated>
+        <summary type="html"><![CDATA[Having troubles with it.
+ Tried this:
+ $ emacs -nw /ssh:user@172.16.42.1|sudo::/etc/hosts $ emacs -nw /ssh:user@172.16.42.1|sudo:172.16.42.1:/etc/hosts 
+ but no matter what I try I just keep getting an empty editor window and stuff like bash: sudo::/etc/hosts: No such file or directory in the terminal.
+ The file I'm looking for definitely does exist.
+ Anything wrong with the command syntax maybe?
+ Emacs 28.1 on linux.
+ Thanks.
+    submitted by    /u/pasholnahuy228  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Learn Haskell in Ubuntu or Windows?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v8a7r2/learn_haskell_in_ubuntu_or_windows/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v8a7r2/learn_haskell_in_ubuntu_or_windows/"/>
+        <updated>2022-06-09T06:12:26.000Z</updated>
+        <summary type="html"><![CDATA[Hi everyone,
+ I want to get started learning Haskell, going through the book “Learn You A Haskell For Great Good”. Do you recommend doing this in Ubuntu or Windows?
+    submitted by    /u/Arekkusu_Migaru  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Glad Emacs never will be sunset]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/v85t8h/glad_emacs_never_will_be_sunset/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/v85t8h/glad_emacs_never_will_be_sunset/"/>
+        <updated>2022-06-09T01:55:32.000Z</updated>
+        <summary type="html"><![CDATA[Reading this morning that Gitbub will sunset Atom by the end of the year, makes me appreciate that I've invested my time in learning an editor that will stick around for as long as I can type on a keyboard. Go Emacs!
+    submitted by    /u/torsteinkrause  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Emacs finally got a command line switch to set user-emacs-directory]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/v84ura/emacs_finally_got_a_command_line_switch_to_set/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/v84ura/emacs_finally_got_a_command_line_switch_to_set/"/>
+        <updated>2022-06-09T01:04:18.000Z</updated>
+        <summary type="html"><![CDATA[Available recently in Emacs 29. This makes testing alternative init files and debugging much easier. Obviates the need for tools like chemacs.
+ https://git.savannah.gnu.org/cgit/emacs.git/log/?qt=grep&q=init-directory
+    submitted by    /u/nv-elisp  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[A Beginner’s Guide to Data Mining Techniques]]></title>
+        <id>https://serokell.io/blog/guide-to-data-mining-techniques</id>
+        <link href="https://serokell.io/blog/guide-to-data-mining-techniques"/>
+        <updated>2022-06-09T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[In this quick guide, you will learn about the main data mining methods, predictive and exploratory data mining techniques and their practical applications in data-driven decision-making.]]></summary>
+        <author>
+            <name>hi@serokell.io (Serokell staff)</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Is there getInt function in Haskell?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v81rlu/is_there_getint_function_in_haskell/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v81rlu/is_there_getint_function_in_haskell/"/>
+        <updated>2022-06-08T22:28:44.000Z</updated>
+        <summary type="html"><![CDATA[Title basically. I can't find anything about taking integer values as intput hough I doubt there won't be a way to.
+    submitted by    /u/pauldirac_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[What's the best way to use undo-redo on emacs?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/v819tn/whats_the_best_way_to_use_undoredo_on_emacs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/v819tn/whats_the_best_way_to_use_undoredo_on_emacs/"/>
+        <updated>2022-06-08T22:05:45.000Z</updated>
+        <summary type="html"><![CDATA[I lost my progress on an org document twice, and I used tons of undo-redo commands, but none of them worked, so now, even though I really like org mode and emacs, I'm kind of disappointed. 
+ Is there a safe way to create documents without the risk of lose everything because of a simple error like using undo-redo commands the wrong way? 
+ I read about version control, but still don't know how to use it.
+    submitted by    /u/lord4ris  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[org-modern-indent: org-modern block styling with org-indent]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/v80w8v/orgmodernindent_orgmodern_block_styling_with/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/v80w8v/orgmodernindent_orgmodern_block_styling_with/"/>
+        <updated>2022-06-08T21:48:35.000Z</updated>
+        <summary type="html"><![CDATA[org-modern-indent
+ with org-modern and org-modern-indent
+    submitted by    /u/JDRiverRun  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Don't fear the Monad - code example?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v80v6f/dont_fear_the_monad_code_example/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v80v6f/dont_fear_the_monad_code_example/"/>
+        <updated>2022-06-08T21:47:09.000Z</updated>
+        <summary type="html"><![CDATA[I have just discovered this gem today.
+ Video: https://www.youtube.com/watch?v=ZhuHCtR3xq8
+ Which made me come back to Haskell and try out what Brian did explain.
+ I managed to reproduce the shoving/binding of a -> Ma functions. My test code lives here: https://github.com/xddq/why-monads-make-lives-easier/blob/main/Test.hs
+ In the video he explains that M can be any monad, and does not have to be a specific one.
+ I did not get this to work. Where should I look to get this working? How would this code look like for these example functions:
+ ```
+ numToMonad :: a -> [a] numToMonad x = [a]
+ numToMonad2 :: a -> Maybe a numToMonad2 x | even x = Just x | otherwise = Nothing
+ shoveIt :: a -> Maybe a shoveIt x = numToMonad x >>= numToMonad2
+ ```
+ Did I misunderstand the video? Is this not possible?
+ Thank you in advanvce!
+    submitted by    /u/prrxddq  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Rational Emacs Update]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/v7zv0o/rational_emacs_update/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/v7zv0o/rational_emacs_update/"/>
+        <updated>2022-06-08T20:58:37.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/wolfjb  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How can I configure Flyspell to hit enter on a word and get suggestions instead of right click on it?]]></title>
         <id>https://www.reddit.com/r/emacs/comments/v7z7wd/how_can_i_configure_flyspell_to_hit_enter_on_a/</id>
@@ -29,6 +427,16 @@
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ebib (20220608.1923) --- a BibTeX database manager]]></title>
+        <id>https://melpa.org/packages/ebib-20220608.1923.tar</id>
+        <link href="https://melpa.org/#/ebib"/>
+        <updated>2022-06-08T19:23:00.000Z</updated>
+        <summary type="html"><![CDATA[The ebib package has been updated to version 20220608.1923.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -93,6 +501,16 @@
  [link]   [comments]]]></summary>
         <author>
             <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[python-mode (20220608.1625) --- Python major mode]]></title>
+        <id>https://melpa.org/packages/python-mode-20220608.1625.tar</id>
+        <link href="https://melpa.org/#/python-mode"/>
+        <updated>2022-06-08T16:25:00.000Z</updated>
+        <summary type="html"><![CDATA[The python-mode package has been updated to version 20220608.1625.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -417,6 +835,16 @@ What do you think?]]></summary>
  Probable fix: add INLINABLE pragma on ‘Control.Monad.Trans.Writer.Lazy.$w$c*>’ ```
     submitted by    /u/Limp_Step_6774  
  [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Critique of Haskell [HN]]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/v7ccvh/critique_of_haskell_hn/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/v7ccvh/critique_of_haskell_hn/"/>
+        <updated>2022-06-08T00:34:41.000Z</updated>
+        <summary type="html"><![CDATA[[link]   [comments]]]></summary>
         <author>
             <name>Haskell :: Reddit</name>
         </author>
@@ -1669,6 +2097,16 @@ cartesian [1, 2] [[1,1],[1,2],[2,1],[2,2]] cartesian [1 .. 3] [[1,1,1],[1,1,2],[
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[apheleia (20220604.2239) --- Reformat buffer stably]]></title>
+        <id>https://melpa.org/packages/apheleia-20220604.2239.el</id>
+        <link href="https://melpa.org/#/apheleia"/>
+        <updated>2022-06-04T22:39:00.000Z</updated>
+        <summary type="html"><![CDATA[The apheleia package has been updated to version 20220604.2239.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -3210,6 +3648,36 @@ What do you think? Should I just get used to it?]]></summary>
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[selectrum-prescient (20220601.1652) --- Selectrum integration]]></title>
+        <id>https://melpa.org/packages/selectrum-prescient-20220601.1652.el</id>
+        <link href="https://melpa.org/#/selectrum-prescient"/>
+        <updated>2022-06-01T16:52:00.000Z</updated>
+        <summary type="html"><![CDATA[The selectrum-prescient package has been updated to version 20220601.1652.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[prescient (20220601.1652) --- Better sorting and filtering]]></title>
+        <id>https://melpa.org/packages/prescient-20220601.1652.el</id>
+        <link href="https://melpa.org/#/prescient"/>
+        <updated>2022-06-01T16:52:00.000Z</updated>
+        <summary type="html"><![CDATA[The prescient package has been updated to version 20220601.1652.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[company-prescient (20220601.1652) --- prescient.el + Company]]></title>
+        <id>https://melpa.org/packages/company-prescient-20220601.1652.el</id>
+        <link href="https://melpa.org/#/company-prescient"/>
+        <updated>2022-06-01T16:52:00.000Z</updated>
+        <summary type="html"><![CDATA[The company-prescient package has been updated to version 20220601.1652.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[ivy-prescient (20220601.1652) --- prescient.el + Ivy]]></title>
         <id>https://melpa.org/packages/ivy-prescient-20220601.1652.el</id>
         <link href="https://melpa.org/#/ivy-prescient"/>
@@ -3539,6 +4007,16 @@ Looking to learn Zettelkasten to help me do this]]></summary>
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[tok-theme (20220601.708) --- Minimal theme with dark and yellow color scheme]]></title>
+        <id>https://melpa.org/packages/tok-theme-20220601.708.el</id>
+        <link href="https://melpa.org/#/tok-theme"/>
+        <updated>2022-06-01T07:08:00.000Z</updated>
+        <summary type="html"><![CDATA[The tok-theme package has been updated to version 20220601.708.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -13819,635 +14297,6 @@ Pausable
  [link]   [comments]]]></summary>
         <author>
             <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Weekly Tips, Tricks, &c. Thread]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/un4wf8/weekly_tips_tricks_c_thread/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/un4wf8/weekly_tips_tricks_c_thread/"/>
-        <updated>2022-05-11T08:15:08.000Z</updated>
-        <summary type="html"><![CDATA[This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.
- See this search for previous "Weekly Tips, Tricks, &c." Threads.
- Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.
-    submitted by    /u/AutoModerator  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Emacs only displays current line number once I type something. How do I make it display it before like in vim?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/un3ewk/emacs_only_displays_current_line_number_once_i/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/un3ewk/emacs_only_displays_current_line_number_once_i/"/>
-        <updated>2022-05-11T06:35:19.000Z</updated>
-        <summary type="html"><![CDATA[I am used to seeing the current line number before typing in it as in vim.
- And this is very offputting.
-    submitted by    /u/LowCom  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ggtags (20220511.610) --- emacs frontend to GNU Global source code tagging system]]></title>
-        <id>https://melpa.org/packages/ggtags-20220511.610.el</id>
-        <link href="https://melpa.org/#/ggtags"/>
-        <updated>2022-05-11T06:10:00.000Z</updated>
-        <summary type="html"><![CDATA[The ggtags package has been updated to version 20220511.610.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[easy-kill (20220511.557) --- kill & mark things easily]]></title>
-        <id>https://melpa.org/packages/easy-kill-20220511.557.el</id>
-        <link href="https://melpa.org/#/easy-kill"/>
-        <updated>2022-05-11T05:57:00.000Z</updated>
-        <summary type="html"><![CDATA[The easy-kill package has been updated to version 20220511.557.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[rg: focus buffer after running it]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/un283d/rg_focus_buffer_after_running_it/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/un283d/rg_focus_buffer_after_running_it/"/>
-        <updated>2022-05-11T05:18:20.000Z</updated>
-        <summary type="html"><![CDATA[Hello, when I run a rg command from rg.el it shows the results in a buffer window below where I ran my command, so far so good, but is there any way to have it focus the window automatically instead of having to switch to it everytime.
- I may be able to do macros, or a small lisp function but I have a feeling there is a better way to do this (and i can't find it)
- anyone has an ideas?
-    submitted by    /u/bruchieOP  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[What is the difference between installing a package, "requiring it" and enabling it? Which of these increases startup time?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/un1xmz/what_is_the_difference_between_installing_a/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/un1xmz/what_is_the_difference_between_installing_a/"/>
-        <updated>2022-05-11T05:00:23.000Z</updated>
-        <summary type="html"><![CDATA[From what I understand. Please tell me which part is wrong. 
- Installing a package through package-install copies the package files into .emacs.d directory. That's all it does. It just sits there and is not loaded during Emacs startup. Eg. package-install evil 
- When you require a package, its code is loaded during startup. So it does slow down the Emacs startup time. But the package is not activated, i.e it's key bindinds are not yet available.
- Eg. (require evil) 
- When you activate a package, it's commands and key binds are available to you as soon as you start up Emacs in each and every buffer. So this slows down start up time, but the slowness should be same as when requiring a package as even if you just require it, the code is still run.
- Eg: (evil-mode 1)
-    submitted by    /u/LowCom  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[What's the latest update of using Haskell for data science?]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/un1rkk/whats_the_latest_update_of_using_haskell_for_data/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/un1rkk/whats_the_latest_update_of_using_haskell_for_data/"/>
-        <updated>2022-05-11T04:50:15.000Z</updated>
-        <summary type="html"><![CDATA[Last post related to data science + Haskell was 3 years ago.
- I'm curious if there's an emerging community building libraries for data science in Haskell.
- Thanks!
-    submitted by    /u/levenshteinn  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Console-only emacs frequent redrawing corruption in multiple terminal programs in WSL2]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/un1686/consoleonly_emacs_frequent_redrawing_corruption/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/un1686/consoleonly_emacs_frequent_redrawing_corruption/"/>
-        <updated>2022-05-11T04:13:13.000Z</updated>
-        <summary type="html"><![CDATA[I'm running emacs in a console in WSL2 and frequently get redrawing corruption when running mu4e, org-agenda and when company completion pop-ups show. They are trivially fixed with a C-l but it is frustrating. I've tried Windows Terminal Preview and alacritty, but with the same results (although anecdotally, alactritty corrupts slightly less frequently, but that could be just a biased observation). [Why console mode? - when I run using a Windows10 X server I frequently get crashes when shutting/opening laptop lid, so it's more straightforward to run purely in a console than use emacs --daemon and try and reconnect, in which case occassionally the daemon wedges and/or the X-server]
- emac version: GNU Emacs 28.1.50 (build 2, x86_64-pc-linux-gnu, cairo version 1.16.0) of 2022-04-04
- Does anyone else see this? Is it a Windows terminal problem, a WSL problem or an emacs problem? Any comments are really welcome before I dive deeper into this rabbit-hole.
-    submitted by    /u/jumbles1234  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Can We All Share Some Great Emacs Configs For Web Development With Intellisense-Like Qualities (LSP Mode, Aggressive Indent, etc)]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/un0zbp/can_we_all_share_some_great_emacs_configs_for_web/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/un0zbp/can_we_all_share_some_great_emacs_configs_for_web/"/>
-        <updated>2022-05-11T04:01:52.000Z</updated>
-        <summary type="html"><![CDATA[I would like to test drive some Emacs configs as I really hate my current one as its conflicting too much with Aggressive Indent vs LSP Mode.
- My main issue is that overall, the indentation really isn't two spaces per tab for most web dev stuff.
- Also, as much as I despise VS Code, I really think its better out of the box with indentation and how it presents its Intelllisense ideas via its LSP functionality.
- Would like to borrow some stuff from people's configs to see how else I can tweak my setup because even with Helm + LSP + Company, I'm really not satisfied with the workflow.
- ​
- Even configs with stuff like Treemacs and Projectile would be cool too. Thanks.
-    submitted by    /u/BackToPlebbit69  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Tell me how terrible of an idea this is]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/un017w/tell_me_how_terrible_of_an_idea_this_is/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/un017w/tell_me_how_terrible_of_an_idea_this_is/"/>
-        <updated>2022-05-11T03:07:26.000Z</updated>
-        <summary type="html"><![CDATA[I've been writing some convenience macros, and at times I want to pass a symbol to the macro, and other times the value of that symbol. Think of mode-line-format's :eval keyword, etc.
- I've come up with this macro-helper function, but I feel like it's probably .... cursed. Let me know what you think!
- (defun +marg (arg) "Return ARG, unless comma-quoted. Then return ARG's value. This function really only makes sense in macros, e.g. (defmacro foo (bar) (let ((bar (+marg bar))) (do-something-with bar))) This will allow a call like (foo thing) to work with the symbol `thing', but (foo ,thing) to work with the value of `thing'. This functionality is probably cursed and probably shouldn't be used." (if (eq (car-safe arg) '\,) `,(cadr arg) `',arg)) 
- The docstring should be fairly descriptive, imo, but I can further explain if need be.
-    submitted by    /u/a-c-d-w  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Seeking scala consultant]]></title>
-        <id>https://www.reddit.com/r/scala/comments/umzq3q/seeking_scala_consultant/</id>
-        <link href="https://www.reddit.com/r/scala/comments/umzq3q/seeking_scala_consultant/"/>
-        <updated>2022-05-11T02:50:33.000Z</updated>
-        <summary type="html"><![CDATA[Hey, folks:
- We're looking for a mid-to-senior level Scala engineer with experience using Typelevel libraries, specifically fs2 for a freelancing-type role. Experience working with big data and MongoDB is also a plus. Duration of maybe about 2 weeks. Happy to discuss and negotiate a rate.
- Thanks for your time!
-    submitted by    /u/logan-diamond  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ob-julia-vterm (20220511.116) --- Babel Functions for Julia in VTerm]]></title>
-        <id>https://melpa.org/packages/ob-julia-vterm-20220511.116.el</id>
-        <link href="https://melpa.org/#/ob-julia-vterm"/>
-        <updated>2022-05-11T01:16:00.000Z</updated>
-        <summary type="html"><![CDATA[The ob-julia-vterm package has been updated to version 20220511.116.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[A Brief Look at Untyped Lambda Calculus]]></title>
-        <id>https://serokell.io/blog/untyped-lambda-calculus</id>
-        <link href="https://serokell.io/blog/untyped-lambda-calculus"/>
-        <updated>2022-05-11T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Lambda calculus is a theoretic framework used to define the meaning of computation in languages like Haskell, Agda, Idris, and others. In this article, we introduce you to lambda calculus by exploring its untyped variant.]]></summary>
-        <author>
-            <name>hi@serokell.io (Serokell staff)</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[M-x customize-apropos: how to keep focus on the mini buffer if there's no match?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umvrov/mx_customizeapropos_how_to_keep_focus_on_the_mini/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umvrov/mx_customizeapropos_how_to_keep_focus_on_the_mini/"/>
-        <updated>2022-05-10T23:23:50.000Z</updated>
-        <summary type="html"><![CDATA[I usually try to find customize options with M-x customize-apropos, but when there's no match I have to go through M-x customize-apropos and try again. 
- How can I go back directly to try a new query and skip the part of going through M-x customize-apropos and typing something else?
- I know I can use something like M-x M-p RET M-p but it's still an extra step (or two).
- Thanks!
-    submitted by    /u/josior  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[project's ideas to start with Haskell]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/umvowa/projects_ideas_to_start_with_haskell/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/umvowa/projects_ideas_to_start_with_haskell/"/>
-        <updated>2022-05-10T23:20:07.000Z</updated>
-        <summary type="html"><![CDATA[Hey everyone, I learned functional programming and Haskell on my computer science degree but for the last 2.5 years I have been working with python and c#. Meanwhile I always liked the concept of functional programming and I am remembering and learning more about it, but it is very important that I also do some projects to get more experience.
- I tried googling but I mostly just found books online, which I am already starting to read since I just finished looking through my university notes, but I want to get practical even if it's more simple things.
- So, any ideas on what would be interesting to work on?
- Any tips and advice are extremely welcome.
-    submitted by    /u/decubalNL  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[Help] Dashboard is not shown on emacsclient]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umu7tc/help_dashboard_is_not_shown_on_emacsclient/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umu7tc/help_dashboard_is_not_shown_on_emacsclient/"/>
-        <updated>2022-05-10T22:11:21.000Z</updated>
-        <summary type="html"><![CDATA[Hey everyone, i switched from Arch to Arco and moved over my doom emacs configs, for some reason when i use the default configs on Arco, the dashboard appears on emacs client, but if i use my own configs that worked perfectly on Arch, it doesnt show on the client but its shown on the regular one. Does anyone know a fix to show the dashboard when using emacsclient?
-    submitted by    /u/Mitass  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-kanban (20220510.2150) --- kanban dynamic block for org-mode.]]></title>
-        <id>https://melpa.org/packages/org-kanban-20220510.2150.el</id>
-        <link href="https://melpa.org/#/org-kanban"/>
-        <updated>2022-05-10T21:50:00.000Z</updated>
-        <summary type="html"><![CDATA[The org-kanban package has been updated to version 20220510.2150.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Add/document laws for toInteger and toRational]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/umtbqp/adddocument_laws_for_tointeger_and_torational/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/umtbqp/adddocument_laws_for_tointeger_and_torational/"/>
-        <updated>2022-05-10T21:30:57.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/Bodigrim  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Pure Haskell implementation of GHC.Unicode]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/umtb31/pure_haskell_implementation_of_ghcunicode/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/umtb31/pure_haskell_implementation_of_ghcunicode/"/>
-        <updated>2022-05-10T21:30:08.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/Bodigrim  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[format-all (20220510.2108) --- Auto-format C, C++, JS, Python, Ruby and 50 other languages]]></title>
-        <id>https://melpa.org/packages/format-all-20220510.2108.el</id>
-        <link href="https://melpa.org/#/format-all"/>
-        <updated>2022-05-10T21:08:00.000Z</updated>
-        <summary type="html"><![CDATA[The format-all package has been updated to version 20220510.2108.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[pcmpl-args (20220510.2056) --- Enhanced shell command completion]]></title>
-        <id>https://melpa.org/packages/pcmpl-args-20220510.2056.el</id>
-        <link href="https://melpa.org/#/pcmpl-args"/>
-        <updated>2022-05-10T20:56:00.000Z</updated>
-        <summary type="html"><![CDATA[The pcmpl-args package has been updated to version 20220510.2056.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[slime (20220510.2050) --- Superior Lisp Interaction Mode for Emacs]]></title>
-        <id>https://melpa.org/packages/slime-20220510.2050.tar</id>
-        <link href="https://melpa.org/#/slime"/>
-        <updated>2022-05-10T20:50:00.000Z</updated>
-        <summary type="html"><![CDATA[The slime package has been updated to version 20220510.2050.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[job] Socialist publisher Jacobin looking for Haskell developer for fixed 1-year position based in NYC]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/ums60a/job_socialist_publisher_jacobin_looking_for/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/ums60a/job_socialist_publisher_jacobin_looking_for/"/>
-        <updated>2022-05-10T20:38:46.000Z</updated>
-        <summary type="html"><![CDATA[Hello Haskellers,
- The socialist publisher Jacobin -- which publishes Jacobin, Catalyst, and, in the UK, Tribune -- has an in-house content, subscriber, and publishing management system written in Haskell. For some new features and improvements they want to make, they'll need a dedicated Haskell full-stack developer, for a fixed, one-year term only, based in NYC but otherwise remote-friendly.
- The position pays up to $75k based on experience and comes with full union healthcare. The ideal candidate is someone who has Haskell experience and who is interested in left politics.
- For more information, for questions, and to apply, see the posting here: https://jacobinmag.com/2022/05/jacobin-is-looking-for-a-programming-fellow/
- I have no affiliation; just sharing here to help out friends. I will not be monitoring this thread or DMs because I don't really know how to use Reddit. ;-)
- -Scott
- ​
- https://preview.redd.it/6gnxlnhtlpy81.png?width=748&format=png&auto=webp&s=451602c6f5a3a7cbf8be294203436fd22ccda32c
-    submitted by    /u/skilpat  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[package-build (20220510.2024) --- Tools for assembling a package archive]]></title>
-        <id>https://melpa.org/packages/package-build-20220510.2024.tar</id>
-        <link href="https://melpa.org/#/package-build"/>
-        <updated>2022-05-10T20:24:00.000Z</updated>
-        <summary type="html"><![CDATA[The package-build package has been updated to version 20220510.2024.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[nimbus-theme (20220510.2023) --- An awesome dark theme]]></title>
-        <id>https://melpa.org/packages/nimbus-theme-20220510.2023.el</id>
-        <link href="https://melpa.org/#/nimbus-theme"/>
-        <updated>2022-05-10T20:23:00.000Z</updated>
-        <summary type="html"><![CDATA[The nimbus-theme package has been updated to version 20220510.2023.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[sharper (20220510.2001) --- A dotnet CLI wrapper, using Transient]]></title>
-        <id>https://melpa.org/packages/sharper-20220510.2001.el</id>
-        <link href="https://melpa.org/#/sharper"/>
-        <updated>2022-05-10T20:01:00.000Z</updated>
-        <summary type="html"><![CDATA[The sharper package has been updated to version 20220510.2001.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-cite export to Latex, how to get a \cite instead of parsed entry?]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/umqu4o/orgcite_export_to_latex_how_to_get_a_cite_instead/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/umqu4o/orgcite_export_to_latex_how_to_get_a_cite_instead/"/>
-        <updated>2022-05-10T19:38:58.000Z</updated>
-        <summary type="html"><![CDATA[I've been writing my dissertation in orgmode using the new citation syntax and engine. For Word export, which my committee demands for revisions, it's been working great. But I want to submit the full diss in a nice pdf, for which Latex is the best option. However, I realized today that when I try to export to a Latex file, the citation gets fully parsed. 
- So from this in the orgmode buffer:
- [cite:Asit Kumar Bandyopadhyay in the Preface of@nyayaratnaBangalaBhashaBangala1991;] 
- I get this in the latex buffer:
- \footnote{Asit Kumar Bandyopadhyay in the Preface of Rāmagati Nyāẏaratna, \textit{Bāṅgālā Bhāshā O Bāṅgālā Sāhityabishaẏaka Prastāba}, Natuna saṃskaraṇa. (Kalikātā: Suprīma Buka Ḍisṭribiuṭārsa, 1991).} 
- This is great for Word but in Latex I'd rather have a \cite command, otherwise I won't get a bibliography with a \printbibliography command in my main.tex document.
- I took a look at the Latex export page of the org manual, but couldn't see an option to change the export. Any ideas?
-    submitted by    /u/radiolalo  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org babel noweb infinite loop]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umqri6/org_babel_noweb_infinite_loop/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umqri6/org_babel_noweb_infinite_loop/"/>
-        <updated>2022-05-10T19:35:30.000Z</updated>
-        <summary type="html"><![CDATA[consider the following code blocks
- #+NAME: a #+begin_src python :noweb yes <<b>> a = b + 10 #+end_src #+NAME: b #+begin_src python :noweb yes b = 20 a = <<a>> #+end_src 
- executing either code block would result in the following error in the minibuffer
- outline-next-heading: Variable binding depth exceeds max-specpdl-size 
- which i assume is because org babel is stuck in an infinite loop of inserting the references
- in c++ we have header guards to deal with this problem, how do i deal with this in org babel?, i know this might seem impractical at first but the example i provided is obviously very simplified and you can encounter this problem in more practical cases
-    submitted by    /u/mahmooz  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Docker Desktop is Now Available on Linux but Emacs already have docker.el]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umqqfw/docker_desktop_is_now_available_on_linux_but/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umqqfw/docker_desktop_is_now_available_on_linux_but/"/>
-        <updated>2022-05-10T19:34:09.000Z</updated>
-        <summary type="html"><![CDATA[https://www.docker.com/blog/the-magic-of-docker-desktop-is-now-available-on-linux/
- Emacs alternative - https://github.com/Silex/docker.el
-    submitted by    /u/csemacs  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Ability to search/pull elisp snippets from within emacs?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umqee4/ability_to_searchpull_elisp_snippets_from_within/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umqee4/ability_to_searchpull_elisp_snippets_from_within/"/>
-        <updated>2022-05-10T19:18:44.000Z</updated>
-        <summary type="html"><![CDATA[I've been using emacs for several years now (coming from vim) and I've found that understanding the basics of elisp can be very helpful, and essential whenever I want to do any customization. Typically I will google what I am trying to do, come across some posts on reddit or stackoverflow, find some sample code (ie. This is the function I wrote and bound to this key to do x and y), and incorporate that into my own emacs config. 
- Here's a simple example, say I want to figure out how to copy the full path of the current filename into the buffer so I can later make a reference to it in my org notes. If I google that, I'll see a dozen different ways to do this and they mostly all work great, but in the spirit of doing everything inside emacs I can't help but wonder... there must be a better way? I feel like there must be some repository of very useful and common elisp code "snippets" where I could just search for "get current filename" and be presented with elisp code I can immediately use, and I feel like that could all be done directly inside my current document and just inserted as a code snippet!? Is something like this at all possible, or are there any useful tools/packages that do something similar? Appreciate any tips :-)
-    submitted by    /u/Lucky_Mike_D  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Extending elfeed with PDF viewer and subtitles fetcher]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umpmc3/extending_elfeed_with_pdf_viewer_and_subtitles/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umpmc3/extending_elfeed_with_pdf_viewer_and_subtitles/"/>
-        <updated>2022-05-10T18:42:46.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/XCapitan_1  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[how do Scala libraries like CatsEffects and ZIO manage to get green threads without JVM support?]]></title>
-        <id>https://www.reddit.com/r/scala/comments/umphqd/how_do_scala_libraries_like_catseffects_and_zio/</id>
-        <link href="https://www.reddit.com/r/scala/comments/umphqd/how_do_scala_libraries_like_catseffects_and_zio/"/>
-        <updated>2022-05-10T18:36:55.000Z</updated>
-        <summary type="html"><![CDATA[Disclaimer: I'm a Java guy, so maybe there is an explanation that's trivial in /r/scala, but out of my reach.
- There used to be a couple of hacks to create green threads in JVM, like Quasar. As far as I know, implementing green threads for Java today is made by changing the JVM. Meanwhile, in Scala and before Project Loom:
- from Cats Effects: Concurrency in IO is facilitated by fibers, which are lightweight, interruptible threads that are managed completely by the runtime.
- from ZIO: Powered by highly-scalable, non-blocking fibers that never waste or leak resources
- Well... how? JVM threads are backed by OS threads. Is the Scala compiler inserting context switch here and there in Cats/Monix code? do Scala language construct allow to create green-threads? Kotlin gets coroutines in the compiler, but Cats/Monix are libraries, not compilers. Or Scala libraries can alter the way the compiler work?
- I'm curious...
-    submitted by    /u/pgris  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[zmq (20220510.1820) --- ZMQ bindings in elisp]]></title>
-        <id>https://melpa.org/packages/zmq-20220510.1820.tar</id>
-        <link href="https://melpa.org/#/zmq"/>
-        <updated>2022-05-10T18:20:00.000Z</updated>
-        <summary type="html"><![CDATA[The zmq package has been updated to version 20220510.1820.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hex editors for Emacs]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ummua2/hex_editors_for_emacs/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ummua2/hex_editors_for_emacs/"/>
-        <updated>2022-05-10T16:35:52.000Z</updated>
-        <summary type="html"><![CDATA[Are there any good ones? There's the built-in hexl mode, but it leaves a /lot/ to be desired if you want to do anything but the most basic operations. For example, when reverse engineering it's critical to be able to view the bytes at point as different types of integers and floats. And as far as I can tell, it's even impossible to change the number of bytes on each line (though maybe this can be customized by some undocumented option to the hexl binary).
- Are there any good alternatives?
-    submitted by    /u/markasoftware  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Exclude a character from "symbol"]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/ummiqi/exclude_a_character_from_symbol/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/ummiqi/exclude_a_character_from_symbol/"/>
-        <updated>2022-05-10T16:21:45.000Z</updated>
-        <summary type="html"><![CDATA[Hi,
- I'm migrating from Vim and configuring my Emacs config (I use Doom).
- I use PHP and I need to exclude $ from symbol definition, if that make sense.
- In PHP class properties are defined like so private $propertyName = 'something'. And then used like so $this->propertyName. 
- The issue is that when I use * to search for a symbol at point (assume my point is on the property definition, the one with $ sign) the "symbol" to search for is $propertyName hence things like $this->propertyName aren't going to be found in the buffer. 
- I'm not sure exactly where I should look for the fix. I tried to set evil-symbol-word-search to nil which will force evil to search for "word" at point but that's not that great and doesn't work for variables with underscore. That's maybe could be fixed with modify-syntax-entry function but it's all looks like a wrong path to do it. 
- What can I do to tell Emacs (or evil) that a "symbol" excludes "$" sign?
- Thanks
-    submitted by    /u/reliktary  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[help: asking for coding system every time I save (org-mode/org-roam)]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umlyiv/help_asking_for_coding_system_every_time_i_save/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umlyiv/help_asking_for_coding_system_every_time_i_save/"/>
-        <updated>2022-05-10T15:56:55.000Z</updated>
-        <summary type="html"><![CDATA[These default coding systems were tried to encode the following problematic characters in the buffer *temp* : Coding System Pos Codepoint Char utf-8-unix 5088 #x1A01C1 5207 #x1A01C1 7319 #x1A01C1 41933 #x1A01C1 However, each of them encountered characters it couldn t encode: utf-8-unix cannot encode these: Click on a character (or switch to this window by SPC w C-w and select the characters by RET) to jump to the place it appears, where SPC u g a will give information about it. Select one of the safe coding systems listed below, or cancel the writing with C-g and edit the buffer to remove or modify the problematic characters, or specify any other coding system (and risk losing the problematic characters). iso-2022-7bit utf-8-emacs prefer-utf-8 
- I legit can't see what characters it is talking about, I see nothing, nothing at all. I don't know what other information to add other than the above, I'm pretty sure I inserted a weird character by accident, but I deleted it, so I don't know why it's still saying that.
- thanks in advance.
-    submitted by    /u/Faumpy  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[lsp-metals (20220510.1457) --- Scala Client settings]]></title>
-        <id>https://melpa.org/packages/lsp-metals-20220510.1457.tar</id>
-        <link href="https://melpa.org/#/lsp-metals"/>
-        <updated>2022-05-10T14:57:00.000Z</updated>
-        <summary type="html"><![CDATA[The lsp-metals package has been updated to version 20220510.1457.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CUA - remap C-c and C-x key sequences?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umk9on/cua_remap_cc_and_cx_key_sequences/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umk9on/cua_remap_cc_and_cx_key_sequences/"/>
-        <updated>2022-05-10T14:41:00.000Z</updated>
-        <summary type="html"><![CDATA[Beginner here, considering switching to emacs from vscode.
- I was reading about rebinding copy/cut/paste/undo to the standard keybindings of ctrl-c/x/v/z but this apparently interferes with Emacs's default key chords. Is there any way to rebind the key chords to a different key, say, ctrl+d or ctrl+b? In other words, a shortcut originally bound to ctrl+x <some key> will now be bound to ctrl+d <some key>.
- I'm just a little worried that using something like CUA mode will interfere with my ability to use advanced shortcuts that rely on ctrl+x modifier chords later on.
- Thanks
-    submitted by    /u/Under-Estimated  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[php-cs-fixer (20220510.1407) --- php-cs-fixer wrapper.]]></title>
-        <id>https://melpa.org/packages/php-cs-fixer-20220510.1407.el</id>
-        <link href="https://melpa.org/#/php-cs-fixer"/>
-        <updated>2022-05-10T14:07:00.000Z</updated>
-        <summary type="html"><![CDATA[The php-cs-fixer package has been updated to version 20220510.1407.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Let's Program a Calculus Student II: Turning Symbolic Differentiation Automatic]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/umj2lf/lets_program_a_calculus_student_ii_turning/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/umj2lf/lets_program_a_calculus_student_ii_turning/"/>
-        <updated>2022-05-10T13:44:54.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/algebrartist  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Revisiting Daily Notes]]></title>
-        <id>2276@/discussions</id>
-        <link href="https://forum.zettelkasten.de/discussion/2276/revisiting-daily-notes"/>
-        <updated>2022-05-10T13:28:20.000Z</updated>
-        <summary type="html"><![CDATA[Prompted by Maggie Appleton’s recent update to her post on Daily Notes Pages, I was fondly remembering a time when I had a teeny little script that appended a single line of text to a kind of log. I didn’t want to use Day One for the kind of fleeting note that might trigger something else but as likely might not. So I returned to my original thought and repurposed it to work with The Archive.
-I borrowed ideas from Better Journaling with The Archive (and BitBar). I don’t have Keyboard Maestro and I didn’t want BitBar, but the principles are absolutely sound, so I adapted them to create a single script:
-#!/bin/sh
-# Open a daily journaling note
-# Create the note if it does not exist
-
-ZK_PATH="/Users/path/to-your-notes"
-DAY=`date +%Y%m%d`
-
-NOTE="${ZK_PATH}/${DAY}${HOUR}.md"
-
-if [[ -f "$NOTE" ]]; then
-    open "thearchive://match/${DAY}"
-else
-    echo "# Journal Note" >"${NOTE}"
-    echo "Date: "`date +"%d %B %Y %H:%M"` >>"${NOTE}"
-    echo "Tags: #journal" >>"${NOTE}" 
-    echo "" >>"${NOTE}"
-    open "thearchive://match/${DAY}"
-fi
-
-The script runs from an Alfred workflow. The first time on any given day it creates the note and opens it. Next time, it just opens the note. And as brunoc noted, because the note has a specific tag it is easy to find all such notes and see whether there is anything there I need to act on.
-I’m pretty sure that this could be more elegant, probably by testing for the absence of the note rather than its existence. Another nicety would be to capture some input and append it to the day’s note without even opening it. The previous little script might offer a start for that. But hey, it works as intended and that’s good enough for me right now.]]></summary>
-        <author>
-            <name>Jeremy</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Elisp: Format string where resulting string contains format characters]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umguxc/elisp_format_string_where_resulting_string/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umguxc/elisp_format_string_where_resulting_string/"/>
-        <updated>2022-05-10T11:49:31.000Z</updated>
-        <summary type="html"><![CDATA[I am processing a list of URLs where spaces have been replaced by "%2F". 
- For example: "https://example.com/query=aasfasdf%2Fapp%2Fuser=test"
- Now I try to create new strings that contain those URLs.
- (format "Name: %s URL: %s" name url)
- and get an error:
- (error "Not enough arguments for format string")
- Apparently the resulting string contains those "%2F" strings, and format cannot fill them.
- Is there a way to provide literal strings to format function and prevent it from trying to interpolate the resulting string?
- Edit: Here is a code fragment that demonstrates it
-  (let ((name "Test URL") (url "https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2FJames%1Qr5z3L.png?alt=media&token=3571-455b-960f-b68acc31faf0")) (message (format "%s %s" name url))) 
- Solved
- https://www.gnu.org/software/emacs/manual/html_node/elisp/Displaying-Messages.html
-  Warning: If you want to use your own string as a message verbatim, don’t just write (message string). If string contains ‘%’, ‘`’, or ‘'’ it may be reformatted, with undesirable results. Instead, use (message "%s" string). 
- So this does the trick:
-  (let ((name "Test URL") (url "https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2FJames%1Qr5z3L.png?alt=media&token=3571-455b-960f-b68acc31faf0")) (message "%s" (format "%s %s" name url))) 
-    submitted by    /u/pragmat1c1  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[mu4e is not calling mbsync]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umgq52/mu4e_is_not_calling_mbsync/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umgq52/mu4e_is_not_calling_mbsync/"/>
-        <updated>2022-05-10T11:41:36.000Z</updated>
-        <summary type="html"><![CDATA[To get my email, while in the mu4e-main buffer, I have to type U, then wait for email to be downloaded, then J i to see the new headers. I have:
-  mu4e-get-mail-command "mbsync -a" mu4e-update-interval 600 
- Having to type U is a small price to pay for being able to deal with email in Emacs, but I know I shouldn't have to do this.
-    submitted by    /u/BobKoss  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[arxiv-citation (20220510.1137) --- Utility functions for dealing with arXiv papers]]></title>
-        <id>https://melpa.org/packages/arxiv-citation-20220510.1137.el</id>
-        <link href="https://melpa.org/#/arxiv-citation"/>
-        <updated>2022-05-10T11:37:00.000Z</updated>
-        <summary type="html"><![CDATA[The arxiv-citation package has been updated to version 20220510.1137.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LSP function parameters completion]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/umeyoc/lsp_function_parameters_completion/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/umeyoc/lsp_function_parameters_completion/"/>
-        <updated>2022-05-10T09:48:05.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/eva_kuator  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[gdscript-mode (20220510.944) --- Major mode for Godot's GDScript language]]></title>
-        <id>https://melpa.org/packages/gdscript-mode-20220510.944.tar</id>
-        <link href="https://melpa.org/#/gdscript-mode"/>
-        <updated>2022-05-10T09:44:00.000Z</updated>
-        <summary type="html"><![CDATA[The gdscript-mode package has been updated to version 20220510.944.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[smartparens (20220510.934) --- Automatic insertion, wrapping and paredit-like navigation with user defined pairs.]]></title>
-        <id>https://melpa.org/packages/smartparens-20220510.934.tar</id>
-        <link href="https://melpa.org/#/smartparens"/>
-        <updated>2022-05-10T09:34:00.000Z</updated>
-        <summary type="html"><![CDATA[The smartparens package has been updated to version 20220510.934.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
         </author>
     </entry>
 </feed>
