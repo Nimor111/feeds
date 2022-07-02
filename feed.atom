@@ -2,10 +2,215 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2022-07-01T20:40:02.567Z</updated>
+    <updated>2022-07-02T20:37:43.495Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[Preventing 'coerce' of a phantom type]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/vpynmc/preventing_coerce_of_a_phantom_type/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/vpynmc/preventing_coerce_of_a_phantom_type/"/>
+        <updated>2022-07-02T19:01:44.000Z</updated>
+        <summary type="html"><![CDATA[I'm using a phantom type to distinguish between data that's undergone some form of normalization from data that has not. A simplified example:
+ data Normalized data Denormalized class Normalize x where type Normalization x normalize :: x -> Normalization x -- 'Foo' uses phantom type n to track whether normalization has been applied. data Foo n = Foo String -- Normalizing a 'Foo' that has already been 'Normalized' is a no-op. instance Normalize (Foo Normalized) where type Normalization (Foo Normalized) = Foo Normalized normalize = id -- Normalizing a 'Foo' that has not already been normalized transforms the String. instance Normalize (Foo Denormalized) where type Normalization (Foo Denormalized) = Foo Normalized normalize (Foo s) = Foo (map toUpper s) -- A smart constructor produces a 'Foo' with no normalization applied mkFoo :: String -> Foo Denormalized mkFoo = Foo 
+ By exporting mkFoo but not the Foo data constructor, I can prevent users of this library from manually constructing a value of type Foo Normalized. Instead, they're forced to do something like:
+ normalize (mkFoo "x") 
+ However, it seems they could still circumvent normalization via coerce:
+ coerce (mkFoo "x") :: Foo Normalized 
+ The documentation for Coercible seems to suggest this should not be the case, given that the Foo data constructor is not in scope, but playing around with it in ghci I'm finding I can perform this undesirable coercion.
+ For now, I've added a type role annotation to prevent such coercion,
+ type role Foo nominal 
+ but I'm curious to know why coerce is working otherwise, despite the fact that the Foo data constructor is not in scope. (Also curious to know if there's a cleaner way to implement this whole thing in general.)
+    submitted by    /u/roboboticus  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[jOOQ as a dependency in Scala 3 is broken?]]></title>
+        <id>https://www.reddit.com/r/scala/comments/vpxvg8/jooq_as_a_dependency_in_scala_3_is_broken/</id>
+        <link href="https://www.reddit.com/r/scala/comments/vpxvg8/jooq_as_a_dependency_in_scala_3_is_broken/"/>
+        <updated>2022-07-02T18:23:24.000Z</updated>
+        <summary type="html"><![CDATA[Also asked in stackoverflow.
+ I am trying to use jOOQ as dependency in a Scala 3 codebase:
+ libraryDependencies ++= Seq("org.jooq" % "jooq" % "3.16.6")
+ However when I try to do an import from this library -- like import org.jooq.DSLContext -- I get a compilation error.
+ The easiest way to reproduce this is using ammonite:
+ cs launch ammonite --scala 3.1.3 Loading... Welcome to the Ammonite Repl 2.5.4-11-4f5bf2aa (Scala 3.1.3 Java 11.0.15) @ import $ivy.`org.jooq:jooq:3.16.6`, org.jooq.DSLContext Bad symbolic reference. A signature refers to ApiStatus/T in package org.jetbrains.annotations which is not available. It may be completely missing from the current classpath, or the version on the classpath might be incompatible with the version used when compiling the signature. Caught: java.lan…]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Rational Emacs update for July 2022]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/vpwy4m/rational_emacs_update_for_july_2022/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/vpwy4m/rational_emacs_update_for_july_2022/"/>
+        <updated>2022-07-02T17:39:04.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/wolfjb  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[elfeed-score (20220702.1548) --- Gnus-style scoring for Elfeed]]></title>
+        <id>https://melpa.org/packages/elfeed-score-20220702.1548.tar</id>
+        <link href="https://melpa.org/#/elfeed-score"/>
+        <updated>2022-07-02T15:48:00.000Z</updated>
+        <summary type="html"><![CDATA[The elfeed-score package has been updated to version 20220702.1548.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Lazification of Function Arguments - Adding call-by-need to any LLVM based language for improved performance]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/vptwsw/lazification_of_function_arguments_adding/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/vptwsw/lazification_of_function_arguments_adding/"/>
+        <updated>2022-07-02T15:13:47.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/Axman6  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Add live demo to emacs package]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/vps691/add_live_demo_to_emacs_package/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/vps691/add_live_demo_to_emacs_package/"/>
+        <updated>2022-07-02T13:47:02.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/redguardtoo  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[find-file-in-project (20220702.1332) --- Find file/directory and review Diff/Patch/Commit efficiently]]></title>
+        <id>https://melpa.org/packages/find-file-in-project-20220702.1332.el</id>
+        <link href="https://melpa.org/#/find-file-in-project"/>
+        <updated>2022-07-02T13:32:00.000Z</updated>
+        <summary type="html"><![CDATA[The find-file-in-project package has been updated to version 20220702.1332.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[magik-mode (20220702.1158) --- mode for editing Magik + some utils.]]></title>
+        <id>https://melpa.org/packages/magik-mode-20220702.1158.tar</id>
+        <link href="https://melpa.org/#/magik-mode"/>
+        <updated>2022-07-02T11:58:00.000Z</updated>
+        <summary type="html"><![CDATA[The magik-mode package has been updated to version 20220702.1158.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[markless (20220702.1154) --- Major mode for Markless documents]]></title>
+        <id>https://melpa.org/packages/markless-20220702.1154.el</id>
+        <link href="https://melpa.org/#/markless"/>
+        <updated>2022-07-02T11:54:00.000Z</updated>
+        <summary type="html"><![CDATA[The markless package has been updated to version 20220702.1154.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Why does C-u C-c C-c place the vsum() in current row of an org-mode table instead of the row mentioned in #+TBLFM?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/vppm3d/why_does_cu_cc_cc_place_the_vsum_in_current_row/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/vppm3d/why_does_cu_cc_cc_place_the_vsum_in_current_row/"/>
+        <updated>2022-07-02T11:20:06.000Z</updated>
+        <summary type="html"><![CDATA[I have this org-mode table in a file named 1.org:
+ | . | A | B | C | |---+----+-----+------| | X | 10 | 100 | 1000 | | Y | 20 | 200 | 2000 | | Z | 30 | 300 | 3000 | |---+----+-----+------| | T | | | | #+TBLFM: @5$2..$4=vsum(@I..@II) 
+ If I move the cursor to the #+TBLFM line and run C-c C-c, I get the totals of each column in the last row labelled T like so
+ | . | A | B | C | |---+----+-----+------| | X | 10 | 100 | 1000 | | Y | 20 | 200 | 2000 | | Z | 30 | 300 | 3000 | |---+----+-----+------| | T | 60 | 600 | 6000 | #+TBLFM: @5$2..$4=vsum(@I..@II) 
+ All good so far. But if instead I place the cursor on the row labelled Y (for example, just place the cursor on Y) and then run C-u C-c C-c I get this
+ | . | A | B | C | |---+-----+------+-------| | X | 10 | 100 | 1000 | | Y | 60 | 600 | 6000 | | Z | 100 | 1000 | 10000 | |---+-----+------+-------| | T | 170 | 1700 | 17000 | #+TBLFM: @5$2..$4=vsum(@I..@II) 
+ Why did it place the sum of each column in the row labelled Y even though the the #+TBLFM clearly says to put the sum in last row (row @5)?
+  
+Documentation of C-u C-c C-c - https://orgmode.org/manual/Updating-the-table.html
+  
+C-u C-c * or C-u C-c C-c
+ Recompute the entire table, line by line. Any lines before the first hline are left alone, assuming that these are part of the table header.
+  
+   submitted by    /u/eminent101  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Emacs LSP: Install support for Turtle manually?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/vpo4s4/emacs_lsp_install_support_for_turtle_manually/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/vpo4s4/emacs_lsp_install_support_for_turtle_manually/"/>
+        <updated>2022-07-02T09:41:33.000Z</updated>
+        <summary type="html"><![CDATA[Hello,
+ I would like to use Emacs for writing Turtle and since ttl-mode is a bit basic, I'd like to give LSP/turtle-language-server a try.
+ I have lsp-mode and lsp-ui up and running, which works reasonably fine for the languages with built-in support in lsp-mode.
+ However turtle-language-server is not initially supported by lsp-mode, so how do I manually connect the language server with lsp-mode? 
+ (The message I get from lsp-mode says to look at lsp-java/lsp-metals for examples of manual setup, but I think this is deprecated)
+    submitted by    /u/up_grd  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[A small benchmark for functional languages targeting web browsers]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/vpnh53/a_small_benchmark_for_functional_languages/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/vpnh53/a_small_benchmark_for_functional_languages/"/>
+        <updated>2022-07-02T08:55:30.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/gergoerdi  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[org-reverse-datetree (20220702.511) --- Create reverse date trees in org-mode]]></title>
+        <id>https://melpa.org/packages/org-reverse-datetree-20220702.511.el</id>
+        <link href="https://melpa.org/#/org-reverse-datetree"/>
+        <updated>2022-07-02T05:11:00.000Z</updated>
+        <summary type="html"><![CDATA[The org-reverse-datetree package has been updated to version 20220702.511.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mónadas en Cats parte 14]]></title>
+        <id>https://www.reddit.com/r/scala/comments/vpjcst/m%C3%B3nadas_en_cats_parte_14/</id>
+        <link href="https://www.reddit.com/r/scala/comments/vpjcst/m%C3%B3nadas_en_cats_parte_14/"/>
+        <updated>2022-07-02T04:20:56.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/emanuelpeg  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Some notes on developing a structured logging API for Scala]]></title>
+        <id>https://www.reddit.com/r/scala/comments/vpdk0o/some_notes_on_developing_a_structured_logging_api/</id>
+        <link href="https://www.reddit.com/r/scala/comments/vpdk0o/some_notes_on_developing_a_structured_logging_api/"/>
+        <updated>2022-07-01T23:04:01.000Z</updated>
+        <summary type="html"><![CDATA[I've put together a Scala API for Echopraxia, a structured logging API.
+ https://github.com/tersesystems/echopraxia-plusscala
+ There's a couple of neat features in it which I think will be of interest from a Scala perspective -- there's nothing groundbreaking, but whenever anything goes unexpectedly right I like to make a note of it.
+ The first is that implicits are relative to a field builder, a factory defined on the logger, and that field builder is an input to a function that builds the argument for the logging statement:
+ trait SomeFieldBuilder extends FieldBuilder { implicit val fooToValue: ToValue[Foo] = ... } object SomeFieldBuilder extends SomeFieldBuilder val logger: Logger[SomeFieldBuilder] = LoggerFactory.getLogger.withFieldBuilder(SomeFieldBuilder) val myFoo: Foo = ... logger.…]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[fennel-mode (20220701.1956) --- A major-mode for editing Fennel code]]></title>
+        <id>https://melpa.org/packages/fennel-mode-20220701.1956.tar</id>
+        <link href="https://melpa.org/#/fennel-mode"/>
+        <updated>2022-07-01T19:56:00.000Z</updated>
+        <summary type="html"><![CDATA[The fennel-mode package has been updated to version 20220701.1956.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Debugging help -- projectile keeps spawning prompts]]></title>
         <id>https://www.reddit.com/r/emacs/comments/vp90g9/debugging_help_projectile_keeps_spawning_prompts/</id>
@@ -444,6 +649,26 @@ Pirouette’s goals are larger than contracts, though. We’ve built is as a fra
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[eglot-fsharp (20220630.2007) --- fsharp-mode eglot integration]]></title>
+        <id>https://melpa.org/packages/eglot-fsharp-20220630.2007.el</id>
+        <link href="https://melpa.org/#/eglot-fsharp"/>
+        <updated>2022-06-30T20:07:00.000Z</updated>
+        <summary type="html"><![CDATA[The eglot-fsharp package has been updated to version 20220630.2007.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[fsharp-mode (20220630.1931) --- Support for the F# programming language]]></title>
+        <id>https://melpa.org/packages/fsharp-mode-20220630.1931.tar</id>
+        <link href="https://melpa.org/#/fsharp-mode"/>
+        <updated>2022-06-30T19:31:00.000Z</updated>
+        <summary type="html"><![CDATA[The fsharp-mode package has been updated to version 20220630.1931.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Does Emacs have some way of attaching code and data to a buffer?]]></title>
         <id>https://www.reddit.com/r/emacs/comments/vof7kh/does_emacs_have_some_way_of_attaching_code_and/</id>
         <link href="https://www.reddit.com/r/emacs/comments/vof7kh/does_emacs_have_some_way_of_attaching_code_and/"/>
@@ -724,6 +949,16 @@ Btw: I am using "ivy"
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[modus-themes (20220630.659) --- Elegant, highly legible and customizable themes]]></title>
+        <id>https://melpa.org/packages/modus-themes-20220630.659.tar</id>
+        <link href="https://melpa.org/#/modus-themes"/>
+        <updated>2022-06-30T06:59:00.000Z</updated>
+        <summary type="html"><![CDATA[The modus-themes package has been updated to version 20220630.659.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -3976,6 +4211,16 @@ higher resolution of the dependenc…]]></summary>
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[treemacs (20220622.2016) --- A tree style file explorer package]]></title>
+        <id>https://melpa.org/packages/treemacs-20220622.2016.tar</id>
+        <link href="https://melpa.org/#/treemacs"/>
+        <updated>2022-06-22T20:16:00.000Z</updated>
+        <summary type="html"><![CDATA[The treemacs package has been updated to version 20220622.2016.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[el-fetch (20220622.2008) --- Show system information in Neofetch-like style (eg CPU, RAM)]]></title>
         <id>https://melpa.org/packages/el-fetch-20220622.2008.el</id>
         <link href="https://melpa.org/#/el-fetch"/>
@@ -6026,6 +6271,16 @@ Does anyone have any thoughts on this topic, and how to manage digital distracti
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dired-sidebar (20220618.237) --- Tree browser leveraging dired]]></title>
+        <id>https://melpa.org/packages/dired-sidebar-20220618.237.el</id>
+        <link href="https://melpa.org/#/dired-sidebar"/>
+        <updated>2022-06-18T02:37:00.000Z</updated>
+        <summary type="html"><![CDATA[The dired-sidebar package has been updated to version 20220618.237.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -13645,401 +13900,6 @@ Please note that Tyrian itself is happy to accept any Scala 3 + Scala.js + CE3 c
         <summary type="html"><![CDATA[The sly package has been updated to version 20220603.843.]]></summary>
         <author>
             <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[affe (20220603.548) --- Asynchronous Fuzzy Finder for Emacs]]></title>
-        <id>https://melpa.org/packages/affe-20220603.548.tar</id>
-        <link href="https://melpa.org/#/affe"/>
-        <updated>2022-06-03T05:48:00.000Z</updated>
-        <summary type="html"><![CDATA[The affe package has been updated to version 20220603.548.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Junior developer looking for a Haskell codebase to work on and a mentor to help me]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/v3rtue/junior_developer_looking_for_a_haskell_codebase/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/v3rtue/junior_developer_looking_for_a_haskell_codebase/"/>
-        <updated>2022-06-03T05:00:45.000Z</updated>
-        <summary type="html"><![CDATA[Hi Haskellers,
- I'm John, a 28 year old man on disability for mental illness and cognitive issues likely caused by said mental illness. I have almost two years of work experience as a backend programmer for Amazon working on Java code, but I was pretty bad at it. I was never able to learn that codebase that I worked on (for every task I needed to ask a more experienced engineer to point me to where in the codebase the particular code change needed to be made). I'm hoping that I will have a little bit of an easier time learning a Haskell codebase once I master the programming language (but I will definitely need to set up and use a debugger to learn said codebase because just reading code without running it line-by-line doesn't do anything for me). Haskell isn't too difficult for me because I programmed in Scala in my spare time for a couple years, so I'm familiar with the basic functional programming concepts like Monads and such. Sometimes I get confused when people go too deep into category theory and functional programming (like I don't know what is a Kleisli or a Bimonad). My biggest hurdle is just getting to the point where I am independent and useful, so I could use a mentor. Please comment or message me if you know of a codebase I should work on and would be willing to mentor me.
-    submitted by    /u/John-The-Bomb-2  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Rabbit hole: Windows + Linux + Emacs + Vim]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v3qydg/rabbit_hole_windows_linux_emacs_vim/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v3qydg/rabbit_hole_windows_linux_emacs_vim/"/>
-        <updated>2022-06-03T04:07:02.000Z</updated>
-        <summary type="html"><![CDATA[​
- https://preview.redd.it/7vetvrl1zb391.png?width=1366&format=png&auto=webp&s=ad86f6907134a0b70f69d1c9a3f1c53d35767825
- A computing Rabbit hole https://lifeofpenguin.blogspot.com/2022/06/rabbit-hole-windows-linux-emacs-vim.html
-    submitted by    /u/atamariya  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Edit remote files with Emacs via Eshell CD - Amazing!]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v3qwfo/edit_remote_files_with_emacs_via_eshell_cd_amazing/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v3qwfo/edit_remote_files_with_emacs_via_eshell_cd_amazing/"/>
-        <updated>2022-06-03T04:03:52.000Z</updated>
-        <summary type="html"><![CDATA[Just stumbled across this reading my elfeed news and oh my, never knew you could do this with eshell & cd. 
- https://200ok.ch/posts/edit-remote-files-with-emacs.html
-    submitted by    /u/pheedrus  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Testing buffer-modifying Emacs code again [OC]]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v3qrtm/testing_buffermodifying_emacs_code_again_oc/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v3qrtm/testing_buffermodifying_emacs_code_again_oc/"/>
-        <updated>2022-06-03T03:56:42.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/zck  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[markdown-mode (20220603.300) --- Major mode for Markdown-formatted text]]></title>
-        <id>https://melpa.org/packages/markdown-mode-20220603.300.el</id>
-        <link href="https://melpa.org/#/markdown-mode"/>
-        <updated>2022-06-03T03:00:00.000Z</updated>
-        <summary type="html"><![CDATA[The markdown-mode package has been updated to version 20220603.300.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Functional Programming concepts I actually like: A bit of praise for Scala (for once)]]></title>
-        <id>https://www.reddit.com/r/scala/comments/v3mw4g/functional_programming_concepts_i_actually_like_a/</id>
-        <link href="https://www.reddit.com/r/scala/comments/v3mw4g/functional_programming_concepts_i_actually_like_a/"/>
-        <updated>2022-06-03T00:20:08.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/otter-in-a-suit  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Password-protect current pdf buffer or dired file]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v3jv6q/passwordprotect_current_pdf_buffer_or_dired_file/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v3jv6q/passwordprotect_current_pdf_buffer_or_dired_file/"/>
-        <updated>2022-06-02T21:50:03.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/xenodium  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Elm & Haskell Job]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/v3itfv/elm_haskell_job/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/v3itfv/elm_haskell_job/"/>
-        <updated>2022-06-02T21:01:46.000Z</updated>
-        <summary type="html"><![CDATA[Anyone interested in writing Elm & Haskell for a FinTech company in Salt Lake, UT? I'm trying to fill 2 remote/hybrid positions on my team for anyone who's interested in working with Haskell/Elm. We're looking for candidates in the U.S only.Please email me your resume if interested. Email: [ryan.nguyen@acimacredit.com](mailto:ryan.nguyen@acimacredit.com)
- -----------------------------------------------------------------------------------------------------------------------------
- Company: Acima Credit . https://www.acima.com/
- HASKELL ENGINEER
- Mid/Senior Software Engineer (Functional Programming) Hybrid/Remote
- Do you want to create software that meaningfully benefits consumers? Be part of the FinTech industry that is growing at an explosive rate? Are you interested in doing Functional Pr…]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[commercial-emacs]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v3iqdv/commercialemacs/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v3iqdv/commercialemacs/"/>
-        <updated>2022-06-02T20:58:06.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/filipoi  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Will we be ever seeing multithreading in emacs?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v3hb98/will_we_be_ever_seeing_multithreading_in_emacs/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v3hb98/will_we_be_ever_seeing_multithreading_in_emacs/"/>
-        <updated>2022-06-02T19:52:50.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/Several-Theory2433  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Linear Text Builder: up to 20x faster than alternatives]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/v3gouc/linear_text_builder_up_to_20x_faster_than/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/v3gouc/linear_text_builder_up_to_20x_faster_than/"/>
-        <updated>2022-06-02T19:24:32.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/Bodigrim  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Continuing with org-gcal after Google deprecates OAuth authorization?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v3gfyp/continuing_with_orggcal_after_google_deprecates/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v3gfyp/continuing_with_orggcal_after_google_deprecates/"/>
-        <updated>2022-06-02T19:12:48.000Z</updated>
-        <summary type="html"><![CDATA[I've been using org-gcal for a couple of years with few if any problems. I believe I set it up using OAuth authorization, with a token. 
- It looks like OAuth support is being deprecated by Google -- see this email I got from a month ago:
-  
-We are writing to inform you that OAuth out-of-band (OOB) flow will be deprecated on October 3, 2022, to protect users from phishing and app impersonation attacks.
- What do I need to know?
- Starting October 3, 2022, we will block OOB requests to Google's OAuth 2.0 authorization endpoint for existing clients. Apps using OOB in testing mode will not be affected. However, we strongly recommend you to migrate them to safer methods as these apps will be immediately blocked when switching to in production status.
- Note: New OOB usage has already been disallowed since February 28, 2022. 
- Below are key dates for compliance
- September 5, 2022: A user-facing warning message may be displayed to
- non-compliant OAuth requests October 3, 2022: The OOB flow is blocked for all clients and users will see
- the error page.
-  
-In fact, I've been getting an error saying OAuth token expired. Now trying to refresh-token. Received HTTP 401 for a couple of months now, so this tracks.
- Is there anything to be done at this point? org-gcal still works for me at the moment, but I'm guessing it won't come October. The maintainer's github page (at least that's who I think is the maintainer) doesn't mention this issue at the moment though.
-    submitted by    /u/nonreligious  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Call for statistical problems for monad-bayes]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/v3g59u/call_for_statistical_problems_for_monadbayes/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/v3g59u/call_for_statistical_problems_for_monadbayes/"/>
-        <updated>2022-06-02T18:59:35.000Z</updated>
-        <summary type="html"><![CDATA[So this summer I'll be working as part of a Tweag fellowship (https://www.tweag.io/blog/2020-02-14-os-fellowship/) on extending the Bayesian inference and probabilistic programming library monad-bayes (https://github.com/tweag/monad-bayes). It's a super nice library, and my goal is to make it much more user friendly (see these draft docs for example: https://monad-bayes.netlify.app/).
- One thing that would help is if people have statistical problems (or problems involving probability and inference in general) that they would like to see implemented in Haskell, they could mention them either here or in the issues (https://github.com/tweag/monad-bayes/issues) and I'll try to implement them in monad-bayes (or advise on how to do it). That would help me work out what the pain points are in using monad-bayes for "real-world" problems.
- In fact, any suggestions on things you'd like to see in the library are welcome :)
-    submitted by    /u/Limp_Step_6774  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[phpcs flycheck custom code standards file not working?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v3filw/phpcs_flycheck_custom_code_standards_file_not/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v3filw/phpcs_flycheck_custom_code_standards_file_not/"/>
-        <updated>2022-06-02T18:30:53.000Z</updated>
-        <summary type="html"><![CDATA[Trying to get my emacs rig to use a custom code standards file but I'm having issues with the path. I can get around it a bit with this hacky thing,
- (defun setup-flycheck-php-project-path () 
- (setq flycheck-php-phpcs-executable (concat (projectile-project-root) "vendor/bin/phpcs")
- flycheck-phpcs-standard (concat (projectile-project-root) "sniffs.xml"))))
- ​
- but there's still a problem after executing this as the sniffs.xml file points to other files from the project root and setting the project paths like above seems to still break it. 
- Anyone got around this sort of thing before?
-    submitted by    /u/girvain  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[quarto-mode (20220602.1714) --- A (poly)mode for https://quarto.org]]></title>
-        <id>https://melpa.org/packages/quarto-mode-20220602.1714.el</id>
-        <link href="https://melpa.org/#/quarto-mode"/>
-        <updated>2022-06-02T17:14:00.000Z</updated>
-        <summary type="html"><![CDATA[The quarto-mode package has been updated to version 20220602.1714.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[x509-mode (20220602.1711) --- View certificates, CRLs and keys using OpenSSL.]]></title>
-        <id>https://melpa.org/packages/x509-mode-20220602.1711.tar</id>
-        <link href="https://melpa.org/#/x509-mode"/>
-        <updated>2022-06-02T17:11:00.000Z</updated>
-        <summary type="html"><![CDATA[The x509-mode package has been updated to version 20220602.1711.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Issue 318 :: Haskell Weekly newsletter]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/v3d2nv/issue_318_haskell_weekly_newsletter/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/v3d2nv/issue_318_haskell_weekly_newsletter/"/>
-        <updated>2022-06-02T16:41:08.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/haskellweekly  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How to use Scala 3 macros to eliminate boilerplate]]></title>
-        <id>https://www.reddit.com/r/scala/comments/v3cbo4/how_to_use_scala_3_macros_to_eliminate_boilerplate/</id>
-        <link href="https://www.reddit.com/r/scala/comments/v3cbo4/how_to_use_scala_3_macros_to_eliminate_boilerplate/"/>
-        <updated>2022-06-02T16:07:53.000Z</updated>
-        <summary type="html"><![CDATA[I have many case classes with a very-very similar structure in their companion object.
- For example:
- ```scala final case class User(name: String, email: String)
- object User: // everything below is a boilerplate opaque type Id = String
- object Id: given Encoder[Id] = deriveEncoder[Id]
- final case class WithId(id: Id, origin: User)
- object WithId: given Encoder[WithId] = deriveEncoder[WithId] ```
- What I'd like to write is:
- ```scala final case class User(name: String, email: String)
- object User: generateBoilerplate[User] ```
- And have generateBoilerplate generating all the entities.
- I think it should be possible with new macros, but I've never worked with them in Scala 2 and don't even know where to start. Does anyone have any examples or tips on where I should start exploring it?
- I tried to write something, but got stuck when realised that all examples I've show how to create a value, e.g.:
- scala val someValue = generateBoilerplate[User] 
- But don't see anything that would just "unwrap" traits/objects/values within some scope.
-    submitted by    /u/MysteriousGenius  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[key sequence contains no complete binding]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v3bvtx/key_sequence_contains_no_complete_binding/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v3bvtx/key_sequence_contains_no_complete_binding/"/>
-        <updated>2022-06-02T15:48:32.000Z</updated>
-        <summary type="html"><![CDATA[I'm trying to rebind 'a' to evil-change, but i keep getting the error:
- key sequence contains no complete binding.
- this is what i'm using:
- (define-key evil-normal-state-map (kbd "a") 'evil-change)
- i've also tried putting this inside use-package after :config, using :bind in use-package and removing the kbd macro, but nothing works and i get the same error.
- i've even tried changing the evil-maps.el file.
- i have been able to bind other key sequences to evil-change and i've also been able to bind 'a' to other commands but not evil-change.
- this however does work:
- (define-key evil-visual-state-map (kbd "a") 'evil-change)
- any ideas?
-    submitted by    /u/TheRealPepeSilvia03  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[shfmt (20220602.1535) --- Reformat shell scripts using shfmt]]></title>
-        <id>https://melpa.org/packages/shfmt-20220602.1535.el</id>
-        <link href="https://melpa.org/#/shfmt"/>
-        <updated>2022-06-02T15:35:00.000Z</updated>
-        <summary type="html"><![CDATA[The shfmt package has been updated to version 20220602.1535.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[python-x (20220602.1428) --- python.el extras for interactive evaluation]]></title>
-        <id>https://melpa.org/packages/python-x-20220602.1428.tar</id>
-        <link href="https://melpa.org/#/python-x"/>
-        <updated>2022-06-02T14:28:00.000Z</updated>
-        <summary type="html"><![CDATA[The python-x package has been updated to version 20220602.1428.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Congratulations to Prof Simon Peyton Jones, Chair of NCCE, on his OBE award]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/v38861/congratulations_to_prof_simon_peyton_jones_chair/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/v38861/congratulations_to_prof_simon_peyton_jones_chair/"/>
-        <updated>2022-06-02T12:54:10.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/Iceland_jack  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Issue 318]]></title>
-        <id>https://haskellweekly.news/issue/318.html</id>
-        <link href="https://haskellweekly.news/issue/318.html"/>
-        <updated>2022-06-02T12:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Welcome to another issue of Haskell Weekly!
-Haskell is a safe, purely functional programming language with a fast, concurrent runtime.
-This is a weekly summary of what’s going on in its community.
-Featured
-Compiling a Subset of JavaScript to ARM Assembly in Haskell by Micah Cantor
-In this post, I won’t cover every detail of the design of the compiler, but I’ll try to hit on what I found to be the most important or interesting aspects of the code.
-Generate web forms from pure functions by Gabriella Gonzalez
-This is an announcement post for my “Grace browser” project. This project is a web page which can dynamically convert a wide variety of functional programming expressions to their equivalent HTML.
-GHC 9.2.3 is now available by Zubin Duggal
-The GHC developers are very happy to at announce…]]></summary>
-        <author>
-            <name>Haskell Weekly</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[envrc (20220602.1020) --- Support for `direnv' that operates buffer-locally]]></title>
-        <id>https://melpa.org/packages/envrc-20220602.1020.el</id>
-        <link href="https://melpa.org/#/envrc"/>
-        <updated>2022-06-02T10:20:00.000Z</updated>
-        <summary type="html"><![CDATA[The envrc package has been updated to version 20220602.1020.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Some questions about nullable types, syntax]]></title>
-        <id>https://www.reddit.com/r/scala/comments/v355bj/some_questions_about_nullable_types_syntax/</id>
-        <link href="https://www.reddit.com/r/scala/comments/v355bj/some_questions_about_nullable_types_syntax/"/>
-        <updated>2022-06-02T09:44:10.000Z</updated>
-        <summary type="html"><![CDATA[Hi, I'm wondering about two unrelated things. I'm not very close to Scala since the split between 2 and 3, so I'm sorry if those are some standard questions that everyone asks, but I wasn't able to find any meaningful answers for them.
-  
-Are there any plans for introducing nullable types in Scala3? I mean e.g.
-  
- val s: String = null 
- This should not compile (with Nullable Types). I saw some forks of dotty that introduce this feature, but is there some kind of official statement of the devs about it? I'm sure someone has already talked about this stuff, as it's very popular today.
-  
-As for Scala3 syntax, I know that when it has been introduced the blog posts were stating that nobody will force the new syntax on anyone. Has this changed? Some time has passed after introducing the new syntax, is it possible to state which one is more popular today for Scala3 code? Will "old" syntax be deprecated one day?
-  
-Thanks for any answers.
-    submitted by    /u/suitable_character  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Using magit on windows]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/v34qcv/using_magit_on_windows/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/v34qcv/using_magit_on_windows/"/>
-        <updated>2022-06-02T09:12:42.000Z</updated>
-        <summary type="html"><![CDATA[Hey Emacs people,
- I found myself needing/having to use windows (not very happy about it).
- I have parsed this Reddit, the google, the stack... and haven't found a solution to my 2 issues.
-  
-I cannot edit/add commit messages:
- 1 git.exe … "commit" "--"
- Aborting commit due to empty commit message.
- sh -c 'printf /nWITH-EDITOR:: $$: No such file or directory
- 
-I can neither pull nor push to my repo using ssh
- 128 git.exe … push -v gitlab refs/heads/main:refs/heads/main
- Pushing to gitlab.com:aimebertrand/dotemacs.git
- fatal: Could not read from remote repository.
- Please make sure you have the correct access rights and the repository exists.
- 
- I understand that this is going on almost nothing, when meta info is concerned, so here there are:
-  
-Shell
- (customize-set-variable 'shell-file-name "C:/Windows/system32/bash.exe")
- (customize-set-variable 'sh-shell-file "C:/Windows/system32/bash.exe")
- (setenv "ESHELL" "bash")
- 
-I got git-bash installed and have my ssh-keypair in my user directory and for good mesures also in .ssh directory inside of my default-directory
- 
- I am quite ambitious, but some intricacies go over my head aspecially when it comes to windows.
- Hope someone can point me in the right direction. Maybe with their own config or so.
- I do apologize if this question is not the best formed. But maybe with some of your input I can add needed Info.
-    submitted by    /u/aimebertrand  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
         </author>
     </entry>
 </feed>
