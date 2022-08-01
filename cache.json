@@ -53,6 +53,56 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/wdpajg/purescriptify_an_html_to_purescript_converter/",
+          "author": null,
+          "description": "Hey guys,\n While this is PureScript related, I'm posting here since I suspect a large part of the community lurks around here as well.\n While doing PureScript, I found translating HTML snippets (e.g. Tailwind components) tedious and needed a tool to help with that. Since I couldn't find any, I made one.\n You can try it out here https://purescriptify.web.app/\n Code is at https://github.com/dnikolovv/purescriptify\n It's pretty basic, but I'm surprised at how good it gets the job done. It can be extended to support other flavors as well, e.g. Halogen.\n    submitted by    /u/dnikolovv  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/wdpajg/purescriptify_an_html_to_purescript_converter/",
+          "publishedOn": "2022-08-01T18:55:28.000Z",
+          "wordCount": 25959,
+          "title": "Purescriptify - an HTML to PureScript converter",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/wdi4kz/idiomatic_ways_to_handle_parser_errors_and_token/",
+          "author": null,
+          "description": "Well, title says (about) it all...\n I would be interested in blog posts or code that handle parsing errors (possibly many at a time) in the most natural/effective way in Haskell.\n Including reporting precise location range (i.e. a pair of filename+linenumber) for each error.\n Thanks in advance.\n    submitted by    /u/sergio_812  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/wdi4kz/idiomatic_ways_to_handle_parser_errors_and_token/",
+          "publishedOn": "2022-08-01T13:56:54.000Z",
+          "wordCount": 30115,
+          "title": "Idiomatic ways to handle parser errors and token source positions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/wd7oqx/monthly_hask_anything_august_2022/",
+          "author": null,
+          "description": "This is your opportunity to ask any questions you feel don't deserve their own threads, no matter how small or simple they might be!\n    submitted by    /u/taylorfausak  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/wd7oqx/monthly_hask_anything_august_2022/",
+          "publishedOn": "2022-08-01T04:01:09.000Z",
+          "wordCount": 27613,
+          "title": "Monthly Hask Anything (August 2022)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/wcyose/does_senselang_make_sense/",
+          "author": null,
+          "description": "[Haskell Compiler for DSL] Hey folks, I'm in the ideation phase of building a new FP DSL, \"Sense\" that compiles to Kotlin/JS/Swift. The idea is simple: create software by expressing only the absolute necessary information and not a line above.\n  \nValue proposition: a few lines in Sense are hundreds of lines in Kotlin.\n  \nThe purpose we're creating SenseLang is because we want to create a \"SoftwareBuilder\" website where you can create mobile, web, and backend apps via UI + some simple DSL (Sense).\n Tradeoffs: + Pros: Correctness, simplicity - Cons: Performance, security\n https://github.com/ILIYANGERMANOV/sense-lang\n If that grabbed your attention, I'd really appreciate some feedback! If I'm not crazy and someone also likes the idea - we'd be happy to find more contributors and co-founders.\n Motivation: - FP - Haskell (compiler) - Elm - Jetpack Compose\n    submitted by    /u/iliyan-germanov  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/wcyose/does_senselang_make_sense/",
+          "publishedOn": "2022-07-31T20:53:39.000Z",
+          "wordCount": 26348,
+          "title": "Does SenseLang make sense?",
+          "imageUrl": "https://external-preview.redd.it/q6fwVEqJP3tJmwLvhAK_s97YeUVTnooKLs7u8luKyKw.jpg?auto=webp&s=efa5e53c95c4c22bfe40209375e8250cb468b27a"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/wcyi8i/ann_dataelevator_turn_any_lifted_datatype_into_an/",
+          "author": null,
+          "description": "I've just published the data-elevator package on hackage: https://hackage.haskell.org/package/data-elevator-0.1.0.0\n It's the result of a joint brainstorming session at ZuriHac with Andreas Klebinger, Krzysztof Gogolewski and Matthew Craven (remotely). See this thread for details: https://gitlab.haskell.org/ghc/ghc/-/issues/21693 \n You can use its Strict :: LiftedType -> UnliftedType and Lazy :: LiftedType -> UnliftedType newtypes (!) to turn any lifted type into an unlifted (boxed) type like Array# and vice versa.\n Example:\n let f :: (a :: UnliftedType) -> Int f _ = 42 in f (Strict (error \"boom\" :: Int)) \n This will error out with \"boom\". While the following\n let f :: a -> Int f _ = 42 in f (Lazy (error \"boom\" :: Array# Int)) \n will not error and return 42 instead. (Do note though that unlifted primitives like Array# currently don't have enter code and any eval of Lazy will crash, https://gitlab.haskell.org/ghc/ghc/-/issues/21792).\n I added a Coercible-like type, LevitySubsumption that allows to coerce some functions along the subkinding relationship Unlifted <: Lifted lifted over BoxedRep, TYPE and then (->). The only axioms are Strict a <: a and a <: Lazy a. With that in place, I can do call-by-value on any existing lazy function:\n even :: Int -> Bool strictEven :: Strict Int -> Bool strictEven = levCoerce @(Int -> Bool) @(Strict Int -> Bool) even even 42 strictEven (Strict 42) \n See also https://hackage.haskell.org/package/data-elevator-0.1.0.0/docs/Data-Elevator.html#v:levCoerce. It's pretty interesting; constructing a coercion like that is very much what I would like GHC to do by itself one day, without any visible trace of levCoerce if possible (inferrable).\n Do note that this code uncovered a few bugs in GHC, so give it a few GHC releases before you actually use this library in production.\n    submitted by    /u/sgraf812  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/wcyi8i/ann_dataelevator_turn_any_lifted_datatype_into_an/",
+          "publishedOn": "2022-07-31T20:45:41.000Z",
+          "wordCount": 26721,
+          "title": "[ANN] data-elevator: Turn any lifted datatype into an unlifted dataype",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/wcxsnv/haskell_ffi_cannot_marshall_type/",
           "author": null,
           "description": "I have a C struct called Vector2 and I have it declared in Haskell like so:\n data Vector2 = Vector2 { vector2'x :: CFloat, vector2'y :: CFloat } deriving (Eq, Show) p'Vector2'x p = plusPtr p 0 p'Vector2'x :: Ptr Vector2 -> Ptr CFloat p'Vector2'y p = plusPtr p 4 p'Vector2'y :: Ptr Vector2 -> Ptr CFloat instance Storable Vector2 where sizeOf _ = 8 alignment _ = 4 peek _p = do v0 <- peekByteOff _p 0 v1 <- peekByteOff _p 4 return $ Vector2 v0 v1 poke _p (Vector2 v0 v1) = do pokeByteOff _p 0 v0 pokeByteOff _p 4 v1 return () \n I have a function in C called prtVector:\n void prtVector(Vector2 vec) { printf(\"Vector coordinates: (%f, %f)\", vec.x, vec.y); } \n When I try to import it in Haskell I get an error:\n foreign import ccall \"prtVector\" printVector :: Vector2 -> IO () \n 'Vector2' cannot be marshalled in a foreign call\n I believe this is because I have to pass the vector by pointer, but I just wanted to make sure.\n This would fix it, but I wanted to check if there's a better way:\n void prtVectorPtr(Vector2* vec) { prtVector(*vec); } \n Haskell:\n foreign import ccall \"prtVectorPtr\" printVector :: Ptr Vector2 -> IO () \n    submitted by    /u/Anut__  \n [link]   [comments]",
@@ -1601,56 +1651,6 @@
           "wordCount": 24978,
           "title": "How to uninstall ghc from Windows?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/vqbia9/design_patterns/",
-          "author": null,
-          "description": "Sorry to bother, I am trying to learn and really value opinions in this subreddit.\n I know the MVC pattern from frameworks like laravel in php. Is this pattern also used in functional programming? If so, do you also call \"services\" in your controllers? So the only difference is handling business logic in a functional way?\n Do you have any book recommendations for beginners on something like \"functional architectures\"/ \"functional design patterns\"? (any language is okay, I just want to get a basic grasp of it).\n    submitted by    /u/prrxddq  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/vqbia9/design_patterns/",
-          "publishedOn": "2022-07-03T06:48:02.000Z",
-          "wordCount": 25836,
-          "title": "design patterns",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/vq9vb7/just_started_exploring_haskell_as_an_experienced/",
-          "author": null,
-          "description": "I just started exploring Haskell because the idea of pure functional programming seemed quite exciting. I wanted to see what paradigms I would have to use to create proper Haskell code. I was thinking it might help me get out of the Object-Oriented bubble, and maybe become a better programmer in general.\n I have some doubts from what I saw till now:\n - The idea of **modules** seems similar to classes in C++. Where the exposed functions are publically available and rest are not. Isn't this an object-oriented feature?\n - Which tutorials/books would you recommend?\n - My final target is to be able to create a application/project using Haskell. Which type of applications are best suited for Haskell?\n    submitted by    /u/KaliYuga-VaradA  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/vq9vb7/just_started_exploring_haskell_as_an_experienced/",
-          "publishedOn": "2022-07-03T05:00:18.000Z",
-          "wordCount": 28787,
-          "title": "Just started exploring Haskell as an experienced C++ dev. Looking for tips.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/vpynmc/preventing_coerce_of_a_phantom_type/",
-          "author": null,
-          "description": "I'm using a phantom type to distinguish between data that's undergone some form of normalization from data that has not. A simplified example:\n data Normalized data Denormalized class Normalize x where type Normalization x normalize :: x -> Normalization x -- 'Foo' uses phantom type n to track whether normalization has been applied. data Foo n = Foo String -- Normalizing a 'Foo' that has already been 'Normalized' is a no-op. instance Normalize (Foo Normalized) where type Normalization (Foo Normalized) = Foo Normalized normalize = id -- Normalizing a 'Foo' that has not already been normalized transforms the String. instance Normalize (Foo Denormalized) where type Normalization (Foo Denormalized) = Foo Normalized normalize (Foo s) = Foo (map toUpper s) -- A smart constructor produces a 'Foo' with no normalization applied mkFoo :: String -> Foo Denormalized mkFoo = Foo \n By exporting mkFoo but not the Foo data constructor, I can prevent users of this library from manually constructing a value of type Foo Normalized. Instead, they're forced to do something like:\n normalize (mkFoo \"x\") \n However, it seems they could still circumvent normalization via coerce:\n coerce (mkFoo \"x\") :: Foo Normalized \n The documentation for Coercible seems to suggest this should not be the case, given that the Foo data constructor is not in scope, but playing around with it in ghci I'm finding I can perform this undesirable coercion.\n For now, I've added a type role annotation to prevent such coercion,\n type role Foo nominal \n but I'm curious to know why coerce is working otherwise, despite the fact that the Foo data constructor is not in scope. (Also curious to know if there's a cleaner way to implement this whole thing in general.)\n    submitted by    /u/roboboticus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/vpynmc/preventing_coerce_of_a_phantom_type/",
-          "publishedOn": "2022-07-02T19:01:44.000Z",
-          "wordCount": 25508,
-          "title": "Preventing 'coerce' of a phantom type",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/vptwsw/lazification_of_function_arguments_adding/",
-          "author": null,
-          "description": "submitted by    /u/Axman6  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/vptwsw/lazification_of_function_arguments_adding/",
-          "publishedOn": "2022-07-02T15:13:47.000Z",
-          "wordCount": 25259,
-          "title": "Lazification of Function Arguments - Adding call-by-need to any LLVM based language for improved performance",
-          "imageUrl": "https://external-preview.redd.it/RQqnUwFJoFTYFNPxPGXy5_Th6B90isVpGdBTsviwCjQ.jpg?auto=webp&s=041f93a067d499a34c083077af6c4e865f16ab07"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/vpnh53/a_small_benchmark_for_functional_languages/",
-          "author": null,
-          "description": "submitted by    /u/gergoerdi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/vpnh53/a_small_benchmark_for_functional_languages/",
-          "publishedOn": "2022-07-02T08:55:30.000Z",
-          "wordCount": 25002,
-          "title": "A small benchmark for functional languages targeting web browsers",
-          "imageUrl": null
         }
       ]
     },
@@ -1659,6 +1659,46 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/wdqcnh/m%C3%B3nadas_en_cats_parte_19/",
+          "author": null,
+          "description": "submitted by    /u/emanuelpeg  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/wdqcnh/m%C3%B3nadas_en_cats_parte_19/",
+          "publishedOn": "2022-08-01T19:37:59.000Z",
+          "wordCount": 26824,
+          "title": "Mónadas en Cats parte 19",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/wdl05k/who_is_hiring_monthly_rscala_job_postings_thread/",
+          "author": null,
+          "description": "Please post the job with the following template:\n Company Name | Title(s) of position(s) being hired for | City, [State/Province,] Country | {ONSITE, REMOTE} | {Full Time, Part Time, Contract} | (Optional) $approximate salary description contact information \n Posters: Please only post if you are personally involved in the hiring party -- no 3rd party recruiters (you must post the name of the company)\n Readers: please only email submitters if you personally are interested in the job—no recruiters or sales calls.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/wdl05k/who_is_hiring_monthly_rscala_job_postings_thread/",
+          "publishedOn": "2022-08-01T16:00:10.000Z",
+          "wordCount": 27165,
+          "title": "Who is hiring? Monthly /r/Scala Job Postings Thread!",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/wdb4q1/tooling_talks_jeremy_smith_polynote_and_notebooks/",
+          "author": null,
+          "description": "submitted by    /u/ckipp01  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/wdb4q1/tooling_talks_jeremy_smith_polynote_and_notebooks/",
+          "publishedOn": "2022-08-01T07:22:34.000Z",
+          "wordCount": 29670,
+          "title": "Tooling Talks - Jeremy Smith: Polynote and Notebooks",
+          "imageUrl": "https://external-preview.redd.it/kj1VX8fR3dQkMkEh0692ha2YxPgq2kK_A2_urqqtwVw.jpg?auto=webp&s=feb5e7d4b9ed332886995068ff2d9670edfafdab"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/wd1c97/any_online_scala_meetup_or_study_group_how_is_the/",
+          "author": null,
+          "description": "I don't often use Slack, but I joined the FP workspace and there is a Scala channel.\n Some days ago a person asked if there is any weekly/monthly online Meetup on Scala, or something.\n I have the same question so I'm asking on here so we can cover more ground.\n I'm just started with Scala and I wish I could meet and integrate with the community (if there is one online).\n I'm currently working with Elixir, there is a lot of channels and meetups where people discuss books and frameworks, and even some book clubs where they read something together and meet once a week or a month to discuss each chapter.\n I would guess that this other person was looking for something like this when he asked, and I'm too.\n But I couldn't find much \"movement\" on the medium I have found so far, I didn't tried the Discord channel though, as I don't use Discord but I guess that maybe the biggest community is over there?\n What do you guys suggest? There is something else or somewhere else to check? Do you know about something?\n    submitted by    /u/jacksonbenete  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/wd1c97/any_online_scala_meetup_or_study_group_how_is_the/",
+          "publishedOn": "2022-07-31T22:51:42.000Z",
+          "wordCount": 32375,
+          "title": "Any online Scala meetup or study group? How is the Scala community?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/wcy5fw/github_copilot_for_scala_does_it_work/",
           "author": null,
@@ -2538,46 +2578,6 @@
           "wordCount": 26023,
           "title": "High school research on open source software contributors",
           "imageUrl": "https://external-preview.redd.it/S5mgkhveNZyTMPSeMh0042VJQG_MXeypr5J6Z3I3Gss.jpg?auto=webp&s=01d62f75a4f602f37f3cc929f64e288aa06c3613"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/vq74ye/why_isnt_scala_listed_in_the_javafx_list_of/",
-          "author": null,
-          "description": "Hello, I studied Scala for some time and now I want to make a little utility app for my workflow and to use Scala for a project for first time, I want to use JavaFX for it but it's not listed on IntelliJ IDEA's project selector for JavaFX:\n ​\n ​\n https://preview.redd.it/i9fpiapej9991.png?width=795&format=png&auto=webp&s=1bb89a4d4762d351f691ae271c37b701f87a0eb7\n Is there a solution to this or do I have to create a project from scratch and configure it by myself?\n Thanks for reading.\n    submitted by    /u/TheAsSBreaker69  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/vq74ye/why_isnt_scala_listed_in_the_javafx_list_of/",
-          "publishedOn": "2022-07-03T02:21:08.000Z",
-          "wordCount": 26188,
-          "title": "Why isn't Scala listed in the JavaFX list of languages of IntelliJ IDEA?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/vq5vno/sbt_170rc2_released/",
-          "author": null,
-          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/vq5vno/sbt_170rc2_released/",
-          "publishedOn": "2022-07-03T01:10:24.000Z",
-          "wordCount": 25877,
-          "title": "sbt 1.7.0-RC2 released",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/vq10ar/scopt_410_released/",
-          "author": null,
-          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/vq10ar/scopt_410_released/",
-          "publishedOn": "2022-07-02T20:55:44.000Z",
-          "wordCount": 25872,
-          "title": "scopt 4.1.0 released",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/vpxvg8/jooq_as_a_dependency_in_scala_3_is_broken/",
-          "author": null,
-          "description": "Also asked in stackoverflow.\n I am trying to use jOOQ as dependency in a Scala 3 codebase:\n libraryDependencies ++= Seq(\"org.jooq\" % \"jooq\" % \"3.16.6\")\n However when I try to do an import from this library -- like import org.jooq.DSLContext -- I get a compilation error.\n The easiest way to reproduce this is using ammonite:\n cs launch ammonite --scala 3.1.3 Loading... Welcome to the Ammonite Repl 2.5.4-11-4f5bf2aa (Scala 3.1.3 Java 11.0.15) @ import $ivy.`org.jooq:jooq:3.16.6`, org.jooq.DSLContext Bad symbolic reference. A signature refers to ApiStatus/T in package org.jetbrains.annotations which is not available. It may be completely missing from the current classpath, or the version on the classpath might be incompatible with the version used when compiling the signature. Caught: java.lan…",
-          "link": "https://www.reddit.com/r/scala/comments/vpxvg8/jooq_as_a_dependency_in_scala_3_is_broken/",
-          "publishedOn": "2022-07-02T18:23:24.000Z",
-          "wordCount": 26423,
-          "title": "jOOQ as a dependency in Scala 3 is broken?",
-          "imageUrl": "https://external-preview.redd.it/QgPvRTknlY3rMNDqH1k4I37XGiq9tZF_FsygC_Xht4o.jpg?auto=webp&s=8cd5e918e2bde6ca72d4445d6fc007f203689799"
         }
       ]
     },
@@ -2585,7 +2585,28 @@
       "title": "PureScript",
       "feedUrl": "https://reddit.com/r/purescript/.rss",
       "siteUrl": "https://www.reddit.com/r/purescript/",
-      "articles": []
+      "articles": [
+        {
+          "id": "https://www.reddit.com/r/purescript/comments/wdp6a7/html_to_purescript_converter/",
+          "author": null,
+          "description": "Hey guys,\n I found converting HTML snippets to PureScript (with React) tedious so I made a tool to help with that.\n Try it out here https://purescriptify.web.app/\n Repository at https://github.com/dnikolovv/purescriptify\n    submitted by    /u/dnikolovv  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/purescript/comments/wdp6a7/html_to_purescript_converter/",
+          "publishedOn": "2022-08-01T18:50:29.000Z",
+          "wordCount": 25632,
+          "title": "HTML to PureScript converter",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/purescript/comments/wddpre/how_to_generate_serverside_html/",
+          "author": null,
+          "description": "I'm about to learn PureScript, coming from a functional TypeScript, Clojure and Elm background. To get a first taste for the language I thought I'd rewrite my Clojure test-app which generates static HTML files from JSON input using the hiccup templating library.\n Is there some similar library in PureScript which would provide functions to create an HTML document and its content? Something similar to Haskell's blaze? I could not find anything when searching pursuit, but I might be just be using the wrong search terms.\n    submitted by    /u/DeepDay6  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/purescript/comments/wddpre/how_to_generate_serverside_html/",
+          "publishedOn": "2022-08-01T10:09:37.000Z",
+          "wordCount": 25989,
+          "title": "[how to] Generate server-side HTML",
+          "imageUrl": "https://external-preview.redd.it/UuxcUvCFgFXluvOi4GFvE0cFCPi1q4PJhFwJw8oV-8A.jpg?auto=webp&s=b61454038ab6881e6feb978155edd0b9108831e3"
+        }
+      ]
     },
     {
       "title": "Serokell Blog",
@@ -2718,6 +2739,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/wdcgok/in_orgcapture_how_to_calculate_time_passed_on_save/",
+          "author": null,
+          "description": "Right now I have this template:\n  (setq org-capture-templates '((\"n\" \"Note\") (\"ns\" \"Special note\" entry (file+datetree \"~/Documents/notes.org\") \"**** %<%Y-%m-%d %a %H:%M:%S>\\n%?\" :tree-type week) )) \n ​\n What I would like to do is to show the capture window when pressing ns as is now, but then when I save it with C-c C-c also add, automatically, the date of the actual save (time when C-c C-c was pressed. And possibly the difference in minutes (I don't need seconds) between the time of pressing ns and C-c C-c.\n So, in the end it would look like this: \n  (setq org-capture-templates '((\"n\" \"Note\") (\"ns\" \"Special note\" entry (file+datetree \"~/Documents/notes.org\") \"**** %<%Y-%m-%d %a %H:%M:%S> - %H2:%M2:%S2 (duration: 12 minutes) \\n%?\" :tree-type week) )) \n How to do something like that? Is it even possible in org-capture?\n    submitted by    /u/East_Staff3288  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/wdcgok/in_orgcapture_how_to_calculate_time_passed_on_save/",
+          "publishedOn": "2022-08-01T08:50:45.000Z",
+          "wordCount": 26214,
+          "title": "In org-capture, how to calculate time passed on save?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/wdc0n5/broken_priority_cycling/",
+          "author": null,
+          "description": "Before I submit a bug report, I'd like to confirm that others experience the same behavior and the issue is not just happening for me.\n How to reproduce:\n  \nOpen a buffer with the following contents:\n #+PRIORITIES: 1 35 1 * foo \n \nWith the cursor on the heading in line 3, cycle through the priorities with S-Up / S-Down\n \n Expected behavior:\n The priorities should cycle in a range of 1-35\n Actual behavior:\n The priorities only cycle in a range of 1-3. I suspect that only the first character of 35 is parsed, because usually only one character is necessary\n Emacs Version: 26.3\n OS: Ubuntu 20.04\n Edit:\n Some additional info: I'm refering to this documentation. It both says that numeric priorities must be smaller than 65 and has an example where it specifies '#+PRIORITIES 1 10 5'. Unfortunately, this example will cycle in a range of 1-1 for me. So according to the docs my example should work, but since 'C-c ,' also only expects one input, perhaps the docs don't reflect the actual (and valid) behavior.\n    submitted by    /u/Aegn0r  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/wdc0n5/broken_priority_cycling/",
+          "publishedOn": "2022-08-01T08:20:31.000Z",
+          "wordCount": 26366,
+          "title": "Broken priority cycling?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/wcs48x/what_does_a_zinger_mean_in_this_context/",
           "author": null,
@@ -3227,16 +3268,6 @@
           "wordCount": 25263,
           "title": "Org agenda ignores some files",
           "imageUrl": "https://external-preview.redd.it/MbFUKyVT1SbFZ53FJgQfm8i_cljX5JH01zycQj1FW5U.jpg?auto=webp&s=d89c434778c48d7e4c669e10c5f6ee1df15d4ab6"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/vqcfeb/i_know_close_to_nothing_about/",
-          "author": null,
-          "description": "One thing that attracted me is the possibility of turning my entire document into a reveal-js based presentation. I want to and desperately need to get organized in my life but don't know where to start with org mode. Everything seems very complicated.. I just need a minimal, user-friendly setup to organize my stuff. I don't need any fancy features... Where do I start?\n    submitted by    /u/YeezydaSleazy  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/vqcfeb/i_know_close_to_nothing_about/",
-          "publishedOn": "2022-07-03T07:51:29.000Z",
-          "wordCount": 26103,
-          "title": "I know close to nothing about development/technology. How do I get started with org?",
-          "imageUrl": null
         }
       ]
     },
@@ -3245,6 +3276,106 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/osx-dictionary-20220801.1542.tar",
+          "author": null,
+          "description": "The osx-dictionary package has been updated to version 20220801.1542.",
+          "link": "https://melpa.org/#/osx-dictionary",
+          "publishedOn": "2022-08-01T15:42:00.000Z",
+          "wordCount": 105,
+          "title": "osx-dictionary (20220801.1542) --- Interface for OSX Dictionary.app",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/encrypt-region-20220801.1531.el",
+          "author": null,
+          "description": "The encrypt-region package has been updated to version 20220801.1531.",
+          "link": "https://melpa.org/#/encrypt-region",
+          "publishedOn": "2022-08-01T15:31:00.000Z",
+          "wordCount": 105,
+          "title": "encrypt-region (20220801.1531) --- Encrypts and decrypts regions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mpv-20220801.1410.el",
+          "author": null,
+          "description": "The mpv package has been updated to version 20220801.1410.",
+          "link": "https://melpa.org/#/mpv",
+          "publishedOn": "2022-08-01T14:10:00.000Z",
+          "wordCount": 105,
+          "title": "mpv (20220801.1410) --- control mpv for easy note-taking",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/sudo-edit-20220801.1317.el",
+          "author": null,
+          "description": "The sudo-edit package has been updated to version 20220801.1317.",
+          "link": "https://melpa.org/#/sudo-edit",
+          "publishedOn": "2022-08-01T13:17:00.000Z",
+          "wordCount": 105,
+          "title": "sudo-edit (20220801.1317) --- Open files as another user",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-index-20220801.928.el",
+          "author": null,
+          "description": "The org-index package has been updated to version 20220801.928.",
+          "link": "https://melpa.org/#/org-index",
+          "publishedOn": "2022-08-01T09:28:00.000Z",
+          "wordCount": 105,
+          "title": "org-index (20220801.928) --- A personal adaptive index for org",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lua-mode-20220801.503.el",
+          "author": null,
+          "description": "The lua-mode package has been updated to version 20220801.503.",
+          "link": "https://melpa.org/#/lua-mode",
+          "publishedOn": "2022-08-01T05:03:00.000Z",
+          "wordCount": 105,
+          "title": "lua-mode (20220801.503) --- a major-mode for editing Lua scripts",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/spell-fu-20220731.2327.el",
+          "author": null,
+          "description": "The spell-fu package has been updated to version 20220731.2327.",
+          "link": "https://melpa.org/#/spell-fu",
+          "publishedOn": "2022-07-31T23:27:00.000Z",
+          "wordCount": 105,
+          "title": "spell-fu (20220731.2327) --- Fast & light spelling highlighter",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/flycheck-languagetool-20220731.2301.el",
+          "author": null,
+          "description": "The flycheck-languagetool package has been updated to version 20220731.2301.",
+          "link": "https://melpa.org/#/flycheck-languagetool",
+          "publishedOn": "2022-07-31T23:01:00.000Z",
+          "wordCount": 105,
+          "title": "flycheck-languagetool (20220731.2301) --- Flycheck support for LanguageTool",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/run-command-recipes-20220731.1957.tar",
+          "author": null,
+          "description": "The run-command-recipes package has been updated to version 20220731.1957.",
+          "link": "https://melpa.org/#/run-command-recipes",
+          "publishedOn": "2022-07-31T19:57:00.000Z",
+          "wordCount": 105,
+          "title": "run-command-recipes (20220731.1957) --- This is collection of recipes to `run-command'",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-reverse-datetree-20220731.1246.el",
+          "author": null,
+          "description": "The org-reverse-datetree package has been updated to version 20220731.1246.",
+          "link": "https://melpa.org/#/org-reverse-datetree",
+          "publishedOn": "2022-07-31T12:46:00.000Z",
+          "wordCount": 105,
+          "title": "org-reverse-datetree (20220731.1246) --- Create reverse date trees in org-mode",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/gerrit-20220731.936.tar",
           "author": null,
@@ -3263,6 +3394,16 @@
           "publishedOn": "2022-07-31T09:34:00.000Z",
           "wordCount": 105,
           "title": "hotfuzz (20220731.934) --- Fuzzy completion style",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/loopy-20220731.202.tar",
+          "author": null,
+          "description": "The loopy package has been updated to version 20220731.202.",
+          "link": "https://melpa.org/#/loopy",
+          "publishedOn": "2022-07-31T02:02:00.000Z",
+          "wordCount": 105,
+          "title": "loopy (20220731.202) --- A looping macro",
           "imageUrl": null
         },
         {
@@ -3423,6 +3564,16 @@
           "publishedOn": "2022-07-29T09:23:00.000Z",
           "wordCount": 105,
           "title": "devdocs (20220729.923) --- Emacs viewer for DevDocs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/eldoc-box-20220729.844.el",
+          "author": null,
+          "description": "The eldoc-box package has been updated to version 20220729.844.",
+          "link": "https://melpa.org/#/eldoc-box",
+          "publishedOn": "2022-07-29T08:44:00.000Z",
+          "wordCount": 105,
+          "title": "eldoc-box (20220729.844) --- Display documentation in childframe",
           "imageUrl": null
         },
         {
@@ -3943,6 +4094,16 @@
           "publishedOn": "2022-07-23T14:01:00.000Z",
           "wordCount": 105,
           "title": "pkgbuild-mode (20220723.1401) --- Interface to the ArchLinux package manager",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/consult-20220723.1240.tar",
+          "author": null,
+          "description": "The consult package has been updated to version 20220723.1240.",
+          "link": "https://melpa.org/#/consult",
+          "publishedOn": "2022-07-23T12:40:00.000Z",
+          "wordCount": 105,
+          "title": "consult (20220723.1240) --- Consulting completing-read",
           "imageUrl": null
         },
         {
@@ -6694,96 +6855,6 @@
           "wordCount": 105,
           "title": "wallpreview (20220703.1108) --- Set wallpapers with image-dired",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/osm-20220702.2218.tar",
-          "author": null,
-          "description": "The osm package has been updated to version 20220702.2218.",
-          "link": "https://melpa.org/#/osm",
-          "publishedOn": "2022-07-02T22:18:00.000Z",
-          "wordCount": 105,
-          "title": "osm (20220702.2218) --- OpenStreetMap viewer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/company-20220702.1935.tar",
-          "author": null,
-          "description": "The company package has been updated to version 20220702.1935.",
-          "link": "https://melpa.org/#/company",
-          "publishedOn": "2022-07-02T19:35:00.000Z",
-          "wordCount": 105,
-          "title": "company (20220702.1935) --- Modular text completion framework",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elfeed-score-20220702.1548.tar",
-          "author": null,
-          "description": "The elfeed-score package has been updated to version 20220702.1548.",
-          "link": "https://melpa.org/#/elfeed-score",
-          "publishedOn": "2022-07-02T15:48:00.000Z",
-          "wordCount": 105,
-          "title": "elfeed-score (20220702.1548) --- Gnus-style scoring for Elfeed",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/julia-vterm-20220702.1411.el",
-          "author": null,
-          "description": "The julia-vterm package has been updated to version 20220702.1411.",
-          "link": "https://melpa.org/#/julia-vterm",
-          "publishedOn": "2022-07-02T14:11:00.000Z",
-          "wordCount": 105,
-          "title": "julia-vterm (20220702.1411) --- A mode for Julia REPL using vterm",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/find-file-in-project-20220702.1332.el",
-          "author": null,
-          "description": "The find-file-in-project package has been updated to version 20220702.1332.",
-          "link": "https://melpa.org/#/find-file-in-project",
-          "publishedOn": "2022-07-02T13:32:00.000Z",
-          "wordCount": 105,
-          "title": "find-file-in-project (20220702.1332) --- Find file/directory and review Diff/Patch/Commit efficiently",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/magik-mode-20220702.1158.tar",
-          "author": null,
-          "description": "The magik-mode package has been updated to version 20220702.1158.",
-          "link": "https://melpa.org/#/magik-mode",
-          "publishedOn": "2022-07-02T11:58:00.000Z",
-          "wordCount": 105,
-          "title": "magik-mode (20220702.1158) --- mode for editing Magik + some utils.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/markless-20220702.1154.el",
-          "author": null,
-          "description": "The markless package has been updated to version 20220702.1154.",
-          "link": "https://melpa.org/#/markless",
-          "publishedOn": "2022-07-02T11:54:00.000Z",
-          "wordCount": 105,
-          "title": "markless (20220702.1154) --- Major mode for Markless documents",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-auto-tangle-20220702.940.el",
-          "author": null,
-          "description": "The org-auto-tangle package has been updated to version 20220702.940.",
-          "link": "https://melpa.org/#/org-auto-tangle",
-          "publishedOn": "2022-07-02T09:40:00.000Z",
-          "wordCount": 105,
-          "title": "org-auto-tangle (20220702.940) --- Automatically and Asynchronously tangles org files on save",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elfeed-summary-20220702.906.el",
-          "author": null,
-          "description": "The elfeed-summary package has been updated to version 20220702.906.",
-          "link": "https://melpa.org/#/elfeed-summary",
-          "publishedOn": "2022-07-02T09:06:00.000Z",
-          "wordCount": 105,
-          "title": "elfeed-summary (20220702.906) --- Feed summary interface for elfeed",
-          "imageUrl": null
         }
       ]
     },
@@ -6792,6 +6863,186 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdqjxu/lspeslintservercommand_not_working_anymore/",
+          "author": null,
+          "description": "Hello, lsp-eslint was working for me. But this morning it isn't. Trying to figure it out. I'm on macos.\n lsp-eslint-server-command is a variable defined in lsp-eslint.el. Value (\"node\" \"~/server/out/eslintServer.js\" \"--stdio\") \n (I don't have a ~/server/out/eslintServer.js directory. That's seems to be the default though.)\n When I run lsp-install-server, I get this in Messages buffer:\n LSP :: Download eslint started. LSP :: Starting to download https://github.com/emacs-lsp/lsp-server-binaries/blob/master/dbaeumer.vscode-eslint-2.2.2.vsix?raw=true to /var/folders/dk/b2328vnn2gj6mhmy6sx2y3sc0000gn/T/extWd6p44.zip... Contacting host: github.com:443 Wrote /var/folders/dk/b2328vnn2gj6mhmy6sx2y3sc0000gn/T/extWd6p44.zip LSP :: Finished downloading /var/folders/dk/b2328vnn2gj6mhmy6sx2y3sc0000gn/T/extWd6p44.zip... (Shell command succeeded with no output) LSP :: Server eslint downloaded, auto-starting in 0 buffers. \n It looks like the download succeeds, but it's not extracting it anywhere that I can find. What can I look in to?\n The error message:\n LSP :: Sending to process failed with the following error: Process eslint not running [3 times] \n    submitted by    /u/diredwolf  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdqjxu/lspeslintservercommand_not_working_anymore/",
+          "publishedOn": "2022-08-01T19:46:16.000Z",
+          "wordCount": 26218,
+          "title": "lsp-eslint-server-command not working (anymore?)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdo07q/how_to_align_these_todo_states_to_show_up_in_the/",
+          "author": null,
+          "description": "submitted by    /u/Bonsai-Haiku  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdo07q/how_to_align_these_todo_states_to_show_up_in_the/",
+          "publishedOn": "2022-08-01T18:02:06.000Z",
+          "wordCount": 26048,
+          "title": "How to align these to-do states to show up in the same column?",
+          "imageUrl": "https://preview.redd.it/0p2wrbjw55f91.png?auto=webp&s=94a08421186a0137ce22d5d244e94b77fc3c4550"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdk051/how_to_build_an_editor_with_emacs_lisp_09/",
+          "author": null,
+          "description": "submitted by    /u/lxsameer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdk051/how_to_build_an_editor_with_emacs_lisp_09/",
+          "publishedOn": "2022-08-01T15:17:42.000Z",
+          "wordCount": 25926,
+          "title": "How to build an editor with Emacs Lisp - 09 Introduction to macros",
+          "imageUrl": "https://external-preview.redd.it/rz5UF_A52yD2pN3o4gLxNCCcI5fDt0FgYxbS7xsR9bQ.jpg?auto=webp&s=061af2f1149267e04b34ecb274a36159a64d287d"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdjrqt/magit_jump_to_next_commit_in_log/",
+          "author": null,
+          "description": "When inspecting a commit from the log in magit, is it possible to jump to the next commit?\n    submitted by    /u/poiu-  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdjrqt/magit_jump_to_next_commit_in_log/",
+          "publishedOn": "2022-08-01T15:07:46.000Z",
+          "wordCount": 25931,
+          "title": "magit: jump to next commit in log",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdhg02/org_clock_report_not_working/",
+          "author": null,
+          "description": "I am trying to use org-clock-report but for some reason it won't allow me to clock in. I've tried a handful of different scenarios, but even the most basic of just running org-clock-report then clocking in, doesn't work. I keep getting an error similar to before first at position XXX in buffer test.org the issue though is the position of my cursor doesn't seem to change anything aside from the position number. \n ​\n My test.org file is below, it's literally just the clock. No matter what line I leave my cursor on when trying to log in, I get that above error. \n ​\n #+BEGIN: clocktable :scope file :maxlevel 2\n #+CAPTION: Clock summary at [2022-08-01 Mon 08:17]\n | Headline | Time |\n |----------------+------|\n | *Total time* | *0:00* |\n #+END:\n    submitted by    /u/Hercislife23  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdhg02/org_clock_report_not_working/",
+          "publishedOn": "2022-08-01T13:24:54.000Z",
+          "wordCount": 26269,
+          "title": "Org Clock Report Not Working",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdh64r/emacsgroundup_first_tagged_release/",
+          "author": null,
+          "description": "​\n emacs-groundup snapshot\n Hi,\n A while ago, I had introduced emacs-groundup - an emacs spin aimed at elisp novices. Happy to announce its first versioned release! To re-iterate its objectives:\n  \nProvides a solid, ootb workflow for task and project management.\n Pre-configured for Julia and python programming - supports both REPL and notebook based workflows.\n Ideal for users looking to 'try emacs'. It can be used as-is by setting only a handful of (including zero) parameters.\n May interest 'experienced' elisp novices and/or emacs novices 'looking to get serious'. The code is amply commented, and package configurations are as decoupled as possile. Perfect to learn how to write elisp and how to configure some of the more commonly-used packages.\n  \nGive it a go! All user feedback and contributions are welcome.\n    submitted by    /u/cellular--automaton  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdh64r/emacsgroundup_first_tagged_release/",
+          "publishedOn": "2022-08-01T13:12:21.000Z",
+          "wordCount": 25806,
+          "title": "emacs-groundup, first tagged release!",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdgkyv/what_happened_to_dartmode/",
+          "author": null,
+          "description": "I just use straight to update all my package and discovered that the repository for dart-mode is no longer there. https://github.com/bradyt/dart-mode\n Does anyone have an alternative to dart-mode?\n    submitted by    /u/J-ky  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdgkyv/what_happened_to_dartmode/",
+          "publishedOn": "2022-08-01T12:44:33.000Z",
+          "wordCount": 26030,
+          "title": "What happened to dart-mode?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdf1qe/how_to_disable_case_sensitivity_for/",
+          "author": null,
+          "description": "I am using completion-at-point in OrgRoam.\n But it acts case sensitiv. I am not sure which component/package of Emacs is responsible for that.\n How can I modify that behavior or in which docu I have to look into?\n    submitted by    /u/wWA5RnA4n2P3w2WvfHq  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdf1qe/how_to_disable_case_sensitivity_for/",
+          "publishedOn": "2022-08-01T11:26:22.000Z",
+          "wordCount": 26062,
+          "title": "How to disable case sensitivity for completion-at-point?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdf0r7/error_cant_set_tags_command/",
+          "author": null,
+          "description": "When I press C-c C-q, I get error \"Symbol's function definition is void: consult-completing-read-multiple.\"\n I'm still a novice emacs user, can anyone explain this in simplistic terms? How do I fix this?\n    submitted by    /u/pathvbox  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdf0r7/error_cant_set_tags_command/",
+          "publishedOn": "2022-08-01T11:24:52.000Z",
+          "wordCount": 25950,
+          "title": "Error: can't set tags command",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wddqj0/change_buffer_before_async_call_returns_its_result/",
+          "author": null,
+          "description": "I have the following function that creates a new buffer and calls a compilation watcher asynchronously in it. This means that every time I save the file I'm working on the watcher will compile it and returns the result:\n elisp (defun dune-watch (exe) \"Will call dune build -w EXE on an async process.\" (interactive \"sBuild name: \") (let ((buffer (get-buffer-create \"Dune watch\"))) (with-current-buffer buffer (compilation-minor-mode t)) (projectile-run-async-shell-command-in-root (concat \"dune build -w \" exe) buffer) ;; Make this process non blocking for killing (set-process-query-on-exit-flag (get-buffer-process buffer) nil) (display-buffer buffer '((display-buffer-below-selected display-buffer-at-bottom) (inhibit-same-window . t) (window-height . 0.2))))) \n A normal run will look like this (…",
+          "link": "https://www.reddit.com/r/emacs/comments/wddqj0/change_buffer_before_async_call_returns_its_result/",
+          "publishedOn": "2022-08-01T10:10:51.000Z",
+          "wordCount": 26476,
+          "title": "Change buffer before async call returns its result",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wddq61/how_to_pinlockfix_text/",
+          "author": null,
+          "description": "With elisp it is possible to add overlays to parts of the buffer to hide them etc. I went through all the possible overlays and couldn't find a way to pin a selection. Is it possible to have a function that, given a selection in a buffer, pins this selection so that when you scroll up or down the selection is always shown? (a bit like what you have with Excel where you can lock some rows or columns so that they always appear on screen).\n I wanted to do something like this but with (overlay-put new-overlay 'lock t) but there doesn't appear to be such overlay.\n elisp (defun hide-region-hide () \"Hides a region by making an invisible overlay over it and save the overlay on the hide-region-overlays \\\"ring\\\"\" (interactive) (let ((new-overlay (make-overlay (mark) (point)))) (push new-overlay hide-region-overlays) (overlay-put new-overlay 'invisible t) (overlay-put new-overlay 'intangible t) (overlay-put new-overlay 'before-string (if hide-region-propertize-markers (propertize hide-region-before-string 'font-lock-face 'hide-region-before-string-face) hide-region-before-string)) (overlay-put new-overlay 'after-string (if hide-region-propertize-markers (propertize hide-region-after-string 'font-lock-face 'hide-region-after-string-face) hide-region-after-string)))) \n    submitted by    /u/MonsieurPi  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wddq61/how_to_pinlockfix_text/",
+          "publishedOn": "2022-08-01T10:10:16.000Z",
+          "wordCount": 26325,
+          "title": "How to pin/lock/fix text",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdbk34/emacss_native_templating_and_snippet_fuctionality/",
+          "author": null,
+          "description": "https://github.com/yilkalargaw/emacs-native-snippets\n While perusing through Emacs’ built in features through “C-h p” documentation I found out there were several template and snippet tools built into Emacs. Three of them to be exact tempo, skeletons and expand. I’ve never actually dived into many of these features. After reading about them and experimenting with them deeper I have noticed how powerful they are. Aside from lack of documentation most of them are not used widely because they lack a good collection of snippets for various modes. This repo aims to give a good documentation and a set of snippets that could easily be copied by users to help them get started on using Emacs’ built in code templating and snippet tools.\n Feel free to add your own if have any that you use daily.\n    submitted by    /u/fromadarkcontinent  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdbk34/emacss_native_templating_and_snippet_fuctionality/",
+          "publishedOn": "2022-08-01T07:50:46.000Z",
+          "wordCount": 26993,
+          "title": "Emacs's native templating and snippet fuctionality",
+          "imageUrl": "https://external-preview.redd.it/KqGsroPaQWfuz1ze1kbABq0xFCUM99mWlOELLJdtkMQ.jpg?auto=webp&s=3a45920731b3e568a62dae2e9e2cc699b6e3c4d9"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wdad2v/a_meta_question_about_meta_keys_question/",
+          "author": null,
+          "description": "A few days ago I asked this question:\n https://www.reddit.com/r/emacs/comments/wa73du/i_am_unable_to_remap_m1_or_m2_to_my_shortcuts_in/\n This question has been seen 1700 times and has a 100% upvote rate as you can see here: https://i.imgur.com/pAdhWeQ.png , yet there is not a single answer (outside of my 1 comment asking people what do they need more to be able to help).\n My question to you is, what should I formulate differently, or what other information should I bring in so the question would attract at least 1 answer.\n Or, should I put more effort into titles? Do Emacs enthusiasts appreciate a witty titles like \"A meta question about meta keys question\" more than \"Why doesn't my question about meta keys rebinding get any answers?\" Do the feel that responding/helping/interacting with a person who puts effort into titles will be more enjoyable, worth spending their time than talking to somebody whose titles are \"ordinary\"?\n I shared this question on Spacemacs subredit as well, but only 2 guys who are even less experienced than me tried to help, but as I said, they didn't have any deep knowledge about Emacs at all, they were beginners as one of them admitted.\n Thank you in advance.\n    submitted by    /u/East_Staff3288  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wdad2v/a_meta_question_about_meta_keys_question/",
+          "publishedOn": "2022-08-01T06:35:16.000Z",
+          "wordCount": 27051,
+          "title": "A meta question about meta keys question",
+          "imageUrl": "https://external-preview.redd.it/nJZBFcTI3UXOTNwd_X_v083eHKX2zt10XgBoRlXE27s.png?auto=webp&s=0fd2308fa8636cf7b87c3dd6a38e70f8e0162f8c"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wd2s2b/magit_tags/",
+          "author": null,
+          "description": "Hi,\n I recently learnt that magit does tags! I am wondering, how does one tag a remote branch though? I have gone through the manual but couldn't figure it out. Maybe some more experienced folk here can help me?\n Also, is there any way one can do gitlab release tags from magit? Seeing as it is probably a gitlab-specific implementation rather than a feature in git proper, am I right in assuming that this is not possible ?\n Cheers\n    submitted by    /u/cellular--automaton  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wd2s2b/magit_tags/",
+          "publishedOn": "2022-07-31T23:59:22.000Z",
+          "wordCount": 29228,
+          "title": "magit tags",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wd2mzz/nano_emacs_in_doom_emacs_how_to_install_and_use/",
+          "author": null,
+          "description": "I'm trying to use the magnifique NANO Emacs suite by u/Nicolas-Rougier but, as an emacs noob, I'm having trouble making it work with Doom Emacs. Has anyone else succeeded in such enterprise? \n Thanks in advance for all your help.\n    submitted by    /u/Gus_Gustavsohn  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wd2mzz/nano_emacs_in_doom_emacs_how_to_install_and_use/",
+          "publishedOn": "2022-07-31T23:52:30.000Z",
+          "wordCount": 28561,
+          "title": "NANO Emacs in Doom Emacs: how to install and use?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wd0quw/custom_companybackends_only_trigger_backend_on/",
+          "author": null,
+          "description": "Hey all!\n I have this custom backend I'm working on:\n (defun company-sample-backend (command &optional arg &rest ignored) (interactive (list 'interactive)) (let ((people (org-ql-select (concat org-dir \"/contacts.org\") '(level 1) :action #'org-get-heading))) (cl-case command (interactive (company-begin-backend 'company-sample-backend)) (prefix (and (eq major-mode 'org-mode) (company-grab-symbol))) (candidates (my/contacts-candidates arg)) (post-completion (company-thing arg))))) \n It works well, so far. However, what I'd like is to have this backend \"kick in\" only when I press @. I'm not entirely sure how to achieve this. I assume it needs to be done in the prefix logic, but my attempts don't seem to work. I'm hoping someone has done this and can show me the (probably simple) solution.\n Thanks!\n    submitted by    /u/codethrasher  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wd0quw/custom_companybackends_only_trigger_backend_on/",
+          "publishedOn": "2022-07-31T22:24:43.000Z",
+          "wordCount": 29272,
+          "title": "Custom company-backends: only \"trigger\" backend on specific keypress",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wd0n8b/custom_company_backends_different_insert_value_to/",
+          "author": null,
+          "description": "Hey all!\n I'm attempting to write my own custom backend which reads from an org file, grabs all the top-level headings and displays them in the company-mode popup as selection candidates. \n I have this working pretty well, but I was wondering if it was possible to (once the candidate has been selected) have the insert text (what actually gets placed into the buffer) changed or otherwise manipulated in some other way so that the value is different from the selection candidate.\n I was under the impression post-completion would allow this, but it doesn't seem to work. Here's my defun:\n (defun company-sample-backend (command &optional arg &rest ignored) (interactive (list 'interactive)) (let ((people (org-ql-select (concat org-dir \"/contacts.org\") '(level 1) :action #'org-get-heading))) (cl-case command (interactive (company-begin-backend 'company-sample-backend)) (prefix (and (eq major-mode 'org-mode) (company-grab-symbol))) (candidates (my/contacts-candidates arg)) (post-completion (company-thing arg))))) \n    submitted by    /u/codethrasher  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wd0n8b/custom_company_backends_different_insert_value_to/",
+          "publishedOn": "2022-07-31T22:19:58.000Z",
+          "wordCount": 29640,
+          "title": "Custom company backends: different insert value to selection value",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/wcyrhh/emacsclient_cant_rename_tabbar_tab_on_startup/",
+          "author": null,
+          "description": "I have the following code snippet and it works fine when launching emacs the normal way. But if using emacsclient with the daemon, then (tab-bar-rename-tab \"main\") doesn't seem to get executed.\n Edit: I think I made it work now by utilizing the server-after-make-frame-hook.\n (use-package tab-bar :hook (server-after-make-frame . (lambda () (tab-bar-rename-tab \"main\"))) :config (tab-bar-mode +1) (tab-bar-history-mode +1)) \n    submitted by    /u/ixlxixl  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/wcyrhh/emacsclient_cant_rename_tabbar_tab_on_startup/",
+          "publishedOn": "2022-07-31T20:57:04.000Z",
+          "wordCount": 25986,
+          "title": "emacsclient can't rename tab-bar tab on startup",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/wcupae/lets_share_your_top_3_packages_that_you_cant_live/",
           "author": null,
@@ -9411,46 +9662,6 @@
           "wordCount": 25086,
           "title": "[ANN] alphapapa/salv.el: Local minor mode to save a buffer when Emacs is idle",
           "imageUrl": "https://external-preview.redd.it/cBrQ-wnTHqeIk8JCNTsy2gDSgE6N2jmTEggM6-Yu090.jpg?auto=webp&s=d2cd0ca009ace9440efebb9441a815aa03269ee4"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/vpwy4m/rational_emacs_update_for_july_2022/",
-          "author": null,
-          "description": "submitted by    /u/wolfjb  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/vpwy4m/rational_emacs_update_for_july_2022/",
-          "publishedOn": "2022-07-02T17:39:04.000Z",
-          "wordCount": 25040,
-          "title": "Rational Emacs update for July 2022",
-          "imageUrl": "https://external-preview.redd.it/MEaepZS03kHx29J29J5qZA-NesH_jFLOTR4PRxqQ5d4.jpg?auto=webp&s=d3ec24483804bf27b4a57d2a7ae679d437f0559d"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/vps691/add_live_demo_to_emacs_package/",
-          "author": null,
-          "description": "submitted by    /u/redguardtoo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/vps691/add_live_demo_to_emacs_package/",
-          "publishedOn": "2022-07-02T13:47:02.000Z",
-          "wordCount": 24929,
-          "title": "Add live demo to emacs package",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/vppm3d/why_does_cu_cc_cc_place_the_vsum_in_current_row/",
-          "author": null,
-          "description": "I have this org-mode table in a file named 1.org:\n | . | A | B | C | |---+----+-----+------| | X | 10 | 100 | 1000 | | Y | 20 | 200 | 2000 | | Z | 30 | 300 | 3000 | |---+----+-----+------| | T | | | | #+TBLFM: @5$2..$4=vsum(@I..@II) \n If I move the cursor to the #+TBLFM line and run C-c C-c, I get the totals of each column in the last row labelled T like so\n | . | A | B | C | |---+----+-----+------| | X | 10 | 100 | 1000 | | Y | 20 | 200 | 2000 | | Z | 30 | 300 | 3000 | |---+----+-----+------| | T | 60 | 600 | 6000 | #+TBLFM: @5$2..$4=vsum(@I..@II) \n All good so far. But if instead I place the cursor on the row labelled Y (for example, just place the cursor on Y) and then run C-u C-c C-c I get this\n | . | A | B | C | |---+-----+------+-------| | X | 10 | 100 | 1000 | | Y | 60 | 600 | 6000 | | Z | 100 | 1000 | 10000 | |---+-----+------+-------| | T | 170 | 1700 | 17000 | #+TBLFM: @5$2..$4=vsum(@I..@II) \n Why did it place the sum of each column in the row labelled Y even though the the #+TBLFM clearly says to put the sum in last row (row @5)?\n  \nDocumentation of C-u C-c C-c - https://orgmode.org/manual/Updating-the-table.html\n  \nC-u C-c * or C-u C-c C-c\n Recompute the entire table, line by line. Any lines before the first hline are left alone, assuming that these are part of the table header.\n  \n   submitted by    /u/eminent101  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/vppm3d/why_does_cu_cc_cc_place_the_vsum_in_current_row/",
-          "publishedOn": "2022-07-02T11:20:06.000Z",
-          "wordCount": 25550,
-          "title": "Why does C-u C-c C-c place the vsum() in current row of an org-mode table instead of the row mentioned in #+TBLFM?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/vpo4s4/emacs_lsp_install_support_for_turtle_manually/",
-          "author": null,
-          "description": "Hello,\n I would like to use Emacs for writing Turtle and since ttl-mode is a bit basic, I'd like to give LSP/turtle-language-server a try.\n I have lsp-mode and lsp-ui up and running, which works reasonably fine for the languages with built-in support in lsp-mode.\n However turtle-language-server is not initially supported by lsp-mode, so how do I manually connect the language server with lsp-mode? \n (The message I get from lsp-mode says to look at lsp-java/lsp-metals for examples of manual setup, but I think this is deprecated)\n    submitted by    /u/up_grd  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/vpo4s4/emacs_lsp_install_support_for_turtle_manually/",
-          "publishedOn": "2022-07-02T09:41:33.000Z",
-          "wordCount": 25109,
-          "title": "Emacs LSP: Install support for Turtle manually?",
-          "imageUrl": "https://external-preview.redd.it/WaI7ci8y_BucxfTyRMw9rEGVoXvk-w3erN7z645l-H8.jpg?auto=webp&s=dc9f3722e4f26a0d394e974bdc658bd002ee6f3d"
         }
       ]
     },
