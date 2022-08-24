@@ -2,10 +2,442 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2022-08-23T20:39:23.628Z</updated>
+    <updated>2022-08-24T20:39:56.013Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[What is an Idiomatic way to provide different ways of initializing a data structure ?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/wwt7z7/what_is_an_idiomatic_way_to_provide_different/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/wwt7z7/what_is_an_idiomatic_way_to_provide_different/"/>
+        <updated>2022-08-24T20:02:29.000Z</updated>
+        <summary type="html"><![CDATA[I'm heavenly new to Haskell and asking myself how to solve the following problem. I have a simple data structre like this: data Document = Document { title :: String, content :: [String], wordCount :: Int } I want to have besides the default constructor where I have to provide a title and the content another one where I just have to provide the title and the content or just the title. And I also want to have a constructor function that creates out of a completely different data structure a Document. I find it pretty nasty to name all these constructor functions differently. Especially since I encountered this problem with a lot of different data structures. So I decided to use ad-hoc polymorphism provided by a generic type-class: class Factory a b where ‏‏‎‏‏‎‏‏‎‏‏‎­ create :: a -> b Which I use like this: instance Factory String ([String] -> Document) where create title words = Document { title = title, words = words, wordCount = 0 } instance Factory String Document where create title = Document { title = title, words = [], wordCount = 0 } instance Factory RawDocument Document where create RawDocument{..} = create title (splitOn " " content) Now I can use simply the create function everywhere with the defined input types. And it scales nicely with all my data structures. Do you see any problems with this approach? I'm really not sure if I'm missing something. I'm just facing one problem: - Either I define the factories in the same module as the data structure, but then I need to live with the name shadowing warnings for values like title and words (I would hate to name them differently since they describe the same thing) - Or I have a separate Factory-Module but then I have to live with the orphan instance warnings. Which is also pretty nasty What do you recommend?
+    submitted by    /u/FossilOG  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How Can I Disable MacOS Keyboard Shortcuts in Doom?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwsu0l/how_can_i_disable_macos_keyboard_shortcuts_in_doom/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwsu0l/how_can_i_disable_macos_keyboard_shortcuts_in_doom/"/>
+        <updated>2022-08-24T19:46:33.000Z</updated>
+        <summary type="html"><![CDATA[How can I disable MacOS Keyboard Shortcuts in Doom Emacs. e.g. CMD+s saves the file even in Emacs. CMD+f starts search function. my CMD+d is interfering with my keybinds on Emacs, I want to disable that .
+    submitted by    /u/_analysis230_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Org-roam-capture function behaves differently when called interactively, and from org-metareturn-hook. Why?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwsbxv/orgroamcapture_function_behaves_differently_when/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwsbxv/orgroamcapture_function_behaves_differently_when/"/>
+        <updated>2022-08-24T19:25:51.000Z</updated>
+        <summary type="html"><![CDATA[I've got the following function:
+ (defun my/org-roam-capture-to-link () "In org-roam files, capture to node linked at point." (interactive) (when-let ((_ (org-roam-file-p)) ;; Only act in org-roam files (link-start (car (org-in-regexp org-link-bracket-re 1))) (link (save-excursion (goto-char link-start) (org-element-link-parser))) (id (plist-get (cadr link) :path)) ;; This will fail if there is no node (node (org-roam-node-from-id id))) ;; If there /is/ a node, capture to it. (org-roam-capture- :node node))) 
+ This should capture to the org-roam node at the id linked at point, but only if point is at a link to such a node, and I'm in an org-roam file's buffer.
+ Normally when I just run org-roam-capture and select an already existing node, no new text is added, and I just add whatever I need to and press C-c C-c.
+ Now, If I'm on a link to an org-roam node, and run my/org-roam-capture-to-link interactively with M-x, it does exactly that: nothing new is added, exactly what I want.
+ But I wanted to run it from org-metareturn. I added the symbol for the function to org-metareturn-hook. Now if I press M-RET on an appropriate link, I do get an org-roam capture, but it adds an empty heading on a newline (that is, it adds "\n* |", with the cursor at |).
+ What's going on? How can I make the meta-return version work like the M-x version?
+ Thanks!
+    submitted by    /u/Jack-o-tall-tales  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Setting up snippets and auto completion with lsp-mode and pyright]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwr6h2/setting_up_snippets_and_auto_completion_with/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwr6h2/setting_up_snippets_and_auto_completion_with/"/>
+        <updated>2022-08-24T18:38:20.000Z</updated>
+        <summary type="html"><![CDATA[Hi,
+ I am trying to get a simple Python setup working in Emacs. I have gotten auto completion to work but not to the extent where it will add parenthesis, insert the arguments, and allow me to select between them. I believe this should work (requires integration with yasnippet?) since I can see on the bottom of Emacs that on completion Pyright provides the function information e.g. import gc gc.collect shows (function) collect: (generation: int = ...) -> int
+ init.el
+ (setq custom-file (concat user-emacs-directory "custom.el")) (when (file-exists-p custom-file) (load custom-file)) (require 'package) (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")) (package-initialize) (unless (package-installed-p 'use-package) (package-refresh-contents) (package-install 'use-package)) (require 'use-package) (setq use-package-always-defer t use-package-always-ensure t) (use-package company :hook (lsp-mode . company-mode) :config (global-company-mode)) (use-package flycheck :init (global-flycheck-mode)) (use-package lsp-mode :commands (lsp lsp-deferred) :init (setq lsp-keymap-prefix "C-c l") :config (lsp-enable-which-key-integration t) :hook (python-mode . lsp-deferred)) (use-package lsp-pyright :hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))) (use-package lsp-ui :commands lsp-ui-mode) (use-package python-mode) (use-package which-key :config (which-key-mode)) (use-package yasnippet :config (yas-global-mode t)) (use-package yasnippet-snippets) 
+    submitted by    /u/exceta  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Trying to Understand Under The Hood LSP of VSCode.]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwp7db/trying_to_understand_under_the_hood_lsp_of_vscode/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwp7db/trying_to_understand_under_the_hood_lsp_of_vscode/"/>
+        <updated>2022-08-24T17:17:36.000Z</updated>
+        <summary type="html"><![CDATA[I'm making a switch from VSCode to Emacs. I started with Doom Emacs and things are going well. I'm really falling in love with the use of keybindings and even when they are not yet second nature to me I feel like I'm more efficient with them. 
+ With LSP I'm able to get the behavior of Emacs nearly identical to VSCode. There are some small, nearly ignorable, areas where I do feel like code completion works better in VSC. Where can I get details about what LSP VSC uses for which language? How does it integrate so well with different languages like RJSX and CSS in my Next projects? I'm sure it only has to do with some LSP configs. 
+ In Emacs I have to explicitly give the lsp configs whereas VSCode used to do it implicitly, I want to somehow locate what those configs were and then copy them over to Emacs.
+    submitted by    /u/_analysis230_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Confused about tools that seem to do the same thing (Stack - Cabal - GHCup...)]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/wwmy7c/confused_about_tools_that_seem_to_do_the_same/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/wwmy7c/confused_about_tools_that_seem_to_do_the_same/"/>
+        <updated>2022-08-24T15:48:04.000Z</updated>
+        <summary type="html"><![CDATA[I'm starting out my dev journey in Haskell and what I have done so far is install Stack and through Stack I installed ghc and hspec.
+ What I then wanted to do was configure vscode for Haskell and so I downloaded the Haskell extension which says ghcup is not installed and that intero isn't as well. At first glance GHCup seems to do the same thing as Stack (a kind of dependency manager). But Stack seems to do more than that, creating projects, testing, etc...
+ To add to the confusion, there seems to be a Cabal library and a cabal-install package, both of which I don't understand.
+ Not sure where to go from here honestly. At this point, I just want VSCode to work without installing tools that do the same thing. (I said seem to be the same because they are probably not)
+    submitted by    /u/attitude12136  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Background color of tab visualization]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwms04/background_color_of_tab_visualization/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwms04/background_color_of_tab_visualization/"/>
+        <updated>2022-08-24T15:41:12.000Z</updated>
+        <summary type="html"><![CDATA[Hello,
+ I found a snippet of code that displays each tab with a | character on the internet, that is very useful however the background color it uses doesn't play well with my theme, I don't understand a lot of elisp so could you tell me which line to modify to make it fit my theme? 
+  ;; (OPTIONAL) Visualize tabs as a pipe character - "|" ;; This will also show trailing characters as they are useful to spot. (setq whitespace-style '(face tabs tab-mark trailing)) (custom-set-faces ;; custom-set-faces was added by Custom. ;; If you edit it by hand, you could mess it up, so be careful. ;; Your init file should contain only one such instance. ;; If there is more than one, they won't work right. '(whitespace-tab ((t (:foreground "#555"))))) (setq whitespace-display-mappings '((tab-mark 9 [124 9] [92 9]))) ; 124 is the ascii ID for '\|' (global-whitespace-mode) ; Enable whitespace mode everywhere 
+ Any help would be appreciated, thanks in advance c:
+    submitted by    /u/IcePhoneX_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mixed Language Zettelkasten]]></title>
+        <id>2359@/discussions</id>
+        <link href="https://forum.zettelkasten.de/discussion/2359/mixed-language-zettelkasten"/>
+        <updated>2022-08-24T14:13:20.000Z</updated>
+        <summary type="html"><![CDATA[Hello Zettlers,
+I wonder how you work  with different languages in your Zettelkasten.
+My problem is that I think about different topics in different languages: 
+My question: how do I best deal with this in my Zettelkasten?
+So far I tried to write all of my zettels in german, but I realize more and more, that this is sub-optimal: it introduces the added problem of adequate translation and some of the thoughts and arguments loose nuance in translation, or (worse) get added meanings and associations through the translation which weren't there in the original. The mental work of tranlating also introduces additional friction into the system.
+How do you deal with this? Do you have a single language Zettelkasten and translate all of your thoughts into your primary language? Or do you mix and match, having Zettels written in different languages in the same Zettelkasten?
+Kind regards]]></summary>
+        <author>
+            <name>Grayskull</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Why my spacemacs theme is not showing org files as they are suppose to show like(round instead of asterisk etc.) below?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwjkog/why_my_spacemacs_theme_is_not_showing_org_files/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwjkog/why_my_spacemacs_theme_is_not_showing_org_files/"/>
+        <updated>2022-08-24T13:27:07.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/inquisitive-user_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[sparql-mode (20220824.1323) --- Edit and interactively evaluate SPARQL queries.]]></title>
+        <id>https://melpa.org/packages/sparql-mode-20220824.1323.tar</id>
+        <link href="https://melpa.org/#/sparql-mode"/>
+        <updated>2022-08-24T13:23:00.000Z</updated>
+        <summary type="html"><![CDATA[The sparql-mode package has been updated to version 20220824.1323.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[This is how computing should feel]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwhwx5/this_is_how_computing_should_feel/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwhwx5/this_is_how_computing_should_feel/"/>
+        <updated>2022-08-24T12:10:56.000Z</updated>
+        <summary type="html"><![CDATA[It's not surprising most of us find ourselves doing more and more in Emacs as time goes on. Here's an environment that's completely malleable and transparent - a productive playground where workflow and tooling grow organically together, intertwined. 
+ I sometimes feel like a blacksmith or the 'primitive technology' youtuber: building tools that make new tools possible, each more powerful and precise than the last, working in concert to open new possibilities. 
+ As I think about that comparison, it strikes me that this must be the key to Emacs' allure. Most of our computing tools are delivered to us on a plate, like a modern mass-manufactured product. Impressively engineered and convenient to be sure, but closed and impersonal. In a funny way, I feel Emacs puts us in touch with a much deeper human tradition: moulding and shaping our environment to suit our own needs, instead of being moulded and shaped ourselves.
+    submitted by    /u/soundslogical  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[What is your "base monad" of choice when you write applications in Haskell?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/wwh2js/what_is_your_base_monad_of_choice_when_you_write/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/wwh2js/what_is_your_base_monad_of_choice_when_you_write/"/>
+        <updated>2022-08-24T11:30:14.000Z</updated>
+        <summary type="html"><![CDATA[So far, for writing small toy applications, I've mostly sat in some sort of ExceptT ProgrammeError IO a which I runExceptT in my main function.
+ I've been starting to build slightly more interesting applications, and was reading The ReaderT Design Pattern, so started to think maybe I wanted something like the following as a base monad (I heard this term on a podcast but I can't remember which).
+ type App = ExceptT ProgrammeError (ReaderT AppEnv IO) 
+ I imagine I can improve on this by using MonadError, MonadReader, etc. typeclasses, but I would like to know, when you write applications, what "base monad" you use (especially for different sizes of application -- nothing I'm writing is hugely complex but I am finding my code is becoming a big convoluted).
+    submitted by    /u/gtf21  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Haskell for Lisp/Scheme progammers]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/wwgq1j/haskell_for_lispscheme_progammers/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/wwgq1j/haskell_for_lispscheme_progammers/"/>
+        <updated>2022-08-24T11:11:43.000Z</updated>
+        <summary type="html"><![CDATA[Let me preface that by saying that I am somewhat proficient in Lisp, having been working through SICP over the past few months. However, I am unable to grok Haskell concepts like I was able to for Lisp, and most tutorials I am finding for Haskell are catering to those who either are familiar with Haskell, or are absolute beginners with functional programming in its entierety. Is there a guide for someone of my background, who has dipped their toes in functional programming but not Haskell?
+    submitted by    /u/illustrious_trees  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Announcing pGenie: Generate typesafe Haskell from plain SQL for Postgres]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/wwgp6g/announcing_pgenie_generate_typesafe_haskell_from/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/wwgp6g/announcing_pgenie_generate_typesafe_haskell_from/"/>
+        <updated>2022-08-24T11:10:28.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/nikita-volkov  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[magit + libgit2]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwg15r/magit_libgit2/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwg15r/magit_libgit2/"/>
+        <updated>2022-08-24T10:34:30.000Z</updated>
+        <summary type="html"><![CDATA[Hi,
+ Do you use magit + libgit2 ?
+ Can I ask you to write a short comment how to set it up ?
+ thanks !
+    submitted by    /u/zsome  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Setting up Emacs for PHP/Laravel and Vue.js?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwekqi/setting_up_emacs_for_phplaravel_and_vuejs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwekqi/setting_up_emacs_for_phplaravel_and_vuejs/"/>
+        <updated>2022-08-24T09:09:46.000Z</updated>
+        <summary type="html"><![CDATA[So... I wanted to start coding on emacs but my workflow doesn't seem to be suitable for it. I code in Laravel and Vue.js on daily basis. What do you guys recommend for setting up Emacs for PHP / Laravel? There is web-mode or php-mode and serenata and intelephense for LSP mode but I still don't know which would be the suitable combination for this setup... And Vue.js seems unusable on emacs since vue-mode is pretty outdated. Maybe I should give up? :(
+    submitted by    /u/Kaydorf  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[futhark-mode (20220824.828) --- major mode for editing Futhark source files]]></title>
+        <id>https://melpa.org/packages/futhark-mode-20220824.828.tar</id>
+        <link href="https://melpa.org/#/futhark-mode"/>
+        <updated>2022-08-24T08:28:00.000Z</updated>
+        <summary type="html"><![CDATA[The futhark-mode package has been updated to version 20220824.828.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Weekly Tips, Tricks, &c. Thread]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwdpju/weekly_tips_tricks_c_thread/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwdpju/weekly_tips_tricks_c_thread/"/>
+        <updated>2022-08-24T08:15:09.000Z</updated>
+        <summary type="html"><![CDATA[This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.
+ See this search for previous "Weekly Tips, Tricks, &c." Threads.
+ Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.
+    submitted by    /u/AutoModerator  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[helm-mu (20220824.757) --- Helm sources for searching emails and contacts.]]></title>
+        <id>https://melpa.org/packages/helm-mu-20220824.757.el</id>
+        <link href="https://melpa.org/#/helm-mu"/>
+        <updated>2022-08-24T07:57:00.000Z</updated>
+        <summary type="html"><![CDATA[The helm-mu package has been updated to version 20220824.757.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[LSP is reinstalled unexpectedly]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwcnme/lsp_is_reinstalled_unexpectedly/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwcnme/lsp_is_reinstalled_unexpectedly/"/>
+        <updated>2022-08-24T07:09:38.000Z</updated>
+        <summary type="html"><![CDATA[Here is my ~/.emacs for Emacs 28.1:
+ ;;; .emacs --- My custom .emacs config. ;;; Commentary: ;;; Installs different packages for code linting and formatting to enable user feel Emacs like an IDE. ;;; Code: (require 'package) (require 'lsp-mode) (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t) (defvar emacs-themes '(soft-stone-theme) "Themes installed as packages.") (defvar emacs-linters '(flycheck json-mode yaml-mode markdown-mode) "Code linters installed as packages.") (defvar emacs-language-servers '(lsp-mode lsp-pyright lsp-java) "Language servers installed as packages.") (defvar emacs-formatters '(format-all) "Code formatters installed as packages.") (defvar emacs-other '(company) "Other packages installed as packages.") (defvar emacs-packages (append emacs-…]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Convert a Double Space Indentation to Tab (width - 4) Indentation]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwcds5/convert_a_double_space_indentation_to_tab_width_4/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwcds5/convert_a_double_space_indentation_to_tab_width_4/"/>
+        <updated>2022-08-24T06:53:28.000Z</updated>
+        <summary type="html"><![CDATA[I am facing this problem which on the face of it should be easy to solve but isn't.
+ this is my .editorconf:
+ root = true [*] indent_style = tab tab_width = 4 end_of_line = lf charset = utf-8 trim_trailing_whitespace = true insert_final_newline = true 
+ I am running doom emacs with ts-ls with LSP for javascript.
+ I have some files in my project that are indented with 4-width Tabs and that's how I like it. If I change something in them and save they stay properly indented with 4-width Tabs.
+ I have other files in the same project that are indented with 2 spaces. I don't want that. I want to be able to convert that to 4-width tab but that does not happen automatically on save, they stay in 2 space formatting.
+ Any new file I create in Emacs is also indented with 2 spaces, but if I create the file in VSCode and write some Tab spaced text and open it back in Emacs it stays Tab indented.
+ How can I fix this?
+    submitted by    /u/_analysis230_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Wrangling windows]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wwbgmg/wrangling_windows/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wwbgmg/wrangling_windows/"/>
+        <updated>2022-08-24T05:58:22.000Z</updated>
+        <summary type="html"><![CDATA[I find it pretty unintuitive how magit, vterm, rg, and other commands that want to open a new window will interact with a multi-window setup. Sometimes they'll use an existing window, sometimes they'll make a new one. I prefer having things be predictable: terminals always go here, search results go there, and so on. I was looking for ways to tame this, and I found purpose, popper, shackle, and of course, directly hacking on display-buffer-alist.
+ I also found winner-undo, which is nice, but I'd like to prevent things from getting messy rather than letting them get bad and then undoing them. And there doesn't seem to be a 'modern' clean approach; i.e., there's no window management equivalent of corfu. (Maybe this is an excuse for me to get my toes wet in actual emacs package development; purpose is probably the closest, but I don't like how it works by advising everything...)
+    submitted by    /u/quasi_qua_quasi  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Vterm for Macos M1]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/ww7x1x/vterm_for_macos_m1/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/ww7x1x/vterm_for_macos_m1/"/>
+        <updated>2022-08-24T02:53:05.000Z</updated>
+        <summary type="html"><![CDATA[How do I compile the vterm library for mac m1?
+ When I do the default install, I seemingly get an x86 share object.
+ .emacs.d/elpa/vterm-20220822.1158/vterm-module.so' (mach-o file, but is an incompatible architecture (have (x86_64), need (arm64e)))"
+    submitted by    /u/ReallyRussell  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[metaweblog (20220824.148) --- An XML-RPC MetaWeblog and WordPress API client.]]></title>
+        <id>https://melpa.org/packages/metaweblog-20220824.148.el</id>
+        <link href="https://melpa.org/#/metaweblog"/>
+        <updated>2022-08-24T01:48:00.000Z</updated>
+        <summary type="html"><![CDATA[The metaweblog package has been updated to version 20220824.148.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dired-mode: Open remote PDF file over ssh and view locally with external program.]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/ww4lm5/diredmode_open_remote_pdf_file_over_ssh_and_view/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/ww4lm5/diredmode_open_remote_pdf_file_over_ssh_and_view/"/>
+        <updated>2022-08-24T00:18:19.000Z</updated>
+        <summary type="html"><![CDATA[I haven't been able to find the following functionality in dired-mode with my Google-fu, but I suspect that someone has already written up a solution. When a PDF file exists on a remote server that is being accessed over an SSH connection and the file is displayed in a dired-mode buffer, I'd like to view the PDF locally in an external reader such as xpdf or acroread on linux (Ubuntu). It wouldn't be that difficult to write up a solution (e.g., download to a temporary directory, perhaps using something like url-retrieve-synchronously), but if a solution already exists, I'd like to start with that. Any ideas how that would be done would be greatly appreciated.
+    submitted by    /u/lawlist  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Scalafmt force empty lines between functions and classes]]></title>
+        <id>https://www.reddit.com/r/scala/comments/ww36bc/scalafmt_force_empty_lines_between_functions_and/</id>
+        <link href="https://www.reddit.com/r/scala/comments/ww36bc/scalafmt_force_empty_lines_between_functions_and/"/>
+        <updated>2022-08-23T23:14:28.000Z</updated>
+        <summary type="html"><![CDATA[Is there a way to force empty lines between functions and classes using scalafmt?
+    submitted by    /u/daredevildas  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[litex-mode (20220823.2231) --- Minor mode for converting lisp to LaTeX]]></title>
+        <id>https://melpa.org/packages/litex-mode-20220823.2231.tar</id>
+        <link href="https://melpa.org/#/litex-mode"/>
+        <updated>2022-08-23T22:31:00.000Z</updated>
+        <summary type="html"><![CDATA[The litex-mode package has been updated to version 20220823.2231.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[I updated my "org-tags-column" variable, now how to update existing tags?]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/ww1d7x/i_updated_my_orgtagscolumn_variable_now_how_to/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/ww1d7x/i_updated_my_orgtagscolumn_variable_now_how_to/"/>
+        <updated>2022-08-23T21:58:34.000Z</updated>
+        <summary type="html"><![CDATA[Hello, the default value of org-tags-column is -77 which aligns the tags to the right. I set the value of the variablle to 0 so the tags gets placed directly after the headline text.
+  Before (org-tags-column -77) * Headline text :tag After (org-tags-column 0) * Headline text :tag 
+ I have a few documents in which the tags were set when the variable was still at a value of -77. As a result the tags are all aligned to the right. Is there a way to update all the tags in the file to use the new value of the variable, the zero value? or do I need to remove all tags manually from all headlines and insert them again?
+    submitted by    /u/zoliky  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[doom-emacs] How to put the signature above the citation in mu4e?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/ww15x3/doomemacs_how_to_put_the_signature_above_the/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/ww15x3/doomemacs_how_to_put_the_signature_above_the/"/>
+        <updated>2022-08-23T21:50:08.000Z</updated>
+        <summary type="html"><![CDATA[Anyone knows how to put the signature above the citation in mu4e.
+ Normally I have this format when reply some email.
+ Me <me@email.com> writes: > Old reply > Old reply > Old reply > Old reply #+begin_signature --\\ My signature #+end_signature 
+ However, I want that my emails are formatted like this (noticed the switch in the signature and the citation)
+ #+begin_signature --\\ My signature #+end_signature Me <me@email.com> writes: > Old reply > Old reply > Old reply > Old reply 
+ I have this line (setq message-cite-reply-position 'above)in my config.el but it doesn't work. I activated +org (org-msg) in the init.el
+ Thanks for the help.
+    submitted by    /u/mklsls  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Loading a different theme just for htmlize org exporting]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/ww15sg/loading_a_different_theme_just_for_htmlize_org/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/ww15sg/loading_a_different_theme_just_for_htmlize_org/"/>
+        <updated>2022-08-23T21:50:01.000Z</updated>
+        <summary type="html"><![CDATA[I'm currently using the vscode dark theme and there is something keeping it from exporting ( a face value error) but when i start emacs with the default theme I can export with syntax highlighting. I tried loading the theme just before exporting and this still threw an error. Is there any way to have htmlize use only the default theme irregardless of the current theme?
+ Thanks.
+    submitted by    /u/Doomer1999  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[projectile]: case insensitivity for file search]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/ww0xil/projectile_case_insensitivity_for_file_search/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/ww0xil/projectile_case_insensitivity_for_file_search/"/>
+        <updated>2022-08-23T21:40:22.000Z</updated>
+        <summary type="html"><![CDATA[Is this possible? I was looking through the src of projectile-find-file, but didn't see anything. 
+ It would be nice if my fat-fingered mistakes (e.g. myFile isntead of myfile) could be overlooked.
+    submitted by    /u/codethrasher  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[tokei (20220823.2058) --- Display codebase statistics]]></title>
+        <id>https://melpa.org/packages/tokei-20220823.2058.el</id>
+        <link href="https://melpa.org/#/tokei"/>
+        <updated>2022-08-23T20:58:00.000Z</updated>
+        <summary type="html"><![CDATA[The tokei package has been updated to version 20220823.2058.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[VSCode Does This Autoimport, How Can I Get it on Emacs With ts-ls LSP?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/wvzg75/vscode_does_this_autoimport_how_can_i_get_it_on/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/wvzg75/vscode_does_this_autoimport_how_can_i_get_it_on/"/>
+        <updated>2022-08-23T20:40:21.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/_analysis230_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Help with pop-up]]></title>
         <id>https://www.reddit.com/r/emacs/comments/wvz3wx/help_with_popup/</id>
@@ -2338,6 +2770,16 @@ fourmolu: Optionally indent with tabs]]></summary>
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[naga-theme (20220818.728) --- Dark color theme with green foreground color]]></title>
+        <id>https://melpa.org/packages/naga-theme-20220818.728.el</id>
+        <link href="https://melpa.org/#/naga-theme"/>
+        <updated>2022-08-18T07:28:00.000Z</updated>
+        <summary type="html"><![CDATA[The naga-theme package has been updated to version 20220818.728.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Use Hook to alter global variables but only for current buffer]]></title>
         <id>https://www.reddit.com/r/emacs/comments/wrcvap/use_hook_to_alter_global_variables_but_only_for/</id>
         <link href="https://www.reddit.com/r/emacs/comments/wrcvap/use_hook_to_alter_global_variables_but_only_for/"/>
@@ -3757,6 +4199,16 @@ To make it easy to reuse for myself and everyone I thought it would be good to m
         <link href="https://melpa.org/#/telega"/>
         <updated>2022-08-14T19:47:00.000Z</updated>
         <summary type="html"><![CDATA[The telega package has been updated to version 20220814.1947.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[conda (20220814.1919) --- Work with your conda environments]]></title>
+        <id>https://melpa.org/packages/conda-20220814.1919.el</id>
+        <link href="https://melpa.org/#/conda"/>
+        <updated>2022-08-14T19:19:00.000Z</updated>
+        <summary type="html"><![CDATA[The conda package has been updated to version 20220814.1919.]]></summary>
         <author>
             <name>MELPA package updates</name>
         </author>
@@ -13521,334 +13973,6 @@ Thanks for reading!]]></summary>
         <link href="https://melpa.org/#/helm-tail"/>
         <updated>2022-07-26T09:47:00.000Z</updated>
         <summary type="html"><![CDATA[The helm-tail package has been updated to version 20220726.947.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[my-repo-pins (20220726.813) --- Keep your git repositories organized]]></title>
-        <id>https://melpa.org/packages/my-repo-pins-20220726.813.el</id>
-        <link href="https://melpa.org/#/my-repo-pins"/>
-        <updated>2022-07-26T08:13:00.000Z</updated>
-        <summary type="html"><![CDATA[The my-repo-pins package has been updated to version 20220726.813.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[xref-find-definitions stopped working, how can I diagnose?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w8dpno/xreffinddefinitions_stopped_working_how_can_i/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w8dpno/xreffinddefinitions_stopped_working_how_can_i/"/>
-        <updated>2022-07-26T07:53:49.000Z</updated>
-        <summary type="html"><![CDATA[Hey all!
- So, around 3 months ago I upgraded to emacs 29 and set up a "fresh" init.el; lots of copy/paste from my old config with an eye to using less "custom" features/keybindings and using "modern" tooling like embark and consult. I mostly develop in Elixir, so configured lsp with elixir-mode and found that xref-find-definitions triggered from the embark menu was working great and a real time saver.
- A couple of weeks ago, xref-find-definitions stopped working. I don't think I changed anything in my init.el, at least not related to lsp-mode or elixir-mode and definitely nothing related to xref. Now I always get No definitions found in the minibuffer whenever I call xref-find-definitions (either via C-. RET or M-.) even for items I know worked a few weeks ago. I've switched to using dump-jump in the meantime which is a great package but isn't as well integrated into embark.
- Can anyone point me in the right direction for diagnosing this issue?
-    submitted by    /u/hairlesscaveman  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How to work with Razor and Blazor in Emacs?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w8cyil/how_to_work_with_razor_and_blazor_in_emacs/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w8cyil/how_to_work_with_razor_and_blazor_in_emacs/"/>
-        <updated>2022-07-26T07:07:28.000Z</updated>
-        <summary type="html"><![CDATA[Hello lads and lasses, 
- I am working at a C# shop where our systems utilise Blazor, Razor and MudBlazor. I have configured Emacs so the C# part is walk in the park. But I cannot find a good way to integrate working with Blazor and Razor. 
- Is there a good way to do this or is it a lost cause?
-    submitted by    /u/looopTools  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Need help to debug a lisp error]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w891db/need_help_to_debug_a_lisp_error/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w891db/need_help_to_debug_a_lisp_error/"/>
-        <updated>2022-07-26T03:34:49.000Z</updated>
-        <summary type="html"><![CDATA[I do not have any coding knowledge. I'd like some help to learn how to pin point the issue in a backtrace debugger buffer. I got this weird bug now and I cant find what's wrong. Or may be there's other debugger packages available for Emacs that would be more specific about what's wrong in my init file that is causing this issue?
- When I'm running 'C-g' on 'M-x' I get this backtrace now. That's new. The problem here is that I've added a few stuff in my init file since before running 'C-g' on 'M-x'. There's no way now that I can recall what could be causing the issue. I definitely need to find what's causing this from a degugger.
- Here's the backtrace. I've tried to look for something related with 'minibuffer-quit' in my init file. There's nothing with 'minibuffer-quit' anywhere in my init file. Here's my init file
- Thank's for any help.
-    submitted by    /u/Danrobi1  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[dired-single (20220726.137) --- Reuse the current dired buffer to visit a directory]]></title>
-        <id>https://melpa.org/packages/dired-single-20220726.137.el</id>
-        <link href="https://melpa.org/#/dired-single"/>
-        <updated>2022-07-26T01:37:00.000Z</updated>
-        <summary type="html"><![CDATA[The dired-single package has been updated to version 20220726.137.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[What's That Typeclass: Functor]]></title>
-        <id>https://serokell.io/blog/whats-that-typeclass-functor</id>
-        <link href="https://serokell.io/blog/whats-that-typeclass-functor"/>
-        <updated>2022-07-26T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[What's the Functor typeclass, and how can it be used? Find all the information you need to get started with Functor in our beginner-friendly blog post.]]></summary>
-        <author>
-            <name>hi+alyonaantonova@serokell.io (Alyona Antonova)</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Rust-analzyer with LSP always indents one level to deep in a single file only. Doom Emacs.]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w849y8/rustanalzyer_with_lsp_always_indents_one_level_to/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w849y8/rustanalzyer_with_lsp_always_indents_one_level_to/"/>
-        <updated>2022-07-25T23:55:01.000Z</updated>
-        <summary type="html"><![CDATA[Basically the title. There is this once file where pressing TAB always indents it one level too deep. No other file has this issue, and I have no idea how to fix it.
-    submitted by    /u/coolusername192168  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Obsidian.el — Obsidian Notes within Emacs]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w82c8m/obsidianel_obsidian_notes_within_emacs/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w82c8m/obsidianel_obsidian_notes_within_emacs/"/>
-        <updated>2022-07-25T22:31:17.000Z</updated>
-        <summary type="html"><![CDATA[There were several discussions over the past year about supporting Obsidian Notes within Emacs. Which I though was a neat idea, so I built obsidian.el
- You can read the details in the readme, but even though it's still WIP, it already can:
- - autocomplete tags
- - insert links from selection
- - jump between notes
- - capture notes
- Give it a try please and let me know what you think!
- https://github.com/licht1stein/obsidian.el
- ​
-    submitted by    /u/licht1nstein  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[fstar-mode (20220725.2139) --- Support for F* programming]]></title>
-        <id>https://melpa.org/packages/fstar-mode-20220725.2139.tar</id>
-        <link href="https://melpa.org/#/fstar-mode"/>
-        <updated>2022-07-25T21:39:00.000Z</updated>
-        <summary type="html"><![CDATA[The fstar-mode package has been updated to version 20220725.2139.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Type-Signature: Who Wants to Be a Millionaire - but with Types]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/w806kf/typesignature_who_wants_to_be_a_millionaire_but/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/w806kf/typesignature_who_wants_to_be_a_millionaire_but/"/>
-        <updated>2022-07-25T21:01:48.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/_andys8  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Happy Path Programming - ZIO 2 dot Ohhhhh!]]></title>
-        <id>https://www.reddit.com/r/scala/comments/w7zvlm/happy_path_programming_zio_2_dot_ohhhhh/</id>
-        <link href="https://www.reddit.com/r/scala/comments/w7zvlm/happy_path_programming_zio_2_dot_ohhhhh/"/>
-        <updated>2022-07-25T20:49:34.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/swoogles  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[The Haskell Foundation Technical Working Group - volunteers wanted! Deadline August 1, AoE]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/w7xs7v/the_haskell_foundation_technical_working_group/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/w7xs7v/the_haskell_foundation_technical_working_group/"/>
-        <updated>2022-07-25T19:25:28.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/davidchristiansen  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[tangonov-theme (20220725.1836) --- A 256 color dark theme featuring bright pastels]]></title>
-        <id>https://melpa.org/packages/tangonov-theme-20220725.1836.el</id>
-        <link href="https://melpa.org/#/tangonov-theme"/>
-        <updated>2022-07-25T18:36:00.000Z</updated>
-        <summary type="html"><![CDATA[The tangonov-theme package has been updated to version 20220725.1836.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-jira (20220725.1808) --- Syncing between Jira and Org-mode.]]></title>
-        <id>https://melpa.org/packages/org-jira-20220725.1808.tar</id>
-        <link href="https://melpa.org/#/org-jira"/>
-        <updated>2022-07-25T18:08:00.000Z</updated>
-        <summary type="html"><![CDATA[The org-jira package has been updated to version 20220725.1808.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[dwim-shell-command (20220725.1712) --- Shell commands with DWIM behaviour]]></title>
-        <id>https://melpa.org/packages/dwim-shell-command-20220725.1712.tar</id>
-        <link href="https://melpa.org/#/dwim-shell-command"/>
-        <updated>2022-07-25T17:12:00.000Z</updated>
-        <summary type="html"><![CDATA[The dwim-shell-command package has been updated to version 20220725.1712.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[No 'org-roam-insert-immediate' command available in my current org-roam build.]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w7t0w1/no_orgroaminsertimmediate_command_available_in_my/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w7t0w1/no_orgroaminsertimmediate_command_available_in_my/"/>
-        <updated>2022-07-25T16:15:39.000Z</updated>
-        <summary type="html"><![CDATA[I'm attempting to find a way to include org-roam into my workflow ATM. (I use Doom). It would be highly useful to be able to turn a word I am currently typing into an org-roam node. I understand that this functionality is provided by 'org-roam-insert-immediate' https://github.com/org-roam/org-roam/issues/937 however this facility is currently unavailable in the org-roam build I am using (i.e. the command is absent). How do I get this functionality as having to stop in order manually to create nodes whilst writing is very tedious? Thx a lot in advance..
-    submitted by    /u/PossibleFar5107  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Does anyone know which variable decides the return prompt in geiser? i.e the '$num']]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w7s831/does_anyone_know_which_variable_decides_the/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w7s831/does_anyone_know_which_variable_decides_the/"/>
-        <updated>2022-07-25T15:44:21.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/ArcanistCheshire  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Performance issue with generalizing code (typeclasses)]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/w7s1f0/performance_issue_with_generalizing_code/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/w7s1f0/performance_issue_with_generalizing_code/"/>
-        <updated>2022-07-25T15:36:48.000Z</updated>
-        <summary type="html"><![CDATA[I'll ask this question at a pretty high level, since it seems like an issue people might recognize, but if not, I can add more detail. I have (in the package monad-bayes), a type
- newtype Sampler a = Sampler (ReaderT GenIO IO a)
- which is used as a sampling monad. We wanted to generalize it to the following
- newtype Sampler g m a = Sampler (StatefulGen g m => ReaderT g m a)
- This version is parametrized by a choice of RNG and monad, which is great. Unfortunately, it's about 10x slower, at least when used as the sampling monad in a program that takes 1000000 random samples. 
- Does the typeclass constraint inside the newtype set off performance alarm bells for anyone? We tried inlining and specializing pragmas, but so far to no avail.
- Thanks!
-    submitted by    /u/Limp_Step_6774  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Where are themes stored on macOS?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w7qpx4/where_are_themes_stored_on_macos/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w7qpx4/where_are_themes_stored_on_macos/"/>
-        <updated>2022-07-25T14:43:11.000Z</updated>
-        <summary type="html"><![CDATA[I have looked into /etc/ folder but I don't see any emacs directory.
- I havent' found any themes directory with theme files inside ~/.emacs.d directory, but maybe it's just hidden in some subdirectory os something.
- Where are theme files for themes like what I have right now - leuven theme - stored on macOS?
- For example I would like to see the leuven theme code where is it located?
- I am using Spacemacs if it's important.
-    submitted by    /u/East_Staff3288  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[tramp-term (20220725.1441) --- Automatic setup of directory tracking in ssh sessions]]></title>
-        <id>https://melpa.org/packages/tramp-term-20220725.1441.el</id>
-        <link href="https://melpa.org/#/tramp-term"/>
-        <updated>2022-07-25T14:41:00.000Z</updated>
-        <summary type="html"><![CDATA[The tramp-term package has been updated to version 20220725.1441.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[mindre-theme (20220725.1404) --- Minimal, light theme]]></title>
-        <id>https://melpa.org/packages/mindre-theme-20220725.1404.el</id>
-        <link href="https://melpa.org/#/mindre-theme"/>
-        <updated>2022-07-25T14:04:00.000Z</updated>
-        <summary type="html"><![CDATA[The mindre-theme package has been updated to version 20220725.1404.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Fuzzy Finding with Emacs Instead of fzf]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w7oiub/fuzzy_finding_with_emacs_instead_of_fzf/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w7oiub/fuzzy_finding_with_emacs_instead_of_fzf/"/>
-        <updated>2022-07-25T13:06:57.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/mickeyp  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[review-mode (20220725.1305) --- major mode for ReVIEW]]></title>
-        <id>https://melpa.org/packages/review-mode-20220725.1305.el</id>
-        <link href="https://melpa.org/#/review-mode"/>
-        <updated>2022-07-25T13:05:00.000Z</updated>
-        <summary type="html"><![CDATA[The review-mode package has been updated to version 20220725.1305.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Is there a way to split the *whole frame* vertically?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w7l3ls/is_there_a_way_to_split_the_whole_frame_vertically/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w7l3ls/is_there_a_way_to_split_the_whole_frame_vertically/"/>
-        <updated>2022-07-25T10:11:37.000Z</updated>
-        <summary type="html"><![CDATA[I have a frame with windows like this:
- +---------------------+ | | | a | | | +---------------------+ | | | b | | | +---------------------+ 
- And I want this:
- +---------+-----------+ | | | | a | | | | | +---------+ c | | | | | b | | | | | +---------+-----------+ 
- That is, I: - already have a top/bottom split, buffer a above b. - want to end up a right/left left split, where the left side is split in the same way as the original top/bottom split (buffer a above b). I don't mind having to switch buffers after splitting to get the right buffer at c.
- Is there a way to do that?
-    submitted by    /u/Jack-o-tall-tales  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[To create lockfiles outside of the working directory]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/w7kvwo/to_create_lockfiles_outside_of_the_working/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/w7kvwo/to_create_lockfiles_outside_of_the_working/"/>
-        <updated>2022-07-25T09:59:58.000Z</updated>
-        <summary type="html"><![CDATA[I want lockfiles to be created outside of the working directory, and so I have added the following part into my init.el, right from the manual:
- ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html (setq lock-file-name-transforms '(("\\`/.*/\\([^/]+\\)\\'" "~/.emacs.d/lockfiles/\\1" t))) ;; just in case... (make-directory "~/.emacs.d/lockfiles/" t) 
- However, it doesn't work. Lockfiles (.#file.ext) are still created in the same directory where I edit the file itself. Why?
-    submitted by    /u/john_smith_007  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[evil (20220725.908) --- Extensible Vi layer for Emacs.]]></title>
-        <id>https://melpa.org/packages/evil-20220725.908.tar</id>
-        <link href="https://melpa.org/#/evil"/>
-        <updated>2022-07-25T09:08:00.000Z</updated>
-        <summary type="html"><![CDATA[The evil package has been updated to version 20220725.908.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[dtrt-indent (20220725.849) --- Adapt to foreign indentation offsets]]></title>
-        <id>https://melpa.org/packages/dtrt-indent-20220725.849.tar</id>
-        <link href="https://melpa.org/#/dtrt-indent"/>
-        <updated>2022-07-25T08:49:00.000Z</updated>
-        <summary type="html"><![CDATA[The dtrt-indent package has been updated to version 20220725.849.]]></summary>
         <author>
             <name>MELPA package updates</name>
         </author>
