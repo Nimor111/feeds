@@ -53,6 +53,56 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/xbq0ou/problems_with_the_linking_process_when_compiling/",
+          "author": null,
+          "description": "On my WSL2 linux installation I installed Haskell using GHCup. But I get the following error message when trying to compile some Haskell source file:\n Linking hello ...\n /usr/bin/ld.gold: warning: hello.o: unknown program property type 0xc0010002 in .note.gnu.property section\n /usr/bin/ld.gold: warning: hello.o: unknown program property type 0xc0010001 in .note.gnu.property section\n /usr/bin/ld.gold: warning: /tmp/ghc8553_0/ghc_2.o: unknown program property type 0xc0010002 in .note.gnu.property section\n /usr/bin/ld.gold: warning: /tmp/ghc8553_0/ghc_2.o: unknown program property type 0xc0010001 in .note.gnu.property section\n /usr/bin/ld.gold: warning: /tmp/ghc8553_0/ghc_5.o: unknown program property type 0xc0010002 in .note.gnu.property section\n /usr/bin/ld.gold: warning: /tmp/ghc8553_0/ghc_5.o: unknown program property type 0xc0010001 in .note.gnu.property section\n /usr/bin/ld.gold: error: cannot open /usr/lib/gcc/x86_64-linux-gnu/9/libgmp.so: No such file or directory\n collect2: error: ld returned 1 exit status\n `gcc' failed in phase `Linker'. (Exit code: 1)\n ​\n Does anyone know the solution to this?\n    submitted by    /u/FBI_agent44  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/xbq0ou/problems_with_the_linking_process_when_compiling/",
+          "publishedOn": "2022-09-11T18:36:51.000Z",
+          "wordCount": 26459,
+          "title": "Problems with the linking process when compiling Haskell source files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/xbij59/async_ui_state_in_elm_architecture/",
+          "author": null,
+          "description": "I was playing with the Brick terminal UI library and hit an interesting hurdle. Roughly, brick represents the program logic as two functions Event -> State -> IO State and State -> Image.\n I have some non-trivial IO (loading and parsing files, possibly transitively) which should not block key inputs. We can launch some async IO and send the results into an event queue which Brick reads from. But it is really annoying:\n  \nThe update function must know which async resources to load, duplicating parts of the rendering logic\n The update function must track which resources are already loaded\n The update function must track which requests are in-flight, or have failed\n Optionally, the update function may have to cancel requests that are no longer needed\n  \nThat's quite a bit of complexity for a simple update function! My approach so far has been Haxl-like. There is a function CoreState -> IO AppState which is run after every event is processed, and it re-loads all resources. Requests are represented by a GADT, and cached in an MVar wrapped map. A functionsend :: MonadAsync r m => r a -> m (Maybe a) retrieves the existing result, or starts a new request unless one is in flight. When a request finishes this queues an event so Brick updates.\n This solves some of the complexity issues but still feels kind of ad-hoc. Shouldn't Haskell be better at this sort of thing? Is there some existing approach to this?\n The only idea I had so far is some kind of declarative IO. The render function produces an Image, and the frame-work diffs images and produces some imperative commands to synchronize the world. Maybe the render function also could produce a sort-of free-monad trace, the trace is diffed, and the framework performs some imperative steps to ensure the minimal necessary requests are performed? But for diffing to work trace would have to contain which case-statement branches were taken, not sure how to do that without compiler support.\n    submitted by    /u/Tarmen  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/xbij59/async_ui_state_in_elm_architecture/",
+          "publishedOn": "2022-09-11T13:26:00.000Z",
+          "wordCount": 28848,
+          "title": "Async UI State in Elm Architecture",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/xbdvkd/question_about_typeclasses/",
+          "author": null,
+          "description": "So I've been learning haskell through multiple sources (one being a free online course) and I've gotten to learning about monoids. However, I'm still struggling a bit on understanding typeclasses.\n I understand a typeclass is similar to, say, an interface in Java or c#, in that typeclasses can be used to define things that work for all classes that define an instance for said class (similar to implementing an interface). But I don't fully understand how the type signatures work, or when to use a vs b in polymorphic signatures. \n For example, I can define a typeclass\n  class Foo a where prev :: a -> a next :: a -> a \n But I don't understand how that would differ from the same typeclass defined as:\n class Foo a where prev :: a -> b next :: b -> a \n To put this another way, I'm fairly sure I understand the theory, but I don't know how to apply it very well.\n (All that said, I'm loving my time with learning haskell. Such a great language.)\n (Sorry for formatting. Don't understand how to do multi-line code on mobile)\n    submitted by    /u/Nerketur  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/xbdvkd/question_about_typeclasses/",
+          "publishedOn": "2022-09-11T09:12:09.000Z",
+          "wordCount": 29405,
+          "title": "question about typeclasses",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/xb78ue/requesting_help_with_haskell_setup_in_emacs_in/",
+          "author": null,
+          "description": "I am looking for some suggestion on setting up emacs for haskell. I am looking for syntax highlighting, formatting and good integration with repl. \n While searching for some suggestions, all posts were from 2020 and before and it appears that the things have changed a bit since then. \n Specifically:\n  \nIs haskell-mode still the go to package? \n \nAre there any issues with lsp-mode or is it recommended that I configure haskell-mode?\n \nWhat is a good way to use ghci repl in emacs? I have ghcup installed. \n \n Any other suggestions are welcome too! Thank you for your time.\n    submitted by    /u/omeow  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/xb78ue/requesting_help_with_haskell_setup_in_emacs_in/",
+          "publishedOn": "2022-09-11T02:47:50.000Z",
+          "wordCount": 33935,
+          "title": "Requesting help with Haskell setup in emacs in 2022.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/xb6b9s/efficient_logic_programming_in_haskell/",
+          "author": null,
+          "description": "So I've been working on my hobby programming language and there's three things I want to write for it: a type checker, type inference, and a program synthesizer. While writing each of these I realized there was a lot of similarity in the code to the point that it almost felt like the same thing three times. I realized if I was working in Prolog I could probably express this as typed(term, type, errorList) and then I could get supply a term and a type to see if if type checks, a term and an empty error list to infer the type, and a type and an empty error list to get program synthesis. It would be nice to be able to express this relation in Haskell with a similar style and elegance but I'm not sure if it's possible since I'm not sure if I can do logic programming with similar levels of optimizations in Haskell. logict doesn't seem to do any kind of optimization and I'm guessing this would make my code unusable in practice.\n Is my assumption that logic programming without optimizations is unusable in practice correct? Does anyone know if it's possible to do logic programming in Haskell that has performance comparable to Prolog?\n    submitted by    /u/Isaac22877822  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/xb6b9s/efficient_logic_programming_in_haskell/",
+          "publishedOn": "2022-09-11T02:00:58.000Z",
+          "wordCount": 27219,
+          "title": "Efficient logic programming in Haskell?",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/xarkrx/help_with_monad_transformer_stacks_with_servant/",
           "author": null,
           "description": "I'm struggling to resolve all the monad transformers when writing a handler for Servant. In short, I have three things happening in this handler:\n  \nsome validation which requires env information (so I'm using ReaderT)\n some logging (I'm using ReaderT over IO for this so my logger is swappable)\n some IO (to get the current time)\n  \nServant's Handler type is newtype Handler a = Handler (ExceptT ServerError IO a), and what I'm struggling with is the MonadIO and MonadReader constraints required by the logging function.\n For context, here are some of the type signatures involved:\n  newtype Handler a = Handler (ExceptT ServerError IO a) type Processor = ExceptT ProcessingFailure IO log :: (MonadReader env m, MonadIO m, HasLog env) => String -> m () makeNoteFromBody :: MailgunEmailBody -> IO Not…",
@@ -1471,86 +1521,6 @@
           "wordCount": 26108,
           "title": "How to identify external storages?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/wn0yd5/effect_zoo_for_scala_3/",
-          "author": null,
-          "description": "submitted by    /u/marcinzh  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/wn0yd5/effect_zoo_for_scala_3/",
-          "publishedOn": "2022-08-13T00:48:52.000Z",
-          "wordCount": 25962,
-          "title": "Effect Zoo for Scala 3",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/wmzch3/cant_match_bytestring_with_t0_bytestring_error/",
-          "author": null,
-          "description": "I have this bit of code:\n name :: B.ByteString -> [B.ByteString] -> [B.ByteString] name a = filter (elem a) \n It seems like it'd work to me, but I'm getting an error:\n Couldn't match type ByteString’ with ‘B.ByteString’ Expected type: [B.ByteString] -> [B.ByteString] Actual type: [t0 B.ByteString] -> [t0 B.ByteString] \n I have two questions here. One, how do I solve this (ofc). And two, why is this happening? I have a vague idea, but I'm not entirely sure. Thank u.\n    submitted by    /u/amber__yo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/wmzch3/cant_match_bytestring_with_t0_bytestring_error/",
-          "publishedOn": "2022-08-12T23:32:58.000Z",
-          "wordCount": 26328,
-          "title": "Can't match [ByteString] with [t0 ByteString] error",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/wmwzcu/understanding_haskells_type_system_deeply/",
-          "author": null,
-          "description": "Hello,\n ​\n I have been searching for good category theory books because I read that category theory can help you understand Haskells type system.\n ​\n So I was wondering if any of you can point to any books or papers where I can learn category theory and about Haskells type system and their intersection. thanks\n    submitted by    /u/deephl  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/wmwzcu/understanding_haskells_type_system_deeply/",
-          "publishedOn": "2022-08-12T21:48:59.000Z",
-          "wordCount": 26364,
-          "title": "Understanding Haskells type system deeply",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/wmkt56/suggestions_for_haskell_live_coding_channels_or/",
-          "author": null,
-          "description": "Application development or \"practical\" Haskell (obviously practical might mean different things for different people) would be cool. But theoretical ones are also interesting.\n    submitted by    /u/thedeepcoderunknown  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/wmkt56/suggestions_for_haskell_live_coding_channels_or/",
-          "publishedOn": "2022-08-12T13:05:17.000Z",
-          "wordCount": 25943,
-          "title": "Suggestions for Haskell (live) coding channels or streams",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/wmkqjo/the_type_of/",
-          "author": null,
-          "description": "I've tried to get the type of this function and I keep getting the type of (.) which is: (b-c) -> (a->b) -> a -> c\n    submitted by    /u/yzdnegel  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/wmkqjo/the_type_of/",
-          "publishedOn": "2022-08-12T13:01:42.000Z",
-          "wordCount": 32099,
-          "title": "The type of (.).(.)?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/wmiokt/a_rest_library/",
-          "author": null,
-          "description": "Hi Everyone,\n I've been working on this for some days now and I've got the basic framework. It is still very nascant and has a big enough TODO list. It would be awesome to have some feedback on how it looks so far.\n Cheers !\n https://github.com/bewakes/resty\n    submitted by    /u/bewakes  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/wmiokt/a_rest_library/",
-          "publishedOn": "2022-08-12T11:14:42.000Z",
-          "wordCount": 31452,
-          "title": "A rest library",
-          "imageUrl": "https://external-preview.redd.it/iy-I6g5V7FO8-ag57JaZFGngv05HTyyteZaydZwVhzE.jpg?auto=webp&s=6f51b4bb43ab5d9f72e6896a6cc39d8519097114"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/wmhqpl/ann_yampa_0136/",
-          "author": null,
-          "description": "Dear all,\n I'm happy to announce the release of Yampa 0.13.6!\n Note: The Yampa project is now seeking donations.\n Microsoft/Github will match the first 5K.\n Details below.\n Summary\n  \nNew README, with a clear top banner, TOC, and better organized.\n New funding link pointing to github sponsors profile.\n Unit tests in the yampa-test library for 3 modules have been completed.\n The implementation of mapFilterE has been simplified.\n We have removed mentions of AFRP (the original implementation's name) from the code.\n We have fixed typos in the documentation.\n  \nSpecial thanks to architsinghal-mriirs for their contribution!\n As always, Yampa and yampa-test are released in sync. The CHANGELOGs areavailable at:\n  \nhttps://github.com/ivanperez-keera/Yampa/blob/develop/yampa/CHANGELOG\n https://githu…",
-          "link": "https://www.reddit.com/r/haskell/comments/wmhqpl/ann_yampa_0136/",
-          "publishedOn": "2022-08-12T10:19:11.000Z",
-          "wordCount": 26609,
-          "title": "[ANN] Yampa 0.13.6",
-          "imageUrl": "https://external-preview.redd.it/oXoMkFV3uX_I9ZPyfQE5YnYCPgkppzuDRp2OfMXilTY.jpg?auto=webp&s=7dc991bdd79f5aca170494ce638169dc4aed24c6"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/wmgyhk/whats_your_opinion_on_monday_morning_haskell/",
-          "author": null,
-          "description": "I'm looking for beginner/intermediate courses (paid preferably (by employer)) and I like learning in the video format. I found the video courses at https://mmhaskell.com/courses but not really any reviews or feedback around it. So was wondering if any of you taken some of the \"mmmhaskell courses\" and in that case, you would recommend it or do you know some better paid video course you could recommend?\n    submitted by    /u/primalivet  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/wmgyhk/whats_your_opinion_on_monday_morning_haskell/",
-          "publishedOn": "2022-08-12T09:30:38.000Z",
-          "wordCount": 26020,
-          "title": "What's your opinion on Monday Morning Haskell Courses?",
-          "imageUrl": null
         }
       ]
     },
@@ -1559,6 +1529,56 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/xbqf7u/scala_jwt/",
+          "author": null,
+          "description": "Hello everyone, I need to implement simple jwt authentication in scala. I’m having trouble with finding some examples and code on the internet. I found one quite simple library [https://index.scala-lang.org/jasongoodwin/authentikat-jwt] that I wanted to use. The problem is that my play project is on verison 2.13.5 and library supports only up to 2.12. I tried to install 2.12 version in ineliJ idea and changed version in build.sbr but then there was compilation problem because of two versions of scala that I didnlt know how to solve. Can someone recommend some simple library or code for using jwt in scala?\n    submitted by    /u/programer_srb  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/xbqf7u/scala_jwt/",
+          "publishedOn": "2022-09-11T18:52:57.000Z",
+          "wordCount": 27548,
+          "title": "Scala JWT",
+          "imageUrl": "https://external-preview.redd.it/3QaU1bKLD6ljcmkQon91s_C2WdQMODh4Lt452BLCwN8.jpg?auto=webp&s=151bdb364d232c98b7a48f639dc8b99d9cd31241"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/xbpvfq/which_package_style_for_a_library/",
+          "author": null,
+          "description": "Hello.\n I am writing a library and I am wondering about my package name. My old Java instincts tell me to use ext.domain.project (e.g io.github.iltotore) but I often see imports with only the name of the project like in Haoyi ecosystem (mill, os (os-lib), utest ...), Cats or ZIO.\n Actually, my package name is a bit long with the ext.domain.project model but I am worried by potential name clashes.\n Thoughts?\n    submitted by    /u/Il_totore  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/xbpvfq/which_package_style_for_a_library/",
+          "publishedOn": "2022-09-11T18:30:56.000Z",
+          "wordCount": 30305,
+          "title": "Which package style for a library",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/xbowxq/this_week_in_scala_sep_12_2022/",
+          "author": null,
+          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/xbowxq/this_week_in_scala_sep_12_2022/",
+          "publishedOn": "2022-09-11T17:52:00.000Z",
+          "wordCount": 29800,
+          "title": "This week in #Scala (Sep 12, 2022)",
+          "imageUrl": "https://external-preview.redd.it/6LB5lfGBk7VebtJ8L6vcInNCZbPH9ErOR1WYwI-cnw8.jpg?auto=webp&s=69f497ceb05afa417d41f33bf8a790faba96dcfd"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/xbhval/replacing_playakka_with_another_techstack_in_scala/",
+          "author": null,
+          "description": "As you all know the mess with Akka during these days, we have been thinking of migrating our main project at work to another tech-stack in Scala. For now we use a combination of Play+Akka. What would be a good choice to substitute both of them ?\n    submitted by    /u/Artistic_Passage4850  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/xbhval/replacing_playakka_with_another_techstack_in_scala/",
+          "publishedOn": "2022-09-11T12:56:22.000Z",
+          "wordCount": 27806,
+          "title": "Replacing Play+Akka with another tech-stack in Scala",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/xb6f90/shardcake_a_library_for_entity_sharding_and/",
+          "author": null,
+          "description": "At the beginning of 2022, we decided to get rid of Akka at work and built our own alternative to the last bit of Akka that didn't have a good alternative: sharding (more details on our motivations and architecture choices in a talk I'm planning to do later this year).\n After 6 months in production we decided to release it as an open source library called Shardcake: https://github.com/devsisters/shardcake (it was coincidentally made public a few hours before the Akka licence change announcement).\n In a nutshell, Shardcake makes it easy to distribute entities across multiple servers and interact with those entities using their ID without knowing their actual location (the entity behavior and persistence is entirely up to you, the library only takes care of the distribution and messaging). It exposes a purely functional API based on ZIO. It was designed to be simple to use, lightweight (unlike Akka, nodes do not form a cluster) and customizable: you can change the messaging protocol, the serialization, the storage layer as well as the source of truth for pod's health.\n It's been working great for us, so I hope others find it useful!\n    submitted by    /u/ghostdogpr  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/xb6f90/shardcake_a_library_for_entity_sharding_and/",
+          "publishedOn": "2022-09-11T02:06:40.000Z",
+          "wordCount": 28392,
+          "title": "Shardcake, a library for entity sharding and location transparency",
+          "imageUrl": "https://external-preview.redd.it/j5AGtc2yVeJFjJYQw_Gm-VWYcCH0Ow9DpuQ3vYoWI_k.jpg?auto=webp&s=a4d735f5385b06b133141f5fc846ae73c98a59d4"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/xank77/good_book_for_nonbeginners_in_programming/",
           "author": null,
@@ -2458,46 +2478,6 @@
           "wordCount": 27854,
           "title": "Count Vowels in List of Strings",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/wn0wyg/effect_zoo_for_scala_3/",
-          "author": null,
-          "description": "Effect Zoo - Code gallery & microbenchmark suite for effect systems.\n Inspired by similarly named project for Haskell.\n Disclaimer: I'm also the author of one of the effect systems included in the suite.\n    submitted by    /u/marcinzh  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/wn0wyg/effect_zoo_for_scala_3/",
-          "publishedOn": "2022-08-13T00:47:02.000Z",
-          "wordCount": 27210,
-          "title": "Effect Zoo for Scala 3",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/wmn41x/pulumi_infrastructure_as_code_platform_has_gained/",
-          "author": null,
-          "description": "submitted by    /u/sideEffffECt  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/wmn41x/pulumi_infrastructure_as_code_platform_has_gained/",
-          "publishedOn": "2022-08-12T14:48:24.000Z",
-          "wordCount": 27084,
-          "title": "Pulumi (Infrastructure as Code platform) has gained experimental support for Scala/sbt",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/wmlkm6/my_first_article_ever_tagless_final_from_a/",
-          "author": null,
-          "description": "https://blog.craftlab.hu/tagless-final-from-a-different-perspective-72321a29bbe3\n As the title says, please be kind to me:) \n This article is about tagless final in perspective of the least power principle.\n    submitted by    /u/b-dani  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/wmlkm6/my_first_article_ever_tagless_final_from_a/",
-          "publishedOn": "2022-08-12T13:41:10.000Z",
-          "wordCount": 27204,
-          "title": "My first article ever: Tagless final — from a different perspective",
-          "imageUrl": "https://external-preview.redd.it/MQwo5GQCDoC4DN3f3fmbn-VEMnhzBohg9I_WitEu45Y.jpg?auto=webp&s=7eb460062fc6383d5af7c4ce492c6232b0732a13"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/wmh04p/creando_un_web_service_rest_con_zio/",
-          "author": null,
-          "description": "submitted by    /u/emanuelpeg  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/wmh04p/creando_un_web_service_rest_con_zio/",
-          "publishedOn": "2022-08-12T09:33:36.000Z",
-          "wordCount": 30028,
-          "title": "Creando un web service REST con ZIO",
-          "imageUrl": "https://external-preview.redd.it/9JmHctp32o62m2_qF8UHC66zzTV46WnTUURGW_CcprA.jpg?auto=webp&s=737159ac58142c0ed9eb1c03902fd5b16a81f7f9"
         }
       ]
     },
@@ -2629,6 +2609,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/xbg0zr/only_steps_in_org_agenda/",
+          "author": null,
+          "description": "There is a task and there are steps that need to be completed in sequence in Task 1 for the task to be complete. I can use checkbox. Is the child checkbox is completed the parent checkbox will automatically will change to completed. \n My question is I only want the next steps that is not completed to show up in org agenda. \n TODO task 1 [ ] ** [X] Step 1 ** [X] Step 2 ** [ ] Step 3 ** [ ] Step 4 \n TODO task 2 [ ] ** [X] Step 1 ** [X] Step 2 ** [X ] Step 3 ** [ ] Step 4 ** [ ] Step 5\n So if I run org agenda I only want task 1 step 3 and task 2 step 4 to show up and not anything else. How to achieve this?\n I am okay with using TODO and not checkboxes. How to achieve this. \n EDIT : I pressed enter but reddit doesn't format properly. I hope u get what I mean.\n    submitted by    /u/unlimited_void_bkk  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/xbg0zr/only_steps_in_org_agenda/",
+          "publishedOn": "2022-09-11T11:21:06.000Z",
+          "wordCount": 28713,
+          "title": "Only steps in org agenda.",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/xar0cg/how_to_track_bad_habits_with_orgmode/",
           "author": null,
@@ -3378,16 +3368,6 @@
           "wordCount": 26323,
           "title": "How to update the \"modified\" property of a heading?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/wmyibq/is_there_a_naming_convention_for_they_keys_of/",
-          "author": null,
-          "description": "I'm talking about these key-value pairs:\n :PROPERTIES: :key: value :key: value :END ;; All uppercase :PROPERTIES: :ADDRESS: :POSTALCODE: :EMAIL: :WEBSITE: :END ;; Pascal case naming convention :PROPERTIES: :Address: :PostalCode: :Email: :Website: :END ;; All lowercase with a dash separator :PROPERTIES: :address: :postal-code: ; Notice the dash :email: :website: :END \n I'm wondering which of these you use and prefer.\n    submitted by    /u/zoliky  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/wmyibq/is_there_a_naming_convention_for_they_keys_of/",
-          "publishedOn": "2022-08-12T22:54:56.000Z",
-          "wordCount": 26139,
-          "title": "Is there a naming convention for they keys of properties?",
-          "imageUrl": null
         }
       ]
     },
@@ -3396,6 +3376,126 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/yul-mode-20220911.1651.el",
+          "author": null,
+          "description": "The yul-mode package has been updated to version 20220911.1651.",
+          "link": "https://melpa.org/#/yul-mode",
+          "publishedOn": "2022-09-11T16:51:00.000Z",
+          "wordCount": 105,
+          "title": "yul-mode (20220911.1651) --- Major mode for editing Ethereum Yul intermediate code",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/evm-mode-20220911.1647.el",
+          "author": null,
+          "description": "The evm-mode package has been updated to version 20220911.1647.",
+          "link": "https://melpa.org/#/evm-mode",
+          "publishedOn": "2022-09-11T16:47:00.000Z",
+          "wordCount": 105,
+          "title": "evm-mode (20220911.1647) --- Major mode for editing Ethereum EVM bytecode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/sideline-20220911.1609.el",
+          "author": null,
+          "description": "The sideline package has been updated to version 20220911.1609.",
+          "link": "https://melpa.org/#/sideline",
+          "publishedOn": "2022-09-11T16:09:00.000Z",
+          "wordCount": 105,
+          "title": "sideline (20220911.1609) --- Show information on the side",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ht-20220911.1544.el",
+          "author": null,
+          "description": "The ht package has been updated to version 20220911.1544.",
+          "link": "https://melpa.org/#/ht",
+          "publishedOn": "2022-09-11T15:44:00.000Z",
+          "wordCount": 105,
+          "title": "ht (20220911.1544) --- The missing hash table library for Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ein-20220911.1319.tar",
+          "author": null,
+          "description": "The ein package has been updated to version 20220911.1319.",
+          "link": "https://melpa.org/#/ein",
+          "publishedOn": "2022-09-11T13:19:00.000Z",
+          "wordCount": 105,
+          "title": "ein (20220911.1319) --- Emacs IPython Notebook",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/counsel-20220911.1209.el",
+          "author": null,
+          "description": "The counsel package has been updated to version 20220911.1209.",
+          "link": "https://melpa.org/#/counsel",
+          "publishedOn": "2022-09-11T12:09:00.000Z",
+          "wordCount": 105,
+          "title": "counsel (20220911.1209) --- Various completion functions using Ivy",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/company-prescient-20220911.138.el",
+          "author": null,
+          "description": "The company-prescient package has been updated to version 20220911.138.",
+          "link": "https://melpa.org/#/company-prescient",
+          "publishedOn": "2022-09-11T01:38:00.000Z",
+          "wordCount": 105,
+          "title": "company-prescient (20220911.138) --- prescient.el + Company",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/math-tex-convert-20220911.55.tar",
+          "author": null,
+          "description": "The math-tex-convert package has been updated to version 20220911.55.",
+          "link": "https://melpa.org/#/math-tex-convert",
+          "publishedOn": "2022-09-11T00:55:00.000Z",
+          "wordCount": 105,
+          "title": "math-tex-convert (20220911.55) --- Convert LaTeX macros to unicode and back",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ctrlf-20220911.6.el",
+          "author": null,
+          "description": "The ctrlf package has been updated to version 20220911.6.",
+          "link": "https://melpa.org/#/ctrlf",
+          "publishedOn": "2022-09-11T00:06:00.000Z",
+          "wordCount": 105,
+          "title": "ctrlf (20220911.6) --- Emacs finally learns how to ctrl+F",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/bind-key-20220910.2157.el",
+          "author": null,
+          "description": "The bind-key package has been updated to version 20220910.2157.",
+          "link": "https://melpa.org/#/bind-key",
+          "publishedOn": "2022-09-10T21:57:00.000Z",
+          "wordCount": 105,
+          "title": "bind-key (20220910.2157) --- A simple way to manage personal keybindings",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mybuild-mode-20220910.2015.el",
+          "author": null,
+          "description": "The mybuild-mode package has been updated to version 20220910.2015.",
+          "link": "https://melpa.org/#/mybuild-mode",
+          "publishedOn": "2022-09-10T20:15:00.000Z",
+          "wordCount": 105,
+          "title": "mybuild-mode (20220910.2015) --- Major mode for editing Mybuild files from Embox",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/avy-20220910.1936.el",
+          "author": null,
+          "description": "The avy package has been updated to version 20220910.1936.",
+          "link": "https://melpa.org/#/avy",
+          "publishedOn": "2022-09-10T19:36:00.000Z",
+          "wordCount": 105,
+          "title": "avy (20220910.1936) --- Jump to arbitrary positions in visible text and select text quickly.",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/tiny-20220910.1929.el",
           "author": null,
@@ -3624,6 +3724,16 @@
           "publishedOn": "2022-09-09T03:02:00.000Z",
           "wordCount": 105,
           "title": "org2blog (20220909.302) --- Blog from Org mode to WordPress",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/spdx-20220909.204.tar",
+          "author": null,
+          "description": "The spdx package has been updated to version 20220909.204.",
+          "link": "https://melpa.org/#/spdx",
+          "publishedOn": "2022-09-09T02:04:00.000Z",
+          "wordCount": 105,
+          "title": "spdx (20220909.204) --- Insert SPDX license and copyright headers",
           "imageUrl": null
         },
         {
@@ -4177,6 +4287,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/notmuch-20220903.1112.tar",
+          "author": null,
+          "description": "The notmuch package has been updated to version 20220903.1112.",
+          "link": "https://melpa.org/#/notmuch",
+          "publishedOn": "2022-09-03T11:12:00.000Z",
+          "wordCount": 105,
+          "title": "notmuch (20220903.1112) --- run notmuch within emacs",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/justl-20220903.901.el",
           "author": null,
           "description": "The justl package has been updated to version 20220903.901.",
@@ -4474,6 +4594,16 @@
           "publishedOn": "2022-08-30T18:34:00.000Z",
           "wordCount": 105,
           "title": "consult-company (20220830.1834) --- Consult frontend for company",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/math-preview-20220830.1740.el",
+          "author": null,
+          "description": "The math-preview package has been updated to version 20220830.1740.",
+          "link": "https://melpa.org/#/math-preview",
+          "publishedOn": "2022-08-30T17:40:00.000Z",
+          "wordCount": 105,
+          "title": "math-preview (20220830.1740) --- Preview TeX math equations inline",
           "imageUrl": null
         },
         {
@@ -6535,76 +6665,6 @@
           "wordCount": 105,
           "title": "terminal-here (20220813.1007) --- Run an external terminal in current directory",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/x509-mode-20220813.627.tar",
-          "author": null,
-          "description": "The x509-mode package has been updated to version 20220813.627.",
-          "link": "https://melpa.org/#/x509-mode",
-          "publishedOn": "2022-08-13T06:27:00.000Z",
-          "wordCount": 105,
-          "title": "x509-mode (20220813.627) --- View certificates, CRLs and keys using OpenSSL",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/julia-snail-20220812.2248.tar",
-          "author": null,
-          "description": "The julia-snail package has been updated to version 20220812.2248.",
-          "link": "https://melpa.org/#/julia-snail",
-          "publishedOn": "2022-08-12T22:48:00.000Z",
-          "wordCount": 105,
-          "title": "julia-snail (20220812.2248) --- Julia Snail",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/switch-window-20220812.2137.tar",
-          "author": null,
-          "description": "The switch-window package has been updated to version 20220812.2137.",
-          "link": "https://melpa.org/#/switch-window",
-          "publishedOn": "2022-08-12T21:37:00.000Z",
-          "wordCount": 105,
-          "title": "switch-window (20220812.2137) --- A *visual* way to switch window",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/srfi-20220812.2051.tar",
-          "author": null,
-          "description": "The srfi package has been updated to version 20220812.2051.",
-          "link": "https://melpa.org/#/srfi",
-          "publishedOn": "2022-08-12T20:51:00.000Z",
-          "wordCount": 105,
-          "title": "srfi (20220812.2051) --- Scheme Requests for Implementation browser",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/doom-modeline-20220812.1852.tar",
-          "author": null,
-          "description": "The doom-modeline package has been updated to version 20220812.1852.",
-          "link": "https://melpa.org/#/doom-modeline",
-          "publishedOn": "2022-08-12T18:52:00.000Z",
-          "wordCount": 105,
-          "title": "doom-modeline (20220812.1852) --- A minimal and modern mode-line",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/string-inflection-20220812.1259.el",
-          "author": null,
-          "description": "The string-inflection package has been updated to version 20220812.1259.",
-          "link": "https://melpa.org/#/string-inflection",
-          "publishedOn": "2022-08-12T12:59:00.000Z",
-          "wordCount": 105,
-          "title": "string-inflection (20220812.1259) --- underscore -> UPCASE -> CamelCase -> lowerCamelCase conversion of names",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/s-20220812.1014.el",
-          "author": null,
-          "description": "The s package has been updated to version 20220812.1014.",
-          "link": "https://melpa.org/#/s",
-          "publishedOn": "2022-08-12T10:14:00.000Z",
-          "wordCount": 105,
-          "title": "s (20220812.1014) --- The long lost Emacs string manipulation library.",
-          "imageUrl": null
         }
       ]
     },
@@ -6613,6 +6673,66 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xboh0y/how_to_put_icons_into_eshell_ls/",
+          "author": null,
+          "description": "I'm trying to have eshell show icons of files and dirs using 'ls' via all-the-icons. The below code works for line display (e.g. 'ls -l'). But not for the simple column display. Anyone have any ideas what the problem might be? \n https://preview.redd.it/17vupxw0m9n91.png?width=3100&format=png&auto=webp&s=16c48e3119f14f69d86bd28b4b1f2e5bdb379bc9\n and here's the function: \n (defun lem-eshell-icons (f file) (let* ((name (funcall f file)) (icon (if (eq (cadr file) t) (all-the-icons-icon-for-dir (car file)) (all-the-icons-icon-for-file (car file))))) (concat icon name ))) (advice-add 'eshell-ls-decorated-name :around #'lem-eshell-icons) \n    submitted by    /u/mclearc  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xboh0y/how_to_put_icons_into_eshell_ls/",
+          "publishedOn": "2022-09-11T17:33:38.000Z",
+          "wordCount": 31009,
+          "title": "How to put icons into eshell 'ls'?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xbhdf6/projectile_interactive_run_mode/",
+          "author": null,
+          "description": "Hello, I would like to ask for help about projectile and projectile-run-project command. When I run the command on a rust project it compiles the project and run it, but I cannot type into the window any text, because it's not interactive. I found a pull request on projectile's github page, but couldn't make it work. Can somebody might show me how to enable it? \n Projectile config in my init.el: \n (use-package projectile\n :ensure t\n :config\n (define-key projectile-mode-map (kbd \"C-x p\") 'projectile-command-map)\n (define-key projectile-mode-map (kbd \"C-x C-r\") 'projectile-ripgrep)\n (projectile-mode +1))\n    submitted by    /u/MarcellM888  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xbhdf6/projectile_interactive_run_mode/",
+          "publishedOn": "2022-09-11T12:32:13.000Z",
+          "wordCount": 30639,
+          "title": "Projectile interactive run mode.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xbg3nq/show_only_next_unfinished_steps_in_org_agenda/",
+          "author": null,
+          "description": "submitted by    /u/unlimited_void_bkk  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xbg3nq/show_only_next_unfinished_steps_in_org_agenda/",
+          "publishedOn": "2022-09-11T11:25:22.000Z",
+          "wordCount": 26671,
+          "title": "Show Only next unfinished steps in org agenda.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xb6qdm/super_fast_emacs_start_up/",
+          "author": null,
+          "description": "Hello.\n I've just tried dumping my Emacs after it loads packages and is configured.\n Like this:\n  emacs --batch -l ~/.emacs -eval '(dump-emacs-portable \"emacs.dump\")' \n Then I start my already configured Emacs:\n  emacs -q --dump-file emacs.dump \n Emacs starts a lot faster this way.\n Why are we Emacs users not taking advantage of this? Or this is well known already?\n    submitted by    /u/mmontone  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xb6qdm/super_fast_emacs_start_up/",
+          "publishedOn": "2022-09-11T02:22:17.000Z",
+          "wordCount": 28157,
+          "title": "Super fast Emacs start up",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xb6po0/ask_remacs_which_version_of_emacs_do_you_use/",
+          "author": null,
+          "description": "submitted by    /u/ocodo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xb6po0/ask_remacs_which_version_of_emacs_do_you_use/",
+          "publishedOn": "2022-09-11T02:21:21.000Z",
+          "wordCount": 26413,
+          "title": "Ask r/emacs: Which version of Emacs do you use currently?",
+          "imageUrl": "https://external-preview.redd.it/bPhdjFHdU214FTrDEv0NZSfYXqSa9w8Kprw1hYwcxgY.jpg?auto=webp&s=018e606beb0109ccf07cb9efbd2c8c5c39fafce1"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xazwmi/creating_a_latex_document_with_furigana/",
+          "author": null,
+          "description": "I'm creating a latex document in japanese with lots of furigana and some footnotes. The command to create the kanji with footnote is \\edtext{\\ruby{kanji}{reading}}{\\Afootnote{meaning}, where kanji, reading and meaning are my inputs.\n ​\n Is there any way to quickly create them? Yasnippets doesn't seem to work well since I use three different input-modes, japanese for the kanji, japanese-hiragana for the reading and nil for the meaning.\n ​\n I created the following function:\n (defun jane/latex-footnote () (interactive) (let ((my-input current-input-method)) (set-input-method 'japanese) (let ((kanji (read-string \"What's the kanji: \" nil nil nil t))) (set-input-method 'japanese-hiragana) (let ((reading (read-string \"What's the reading: \" nil nil nil t)) (footnote (read-string \"What's the footnote: \"))) (insert (concat \"\\\\edtext\\{\\\\ruby\\{\" kanji \"\\}\\{\" reading \"\\}\\}\\{\\\\Afootnote\\{\" footnote \"\\}\")))) (set-input-method my-input))) \n It does work, but I do need to type the kanji twice. Once for the kanji, and twice for it's reading. Is there any way to improve my function?\n    submitted by    /u/Hiorig  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xazwmi/creating_a_latex_document_with_furigana/",
+          "publishedOn": "2022-09-10T20:59:59.000Z",
+          "wordCount": 26748,
+          "title": "Creating a LaTeX document with furigana",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/xaz7ik/what_are_the_kinds_of_things_youve_written_emacs/",
           "author": null,
@@ -10032,116 +10152,6 @@
           "wordCount": 26492,
           "title": "Garbage collect when the Emacs frame is out of focus",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wn94ne/strategies_for_literate_config_in_orgmode/",
-          "author": null,
-          "description": "I am curious what your strategies/approaches are for using a literate org config.\n Currently I have the following in my init.el:\n elisp (require 'org) (org-babel-load-file (expand-file-name \"/path/to/config.org\")) \n My whole configuration resides in a single, separate org file, including the early-init part (which is tangled to a separate early-init.el file in user-emacs-directory).\n Whilst this mostly works fine, this approach gives me issues when I try to use the latest version of org-mode via straight.el. I believe this is caused by the fact that I'm loading the built-in org version in init.el, and then trying to load/use an updated version in config.org (which causes some void variable errors for me).\n Alternative strategies are to put something like (load-file \"config.el\") in init.el, and tangle config.org manually or on save.\n Just curious how you all are using your literate org config file, and whether there is anyone who was able to solve/avoid the issue with org that I'm having (I could stick to the built-in version, but I would like to be able to use the latest version).\n    submitted by    /u/fast-90  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wn94ne/strategies_for_literate_config_in_orgmode/",
-          "publishedOn": "2022-08-13T08:10:38.000Z",
-          "wordCount": 28628,
-          "title": "Strategies for literate config in org-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmqmnn/trying_to_get_betterjumper_work/",
-          "author": null,
-          "description": "I transitioned to (vanilla) Emacs two months ago, after using Vim for the last 8 years or so---I'm loving it!\n I also forced myself out of the comfort zone and practiced plain Emacs keybinding, and I'm quite comfortable with it.\n However, the only thing I miss from (Neo)vim as an ex-vimmer is C-o and C-i to jump back and forth.\n I found this better-jumper package and tried to use it: emacs-lisp (use-package better-jumper :ensure t :init (better-jumper-mode 1) :config (define-key input-decode-map \"\\\\C-i\" \\[C-i\\]) :bind ((\"C-o\" . 'better-jumper-jump-backward) (\"C-i\" . 'better-jumper-jump-forward)))  But it doesn't seem to automatically record positions. For instance, I want to move back to where I was after I C-M-. via C-o.\n Is there a way to automatically do this without full-fledged Doom emacs or evil-mode?\n I'm fine with cherry-picking only this feature from evil-mode, btw.\n Thanks!\n    submitted by    /u/Zeta611  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmqmnn/trying_to_get_betterjumper_work/",
-          "publishedOn": "2022-08-12T17:14:17.000Z",
-          "wordCount": 26213,
-          "title": "Trying to get \"better-jumper\" work.",
-          "imageUrl": "https://external-preview.redd.it/Xjlpk-dtyuVnSiHlYe0wki1iRJlfKHP57F7fXTf6ibw.jpg?auto=webp&s=a0542a4215b41e90ecc37b85129d1fd978c14132"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmq6wy/there_and_back_again_again/",
-          "author": null,
-          "description": "Hi!\n Yes, this is another post about someone switching editors. I know, there are a lot, but I think those are important because that kind of posts drove my decisions in the past.\n I move constantly between editors (Vim => Emacs => Neovim => Emacs => Neovim => Vscode (1 day) => Neovim => ...). The only thing that is nonnegotiable is modal editing.\n Last time I switched from Emacs because of the **huge** amount of time it takes to open (no, I do not like emacsclient). IIRC, it was taking 8s to start in my machine. Hence, I migrate to Neovim and Lua.\n Neovim is a fantastic project! Lua will bring it to a new level! However, I started to miss a GUI and some polished tools I had in Emacs. All GUIs in Neovim are almost a terminal in a graphical application. It really does not add something new. Furthermore, since Lua integration is relatively new, I often find some rough edges. 99% can be fixed relatively easily. However, I just do not have time anymore to tweak my configuration as I had back in the day.\n So, I heard about gccemacs and tried again. WOW! That's a game changer!\n After 20 min compiling everything shipped with Doom emacs by default (yes, this is the bad side of the tradeoff), Emacs starts in less than 2s. It is even faster than my Neovim with all plugins. So, if anyone quit Emacs because of performance, give it one more try. Just do not mind the initial compilation time...\n Finally, I just want to thanks the amazing job of u/hlissner, Doom Emacs is amazing and you can use it out-of-the-box. Exactly what I need now.\n    submitted by    /u/Ronis_BR  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmq6wy/there_and_back_again_again/",
-          "publishedOn": "2022-08-12T16:55:47.000Z",
-          "wordCount": 26979,
-          "title": "There and back again... again...",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmnm8y/rsi_code_with_your_voice_in_emacs/",
-          "author": null,
-          "description": "submitted by    /u/arredi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmnm8y/rsi_code_with_your_voice_in_emacs/",
-          "publishedOn": "2022-08-12T15:09:12.000Z",
-          "wordCount": 31498,
-          "title": "RSI? Code with your voice in emacs",
-          "imageUrl": "https://external-preview.redd.it/cXSLSR-gobIICaksHqpRAReUnrShB10S0W_ZJVsw3R8.jpg?auto=webp&s=8609ec9f26a953d706c8223040ba167c630c2153"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmm7gd/recent_problem_with_bindkey/",
-          "author": null,
-          "description": "As of recent, all my bindings created with (bind-key*) just don't work. (The star means, \"override all minor-mode bindings\", if I recall correctly.) I don't get any errors or warnings (the package gets loaded fine), but the bindings aren't made.\n After lots of fiddling with my config and packages, I noticed that using the unstarred version does work: (bind-key). \n Does anybody know what's going on? Has anybody else notice this?\n    submitted by    /u/pailanderCO  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmm7gd/recent_problem_with_bindkey/",
-          "publishedOn": "2022-08-12T14:09:03.000Z",
-          "wordCount": 26127,
-          "title": "Recent problem with (bind-key*)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmm50u/poll_switch_back_to_a_visible_buffer/",
-          "author": null,
-          "description": "Consider the common scenario of the same file in two panes (C-x C-f file, then C-x 2). One often references the top pane while actively editing the bottom pane. If you C-x b the bottom pane, say to consult another source, which buffer would you prefer as the default upon a subsequent C-x b RET?\n View Poll\n    submitted by    /u/nnreddit-user  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmm50u/poll_switch_back_to_a_visible_buffer/",
-          "publishedOn": "2022-08-12T14:06:07.000Z",
-          "wordCount": 26197,
-          "title": "Poll: Switch back to a visible buffer?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmkue3/elisp_help_calling_findfile/",
-          "author": null,
-          "description": "I'm playing with fzf-el, but I don't like how fzf-find-file works since I'm a dired junkie and like to use C-x C-f for both files and dirs.\n So, I tried this, hoping to use a universal arg when I want to fzf-find-file, and normal without.\n (defun fzf-or-find-file () (interactive) (if (equal current-prefix-arg nil) (find-file) (fzf-find-file))) \n This works with C-u M-x fzf-or-find-file (the fzf version runs), but when I DON'T pass a Ctrl-u, find-file ... fails. I'm sure I'm calling it incorrectly here, but pointers welcome.\n The failure looks like this\n What'd I do wrong?\n    submitted by    /u/campbellm  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmkue3/elisp_help_calling_findfile/",
-          "publishedOn": "2022-08-12T13:06:54.000Z",
-          "wordCount": 26317,
-          "title": "Elisp help? (calling find-file)",
-          "imageUrl": "https://external-preview.redd.it/FdD0dd5MMCAI458scMUzvg-X3qPdrKMGaeh7-5xUdnk.png?auto=webp&s=af91747d35a1ac13a96eee679a83d20b216fd8ab"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmim25/sort_recentf_by_date_consultrecentfile/",
-          "author": null,
-          "description": "I'm using consult-recent-file to view recent files. How do I sort them by date accessed?\n    submitted by    /u/Opposite-Pitch7378  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmim25/sort_recentf_by_date_consultrecentfile/",
-          "publishedOn": "2022-08-12T11:10:50.000Z",
-          "wordCount": 26125,
-          "title": "Sort recentf by date (consult-recent-file)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmil9x/emacs_keybindings_for_office_users_how_to_get/",
-          "author": null,
-          "description": "I want to direct a bunch of people I know to use emacs to leverage the org-eco system.\n ​\n Are there starterkits/modes that help with the keybindings? e.g. simplify them as much as possible, use the :sadface: gui defaults, etc.?\n    submitted by    /u/poiu-  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmil9x/emacs_keybindings_for_office_users_how_to_get/",
-          "publishedOn": "2022-08-12T11:09:38.000Z",
-          "wordCount": 27287,
-          "title": "Emacs keybindings for office users? How to get office users to switch to emacs?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmgtgs/is_there_a_good_emacs_from_scratch_guide/",
-          "author": null,
-          "description": "I’m annoyed at how slow spacemacs is to start up. \n Should I start a fresh install of emacs and manually set everything up?\n Should I try doom emacs instead?\n I use evil mode and mostly live in org-mode.\n    submitted by    /u/kingkongjaffa  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmgtgs/is_there_a_good_emacs_from_scratch_guide/",
-          "publishedOn": "2022-08-12T09:21:26.000Z",
-          "wordCount": 27191,
-          "title": "Is there a good eMacs from scratch guide?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/wmghm5/elpaca_package_manager_a_better_package_manager/",
-          "author": null,
-          "description": "submitted by    /u/RevolutionaryAir1922  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/wmghm5/elpaca_package_manager_a_better_package_manager/",
-          "publishedOn": "2022-08-12T09:00:30.000Z",
-          "wordCount": 26897,
-          "title": "elpaca package manager, a better package manager",
-          "imageUrl": null
         }
       ]
     },
@@ -10150,6 +10160,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2374@/discussions",
+          "author": "chrisaldrich",
+          "description": "Many people mistakenly credit Niklas Luhmann with the invention of the zettelkasten method, so I’ve been delving into historical note taking practices. I’ve recently come across a well known and influential book on historical method from the late 1800s that has well described version of the slip (box) method.\nOriginally published in French in 1897 as Introduction aux études historiques and then translated into English by George Godfrey Berry, Henry Holt and Company published Introduction to the Study of History in 1898 by authors Charles Victor Langlois and Charles Seignobos. Along with Ernst Bernheim’s popular Lehrbuch der historischen Methode mit Nachweis der wichtigsten Quellen und Hülfsmittelzum Studium der Geschichte (Leipzig: Duncker & Humblot, 1889), Langlois and Seignobos’ text is …",
+          "link": "https://forum.zettelkasten.de/discussion/2374/zettelkasten-method-state-of-the-art-in-1898",
+          "publishedOn": "2022-09-11T16:33:51.000Z",
+          "wordCount": 2782,
+          "title": "Zettelkasten Method State of the Art in 1898",
+          "imageUrl": null
+        },
         {
           "id": "2373@/discussions",
           "author": "Hailtothekym",
