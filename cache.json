@@ -44,16 +44,6 @@
           "wordCount": 550,
           "title": "Issue 333",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/332.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nDijkstra Comparison: Looking at the Library Function by Monday Morning Haskell\nToday, we’ll look at the API for a library implementation of this algorithm and compare it to the implementations I thought up.\nLinear Combinations of Applicatives by Sonat Süer\nOn a given type constructor of the appropriate kind, there is at most one Functor instance and it can be derived automatically. There is no analog of this for Applicatives.\nMore recursive definitions by Joachim Breitner\nHaskell is a pure and lazy programming language, and the laziness allows us to write some algorithms very elegantly, by recursively referring to already calculated values.\nnix-serve-ng: A faster, more reliable, drop-in replacement for nix-serve by Gabriella Gonzalez\nOur team at Arista Networks is happy to announce nix-serve-ng, a backwards-compatible Haskell rewrite of nix-serve. It provides better reliability and performance than nix-serve.\nJobs\nTrying to hire a Haskell developer?\nYou should advertise with us!\nIn brief\nMonthly Hask Anything (September 2022)\n\nThis is your opportunity to ask any questions you feel don’t deserve their own threads, no matter how small or simple they might be!\nShow & tell\nHorizon Haskell Platform by Dan Firth\nNix-first build plans for GHC 9.4.2 and beyond.\nStack version 2.9.0.1 release candidate by Mike Pilgrem\nxmonad verison 0.17.1 by Tony Zorman\nAbout 10 months after the big release of 0.17.0, we — as promised — picked up the pace a bit and are back with a new minor version.\nXStatic by Tristan de Cacqueray\nThe goal of XStatic family of packages is to provide static file as Haskell library to be installed using cabal.\nCall for participation\nCabal: user manual: text on images is unhelpful\nagda: Mark small functions as INLINABLE\nswarm: Void type",
-          "link": "https://haskellweekly.news/issue/332.html",
-          "publishedOn": "2022-09-08T12:00:00.000Z",
-          "wordCount": 378,
-          "title": "Issue 332",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,36 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/xys44v/create_state_monad_that_works_with_io/",
+          "author": null,
+          "description": "So I came across this stackoverflow post and tried to implement my own StateIO monad where I could perform IO actions. Here is my code:\n {-# LANGUAGE MultiParamTypeClasses #-} {-# LANGUAGE FunctionalDependencies #-} {-# LANGUAGE FlexibleInstances #-} import Control.Monad.Trans import Control.Monad (ap, liftM) newtype StateIO s a = StateIO {runStateIO :: s -> IO (a, s)} instance Functor (StateIO s) where fmap = liftM instance Applicative (StateIO s) where pure = return (<*>) = ap instance Monad (StateIO s) where return a = StateIO $ \\s -> return (a, s) n >>= k = StateIO $ \\s -> do (a, s') <- runStateIO n s runStateIO (k a) s instance MonadIO (StateIO s) where liftIO io = StateIO $ \\st -> do x <- io return (x, st) class Monad m => MonadStateIO s m | m -> s where getSt :: m s putSt :: s -> m () instance MonadStateIO s (StateIO s) where getSt = StateIO $ \\st -> return (st,st) putSt st = StateIO $ const $ return ((),st) \n Then I run a simple program where the user inputs a positive integer n and I return the first n fibonacci numbers with the use of the StateIO monad. \n type FibNums = [Int] main :: IO () main = do putStrLn \"How many fibonacci numbers do you want to see:\" n <- (read <$> getLine) :: IO Int let initialState = [n,0,1] process initialState process :: FibNums -> IO () process st = do (finished, newSt) <- runStateIO addFib st print finished -- for debugging print newSt -- for debugging if finished then do putStrLn \"Fibonacci numbers are:\" print $ tail newSt else process newSt addFib :: StateIO FibNums Bool addFib = do st <- getSt let newSt = st ++ [last st + last (init st)] finished = length (tail newSt) == head newSt liftIO $ print newSt -- for debugging putSt newSt return finished \n The problem is in the function addFib the line \"putSt newSt\" does not really update the FibNums state variable and the initial state is returned. So the program loops on forever. \n Any ideas what am I missing?\n    submitted by    /u/LukaKurnjek  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/xys44v/create_state_monad_that_works_with_io/",
+          "publishedOn": "2022-10-08T12:55:09.000Z",
+          "wordCount": 31550,
+          "title": "Create State Monad that works with IO",
+          "imageUrl": "https://external-preview.redd.it/QgPvRTknlY3rMNDqH1k4I37XGiq9tZF_FsygC_Xht4o.jpg?auto=webp&s=8cd5e918e2bde6ca72d4445d6fc007f203689799"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/xye74e/dsl_for_fitchstyle_proofs_in_firstorder_logic/",
+          "author": null,
+          "description": "Hi,\n As part of a project at university, I'm looking to formalize and implement a small DSL for proving statements in first-order logic based on Fitch notation. I'm going to implement this in Haskell.\n The implementation itself would not be a huge problem if I were to go by intuition alone, seeing as natural deduction in first-order logic is quite simple. However, since this is a project for university, I wanted to ask if you guys can recommend some interesting papers on various techniques and approaches (e.g. dependent type theory) that might be of use to me?\n Thanks!\n    submitted by    /u/tinspank  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/xye74e/dsl_for_fitchstyle_proofs_in_firstorder_logic/",
+          "publishedOn": "2022-10-08T00:03:02.000Z",
+          "wordCount": 30994,
+          "title": "DSL for Fitch-style proofs in first-order logic",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/xyd19m/dependent_types_in_its_purest_form/",
+          "author": null,
+          "description": "Haskell has generalized algebraic data types (GADTs). GADTs are a special case of dependent types. Fully dependent types are used in programming languages like Coq, Agda, Idris, etc.\n For those who want to understand the theory behind dependent types I have written a paper which describes in a textbook style dependent types in its purest form encountered in the Calculus of Constructions.\n It is a paper for mathematically oriented readers.\n    submitted by    /u/hbrandl  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/xyd19m/dependent_types_in_its_purest_form/",
+          "publishedOn": "2022-10-07T23:08:13.000Z",
+          "wordCount": 33427,
+          "title": "Dependent Types in its Purest Form",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/xy6gl8/bad/",
           "author": null,
@@ -1711,56 +1731,6 @@
           "wordCount": 26126,
           "title": "GitHub - cachix/haskell-release-action: Automation for releasing haskell packages",
           "imageUrl": "https://external-preview.redd.it/Ux8GX6vbAKxckXIT4H5Tt8oO7pheP1QdnhIRm2aWnNM.jpg?auto=webp&s=3a298e9757f1e363857eaa6bd827ce9eed310354"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/x9k5fl/branching_on_constraints_ifinstance_applications/",
-          "author": null,
-          "description": "Sam Derbyshire has a cool type-checking plugin called if-instance that lets you branch on whether a constraint is satisfied with the following interface:\n -- 'IsSat cls' returns True if 'cls' is satisfied, and False otherwise. type IsSat :: Constraint -> Bool -- | 'dispatch @cls₁ @cls₂ a b' returns 'a' if the constraint 'cls₁' is satisfied, -- otherwise 'b'. type (||) :: Constraint -> Constraint -> Constraint class cls₁ || cls₂ where dispatch :: (cls₁ => IsSat cls₁ ~ True => a) -> (cls₂ => IsSat cls₁ ~ False => IsSat cls₂ ~ True => a) -> a type IfSat :: Constraint -> Constraint type IfSat cls = cls || () -- 'ifSat @cls a b' returns 'a' if the constraint 'cls' is satisfied, and 'b' otherwise. ifSat :: IfSat cls => (IsSat cls ~ True => cls => a) -> (IsSat cls ~ False => a) -> a \n Now the catch is, anyone can add an instance at any point because of the open-world assumption and this will change the behaviour of your program if the branches are functionally different. This plugin basically goes against the design of type classes but sometimes that is what we want. One safe use of this technique is to branch on extra-functional properties such as space, time, energy like choosing HashSet a if Hashable a is satisfied.\n But let's not only stick to safe use cases, what application can you think of for this plugin??\n    submitted by    /u/Iceland_jack  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/x9k5fl/branching_on_constraints_ifinstance_applications/",
-          "publishedOn": "2022-09-09T03:10:30.000Z",
-          "wordCount": 27798,
-          "title": "Branching on constraints (if-instance), applications",
-          "imageUrl": "https://external-preview.redd.it/_QYrpCyKs5mYnmm0ofAXTlknEUNOie5RNTer1d5ZTws.jpg?auto=webp&s=a6aaa67bd8329f04cabe7db8e872dd0dbdda214c"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/x9iwu2/help_me_understand_a_little_better/",
-          "author": null,
-          "description": "Ok so I am trying to return only the even index elements of a list (including zero) , and i am having trouble getting something. I am sorry if it is painful to see but i am new to haskell and its functional program so any help or explanation of what i am doing wrong is always helpful. \n here is my attempt using a list comprehension \n evens :: [a] -> [a] evens xs = [ x | x <- xs, x `mod` 2 == 0] \n thank you in advance\n    submitted by    /u/exsteezy  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/x9iwu2/help_me_understand_a_little_better/",
-          "publishedOn": "2022-09-09T02:12:39.000Z",
-          "wordCount": 27678,
-          "title": "help me understand a little better",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/x96y67/help_me_publish_my_first_package_please/",
-          "author": null,
-          "description": "After using the `blaze-svg` package to code svg images for some of my personal projects, I've decided to gather all that code in a single Haskell package, and I would like to upload it to Hackage to use it myself and for other to use also. \n The project can be found at RamiroPastor/SvgIcons: Svg icons with Haskell (github.com) \n If anyone can point me some tutorial describing the steps required for uploading my package I'd be most grateful. Also, as the main products of the code are svg images, I would like to know if the official hackage documentation can contain images. \n Thanks in advance.\n    submitted by    /u/Conmocion  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/x96y67/help_me_publish_my_first_package_please/",
-          "publishedOn": "2022-09-08T17:45:58.000Z",
-          "wordCount": 31200,
-          "title": "Help me publish my first package please",
-          "imageUrl": "https://external-preview.redd.it/-OCPuzH9a8MmavuTW5CTxK0KxdgIC4IKtei-0kjZdc4.jpg?auto=webp&s=da2d43f6ca392dff438fa0c8592dce7f9a1be6f0"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/x93n42/lockstepstyle_testing_with_quickcheckdynamic/",
-          "author": null,
-          "description": "submitted by    /u/n00bomb  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/x93n42/lockstepstyle_testing_with_quickcheckdynamic/",
-          "publishedOn": "2022-09-08T15:37:21.000Z",
-          "wordCount": 26219,
-          "title": "Lockstep-style testing with quickcheck-dynamic",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/x90l0m/cant_build_statistics_with_profile_on/",
-          "author": null,
-          "description": "I am building it this way:\n stack build --profile --ghc-options -fsimpl-tick-factor=2000 statistics \n And eventually I am getting:\n ... some building ... statistics> [46 of 48] Compiling Statistics.Distribution.Exponential statistics> [47 of 48] Compiling Statistics.Correlation statistics> Simplifier ticks exhausted statistics> When trying UnfoldingDone pearsonMatByRow statistics> To increase the limit, use -fsimpl-tick-factor=N (default 100). statistics> statistics> If you need to increase the limit substantially, please file a statistics> bug report and indicate the factor you needed. statistics> statistics> If GHC was unable to complete compilation even with a very large factor statistics> (a thousand or more), please consult the \"Known bugs or infelicities\" statistics> section in the Users Guide before filing a report. There are a statistics> few situations unlikely to occur in practical programs for which statistics> simplifier non-termination has been judged acceptable. statistics> statistics> To see detailed counts use -ddump-simpl-stats statistics> Total ticks: 9684 \n The non---profile version seems to build just fine.\n Needless to say, I did what that message suggested (-fsimpl-tick-factor=2000) and now the part where I am sent off to an exciting detective adventure is supposed to begin, but I just want to move past this and figure out the why later.\n Any ideas?\n    submitted by    /u/at_least_its_unique  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/x90l0m/cant_build_statistics_with_profile_on/",
-          "publishedOn": "2022-09-08T13:29:50.000Z",
-          "wordCount": 26791,
-          "title": "Can't build `statistics` with `--profile` on",
-          "imageUrl": null
         }
       ]
     },
@@ -1769,6 +1739,16 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/xyy2y2/tail_recursion_for_lazy_functions_in_scala_2/",
+          "author": null,
+          "description": "Hi, I'm new to Scala and was trying to understand why my lazy function sumVal was not being tail-call optimized.\n For comparison, if I use the same body on a method, it works as expected. Appreciate any explanation or pointer to where I can read more about this.\n Note: I'm using Scala 2 in case that matter.\n lazy val sumVal: (Int, List[Int]) => Int = (acc, numbers) => numbers match { case head :: tail => sumVal(acc + head, tail) case _ => acc } def sum(acc: Int, numbers: List[Int]): Int = { numbers match { case head :: tail => sum(acc + head, tail) case _ => acc } } val numbers = List.fill(10000)(2) sum(0, numbers) // this works as expected sumVal(0, numbers) // this blows up with a stack overflow \n    submitted by    /u/gofrioalop  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/xyy2y2/tail_recursion_for_lazy_functions_in_scala_2/",
+          "publishedOn": "2022-10-08T17:13:30.000Z",
+          "wordCount": 32737,
+          "title": "Tail recursion for lazy functions in Scala 2",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/xy22m7/starting_a_scala_project/",
           "author": null,
@@ -2748,36 +2728,6 @@
           "wordCount": 28379,
           "title": "would you recommend learning scala?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/x9q0dr/library_recommendations/",
-          "author": null,
-          "description": "Hey guys. In my last company we used Slick and Play, and I was a huge fan of these libraries because they weren't overly complicated, making it easier to maintain and hire new engineers.\n I'm currently looking for alternatives. I heard a lot about zio and typelevel, but I was hesitant to switch over because they seemed overly complicated. I'm talking about for maintenance, stability, and hiring purposes--not for learning (I used to geek out on Haskell before I learned there was a difference between writing something as a hobby project and writing something for industry).\n Has anyone used these libraries in production at a large scale? What are your recommendations?\n    submitted by    /u/xdqz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/x9q0dr/library_recommendations/",
-          "publishedOn": "2022-09-09T08:34:28.000Z",
-          "wordCount": 28259,
-          "title": "Library recommendations?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/x9olls/scala_isnt_fun_anymore/",
-          "author": null,
-          "description": "submitted by    /u/alexelcu  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/x9olls/scala_isnt_fun_anymore/",
-          "publishedOn": "2022-09-09T07:06:08.000Z",
-          "wordCount": 31594,
-          "title": "Scala isn't fun anymore",
-          "imageUrl": "https://external-preview.redd.it/EXqtphKppUYDG95N_DQxB_V6G24krNNXRA5UgfeeD3w.jpg?auto=webp&s=5dc3e4947cf2e3e54d7d9872bc3906b55cf96a9c"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/x91ovq/scala_superfan_james_ward_on_java_scala_kotlin/",
-          "author": null,
-          "description": "James is a self-proclaimed \"Typed Pure Functional Programming zealot\". But he also is a Java Champion and the Google Kotlin Product Manager. I think that gives him some unique insights into JVM languages. I interviewed James for InfoQ about Java, Scala, Kotlin, and programming in general. I hope you find his answers helpful!\n InfoQ article: Java Champion James Ward on the State of Java and JVM Languages\n    submitted by    /u/Joe_Data_89  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/x91ovq/scala_superfan_james_ward_on_java_scala_kotlin/",
-          "publishedOn": "2022-09-08T14:17:56.000Z",
-          "wordCount": 27330,
-          "title": "Scala Superfan James Ward on Java, Scala & Kotlin",
-          "imageUrl": "https://external-preview.redd.it/WRKPHqbqnq5UuE7nC0N44NnfnyQAG8hQSeKi6aaiScw.jpg?auto=webp&s=809030c47579c02565ef6e33bb6d44dbc8897392"
         }
       ]
     },
@@ -3498,26 +3448,6 @@
           "wordCount": 28886,
           "title": "Evolving my note-taking processes",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/x96eu9/new_todos_do_not_show_up_in_orgagenda/",
-          "author": null,
-          "description": "For the past couple days, TODOs I made, including scheduled TODOs, don't show up in org-agenda. \n I can't remember what I was doing at the time it broke that may have caused it. \n Previous TODOs from days before show up, just not new ones. If I put a TODO in a day before it broke, it works and shows up. It is just the last two days oddly that don't work. They are all in the same directory, and named with the same convention. \n I still have (setq org-agenda-files '(\"~/org-roam/daily\")) in my init.el and have not changed it. The directory is correct. \n Any help is appreciated.\n    submitted by    /u/tonystark29  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/x96eu9/new_todos_do_not_show_up_in_orgagenda/",
-          "publishedOn": "2022-09-08T17:26:17.000Z",
-          "wordCount": 30027,
-          "title": "New TODOs do not show up in org-agenda",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/x8zeh5/how_to_hidefilter_items_with_no_todo_keyword_from/",
-          "author": null,
-          "description": "I have a few items such as this\n * Pick up Sam at school\n <2022-09-16 Wed 12:30 +1w>\n ​\n It has a simple time stamp with repeated intervals. I do not want it to show up in org agenda.\n    submitted by    /u/NoahEtan  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/x8zeh5/how_to_hidefilter_items_with_no_todo_keyword_from/",
-          "publishedOn": "2022-09-08T12:36:26.000Z",
-          "wordCount": 30996,
-          "title": "How to hide/filter items with no todo keyword from showing in org agenda?",
-          "imageUrl": null
         }
       ]
     },
@@ -3526,6 +3456,96 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/matlab-mode-20221008.1623.tar",
+          "author": null,
+          "description": "The matlab-mode package has been updated to version 20221008.1623.",
+          "link": "https://melpa.org/#/matlab-mode",
+          "publishedOn": "2022-10-08T16:23:00.000Z",
+          "wordCount": 105,
+          "title": "matlab-mode (20221008.1623) --- Major mode for MATLAB(R) dot-m files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/loophole-20221008.1525.el",
+          "author": null,
+          "description": "The loophole package has been updated to version 20221008.1525.",
+          "link": "https://melpa.org/#/loophole",
+          "publishedOn": "2022-10-08T15:25:00.000Z",
+          "wordCount": 105,
+          "title": "loophole (20221008.1525) --- Manage temporary key bindings",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/khalel-20221008.1456.el",
+          "author": null,
+          "description": "The khalel package has been updated to version 20221008.1456.",
+          "link": "https://melpa.org/#/khalel",
+          "publishedOn": "2022-10-08T14:56:00.000Z",
+          "wordCount": 105,
+          "title": "khalel (20221008.1456) --- Import, edit and create calendar events through khal",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/link-hint-20221008.1445.el",
+          "author": null,
+          "description": "The link-hint package has been updated to version 20221008.1445.",
+          "link": "https://melpa.org/#/link-hint",
+          "publishedOn": "2022-10-08T14:45:00.000Z",
+          "wordCount": 105,
+          "title": "link-hint (20221008.1445) --- Use avy to open, copy, etc. visible links",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dante-20221008.1411.el",
+          "author": null,
+          "description": "The dante package has been updated to version 20221008.1411.",
+          "link": "https://melpa.org/#/dante",
+          "publishedOn": "2022-10-08T14:11:00.000Z",
+          "wordCount": 105,
+          "title": "dante (20221008.1411) --- Development mode for Haskell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/why-this-20221008.1147.el",
+          "author": null,
+          "description": "The why-this package has been updated to version 20221008.1147.",
+          "link": "https://melpa.org/#/why-this",
+          "publishedOn": "2022-10-08T11:47:00.000Z",
+          "wordCount": 105,
+          "title": "why-this (20221008.1147) --- Why is this line here?  Ask version control",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-ql-20221007.2334.tar",
+          "author": null,
+          "description": "The org-ql package has been updated to version 20221007.2334.",
+          "link": "https://melpa.org/#/org-ql",
+          "publishedOn": "2022-10-07T23:34:00.000Z",
+          "wordCount": 105,
+          "title": "org-ql (20221007.2334) --- Org Query Language, search command, and agenda-like view",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/company-20221007.2145.tar",
+          "author": null,
+          "description": "The company package has been updated to version 20221007.2145.",
+          "link": "https://melpa.org/#/company",
+          "publishedOn": "2022-10-07T21:45:00.000Z",
+          "wordCount": 105,
+          "title": "company (20221007.2145) --- Modular text completion framework",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/syntree-20221007.2055.tar",
+          "author": null,
+          "description": "The syntree package has been updated to version 20221007.2055.",
+          "link": "https://melpa.org/#/syntree",
+          "publishedOn": "2022-10-07T20:55:00.000Z",
+          "wordCount": 105,
+          "title": "syntree (20221007.2055) --- Draw plain text constituency trees",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/quickrun-20221007.1956.el",
           "author": null,
@@ -3674,6 +3694,16 @@
           "publishedOn": "2022-10-05T19:22:00.000Z",
           "wordCount": 105,
           "title": "solidity-mode (20221005.1922) --- Major mode for ethereum's solidity language",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/citar-20221005.1820.tar",
+          "author": null,
+          "description": "The citar package has been updated to version 20221005.1820.",
+          "link": "https://melpa.org/#/citar",
+          "publishedOn": "2022-10-05T18:20:00.000Z",
+          "wordCount": 105,
+          "title": "citar (20221005.1820) --- Citation-related commands for org, latex, markdown",
           "imageUrl": null
         },
         {
@@ -4027,6 +4057,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/php-mode-20221002.328.tar",
+          "author": null,
+          "description": "The php-mode package has been updated to version 20221002.328.",
+          "link": "https://melpa.org/#/php-mode",
+          "publishedOn": "2022-10-02T03:28:00.000Z",
+          "wordCount": 105,
+          "title": "php-mode (20221002.328) --- Major mode for editing PHP code",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/melancholy-theme-20221002.50.el",
           "author": null,
           "description": "The melancholy-theme package has been updated to version 20221002.50.",
@@ -4354,6 +4394,16 @@
           "publishedOn": "2022-09-29T06:08:00.000Z",
           "wordCount": 105,
           "title": "flycheck-vale (20220929.608) --- flycheck integration for vale",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tok-theme-20220928.1823.el",
+          "author": null,
+          "description": "The tok-theme package has been updated to version 20220928.1823.",
+          "link": "https://melpa.org/#/tok-theme",
+          "publishedOn": "2022-09-28T18:23:00.000Z",
+          "wordCount": 105,
+          "title": "tok-theme (20220928.1823) --- Comfy dark monochromatic theme",
           "imageUrl": null
         },
         {
@@ -6795,176 +6845,6 @@
           "wordCount": 105,
           "title": "diminish (20220909.847) --- Diminished modes are minor modes with no modeline display",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/persp-mode-20220909.836.el",
-          "author": null,
-          "description": "The persp-mode package has been updated to version 20220909.836.",
-          "link": "https://melpa.org/#/persp-mode",
-          "publishedOn": "2022-09-09T08:36:00.000Z",
-          "wordCount": 105,
-          "title": "persp-mode (20220909.836) --- windows/buffers sets shared among frames + save/load.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sotlisp-20220909.803.el",
-          "author": null,
-          "description": "The sotlisp package has been updated to version 20220909.803.",
-          "link": "https://melpa.org/#/sotlisp",
-          "publishedOn": "2022-09-09T08:03:00.000Z",
-          "wordCount": 105,
-          "title": "sotlisp (20220909.803) --- Write lisp at the speed of thought.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/counsel-bbdb-20220909.727.el",
-          "author": null,
-          "description": "The counsel-bbdb package has been updated to version 20220909.727.",
-          "link": "https://melpa.org/#/counsel-bbdb",
-          "publishedOn": "2022-09-09T07:27:00.000Z",
-          "wordCount": 105,
-          "title": "counsel-bbdb (20220909.727) --- Quick search&input email from BBDB based on Emacs API `completing-read'",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-edit-indirect-20220909.457.el",
-          "author": null,
-          "description": "The org-edit-indirect package has been updated to version 20220909.457.",
-          "link": "https://melpa.org/#/org-edit-indirect",
-          "publishedOn": "2022-09-09T04:57:00.000Z",
-          "wordCount": 105,
-          "title": "org-edit-indirect (20220909.457) --- Edit anything, not just source blocks",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org2blog-20220909.302.tar",
-          "author": null,
-          "description": "The org2blog package has been updated to version 20220909.302.",
-          "link": "https://melpa.org/#/org2blog",
-          "publishedOn": "2022-09-09T03:02:00.000Z",
-          "wordCount": 105,
-          "title": "org2blog (20220909.302) --- Blog from Org mode to WordPress",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/spdx-20220909.204.tar",
-          "author": null,
-          "description": "The spdx package has been updated to version 20220909.204.",
-          "link": "https://melpa.org/#/spdx",
-          "publishedOn": "2022-09-09T02:04:00.000Z",
-          "wordCount": 105,
-          "title": "spdx (20220909.204) --- Insert SPDX license and copyright headers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/rmsbolt-20220909.130.tar",
-          "author": null,
-          "description": "The rmsbolt package has been updated to version 20220909.130.",
-          "link": "https://melpa.org/#/rmsbolt",
-          "publishedOn": "2022-09-09T01:30:00.000Z",
-          "wordCount": 105,
-          "title": "rmsbolt (20220909.130) --- A compiler output viewer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eldev-20220908.2134.tar",
-          "author": null,
-          "description": "The eldev package has been updated to version 20220908.2134.",
-          "link": "https://melpa.org/#/eldev",
-          "publishedOn": "2022-09-08T21:34:00.000Z",
-          "wordCount": 105,
-          "title": "eldev (20220908.2134) --- Elisp development tool",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ligo-mode-20220908.1957.el",
-          "author": null,
-          "description": "The ligo-mode package has been updated to version 20220908.1957.",
-          "link": "https://melpa.org/#/ligo-mode",
-          "publishedOn": "2022-09-08T19:57:00.000Z",
-          "wordCount": 105,
-          "title": "ligo-mode (20220908.1957) --- A major mode for editing LIGO source code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/browse-at-remote-20220908.1736.el",
-          "author": null,
-          "description": "The browse-at-remote package has been updated to version 20220908.1736.",
-          "link": "https://melpa.org/#/browse-at-remote",
-          "publishedOn": "2022-09-08T17:36:00.000Z",
-          "wordCount": 105,
-          "title": "browse-at-remote (20220908.1736) --- Open github/gitlab/bitbucket/stash/gist/phab/sourcehut page from Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/move-text-20220908.1632.el",
-          "author": null,
-          "description": "The move-text package has been updated to version 20220908.1632.",
-          "link": "https://melpa.org/#/move-text",
-          "publishedOn": "2022-09-08T16:32:00.000Z",
-          "wordCount": 105,
-          "title": "move-text (20220908.1632) --- Move current line or region with M-up or M-down.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-roam-20220908.1625.tar",
-          "author": null,
-          "description": "The org-roam package has been updated to version 20220908.1625.",
-          "link": "https://melpa.org/#/org-roam",
-          "publishedOn": "2022-09-08T16:25:00.000Z",
-          "wordCount": 105,
-          "title": "org-roam (20220908.1625) --- A database abstraction layer for Org-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pyimport-20220908.1610.el",
-          "author": null,
-          "description": "The pyimport package has been updated to version 20220908.1610.",
-          "link": "https://melpa.org/#/pyimport",
-          "publishedOn": "2022-09-08T16:10:00.000Z",
-          "wordCount": 105,
-          "title": "pyimport (20220908.1610) --- Manage Python imports!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-roam-bibtex-20220908.1053.tar",
-          "author": null,
-          "description": "The org-roam-bibtex package has been updated to version 20220908.1053.",
-          "link": "https://melpa.org/#/org-roam-bibtex",
-          "publishedOn": "2022-09-08T10:53:00.000Z",
-          "wordCount": 105,
-          "title": "org-roam-bibtex (20220908.1053) --- Org Roam meets BibTeX",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eglot-20220908.1036.el",
-          "author": null,
-          "description": "The eglot package has been updated to version 20220908.1036.",
-          "link": "https://melpa.org/#/eglot",
-          "publishedOn": "2022-09-08T10:36:00.000Z",
-          "wordCount": 105,
-          "title": "eglot (20220908.1036) --- Client for Language Server Protocol (LSP) servers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/avk-emacs-themes-20220908.1022.tar",
-          "author": null,
-          "description": "The avk-emacs-themes package has been updated to version 20220908.1022.",
-          "link": "https://melpa.org/#/avk-emacs-themes",
-          "publishedOn": "2022-09-08T10:22:00.000Z",
-          "wordCount": 105,
-          "title": "avk-emacs-themes (20220908.1022) --- Collection of avk themes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/edit-server-20220908.1014.el",
-          "author": null,
-          "description": "The edit-server package has been updated to version 20220908.1014.",
-          "link": "https://melpa.org/#/edit-server",
-          "publishedOn": "2022-09-08T10:14:00.000Z",
-          "wordCount": 105,
-          "title": "edit-server (20220908.1014) --- server that responds to edit requests from Chrome",
-          "imageUrl": null
         }
       ]
     },
@@ -6973,6 +6853,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xz30hf/catppuccin_coming_soon/",
+          "author": null,
+          "description": "submitted by    /u/MicrowavingMetal  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xz30hf/catppuccin_coming_soon/",
+          "publishedOn": "2022-10-08T20:39:10.000Z",
+          "wordCount": 30765,
+          "title": "Catppuccin coming soon",
+          "imageUrl": "https://preview.redd.it/ct1cuexx7ns91.png?auto=webp&s=e89a6b1dd3973cff9127f866f329de9e393acb8c"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xyyfr7/tracking_blog_post_changes_by_leveraging_git_and/",
+          "author": null,
+          "description": "submitted by    /u/grtcdr  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xyyfr7/tracking_blog_post_changes_by_leveraging_git_and/",
+          "publishedOn": "2022-10-08T17:28:37.000Z",
+          "wordCount": 34696,
+          "title": "Tracking blog post changes by leveraging git and ox-html.el",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xywnge/filter_xref_results_with_lsp/",
+          "author": null,
+          "description": "Hi. \n I use Doom Emacs with lsp enabled. \n I develop in PHP using Laravel framework. There's a package called laravel-ide-helper that creates stub classes to help on IDE completion for properties and magic methods. \n The problem is, when I x-ref-find I get two results, one for the correct method and another for the stub (they are all in a file called _ide_helper.php). \n Is there a way I can filter out these results? Maybe blacklist the filename somehow?\n Thanks in advance. \n Gonçalo\n    submitted by    /u/_gjm_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xywnge/filter_xref_results_with_lsp/",
+          "publishedOn": "2022-10-08T16:14:20.000Z",
+          "wordCount": 30989,
+          "title": "Filter x-ref results with lsp",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xyu6hq/flycheck_is_giving_me_weird_error_messages_for/",
+          "author": null,
+          "description": "Suspicious state from syntax checker python-pycompile: Flycheck checker python-pycompile returned 49, but its output contained no errors: Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Manage App Execution Aliases. Try installing a more recent version of python-pycompile, and please open a bug report if the issue persists in the latest release. Thanks! \n I am using Emacs on Windows and I got this weird message. I also get errors but slightly different in Latex files. After searching around, it seems it must be something to do with \\r\\n but can't find a solution.\n    submitted by    /u/attitude12136  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xyu6hq/flycheck_is_giving_me_weird_error_messages_for/",
+          "publishedOn": "2022-10-08T14:29:17.000Z",
+          "wordCount": 31033,
+          "title": "Flycheck is giving me weird error messages for Python on Windows",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xyowv2/access_symbol_value_in_cons/",
+          "author": null,
+          "description": "I want to find out what the value (here: 100) associated with b is\n  (defconst z '( ( a 100) (b a))) (setq y (cl-second z) \n I know that a in (b a) is a symbol, but (symbol-value (cl-second y)) just gives me a *** Eval error *** Symbol’s value as variable is void: a. What's wrong with my thinking?\n    submitted by    /u/olmu1944  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xyowv2/access_symbol_value_in_cons/",
+          "publishedOn": "2022-10-08T10:02:15.000Z",
+          "wordCount": 31179,
+          "title": "Access symbol value in cons",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xyo2fo/orgmode_vterm_tmux/",
+          "author": null,
+          "description": "I often find myself switching between Emacs and terminal (e.g. xterm). A typical example is to run a test suite after editing some code. For years, I've been looking for a clean way to send code directly to a terminal without copy-pasting, and I think I finally found it. Best hack I've come up with in 12 years of using this editor. Here it is:\n  \nInstall the absolutely excellent vterm package:https://github.com/akermu/emacs-libvterm\n Create the following script, put it somewhere reasonable:#!/bin/bashemacsclient -e \"(progn (vterm) (vterm-send-string \\\"$*\\\") (vterm-send-return))\"\n Install ob-tmux and configure:https://github.com/ahendriksen/ob-tmux(setq org-babel-tmux-terminal \"<PATH TO THE BASH SCRIPT ABOVE>\")(setq org-babel-tmux-terminal-opts nil)\n Enjoy!\n (e.t.a: with (setq vterm-enable-manipulate-selection-data-by-osc52 t) you also get integration between tmux visual mode and the kill-ring, which depending on your habits may be a more ergonomic way to copy/paste between terminal and emacs)\n  \n​\n https://i.redd.it/twkilcoqsjs91.gif\n    submitted by    /u/dnquark  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xyo2fo/orgmode_vterm_tmux/",
+          "publishedOn": "2022-10-08T09:09:24.000Z",
+          "wordCount": 31464,
+          "title": "org-mode + vterm + tmux == ❤️❤️❤️",
+          "imageUrl": "https://external-preview.redd.it/RJ4aGEMHWheJ-zDCk7izbt3pzhYSRDiQmtZYFdvW_GI.jpg?auto=webp&s=600e6216078bfc4f58508704a34eb48823e22ce8"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xylwaj/everything_in_emacs_is_fine_but_daemon_doesnt_work/",
+          "author": null,
+          "description": "I recently completed my emacs setup, everything works fine. but for some reason, the emacs daemon just freezes at startup when I run it outside emacs with emacs --daemon, so emacsclient doesn't work.\n But when started with server-start inside emacs, everything works fine\n Here's the output I'm getting, Did I do something wrong here?\n EDIT: It works now, it was selectric-mode that didn't work for the server for some reason. I'm so dumb\n https://preview.redd.it/0iayam2m4js91.png?width=737&format=png&auto=webp&s=b60cbf01c77df64877fedeb7a8a71ec18974fb9d\n    submitted by    /u/pearcidar43  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xylwaj/everything_in_emacs_is_fine_but_daemon_doesnt_work/",
+          "publishedOn": "2022-10-08T06:55:03.000Z",
+          "wordCount": 31126,
+          "title": "Everything in emacs is fine but daemon doesn't work",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xyjeqj/change_default_zoom_and_remove_margin_in/",
+          "author": null,
+          "description": "When I use latex-preview-pane-mode and save after making an edit, the buffer with the rendered pdf is always zoomed to show the entire page when it is re-rendered. It is hard to see detail in this result on my laptop, so I'd like the pdf to be zoomed in a bit by default. Also, when I use ctrl- mousescroll to zoom in the preview-pane, there is always a large margin to the left of the pdf page that I'd like to get rid of.\n    submitted by    /u/RobotsMustTakeJobs  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xyjeqj/change_default_zoom_and_remove_margin_in/",
+          "publishedOn": "2022-10-08T04:31:26.000Z",
+          "wordCount": 30951,
+          "title": "change default zoom and remove margin in latex-preview-pane-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xyius1/pdftools/",
+          "author": null,
+          "description": "I have installed it from both AUR and also deom emacs.But still pdfs open in docview\n    submitted by    /u/Confident_Ship_2809  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xyius1/pdftools/",
+          "publishedOn": "2022-10-08T04:01:43.000Z",
+          "wordCount": 30818,
+          "title": "pdf-tools",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xybrtw/what_is_the_most_appropriate_way_to_set_fonts_in/",
+          "author": null,
+          "description": "I'm a novice emacs user and I see several ways to set the editor fonts, I'd like to know which one is the most suitable.\n    submitted by    /u/sweet_demon  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xybrtw/what_is_the_most_appropriate_way_to_set_fonts_in/",
+          "publishedOn": "2022-10-07T22:11:27.000Z",
+          "wordCount": 31620,
+          "title": "What is the most appropriate way to set fonts in emacs?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xybjf7/map_cbackspace_to_backwardkillword/",
+          "author": null,
+          "description": "Hello,\n I am an emacs beginner and I am running into this annoying issue where pressing Control-Basckscpace brings up the help menu, which is the same as pressing Control-h. I want to remap C-Backspace to the function backward-kill word but keep C-h for help.\n Currently, I have M-Backspace mapped to backward-kill-word be default, but I do not want to get used to that one because I use C-Backspace outside of Emacs. What is the best solution here? I have looked online and did not find solutions that work exactly like I want. Some remapped C-h which is not what I want to do.\n I am using wsl 2 ubuntu if that matters at all.\n    submitted by    /u/attitude12136  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xybjf7/map_cbackspace_to_backwardkillword/",
+          "publishedOn": "2022-10-07T22:01:22.000Z",
+          "wordCount": 31006,
+          "title": "Map C-Backspace to backward-kill-word",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/xyax58/how_to_assign_to_variable_value_with/",
+          "author": null,
+          "description": "Guys, hi\n I have environmental variable CFG and usually to use it i do smng like this:\n (use-package fixed-pitch :demand t :load-path (lambda () (substitute-in-file-name \"${CFG}/Emacs/fixed-pitch/\")) ... ) \n But i can't make it work with yasnippet, instructions are:\n (setq yas-snippet-dirs '(\"~/.emacs.d/snippets\" ;; personal snippets \"/path/to/some/collection/\" ;; foo-mode and bar-mode snippet collection \"/path/to/yasnippet/yasmate/snippets\" ;; the yasmate collection )) \n And i tried lots of things (commented out):\n (use-package yasnippet :ensure t :config (setq yas-snippet-dirs '(;; (substitute-in-file-name \"${CFG}/Emacs/snippets/\") ;; (lambda () (substitute-in-file-name \"${CFG}/Emacs/snippets/\")) ;; (concat (getenv \"CFG\") \"/Emacs/snippets/\") ;; (lambda () (concat (getenv \"CFG\") \"/Emacs/snippets/\")) \"~/snippets/\" ) ) (setq yas-indent-line 'fixed) (yas-global-mode 1) ) \n What's the right way to do it?\n    submitted by    /u/rtwyyn  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/xyax58/how_to_assign_to_variable_value_with/",
+          "publishedOn": "2022-10-07T21:34:11.000Z",
+          "wordCount": 31170,
+          "title": "How to assign to variable value with environmental variable? (use-package)",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/xy8g9u/why_doesnt_perspmode_load_on_initialization/",
           "author": null,
@@ -10311,106 +10311,6 @@
           "publishedOn": "2022-09-09T09:34:34.000Z",
           "wordCount": 26619,
           "title": "Keybinding worries",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x9p6n8/how_can_i_change_the_spacing_of_the_chat_content/",
-          "author": null,
-          "description": "​\n https://preview.redd.it/ubsm0xzvesm91.png?width=1016&format=png&auto=webp&s=52faf90a67c49a64b24ec6cb87dc5143a30fbf69\n    submitted by    /u/Lucius_Chan  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/x9p6n8/how_can_i_change_the_spacing_of_the_chat_content/",
-          "publishedOn": "2022-09-09T07:41:43.000Z",
-          "wordCount": 32155,
-          "title": "How can I change the spacing of the chat content sent by each person in telega?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x9oeq6/how_to_combine_evil_operator_keys_isearch/",
-          "author": null,
-          "description": "I love both evil and isearch. However, I have a hard time combining evil operator keys (e.g., d c y) with isearch. \n ​\n When I call isearch in the evil operator state, the operator states quits before isearch activates -- the cursor point is indeed jumped, but the operation is NOT completed. For example, when I pressed \"d c-s abc\", the operator state quits first, and then the cursor moves to \"abc\". The content between my old point (before the search) and \"abc\" is not deleted. (I don't encounter this issue when I combine the v key for visual selection with isearch)\n ​\n Does any one have any idea how to fix this issue?\n ​\n P.s., if it matters, I am on emacs 28 + doom.\n    submitted by    /u/franticnerd  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/x9oeq6/how_to_combine_evil_operator_keys_isearch/",
-          "publishedOn": "2022-09-09T06:55:24.000Z",
-          "wordCount": 27472,
-          "title": "How to combine evil operator keys + isearch?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x9nmo6/getting_the_following_error_warning_comp/",
-          "author": null,
-          "description": "So I am using a M1 Mac, and tryna setup emacs. I was trying to setup Magit and when I run magit-status-here I get a compiling error.\n This is the full error log: https://hastebin.com/gekaraqiji \n Not too sure as to what the issue is but any help would be nice\n    submitted by    /u/Riffle_X  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/x9nmo6/getting_the_following_error_warning_comp/",
-          "publishedOn": "2022-09-09T06:09:25.000Z",
-          "wordCount": 26613,
-          "title": "Getting the following error: Warning (comp): libgccjit.so: error: error invoking gcc driver",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x9ftjw/how_insert_a_timestamp_after_an_orgtodo_job_gets/",
-          "author": null,
-          "description": "I try insert a timestamp to org-todo as:\n (advice-add 'org-todo :after (lambda () (insert \"\\n\" (format-time-string \"[%Y-%m-%d %a %H:%M]\" (current-time))) )) \n Test it with (org-todo 'done) but it report various errors.\n    submitted by    /u/AbstProcDo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/x9ftjw/how_insert_a_timestamp_after_an_orgtodo_job_gets/",
-          "publishedOn": "2022-09-08T23:53:22.000Z",
-          "wordCount": 26596,
-          "title": "How insert a timestamp after an org-todo job gets done?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x961jp/a_package_that_abbreviates_the_word_at_point/",
-          "author": null,
-          "description": "I spent a few hours today creating this silly little package that basically does the exact opposite of abbrev-mode. The reason is that I always forget certain abbreviations and wanted to make sure I keep the abbreviations I use consistent across code bases. \n Maybe someone in the community will also find it useful and hopefully Emacs does not already have this feature and I missed it somehow! 😅\n Example:\n https://i.redd.it/o811cqad2om91.gif\n I also made it possible to add your own abbreviations, please check the below repository for more information. And if anyone wants to help contribute some abbreviations or features, please do!\n Repository: https://github.com/VernonGrant/abbreviate.el\n    submitted by    /u/VernonGrant  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/x961jp/a_package_that_abbreviates_the_word_at_point/",
-          "publishedOn": "2022-09-08T17:11:24.000Z",
-          "wordCount": 26780,
-          "title": "A package that abbreviates the word at point",
-          "imageUrl": "https://external-preview.redd.it/OnpJVDJQR9XIJHEihu7gnvsewQ3S-mK4NWzeVpbotws.jpg?auto=webp&s=0e4d74c79dd1d15f345657f211faea95136b1889"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x95las/doom_how_to_enable_linking_a_bbdb_entry_in_an_org/",
-          "author": null,
-          "description": "I’m just trying to link to a bbdb contact in a org file.I’ve tried gnorb, but the inserted links [[bbdb:First Last][First Last]] when invoked just say there is not match, and offers to create a heading.If I open my bbdb database and invoke M-x org-store-link , the error ‘no method for storing a link from this buffer’ is thrown.As a long shot, I added +bbdb to the :lang org section in init.el, to no avail.I’ve also found in emacs/modules/lang/org/confi.el that ol-bbdb is commented out (along with everything except ol-bibtex .\n So, it seems maybe I need to enable ol-bbdb but I’m not sure if that’s the fix, and the correct place to do that to ensure future doom updates won’t break.\n Thanks!\n generated Sep 08, 2022 12:54:22 system MacOS 12.5.1 Darwin 21.6.0 x86_64 emacs 28.1 ~/.config/emacs/ -…",
-          "link": "https://www.reddit.com/r/emacs/comments/x95las/doom_how_to_enable_linking_a_bbdb_entry_in_an_org/",
-          "publishedOn": "2022-09-08T16:54:05.000Z",
-          "wordCount": 34600,
-          "title": "Doom: how to enable linking a bbdb entry in an org file?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x94myl/elisp_how_to_insert_a_char_at_a_fixed_position_in/",
-          "author": null,
-          "description": "Let say you have\n (setq myId \"00223344556677\") \n and now you want to format it as \"002233-44556677\"\n I can't find a good way to insert a character. \n Thanks\n    submitted by    /u/konrad1977  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/x94myl/elisp_how_to_insert_a_char_at_a_fixed_position_in/",
-          "publishedOn": "2022-09-08T16:16:05.000Z",
-          "wordCount": 32971,
-          "title": "Elisp / How to insert a char at a fixed position in a string",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x8zys4/how_to_call_functions_only_when_on_gui_even_when/",
-          "author": null,
-          "description": "I've had luck binding ESC to keyboard-quit everywhere except in terminal sessions with the following line: \n (when (display-graphic-p) (define-key key-translation-map (kbd \"ESC\") (kbd \"C-g\")) \n But recently I've started making more regular use of the daemon and this hasn't worked really anymore. (From what I understand, upon first starting the server, display-graphic-p returns nil.)\n The workaround that seems to be doing the trick is to add the above to server-after-make-frame-hook. (I tried adding the above to after-init-hook but it doesn't seem to work, and some poking around suggests that when the functions in after-init-hook are run when the server starts, display-graphic-p also returns nil.)\n Now, there are other things I want to run only when starting a new GUI session, so I've kept on adding things to server-after-make-frame-hook. \n Not knowing very much about the way all of this works, I keep thinking this is inefficient. For it seems that server-after-make-frame-hook gets called more often than just when I start what, on my end, looks like a new session: calling magit-commit, for example, will run all of the functions in that hook. \n So, what I'm looking for is some tips on how to activate some bits of my config in all and only the following circumstances: when a new GUI frame is opened but no other GUI frames are. \n One solution I would be happy with, but which I cannot figure out how to create, is to have a GUI dedicated daemon and another daemon, if needed, for terminal sessions. I'd then need to have a way of triggering some bits of my config only when the dedicated GUI daemon starts. \n Sorry if this a bit muddled. As I write this I suspect I'm confused about something, I just don't quite know what it is!\n    submitted by    /u/graduale  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/x8zys4/how_to_call_functions_only_when_on_gui_even_when/",
-          "publishedOn": "2022-09-08T13:01:52.000Z",
-          "wordCount": 27120,
-          "title": "How to call functions only when on GUI, even when using the daemon",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x8wzi9/goto_definition_hangs_for_a_long_time_when_using/",
-          "author": null,
-          "description": "I've been using emacs for about a week on and off, and I've just started setting it up for php\n Here is my init.el file\n ```\n ;; My emacs init.el\n ​\n ;; Disable Menu Bar\n (menu-bar-mode -1)\n ​\n ;; Disble the scrollbar and toolbar\n (if (display-graphic-p)\n (progn\n (tool-bar-mode -1)\n (scroll-bar-mode -1)))\n ​\n ;; Enable Line Numbers?\n (global-display-line-numbers-mode 1)\n ​\n ;; Font Settings\n (set-face-attribute 'default nil :height 180)\n ​\n ;; Cursor Type\n (setq-default cursor-type 'bar)\n (set-cursor-color \"#fff\")\n (add-to-list 'default-frame-alist\n '(cursor-color . \"#fff\"))\n ​\n ​\n ;; Margin Settings\n (setq-default left-margin-width 4 right-margin-width 4)\n (set-window-buffer nil (current-buffer))\n ​\n ;; use-package\n (add-to-list 'load-path \"~/.emacs.d/site-lisp/use-package\")\n (require 'us…",
-          "link": "https://www.reddit.com/r/emacs/comments/x8wzi9/goto_definition_hangs_for_a_long_time_when_using/",
-          "publishedOn": "2022-09-08T10:36:15.000Z",
-          "wordCount": 27121,
-          "title": "goto definition hangs for a long time when using php-mode + phpactor",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/x8vxna/orgjournal_view_history/",
-          "author": null,
-          "description": "I have for a while been wondering how I can get an overview of my org-journal entries. I would like to list all entries say for the last two months.\n Here is a way to do it: customize org-journal-search to do regexp search instead of plain string search.\n (customize-set-variable 'org-journal-search-forward-fn 're-search-forward) \n Then one can search for all entries for the last two months by executing\n M-x org-journal-search giving search string \"^\\*\\* \" and starting date -2m and end date the empty string (just hit return).\n Something to be aware of is that if one gives org-journal-search an empty search string, it will search for \"** \" which will not work as intended with regexp search. It is probably not a good idea to change the variable org-journal-time-prefix which defines that string. Just avoid entering an empty search string.\n    submitted by    /u/johan_widen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/x8vxna/orgjournal_view_history/",
-          "publishedOn": "2022-09-08T09:36:42.000Z",
-          "wordCount": 33075,
-          "title": "org-journal: View history",
           "imageUrl": null
         }
       ]
