@@ -44,16 +44,6 @@
           "wordCount": 363,
           "title": "Issue 335",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/334.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nHow and why I got started with Haskell by Shayne Czyzewski\nI decided I’d start learning it on the side and also look for a company that uses it as my next gig. That’s how my Haskell journey started, and how I got into Wasp a few months later.\nMemoization via Representables by Iago Leal de Freitas\nWhat is the most basic container type a language can have? Some people may answer vectors, others would go with hash tables, but in this post I am arguing in favor of functions.\nNamed Routes in Okapi: Part III by Rashad Gover\nIn the final post of this series, we’ll look at how to handle more com…",
-          "link": "https://haskellweekly.news/issue/334.html",
-          "publishedOn": "2022-09-22T12:00:00.000Z",
-          "wordCount": 473,
-          "title": "Issue 334",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,26 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/yay1ck/architecture_for_a_board_game/",
+          "author": null,
+          "description": "I'm creating a sort of game where several \"walkers\" are positioned on a board. ``` data Dir = N | E | S | W deriving (Eq, Ord, Show, Enum, Bounded)\n data Pos = Pos { x :: Int, y :: Int} deriving (Eq, Ord, Show)\n data Object = Object { pos :: Pos, dir :: Dir} deriving (Eq, Ord)\n -- An Walker is an object with a position and a direction. type Walker = Object type Exit = Object type Entry = Object ```\n Several walkers can be located on the same tile, in which case they collide. To manage this, I have a function that will move them. This function takes a list of walkers all located at the same position, and calculate their next position:  -- this function takes a list of walkers that are at the same position. move :: [Walker] -> [Walker] move ws = ... \n I'm not very satisfied with this function, because the pre-condition (walkers must be at the same position) is not encoded in the type. I'm thinking of several solutions: 1. Encode the precondition as a guard 2. Decompose the argument 3. Enforce property with refined types\n Encode the precondition as a guard\n  move :: [Walker] -> [Walker] move ws | isSamePos ws = ... move _ = error \"All walkers must be at the same position\".  It's an OK solution, however it's a pity that the type doesn't help you.\n Decompose the argument\n I could decompose the list of walkers, removing the redundant part (they all have the same position):  move :: Pos -> [Dir] -> [Walker] move pos dirs = ...  That solution is interesting, because illegal states are now unrepresentable. However, I lost the idea that the input is a walker.\n Enforce property with refined types\n I could use Liquid Haskell to check the precondition using a SAT solver. I'm not quite sure how to write it, it seems a bit overkill.\n What is your opinion? Thanks!\n    submitted by    /u/kaukaukau  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/yay1ck/architecture_for_a_board_game/",
+          "publishedOn": "2022-10-22T20:40:23.000Z",
+          "wordCount": 35653,
+          "title": "Architecture for a board game",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/yavw65/haskell_f5_to_ghci_in_vscode/",
+          "author": null,
+          "description": "I'm trying to write Haskell programs in VSCode, and as far as I know, there are no extensions which allow you to run these programs using F5. Instead, I use GHCi.\n Is there a way to configure F5 to run a terminal and use GHCi to run my program?\n    submitted by    /u/schutteteam  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/yavw65/haskell_f5_to_ghci_in_vscode/",
+          "publishedOn": "2022-10-22T19:08:32.000Z",
+          "wordCount": 34358,
+          "title": "Haskell F5 to GHCi in VSCode",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/ya1448/the_comonadreader_internalized_guarded_recursion/",
           "author": null,
@@ -1501,66 +1511,6 @@
           "wordCount": 26118,
           "title": "Issue 334 :: Haskell Weekly newsletter",
           "imageUrl": "https://external-preview.redd.it/QN4ktfFMABnBF6XEPkZWKdVBmOeoKfq094xszcT0RD4.jpg?auto=webp&s=00dc4ace0e204a30ab1d7e7b788ffc3c8a4713ed"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/xlm4qv/haskell_ffi_call_safety_and_garbage_collection/",
-          "author": null,
-          "description": "In this post I explain the garbage collection behaviour of safe and unsafe foreign calls, and describe how the wrong choice led to a nasty deadlock bug in hs-notmuch.\n https://frasertweedale.github.io/blog-fp/posts/2022-09-23-ffi-safety-and-gc.html\n    submitted by    /u/frasertweedale  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/xlm4qv/haskell_ffi_call_safety_and_garbage_collection/",
-          "publishedOn": "2022-09-23T03:24:11.000Z",
-          "wordCount": 26830,
-          "title": "Haskell FFI call safety and garbage collection",
-          "imageUrl": "https://external-preview.redd.it/7gsM-GB8uKjq7STSSiOn65CJcFVTIO91gkWFAYZwcHM.jpg?auto=webp&s=dc68b03f146a9eb6c75cabe7fd5689030c409309"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/xljcbq/i_need_help/",
-          "author": null,
-          "description": "I wrote a mininet program to simulate an SDN network with single controller (ryu controller), 6 switches and 18 hosts .\n A monitoring program have been deployed in the ryu controller in order to capture the network traffic with two classes (normal and attack) .\n The monitored traffic has been saved in csv file and treated as a dataset in order to train a deep learning model for network traffic classification . \n A One Dimensional Convolutional Neural Network (1D-CNN) model has been developed using tensorflow and keras. The trained model was saved as h5 file . My question is how to deploy or integrate the h5 model and run it inside the ryu controller .. I have tried to do the tensorflow integration in different ways but unfortunately I failed as I faced many difficulties in installing tensorflow and its supporting libraries inside the ryu controller. I would be greatful If you have any suggestions that lead to sort out the aforementioned issue.\n  \n   submitted by    /u/Odd-Recognition4231  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/xljcbq/i_need_help/",
-          "publishedOn": "2022-09-23T01:15:42.000Z",
-          "wordCount": 26479,
-          "title": "I need help",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/xlemih/best_resources_to_learn_haskell/",
-          "author": null,
-          "description": "I am in desperate need right now. I'm taking a class at uni as a senior that focuses on a few different languages that are not in the degree track as much. To be specific. Haskell, Python, and Java. Python and Java I have no problem with. But for some reason, I cannot wrap my head around Haskell. I have tried everything. This class is a requirement for my degree and only one person teaches it. I've done well in my other classes and am familiar with a lot of other languages and I feel like I am about to throw tens of thousands of dollars away on a degree because I am struggling with one niche language that I never want to use again. I passed all the hard classes in my degree and my entire education hangs on this. No offense to people who love Haskell. I understand it can be a great language in certain uses. Anyone who was like a lost puppy when they started learning Haskell, what resources did you use? My degree, financial well-being, and mental health depend on it. Haskell is worth about 25% of the overall course grade and I already bombed the first assignment. Unfortunately, her questions are very hard and the homework is very strict on using resources and other people.\n She low key expects us to be fluent in haskell in just five weeks.\n I hope this post is okay here.\n    submitted by    /u/ChickenFriedRiceee  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/xlemih/best_resources_to_learn_haskell/",
-          "publishedOn": "2022-09-22T21:55:53.000Z",
-          "wordCount": 33788,
-          "title": "Best resources to learn haskell?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/xlejyy/empty_integer/",
-          "author": null,
-          "description": "if function A inputs integers, one at a time, to another function, function B, then function doesn't provide an integer anymore, since the list it has been sending from is now empty. Is an empty integer represented as \"null\" in Haskell?\n    submitted by    /u/SherifBakr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/xlejyy/empty_integer/",
-          "publishedOn": "2022-09-22T21:52:59.000Z",
-          "wordCount": 26695,
-          "title": "Empty integer?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/xl0ykz/at_effective_algebraic_topology_in_haskell/",
-          "author": null,
-          "description": "submitted by    /u/mvr_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/xl0ykz/at_effective_algebraic_topology_in_haskell/",
-          "publishedOn": "2022-09-22T13:09:26.000Z",
-          "wordCount": 27082,
-          "title": "at: Effective Algebraic Topology in Haskell",
-          "imageUrl": "https://external-preview.redd.it/BExG8Oipw6jtz_mhutesh-8HDwQCXwDg0te9uF7PEqk.jpg?auto=webp&s=00c67a3251234c6cda7117735a9dd1bfc1a7edca"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/xkvzo3/how_to_debug_performance_degradation/",
-          "author": null,
-          "description": "Hello!\n I've got an application that appears to get slower over time. I currently have no idea why. Ram usage seems constant, CPU usage seems low. But after a while, requests to the API take longer and longer.\n The problem is that I have no idea how to start working out where the performance issues are. It can take days before the problem sets in.\n Are there any good ways of getting to the bottom of this? Any tricks to facilitate debugging? I know that the RTS can spit out all sorts of logs, but I have no idea about interpreting them, or even if it's a good idea to log for days before stopping.\n So is there any good guides/tools for tackling this kind of problem?\n    submitted by    /u/jamhob  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/xkvzo3/how_to_debug_performance_degradation/",
-          "publishedOn": "2022-09-22T08:51:43.000Z",
-          "wordCount": 27110,
-          "title": "How to debug performance degradation",
-          "imageUrl": null
         }
       ]
     },
@@ -1569,6 +1519,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/yaw608/how_to_do_json_logging_in_scala/",
+          "author": null,
+          "description": "I have been searching the web but for the life of me cannot seem to find a straight answer.\n What's a simple way to do it?\n Edit: to add some context: I have some Scala code running in AWS lambda. I'd like to implement structured logging so I can write CloudWatch queries against logs.\n    submitted by    /u/6_directions  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/yaw608/how_to_do_json_logging_in_scala/",
+          "publishedOn": "2022-10-22T19:20:32.000Z",
+          "wordCount": 35486,
+          "title": "How to do JSON logging in Scala?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/yavpzm/why_does_scala_seem_to_be_slow_at_benchmark/",
+          "author": null,
+          "description": "Nowadays, I reached out for some benchmark results. Scala is slower than Java and Kotlin. Can you explain it? https://github.com/losvedir/transit-lang-cmp https://github.com/kostya/benchmarks\n    submitted by    /u/zagor_69  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/yavpzm/why_does_scala_seem_to_be_slow_at_benchmark/",
+          "publishedOn": "2022-10-22T19:01:15.000Z",
+          "wordCount": 33930,
+          "title": "Why does Scala seem to be slow at benchmark results?",
+          "imageUrl": "https://external-preview.redd.it/l5XOQ_joybqcxjI-mGnz0S4j2j8B3MzOtuoBlidrFJk.jpg?auto=webp&s=95ce8f9dba9556a840a6f848f5ffd1d9467c5889"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/ya0alw/need_help_to_understand_fs2_library/",
           "author": null,
@@ -2278,26 +2248,6 @@
           "wordCount": 27385,
           "title": "Normalised relational database modelling of ADTs",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/xlqtph/migrating_from_akka_http_to_tapir/",
-          "author": null,
-          "description": "submitted by    /u/adamw1pl  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/xlqtph/migrating_from_akka_http_to_tapir/",
-          "publishedOn": "2022-09-23T07:34:56.000Z",
-          "wordCount": 27739,
-          "title": "Migrating from Akka HTTP to tapir",
-          "imageUrl": "https://external-preview.redd.it/iYjckLkgWqSjklEoyd05r27BE3xcQTN4BR987vfMQZY.jpg?auto=webp&s=df2056bb6445f5cb5b087ef232beb0a8566aa9d4"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/xl5nvy/akka_fork_something_is_brewing_at_apache/",
-          "author": null,
-          "description": "Read Claude Warren's comment: https://issues.apache.org/jira/browse/FLINK-29281\n Here the comment added yesterday: I am working with a group of developers in an attempt to get an Akka fork accepted as an Apache Project. If anyone here is interested in participating in that project please reach out to me at claude@apache.org\n That's great news, let's hope it is going to happen.\n    submitted by    /u/sebaz6r  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/xl5nvy/akka_fork_something_is_brewing_at_apache/",
-          "publishedOn": "2022-09-22T16:12:53.000Z",
-          "wordCount": 27689,
-          "title": "Akka Fork - Something is Brewing at Apache",
-          "imageUrl": null
         }
       ]
     },
@@ -2306,6 +2256,16 @@
       "feedUrl": "https://reddit.com/r/purescript/.rss",
       "siteUrl": "https://www.reddit.com/r/purescript/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/purescript/comments/ya4trf/tecton_css_in_purescript/",
+          "author": null,
+          "description": "I recently released Tecton, a new DSL for authoring CSS. My goal for this project is to make \"CSS in PureScript\" more practical for real-world use cases, meaning: * Extensive type-level validation * Minimal syntactic overhead * Broad CSS coverage * Alignment with W3C specifications * Exhaustive testing\n If you're interested to take a look, a good place to start might be the Zen Garments example, adapted from Dan Mall's CSS Zen Garden submission in order to assess the library's CSS coverage.\n From there, you might like to see some examples of CSS errors that will fail to compile. Some of these issues are significantly more complicated than e.g. providing a <length-percentage> value where a <length> was expected (although those cases are covered too).\n Hopefully the next step would be to try it out for yourself, using the large test suite as a reference wherever the (WIP) docs currently fall short.\n I am looking forward to any feedback you might have to offer! I would also like to note that contributions are welcome, so please let me know if you are interested via Twitter or [email](mailto:nick@saunde.rs); or, if you have something specific in mind already, just review the contributing guidelines and then open an issue.\n Thanks for reading!\n    submitted by    /u/nsaunders1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/purescript/comments/ya4trf/tecton_css_in_purescript/",
+          "publishedOn": "2022-10-21T21:09:27.000Z",
+          "wordCount": 31041,
+          "title": "Tecton: CSS in PureScript",
+          "imageUrl": "https://external-preview.redd.it/0zmt7zo5xUpLiUhWX1lc7JEoUKVylhJqQt3r4Y3mBAs.jpg?auto=webp&s=a2256b767dd2e9b558d22d597ded6538cf60e14f"
+        },
         {
           "id": "https://www.reddit.com/r/purescript/comments/y3fd4o/this_formatting_just_seems_like_an_odd_choicebut/",
           "author": null,
@@ -2459,6 +2419,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/yap57e/ann_orgbookmarkheading_v12_released/",
+          "author": null,
+          "description": "submitted by    /u/github-alphapapa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/yap57e/ann_orgbookmarkheading_v12_released/",
+          "publishedOn": "2022-10-22T14:25:38.000Z",
+          "wordCount": 34466,
+          "title": "[ANN] org-bookmark-heading v1.2 released",
+          "imageUrl": "https://external-preview.redd.it/h0lhcBsViJgf1c3kJcVaH_DpTaQeqoTONQYlEvCPYd8.jpg?auto=webp&s=64384bebc009814e13273b48e0701229b030ec4d"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/y9i8t3/set_org_mode_default_tags_in_dirlocalsel/",
           "author": null,
@@ -2948,36 +2918,6 @@
           "wordCount": 26296,
           "title": "Handshake Failed Error with WEBDAV on my mobile but no problem on tablet",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/xlqtu5/orgtablemaptables_doesnt_respect_narrowing/",
-          "author": null,
-          "description": "I'm working on a function that exports all the tables in the subtree at point to a single CSV file. I tried to implement this by narrowing to the subtree at point and then applying org-table-map-tables:\n (defun sbr-org-export-subtree-tables () \"Export the Org tables in subtree at point to TSV file.\" (interactive) (save-excursion (while (/= (org-current-level) 1) (org-up-heading-safe)) (let* ((table nil) (chapter (car (split-string (nth 4 (org-heading-components)) \":\"))) (file (format \"%s.csv\" (replace-regexp-in-string \" \" \"-\" (downcase chapter))))) (org-narrow-to-subtree) (org-table-map-tables (lambda () (setq table (nconc table (cddr (org-table-to-lisp))))) t) (org-toggle-narrow-to-subtree) (with-temp-buffer (orgtbl-insert-elisp-table table) (beginning-of-buffer) (org-table-export file \"orgtbl-to-tsv\"))))) \n I notice that this function is exporting all the tables in the buffer, not just the tables in the current subtree. It appears that org-table-map-tables is ignoring the narrowing of the buffer to the subtree. Is this a bug, or am I misunderstanding how org-table-map-tables is intended to be used?\n    submitted by    /u/cottasteel  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/xlqtu5/orgtablemaptables_doesnt_respect_narrowing/",
-          "publishedOn": "2022-09-23T07:35:08.000Z",
-          "wordCount": 26572,
-          "title": "org-table-map-tables doesn't respect narrowing?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/xlcqnx/bidi_export_org_to_pdf/",
-          "author": null,
-          "description": "hey!\n sorry for asking, Im pretty new to emacs and im trying to find a way to export org file to pdf using latex.\n im writing both in hebrew and english...\n thanks a lot!\n    submitted by    /u/MindlessTraining4550  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/xlcqnx/bidi_export_org_to_pdf/",
-          "publishedOn": "2022-09-22T20:43:13.000Z",
-          "wordCount": 26154,
-          "title": "Bidi export org to pdf",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/xlagkz/gantt_charts_in_282/",
-          "author": null,
-          "description": "Does anyone know what happened to TaskJuggler in Emacs 28+ ? \n I'm trying to get a Gantt chart using the exporter for TaskJuggler but it looks like it's no longer part of Emacs nor is it available as a package.\n Adding (require 'ox-taskjuggler) in my config gives me an error.\n Are there any alternative packages or is gnuplot my next best option?\n Many thanks.\n    submitted by    /u/Opposite-Coconut-781  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/xlagkz/gantt_charts_in_282/",
-          "publishedOn": "2022-09-22T19:15:48.000Z",
-          "wordCount": 26225,
-          "title": "Gantt charts in 28.2",
-          "imageUrl": null
         }
       ]
     },
@@ -2986,6 +2926,46 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/modus-themes-20221022.1236.tar",
+          "author": null,
+          "description": "The modus-themes package has been updated to version 20221022.1236.",
+          "link": "https://melpa.org/#/modus-themes",
+          "publishedOn": "2022-10-22T12:36:00.000Z",
+          "wordCount": 105,
+          "title": "modus-themes (20221022.1236) --- Elegant, highly legible and customizable themes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/yaml-mode-20221022.920.el",
+          "author": null,
+          "description": "The yaml-mode package has been updated to version 20221022.920.",
+          "link": "https://melpa.org/#/yaml-mode",
+          "publishedOn": "2022-10-22T09:20:00.000Z",
+          "wordCount": 105,
+          "title": "yaml-mode (20221022.920) --- Major mode for editing YAML files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/markdown-mode-20221022.735.el",
+          "author": null,
+          "description": "The markdown-mode package has been updated to version 20221022.735.",
+          "link": "https://melpa.org/#/markdown-mode",
+          "publishedOn": "2022-10-22T07:35:00.000Z",
+          "wordCount": 105,
+          "title": "markdown-mode (20221022.735) --- Major mode for Markdown-formatted text",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/uwu-theme-20221022.49.el",
+          "author": null,
+          "description": "The uwu-theme package has been updated to version 20221022.49.",
+          "link": "https://melpa.org/#/uwu-theme",
+          "publishedOn": "2022-10-22T00:49:00.000Z",
+          "wordCount": 105,
+          "title": "uwu-theme (20221022.49) --- An awesome dark color scheme",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/org-bookmark-heading-20221021.1556.el",
           "author": null,
@@ -3024,6 +3004,16 @@
           "publishedOn": "2022-10-21T04:53:00.000Z",
           "wordCount": 105,
           "title": "units-mode (20221021.453) --- Mode for conversion between different units",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/geiser-guile-20221021.259.tar",
+          "author": null,
+          "description": "The geiser-guile package has been updated to version 20221021.259.",
+          "link": "https://melpa.org/#/geiser-guile",
+          "publishedOn": "2022-10-21T02:59:00.000Z",
+          "wordCount": 105,
+          "title": "geiser-guile (20221021.259) --- Guile and Geiser talk to each other",
           "imageUrl": null
         },
         {
@@ -3554,6 +3544,16 @@
           "publishedOn": "2022-10-15T02:45:00.000Z",
           "wordCount": 105,
           "title": "evil-nerd-commenter (20221015.245) --- Comment/uncomment lines efficiently. Like Nerd Commenter in Vim",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dap-mode-20221014.1942.tar",
+          "author": null,
+          "description": "The dap-mode package has been updated to version 20221014.1942.",
+          "link": "https://melpa.org/#/dap-mode",
+          "publishedOn": "2022-10-14T19:42:00.000Z",
+          "wordCount": 105,
+          "title": "dap-mode (20221014.1942) --- Debug Adapter Protocol mode",
           "imageUrl": null
         },
         {
@@ -5955,116 +5955,6 @@
           "wordCount": 105,
           "title": "gkroam (20220923.1018) --- A lightweight org-mode Roam Research replica",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elpy-20220922.2253.tar",
-          "author": null,
-          "description": "The elpy package has been updated to version 20220922.2253.",
-          "link": "https://melpa.org/#/elpy",
-          "publishedOn": "2022-09-22T22:53:00.000Z",
-          "wordCount": 105,
-          "title": "elpy (20220922.2253) --- Emacs Python Development Environment",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/blacken-20220922.2045.el",
-          "author": null,
-          "description": "The blacken package has been updated to version 20220922.2045.",
-          "link": "https://melpa.org/#/blacken",
-          "publishedOn": "2022-09-22T20:45:00.000Z",
-          "wordCount": 105,
-          "title": "blacken (20220922.2045) --- Reformat python buffers using the \"black\" formatter",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/boogie-friends-20220922.1942.tar",
-          "author": null,
-          "description": "The boogie-friends package has been updated to version 20220922.1942.",
-          "link": "https://melpa.org/#/boogie-friends",
-          "publishedOn": "2022-09-22T19:42:00.000Z",
-          "wordCount": 105,
-          "title": "boogie-friends (20220922.1942) --- A collection of programming modes for Boogie, Dafny, and Z3 (SMTLIB v2).",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/molar-mass-20220922.1752.el",
-          "author": null,
-          "description": "The molar-mass package has been updated to version 20220922.1752.",
-          "link": "https://melpa.org/#/molar-mass",
-          "publishedOn": "2022-09-22T17:52:00.000Z",
-          "wordCount": 105,
-          "title": "molar-mass (20220922.1752) --- Calculates molar mass of a molecule",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/reverse-im-20220922.1650.el",
-          "author": null,
-          "description": "The reverse-im package has been updated to version 20220922.1650.",
-          "link": "https://melpa.org/#/reverse-im",
-          "publishedOn": "2022-09-22T16:50:00.000Z",
-          "wordCount": 105,
-          "title": "reverse-im (20220922.1650) --- Reverse mapping for non-default system layouts",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/async-20220922.1622.tar",
-          "author": null,
-          "description": "The async package has been updated to version 20220922.1622.",
-          "link": "https://melpa.org/#/async",
-          "publishedOn": "2022-09-22T16:22:00.000Z",
-          "wordCount": 105,
-          "title": "async (20220922.1622) --- Asynchronous processing in Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/leuven-theme-20220922.1545.tar",
-          "author": null,
-          "description": "The leuven-theme package has been updated to version 20220922.1545.",
-          "link": "https://melpa.org/#/leuven-theme",
-          "publishedOn": "2022-09-22T15:45:00.000Z",
-          "wordCount": 105,
-          "title": "leuven-theme (20220922.1545) --- Awesome Emacs color theme on white background",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/timu-spacegrey-theme-20220922.1439.el",
-          "author": null,
-          "description": "The timu-spacegrey-theme package has been updated to version 20220922.1439.",
-          "link": "https://melpa.org/#/timu-spacegrey-theme",
-          "publishedOn": "2022-09-22T14:39:00.000Z",
-          "wordCount": 105,
-          "title": "timu-spacegrey-theme (20220922.1439) --- Color theme inspired by the Spacegray theme in Sublime Text",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/detached-20220922.1355.tar",
-          "author": null,
-          "description": "The detached package has been updated to version 20220922.1355.",
-          "link": "https://melpa.org/#/detached",
-          "publishedOn": "2022-09-22T13:55:00.000Z",
-          "wordCount": 105,
-          "title": "detached (20220922.1355) --- A package to launch, and manage, detached processes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mentor-20220922.1342.tar",
-          "author": null,
-          "description": "The mentor package has been updated to version 20220922.1342.",
-          "link": "https://melpa.org/#/mentor",
-          "publishedOn": "2022-09-22T13:42:00.000Z",
-          "wordCount": 105,
-          "title": "mentor (20220922.1342) --- Frontend for the rTorrent bittorrent client",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mastodon-20220922.940.tar",
-          "author": null,
-          "description": "The mastodon package has been updated to version 20220922.940.",
-          "link": "https://melpa.org/#/mastodon",
-          "publishedOn": "2022-09-22T09:40:00.000Z",
-          "wordCount": 105,
-          "title": "mastodon (20220922.940) --- Client for Mastodon",
-          "imageUrl": null
         }
       ]
     },
@@ -6073,6 +5963,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yas4bd/mx_outside_of_emacs/",
+          "author": null,
+          "description": "I'm really missing M-x functionality outside of emacs for tasks that I do frequently enough that I assigned them a global shortcut, but infrequently enough that I forget it!\n On MacOS, I use Hammerspoon, and I assigned a shortcut to it's console and then promptly forgot it. Would love to hit M-x Hammerspoon-console anywhere and have it brought up. \n Wondering if there's anything like that already available?\n There's built-in spotlight, and alfredapp but I would prefer to leverage emacs further.\n    submitted by    /u/trae  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yas4bd/mx_outside_of_emacs/",
+          "publishedOn": "2022-10-22T16:30:07.000Z",
+          "wordCount": 35052,
+          "title": "M-x outside of emacs?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yaqdwq/a_potpourri_of_emacs_tweaks/",
+          "author": null,
+          "description": "submitted by    /u/slinchisl  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yaqdwq/a_potpourri_of_emacs_tweaks/",
+          "publishedOn": "2022-10-22T15:17:25.000Z",
+          "wordCount": 35023,
+          "title": "A Potpourri of Emacs Tweaks",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yapzan/customize_variable/",
+          "author": null,
+          "description": "I have been trying to customize width variable in treemacs. In the source code the variabe is defined like this\n (defcustom treemacs-width 35 :type 'integer : group 'treemacs-window)\n I want customize this variable from config.el and not from source code. Im using doom emacs and i have tried with:\n (setq 'treemacs-width 25)\n but don't work. Im new using emacs and all this notation is little confusing to me. \n How i should customize the variabe?\n    submitted by    /u/GidiomGates  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yapzan/customize_variable/",
+          "publishedOn": "2022-10-22T15:00:18.000Z",
+          "wordCount": 34517,
+          "title": "Customize variable",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yapuh9/host_specific_customization_functions/",
+          "author": null,
+          "description": "hi all,\n a package that i am using defines an a-list of various font properties f.e. 'family', 'weight', 'height' etc. etc.\n i want to set values to these properties progammatically, f.e. on linux + my-home-machine i would want to set 'family' to say \"Iosevka Mono\", on my laptop i would use a high-dpi friendly font etc.\n i wrote a trivial function like so:\n  (defun util:get-host-default-font-family () \"return host specific font-family\" (interactive) (cond ((utils:host-name-is \"host-01\") Iosevka Mono\") ((utils:host-name-is \"host-02\") \"Go Mono Regular\") ((t \"Consolas\")))) \n the \"utils:host-name-is <name-of-host>\" returns 'true' when current hostname matches the provided argument, 'false' otherwise. the above function does the right thing when called interactively on different hosts. \n however, when i use it like so\n  (:default-family (util:get-host-default-font-family)) \n i get a\n  Wrong type argument: stringp, (util:get-host-default-font-family) \n how do i fix it ?\n \n thanks !\n    submitted by    /u/junglee33  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yapuh9/host_specific_customization_functions/",
+          "publishedOn": "2022-10-22T14:54:46.000Z",
+          "wordCount": 34729,
+          "title": "Host specific customization functions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yap51u/ann_orgbookmarkheading_v12_released/",
+          "author": null,
+          "description": "submitted by    /u/github-alphapapa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yap51u/ann_orgbookmarkheading_v12_released/",
+          "publishedOn": "2022-10-22T14:25:28.000Z",
+          "wordCount": 34272,
+          "title": "[ANN] org-bookmark-heading v1.2 released",
+          "imageUrl": "https://external-preview.redd.it/h0lhcBsViJgf1c3kJcVaH_DpTaQeqoTONQYlEvCPYd8.jpg?auto=webp&s=64384bebc009814e13273b48e0701229b030ec4d"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yanmi8/why_are_colours_different_in_vterm_term_and_my_os/",
+          "author": null,
+          "description": "term has settings for 'bright' colours. Here's mine: \n (custom-set-faces ;; custom-set-faces was added by Custom. ;; If you edit it by hand, you could mess it up, so be careful. ;; Your init file should contain only one such instance. ;; If there is more than one, they won't work right. '(term-color-black ((t (:background \"#2e3436\" :foreground \"#000000\")))) '(term-color-blue ((t (:background \"#8D37AF\" :foreground \"#8D37AF\")))) '(term-color-bright-black ((t (:background \"#777979\" :foreground \"#777979\")))) '(term-color-bright-blue ((t (:background \"#5ba0f4\" :foreground \"#5ba0f4\")))) '(term-color-bright-cyan ((t (:background \"#8CD5CF\" :foreground \"#8CD5CF\")))) '(term-color-bright-green ((t (:background \"#37A42B\" :foreground \"#37A42B\")))) '(term-color-bright-magenta ((t (:background \"#f692dd\" …",
+          "link": "https://www.reddit.com/r/emacs/comments/yanmi8/why_are_colours_different_in_vterm_term_and_my_os/",
+          "publishedOn": "2022-10-22T13:20:30.000Z",
+          "wordCount": 35132,
+          "title": "Why are colours different in vterm, term and my OS terminal xfce4-terminal?",
+          "imageUrl": "https://external-preview.redd.it/Dg06OcMHgOcs7pbgK8q_3gtUpPj4C7VCp4TuIYk0Vpw.png?auto=webp&s=0cb68295d9fdd15d93708ed5760ce8239868f496"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yamtws/using_emacs_as_an_irc_client/",
+          "author": null,
+          "description": "I just found out that I can emacs as my IRC client with ERC which is great. However, there are a couple of issues that I am wondering if Emacs supports: the first is that the message prompt is terminal style, which means that it keeps moving as I receive messages. Is there a way to replicate the interface of other IRC clients where there is a separate frame for inputing messages?\n The second issue is that it seems that receiving files from an XDCC server does not work. Is there some special configuration for it to work?\n    submitted by    /u/Tohiko  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yamtws/using_emacs_as_an_irc_client/",
+          "publishedOn": "2022-10-22T12:44:34.000Z",
+          "wordCount": 35039,
+          "title": "Using Emacs as an IRC client",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yaj6ab/how_to_wrapproofing_a_region_excluding_parts_of_a/",
+          "author": null,
+          "description": "In my config https://github.com/vidbina/dotfiles/tree/reorg-for-lit-prog/emacs#-text you may spot that I use visual-fill-column-mode and adaptive-wrap-mode to improve the readability of text in Emacs.\n ⚠️ The gotcha is that I sometimes have bits of context that I want to exclude from being \"wrapped\" such as tables. My current UX on this is poor as I usually want to see the table fully extended while simultaneously sneaking a peak at text in the paragraphs around it. Is there a way to do this (exclude a region from being wrapped) or is there a term that describes what I'm looking for that I should factor into my web-search queries?\n 🤔 There is never really a use case where the wrapped table is even readable for me so it's just a lost piece of screen real estate when I wrap the buffer. It may as well be folded away to be conjured up through something similar to C-c C-v v where can open expanded code into a preview buffer (to see how all the noweb refs resolve). How do you deal with wrapping when tables are present? Hoping to learn what I can improve about my usage to minimize this \"pain\".\n 💡 For now I keep toggling between the wrapped and non-wrapped states and now that I'm typing this, I'm thinking that I can open a cloned frame or buffer. That way I can show the table non-wrapped or extended in one buffer, while I look at the wrapped peripheral text in a cloned buffer and thus have a way to keep the wrapped states apart. This however does alter the layout of buffers which is again a bit of a UX killer as it disturbs the y-flow of the text in the original buffer if you catch my drift.\n Looking fwd to getting schooled. Thanks for helping think along. 🙏🏿\n    submitted by    /u/vidbina  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yaj6ab/how_to_wrapproofing_a_region_excluding_parts_of_a/",
+          "publishedOn": "2022-10-22T09:31:18.000Z",
+          "wordCount": 35306,
+          "title": "How to wrap-proofing a region: Excluding parts of a buffer from wrapping?",
+          "imageUrl": "https://external-preview.redd.it/iAQHUpyTYS7eH-p71yqWuWaacHV539Dc_0oj4GYU0_A.jpg?auto=webp&s=73cadb7df6ff4f78faf60cdacaad9ff59edf1b8c"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yaj2mh/dwim_rename_all_consistently/",
+          "author": null,
+          "description": "submitted by    /u/xenodium  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yaj2mh/dwim_rename_all_consistently/",
+          "publishedOn": "2022-10-22T09:25:37.000Z",
+          "wordCount": 35613,
+          "title": "DWIM rename all consistently",
+          "imageUrl": "https://external-preview.redd.it/fw7cxJtIbc2Ioub9kVYDGAEtNjm3tFAzdEWHF84KzoY.png?format=pjpg&auto=webp&s=de46488ac9b77a7e643633c7f7f2b697c82bdd68"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yahn5b/any_help_i_want_to_run_htmlcssjavascript_file/",
+          "author": null,
+          "description": "In my next class, I would like to use a built-in server which updates when I type an HTML/CSS code. A quick browse through Internet through a lot of option including HTML Editing with Emacs. But I think it is meant for some other purpose. I am looking live-server in VS Code. Any help will be appreciated. It should be simple to configure and use.\n    submitted by    /u/sreekumar_r  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yahn5b/any_help_i_want_to_run_htmlcssjavascript_file/",
+          "publishedOn": "2022-10-22T08:00:15.000Z",
+          "wordCount": 34127,
+          "title": "Any Help? I want to run html/css/JavaScript file within Emacs.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yaeocs/using_quartomode_and_ess/",
+          "author": null,
+          "description": "Hi all,\n Relatively new to emacs. I'm looking to use emacs speaks statistics and take advantage of using polymode and quarto mode (https://github.com/quarto-dev/quarto-emacs) which best I can tell is a version of polymode that allows using quarto based documents.\n So far I can build the quarto document and output a html window, but if I try to run individual chunks or pieces of code it doesn't work. The github page states it uses ESS by default but when I try to use the ESS run commands I get Wrong type argument: window-live-p, nil. I've googled this error message but haven't seen anything similar so far.\n I've also tried having polymode itself enabled with quarto mode and on its own, and using the polymode run chunks command but I get a similar error message.\n Anyone have any ideas or potential solutions?\n Thanks in advance!\n    submitted by    /u/TibialCuriosity  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yaeocs/using_quartomode_and_ess/",
+          "publishedOn": "2022-10-22T05:04:10.000Z",
+          "wordCount": 35111,
+          "title": "Using quarto-mode and ESS",
+          "imageUrl": "https://external-preview.redd.it/b2WKdDIg16ZabCXbUnTVv8gTDIeiN_gVeI18-2K-NVM.jpg?auto=webp&s=ef3c63f84e5085d873ffff427d9b0f254ec71b31"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ya7efn/is_it_possible_to_add_configurations_per_project/",
+          "author": null,
+          "description": "I'm currently using lsp-mode with python-lsp-server and everything was working correctly until now, I started working on another project which does not use the same tools as the other projects. \n Is there any way to adjust the lsp-mode configurations dynamically per project, something like .flake8 or tox.ini?\n    submitted by    /u/J4D3V  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ya7efn/is_it_possible_to_add_configurations_per_project/",
+          "publishedOn": "2022-10-21T23:00:20.000Z",
+          "wordCount": 34566,
+          "title": "Is it possible to add configurations per project in lsp mode?",
+          "imageUrl": "https://external-preview.redd.it/L5wtREZhPYjs4V_-DSWgNwK-A68Vyk0t6-2b71tea2Q.jpg?auto=webp&s=d0b38a44eca93986e4c8460e326ea8116642edc1"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/ya47l5/can_i_change_the_size_of_a_mouse_cursor_for_exwm/",
           "author": null,
@@ -9442,156 +9452,6 @@
           "wordCount": 26457,
           "title": "Extending org-mode to handle youtube links",
           "imageUrl": "https://external-preview.redd.it/-2R58BC9a-Mffds-LFyY5QhTErcRtaUhucsG_jJWW1g.jpg?auto=webp&s=e7d903e7d22683bfcb7c6e2e3a44c8ff25737a7d"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xlrn6n/emacs_sync_to_google_drive/",
-          "author": null,
-          "description": "I have been using Google drive to share documents with my family and across different devices. Booting up xserver and going to browser to upload the file I need has always been the solution. \n But lately I find this solution to be pretty stupid. Are there a better way to do it?\n Looking for:\n a simple, cli/tui solution to sync Emacs file to Google drive.\n What I have found: Grive (seems like it stopped working?) iCloud, Dropbox, syncthing (require xserver(?)\n Thanks you in advance!!\n    submitted by    /u/manho1e  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xlrn6n/emacs_sync_to_google_drive/",
-          "publishedOn": "2022-09-23T08:24:40.000Z",
-          "wordCount": 26574,
-          "title": "Emacs sync to Google drive",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xlloz8/ai_speech_to_text_implications/",
-          "author": null,
-          "description": "so, openai just open sourced \"whisper\" which apparently is human level speech to text software.\n i've wanted to do hands free emacs for a while now but existing software like dragon naturally speaking, just didn't seem up for it. Is now the time? Could we design some kind of conlang (constructed language) to interact with emacs with? Would it be like the reverse version of how the blind use a computer (where the words blend together at a seemingly impossible speed for those untrained)?\n    submitted by    /u/Frumpagumpus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xlloz8/ai_speech_to_text_implications/",
-          "publishedOn": "2022-09-23T03:02:59.000Z",
-          "wordCount": 26921,
-          "title": "AI Speech to text implications",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xlhabi/how_can_i_use_jupyter_widgets_in_org_mode/",
-          "author": null,
-          "description": "Could the xwidget module be used to embed jupyter widgets in org mode?\n    submitted by    /u/guachoperez  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xlhabi/how_can_i_use_jupyter_widgets_in_org_mode/",
-          "publishedOn": "2022-09-22T23:45:29.000Z",
-          "wordCount": 26632,
-          "title": "how can I use jupyter widgets in org mode?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xlh8fa/discover_evil_keybindings_for_mode/",
-          "author": null,
-          "description": "Hi all, I've been struggling with this for a bit but is there a way to see the evil keybindings for a particular mode? I know we have describe-key, describe-mode, and describe-keymap, but it seems as though those are the Emacs bound keys. This isn't too much of a concern as I can switch to Emacs control from evil, but I was wondering if there is a way to see the evil bindings easily so I wouldn't have to switch back and forth. \n If someone can give me a clue or point me in the right direction that would be appreciated. My google-fu is failing me currently\n    submitted by    /u/TheSnowIsCold-46  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xlh8fa/discover_evil_keybindings_for_mode/",
-          "publishedOn": "2022-09-22T23:43:08.000Z",
-          "wordCount": 26455,
-          "title": "Discover Evil keybindings for mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xlen86/installing_python_support_on_doom_which_python/",
-          "author": null,
-          "description": "I'm a bit of Python newbie wanting to get into Django and Wagtail and need configure Python in Doom.\n I uncommented Python and running doom doctor came up with some errors about some addons.\n > :lang python ! Couldn't find isort. Import sorting will not work. ! Couldn't find pipenv. pipenv support will not work. ! Couldn't find nosetests. Running tests through nose will not work. ! Couldn't find pytest. Running tests through pytest will not work. \n I suspect running pip to install the necessary python and emacs packages will fix those.\n Until LSP and pyls are installed is Python support provided by flycheck or some package installed by default?\n A worry I have is to know if what Doom did used Python 2 or Python 3 as both are installed on my system. I also saw some pip messages and perhaps that also involves Python 2\n Is that something I need to worry about now, or can that be deferred till later?\n    submitted by    /u/vfclists  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xlen86/installing_python_support_on_doom_which_python/",
-          "publishedOn": "2022-09-22T21:56:42.000Z",
-          "wordCount": 26896,
-          "title": "Installing Python support on Doom - which Python version and what built-in packages provide Python supprt?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xlck5h/help_with_exporting_org_to_pdf_with_bidi/",
-          "author": null,
-          "description": "hey!\n sorry for asking, Im pretty new to emacs and im trying to find a way to export org file to pdf using latex.\n im writing both in hebrew and english...\n thanks a lot!\n    submitted by    /u/MindlessTraining4550  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xlck5h/help_with_exporting_org_to_pdf_with_bidi/",
-          "publishedOn": "2022-09-22T20:36:09.000Z",
-          "wordCount": 26272,
-          "title": "help with exporting org to pdf with bidi",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xlbg4v/how_hard_would_it_be_to_write_code_to_fix/",
-          "author": null,
-          "description": "Now that I have tamed end of line comments to line up with proportional fonts (using the display attribute :halign-to, which lets you make text display at a particular physical column), I'm wondering if I might be able to do the same for c++ lines which are indented because of being continuations of a statement for a previous line.\n This isn't such a big deal as the comment thing was, as it only affects continued lines, and looks OK anyway the way it is. But it would be nice - normally emacs will line things like an argument on a continuation line with the enclosing parenthesis from the function call, but with a proportional font it only ends up approximating that.\n ​\n It seems like what I would have to do, is in the code that calculates what character from the line above to line this line up with, calculate the physical position of that character and add the spaces, but also visually indent the next line using :halign-to.\n    submitted by    /u/ChristopherHGreen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xlbg4v/how_hard_would_it_be_to_write_code_to_fix/",
-          "publishedOn": "2022-09-22T19:53:49.000Z",
-          "wordCount": 26587,
-          "title": "How hard would it be to write code to fix alignment of c++ statements with proportional fonts using display attributes?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xlair1/question_about_echo_area_lspmode_and_windows/",
-          "author": null,
-          "description": "Sometimes when using lsp-mode with a couple of vertically split windows, if an error messages pops up in the echo area, the scroll position in one of the inactive windows gets changed. Is there any way to prevent this?\n    submitted by    /u/ianzen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xlair1/question_about_echo_area_lspmode_and_windows/",
-          "publishedOn": "2022-09-22T19:18:08.000Z",
-          "wordCount": 30432,
-          "title": "Question about echo area, lsp-mode and windows",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xl6c92/declaring_bankruptcy_or_why_is_vscode_so_much/",
-          "author": null,
-          "description": "So I opened up VS Code for the first time in a long time. There was a file I wanted to edit outside of my normal project, and sometimes I like a separate editor for that so it's not polluting all the buffer lists and whatnot I have open.\n I saw that the clangd integration was available, so I turned it on, and I opened one of my normal project files.\n Why is clangd integration in VSCode so much faster and less painless? It came up with completions right away. I didn't have huge stalls while I waited for things to happen?\n I can only guess that something is weird with my setup, so I have to get rid of everything and start over, I think. I'll start with basically nothing except keybindings and eglot and p4.el and see if it's any better, because right now this is insupportable. The clangd integration in VSCode is faster than any code completion in Visual Studio or Jetbrains Rider, even with indexing turned on. I'd thought my stalls were because of clangd itself, and the absurd number of files it had indexed, but it's really not. I don't get symbol lookout timeouts in VS Code. There's something else afoot.\n    submitted by    /u/vjgoh  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xl6c92/declaring_bankruptcy_or_why_is_vscode_so_much/",
-          "publishedOn": "2022-09-22T16:38:54.000Z",
-          "wordCount": 27055,
-          "title": "Declaring bankruptcy, OR: why is VSCode so much faster?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xl5qho/converting_from_orgref_to_orgcite/",
-          "author": null,
-          "description": "Having used orf-ref for a time, I am currently investigating the possibilities of org-cite. Is there any smart way to convert citations in the org-ref style to the org-cite syntax? E.g. I am looking for something doing the replacement\n [[cite:key]] > [cite:@key]\n if possible also \n [[parencite:key]] > [cite:p,@key]\n and so on. Any ideas?\n    submitted by    /u/badkey212  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xl5qho/converting_from_orgref_to_orgcite/",
-          "publishedOn": "2022-09-22T16:15:31.000Z",
-          "wordCount": 26574,
-          "title": "converting from org-ref to org-cite",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xl3yxv/compiling_lucidemacs_for_alpine/",
-          "author": null,
-          "description": "Hello,\n For experimentation purposes I would like to compile lucid-emacs for alpine.\n I can't even find the lucid-emacs source code if such a thing exists. The github mirror for emacs is here.\n The original GNU emacs repo is here.\n I have found this page for emacs-lucid here which I am not so sure.\n So to sum up:\n  \nDoes emacs-lucid have its own repo?\n Is it possible to compile it for alpine?\n  \n   submitted by    /u/Satrapes1  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xl3yxv/compiling_lucidemacs_for_alpine/",
-          "publishedOn": "2022-09-22T15:07:50.000Z",
-          "wordCount": 26570,
-          "title": "Compiling lucid-emacs for alpine",
-          "imageUrl": "https://external-preview.redd.it/x5065LHyUySCUgd5W26dZNKisupm9tVYmVWFdKojkkY.jpg?auto=webp&s=9a4c301ce641eae9604ee1786334d2addbaad4f4"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xl3tjb/integration_with_raindrop/",
-          "author": null,
-          "description": "Is it possible to have an integration with Raindrop? If so are there any packages available to do it?\n    submitted by    /u/sachin-12  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xl3tjb/integration_with_raindrop/",
-          "publishedOn": "2022-09-22T15:02:10.000Z",
-          "wordCount": 26470,
-          "title": "Integration with Raindrop",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xl0qt0/vscode_includes_invalidundefined_symbols_in/",
-          "author": null,
-          "description": "submitted by    /u/_analysis230_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xl0qt0/vscode_includes_invalidundefined_symbols_in/",
-          "publishedOn": "2022-09-22T13:00:41.000Z",
-          "wordCount": 27081,
-          "title": "VSCode Includes Invalid/Undefined Symbols in Completion Suggestions, How Can I Make This Happen in Emacs With lsp-mode Using typescript-language-server?",
-          "imageUrl": "https://preview.redd.it/tlozt7birep91.png?auto=webp&s=bad52e78823c1afeee9281d1ee7968c19c12dc8a"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xl0if1/a_nice_witing_on_why_to_prefer_emacs_and_gnulinux/",
-          "author": null,
-          "description": "submitted by    /u/arthurno1  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xl0if1/a_nice_witing_on_why_to_prefer_emacs_and_gnulinux/",
-          "publishedOn": "2022-09-22T12:50:37.000Z",
-          "wordCount": 26256,
-          "title": "A Nice Witing on Why to Prefer Emacs and GNU/Linux as Your Tools of Choice",
-          "imageUrl": "https://external-preview.redd.it/5s3zAqeJVCD0lfjdpsaTydLY5If6sVjMyYezWZA__aQ.jpg?auto=webp&s=374ba20ec2e95689ee78597fb4e64c6f08d9d03c"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/xkzwqf/how_to_use_mu4e_with_both_orgcontacts_and_mu/",
-          "author": null,
-          "description": "I switched from Thunderbird to Mu4e a year ago and never regretted it.\n To make my use of Mu4e an even better experience, I would love to combine for autocompletion the mail-addresses of org-contacts with the automatically collected mail-adresses of the mu database. I am using helm and tried out John Kitchins solution from https://kitchingroup.cheme.cmu.edu/blog/2015/03/14/A-helm-mu4e-contact-selector/, but if I (require 'org-contacts), the variable mu4e~contacts-for-completion is void, and if I do not (require 'org-contacts), I get the error: Symbonl's function definition is void: org-contacts-db.\n Does anyone of you combine the two sources for e-mail-address completion in mu4e, and how have you solved it?\n I was setting hopes in mu4e-contacts (https://gitlab.com/voidyourwarranty/mu4e-contacts). Regrettably, when I add the package and restart emacs, I get (error Recursive ‘require’ for feature ‘mu4e’).\n Thank you for any help and insights!\n I am using mu4e 1.8.9 and the newest version of org-contacts (that is on melpa again, yeah!).\n    submitted by    /u/TiMueller  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/xkzwqf/how_to_use_mu4e_with_both_orgcontacts_and_mu/",
-          "publishedOn": "2022-09-22T12:23:13.000Z",
-          "wordCount": 26507,
-          "title": "How to use mu4e with both org-contacts and mu autocompletion database",
-          "imageUrl": null
         }
       ]
     },
@@ -9798,16 +9658,6 @@
           "publishedOn": "2022-09-26T05:55:59.000Z",
           "wordCount": 796,
           "title": "Markdown files without metadata (for blogging)",
-          "imageUrl": null
-        },
-        {
-          "id": "2380@/discussions",
-          "author": "rupertius",
-          "description": "Hey everyone!\nSo, I've been writing linked notes for a few years now, and I've found some of the posts from this community to be particularly insightful, especially seeing behind-the-scenes of other people's processes. (I also adopted the idea of UIDs from this forum, which I use constantly).\nWhile I've used my notes regularly for myself–during my work and for writing articles–I've never shared any of my notes directly. So, I recently decided to start posting some online straight from my editor – a place where I spend a decent part my day thinking and researching.\nI always find it useful to see how other people record and connect their thinking, and I hope this might be interesting/helpful. I'll be adding to the collection on Twitter every couple of days.\nR\n\nLink: Twitter thread",
-          "link": "https://forum.zettelkasten.de/discussion/2380/how-ive-taken-notes-the-past-few-years-sharing-from-my-archive",
-          "publishedOn": "2022-09-23T08:35:51.000Z",
-          "wordCount": 538,
-          "title": "How I've taken notes the past few years (sharing from my archive)",
           "imageUrl": null
         }
       ]
