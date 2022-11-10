@@ -6,6 +6,16 @@
       "siteUrl": "https://haskellweekly.news/newsletter.atom",
       "articles": [
         {
+          "id": "https://haskellweekly.news/issue/341.html",
+          "author": null,
+          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nSurvey\n2022 State of Haskell Survey by Haskell Weekly\n\nThis survey opens on November 1st and closes on the 15th. The goal of this survey is to better understand what people think of the Haskell programming language, together with its ecosystem and community. Whether you have never used Haskell or you use it every day, we want to hear from you!\nFeatured\nGHC 9.4.3 is now available by Ben Gamari\nThe GHC developers are happy to announce the availability of GHC 9.4.3. This release is primarily a bugfix release addressing a few issues found in 9.4.2.\nGHC 9.2.5 released by Zubin Duggal\nThe GHC developer…",
+          "link": "https://haskellweekly.news/issue/341.html",
+          "publishedOn": "2022-11-10T12:00:00.000Z",
+          "wordCount": 713,
+          "title": "Issue 341",
+          "imageUrl": "https://haskellweekly.news/logo.png"
+        },
+        {
           "id": "https://haskellweekly.news/issue/340.html",
           "author": null,
           "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nSurvey\n2022 State of Haskell Survey by Haskell Weekly\n\nThis survey opens on November 1st and closes on the 15th. The goal of this survey is to better understand what people think of the Haskell programming language, together with its ecosystem and community. Whether you have never used Haskell or you use it every day, we want to hear from you!\nFeatured\nBinary Packet Parsing by Monday Morning Haskell\nThis problem is about parsing a binary format, similar in some sense to how network packets work. It’s a good exercise in handling a few different kinds of recursive cases.\nData validation in Haskell …",
@@ -52,6 +62,76 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/yrjuzi/typelits_and_datakinds_for_a_monomial_type/",
+          "author": null,
+          "description": "I am trying to make a Monomial type that has an ordering and the number of variables as parameters. I want those parameters to be at the type level so I can take advantage of type checking and type inference. For example, I want to be able to create a monomial with four variables in a Lex ordering and say it has type Mon 4 \"Lex\". I've been trying to use the DataKinds extension with the TypeLits and Proxy modules to achieve this, but so far unsuccessfully. Right now, I have something like this:\n {-# LANGUAGE DataKinds, KindSignatures, GADTs #-} import GHC.TypeLits data Mon :: Nat -> Symbol -> * where Mon :: { degList :: [Int] } -> Mon SomeNat SomeSymbol \n This doesn't work because SomeNat and SomeSymbol are of kind *, not of kind Nat or Symbol. First of all, why is this? The description for…",
+          "link": "https://www.reddit.com/r/haskell/comments/yrjuzi/typelits_and_datakinds_for_a_monomial_type/",
+          "publishedOn": "2022-11-10T16:19:04.000Z",
+          "wordCount": 18989,
+          "title": "TypeLits and DataKinds for a Monomial Type Constructor",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/yriwvl/issue_341_haskell_weekly_newsletter/",
+          "author": null,
+          "description": "submitted by    /u/haskellweekly  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/yriwvl/issue_341_haskell_weekly_newsletter/",
+          "publishedOn": "2022-11-10T15:47:34.000Z",
+          "wordCount": 19234,
+          "title": "Issue 341 :: Haskell Weekly newsletter",
+          "imageUrl": "https://external-preview.redd.it/QN4ktfFMABnBF6XEPkZWKdVBmOeoKfq094xszcT0RD4.jpg?auto=webp&s=00dc4ace0e204a30ab1d7e7b788ffc3c8a4713ed"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/yrhfsu/existentials_and_eq_deriving/",
+          "author": null,
+          "description": "I have some parametrised GADTs which, at some point, I need to be able to generally use. Here's one:\n  data Entity (t :: EntityClass) where Entity :: EntityID -> SiteID -> EntityConfiguration t -> Entity t \n I also have a Some type to hide the parameter:\n  data Some (t :: k -> Type) where Some :: t k -> Some t \n I can also hide the parameter using a forall:\n  data EntityX where EntityX :: forall t. EntityID -> SiteID -> EntityConfiguration t -> EntityX \n I have a function that wants to be able to generally use these parametrised classes (e.g. when getting them from a database):\n  type Z = Some Entity -- OR type Z = EntityX instantiateFromRow :: (Int32, Int32, Value) -> Either InvalidEntityError Z \n I'm encountering an issue when writing tests for instantiateFromRow (although I'm sure I'll encounter it elsewhere as well) in that I need to somehow verify that the result of this function is what I think it is (I'm using Hspec, for reference):\n  instantiateFromRow (...) `shouldBe` expectedResult \n The problem is that if I use Some Entity as the result type, then I have the problem that I need Eq instances for Some Entity, which I just cannot work out how to get right (I get lots of \"cannot match type t1 with t2\"), but if I use EntityX then I have problems with the forall t not matching the output of functions which do things like parse JSON instance FromJSON (Some EntityConfiguration).\n So I either need to find a nice way to:\n  \nextract the inner value from the Some existential (but this feels fraught with type difficulty in its own right);\n deriving / write Eq instances for Some Entity\n find a way to reconcile these type variables (which feels like a problem for which one needs dependent types at which point I'm both lost and screwed since Haskell doesn't really support them AFAICT).\n  \n   submitted by    /u/gtf21  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/yrhfsu/existentials_and_eq_deriving/",
+          "publishedOn": "2022-11-10T14:56:39.000Z",
+          "wordCount": 19535,
+          "title": "Existentials and Eq deriving",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/yr2qd2/alternative_typeclass_by_example_chris_penner/",
+          "author": null,
+          "description": "submitted by    /u/ChrisPenner  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/yr2qd2/alternative_typeclass_by_example_chris_penner/",
+          "publishedOn": "2022-11-10T02:21:16.000Z",
+          "wordCount": 18530,
+          "title": "Alternative Typeclass By Example - Chris Penner - Haskell Love 2021",
+          "imageUrl": "https://external-preview.redd.it/KbQwlJqJsiG6v3oRlzL4fveQ9ZZLIHB19qNAnE5MQsg.jpg?auto=webp&s=1abdb848b168b9f8e7a80cf7aa5e962e07357e72"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/yr2grn/how_do_you_structure_haskell_projects/",
+          "author": null,
+          "description": "I'm a Haskell beginner. Well, I've made multiple tries to learn Haskell. I improve little by little :) I'm wondering what would be a good way to structure Haskell programs. Suppose I have a User data type and some other types. Here are some possibilities I think ok:\n 1) Type definition, functions and instances in User.hs. 2) Type definition in Types.hs along with other types; instances in Instances.hs along other type instances; user functions in User.hs.\n Do you have any battle-tested method ? I did not find any article about that.\n Thanks\n    submitted by    /u/orang-outan  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/yr2grn/how_do_you_structure_haskell_projects/",
+          "publishedOn": "2022-11-10T02:08:30.000Z",
+          "wordCount": 19045,
+          "title": "How do you structure Haskell projects ?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/yr09pb/hls_stack_bizarre_redherring_error_about_ghcide/",
+          "author": null,
+          "description": "Just wondering how many other folks experience this issue, have to work around it.\n My current setup is neovim + GHC 9.02 + HLS 1.8.0 + stack 2.9.1, but I've experienced this consistently with VSCode as well, and older/other versions of HLS, stack, and GHC. The offending components seem to be stack and HLS specifically.\n What happens is: due to a (legit) compilation error somewhere in a module, the Haskell Language Server sometimes completely barfs on that module, shows the following error at the top of the file:\n ghcide compiled by GHC X.X failed to load packages: <command line>: cannot satisfy -package anypackage-X.X.X (use -v for more information). Please ensure that ghcide is compiled with the same GHC installation as the project. \n The issue has nothing to do with GHC versions -- tota…",
+          "link": "https://www.reddit.com/r/haskell/comments/yr09pb/hls_stack_bizarre_redherring_error_about_ghcide/",
+          "publishedOn": "2022-11-10T00:24:45.000Z",
+          "wordCount": 17814,
+          "title": "HLS + Stack = bizarre red-herring error about ghcide versions",
+          "imageUrl": "https://external-preview.redd.it/9uvzv7-2GZ0d0OoFWjjJrbH6Fr2H1Xp4w4ZYOBlfst8.jpg?auto=webp&s=421cc217780d0d63138a8f577fd2c0c4ec6d132f"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/yqzyay/wed_nov_16_7pm_central_bugs_in_amber_or_how_i/",
+          "author": null,
+          "description": "submitted by    /u/ClaudeRubinson  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/yqzyay/wed_nov_16_7pm_central_bugs_in_amber_or_how_i/",
+          "publishedOn": "2022-11-10T00:10:27.000Z",
+          "wordCount": 18746,
+          "title": "Wed, Nov 16 @ 7pm Central: \"Bugs in Amber or: How I Learned to Stop Worrying and Love the IO Monad\"",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/ypugse/ghc_925_is_now_available/",
           "author": null,
@@ -1601,36 +1681,6 @@
           "wordCount": 38161,
           "title": "CoSemigroup and random generator transformers?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/y1k2y8/haskell_and_precs_for_k12/",
-          "author": null,
-          "description": "There's a bad dynamic in America's STEM education where kids going into college computer science out of high school hit a brick wall . . . largely made of math they've never seen before. In general, CS is not at all what they thought it would be. Then they switch/flunk out. So if higher-ed physics, engineering, math has a long, gentle preparatory on-ramp in K-12 with math, comp-sci has absolutely nothing -- or maybe just some \"learn to code.\" And so I've been trying to put together a high-school-level on-ramp for real CS . And I'm basing it on Haskell. Why Haskell? Because the top-tier schools all do some sort of typed functional programming eventually. Functional seems to be the fault line between the top schools and the 2nd-tier. So for example I mix in discrete math with Haskell. You could say I'm high-school-izing the Doets, van Eijck text The Haskell Road to Logic, Maths, and Programming. Or even the Paulson ML for the Working Programmer, another fantastic book. Great, you might say. Trouble is I'm all alone -- as far as I know. For example, if you look at the AP Computer Science stuff, it's basically learn to program Java with a smattering of data structures and algorithms tacked on. Not really much help for a kid walking into Cornell or CMU. Every high school effort I've come across so far has hardly ever been more than \"learn to code,\" typically Python. So my question to you is, should I keep going -- or give it up for a bad job? Am I really on to something, or am I tilting at windmills? The fact that I'm so alone on this is ominous. I've contacted lots of big name professors -- and they're sympathetic but in the long run apathetic simply because they're awash in 96th-percentile applicants. Yeah.... Your ideas would be appreciated.\n    submitted by    /u/teilchen010  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/y1k2y8/haskell_and_precs_for_k12/",
-          "publishedOn": "2022-10-11T20:52:24.000Z",
-          "wordCount": 39596,
-          "title": "Haskell and pre-CS for K-12?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/y15n2h/haskell_in_production_caribou/",
-          "author": null,
-          "description": "submitted by    /u/Serokell  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/y15n2h/haskell_in_production_caribou/",
-          "publishedOn": "2022-10-11T10:35:09.000Z",
-          "wordCount": 35973,
-          "title": "Haskell in Production: Caribou",
-          "imageUrl": "https://external-preview.redd.it/3i0saRi8QBQHc7JSImCfAj_TRahGBJ7SXiogLVcClGc.jpg?auto=webp&s=4cf420f6aada4feed35ee84b6a504439948ecdde"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/y15a6i/liquid_haskell_vs_agda_generated_to_haskell_vs/",
-          "author": null,
-          "description": "Never used both of these languages, but very interesting! Is there any other difference besides the syntactic difference? It is very interesting to be able to take an existing Haskell library that does not have proofs, for example, async, but with the help of some annotations and smt magic, prove the properties of your asynchronous code. Is it possible?\n    submitted by    /u/azinenko  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/y15a6i/liquid_haskell_vs_agda_generated_to_haskell_vs/",
-          "publishedOn": "2022-10-11T10:14:52.000Z",
-          "wordCount": 35251,
-          "title": "Liquid Haskell vs Agda (generated to haskell) vs any other alternatives generated to haskell",
-          "imageUrl": null
         }
       ]
     },
@@ -1639,6 +1689,56 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/yrjit4/output_object_with_circe_with_sealed_trait_case/",
+          "author": null,
+          "description": "Consider:\n import io.circe.generic.auto._, io.circe.syntax._ sealed trait Data case class Failed(foo: String, bar: String) extends Data case class Success(foo1:String, bar1:String) extends Data case class Task(Foo:String, Data: Data) val something = Task(\"test\", Failed(\"1\", \"2\")) println(something.asJson) \n This outputs:\n val something: Task = Task(test,Failed(1,2)) {\"Foo\" : \"test\", \"Data\" : {\"Failed\" : {\"foo\" : \"1\",\"bar\" : \"2\"}}} \n But what I really want, is it to output:\n {\"Foo\" : \"test\", \"Data\" : \"foo\" : \"1\",\"bar\" : \"2\"}} \n Effectively, I just want to delete the \"Failed\" block but keep everything within that block.\n    submitted by    /u/juganout  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/yrjit4/output_object_with_circe_with_sealed_trait_case/",
+          "publishedOn": "2022-11-10T16:07:53.000Z",
+          "wordCount": 15033,
+          "title": "Output object with Circe with sealed trait + case classes adds sealed trait block",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/yrbwad/the_art_of_scala_conference_warsaw_nov_16/",
+          "author": null,
+          "description": "submitted by    /u/plokhotnyuk  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/yrbwad/the_art_of_scala_conference_warsaw_nov_16/",
+          "publishedOn": "2022-11-10T11:18:58.000Z",
+          "wordCount": 14470,
+          "title": "The Art of Scala conference, Warsaw, Nov 16",
+          "imageUrl": "https://external-preview.redd.it/8FWqUjrodgJ5_zk9coPNI23fUIMCTo3lBKVLP8MeEMY.jpg?auto=webp&s=126bb3b46675da91f2972dcf169d1e6db33d1f96"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/yrbpv8/scala_321_released/",
+          "author": null,
+          "description": "submitted by    /u/u_tamtam  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/yrbpv8/scala_321_released/",
+          "publishedOn": "2022-11-10T11:08:37.000Z",
+          "wordCount": 14365,
+          "title": "Scala 3.2.1 released!",
+          "imageUrl": "https://external-preview.redd.it/lPU93dx7L8FycHF7U2OtlOdr9psl9WhfqYWlDvL-b40.jpg?auto=webp&s=4da3b2e2e90a420f03b3906f8c46007d9b9e2c50"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/yrbn42/scala_toolkit_makes_scala_powerful_straight_out/",
+          "author": null,
+          "description": "submitted by    /u/jacua9  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/yrbn42/scala_toolkit_makes_scala_powerful_straight_out/",
+          "publishedOn": "2022-11-10T11:04:12.000Z",
+          "wordCount": 15358,
+          "title": "Scala Toolkit makes Scala powerful straight out of the box",
+          "imageUrl": "https://external-preview.redd.it/5uTSVqCTJiw-UWFGjywejz3NZ2NQl-A0H0ZcS2pW4RE.jpg?auto=webp&s=2ae013838c24a5eb3c66eb12fd8db6a0ac5e3c56"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/yr8005/seeing_through_hardware_counters_a_journey_to/",
+          "author": null,
+          "description": "submitted by    /u/plokhotnyuk  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/yr8005/seeing_through_hardware_counters_a_journey_to/",
+          "publishedOn": "2022-11-10T07:07:38.000Z",
+          "wordCount": 15361,
+          "title": "Seeing through hardware counters: a journey to threefold performance increase by Vadim Filanovsky and Harshad Sane",
+          "imageUrl": "https://external-preview.redd.it/QA32raV87tkINbESGeiTrodb3xpU3xcNwZO1Y6yBpr4.jpg?auto=webp&s=ca531a0e42fbb422d455eaaebd81972931fb55f0"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/yqog84/the_scala_community_is_going_to_exile_me_for_this/",
           "author": null,
@@ -2358,46 +2458,6 @@
           "wordCount": 35541,
           "title": "Scala 2.13.10 is here",
           "imageUrl": "https://external-preview.redd.it/VfA0nFuiHh2eC3UdccM9AFIHcBQ-uKMmqbKh_SLGwVY.jpg?auto=webp&s=2582107868fbb732feeb13ed4bf20290b1a350b3"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/y1q9im/how_to_gain_midsenior_experience_in_scala/",
-          "author": null,
-          "description": "I work with Scala every day but mostly writing RDDs or Dataframes to move data around and some IO here and there and although I try my best to incorporate Scala idiomatic solutions I'm finding it hard to gain more broad experience. I recently interviewed with a job that ultimately passed me because I didn't have a ton of experience with Scala and they really wanted someone with hands on. \n So my question is, how would you go about learning a bigger chunk of the language? I have started researching how to write a ray tracer and plan on doing that as a way to broaden my exposure to the language but besides that what else could I do to show I know my way around?\n    submitted by    /u/cockoala  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/y1q9im/how_to_gain_midsenior_experience_in_scala/",
-          "publishedOn": "2022-10-12T01:22:20.000Z",
-          "wordCount": 38528,
-          "title": "How to gain mid-senior experience in Scala",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/y1ktvi/type_mismatch_error/",
-          "author": null,
-          "description": "I find I am still very newbie to Scala's type system. I have the following code\n ​\n  trait MyTrait[F[_]] { def method[I, O](f: I => O): F[O] } class MyImpl extends MyTrait[Future] { override def method[Int, String](f: Int => String): Future[String] = Future(f(3)) } \n When compiling with scala v3.1.1 and jdk 19, scalac complains error message as below:\n ​\n Future(f(3)) ^ Found: (3 : Int) Required: Int² where: Int is a class in package scala Int² is a type in method method \n How to fix this problem? Thanks\n    submitted by    /u/scalausr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/y1ktvi/type_mismatch_error/",
-          "publishedOn": "2022-10-11T21:22:18.000Z",
-          "wordCount": 37610,
-          "title": "Type Mismatch Error",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/y1ad8z/not_able_to_fill_nested_column_with_string/",
-          "author": null,
-          "description": "I am not able to fill a nested column with a string value with fill na. For other column i am able to fill value\n    submitted by    /u/shivaprasad_j  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/y1ad8z/not_able_to_fill_nested_column_with_string/",
-          "publishedOn": "2022-10-11T14:23:36.000Z",
-          "wordCount": 37252,
-          "title": "Not able to fill nested column with string",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/y15zct/neotestscala_neovim_test_plugin/",
-          "author": null,
-          "description": "submitted by    /u/stevanmilic  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/y15zct/neotestscala_neovim_test_plugin/",
-          "publishedOn": "2022-10-11T10:54:25.000Z",
-          "wordCount": 38772,
-          "title": "neotest-scala – Neovim test plugin",
-          "imageUrl": "https://external-preview.redd.it/0v6t-hUTj_5xTpx6Je9iAKY3b3WzalCq9MzbixtyIR0.jpg?auto=webp&s=3fd7ed4335afc5bf8c3c430b2eaa3fabc5ddef49"
         }
       ]
     },
@@ -2406,6 +2466,16 @@
       "feedUrl": "https://reddit.com/r/purescript/.rss",
       "siteUrl": "https://www.reddit.com/r/purescript/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/purescript/comments/yrcivm/why_does_this_compile_it_just_warns_me_that_my/",
+          "author": null,
+          "description": "submitted by    /u/daigoro_sensei  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/purescript/comments/yrcivm/why_does_this_compile_it_just_warns_me_that_my/",
+          "publishedOn": "2022-11-10T11:48:02.000Z",
+          "wordCount": 13776,
+          "title": "Why does this compile? It just warns me that my var has been shadowed...shouldn't the compiler disallow this mutation?",
+          "imageUrl": "https://preview.redd.it/qoc8pik834z91.png?auto=webp&s=2f5768d6e0b2418bda1ae5d071b3cc237ffa08fe"
+        },
         {
           "id": "https://www.reddit.com/r/purescript/comments/yp5uih/heres_a_playlist_of_7_hours_of_music_with_no/",
           "author": null,
@@ -2537,6 +2607,16 @@
       "siteUrl": "https://tweag.io",
       "articles": [
         {
+          "id": "https://tweag.io/blog/2022-11-10-learning-games-with-rllib/",
+          "author": null,
+          "description": "In this post we illustrate how we built “Learning Games”,\nan integration between the open-games-hs framework and rllib,\nin order to gain access to the entire Python ecosystem and train agents for games written in Haskell.\nopen-games-hs is a Haskell library and DSL for defining,\noperating, and analyzing certain kinds of game-theoretic games. It comes\nwith a rich type theory and implementation that allows for the\nspecification of agent strategies as Haskell functions.\nFor some games, encoding strategies in Haskell is fairly simple. But one could\nimagine another way: what if we could learn those strategies? Utilizing the\ntheories of reinforcement learning? Well, one idea might be to try and build\na series of algorithms in Haskell implementing these strategies; or, we\ncould try and connect the…",
+          "link": "https://tweag.io/blog/2022-11-10-learning-games-with-rllib/",
+          "publishedOn": "2022-11-10T00:00:00.000Z",
+          "wordCount": 5299,
+          "title": "Reinforcement Learning for Open Games",
+          "imageUrl": "https://tweag.io/logo.png"
+        },
+        {
           "id": "https://tweag.io/blog/2022-11-08-functional-programming-from-sets-and-functions/",
           "author": null,
           "description": "Introductions to functional programming are usually targeted at people who are already accustomed to programming, and they typically present the perks of the paradigm by comparing it to imperative or object-oriented programming. This often leaves the reader with the impression that they have to unlearn practices and concepts they already know to adopt this new paradigm.\nIn this post I would like to try a different approach, not requiring any programming knowledge, but only the most basic intuition. We will build on high school mathematics, in the form of sets and functions, to provide a learning path to understanding functional programming1.\n\nIntroduction\nFunctional programming is a paradigm for writing computer programs based on, well, you can guess: functions!\nThese functions are exactly…",
@@ -2629,6 +2709,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/yqz7j0/what_features_of_the_more_mainstream_productivity/",
+          "author": null,
+          "description": "Title pretty much says it all. I'm currently using Notion (but sort of wish I had started with Obsidian) and on the verge of completely switching to org-roam. But I wanted to see if there was anything I'd be missing before I do that. The only things I can think of are\n  \nAesthetics while editing - yes you can export with org in a pretty format of your choosing, but it seems like you don't have quite as much control over aesthetics while writing. I don't really care too much about this, just something I've noted\n Line wrapping in table fields - in Notion I make heavy use 2 column tables that have tens of rows, and line wrapping works seamlessly. It seems like org tables don't really support line wrapping. I read about a few possible solutions but they seem a bit like they are going against the grain. This is probably the biggest holdup that might stop me from transitioning\n  \nIs there anything else I'm missing? I don't care much about #1, but I'd also love to hear solutions to #2 if anyone has any.\n    submitted by    /u/Me163k  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/yqz7j0/what_features_of_the_more_mainstream_productivity/",
+          "publishedOn": "2022-11-09T23:37:32.000Z",
+          "wordCount": 18308,
+          "title": "What features of the more mainstream productivity apps do you wish org mode had?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/yqx7f8/how_do_you_distinguish_an_event_from_a_task/",
+          "author": null,
+          "description": "So, while using org-orgzly the other day, I noticed org-orgzly pushed an event to orgzly. This reminded me, that the script needs a way to interpret and distinguish events from tasks. Rather than just program it to how I setup and use orgmode, I decided to get some feedback from other users first. \n So how do you do it? And do you think a consensus could be reached?\n    submitted by    /u/anoduck  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/yqx7f8/how_do_you_distinguish_an_event_from_a_task/",
+          "publishedOn": "2022-11-09T22:13:14.000Z",
+          "wordCount": 16464,
+          "title": "How do you distinguish an event from a task? (feedback much appreciated)",
+          "imageUrl": "https://external-preview.redd.it/lbI1Zvp62TcO1rnteMXlMsKffaj92EnLbWgEsQKrF_w.jpg?auto=webp&s=eae8cf9a4c3e05b1a23db351d2078cf7f9bb016a"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/yq5mbb/org_mode_always_wins/",
           "author": null,
@@ -3188,26 +3288,6 @@
           "wordCount": 45475,
           "title": "Summary for your org clock table, in ocaml",
           "imageUrl": "https://external-preview.redd.it/g5bx1S3_p5pR6fPcjOpYmaro7-chXRpLpunoQgWfeKg.jpg?auto=webp&s=37fd3c220ed536f0ff54343f847358520505fd63"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/y1wyc6/is_there_a_view_for_orgagenda_that_looks_like/",
-          "author": null,
-          "description": "Hello lovely people!\n I want to know if I can change the view of my org agenda from being a row type to a google calendar type of view or block such that I can see the days in a column rather than rows.\n    submitted by    /u/Aberfitness  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/y1wyc6/is_there_a_view_for_orgagenda_that_looks_like/",
-          "publishedOn": "2022-10-12T07:09:33.000Z",
-          "wordCount": 33632,
-          "title": "Is there a view for org-agenda that looks like google calendar?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/y14te9/tracking_blog_post_changes_by_leveraging_git_and/",
-          "author": null,
-          "description": "submitted by    /u/grtcdr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/y14te9/tracking_blog_post_changes_by_leveraging_git_and/",
-          "publishedOn": "2022-10-11T09:47:12.000Z",
-          "wordCount": 34183,
-          "title": "Tracking blog post changes by leveraging git and ox-html.el",
-          "imageUrl": null
         }
       ]
     },
@@ -3216,6 +3296,86 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/powerline-20221110.1956.tar",
+          "author": null,
+          "description": "The powerline package has been updated to version 20221110.1956.",
+          "link": "https://melpa.org/#/powerline",
+          "publishedOn": "2022-11-10T19:56:00.000Z",
+          "wordCount": 105,
+          "title": "powerline (20221110.1956) --- Rewrite of Powerline",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/wakatime-mode-20221110.1632.el",
+          "author": null,
+          "description": "The wakatime-mode package has been updated to version 20221110.1632.",
+          "link": "https://melpa.org/#/wakatime-mode",
+          "publishedOn": "2022-11-10T16:32:00.000Z",
+          "wordCount": 105,
+          "title": "wakatime-mode (20221110.1632) --- Automatic time tracking extension for WakaTime",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/alert-20221110.1614.el",
+          "author": null,
+          "description": "The alert package has been updated to version 20221110.1614.",
+          "link": "https://melpa.org/#/alert",
+          "publishedOn": "2022-11-10T16:14:00.000Z",
+          "wordCount": 105,
+          "title": "alert (20221110.1614) --- Growl-style notification system for Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/sqlite3-20221110.1050.tar",
+          "author": null,
+          "description": "The sqlite3 package has been updated to version 20221110.1050.",
+          "link": "https://melpa.org/#/sqlite3",
+          "publishedOn": "2022-11-10T10:50:00.000Z",
+          "wordCount": 105,
+          "title": "sqlite3 (20221110.1050) --- Direct access to the core SQLite3 API",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/grails-20221110.929.el",
+          "author": null,
+          "description": "The grails package has been updated to version 20221110.929.",
+          "link": "https://melpa.org/#/grails",
+          "publishedOn": "2022-11-10T09:29:00.000Z",
+          "wordCount": 105,
+          "title": "grails (20221110.929) --- Minor mode for Grails projects",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tabspaces-20221110.133.el",
+          "author": null,
+          "description": "The tabspaces package has been updated to version 20221110.133.",
+          "link": "https://melpa.org/#/tabspaces",
+          "publishedOn": "2022-11-10T01:33:00.000Z",
+          "wordCount": 105,
+          "title": "tabspaces (20221110.133) --- Leverage tab-bar and project for buffer-isolated workspaces",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/transpose-frame-20221109.2053.el",
+          "author": null,
+          "description": "The transpose-frame package has been updated to version 20221109.2053.",
+          "link": "https://melpa.org/#/transpose-frame",
+          "publishedOn": "2022-11-09T20:53:00.000Z",
+          "wordCount": 105,
+          "title": "transpose-frame (20221109.2053) --- Transpose windows arrangement in a frame",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/git-timemachine-20221109.2051.el",
+          "author": null,
+          "description": "The git-timemachine package has been updated to version 20221109.2051.",
+          "link": "https://melpa.org/#/git-timemachine",
+          "publishedOn": "2022-11-09T20:51:00.000Z",
+          "wordCount": 105,
+          "title": "git-timemachine (20221109.2051) --- Walk through git revisions of a file",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/robot-mode-20221109.1630.el",
           "author": null,
@@ -3594,6 +3754,16 @@
           "publishedOn": "2022-11-04T15:44:00.000Z",
           "wordCount": 105,
           "title": "org-roam-timestamps (20221104.1544) --- Keep track of modification times for org-roam",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dwim-shell-command-20221104.734.tar",
+          "author": null,
+          "description": "The dwim-shell-command package has been updated to version 20221104.734.",
+          "link": "https://melpa.org/#/dwim-shell-command",
+          "publishedOn": "2022-11-04T07:34:00.000Z",
+          "wordCount": 105,
+          "title": "dwim-shell-command (20221104.734) --- Shell commands with DWIM behaviour",
           "imageUrl": null
         },
         {
@@ -4424,6 +4594,16 @@
           "publishedOn": "2022-10-28T13:44:00.000Z",
           "wordCount": 105,
           "title": "notmuch-transient (20221028.1344) --- Command dispatchers for Notmuch",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mmm-mode-20221027.2340.tar",
+          "author": null,
+          "description": "The mmm-mode package has been updated to version 20221027.2340.",
+          "link": "https://melpa.org/#/mmm-mode",
+          "publishedOn": "2022-10-27T23:40:00.000Z",
+          "wordCount": 105,
+          "title": "mmm-mode (20221027.2340) --- Allow Multiple Major Modes in a buffer",
           "imageUrl": null
         },
         {
@@ -6165,186 +6345,6 @@
           "wordCount": 105,
           "title": "org-roam-bibtex (20221012.846) --- Org Roam meets BibTeX",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/web-mode-20221012.800.el",
-          "author": null,
-          "description": "The web-mode package has been updated to version 20221012.800.",
-          "link": "https://melpa.org/#/web-mode",
-          "publishedOn": "2022-10-12T08:00:00.000Z",
-          "wordCount": 105,
-          "title": "web-mode (20221012.800) --- major mode for editing web templates",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/tree-sitter-ess-r-20221012.640.el",
-          "author": null,
-          "description": "The tree-sitter-ess-r package has been updated to version 20221012.640.",
-          "link": "https://melpa.org/#/tree-sitter-ess-r",
-          "publishedOn": "2022-10-12T06:40:00.000Z",
-          "wordCount": 105,
-          "title": "tree-sitter-ess-r (20221012.640) --- R with tree-sitter",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/meow-20221012.26.tar",
-          "author": null,
-          "description": "The meow package has been updated to version 20221012.26.",
-          "link": "https://melpa.org/#/meow",
-          "publishedOn": "2022-10-12T00:26:00.000Z",
-          "wordCount": 105,
-          "title": "meow (20221012.26) --- Yet Another modal editing",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/company-fuzzy-20221011.1910.el",
-          "author": null,
-          "description": "The company-fuzzy package has been updated to version 20221011.1910.",
-          "link": "https://melpa.org/#/company-fuzzy",
-          "publishedOn": "2022-10-11T19:10:00.000Z",
-          "wordCount": 105,
-          "title": "company-fuzzy (20221011.1910) --- Fuzzy matching for `company-mode'",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/clj-refactor-20221011.1908.tar",
-          "author": null,
-          "description": "The clj-refactor package has been updated to version 20221011.1908.",
-          "link": "https://melpa.org/#/clj-refactor",
-          "publishedOn": "2022-10-11T19:08:00.000Z",
-          "wordCount": 105,
-          "title": "clj-refactor (20221011.1908) --- A collection of commands for refactoring Clojure code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/bibtex-completion-20221011.1854.el",
-          "author": null,
-          "description": "The bibtex-completion package has been updated to version 20221011.1854.",
-          "link": "https://melpa.org/#/bibtex-completion",
-          "publishedOn": "2022-10-11T18:54:00.000Z",
-          "wordCount": 105,
-          "title": "bibtex-completion (20221011.1854) --- A BibTeX backend for completion frameworks",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/counsel-fd-20221011.1853.el",
-          "author": null,
-          "description": "The counsel-fd package has been updated to version 20221011.1853.",
-          "link": "https://melpa.org/#/counsel-fd",
-          "publishedOn": "2022-10-11T18:53:00.000Z",
-          "wordCount": 105,
-          "title": "counsel-fd (20221011.1853) --- counsel interface for fd",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/tempel-20221011.1728.el",
-          "author": null,
-          "description": "The tempel package has been updated to version 20221011.1728.",
-          "link": "https://melpa.org/#/tempel",
-          "publishedOn": "2022-10-11T17:28:00.000Z",
-          "wordCount": 105,
-          "title": "tempel (20221011.1728) --- Tempo templates/snippets with in-buffer field editing",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/doom-modeline-20221011.1511.tar",
-          "author": null,
-          "description": "The doom-modeline package has been updated to version 20221011.1511.",
-          "link": "https://melpa.org/#/doom-modeline",
-          "publishedOn": "2022-10-11T15:11:00.000Z",
-          "wordCount": 105,
-          "title": "doom-modeline (20221011.1511) --- A minimal and modern mode-line",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/starlit-theme-20221011.1445.el",
-          "author": null,
-          "description": "The starlit-theme package has been updated to version 20221011.1445.",
-          "link": "https://melpa.org/#/starlit-theme",
-          "publishedOn": "2022-10-11T14:45:00.000Z",
-          "wordCount": 105,
-          "title": "starlit-theme (20221011.1445) --- Deep blue dark theme with bright colors from the starlit sky",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-treeusage-20221011.1301.tar",
-          "author": null,
-          "description": "The org-treeusage package has been updated to version 20221011.1301.",
-          "link": "https://melpa.org/#/org-treeusage",
-          "publishedOn": "2022-10-11T13:01:00.000Z",
-          "wordCount": 105,
-          "title": "org-treeusage (20221011.1301) --- Examine the usage of org headings in a tree-like manner",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/goggles-20221011.1137.el",
-          "author": null,
-          "description": "The goggles package has been updated to version 20221011.1137.",
-          "link": "https://melpa.org/#/goggles",
-          "publishedOn": "2022-10-11T11:37:00.000Z",
-          "wordCount": 105,
-          "title": "goggles (20221011.1137) --- Pulse modified regions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/osm-20221011.1136.tar",
-          "author": null,
-          "description": "The osm package has been updated to version 20221011.1136.",
-          "link": "https://melpa.org/#/osm",
-          "publishedOn": "2022-10-11T11:36:00.000Z",
-          "wordCount": 105,
-          "title": "osm (20221011.1136) --- OpenStreetMap viewer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/affe-20221011.1135.tar",
-          "author": null,
-          "description": "The affe package has been updated to version 20221011.1135.",
-          "link": "https://melpa.org/#/affe",
-          "publishedOn": "2022-10-11T11:35:00.000Z",
-          "wordCount": 105,
-          "title": "affe (20221011.1135) --- Asynchronous Fuzzy Finder for Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/recursion-indicator-20221011.1130.el",
-          "author": null,
-          "description": "The recursion-indicator package has been updated to version 20221011.1130.",
-          "link": "https://melpa.org/#/recursion-indicator",
-          "publishedOn": "2022-10-11T11:30:00.000Z",
-          "wordCount": 105,
-          "title": "recursion-indicator (20221011.1130) --- Recursion indicator",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/cape-20221011.1128.tar",
-          "author": null,
-          "description": "The cape package has been updated to version 20221011.1128.",
-          "link": "https://melpa.org/#/cape",
-          "publishedOn": "2022-10-11T11:28:00.000Z",
-          "wordCount": 105,
-          "title": "cape (20221011.1128) --- Completion At Point Extensions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/hl-todo-20221011.1032.el",
-          "author": null,
-          "description": "The hl-todo package has been updated to version 20221011.1032.",
-          "link": "https://melpa.org/#/hl-todo",
-          "publishedOn": "2022-10-11T10:32:00.000Z",
-          "wordCount": 105,
-          "title": "hl-todo (20221011.1032) --- Highlight TODO and similar keywords",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/tango-plus-theme-20221011.1012.el",
-          "author": null,
-          "description": "The tango-plus-theme package has been updated to version 20221011.1012.",
-          "link": "https://melpa.org/#/tango-plus-theme",
-          "publishedOn": "2022-10-11T10:12:00.000Z",
-          "wordCount": 105,
-          "title": "tango-plus-theme (20221011.1012) --- A color theme based on the tango palette",
-          "imageUrl": null
         }
       ]
     },
@@ -6353,6 +6353,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yrli57/mw_not_working_but_mx_works_windows/",
+          "author": null,
+          "description": "Hi, I just got issued a new work computer and I'm not sure what the problem is.\n M-w does not work. M-x works, which would seem to indicate that the problem is not that windows is prioritizing the meta key for other operations outside of emacs.\n When I run describe-key, it doesn't register anything as happening when I press M-w.\n When I use M-x to find the kill-ring-save command, it shows M-w as being the assigned shortcut. And yet, nothing happens when I type M-w.\n https://preview.redd.it/73se2bbbp5z91.png?width=272&format=png&auto=webp&s=07132ae264ff7b67afdd149259b663b846284e4f\n Any ideas on whether the issue is with emacs or with windows, and how to address?\n    submitted by    /u/tiktaaliki  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yrli57/mw_not_working_but_mx_works_windows/",
+          "publishedOn": "2022-11-10T17:14:45.000Z",
+          "wordCount": 15614,
+          "title": "M-w not working but M-x works - windows",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yrk16y/dynamic_buffername_in_termmode_ansiterm/",
+          "author": null,
+          "description": "submitted by    /u/tonyaldon  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yrk16y/dynamic_buffername_in_termmode_ansiterm/",
+          "publishedOn": "2022-11-10T16:25:04.000Z",
+          "wordCount": 15345,
+          "title": "Dynamic buffer-name in term-mode | ansi-term, rename-buffer, after-change-functions, add-hook",
+          "imageUrl": "https://external-preview.redd.it/eC05B98L3Y8BRce3Zhrk57bHvbJ51CkzDIQIlbFyxC8.jpg?auto=webp&s=5a9166ec37bc31cd7912d21fec8fde1435328d0f"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yrj04y/a_couple_company_questions_implicit_cthis_and/",
+          "author": null,
+          "description": "So first, Eglot + clangd + company don't insert function arguments for me. Company used to do this for me when I was using gtags. I've checked my config options, and I have ALL of the optional server capabilities turn ON and I've got `Company Clang Insert Arguments` set to `on'. I'm not sure what else to check. (Emacs 28.0.92 on Windows). \n Second, is there a way to turn on completions for the class I'm working on without typing `this->` first? If I want a member variable and I don't remember the name, there doesn't SEEM to be something that lets me implicitly ask for just the class variables and functions. If I start a company completion, it gives me a much broader list of completions, which can be very handy, but usually the list is too big and generic.\n    submitted by    /u/vjgoh  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yrj04y/a_couple_company_questions_implicit_cthis_and/",
+          "publishedOn": "2022-11-10T15:50:41.000Z",
+          "wordCount": 16555,
+          "title": "A couple company questions: implicit c++-this and argument completion with eglot/clang",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yrhou1/eglot_hangs_for_multiple_seconds_on_completions/",
+          "author": null,
+          "description": "I've tried a few times to move away from lsp-mode to eglot but every time I get stopped dead in my tracks by a multi second hang on almost any input with a\n `error in process filter: flymake-error: [Flymake] Unexpected report from disabled backend eglot-flymake-backend`\n how do i solve this?\n    submitted by    /u/General_Librarian_60  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yrhou1/eglot_hangs_for_multiple_seconds_on_completions/",
+          "publishedOn": "2022-11-10T15:05:12.000Z",
+          "wordCount": 15899,
+          "title": "Eglot hangs for multiple seconds on completions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yrfd0n/can_projectel_remember_a_projects_compile_command/",
+          "author": null,
+          "description": "Every time I open an existing project, c-x p c defaults to make -k, and there isn't even any command history.\n ​\n Edit: I don't understand the syntax ((nil . ((variable . \"value\")))) of .dir-locals.el, so many parentheses, but fortunately there is a add-dir-local-variable function, then just select the compile-command.\n    submitted by    /u/OldMansKid  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yrfd0n/can_projectel_remember_a_projects_compile_command/",
+          "publishedOn": "2022-11-10T13:43:12.000Z",
+          "wordCount": 15781,
+          "title": "Can Project.el remember a project's compile command?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yrdnym/json_buffers_dont_seem_to_respect_setvariable/",
+          "author": null,
+          "description": "Long-time emacs user here.\n I need to occasionally edit Jason buffers indented with 2 spaces, when my default indentation is 4.\n However, incanting (set-variable 'tab-width 2) in such a JSON buffer has, to my surprise, no effect.\n M-x describe-variable says:\n tab-width is a variable defined in ‘C source code’. Its value is 2 Original value was 8 Local in buffer summary-fields.json; global value is 4 \n exactly as expected, but hitting tab, or even comma :-/ consistently aligns me with 4 space tabs, which is getting me down.\n C-h m gives me the mode:\n JavaScript mode defined in ‘js.el’: Major mode for editing JavaScript. \n which also seems as expected.\n I'm running Aquamacs 3.6 GNU Emacs 25.3.50.1\n Thanks for any ideas or tips.\n    submitted by    /u/TomSwirly  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yrdnym/json_buffers_dont_seem_to_respect_setvariable/",
+          "publishedOn": "2022-11-10T12:36:49.000Z",
+          "wordCount": 15711,
+          "title": "Json buffers don't seem to respect (set-variable 'tab-width 2)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yrd59s/how_to_set_resolution_on_doom_emacs_for_x11/",
+          "author": null,
+          "description": "Hello,\n I'm attempting to run emacs remotely through SSH X11 Forwarding but after installing Doom emacs it broken the resolution:\n https://imgur.com/8p4rTzI \n Running emacs without any additional configuration loads it up on a GTK interface which is resizable and the resolution is fine. How would i go about correcting this in Doom?\n    submitted by    /u/terramot  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yrd59s/how_to_set_resolution_on_doom_emacs_for_x11/",
+          "publishedOn": "2022-11-10T12:15:02.000Z",
+          "wordCount": 15025,
+          "title": "How to set resolution on Doom emacs for X11 forwarding?",
+          "imageUrl": "https://external-preview.redd.it/eUNdBlzBFhzslAziPlwku5nyXkytqneSjj7it-cGNSI.jpg?auto=webp&s=6e5bfc40888d5d57fcec899c074d6bce9dbd5ccf"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yrannt/dynamic_documents_like_in_potluck/",
+          "author": null,
+          "description": "Some of you may have seen this post recently: https://www.inkandswitch.com/potluck/.\n Org mode is perhaps the first thing that comes to mind as a way to have this in emacs. However, org mode isn't directly extensible by the user. At least, I'm not aware of any API to define e.g. a new kind of plain list, with associated operations.\n Are there other packages that allow defining ad hoc user widgets in the same style? Recognizing patterns in bits of text, extracting info from them, and providing actions for interacting with them. This could very pair nicely with org.\n    submitted by    /u/StrangeNegotiation52  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yrannt/dynamic_documents_like_in_potluck/",
+          "publishedOn": "2022-11-10T10:02:56.000Z",
+          "wordCount": 16536,
+          "title": "Dynamic documents like in Potluck",
+          "imageUrl": "https://external-preview.redd.it/M4HVX91Ivm9sFQsx0QWF-X2yeO0DnFuuK4yEGqgoXMQ.jpg?auto=webp&s=d821036bcad0bc266bdf54f4559c46ee4c411e06"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yr7v50/confused_about_emacs_project_management_support/",
+          "author": null,
+          "description": "There is project.el (inbuilt), EDE (inbuilt) and many others to choose from.\n I understand that project.el is \"new\" and follows the approach when there is a .git folder and other heuristics to auto-determine what a constitutes a project. EDE is \"old\" and has a declarative approach.\n Yet EDE is prominently documented and has imenu-entries, suggesting newcomers to click and try.\n Is EDE using project.el under the hood? And if not: Wouldn't project.el warrant menu entries?\n    submitted by    /u/JohnDoe365  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yr7v50/confused_about_emacs_project_management_support/",
+          "publishedOn": "2022-11-10T06:59:39.000Z",
+          "wordCount": 17446,
+          "title": "Confused about Emacs project management support",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yr6sl3/is_there_an_equivalent_of_n_in_evil_mode_but_for/",
+          "author": null,
+          "description": "Often I find myself wanting to do the classic vim/evil pattern of \n  \nsearch for <keyword>\n do something (e.g., a macro) to the text at/near <keyword>\n press `n` to go the next occurence of <keyword>\n  \nand so on...\n This works great for buffers, but I wish there was an equivalent behavior of `n`/`N`, but for entire projects. I know you can use projectile to find and replace regexps, but I like the flexibility and ease of use of the `n`/`N` + macros flow.\n    submitted by    /u/UnidentifiedSkinny  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yr6sl3/is_there_an_equivalent_of_n_in_evil_mode_but_for/",
+          "publishedOn": "2022-11-10T05:55:11.000Z",
+          "wordCount": 14664,
+          "title": "Is there an equivalent of \"n\" in evil mode, but for projects?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yr2u0x/recommended_workflow_for_using_orgroam_to_read/",
+          "author": null,
+          "description": "Recently I've started using org-roam to build my note taking system.\n I am wondering whether there is a recommended workflow for using org-roam to read source code managed by git?\n What I am imagining is that:\n  \nWhen I open a source code file/buffer, the notes I've taken before would show highlight in the buffer.\n I can read the notes I've taken, and travel from notes to source, under org-roam\n 's help.\n The notes can record the git commit hash of the selected text if any. If I want to travel from notes to source like in 2.\n , it will show the historical file content when the notes were taken, if the file has changed.\n  \n   submitted by    /u/cmal_0807  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yr2u0x/recommended_workflow_for_using_orgroam_to_read/",
+          "publishedOn": "2022-11-10T02:26:06.000Z",
+          "wordCount": 17344,
+          "title": "Recommended workflow for using org-roam to read source code and take notes?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/yqxt72/change_text_appearance_in_buffer/",
+          "author": null,
+          "description": "I'm wondering how I can use emacs lisp to change the way text appears in the buffer (without actually modifying the underlying text). Essentially I want to include a \"label\" of sorts. \n Specifically, I create presentations using RMarkdown and xaringan (which use remark.js on the backend) in Emacs. Three dashed lines (e.g., \"---\") marks the beginning of a new slide. At every occurrence of these three dashed lines, I want to display the slide number. So the buffer will look like this:\n ```\n  \nHeader for first slide\n content\n  \nHeader for second slide\n  \nHeader for third slide\n ```\n And what I want the the buffer to look like this:\n ```\n --- Slide 1\n Header for first slide\n content\n --- Slide 2\n Header for second slide\n --- Slide 3\n Header for third slide\n ```\n So after I type \"---\" with a line break, it will add the slide number. The trick is that I can't actually insert the text though because in order for xaringan to properly break slides, there cannot be anything after the three dashes, not even a line break.\n How can I do this? If I am in a git project, I can see that magit includes the \"+\" character at the end of the line without actually modifying the plain text, so this has to be doable, right?\n    submitted by    /u/haffnasty  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/yqxt72/change_text_appearance_in_buffer/",
+          "publishedOn": "2022-11-09T22:37:22.000Z",
+          "wordCount": 15980,
+          "title": "Change text appearance in buffer",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/yqupkt/esotheric_keyboard_layout/",
           "author": null,
@@ -9922,86 +10042,6 @@
           "wordCount": 35485,
           "title": "Per buffer theme-headings for ef and modus themes",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/y1y0kq/weekly_tips_tricks_c_thread/",
-          "author": null,
-          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n See this search for previous \"Weekly Tips, Tricks, &c.\" Threads.\n Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/y1y0kq/weekly_tips_tricks_c_thread/",
-          "publishedOn": "2022-10-12T08:15:11.000Z",
-          "wordCount": 36638,
-          "title": "Weekly Tips, Tricks, &c. Thread",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/y1xfts/emacs_for_the_win/",
-          "author": null,
-          "description": "So my OS had a significant update yesterday which broke my WM one day before a work conference trip.\n alt+ctrl+f3\n Login\n doom run\n Problem solved - who needs a GUI\n (... me, I need my GUI to do the non-emacs stuff)\n    submitted by    /u/thephatmaster  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/y1xfts/emacs_for_the_win/",
-          "publishedOn": "2022-10-12T07:39:17.000Z",
-          "wordCount": 35862,
-          "title": "Emacs for the win",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/y1w8o7/help_with_orgsuperagendamode/",
-          "author": null,
-          "description": "Hi there,\n I just installed and configured org-super-agenda-mode.\n I'm using it inside org-agenda-custom-command\n Unfortunately this only works if I enable org-super-agenda mode manually after emacs started:\n M-x org-super-agenda-mode C-c a rd # to open my custom view \n I really read the documentation telling me to us setq.\n Here's my code: \n (setq org-agenda-custom-commands '((\"rd\" \"MyView\" ((agenda \"\" ((org-agenda-span 2) (org-super-agenda-groups '((:name \"Today\" :time-grid t :date today :todo \"TODAY\" :scheduled today :order 1) (:discard (:anything t)) )))) (alltodo \"\" ((org-agenda-overriding-header \"\") (org-agenda-sorting-strategy '(deadline-up)) (org-super-agenda-groups '((:name \"Important\" :property \"urgent\" :order 1) (:name \"Überfällig\" :deadline past :order 2) (:name \"Heute fällig\" :deadline today :order 3) (:name \"Current Taks\" :todo (\"InProgress\" \"INPROGRESS\") :order 4) (:name \"Next ToDos\" :todo (\"InputQueue\" \"INPUTQUEUE\") :order 5) (:name \"Drafts\" :todo \"DRAFT\" :order 6) )))))) (\"inf\" \"InfAgenda\" tags \"filename={INFIT}\"( (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp \"\\\\* InProgress\\\\|\\\\* InputQueue\\\\|* Waiting\\\\|* DRAFT\\\\|* ToDo\\\\|* Backlog\\\\|* INPUTQUEUE\\\\|* INPROGRESS\")) (org-agenda-sorting-strategy '(deadline-up)) (org-agenda-view-columns-initially t))) (\"w\" todo \"Waiting\") (\"iq\" todo \"InputQueue\") (\"ip\" todo \"InProgress\") (\"d\" todo \"DRAFT\") (\"y\" agenda*) )) \n How can I get this to work automatically for the custom command \"rd\".\n    submitted by    /u/RepresentativeFox684  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/y1w8o7/help_with_orgsuperagendamode/",
-          "publishedOn": "2022-10-12T06:27:29.000Z",
-          "wordCount": 35840,
-          "title": "help with org-super-agenda-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/y1uakv/offline_emacs/",
-          "author": null,
-          "description": "Dear All, I just got Emacs 28.1 installed on my work laptop. It's a windows 10 machine administered by the IT. The Emacs install does not have access to the internet - howerver, other programs like Firefox do.\n I download packages manually and use use-package without :ensure to configure them. I managed to configure a very basic system with ivy, swiper, evil (+collection). The main goal is convenient org-mode use.\n Do you have any tips for such an offline situation? I admit its quite a chore to do all the config and package installation manually.\n    submitted by    /u/jakub1842  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/y1uakv/offline_emacs/",
-          "publishedOn": "2022-10-12T04:39:32.000Z",
-          "wordCount": 35817,
-          "title": "Offline Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/y1tneh/macos_sharing_dwim_style/",
-          "author": null,
-          "description": "submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/y1tneh/macos_sharing_dwim_style/",
-          "publishedOn": "2022-10-12T04:05:40.000Z",
-          "wordCount": 35694,
-          "title": "macOS sharing (DWIM style)",
-          "imageUrl": "https://external-preview.redd.it/nN2_p3zGwBj5dGJJQmMEFs5o_rSN-YZ53O15SsChIeM.png?format=pjpg&auto=webp&s=3255557301c5d8058d0e8edf7ab49acbaf50be95"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/y1qlky/how_to_fix_vuiet_or_alternative_music_players/",
-          "author": null,
-          "description": "Hey all! This post isn’t just about vuiet but this is my main issue right now. Using spacemacs on pop! OS I recently decided to start adding some extended features and working on my config. Eventually I managed to get lastfm.el and Vuiet working together and it’s awesome! I think I’ve figured out how to make a script with new keybinds for the Vuiet stuff I need to use, but some features are broken, namely searching songs by lyrics. I’m not sure how to debug emacs scripts so if anyone has any suggestions, including a better player, I’m open. Also, I’m shopping around for a completion module, mostly for Python but also C and HTML.\n Edit:\n Vuiet is cool, but seems like a lost cause. I think the only functionality EMMS doesn’t have that Vuiet did, though, is searching by artist for stuff I don’t actually have. \n My main problem at this point is how to add an SMB share to EMMS.\n    submitted by    /u/Magicaldave918  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/y1qlky/how_to_fix_vuiet_or_alternative_music_players/",
-          "publishedOn": "2022-10-12T01:37:58.000Z",
-          "wordCount": 36371,
-          "title": "How to Fix vuiet, or alternative music players",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/y19czm/problem_with_loading_startup_file_in_windows/",
-          "author": null,
-          "description": "Emacs is trying to load init file from emacs installation location in program files/emacs/bin. As I found, changing files there is tricky. I remember being able to do my config in my user folder. How can I achieve that? Thanks!\n    submitted by    /u/suprasa  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/y19czm/problem_with_loading_startup_file_in_windows/",
-          "publishedOn": "2022-10-11T13:40:07.000Z",
-          "wordCount": 35916,
-          "title": "Problem with loading startup file in windows",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/y18eb0/how_to_open_a_file_given_by_enviroment_variable/",
-          "author": null,
-          "description": "Hi, I binded a function open-file-at-cursor. This allows me to open the file directly from a file (given I've written down the correct path). Now, I want to use something like this where I can give the file paths as environment variable. I've been struggling but couldn't find anything related to this. Please help!\n Edit: Noting down the use case for this\n Let's assume we have a file in path - /home/user/dir1/dir2/file.txt\n I've set some env variable $TEST=/home/user/dir1\n In some other file (let's name it file2.f under dir2), I've mentioned following two lines:\n ../file.txt\n $TEST/dir2/file.txt\n With the \"open-file-at-cursor\" bind, I'm able to directly open a file.txt when my cursor is on 1st line. However, the same bind breaks down for line 2. I'm expecting both lines to open the same file. ffap does not solve my issue as it opens the final directory that holds my file(this will increase my keystrokes).\n Thanks\n    submitted by    /u/Kr1ot  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/y18eb0/how_to_open_a_file_given_by_enviroment_variable/",
-          "publishedOn": "2022-10-11T12:56:42.000Z",
-          "wordCount": 36141,
-          "title": "How to open a file given by enviroment variable",
-          "imageUrl": "https://external-preview.redd.it/x3lphP9wS9uLdBlhFMdpIMdUvX7_N4mQblMajzuyYFA.jpg?auto=webp&s=51cabb6e687496097a20f73980a3ce8bed943972"
         }
       ]
     },
@@ -10010,6 +10050,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2418@/discussions",
+          "author": "inquisitiv3",
+          "description": "I'm currently learning a couple of different programming languages, one is very similar to programming languages I've worked with before; and the other one has several differences.\nShould I skip creating these notes and instead focus on actually practice programming in these languages; or should I take the time writing these notes?\nThe situation is a bit different regarding the two languages I'm learning, but I think that I maybe will end with the same solution for both languages. The first programming language is simple and similar to other programming languages I've worked in before. While I still need to read manuals and books to get to learn the languages, a big part of the language (syntax) and ecosystem (libraries) is similar to other languages and ecosystems I've used before. Theref…",
+          "link": "https://forum.zettelkasten.de/discussion/2418/what-dont-you-include-in-your-zettelkasten",
+          "publishedOn": "2022-11-10T19:44:13.000Z",
+          "wordCount": 904,
+          "title": "What don't you include in your zettelkasten?",
+          "imageUrl": null
+        },
         {
           "id": "2417@/discussions",
           "author": "Sascha",
