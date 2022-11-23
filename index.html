@@ -22,8 +22,8 @@
             data-action="toggle-accordions"
             title="Click to toggle the day, Ctrl + click to toggle all."
           >
-            <time class="daily-heading-toggle__weekday js-offset-weekday" data-offset-date=2022-11-22 datetime="2022-11-22T18:39:13.000Z">2022-11-22</time>
-            <time class="daily-heading-toggle__date js-offset-date" data-offset-date=2022-11-22 datetime="2022-11-22T18:39:13.000Z"></time>
+            <time class="daily-heading-toggle__weekday js-offset-weekday" data-offset-date=2022-11-23 datetime="2022-11-23T19:55:58.000Z">2022-11-23</time>
+            <time class="daily-heading-toggle__date js-offset-date" data-offset-date=2022-11-23 datetime="2022-11-23T19:55:58.000Z"></time>
           </button>
         </h2>
         <ul class="sources card">
@@ -42,19 +42,17 @@
                       <details
                         class="article-expander"
                         data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z217o0/branching_out_of_recursive_function/"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z2yskn/functional_revisit/"
                         open
                       >
-                        <summary class="article-expander__title">Branching out of recursive function</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z217o0/branching_out_of_recursive_function/">
+                        <summary class="article-expander__title">Functional revisit</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z2yskn/functional_revisit/">
                           <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/Frol65lNQ_acHOw09wZHamaDJrbfcV6XLk6DdnQbonc.png?auto&#x3D;webp&amp;s&#x3D;e6d5a2d6068ca9df11927b0ed61b19000ec06e76" loading="lazy" class="media-object__media article-image" />
                             <span class="media-object__text">
-                              <span>I&#x27;ve been trying to write a program to check whether a propositional logic formula is valid or not by representing it as a tree and then recursively negating the root node and all subtrees appropriately to look for contradictions, and I reached a point where I don&#x27;t know how to proceed or if I should just rewrite everything.
- This is how I&#x27;m representing the tree, SBranch is only used for the NOT operator.
- data Tree &#x3D; Leaf {op :: String, eval :: Bool} | DBranch {op :: String, eval :: Bool, left :: Tree, right :: Tree} | SBranch {op :: String, eval :: Bool, left :: Tree} deriving Show 
- I have a function that takes a String in prefix notation and turns it into a tree using the above data type. Then, I have two functions, one that negates a subtreee and another that validates it (not sure i…</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;57
+                              <span>I’d like to revisit the functional style of programming again for my own explorations in graphics and media programming. Ten years ago it seemed like Haskell was the place to be . Is it still today or should I invest in n looking at another language like “go” ? ( although not considered a purely functional language) .
+    submitted by    /u/964racer  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;59
                                   min&hairsp;)</span>
                             </span>
                           </div>
@@ -65,22 +63,72 @@
                       <details
                         class="article-expander"
                         data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z1xk6t/ann_first_release_candidate_for_stack293/"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z2tjxu/a_lens_problem/"
                         open
                       >
-                        <summary class="article-expander__title">[ANN] First release candidate for stack-2.9.3</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z1xk6t/ann_first_release_candidate_for_stack293/">
+                        <summary class="article-expander__title">A lens problem</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z2tjxu/a_lens_problem/">
                           <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/p-DeGuIluF92sYAwViboks8tfQezw8Vpg5veBDvGGrE.jpg?auto&#x3D;webp&amp;s&#x3D;566a72a65cd600a751929397494a7f94e77500e4" loading="lazy" class="media-object__media article-image" />
                             <span class="media-object__text">
-                              <span>You can download binaries for this pre-release from: Release rc/v2.9.2.1 (release candidate) · commercialhaskell/stack · GitHub.
- Please test it and let us know at the Stack repository if you run into any trouble. If all goes well, we hope to release the final version in a couple of weeks.
- Changes since v2.9.1:
- Behavior changes:
-  
-In YAML configuration files, the package-index key is introduced which takes precedence over the existing package-indices key. The latter is deprecated.
- In YAML configuration files, the hackage-security key of the package-index key or the package-indices item can be omitted, and the Hackage Security configuration for the item will default to that for the official Hackage server. See #5870.
- Add the stack config set package-index download-prefix command to set…</span>
+                              <span>There&#x27;s a thing that I feel like I should be able to do with lenses, but I can&#x27;t quite work out how. Here&#x27;s the idea. I have a MultiTree data structure, which looks like this:
+ &#x60;&#x60;&#x60;haskell
+ data Node a &#x3D; Node a a deriving stock (Functor, Show, Foldable, Traversable, Generic) type MultiTree b &#x3D; FreeT Node [] (b)
+ -- from the free package: -- newtype FreeT f m a &#x3D; FreeT { runFreeT :: m (FreeF f a (FreeT f m a)) } -- data FreeF f a b &#x3D; Pure a | Free (f b) &#x60;&#x60;&#x60;
+ Basically a multitree is a list of trees of lists of trees of... As an example:
+ &#x60;&#x60;&#x60;haskell
+ trees :: MultiTree Text trees &#x3D; FreeT [ Free (Node (FreeT [ Pure &quot;John&quot;, Pure &quot;Mary&quot;, Pure &quot;Andy&quot;]) (FreeT [ Pure &quot;runs&quot;, Free (Node (FreeT [Pure &quot;eats&quot;]) (FreeT [Pure &quot;lettuce&quot;, Pure &quot;garlic&quot;])) ]) ) ] &#x60;&#x60;&#x60;
+ Now what I&#x27;d like to do is to use the lens library to do a breadth first traversal trees ^.. cleverTraversal which gives [&quot;John eats lettuce&quot;, &quot;Mary eats lettuce&quot;, &quot;John eats garlic&quot;, &quot;Mary eats garlic&quot;, &quot;Andy eats lettuce&quot;, &quot;Andy eats garlic&quot;].
+ The reason I got inspired to do this with lenses is that I came across the plate and levels functions in lens, and those seemed like the right tools to, respectively, traverse recursively, and breadth first traverse. And FreeT has a Plated instance, so I was hoping it would all work magically. But so far I&#x27;m a bit stuck.
+ Anyway, I thought it might be fun to share...
+    submitted by    /u/Limp_Step_6774  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;59
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z2tjwu/welltyped_announcing_a_live_tutorial_on/"
+                        open
+                      >
+                        <summary class="article-expander__title">Well-Typed - Announcing a live tutorial on eventlog2html and ghc-debug</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z2tjwu/welltyped_announcing_a_live_tutorial_on/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/kosmikus  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;60
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z2pzv9/stack_build_fails_with_gcc_failed_in_phase/"
+                        open
+                      >
+                        <summary class="article-expander__title">&#x60;Stack build&#x60; fails with &#x60;gcc&#x27; failed in phase &#x60;Assembler&#x27;</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z2pzv9/stack_build_fails_with_gcc_failed_in_phase/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/-WiKXADWH5lgU4gQv5fcDAQ9QKNBZTJ-D83BykIL2HA.jpg?auto&#x3D;webp&amp;s&#x3D;07c121a0180003f7373863af66192b6ff6a937da" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>Hi there,
+ I&#x27;m trying to build a project with &#x60;stack&#x60;, but I get the error from the title. If I run &#x60;cabal build&#x60; everything works.
+ This is the output of &#x60;stack build -v&#x60; : https://pastebin.com/YMNS5riV 
+ I have the latest stack version
+ Any Ideas?
+ Thank you in advance
+    submitted by    /u/Obvious-Fix19  
+ [link]   [comments]</span>
                                 &ensp;<span class="article-reading-time">(&hairsp;55
                                   min&hairsp;)</span>
                             </span>
@@ -92,16 +140,92 @@ In YAML configuration files, the package-index key is introduced which takes pre
                       <details
                         class="article-expander"
                         data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z1s907/hefty_algebras_modular_elaboration_of_higherorder/"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z2pupj/ksf_media_ab_hiring_senior_developer_in_helsinki/"
                         open
                       >
-                        <summary class="article-expander__title">Hefty Algebras: Modular Elaboration of Higher-Order Algebraic Effects</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z1s907/hefty_algebras_modular_elaboration_of_higherorder/">
+                        <summary class="article-expander__title">KSF Media Ab hiring Senior Developer in Helsinki, Finland</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z2pupj/ksf_media_ab_hiring_senior_developer_in_helsinki/">
                           <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/6TcBbPkhYf51_O8Jtib2aqjRoAHnKuI1KSsMmPASnz0.jpg?auto&#x3D;webp&amp;s&#x3D;13f56a18e285f4f969cfed6d200320dc49df73cb" loading="lazy" class="media-object__media article-image" />
                             <span class="media-object__text">
-                              <span>submitted by    /u/Iceland_jack  
+                              <span>KSF Media is Finland&#x27;s largest Swedish language news media group. Our products include Hufvudstadsbladet, Västra Nyland, Östnyland and HBL Junior. KSF Media&#x27;s digital products are growing fast and our focus is in digital subscription sales and product development. 
+ We are now looking for a new member to join our digital development team to create outstanding news media products for our readers. We are a small but capable team with a lean way of working and passion to learn new things every day.
+ Our way of working
+  
+Kanban
+ Pair Programming, Code Reviews
+ Git, CI/CD (multiple deployments a day), Trunk Based Development
+ Working in the open. Our whole frontend is open source: https://github.com/KSF-Media/affresco and https://github.com/KSF-Media/mosaico
+  
+Our stack
+  
+Most new developments happen in Haskell, PureScript and Javascript
+ Cloud Infrastructure as Code (Google Cloud, Kubernetes, Terraform)
+ Microservices environment with REST APIs
+  
+What we expect from you some relevant work experience and
+  
+English language. Swedish or Finnish knowledge is a plus
+ Knowledge of the principles behind the modern Web stack: things like MVC, Relational Databases and Testing
+ High motivation, self-steering, willingness to learn and dive into things, good social skills and good sense of humour
+ Interest in functional programming, news media and making the world a better place
+ Awareness of some UX principles, API design (and optionally UI design) and empathy for the users of your code
+  
+What we can offer
+  
+Flexible terms, with possibility to remote working
+ Competitive salary and benefits
+ The best co-workers
+ Office in the most central location in Helsinki
+  
+Interested?
+  
+Please apply via LinkedIn
+  
+or
+  
+drop a line at antti.haarala@ksfmedia.fi
+  
+no later than on the 5th of December.
+    submitted by    /u/kaol  
  [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;50
+                                &ensp;<span class="article-reading-time">(&hairsp;63
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >Scala</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/scala/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/scala/comments/z2siur/lichess_is_running_scala_3_now/"
+                        open
+                      >
+                        <summary class="article-expander__title">Lichess is running Scala 3 now</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/z2siur/lichess_is_running_scala_3_now/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/-dbUolWusJunvHSHX3OXUh_NWioDrzZMtKwjTlUVop0.jpg?auto&#x3D;webp&amp;s&#x3D;fe97b919a14b5fc2b34fef07cd6b84223a11badb" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>“The legendary migration” at https://github.com/lichess-org/lila/pull/11875 is now merged!
+    submitted by    /u/Seth_Lightbend  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;54
                                   min&hairsp;)</span>
                             </span>
                           </div>
@@ -112,17 +236,17 @@ In YAML configuration files, the package-index key is introduced which takes pre
                       <details
                         class="article-expander"
                         data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z1rfqh/webassembly_backend_merged_into_ghc/"
+                        data-accordion-key="https://www.reddit.com/r/scala/comments/z2e9nq/semigroupal_parallel_y_applicative/"
                         open
                       >
-                        <summary class="article-expander__title">WebAssembly backend merged into GHC</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z1rfqh/webassembly_backend_merged_into_ghc/">
+                        <summary class="article-expander__title">Semigroupal, Parallel y Applicative</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/z2e9nq/semigroupal_parallel_y_applicative/">
                           <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/Bj50fREKn41m6v1UPb2_hlrczuDz1nxR1tSRjFf-mzU.jpg?auto&#x3D;webp&amp;s&#x3D;6803e63008eaa75aac55167a9225dd6c2f0316a7" loading="lazy" class="media-object__media article-image" />
+                              <img src="https://external-preview.redd.it/xdRjR5xMX-59kOV-eZKHksZ9VuF8sa0Pk6vUnPfT1W4.jpg?auto&#x3D;webp&amp;s&#x3D;c20fc9727a047207201a2ebc10ebb0e700d0748b" loading="lazy" class="media-object__media article-image" />
                             <span class="media-object__text">
-                              <span>submitted by    /u/brdrcn  
+                              <span>submitted by    /u/emanuelpeg  
  [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;59
+                                &ensp;<span class="article-reading-time">(&hairsp;64
                                   min&hairsp;)</span>
                             </span>
                           </div>
@@ -143,6 +267,540 @@ In YAML configuration files, the package-index key is introduced which takes pre
                   <a class="source-heading__link" href="https://www.reddit.com/r/emacs/">Open</a>
                 </h3>
                 <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z2q9va/start_reading_emacs_lisp_code_today/"
+                        open
+                      >
+                        <summary class="article-expander__title">Start reading Emacs Lisp code TODAY</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z2q9va/start_reading_emacs_lisp_code_today/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/hC7CAoQz8e7GNUMXBey0mBDjzAJbAhu7fyBH8WuhK70.jpg?auto&#x3D;webp&amp;s&#x3D;dccc49ac18953d0e12fdd3cc34775ee1b15dafee" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>submitted by    /u/tonyaldon  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;50
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z2oeiz/any_experts_on_fontlock_here/"
+                        open
+                      >
+                        <summary class="article-expander__title">Any experts on font-lock here?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z2oeiz/any_experts_on_fontlock_here/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/7aw1sBshNAKmzfSx7iyTBCqMyjOglHqs-vVSdjUubkA.jpg?auto&#x3D;webp&amp;s&#x3D;93d258ca47b8c596f798c57605985a01cd96721f" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>I am writing a major mode for a lisp like-language where I have two kinds of text in the buffer: code and comments. I can parse buffer correctly, and I set up some text properties as markers for the text. So far so good, it works as intended.
+ I need help with getting font-lock search based fortification when using the function. I am getting it to work, but not really over the entire buffer; initially, when font-locking for the first time when a buffer is opened, it stops after the first match is found. If I manually edit the text further in the buffer, say add and remove a space somewhere in the text, it gets font-locked correctly, but not when the text is initially font-locked. Here is a screenshot to illustrate what I am talking about. It is maybe hard to see, everything gets quite dark…</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;54
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z2ksi8/converting_ics_to_org/"
+                        open
+                      >
+                        <summary class="article-expander__title">Converting ics to org</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z2ksi8/converting_ics_to_org/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I have two Google Calendars that I have downloaded in ics. I want to convert these to org mode files. I need the simplest route possible because I have tried this once before a long time ago and failed after a long period.
+    submitted by    /u/pudentia  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;50
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z2kq1d/help_a_newbie_out/"
+                        open
+                      >
+                        <summary class="article-expander__title">Help a newbie out!</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z2kq1d/help_a_newbie_out/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I just installed Emacs using homebrew on mac and is excited to go on a journey learning this editor. Upon opening Emacs, I am greeted with an error of &#x60;Invalid image type &#x27;svg&#x27;&#x60;. Is there something wrong with my installation and how do I fix this?
+ ​
+ Thanks!
+    submitted by    /u/vinci2fast  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;52
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z2jgt5/weekly_tips_tricks_c_thread/"
+                        open
+                      >
+                        <summary class="article-expander__title">Weekly Tips, Tricks, &amp;c. Thread</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z2jgt5/weekly_tips_tricks_c_thread/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.
+ See this search for previous &quot;Weekly Tips, Tricks, &amp;c.&quot; Threads.
+ Don&#x27;t feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.
+    submitted by    /u/AutoModerator  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;49
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z2hci9/about_orgroam_and_tags/"
+                        open
+                      >
+                        <summary class="article-expander__title">About org-roam and tags</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z2hci9/about_orgroam_and_tags/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Not a native English speaker and new to Emacs.
+ I&#x27;m wondering if I can insert org-roam node into tag?
+ If I insert node with id manually, it will be splitted into two tags when searching tags.
+ https://preview.redd.it/z1hz8hf48n1a1.png?width&#x3D;1135&amp;format&#x3D;png&amp;auto&#x3D;webp&amp;s&#x3D;c167c2315edccd66309fa80cea31d7d718a1861e
+    submitted by    /u/ilygre  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;50
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z29p6l/make_emacs_startup_different_when_opening_file/"
+                        open
+                      >
+                        <summary class="article-expander__title">Make Emacs start-up different when opening file</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z29p6l/make_emacs_startup_different_when_opening_file/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/eUAQy84PNTS5LYhH2PJjc0vSkCKfIVvReJOdL5wfR44.jpg?auto&#x3D;webp&amp;s&#x3D;854b92d7014d42571450c12088eb0acfa0cf2f75" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>When I&#x27;m opening Emacs, I normally want it to display my dashboard. But if I&#x27;m opening a file, I just want it to jump straight to the file and not waste time showing the dashboard.
+ It seems that there is a pretty trivial solution in cases when Emacs is invoked from the command line: just check if there are command-line arguments that look like files, and make Emacs behave accordingly.
+ However, I want Emacs to behave this way even when I invoke it from the GUI: when I double-click on a file, or select &#x27;Open with Emacs&#x27;.
+ I&#x27;ve done some snooping around the startup code, and it looks like in the latter case, the file that we&#x27;re about to open does not show up as a command-line argument, so the above solution doesn&#x27;t work. Yet there must be a way for Emacs to know that it needs to open a file (otherwise it&#x27;d just open normally and not immediately display the file in a buffer). So what can I check to know if Emacs was called in this way?
+    submitted by    /u/andyjda  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;53
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >MELPA package updates</button>
+                  <a class="source-heading__link" href="https://melpa.org">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/merlin-iedit-20221123.1408.el"
+                        open
+                      >
+                        <summary class="article-expander__title">merlin-iedit (20221123.1408) --- Merlin and iedit integration</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/merlin-iedit">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The merlin-iedit package has been updated to version 20221123.1408.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/merlin-company-20221123.1408.el"
+                        open
+                      >
+                        <summary class="article-expander__title">merlin-company (20221123.1408) --- Merlin and company mode integration</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/merlin-company">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The merlin-company package has been updated to version 20221123.1408.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/merlin-ac-20221123.1408.el"
+                        open
+                      >
+                        <summary class="article-expander__title">merlin-ac (20221123.1408) --- Merlin and auto-complete integration</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/merlin-ac">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The merlin-ac package has been updated to version 20221123.1408.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/merlin-20221123.1408.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">merlin (20221123.1408) --- Mode for Merlin, an assistant for OCaml</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/merlin">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The merlin package has been updated to version 20221123.1408.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/mu4e-jump-to-list-20221123.1014.el"
+                        open
+                      >
+                        <summary class="article-expander__title">mu4e-jump-to-list (20221123.1014) --- mu4e jump-to-list extension</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/mu4e-jump-to-list">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The mu4e-jump-to-list package has been updated to version 20221123.1014.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >Zettelkasten Forum</button>
+                  <a class="source-heading__link" href="https://forum.zettelkasten.de/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="2429@/discussions"
+                        open
+                      >
+                        <summary class="article-expander__title">Processing: Building a Second Brain by Tiago Forte</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://forum.zettelkasten.de/discussion/2429/processing-building-a-second-brain-by-tiago-forte">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Hi Zettlers,
+I am currently processing Building a Second Brain by Tiago Forte on my research days. I figured that some of the intermediary thoughts might be of interest to you.
+But you can ask me anything or use this thread to debate this book if you like. This thread is part of the wild west. (but please keep your clothes on and refrain from any behavior that might cause the neighbors to call the police)</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;2
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >Org-mode</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/orgmode/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/orgmode/comments/z2j1e4/from_quarto_to_orgmode/"
+                        open
+                      >
+                        <summary class="article-expander__title">From Quarto to orgmode</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/orgmode/comments/z2j1e4/from_quarto_to_orgmode/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/Xrm5RFI0wWG_pJwZn88cYO2e_T9y0skPK78RZlEqCAE.jpg?auto&#x3D;webp&amp;s&#x3D;d8e998302fe01127fb67595e4ceddaead6e2d1b0" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>Hey,
+ I am trying to switch from quarto to orgmode to write my masters thesis. 
+ One nice feature of quarto is the ability to create a multipage html site (e.g. https://r4ds.hadley.nz/) and pdf from the same source files. Is there a orgmode package out there, that provides something similar out of the box?
+ Currently I am kind of overwhelmed with the amount of features of orgmode and dont know where to start ;)
+    submitted by    /u/FriendlyBeachRetard  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;47
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+        </ul>
+      </section>
+      <section class="daily-content js-toggle-accordions-scope">
+        <h2 class="daily-heading">
+          <button
+            class="daily-heading-toggle"
+            data-action="toggle-accordions"
+            title="Click to toggle the day, Ctrl + click to toggle all."
+          >
+            <time class="daily-heading-toggle__weekday js-offset-weekday" data-offset-date=2022-11-22 datetime="2022-11-22T23:34:49.000Z">2022-11-22</time>
+            <time class="daily-heading-toggle__date js-offset-date" data-offset-date=2022-11-22 datetime="2022-11-22T23:34:49.000Z"></time>
+          </button>
+        </h2>
+        <ul class="sources card">
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >PureScript</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/purescript/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/purescript/comments/z28wz6/any_reason_to_keep_a_foreign_import_behind_an/"
+                        open
+                      >
+                        <summary class="article-expander__title">Any reason to keep a foreign import behind an opaque type?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/purescript/comments/z28wz6/any_reason_to_keep_a_foreign_import_behind_an/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I noticed that the standard libs use the following pattern when interacting with foreign objects:
+ foreign import data SomeObject :: Type foreign import getName :: SomeObject -&gt; Effect String dostuff obj &#x3D; do name &lt;- getName obj log name 
+ The external object is an opaque type and we are forced to use a function to interact with it.
+ Is there a strong reason against using the following approach?
+ foreign import data SomeObject :: { name :: String } dostuff obj &#x3D; do log obj.name 
+    submitted by    /u/No-Resource-9282  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;45
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >M-x emacs-reddit</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/emacs/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z28lda/learn_how_to_test_emacs_lisp_code_intended_to_be/"
+                        open
+                      >
+                        <summary class="article-expander__title">Learn how to test Emacs Lisp code intended to be used in org-mode buffers</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z28lda/learn_how_to_test_emacs_lisp_code_intended_to_be/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/6aECLWo-1ls-3glboidjdZb5_dpItb5cpbZLRBgFCl0.jpg?auto&#x3D;webp&amp;s&#x3D;19471bb5a6a0df7c76d58861d566dfb822d91285" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>submitted by    /u/tonyaldon  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;49
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z262qs/orgcc_custom_completions_for_org_wip/"
+                        open
+                      >
+                        <summary class="article-expander__title">org-cc: Custom completions for Org (WIP)</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z262qs/orgcc_custom_completions_for_org_wip/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://preview.redd.it/m7q1192qok1a1.png?auto&#x3D;webp&amp;s&#x3D;d57c726a7da4c3b0340dfbbece79333226603603" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>submitted by    /u/orgtre  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;49
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z25nq3/why_is_melpa_still_necessary_for_stuff_that_is/"
+                        open
+                      >
+                        <summary class="article-expander__title">why is melpa still necessary for stuff that is built-in to emacs?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z25nq3/why_is_melpa_still_necessary_for_stuff_that_is/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>talking about eglot or tree-sitter e.g. why does one still has to write
+ ​
+ (require &#x27;package) ;; Any add to list for package-archives (to add marmalade or melpa) goes here (add-to-list &#x27;package-archives &#x27;(&quot;MELPA&quot; . &quot;http://melpa.org/packages/&quot;)) (package-initialize) 
+ before being able to use supposedly built-in packages?
+ ​
+ And for that matter, what does require do then in this context?
+    submitted by    /u/RepublicWorried  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;55
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z25iyx/treesitter_has_been_merged_into_master/"
+                        open
+                      >
+                        <summary class="article-expander__title">tree-sitter has been merged into master</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z25iyx/treesitter_has_been_merged_into_master/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/homura_was_right  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;57
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z248sx/projectile_27_is_out/"
+                        open
+                      >
+                        <summary class="article-expander__title">Projectile 2.7 is out!</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z248sx/projectile_27_is_out/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/RF2R19Or48wYrdid8WvReBm9hj4LaxaYE-jwstk2a3Y.jpg?auto&#x3D;webp&amp;s&#x3D;d3d9fac45db47c69d2c7e115d631d45649debf7e" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>submitted by    /u/bozhidarb  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;50
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/z240jl/folding_mode_foldingel_doesnt_always_use_folding/"
+                        open
+                      >
+                        <summary class="article-expander__title">folding mode (folding.el) doesn&#x27;t always use folding</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/z240jl/folding_mode_foldingel_doesnt_always_use_folding/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/V37KhtI2WODSaUkqM9JeX1XVjRT8v1OP5lk0KnovPxM.jpg?auto&#x3D;webp&amp;s&#x3D;5ecdf087a95517c727e122f2c281fab189cf2f3c" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>Hello Emac wizards
+ I&#x27;ve sucessfully installed folding.el. The only problem now is, that I can&#x27;t make it to always use folding when opening a new buffer, as described here: folding.el
+ Here is what&#x27;s in my init.el looks like:
+ (if (require &#x27;folding nil &#x27;noerror) (folding-mode-add-find-file-hook) (message &quot;Library &#x60;folding&#x27; not found&quot;)) (folding-add-to-marks-list &#x27;yaml-mode &quot;# {{{ &quot; &quot;# }}}&quot; nil t) 
+ Here I found aditional information: EmacsWiki
+ What could be the problem?
+    submitted by    /u/fromthegecko  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;49
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
                     <article>
                       <details
                         class="article-expander"
@@ -296,6 +954,26 @@ In YAML configuration files, the package-index key is introduced which takes pre
                       <details
                         class="article-expander"
                         data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/orgmode/comments/z27s9x/orgbabel_apl_update/"
+                        open
+                      >
+                        <summary class="article-expander__title">org-babel APL update</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/orgmode/comments/z27s9x/orgbabel_apl_update/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/tapesales  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;43
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
                         data-accordion-key="https://www.reddit.com/r/orgmode/comments/z1ypop/how_do_i_preview_latex_chemfig_snippets_in_doom/"
                         open
                       >
@@ -368,10 +1046,307 @@ In YAML configuration files, the package-index key is introduced which takes pre
                     class="source-heading__name"
                     data-action="toggle-accordions"
                     title="Click to toggle the source, Ctrl + click to toggle all."
+                  >MELPA package updates</button>
+                  <a class="source-heading__link" href="https://melpa.org">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/el-fetch-20221122.2207.el"
+                        open
+                      >
+                        <summary class="article-expander__title">el-fetch (20221122.2207) --- Show system information in Neofetch-like style (eg CPU, RAM)</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/el-fetch">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The el-fetch package has been updated to version 20221122.2207.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/evil-tex-20221122.2034.el"
+                        open
+                      >
+                        <summary class="article-expander__title">evil-tex (20221122.2034) --- Useful features for editing LaTeX in evil-mode</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/evil-tex">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The evil-tex package has been updated to version 20221122.2034.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/org-modern-20221122.1836.el"
+                        open
+                      >
+                        <summary class="article-expander__title">org-modern (20221122.1836) --- Modern looks for Org</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/org-modern">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The org-modern package has been updated to version 20221122.1836.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/rspec-mode-20221122.1311.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">rspec-mode (20221122.1311) --- Enhance ruby-mode for RSpec</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/rspec-mode">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The rspec-mode package has been updated to version 20221122.1311.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/gruber-darker-theme-20221122.1143.el"
+                        open
+                      >
+                        <summary class="article-expander__title">gruber-darker-theme (20221122.1143) --- Gruber Darker color theme for Emacs 24.</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/gruber-darker-theme">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The gruber-darker-theme package has been updated to version 20221122.1143.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/tok-theme-20221122.852.el"
+                        open
+                      >
+                        <summary class="article-expander__title">tok-theme (20221122.852) --- Comfy dark monochromatic theme</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/tok-theme">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The tok-theme package has been updated to version 20221122.852.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/pulseaudio-control-20221122.459.el"
+                        open
+                      >
+                        <summary class="article-expander__title">pulseaudio-control (20221122.459) --- Use &#x60;pactl&#x27; to manage PulseAudio volumes.</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/pulseaudio-control">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The pulseaudio-control package has been updated to version 20221122.459.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/ebuku-20221122.427.el"
+                        open
+                      >
+                        <summary class="article-expander__title">ebuku (20221122.427) --- Interface to the buku Web bookmark manager</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/ebuku">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The ebuku package has been updated to version 20221122.427.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >Haskell :: Reddit</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/haskell/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z264al/did_you_know_that_haskell_has_3_names_zip_unzip/"
+                        open
+                      >
+                        <summary class="article-expander__title">Did you know that Haskell has 3 names: zip, unzip and transpose for the same basic list operation? Well organized!!! I suggest also introducing &#x60;add&#x60;, &#x60;plus&#x60; and &#x60;summate&#x60;</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z264al/did_you_know_that_haskell_has_3_names_zip_unzip/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/NancyAurum  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;52
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z217o0/branching_out_of_recursive_function/"
+                        open
+                      >
+                        <summary class="article-expander__title">Branching out of recursive function</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z217o0/branching_out_of_recursive_function/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/Frol65lNQ_acHOw09wZHamaDJrbfcV6XLk6DdnQbonc.png?auto&#x3D;webp&amp;s&#x3D;e6d5a2d6068ca9df11927b0ed61b19000ec06e76" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>I&#x27;ve been trying to write a program to check whether a propositional logic formula is valid or not by representing it as a tree and then recursively negating the root node and all subtrees appropriately to look for contradictions, and I reached a point where I don&#x27;t know how to proceed or if I should just rewrite everything.
+ This is how I&#x27;m representing the tree, SBranch is only used for the NOT operator.
+ data Tree &#x3D; Leaf {op :: String, eval :: Bool} | DBranch {op :: String, eval :: Bool, left :: Tree, right :: Tree} | SBranch {op :: String, eval :: Bool, left :: Tree} deriving Show 
+ I have a function that takes a String in prefix notation and turns it into a tree using the above data type. Then, I have two functions, one that negates a subtreee and another that validates it (not sure i…</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;57
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z1xk6t/ann_first_release_candidate_for_stack293/"
+                        open
+                      >
+                        <summary class="article-expander__title">[ANN] First release candidate for stack-2.9.3</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z1xk6t/ann_first_release_candidate_for_stack293/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/p-DeGuIluF92sYAwViboks8tfQezw8Vpg5veBDvGGrE.jpg?auto&#x3D;webp&amp;s&#x3D;566a72a65cd600a751929397494a7f94e77500e4" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>You can download binaries for this pre-release from: Release rc/v2.9.2.1 (release candidate) · commercialhaskell/stack · GitHub.
+ Please test it and let us know at the Stack repository if you run into any trouble. If all goes well, we hope to release the final version in a couple of weeks.
+ Changes since v2.9.1:
+ Behavior changes:
+  
+In YAML configuration files, the package-index key is introduced which takes precedence over the existing package-indices key. The latter is deprecated.
+ In YAML configuration files, the hackage-security key of the package-index key or the package-indices item can be omitted, and the Hackage Security configuration for the item will default to that for the official Hackage server. See #5870.
+ Add the stack config set package-index download-prefix command to set…</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;55
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z1s907/hefty_algebras_modular_elaboration_of_higherorder/"
+                        open
+                      >
+                        <summary class="article-expander__title">Hefty Algebras: Modular Elaboration of Higher-Order Algebraic Effects</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z1s907/hefty_algebras_modular_elaboration_of_higherorder/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/Iceland_jack  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;50
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/z1rfqh/webassembly_backend_merged_into_ghc/"
+                        open
+                      >
+                        <summary class="article-expander__title">WebAssembly backend merged into GHC</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/z1rfqh/webassembly_backend_merged_into_ghc/">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://external-preview.redd.it/Bj50fREKn41m6v1UPb2_hlrczuDz1nxR1tSRjFf-mzU.jpg?auto&#x3D;webp&amp;s&#x3D;6803e63008eaa75aac55167a9225dd6c2f0316a7" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>submitted by    /u/brdrcn  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;59
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
                   >Scala</button>
                   <a class="source-heading__link" href="https://www.reddit.com/r/scala/">Open</a>
                 </h3>
                 <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/scala/comments/z25jm2/poll_best_scala_books/"
+                        open
+                      >
+                        <summary class="article-expander__title">Poll: Best Scala books</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/z25jm2/poll_best_scala_books/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I&#x27;m starting a Scala book club at work, and I was wondering what everyone&#x27;s favorite Scala book is. If not listed here, please feel free to comment. I have seen the lists of books in the sidebar--these are actually from the official Scala docs list, but I just wanted a pulse on their popularity.
+ View Poll
+    submitted by    /u/Lopsided_Tadpole  
+ [link]   [comments]</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;55
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
                     <article>
                       <details
                         class="article-expander"
@@ -463,105 +1438,6 @@ I added some notes on how to migrate from Twitter, maybe you&#x27;ll find it use
  [link]   [comments]</span>
                                 &ensp;<span class="article-reading-time">(&hairsp;61
                                   min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >MELPA package updates</button>
-                  <a class="source-heading__link" href="https://melpa.org">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/rspec-mode-20221122.1311.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">rspec-mode (20221122.1311) --- Enhance ruby-mode for RSpec</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/rspec-mode">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The rspec-mode package has been updated to version 20221122.1311.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/gruber-darker-theme-20221122.1143.el"
-                        open
-                      >
-                        <summary class="article-expander__title">gruber-darker-theme (20221122.1143) --- Gruber Darker color theme for Emacs 24.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/gruber-darker-theme">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The gruber-darker-theme package has been updated to version 20221122.1143.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/tok-theme-20221122.852.el"
-                        open
-                      >
-                        <summary class="article-expander__title">tok-theme (20221122.852) --- Comfy dark monochromatic theme</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/tok-theme">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The tok-theme package has been updated to version 20221122.852.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/pulseaudio-control-20221122.459.el"
-                        open
-                      >
-                        <summary class="article-expander__title">pulseaudio-control (20221122.459) --- Use &#x60;pactl&#x27; to manage PulseAudio volumes.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/pulseaudio-control">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The pulseaudio-control package has been updated to version 20221122.459.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/ebuku-20221122.427.el"
-                        open
-                      >
-                        <summary class="article-expander__title">ebuku (20221122.427) --- Interface to the buku Web bookmark manager</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/ebuku">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The ebuku package has been updated to version 20221122.427.</span>
                             </span>
                           </div>
                         </a>
@@ -1356,6 +2232,23 @@ error
                       <details
                         class="article-expander"
                         data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/eziam-themes-20221121.1609.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">eziam-themes (20221121.1609) --- The mostly monochrome Eziam theme family.</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/eziam-themes">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The eziam-themes package has been updated to version 20221121.1609.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
                         data-accordion-key="https://melpa.org/packages/oer-reveal-20221121.1358.tar"
                         open
                       >
@@ -1600,6 +2493,40 @@ But it is difficult to operationalize the situation of actual use.
 Thesis: You should start with simple memory techniques and then work your way up to more complex ones.
 Translated with www.DeepL.com/Translator (free version) (slightly edited by myself)</span>
                                 &ensp;<span class="article-reading-time">(&hairsp;2
+                                  min&hairsp;)</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >Serokell Blog</button>
+                  <a class="source-heading__link" href="https://serokell.io/blog">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://serokell.io/blog/haskell-in-production-fossa"
+                        open
+                      >
+                        <summary class="article-expander__title">Haskell in Production: FOSSA</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://serokell.io/blog/haskell-in-production-fossa">
+                          <div class="article-summary-box-inner media-object">
+                              <img src="https://serokell.io/files/m4/opengraph.m4k5u5xb.normal-Haskell_in_Production_Fossa.png" loading="lazy" class="media-object__media article-image" />
+                            <span class="media-object__text">
+                              <span>In this edition of our Haskell in Production series, we feature FOSSA – a tool for open-source risk management.</span>
+                                &ensp;<span class="article-reading-time">(&hairsp;18
                                   min&hairsp;)</span>
                             </span>
                           </div>
@@ -2910,6 +3837,23 @@ It&#x27;s &quot;Most often&quot;. So it means it&#x27;s not 100% reliable, right
                           <div class="article-summary-box-inner media-object">
                             <span class="media-object__text">
                               <span>The sly-asdf package has been updated to version 20221119.2235.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/solidity-mode-20221119.1735.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">solidity-mode (20221119.1735) --- Major mode for ethereum&#x27;s solidity language</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/solidity-mode">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The solidity-mode package has been updated to version 20221119.1735.</span>
                             </span>
                           </div>
                         </a>
@@ -7403,6 +8347,23 @@ At the beginning of the covid I was in my second year of my Ph.D. I search for m
                       <details
                         class="article-expander"
                         data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/orderless-20221113.1719.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">orderless (20221113.1719) --- Completion style for matching regexps in any order</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/orderless">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The orderless package has been updated to version 20221113.1719.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
                         data-accordion-key="https://melpa.org/packages/package-build-20221113.1600.tar"
                         open
                       >
@@ -9804,6 +10765,23 @@ I&#x27;ve set ispell-aspell-dict-dir (and also tried setting ispell-aspell-data-
                           <div class="article-summary-box-inner media-object">
                             <span class="media-object__text">
                               <span>The org-vcard package has been updated to version 20221111.328.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/embark-20221111.143.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">embark (20221111.143) --- Conveniently act on minibuffer completions</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/embark">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The embark package has been updated to version 20221111.143.</span>
                             </span>
                           </div>
                         </a>
@@ -24838,155 +25816,6 @@ On a side note, my neotest-haskell adapter (TreeSitter-powered hspec tests) now 
                         </a>
                       </details>
                     </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/ycwlec/test_a_function_using_either/"
-                        open
-                      >
-                        <summary class="article-expander__title">Test a function using Either</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/ycwlec/test_a_function_using_either/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>How can I test the output of a function using the Either function. How can I write a test case with Either that can test a function? I am trying to test the output of Functor laws&#x27; functions.
-    submitted by    /u/SherifBakr  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;115
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/ycuefv/writing_a_function_to_test_functors_second_law/"
-                        open
-                      >
-                        <summary class="article-expander__title">Writing a function to test Functor&#x27;s second law</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/ycuefv/writing_a_function_to_test_functors_second_law/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>What am I missing in this function that tests Functor&#x27;s second law?
- secondFunctorLaw :: (Eq (f c), Functor f) &#x3D;&gt; (b -&gt; c) -&gt; (a -&gt; b) -&gt; f a -&gt; Bool
- secondFunctorLaw x &#x3D; (fmap (g.f) x) &#x3D;&#x3D; (fmap g . fmap f $ x)
-    submitted by    /u/SherifBakr  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;119
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/yct8f6/functor_functions/"
-                        open
-                      >
-                        <summary class="article-expander__title">Functor Functions</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/yct8f6/functor_functions/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I am trying to write a Functor function that returns true if the first functor law holds for a functor value. It should have the type: (Eq (f a), Functor f) &#x3D;&gt; f a -&gt; Bool 
- How can I write and test such a function?
-    submitted by    /u/SherifBakr  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;116
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/ycrmom/parse_error_possible_incorrect_indentation_or/"
-                        open
-                      >
-                        <summary class="article-expander__title">Parse error (possible incorrect indentation or mismatched brackets)</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/ycrmom/parse_error_possible_incorrect_indentation_or/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I wrote the following haskell code to implement a new typeclass and run a few operations on it. Any feedback is highly appreciated!!
- module Three where
- {-# LANGUAGE DefaultSignatures, DeriveAnyClass #-}
- import Data.Semigroup
- data Vec &#x3D; Vec [Double] deriving (Num, Show, Eq) 
- instance Show Vec where
- show (Vec x)&#x3D; &quot;Vec (&quot; ++ show x &quot;)&quot;
- plus :: Vec -&gt; Vec -&gt; Double
- plus &#x3D;zipWith (+) (Vec x) (Vec y)
- subtract :: Vec -&gt; Vec -&gt; Double
- subtract &#x3D;zipWith (-) (Vec x) (Vec y)
- mult :: Vec -&gt; Vec -&gt; Double
- mult &#x3D;zipWith (*) (Vec x) (Vec y)
- div :: Vec -&gt; Vec -&gt; Double
- div &#x3D;zipWith (/) (Vec x) (Vec y)
- and :: Vec -&gt; Vec -&gt; [Bool]
- and &#x3D; zipWith (&amp;&amp;) (Vec x) (Vec y) 
- instance Semigroup Vec where
- () Vec x Vec y &#x3D; plus (Vec x Vec y)
- class Monoid a where
- mempty :: a
- mappend :: a -&gt; a -&gt; a
- mconcat :: [a] -&gt; a
- instance Monoid Vec where
- mempty &#x3D;0 
- instance Monoid Vec where
- mappend&#x3D; (Vec x)  (Vec y)
- --the following compare function included all of the following
- -- , &gt;&#x3D;, max, and min functions 
- instance Ord Vec where
- (Vec x) &#x60;compare&#x60; (Vec y) &#x3D; x &#x60;compare&#x60; y 
- --Create a new typeclass called VecT, this should have one function: magnitude :: VecT a &#x3D;&gt; a -&gt; Double.
- -- Instantiate Vec as a VecT and define magnitude for your vector.
- class VecT x where
- magnitude :: VecT a &#x3D;&gt; a -&gt; Double
- --calculating magnitude of a vector
- instance VecT Vec where
- let mag (Vec x) &#x3D; (fromIntegral . truncate $ sqrt (Vec x))
-    submitted by    /u/SherifBakr  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;119
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/ycqo1h/noob_asking_for_some_code_help_with_list_monad/"
-                        open
-                      >
-                        <summary class="article-expander__title">Noob asking for some code help with list monad :)</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/ycqo1h/noob_asking_for_some_code_help_with_list_monad/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Just trying to get my head round do notation, and settled on a few problems with lists. I ended up writing the following code to (eventually) annotate entries in a 2d nested list (trying to mimic a 9x9 array) with column/row numbers. :
- arrayWithCoords :: [[Int]] -&gt; [[(Int, (Int, Int)]] arrayWithCoords arr &#x3D; do a &lt;- zip arr ([1..9]::[Int]) b &lt;- zip a ([1..9]::[Int]) return _ 
- Obviously the solution right now is incomplete, but I keep getting the following type error for a:
-  • Couldn&#x27;t match expected type: [a0] with actual type: ([Int], Int) • In the first argument of ‘zip’, namely ‘a’ In a stmt of a &#x27;do&#x27; block: b &lt;- zip a ([1 .. 9] :: [Int]) In the expression: do a &lt;- zip arr ([1 .. 9] :: [Int]) b &lt;- zip a ([1 .. 9] :: [Int]) return _ 
- On inspection in the editor a is given a type annotation of [Any] , rather than ([Int], Int) as I expected
-    submitted by    /u/patrickaldis  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;119
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
                 </section>
               </section>
             </li>
@@ -25200,108 +26029,6 @@ On a side note, my neotest-haskell adapter (TreeSitter-powered hspec tests) now 
                           <div class="article-summary-box-inner media-object">
                             <span class="media-object__text">
                               <span>The futhark-mode package has been updated to version 20221025.843.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/kaolin-themes-20221025.812.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">kaolin-themes (20221025.812) --- A set of eye pleasing themes</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/kaolin-themes">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The kaolin-themes package has been updated to version 20221025.812.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/language-id-20221025.541.el"
-                        open
-                      >
-                        <summary class="article-expander__title">language-id (20221025.541) --- Library to work with programming language identifiers</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/language-id">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The language-id package has been updated to version 20221025.541.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/pangu-spacing-20221025.522.el"
-                        open
-                      >
-                        <summary class="article-expander__title">pangu-spacing (20221025.522) --- Minor-mode to add space between Chinese and English characters.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/pangu-spacing">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The pangu-spacing package has been updated to version 20221025.522.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/ox-html5slide-20221025.521.el"
-                        open
-                      >
-                        <summary class="article-expander__title">ox-html5slide (20221025.521) --- Export org-mode to HTML5 slide.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/ox-html5slide">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The ox-html5slide package has been updated to version 20221025.521.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/linum-relative-20221025.517.el"
-                        open
-                      >
-                        <summary class="article-expander__title">linum-relative (20221025.517) --- display relative line number in emacs.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/linum-relative">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The linum-relative package has been updated to version 20221025.517.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/apheleia-20221025.101.el"
-                        open
-                      >
-                        <summary class="article-expander__title">apheleia (20221025.101) --- Reformat buffer stably</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/apheleia">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The apheleia package has been updated to version 20221025.101.</span>
                             </span>
                           </div>
                         </a>
@@ -25556,61 +26283,6 @@ What does &quot;conflict&quot; means?
                         </a>
                       </details>
                     </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/ycyfzl/how_to_get_magitstatus_window_to_replace_current/"
-                        open
-                      >
-                        <summary class="article-expander__title">How to get magit-status window to replace current buffer?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/ycyfzl/how_to_get_magitstatus_window_to_replace_current/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I like to do magit-stage-file and go and commit just the file I&#x27;m working on immediately, but magit-status C-x g prefers to use a different window rather than the one of the file I&#x27;m editing.
- Is there some option to change this?
-    submitted by    /u/vfclists  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;114
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/ycxdo5/i_can_not_find_where_this_error_comes_from/"
-                        open
-                      >
-                        <summary class="article-expander__title">I can not find where this error comes from: invalid read syntax # 1 0</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/ycxdo5/i_can_not_find_where_this_error_comes_from/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/mD3qLYFdKRkeh7fsBDuok7jPDgs-2DjhePo8dNbxH0A.jpg?auto&#x3D;webp&amp;s&#x3D;fe931752aad58b67bad37a3f6242ae970075d1ca" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>Hi everyone,
- I get this error when loading my emacs (vanilla based on nano-emacs):
- &#x60;&#x60;&#x60;Debugger entered--Lisp error: (invalid-read-syntax: # 1 0)
- read(#)
- eval-buffer(# nil &quot;/home/fred/.emacs.d/init.el&quot; nil t) ; Reading at buffer position 109684
- load-with-code-conversion(&quot;/home/fred/.emacs.d/init.el&quot; &quot;/home/fred/.emacs.d/init.el&quot; t t)
- load(&quot;/home/fred/.emacs.d/init&quot; noerror nomessage)
- startup--load-user-init-file(#f(compiled-function () #) #f(compiled-function () #) t)
- command-line()
- normal-top-level()
- I have browsed and search for this error, I found one occurence, without any explanation or solution.
- Where is the error? Please help, and thanks in advance!!!
-    submitted by    /u/fmou67  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;119
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
                 </section>
               </section>
             </li>
@@ -25679,37 +26351,6 @@ It updates the schedule time and properties, but also adds that last line - Stat
                         </a>
                       </details>
                     </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/orgmode/comments/ycshlg/orgagendalogmode_does_not_display_time_for/"
-                        open
-                      >
-                        <summary class="article-expander__title">org-agenda-log-mode does not display time for certain states</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/orgmode/comments/ycshlg/orgagendalogmode_does_not_display_time_for/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/svd1rQaIPz8xOMkAlO-opDx0gY0nbqylgqTH1pTT-Ds.jpg?auto&#x3D;webp&amp;s&#x3D;03dbdbe2489108c1671bec6c43818cc854b44059" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>I use doom emacs and it offers [ ], [-] and [X] as part of the org-todo-keywords.
- In the org-agenda I noticed that the state changes for these states are not listed with the corresponding time when org-agenda-log-mode is active.
- Here is an example to display what it looks like instead:
- Tuesday 25 October 2022 inbox: 10:00 ┄┄┄┄┄ State: (DONE) DONE Test1 TODO -&gt; DONE inbox: State: ([X]) [X] Test2 [ ] -&gt; [X] 
- The headline with Test2 is displayed without the time. Both headlines have a LOGBOOK drawer that does look the same.
- * DONE Test1 TODO -&gt; DONE :LOGBOOK: - State &quot;DONE&quot; from &quot;TODO&quot; [2022-10-25 Tue 10:00] :END * [X] Test2 [ ] -&gt; [X] :LOGBOOK: - State &quot;[X]&quot; from &quot;[ ]&quot; [2022-10-25 Tue 10:00] :END 
- Further it seems like all todo keywords that start with [ and end with ] are not displayed with the corresponding time but below the time-grid with State: in front like seen above.
- I believe I tracked down the function that generates the State: entries (https://github.com/emacs-mirror/emacs/blob/9bfe00dda6b59d9b93eb7a825f6e0868afa1cca3/lisp/org/org-agenda.el#L5943) but I am not really able to understand the function and what is causing this behavior as I am fairly new to emacs/elisp
- Is there someway to show the tasks with the checkbox style todo keywords with time?
- Is this a bug or a feature that I can configure?
-    submitted by    /u/AnythingNo1  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;131
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
                 </section>
               </section>
             </li>
@@ -25748,773 +26389,12 @@ It updates the schedule time and properties, but also adds that last line - Stat
                 </section>
               </section>
             </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >Serokell Blog</button>
-                  <a class="source-heading__link" href="https://serokell.io/blog">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://serokell.io/blog/enums-and-pattern-matching"
-                        open
-                      >
-                        <summary class="article-expander__title">Get Started with Rust: Enums</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://serokell.io/blog/enums-and-pattern-matching">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://serokell.io/files/db/opengraph.dbzl4i1i.normal-Enums_&amp;_Pattern_Matching.png" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>In Rust, enums are composite data types that can have multiple variants. In this article, we show you how to define, instantiate, and use them. We also cover pattern matching and two common enums for error handling: Option and Result.</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;12
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >Tweag - Engineering blog</button>
-                  <a class="source-heading__link" href="https://tweag.io">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://tweag.io/blog/2022-10-25-Internship-abdellatif/"
-                        open
-                      >
-                        <summary class="article-expander__title">Implementing Bayesian Replica Exchange in Chainsail</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://tweag.io/blog/2022-10-25-Internship-abdellatif/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://tweag.io/logo.png" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>During my internship at Tweag, I got the opportunity to work on Chainsail (see the announcement blog post), a web service that helps to sample from multimodal probability distributions.
-A common approach to sampling well-behaved distributions involves Markov chain Monte Carlo (MCMC) methods derived from the
-basic Metropolis-Hastings algorithm; building a Markov chain that has the desired distribution as its stationary distribution.
-The major benefit of Metropolis-Hastings over more “direct” sampling methods is that it doesn’t require the target distribution to be normalized.
-But it does have a big flaw:
-if the distribution presents multiple modes separated by areas of low probability, the Markov chain tends to get stuck in one mode, and thus samples the distribution incorrectly.
-
-Replica E…</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;16
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-        </ul>
-      </section>
-      <section class="daily-content js-toggle-accordions-scope">
-        <h2 class="daily-heading">
-          <button
-            class="daily-heading-toggle"
-            data-action="toggle-accordions"
-            title="Click to toggle the day, Ctrl + click to toggle all."
-          >
-            <time class="daily-heading-toggle__weekday js-offset-weekday" data-offset-date=2022-10-24 datetime="2022-10-24T23:01:51.000Z">2022-10-24</time>
-            <time class="daily-heading-toggle__date js-offset-date" data-offset-date=2022-10-24 datetime="2022-10-24T23:01:51.000Z"></time>
-          </button>
-        </h2>
-        <ul class="sources card">
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >M-x emacs-reddit</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/emacs/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/ycpc6v/managing_subtasks_in_repeated_tasks/"
-                        open
-                      >
-                        <summary class="article-expander__title">Managing subtasks in repeated tasks</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/ycpc6v/managing_subtasks_in_repeated_tasks/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>submitted by    /u/graduale  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;113
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/ycmp4k/visual_studio_code_is_designed_to_fracture_i_am/"
-                        open
-                      >
-                        <summary class="article-expander__title">Visual Studio Code is designed to fracture - I am very happy that I will be able to use emacs forever</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/ycmp4k/visual_studio_code_is_designed_to_fracture_i_am/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/RNZyGJzSu_7zfku2UOmcnNjSreyrowGQMs_d9J-QveE.jpg?auto&#x3D;webp&amp;s&#x3D;bddc672147bf2a50733f22ac2c30baf131aea431" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>submitted by    /u/wargxs  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;116
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/ycktcp/a_minimalist_welcome_screen/"
-                        open
-                      >
-                        <summary class="article-expander__title">A minimalist welcome screen</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/ycktcp/a_minimalist_welcome_screen/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/9TvzMMehuZKDajAG-_1iv_ApkSSAvvCDfPO4kLrGFdI.png?format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;0b643cab577cd238fb0969e4b2304be203367191" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>submitted by    /u/xenodium  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;114
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/yck7yz/navigate_to_positions_within_long_words/"
-                        open
-                      >
-                        <summary class="article-expander__title">Navigate to positions within long words</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/yck7yz/navigate_to_positions_within_long_words/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>A typical scenario is a quite long function name, e.g. 
- void myVeryLongFunctionNameWithoutAnyPurpose(int a);
- ​
- what is the most efficient, built-in way to navigate to e.g. the Name subword?
- using subword mode still makes me press M-f multiple times and also slows down general buffer navigation by treating every capital letter now as a separate word.
-    submitted by    /u/RepublicWorried  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;117
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/ycgorx/python_setup_why_no_linetoolong_warnings_with/"
-                        open
-                      >
-                        <summary class="article-expander__title">Python setup: why no line-too-long warnings with pyright</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/ycgorx/python_setup_why_no_linetoolong_warnings_with/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Hello. I&#x27;ve recently been trying to set up emacs to play nicely with python. The number of options is a bit overwhelming, but a lot of signs are pointing towards using lsp with pyright and lsp-ui. So that&#x27;s what I&#x27;ve been doing, along with using pyvenv to choose my virtual environments. But I&#x27;ve noticed that I don&#x27;t get any warnings if my lines are too long. I&#x27;m not sure why this is? Does it have to do with my settings, or is this not something lsp/pyright should catch?
-    submitted by    /u/frymye  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;115
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/ycfd3l/question_about_the_state_of_package_managers/"
-                        open
-                      >
-                        <summary class="article-expander__title">Question about the state of package managers</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/ycfd3l/question_about_the_state_of_package_managers/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>A year or two ago, straight.el was probably the most recommended package manager for GNU Emacs. As I’ve revisited my configuration today, I noticed that there are a few recent package managers (namely, leaf and elpaca) which are new to - at least - me and (at least elpaca) want to be straight.el’s “successor”.
- Is there any write-up about the state of GNU Emacs package management in 2022? Straight.el works for me (and I need its custom build features for two packages), but I don’t want to rely on deprecated packages for too long.
-    submitted by    /u/rhabarba  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;117
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/yccqom/django_and_flycheck/"
-                        open
-                      >
-                        <summary class="article-expander__title">Django and Flycheck?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/yccqom/django_and_flycheck/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I&#x27;ve been working with Django, using Flycheck and Company-mode for check and autocompletion. Well, Flycheck have been showing errors with objects member in classes, but this is a False positive, even company sugest to me the correct completion but Flycheck mark this like error.
- I have searched in web, and found that Flycheck is using wrong dir, but i don&#x27;t know how customize that. Is there some option to Flycheck work well on Django?
- pylint has an module named pylint-django. Can be this enhabled in Flycheck?
- Edit: I found solution that works to me for now, but isn&#x27;t automatic.
- 1) Install pylint-django pluging with pip pip install pylint-django
- 2) Create a pylint config file in the root directory of project. You can do thi from terminal
- pylint --generate-rcfile &gt; .pylintrc
- 3)Enhable Django pluging in pylint config file in &quot;load-plugins&quot; line
- load-plugins&#x3D;pylint_django
- That worked to me. When you start flychek in current buffer, you can see if flycheck is using the config file:
- M-x flycheck-verify-setup
-    submitted by    /u/GidiomGates  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;117
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/ycan6z/significant_garbage_collection_improvement_for/"
-                        open
-                      >
-                        <summary class="article-expander__title">Significant Garbage Collection Improvement For Emacs: Reducing Wall Clock Latency For sweep_conses By 50%.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/ycan6z/significant_garbage_collection_improvement_for/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/jxwVF3pENQYE8meaRYbNvivqnX8RNgxn6yEGZA3ZW8U.jpg?auto&#x3D;webp&amp;s&#x3D;0acfcb16996957bcb3f4e510474032afec712ae2" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>submitted by    /u/tdodgeconsulting  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;131
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/yc7g6j/using_emacs_artistmode/"
-                        open
-                      >
-                        <summary class="article-expander__title">Using emacs artist-mode</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/yc7g6j/using_emacs_artistmode/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/FHP-Ix8k_LKXhepA_PGMd8Yeho6wpr2pqOhywd0DdIQ.jpg?auto&#x3D;webp&amp;s&#x3D;c8b1bcab9c87c519bb1f299723a4e02a20257559" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>submitted by    /u/ychaouche  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;113
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >Haskell :: Reddit</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/haskell/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/ycohkg/the_effectful_ecosystem_is_growing/"
-                        open
-                      >
-                        <summary class="article-expander__title">The effectful ecosystem is growing! 🥳</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/ycohkg/the_effectful_ecosystem_is_growing/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Since its initial release (corresponding thread) the library has got several improvements (the current version is 2.2.0.0), but the most significant development happened within the ecosystem. Here&#x27;s the list of new adapter libraries:
-  
-crypto-rng-effectful - generation of cryptographically secure random bytes and numbers.
- 
-log-effectful - structured logging with multiple backends.
- 
-hpqtypes-effectful - access to a PostgreSQL database.
- 
-retry-effectful - combinators for monadic actions that may fail.
- 
- It&#x27;s worth noting that all of these are light wrappers over existing libraries, not rewrites. As advertised, effectful makes it easy to adapt libraries to be used as effects.
- Also, the Monocle project has moved to effectful.
- If anyone was skeptical about effectful, maybe that&#x27;ll convince you to give it another look. I&#x27;m sure this is just the beginning :)
-    submitted by    /u/arybczak  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;117
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/yco7t2/haskell_adoption_is_higher_than_i_expected_what/"
-                        open
-                      >
-                        <summary class="article-expander__title">Haskell adoption is higher than I expected, what can we do to get it to top 10 languages.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/yco7t2/haskell_adoption_is_higher_than_i_expected_what/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/_Yl1NKePPUGa_ZvqbNTggvYVguCjyS3Bvz1m4VUfxbg.jpg?auto&#x3D;webp&amp;s&#x3D;3a8994ba785872241cf533367296d9e7a4fabca2" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>According to this: https://redmonk.com/sogrady/2022/10/20/language-rankings-6-22/
- ​
- What is surprising is that it is:
- - more adopted than Clojure that I thought to be the most popular functional language (even though I think it&#x27;s really bad).
- - much more adopted than Erlang and F#, I thought Haskell is used less frequently than these.
- - has almost as many projects as Elixir in GitHub, but much more popular on Stack Overflow - shows the strength of the community.
- - as widely adopted as Perl.
- ​
- Looking at this chart I think we can get Haskell into the top 10 (or even 5) languages by solving several problems, as community (I do have a vested interest that it happens – our SimpleX Chat is written in Haskell):
- - make JSON a first class citizen in Haskell code, ideally with some syntax-level support, without requiring QQ, rather than one of the most complex to use libraries. It doesn&#x27;t seem a coincidence that 2 most popular languages - JavaScript and Python - make it really easy to integrate with JSON.
- - make cross-platform compilation &quot;manageable&quot; (including mobile and web), not just &quot;possible&quot;.
- - solve problem of compiled binary size - it should be at least 5x, better 10x smaller – even if it comes at cost of 10x longer compilation time (so that we would only use it for production builds).
- - at the same time, make interpreted tests execution simpler - I still can&#x27;t figure out how to do it, waiting for several minutes until it builds with most cores idling is very time consuming... Maybe this is a solved problem, and there is a simple answer how to do it.
- - make networking and cryptography more trustworthy - with exodus of some maintainers into Rust-land they are at risk of abandonment – I will share more comments on this subject a bit later.
- ​
- These are all issues that Haskell Foundation and community can help solving, we could chip in some time/money too if there is some concerted effort.
-    submitted by    /u/epoberezkin  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;124
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/ycezye/ihp_v10_is_out/"
-                        open
-                      >
-                        <summary class="article-expander__title">IHP v1.0 is out 🎉</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/ycezye/ihp_v10_is_out/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/dyadvxFhA9kwz-mjUdDI_AkT1Xb2gY91qNgOUmbgRCw.jpg?auto&#x3D;webp&amp;s&#x3D;139ca08023d9e75bd994a0df87b118fc33c4d2a1" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>submitted by    /u/_query  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;118
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/haskell/comments/ycaz8w/issue_338_haskell_weekly_newsletter/"
-                        open
-                      >
-                        <summary class="article-expander__title">Issue 338 :: Haskell Weekly newsletter</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/ycaz8w/issue_338_haskell_weekly_newsletter/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/QN4ktfFMABnBF6XEPkZWKdVBmOeoKfq094xszcT0RD4.jpg?auto&#x3D;webp&amp;s&#x3D;00dc4ace0e204a30ab1d7e7b788ffc3c8a4713ed" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>submitted by    /u/haskellweekly  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;112
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >MELPA package updates</button>
-                  <a class="source-heading__link" href="https://melpa.org">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/rubocopfmt-20221024.2139.el"
-                        open
-                      >
-                        <summary class="article-expander__title">rubocopfmt (20221024.2139) --- Minor-mode to format Ruby code with RuboCop on save</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/rubocopfmt">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The rubocopfmt package has been updated to version 20221024.2139.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/obsidian-20221024.2135.el"
-                        open
-                      >
-                        <summary class="article-expander__title">obsidian (20221024.2135) --- Obsidian Notes interface</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/obsidian">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The obsidian package has been updated to version 20221024.2135.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/burly-20221024.2019.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">burly (20221024.2019) --- Save and restore frame/window configurations with buffers</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/burly">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The burly package has been updated to version 20221024.2019.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/helm-org-rifle-20221024.1943.el"
-                        open
-                      >
-                        <summary class="article-expander__title">helm-org-rifle (20221024.1943) --- Rifle through your Org files</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/helm-org-rifle">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The helm-org-rifle package has been updated to version 20221024.1943.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/annotate-20221024.1829.el"
-                        open
-                      >
-                        <summary class="article-expander__title">annotate (20221024.1829) --- annotate files without changing them</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/annotate">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The annotate package has been updated to version 20221024.1829.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/rg-20221024.1631.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">rg (20221024.1631) --- A search tool based on ripgrep</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/rg">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The rg package has been updated to version 20221024.1631.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/evil-20221024.1556.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">evil (20221024.1556) --- Extensible Vi layer for Emacs.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/evil">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The evil package has been updated to version 20221024.1556.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/vs-light-theme-20221024.1546.el"
-                        open
-                      >
-                        <summary class="article-expander__title">vs-light-theme (20221024.1546) --- Visual Studio IDE light theme</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/vs-light-theme">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The vs-light-theme package has been updated to version 20221024.1546.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/vs-dark-theme-20221024.1544.el"
-                        open
-                      >
-                        <summary class="article-expander__title">vs-dark-theme (20221024.1544) --- Visual Studio IDE dark theme</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/vs-dark-theme">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The vs-dark-theme package has been updated to version 20221024.1544.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/lsp-mode-20221024.1146.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">lsp-mode (20221024.1146) --- LSP mode</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/lsp-mode">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The lsp-mode package has been updated to version 20221024.1146.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >Org-mode</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/orgmode/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/orgmode/comments/ychrpx/managing_subtasks_in_repeated_tasks/"
-                        open
-                      >
-                        <summary class="article-expander__title">Managing subtasks in repeated tasks</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/orgmode/comments/ychrpx/managing_subtasks_in_repeated_tasks/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I&#x27;m looking for suggestions for how to manage repeated tasks with subtasks. Ideally, I&#x27;d like to be able to mark the parent heading as done and have all the DONE subtasks (or even better, those without a certain property) be changed to TODO. In practice, what I want is to be able to move from this: 
- * TODO Meal plan for the week SCHEDULED:  ** DONE Make list of dishes ** DONE Make grocery list ** DONE Get groceries 
- to this: 
- * TODO Meal plan for the week SCHEDULED:  ** TODO Make list of dishes ** TODO Make grocery list ** TODO Get groceries 
- after marking the heading task as done. 
- I suspect I could make use of org-todo-repeat-hook and define a function that will take all the sub-tasks of a given task and change them from e.g. DONE to TODO, or to the TODO state the parent will be in after repeat, e.g. 
- (defun my/org--bequeath-state () (let ((state (org-get-todo-state))) (org-map-entries (lambda () (org-todo state)) nil &#x27;tree))) (add-to-list &#x27;org-todo-repeat-hook &#x27;my/org--bequeath-state) 
- But I&#x27;m wondering if anyone has given this more thought and has a better conceived solution they&#x27;d be willing to share.
-    submitted by    /u/graduale  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;124
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/orgmode/comments/ycd6rq/adding_a_function_to_carry_forward_an_orgmode/"
-                        open
-                      >
-                        <summary class="article-expander__title">Adding a Function to Carry Forward an Org-Mode Agenda Item // Take on Rules</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/orgmode/comments/ycd6rq/adding_a_function_to_carry_forward_an_orgmode/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/QKAOjiJRv3JU1-5eYUJhivyh_CsV6fO2oRUj04P-Krk.jpg?auto&#x3D;webp&amp;s&#x3D;ae38cb1f07fdec6dae23c23615c5fb367f13ab02" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>submitted by    /u/takeonrules  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;120
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/orgmode/comments/ycaijm/the_2022_emacs_user_survey_is_now_open/"
-                        open
-                      >
-                        <summary class="article-expander__title">The 2022 Emacs User Survey is now open!</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/orgmode/comments/ycaijm/the_2022_emacs_user_survey_is_now_open/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>submitted by    /u/yantar92  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;125
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >Scala</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/scala/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/scala/comments/ycfihv/on_scala_3s_optional_braces/"
-                        open
-                      >
-                        <summary class="article-expander__title">On Scala 3&#x27;s Optional Braces</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/ycfihv/on_scala_3s_optional_braces/">
-                          <div class="article-summary-box-inner media-object">
-                              <img src="https://external-preview.redd.it/jK2luzUNJakM3zaOv6m8KxHhYH_I59qXyjNHGRrIBsc.jpg?auto&#x3D;webp&amp;s&#x3D;668fba29a9896884c2039df7a5e56233f06a7f37" loading="lazy" class="media-object__media article-image" />
-                            <span class="media-object__text">
-                              <span>submitted by    /u/kaitos  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;116
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/scala/comments/ycc97j/university_project_spark_scala/"
-                        open
-                      >
-                        <summary class="article-expander__title">university project - Spark + scala</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/ycc97j/university_project_spark_scala/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I would like some advice for a university project that requires writing an application that makes queries on a large dataset.
- I am using Spark+Scala.
- 1) materials where can i find similar solutions? where can i find some tutorials for aggregate queries in Spark? or just some examples of aggregate queries on simple datasets?
- 2) Spark advices any general advice? any advice on how to best use dataframes with Spark in this project? are there general things to be careful of in order not to have bad performances?
- how would it be better to return the results of a query considering that I will have to create a graphical interface?
- 3) query tips I use a flight dataset. What might be some interesting aggregate queries to do? I have a lot of columns, so a lot of information about each flight
- I know that is a lot of questions, but answers for just one question will also be helpful.
-    submitted by    /u/myqum  
- [link]   [comments]</span>
-                                &ensp;<span class="article-reading-time">(&hairsp;117
-                                  min&hairsp;)</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
         </ul>
       </section>
 
     <footer>
-      <a class="footer-link" href="https://github.com/Nimor111/feeds/actions/runs/3526903185">
-        <time id="build-timestamp" datetime="2022-11-22T20:36:32.963Z">2022-11-22T20:36:32.963Z</time>
+      <a class="footer-link" href="https://github.com/Nimor111/feeds/actions/runs/3535499492">
+        <time id="build-timestamp" datetime="2022-11-23T20:36:20.945Z">2022-11-23T20:36:20.945Z</time>
       </a>
       <a class="footer-link" href="https://github.com/osmoscraft/osmosfeed">osmosfeed 1.15.1</a>
     </footer>
