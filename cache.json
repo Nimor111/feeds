@@ -44,16 +44,6 @@
           "wordCount": 742,
           "title": "Issue 344",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/343.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\n2022 State of Haskell Survey Results by Taylor Fausak\nThe sixth annual State of Haskell Survey closed this week. This post summarizes the results and makes the raw data available.\nLTS 20 release for ghc-9.2 and Nightly now on ghc-9.4 by Jens Petersen\nThe Stackage team is very happy to announce the first Stackage LTS version 20 snapshot has been released this week, based on GHC stable version 9.2.5.\nWebAssembly backend merged into GHC by Cheng Shao\nTweag has been working on a GHC WebAssembly backend for some time. Recently, the WebAssembly backend merge request has landed in GHC, and is o…",
-          "link": "https://haskellweekly.news/issue/343.html",
-          "publishedOn": "2022-11-24T12:00:00.000Z",
-          "wordCount": 590,
-          "title": "Issue 343",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,56 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/zugm3h/unknown_glut_entry_glutinit_failing_to_get_gloss/",
+          "author": null,
+          "description": "Windows 10, specifically. stack install gloss succeeded without complaint. I'm trying to run the following file (either in ghci or as a compiled executable) but nothing seems to work. Same error Unknown GLUT entry glutInit each time.\n import Graphics.Gloss window :: Display window = InWindow \"Nice Window\" (200, 200) (10, 10) background :: Color background = white drawing :: Picture drawing = circle 80 final :: IO () final = display window background drawing main = final \n Every answer online regarding this issue tells me to copy glut32.dll to either my System32, my SysWOW64, or the same directory as the .hs file. I've done all three, but no dice.\n Why could my machine still be failing to utilize the .dll's I've downloaded? Is there some extra step I'm missing?\n    submitted by    /u/Feryll  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/zugm3h/unknown_glut_entry_glutinit_failing_to_get_gloss/",
+          "publishedOn": "2022-12-24T19:16:35.000Z",
+          "wordCount": 17408,
+          "title": "\"Unknown GLUT entry glutInit\" -- Failing to get Gloss working on Windows",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/zuecui/problem_with_datavectorfixedany/",
+          "author": null,
+          "description": "I was trying to use the 'any' function from Data.Vector.Fixed, but it seems to return true no matter what. This is an example of what I mean\n λ> :set -XDataKinds -package fixed-vector λ> import Data.Vector.Fixed as V λ> import Data.Vector.Fixed.Unboxed as UV λ> v = V.fromList [4,1,2] :: UV.Vec 3 Int λ> V.any (< 0) v True λ> V.any (> 99) v True \n The 'all' function from that package works just fine so any condition I need I can reverse the logic and use that so the issue isn't preventing me from getting anything done, but this seems like a bug to me so I thought I would ask here if anyone could see a good reason for this behavior. The source code for these functions calls C code, so there may be some funny business going on with that.\n I'm on GHC version 9.2.4 and I'm not specifying the version of the fixed-vector package, so I assume it is the most recent.\n    submitted by    /u/nerfherder616  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/zuecui/problem_with_datavectorfixedany/",
+          "publishedOn": "2022-12-24T17:26:01.000Z",
+          "wordCount": 16835,
+          "title": "Problem with Data.Vector.Fixed.any",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/zu8h64/question_interplay_laziness_partial_application/",
+          "author": null,
+          "description": "I have a collection of items, e.g. a list of number, and an expensive operation. I want to pre-compute the operation for each of the items, so I can do cheap lookups repeatedly. For example:\n expensive :: Int -> Int expensive = (!! 1000000) . iterate (floor . sqrt . fromIntegral . (^2)) getAt :: [Int] -> Int -> Int getAt pre_computed index = pre_computed !! index main :: IO () main = do let xs = [5,2,4,6] pre_computed = map expensive xs for_ (cycle [0..length xs-1]) (print . getAt pre_computed) \n That works as expected. Initially numbers are printed slowly but then fast later on.\n Now, I thought I can combine the pre-computing- and the lookup function into a single function like this:\n getAt :: [Int] -> Int -> Int getAt xs index = pre_computed !! index where pre_computed = map expensive xs main :: IO () main = do let xs = [5,2,4,6] for_ (cycle [0..length xs-1]) (print . getAt xs) \n But this doesn't work. Printing the numbers is always slow. My intuition was, that after partially applying getAt, it pretty much looks like this\n getAt' :: Int -> Int getAt' index = pre_computed !! index where pre_computed = map expensive [5,2,4,6] \n and then laziness makes sure that pre_computed is only computed once. After thinking about it more, I guess pre_computed is a local variable and not shared cross getAt calls. But shouldn't Haskell be able to see that pre_computed does not depend on any of the arguments and optimize that away somehow?\n    submitted by    /u/ngruhn  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/zu8h64/question_interplay_laziness_partial_application/",
+          "publishedOn": "2022-12-24T12:00:51.000Z",
+          "wordCount": 17784,
+          "title": "Question: interplay laziness, partial application and scope",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/zu28jm/advent_of_code_2022_day_24/",
+          "author": null,
+          "description": "https://adventofcode.com/2022\n    submitted by    /u/taylorfausak  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/zu28jm/advent_of_code_2022_day_24/",
+          "publishedOn": "2022-12-24T05:01:10.000Z",
+          "wordCount": 17613,
+          "title": "Advent of Code 2022 day 24",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/ztwke1/ann_tastyautocollect_040_released/",
+          "author": null,
+          "description": "tasty-autocollect is an alternative to tasty-discover for auto-discovery of tests using the tasty framework.\n New features in this release: * where clauses for property tests now have the generated arguments in scope * Skip discovering invalid module names (e.g. #Foo#.hs files that emacs writes) * Enable importing configuration from separate files\n https://hackage.haskell.org/package/tasty-autocollect-0.4.0\n    submitted by    /u/brandonchinn178  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/ztwke1/ann_tastyautocollect_040_released/",
+          "publishedOn": "2022-12-24T00:03:30.000Z",
+          "wordCount": 17692,
+          "title": "[ANN] tasty-autocollect 0.4.0 released!",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/ztpzh3/clc_election_january_2023/",
           "author": null,
@@ -1971,26 +2011,6 @@
           "wordCount": 18552,
           "title": "Question: Servant with NamedRoutes and Swagger",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/z3mga0/call_for_documentation_errorshaskellorg_now/",
-          "author": null,
-          "description": "submitted by    /u/davidchristiansen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/z3mga0/call_for_documentation_errorshaskellorg_now/",
-          "publishedOn": "2022-11-24T15:14:24.000Z",
-          "wordCount": 18665,
-          "title": "Call for documentation: errors.haskell.org now supports Stack",
-          "imageUrl": "https://external-preview.redd.it/uUxcC4pq2wPNhEfNaesM3eWEpkU7wsrPRqmskOz28TI.jpg?auto=webp&s=9fbd287efb137f61b5c25ef11bea05bb241003d0"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/z3lnh1/haskell_weekly_issue_343/",
-          "author": null,
-          "description": "submitted by    /u/amalinovic  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/z3lnh1/haskell_weekly_issue_343/",
-          "publishedOn": "2022-11-24T14:41:08.000Z",
-          "wordCount": 18667,
-          "title": "Haskell Weekly Issue 343",
-          "imageUrl": "https://external-preview.redd.it/QN4ktfFMABnBF6XEPkZWKdVBmOeoKfq094xszcT0RD4.jpg?auto=webp&s=00dc4ace0e204a30ab1d7e7b788ffc3c8a4713ed"
         }
       ]
     },
@@ -2928,36 +2948,6 @@
           "wordCount": 20104,
           "title": "What's the point of opaque type aliases (and are they actually sound)?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/z42n54/i_removed_sbtassembly_and_sbtbuildinfo_from_my/",
-          "author": null,
-          "description": "If you're wondering why, well, just to reduce my dependency cone and possibly build times. No deeper reasons.\n Replaced sbt-assembly with sbt-native-packager's dist command to build a zip file. Unzipped that. Then added the resulting directory into my Docker image. The image now has everything needed to run the app, no fat JAR required.\n Replacing sbt-buildinfo was slightly trickier. I decided to roll the replacement by hand and 'sacrifice' a couple of things that sbt-buildinfo provides. Let's cover all of them:\n  \nname: I can just hard-code the project name, it's not like it's going to change all the time\n version: just need to plug in the output of git describe here\n scalaVersion: do I really need this info in my health page? Not really. I can just look up the version, pull up my repo, and figure out the Scala version there\n sbtVersion: same argument, I don't really need this in my app's health page\n buildTime: just need to plug in the output of date -u -Iseconds here (e.g. 2022-11-25T03:11:49+00:00)\n startTime: bonus, sbt-buildinfo doesn't provide this but it's trivial to add, just run val startTime = java.time.Instant.now.toString eagerly when the app starts up.\n  \nOK, so above in a couple of places I mention plugging in the output of shell commands, how to do that? Pretty simple. In the project code we just have a file like this committed in the repo:\n // Info.scala package build object Info { val name = \"my-app-name\" val version = \"TBD\" val buildTime = \"TBD\" val startTime = java.time.Instant.now.toString } \n And at build time we just replace this file with a generated one:\n # build.sh printf ' package build object Info { val name = \"my-app-name\" val version = \"%s\" val buildTime = \"%s\" val startTime = java.time.Instant.now.toString } ' \"$(git describe)\" \"$(date -u -Iseconds)\" sbt test dist unzip target/.../my-app-name.zip \n Yes, that's printf in Unix shell. It's kinda hacky–but it works.\n    submitted by    /u/yawaramin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/z42n54/i_removed_sbtassembly_and_sbtbuildinfo_from_my/",
-          "publishedOn": "2022-11-25T03:27:48.000Z",
-          "wordCount": 18274,
-          "title": "I removed sbt-assembly and sbt-buildinfo from my project.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/z3shwx/scala3_macros_by_example_2_packagewide_search/",
-          "author": null,
-          "description": "Hello, a few days ago I posted the first example of using macros in Scala 3 for use cases more than debugging: the Annotation Maps.\n Today, I bring you Package-wide Search, a way of scanning packages for certain types of objects and return all of them type-safely in a nice list to be used as you see fit.\n This one I believe is more difficult to grasp especially because of the many quoted types and the cache invalidation I mention at the end, I hope this does not discourage anyone from trying to write their own macros, I will continue posting more examples (hopefully simpler than this one)\n    submitted by    /u/Lumintorious  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/z3shwx/scala3_macros_by_example_2_packagewide_search/",
-          "publishedOn": "2022-11-24T19:28:08.000Z",
-          "wordCount": 16449,
-          "title": "Scala3 Macros by Example 2: Package-wide Search",
-          "imageUrl": "https://external-preview.redd.it/93AHGj7m2R3WFFW1amrerjMHFthqidZOd_PaZ6leXkg.jpg?auto=webp&s=1a46aadff09e986258bbf72750d3900e4bb98277"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/z3irr7/ensime_now_works_with_vscode_vim_and_more/",
-          "author": null,
-          "description": "The latest release of ENSIME includes an LSP and extensions for vscode and neovim.\n If you crave minimalist tooling that you can tinker with, and easy-going on laptop battery life, then I hope you enjoy it: https://ensime.github.io/\n Features are intentionally limited to:\n  \ndot completion\n infer type (hover)\n jump to source\n import symbol\n diagnostics (red squigglies)\n  \nBoth sbt and mill have plugins. Other build tools can have support by adding a single entry to the scalac compiler flags.\n    submitted by    /u/ensime  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/z3irr7/ensime_now_works_with_vscode_vim_and_more/",
-          "publishedOn": "2022-11-24T12:32:03.000Z",
-          "wordCount": 16742,
-          "title": "ENSIME now works with VScode, Vim and more",
-          "imageUrl": null
         }
       ]
     },
@@ -3004,16 +2994,6 @@
           "publishedOn": "2022-11-30T00:24:40.000Z",
           "wordCount": 14290,
           "title": "Don't wanna reinvent the wheel sorting...",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/z3mp7r/help_not_able_to_import_math_module_but_able_to/",
-          "author": null,
-          "description": "I installed the module using bower and able to find the purescript-math module under bower_components within the project folder. But still not able to import, can someone pls help me to fix this?\n    submitted by    /u/146other  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/z3mp7r/help_not_able_to_import_math_module_but_able_to/",
-          "publishedOn": "2022-11-24T15:24:31.000Z",
-          "wordCount": 13723,
-          "title": "[Help] Not able to import Math module. But able to find purescript-math module under bower_components",
           "imageUrl": null
         }
       ]
@@ -3708,26 +3688,6 @@
           "wordCount": 14332,
           "title": "xpath equivalent for org mode?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/z3zho8/listing_nodes_without_aliases/",
-          "author": null,
-          "description": "submitted by    /u/original_account_nam  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/z3zho8/listing_nodes_without_aliases/",
-          "publishedOn": "2022-11-25T00:49:51.000Z",
-          "wordCount": 13943,
-          "title": "Listing nodes without Aliases",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/z3w4sk/orgmode_tables_break_for_some_reason_how_do_i_fix/",
-          "author": null,
-          "description": "Last night this was fine and today its all unaligned. Not sure how to fix it. Adding / deleting rows is not working.\n https://preview.redd.it/ev3mukmj3z1a1.png?width=1574&format=png&auto=webp&s=2deda71a3d05d32c9bcb04133710cad0a01e763a\n    submitted by    /u/timmymayes  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/z3w4sk/orgmode_tables_break_for_some_reason_how_do_i_fix/",
-          "publishedOn": "2022-11-24T22:13:17.000Z",
-          "wordCount": 14134,
-          "title": "Org-mode tables break for some reason. How do I fix this?",
-          "imageUrl": null
         }
       ]
     },
@@ -3736,6 +3696,66 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/web-mode-20221224.1731.el",
+          "author": null,
+          "description": "The web-mode package has been updated to version 20221224.1731.",
+          "link": "https://melpa.org/#/web-mode",
+          "publishedOn": "2022-12-24T17:31:00.000Z",
+          "wordCount": 105,
+          "title": "web-mode (20221224.1731) --- major mode for editing web templates",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-zettelkasten-20221224.1144.el",
+          "author": null,
+          "description": "The org-zettelkasten package has been updated to version 20221224.1144.",
+          "link": "https://melpa.org/#/org-zettelkasten",
+          "publishedOn": "2022-12-24T11:44:00.000Z",
+          "wordCount": 105,
+          "title": "org-zettelkasten (20221224.1144) --- Helper functions to use Zettelkasten in org-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/binder-20221224.1132.tar",
+          "author": null,
+          "description": "The binder package has been updated to version 20221224.1132.",
+          "link": "https://melpa.org/#/binder",
+          "publishedOn": "2022-12-24T11:32:00.000Z",
+          "wordCount": 105,
+          "title": "binder (20221224.1132) --- Global minor mode to facilitate multi-file writing projects",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/jsonian-20221224.12.el",
+          "author": null,
+          "description": "The jsonian package has been updated to version 20221224.12.",
+          "link": "https://melpa.org/#/jsonian",
+          "publishedOn": "2022-12-24T00:12:00.000Z",
+          "wordCount": 105,
+          "title": "jsonian (20221224.12) --- A major mode for editing JSON files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orderless-20221223.2211.tar",
+          "author": null,
+          "description": "The orderless package has been updated to version 20221223.2211.",
+          "link": "https://melpa.org/#/orderless",
+          "publishedOn": "2022-12-23T22:11:00.000Z",
+          "wordCount": 105,
+          "title": "orderless (20221223.2211) --- Completion style for matching regexps in any order",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tidal-20221223.1759.el",
+          "author": null,
+          "description": "The tidal package has been updated to version 20221223.1759.",
+          "link": "https://melpa.org/#/tidal",
+          "publishedOn": "2022-12-23T17:59:00.000Z",
+          "wordCount": 105,
+          "title": "tidal (20221223.1759) --- Interact with TidalCycles for live coding patterns",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/circadian-20221223.1419.el",
           "author": null,
@@ -3794,6 +3814,16 @@
           "publishedOn": "2022-12-22T14:26:00.000Z",
           "wordCount": 105,
           "title": "pydoc (20221222.1426) --- functional, syntax highlighted pydoc navigation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/merlin-20221222.1239.tar",
+          "author": null,
+          "description": "The merlin package has been updated to version 20221222.1239.",
+          "link": "https://melpa.org/#/merlin",
+          "publishedOn": "2022-12-22T12:39:00.000Z",
+          "wordCount": 105,
+          "title": "merlin (20221222.1239) --- Mode for Merlin, an assistant for OCaml",
           "imageUrl": null
         },
         {
@@ -7315,46 +7345,6 @@
           "wordCount": 105,
           "title": "ox-qmd (20221125.1557) --- Qiita Markdown Back-End for Org Export Engine",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-clock-convenience-20221124.2304.el",
-          "author": null,
-          "description": "The org-clock-convenience package has been updated to version 20221124.2304.",
-          "link": "https://melpa.org/#/org-clock-convenience",
-          "publishedOn": "2022-11-24T23:04:00.000Z",
-          "wordCount": 105,
-          "title": "org-clock-convenience (20221124.2304) --- Convenience functions for org time tracking",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/paredit-20221124.2249.el",
-          "author": null,
-          "description": "The paredit package has been updated to version 20221124.2249.",
-          "link": "https://melpa.org/#/paredit",
-          "publishedOn": "2022-11-24T22:49:00.000Z",
-          "wordCount": 105,
-          "title": "paredit (20221124.2249) --- minor mode for editing parentheses",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/csharp-mode-20221124.2217.tar",
-          "author": null,
-          "description": "The csharp-mode package has been updated to version 20221124.2217.",
-          "link": "https://melpa.org/#/csharp-mode",
-          "publishedOn": "2022-11-24T22:17:00.000Z",
-          "wordCount": 105,
-          "title": "csharp-mode (20221124.2217) --- C# mode derived mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/citar-20221124.1514.tar",
-          "author": null,
-          "description": "The citar package has been updated to version 20221124.1514.",
-          "link": "https://melpa.org/#/citar",
-          "publishedOn": "2022-11-24T15:14:00.000Z",
-          "wordCount": 105,
-          "title": "citar (20221124.1514) --- Citation-related commands for org, latex, markdown",
-          "imageUrl": null
         }
       ]
     },
@@ -7363,6 +7353,86 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/zuhpl3/when_exactly_can_async_process_output_actually/",
+          "author": null,
+          "description": "Async programming in Emacs is... challenging. If the modern asyncio/await/async paradigm represents \"cooperative\" multi-tasking, Emacs' async seems more \"semi-cooperative\".\n I'm working with async process output in a comint mode, and I (re-)read the following docs often (emphasis added):\n  \nOutput from a subprocess can arrive only while Emacs is waiting: when reading terminal input (see the function waiting-for-user-input-p), in sit-for and sleep-for (see Waiting for Elapsed Time or Input), in accept-process-output (see Accepting Output from Processes), and in functions which send data to processes (see Sending Input to Processes). This minimizes the problem of timing errors that usually plague parallel programming.\n  \nSo it's pretty clear that sit-for and accept-process-output are good \"yield points\" (ala await). But what about in functions which send data? Does that mean:\n  \nOnly functions which directly call process-send-*?\n Any function which calls such a function (and so on up the call stack)?\n  \nAnd where exactly in such functions which send data can process-output interrupts happen? Anywhere? Only specific places? If you've been down this road and found any enlightenment, I'd be grateful to hear about your travels.\n    submitted by    /u/JDRiverRun  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/zuhpl3/when_exactly_can_async_process_output_actually/",
+          "publishedOn": "2022-12-24T20:11:24.000Z",
+          "wordCount": 15835,
+          "title": "When Exactly can Async Process Output Actually Arrive?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/zugbpa/why_does_my_emacs_try_to_recover_outofdate_file/",
+          "author": null,
+          "description": "I'd be grateful for any help with a problem I've had for a while. When I close Emacs, I always make sure to save every open buffer before I do so -- it's an automatic reflex. Thus, the saved version of any given file will be the most current, and there should not be any need for autorecovery unless Emacs crashes without getting to save. Sometimes however, even after a normal close, my Emacs claims that a file has auto-save data, and prompts me to recover the file. If I recover the file and run a diff on it, I can see that the \"recovered\" file is actually an out-of-date version.\n Has anyone else encountered this, and could there something wrong with my config that's causing Emacs to try to \"recover\" out-of-date files? Below are the lines that I think could be relevant from my config:\n (setq version-control t) (setq vc-make-backup-files t) (setq auto-save-interval 20) (setq kept-old-versions 0) (setq delete-old-versions t) (setq backup-by-copying t) (setq kept-new-versions 10) \n Right now I'm on Emacs 28.2 on Apple M1, but I think this has been a problem I experienced on a past Linux machine as well, so I suspect the fault is with my config.\n Thank you!!\n    submitted by    /u/NeatSea7  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/zugbpa/why_does_my_emacs_try_to_recover_outofdate_file/",
+          "publishedOn": "2022-12-24T19:02:42.000Z",
+          "wordCount": 15888,
+          "title": "Why does my Emacs try to recover out-of-date file versions?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/zuec2q/treesitter_playground/",
+          "author": null,
+          "description": "tree-sitter playground\n  \nFor people wondering what the parsing capabilities of tree-sitter will be, or maybe hacking on or planning for some emacs modes to make use of it, I found the very helpful tree-sitter playground. Pick your language, enter some test code, click around. It's really impressive.\n    submitted by    /u/JDRiverRun  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/zuec2q/treesitter_playground/",
+          "publishedOn": "2022-12-24T17:24:58.000Z",
+          "wordCount": 15470,
+          "title": "tree-sitter playground",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/zu60it/how_to_add_manual_indents/",
+          "author": null,
+          "description": "How do I add an indentation between two words in the middle of a sentence? Thank you.\n eg. my word\n    submitted by    /u/confusedandlostcow  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/zu60it/how_to_add_manual_indents/",
+          "publishedOn": "2022-12-24T09:01:40.000Z",
+          "wordCount": 15121,
+          "title": "How to add manual indents?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/zu3lkm/more_precise_text_selection_with_mouse_on_macos/",
+          "author": null,
+          "description": "I was using emacs-mac because it has precise text selection when using a mouse. But I like just about everything more building with emacs-plus, seems much more stable being closer to source. So I am using emacs-plus now but when selecting text with a mouse, it is quite imprecise. It will show you have characters selected while clicking down and when you release the click it will often add one character more to the selection. Is there any setting to fix this or is it more low level that a build has to fix it like emacs-mac did? Thanks!\n    submitted by    /u/amasunbey  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/zu3lkm/more_precise_text_selection_with_mouse_on_macos/",
+          "publishedOn": "2022-12-24T06:22:19.000Z",
+          "wordCount": 15734,
+          "title": "More precise text selection with mouse on MacOS?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/zu2u9j/sqlite_in_29/",
+          "author": null,
+          "description": "I hear that 29 now has sqlite \"built in.\" Does that mean I don't need to have a sqlite mode package installed? If so, is there any documentation on how to use it?\n    submitted by    /u/teilchen010  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/zu2u9j/sqlite_in_29/",
+          "publishedOn": "2022-12-24T05:36:31.000Z",
+          "wordCount": 14844,
+          "title": "sqlite in 29?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ztvapb/significant_performance_issues_am_i_doing/",
+          "author": null,
+          "description": "I know emacs isn't supposed to be super snappy, but it is ridiculously slow, to the point where I'm convinced that I've done something terribly wrong. It's just a little slow on startup and gets progressively worse and is borderline unusable after about half an hour.\n All my packages are natively compiled. (From nix) I'm using lsp-mode with haskell-language-server. It's also bad with rust-analyzer, but not as bad. It affects all versions I've tried, including latest master and the lsp-mode experimental fork (which improved stuff but broke direnv, so...) I've tried the default gc limit, a high limit, a manual idle timeout and gcmh. It's much snappier in the terminal, but still not as good as I want it (and the whole gui thing was the reason I tried to switch away from neovim).\n So now I'm convinced that there's no way you all live with this and that I must've done something really stupid.\n Here's (the relevant parts of) my config: https://github.com/SKyletoft/dotfiles/blob/master/emacs https://github.com/SKyletoft/dotfiles/blob/master/emacs.d/configs/language-specifics.el\n    submitted by    /u/NotFromSkane  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ztvapb/significant_performance_issues_am_i_doing/",
+          "publishedOn": "2022-12-23T23:04:21.000Z",
+          "wordCount": 17629,
+          "title": "Significant performance issues, am I doing anything really stupid?",
+          "imageUrl": "https://external-preview.redd.it/jRnAclczXOtGAWAJ_hv-K2DF3vG7Dj1tAM6huzgA25s.jpg?auto=webp&s=62ef3480a631b1020f13b8849fcfebdf7b330244"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/ztu9vd/how_are_you_supposed_to_use_usepackage_with/",
+          "author": null,
+          "description": "I started undergoing the process of rewriting my existing config with use-package and straight.el, but I cannot get straight to install packages. Neither :straight t, nor setq straight-use-package-by-default works and Emacs complains about a bunch of missing definitions when compiling init.el (I know this is somewhat expected, but it happens with extremely simple to load packages, like company). I'm using GNU Emacs 28.2-r4, if that matters.\n    submitted by    /u/Pay08  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/ztu9vd/how_are_you_supposed_to_use_usepackage_with/",
+          "publishedOn": "2022-12-23T22:17:27.000Z",
+          "wordCount": 15653,
+          "title": "How are you supposed to use use-package with straight.el?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/ztoql4/advice_on_config_hacking_yak_shaving_bikeshedding/",
           "author": null,
@@ -11621,146 +11691,6 @@
           "publishedOn": "2022-11-25T13:51:51.000Z",
           "wordCount": 15690,
           "title": "What is the straight keyword for declaring that one package depends on another which must be loaded first?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z47aqe/writing_emails_in_a_full_window/",
-          "author": null,
-          "description": "When I invoke rmail-mail-new-frame Emacs opens in a half-window. I would prefer to write my new emails in a full-window. I once knew how to do this, but alas have forgotten! Any help would be appreciated.\n    submitted by    /u/pudentia  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z47aqe/writing_emails_in_a_full_window/",
-          "publishedOn": "2022-11-25T07:36:02.000Z",
-          "wordCount": 15121,
-          "title": "Writing emails in a full window",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z46k8u/whats_the_difference_between_all_the_available/",
-          "author": null,
-          "description": "Starting my journey in emac I found about textobjec in evil and I liked the idea of selecting text or maybe selecting text between tags ...etc.\n As result, I start searching I stumble on: 1. textobjec config from doom emacs. 2. Traget.el 3. evil-textobj-tree-sitter.el 4. Objed.el \n However, it is confusing with all these packages and for newbie the difference is hard to understand. All I want is to select text, line, sentence, paragraph, block, text between tags, functions etc.\n My initial thought is that the 3rd options seems interesting but I think it doesn't support org syntax and I can't select lines, paragraphs with it.\n P.s: I use evil 🙈\n    submitted by    /u/aminevsaziz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z46k8u/whats_the_difference_between_all_the_available/",
-          "publishedOn": "2022-11-25T06:53:35.000Z",
-          "wordCount": 16337,
-          "title": "What's the difference between all the available text selection in emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z41rit/best_packages_for_structural_editing/",
-          "author": null,
-          "description": "I typeset math a lot in latex and im getting tired of distributing/leibniz'ing terms around. I wrote a pretty crappy package for sending some stuff to mathematica and inserting them into the document but this is not enough. Ideally, i would use mathematica as the last processing step, and use something more interactive to expand/distribute/factor terms. \n ​\n My idea is to use Wisent to write a simple latex parser that can output the AST in lisp form, then modify it with structural editing in place, and finally have the lisp execute to print out automatically formatted latex code + any processing I may want to do with mathematica/sympy. Ofc, a big part of this plan depends on being able to modify the lisp code easily. Probably one of the most common cases would be transforming\n (product a (sum b1 b2 ... bn)) -> (sum (product a b1) ... (product a bn)) \n so I need a really featureful structural editing package that allows me to jump between and into terms, combine, swap, what have you. Do any hardcore lispers have a really powerful setup they would like to share?\n    submitted by    /u/cuntymccuntlicker  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z41rit/best_packages_for_structural_editing/",
-          "publishedOn": "2022-11-25T02:43:24.000Z",
-          "wordCount": 14891,
-          "title": "Best packages for structural editing?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3yd4d/eamcs_on_an_ipad/",
-          "author": null,
-          "description": "submitted by    /u/ReneFroger  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3yd4d/eamcs_on_an_ipad/",
-          "publishedOn": "2022-11-24T23:54:39.000Z",
-          "wordCount": 14360,
-          "title": "Eamcs on an iPad",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3xwas/minor_annoyance_with_orgtagview_and_org_agenda/",
-          "author": null,
-          "description": "org-tags-view is my quickest way to access notes in org-agenda. But if I invoke org-tags-view and type in \"soccer\", then Emacs puts the cursor at the top of the buffer on the words Headlines with TAGS match: soccer, rather than on the first match. I would like to change this if possible.\n    submitted by    /u/pudentia  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3xwas/minor_annoyance_with_orgtagview_and_org_agenda/",
-          "publishedOn": "2022-11-24T23:32:04.000Z",
-          "wordCount": 14544,
-          "title": "Minor annoyance with org-tag-view and org agenda note searching",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3x25t/how_to_modify_headlines_programmatically/",
-          "author": null,
-          "description": "submitted by    /u/tonyaldon  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3x25t/how_to_modify_headlines_programmatically/",
-          "publishedOn": "2022-11-24T22:54:28.000Z",
-          "wordCount": 14948,
-          "title": "How to modify headlines programmatically",
-          "imageUrl": "https://external-preview.redd.it/A8_JBu-uvAR6MMvum5_yYIWIcmElJSfTyfORDcUFyso.jpg?auto=webp&s=a7cf1ee5a4027bde03c3e8815a3f26cb46637caf"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3v5xu/is_there_a_way_to_pin_a_package_to_a_specific/",
-          "author": null,
-          "description": "I'm looking for a way to pin packages to specific commits in straight.el and I came across this answer here on reddit - https://www.reddit.com/r/emacs/comments/iyzs29/is_there_a_way_to_pin_a_package_to_a_specific/g6frovq/ with this example.\n (use-package diminish :demand :straight (diminish :host github :repo \"myrjola/diminish.el\" :tag \"v0.45\")) \n but according to the answer this:\n  \nBut I think this only applies to the initial checkout, and the real way is to run straight-freeze-versions, which creates a lockfile. Then straight-thaw-versions applies whatever versions are in there to the package repos.\n  \nI think I also saw a :ref option in an answer here on reddit but I can't find the either the :ref and :tag option in the straight README. There is a :branch option though and that is the one I want to stick to, but it may not be safe if changes or some fixes which I may not want are backported to it.\n My idea then is to clone the repo I want, create a branch from the commit hash I want and point straight to it. If I don't make any changes to it than that \"branch\" will be good with straight forever, and I should be able to use the :fork option if I want to retain a reference to the original configuration.\n Is this cloning and creating an unchanging branch a good idea? I have read about the lockfiles but at this stage it is all a bit much for me. I want something I can wrap my head around for now and get to the advanced stuff later.\n For instance I want to stick to org 9.3.8 in one of my profiles. Can I set the :branch to release_9.3.8?\n    submitted by    /u/vfclists  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3v5xu/is_there_a_way_to_pin_a_package_to_a_specific/",
-          "publishedOn": "2022-11-24T21:30:43.000Z",
-          "wordCount": 15679,
-          "title": "Is there a way to pin a package to a specific commit using Straight?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3v1a7/how_to_enable_the_ohmyposh_powershell_prompt_in/",
-          "author": null,
-          "description": "I have the Oh-my-posh prompt installed for the PowerShell terminal and runs just fine in the Windows terminal and Alacritty, but when I try to open PowerShell from within Emacs, I see “?” symbols all over the prompt.\n This is my configuration for PowerShell:\n (defun run-powershell () \"Run powershell\" (interactive) (async-shell-command \"C:/Program Files/PowerShell/7/pwsh.exe\" nil nil)) (defun my-buffer-face-mode-fixed () \"Sets a fixed width (monospace) font in current buffer\" (interactive) (setq buffer-face-mode-face '(:family \"FuraCode NF\" :height 100)) (buffer-face-mode)) (add-hook 'shell-mode-hook 'my-buffer-face-mode-fixed) \n    submitted by    /u/eis3nheim  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3v1a7/how_to_enable_the_ohmyposh_powershell_prompt_in/",
-          "publishedOn": "2022-11-24T21:25:04.000Z",
-          "wordCount": 14428,
-          "title": "How to enable the Oh-my-posh PowerShell prompt in the Emacs shell?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3sh1t/problem_with_control_mode_and_autoloaded_packages/",
-          "author": null,
-          "description": "If I have a package like so: (use-package xyz :bind-keymap (\"C-c x\" . some-map)) and i enter control mode and press \"c x\" i would expect it to allow me to enter sequences from some-map as if i pressed \"C-c x\". Instead it errors out and tells me that c is not a valid prefix.\n If I force load the package by manually pressing \"C-c x\" then control mode finds the binding and it works until i close emacs.\n Is it possible to make it so that control mode understands the binding without first pressing \"C-c x\" ?\n    submitted by    /u/Xeroth95  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3sh1t/problem_with_control_mode_and_autoloaded_packages/",
-          "publishedOn": "2022-11-24T19:27:03.000Z",
-          "wordCount": 14676,
-          "title": "Problem with control mode and autoloaded packages from use-package.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3rgf8/where_to_find_the_list_of_packages/",
-          "author": null,
-          "description": "I'm in the process of transferring my whole messy config over to use-package, and I have a few questions:\n  \nI can't seem to find one place that lists all installed packages. I can see some installed packages with M-x list-packages (they will be tagged as \"installed\", \"built-in\", etc), but it does not seem to list all packages. For instance, ibuffer is not listed there, but it is a package, and it is installed (I can see ibuffer.el.gz and ibuffer.elc in /usr/share/emacs/28.2/lisp/). Is there a way to see a complete list of packages? Something like the installed packages listed by M-x list-packages plus the installed packages found in /usr/share/emacs/28.2/lisp/, but in the same place?\n \nI presume that all packages found in /usr/share/emacs/28.2/lisp/ are somewhat \"built-in\" (i.e., part of the core Emacs packages). If so, why aren't they listed with M-x list-packages as \"built-in\"?\n \nWhat is the distinction between a package found in /usr/share/emacs/28.2/lisp/ and a package tagged as \"built-in\" by M-x list-packages? What does the latter's use of \"built-in\" mean, really?\n \n Thanks.\n    submitted by    /u/teckau22  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3rgf8/where_to_find_the_list_of_packages/",
-          "publishedOn": "2022-11-24T18:42:33.000Z",
-          "wordCount": 14810,
-          "title": "Where to find the list of packages?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3r6wt/evil_problem_with_key_sequence_contain_no/",
-          "author": null,
-          "description": "Hi guys, hope you all doing fine.\n I'm trying to make an operator in evil that does the following: \n  \ntakes a motion for object to keep \n takes another motion to delete \n  \nso for example if i have a string with | as the cursor \"testing |with a string\" and i use the operator in it with iw then i\" this would leave the string as \"with\" .\n the problem here is that I have some motion keys that are not standard evil motion keys those functions when used with this operator they produce this error evil-extract-count: Key sequence contains no complete binding.\n an example of the motion functions is: \n (evil-define-motion my-backward-sexp-or-pyblock ( count args) :jump nil :type 'word (if (eq major-mode 'python-mode) (if (python-info-end-of-block-p) (python-nav-backward-sexp count t t) (python-nav-backward-sexp count t) ) (sp-backward-sexp count) ) ) \n any ideas on how to solve this problem?\n    submitted by    /u/ntrysii  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3r6wt/evil_problem_with_key_sequence_contain_no/",
-          "publishedOn": "2022-11-24T18:31:26.000Z",
-          "wordCount": 14747,
-          "title": "evil problem with key sequence contain no complete binding",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3o6ms/what_is_the_desired_behaviour_of_cx_cs_in_a_dired/",
-          "author": null,
-          "description": "This defaults to save-buffer, but unless I'm not understand something, this feels like a forgotten common binding that should do something more meaningful than just writing a directory buffer somewhere to file\n    submitted by    /u/tomatoaway  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3o6ms/what_is_the_desired_behaviour_of_cx_cs_in_a_dired/",
-          "publishedOn": "2022-11-24T16:24:42.000Z",
-          "wordCount": 15618,
-          "title": "What is the desired behaviour of C-x C-s in a dired buffer?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3n3lc/would_changing_terminal_emulator_help_on_macos/",
-          "author": null,
-          "description": "I have a remote system, I log on to over ssh, where I use Emacs with vanilla key bindings. (So not edit files with tramp, but actually using the local Emacs application, like for reading local mail and other local stuff).\n On Linux and FreeBSD this works OK, but on MacOS this is terrible, the MacOS terminal emulator creates a lot of havoc.\n Setting up a emacsclient / emacs-server combi over tcp seems rather complicated, so I haven't tried that. The remote system is a headless system, without X.\n Would installing a different terminal emulator (f.e., with brew) help? If so, any recommendations on what terminal emulator to choose?\n UPDATE: Thanks to the reply's from https://www.reddit.com/user/rpluim/ and https://www.reddit.com/user/Greenskid/, I installed iterm2. \n In the configuration of the profile, set the left alt-key to \"Esc+\". After this, using Emacs over ssh works great :) \n    submitted by    /u/brwendel  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/z3n3lc/would_changing_terminal_emulator_help_on_macos/",
-          "publishedOn": "2022-11-24T15:40:54.000Z",
-          "wordCount": 14970,
-          "title": "Would changing terminal emulator help on MacOS for use of remote terminal emacs over ssh?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/z3lz0d/orgbabel_custom_result_formatting_automatic/",
-          "author": null,
-          "description": "https://i.redd.it/x09mu9q4uw1a1.gif\n Hey all. The code below makes it possible to define custom wrappers for results of org-babel code blocks, as well as custom actions to take after printing the results, such as automatically previewing LaTeX equations. If you think this is worth attempting to submit to the development mailing list let me know!\n ## How it works\n By default it is not possible to add custom wrappers for org-babel results, as they are hardcoded inside *org-babel-insert-result*. The code below extracts the list with result wrappers used inside *org-babel-insert-result* and puts it in a variable called *custom/org-babel-result-wrap-formats*. It is then possible to add new entries to this list, such as this one here,\n (add-to-list 'custom/org-babel-result-wrap-formats '((member…",
-          "link": "https://www.reddit.com/r/emacs/comments/z3lz0d/orgbabel_custom_result_formatting_automatic/",
-          "publishedOn": "2022-11-24T14:55:03.000Z",
-          "wordCount": 19096,
-          "title": "org-babel - custom result formatting + automatic preview of LaTeX equations",
           "imageUrl": null
         }
       ]
