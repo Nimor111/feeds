@@ -53,6 +53,86 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/101lsig/haskell_handling_twitter_pagination/",
+          "author": null,
+          "description": "I am really stuck with learning this bit of Haskell. I have a function that accesses the twitter REST api. \n The issue I am grappling with is that the api sometimes returns an token for the next page. I need to loop through each of the individual calls until this token is no longer present. In imperitive programming this is a simple `while` loop. I am struggling to find a functional form that works.\n This is the current signature of the get_tweets function\n  get_tweets :: NW.Options -> IO TwitterResponse \n where TwitterResponse is \n  data TwitterResponse = Failed | Partial (String, TwitterApiResponse) | Final TwitterApiResponse \n The String in Partial is the pagination token.\n    submitted by    /u/AffectionateDamage48  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/101lsig/haskell_handling_twitter_pagination/",
+          "publishedOn": "2023-01-02T19:51:53.000Z",
+          "wordCount": 18378,
+          "title": "Haskell handling twitter pagination",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/101kczm/haskell_setup/",
+          "author": null,
+          "description": "Greetings fellow Haskellers,\n I've decided 2023 is the year I'm going to learn and become productive in Haskell. I installed everything I think I need through GHCup. I can make my own projects with `stack new` and everything works _okay_. HLS seems to need restarts from time to time, though. But in any case, I am working through Haskell in Depth and I can't really work with the example repo at all. When I open the directory in VSCode, I get this fairly inscrutable error at the top of any file I open:\n <command line>: cannot satisfy -package z-hid-examples-z-contexts (use -v for more information) \n Any call to \\`stack build\\` fails with a bunch of constraint violations. The output appears to be complaining about which GHC I am using. In short, I am wondering whether there is any up-to-date, authoritative guide I can follow to fix my configuration so I can work through this stuff. Examples on the web seem to be mostly a bit old and piecemeal.\n    submitted by    /u/bhliebs93  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/101kczm/haskell_setup/",
+          "publishedOn": "2023-01-02T18:55:27.000Z",
+          "wordCount": 18808,
+          "title": "Haskell setup",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/101gzz6/how_can_i_restructure_the_following_function_so/",
+          "author": null,
+          "description": "I am trying to define a function that given a lambda expression (LamExpr) returns a Maybe LamExpr performing in leftmost innermost reduction. However, I have only figured out how to return the reduced subtree, but not the whole thing.\n data LamExpr = LamApp LamExpr LamExpr | LamAbs Int LamExpr | LamVar Int deriving (Eq, Show, Read) reduction :: LamExpr -> Maybe LamExpr reduction (LamVar _) = Nothing reduction (LamAbs _ e) = reduction e reduction (LamApp e1 e2) = reduction e1 <|> reduction e2 <|> return (reduce (LamApp e1 e2)) \n    submitted by    /u/Equation7571  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/101gzz6/how_can_i_restructure_the_following_function_so/",
+          "publishedOn": "2023-01-02T16:40:29.000Z",
+          "wordCount": 18455,
+          "title": "How can I restructure the following function so it returns the whole tree instead of the reduced subtree",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/101dfq5/sieve_of_eratosthenes_using_mutable_vector_and/",
+          "author": null,
+          "description": "I'm doing an exercise that computes all primes up to a given n using the Sieve of Eratosthenes. For learning, I decided to use mutable vector and monad. This is where things got really confusing because all the examples/tutorials/articles I found are either trivial, or over my head.\n The following code works, but I'm wondering if there is a way to filter out the composite numbers without unfreezing the vector. My attempt to do so using forM and guard didn't compile.\n Signature of primesUpTo is determined by the exercise and can't be modified.\n module Sieve (primesUpTo) where import Control.Monad as M import Control.Monad.Reader (ReaderT) import qualified Control.Monad.Reader as R import Control.Monad.ST (ST) import qualified Control.Monad.ST as ST import Data.Vector.Unboxed ((!)) import qualified Data.Vector.Unboxed as U import Data.Vector.Unboxed.Mutable (MVector) import qualified Data.Vector.Unboxed.Mutable as VM -- You should not use any of the division operations when implementing -- the sieve of Eratosthenes. import Prelude hiding (div, divMod, mod, quot, quotRem, rem, (/)) type MyVec s = ReaderT (MVector s Bool) (ST s) primesUpTo :: Integer -> [Integer] primesUpTo n = ST.runST $ do let n' = fromInteger n v <- VM.replicate (n' + 1) True let m = round $ sqrt (fromInteger n :: Float) M.forM_ [2 .. m] $ \\x -> do y <- VM.unsafeRead v (fromInteger x) M.when y (R.runReaderT (mark x n) v) -- M.forM [2 .. n] $ \\x -> do -- y <- VM.unsafeRead v (fromInteger x) -- M.guard y -- return (toInteger x) v' <- U.freeze v return ((map toInteger . filter (v' !)) [2 .. n']) mark :: Integer -> Integer -> MyVec s () mark x n = do let xs = [x * x, x * x + x .. n] v <- R.ask M.forM_ xs $ \\i -> do VM.unsafeWrite v (fromInteger i) False \n    submitted by    /u/sarkara1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/101dfq5/sieve_of_eratosthenes_using_mutable_vector_and/",
+          "publishedOn": "2023-01-02T14:08:14.000Z",
+          "wordCount": 19878,
+          "title": "Sieve of Eratosthenes using mutable vector and monad",
+          "imageUrl": "https://external-preview.redd.it/umQFQHW5ALN2X5xavdYy8GwtSIsD1NlNcx4gcxwBiGc.jpg?auto=webp&s=af27c14882b5880ff907c9f47497d22d9995a131"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/101bcx9/from_delimited_continuations_to_algebraic_effects/",
+          "author": null,
+          "description": "submitted by    /u/Syrak  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/101bcx9/from_delimited_continuations_to_algebraic_effects/",
+          "publishedOn": "2023-01-02T12:23:14.000Z",
+          "wordCount": 19586,
+          "title": "From delimited continuations to algebraic effects in Haskell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/101alm0/monthly_update_on_a_haskell_game_engine/",
+          "author": null,
+          "description": "I've been writing a game engine in Haskell for the past two months and I've written an update about its unreleased status on discourse: https://discourse.haskell.org/t/monthly-update-on-a-haskell-game-engine/5515/5\n Here is a screenshot of the procedural planets game I'm writing based on Sebastian Lague's series:\n https://preview.redd.it/2n3bks7u9m9a1.png?width=2552&format=png&auto=webp&s=9633d2554c4653e750a9614382e33055e8c87118\n    submitted by    /u/romesrf  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/101alm0/monthly_update_on_a_haskell_game_engine/",
+          "publishedOn": "2023-01-02T11:39:42.000Z",
+          "wordCount": 22082,
+          "title": "Monthly Update on a Haskell Game Engine",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1018y55/what_data_structures_do_you_miss_in_haskell/",
+          "author": null,
+          "description": "I want to start contributing to the haskell ecosystem and implementing data structures seems like a good place to start.\n Are there any data structures that you needed once or still need, but no satisfactory solution is available?\n    submitted by    /u/thefybe  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1018y55/what_data_structures_do_you_miss_in_haskell/",
+          "publishedOn": "2023-01-02T09:58:49.000Z",
+          "wordCount": 19589,
+          "title": "What data structures do you miss in haskell?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/100vbzl/published_my_first_haskell_library_on_hackage/",
+          "author": null,
+          "description": "I recently discovered that the xdg-basedir library on Hackage only covered a very limited part of the XDG Basedir Specification, namely just reading the environment variables and returning paths for directories and files, and only for the categories or config, data and cache.\n But the XDG Basedir is so much more!\n First, there are other categories, state and runtime. Second, there's a whole logic to what files should be read: either you want to read only one file, and the application should try each directory for the category and give you the content of the first file that is available, or you want all available files merged together. Also, relative paths in the environment variables should be ignored.\n So I created xdg-basedir-compliant. It was fun to create because thanks to Polysemy, I could easily do TDD with non-IO interpreters.\n I hope the API is practical. I do hope people will use the library and I would very much welcome feedback on its use!\n    submitted by    /u/pthierry  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/100vbzl/published_my_first_haskell_library_on_hackage/",
+          "publishedOn": "2023-01-01T22:24:23.000Z",
+          "wordCount": 17751,
+          "title": "Published my first Haskell library on Hackage: xdg-basedir-compliant",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/100epuf/aoc_d2_convoluted_rockpaperscissors/",
           "author": null,
           "description": "Happy new year everyone!\n I was trying the 2nd day of AOC; and just for funsies i was trying to model the rock-paper-scissors game through a type-class (my motivation was that i didn't want to update the result function if i were to extend the rock-paper-scissors with spock or some other variant). Nevertheless, I'm having trouble figuring out how to promote a value to it's promoted-type (see result' at the bottom for the issue)\n {-# LANGUAGE DataKinds #-} {-# LANGUAGE FunctionalDependencies #-} {-# LANGUAGE GADTs #-} {-# LANGUAGE ScopedTypeVariables #-} {-# LANGUAGE StandaloneKindSignatures #-} {-# LANGUAGE TemplateHaskell #-} {-# LANGUAGE TypeApplications #-} {-# LANGUAGE TypeFamilies #-} {-# LANGUAGE RankNTypes #-} module Day2.Utils where import Data.Singletons import Data.Singletons.TH …",
@@ -1971,36 +2051,6 @@
           "wordCount": 19839,
           "title": "Delimiter-first code",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zc108l/advent_of_code_2022_day_4/",
-          "author": null,
-          "description": "submitted by    /u/taylorfausak  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zc108l/advent_of_code_2022_day_4/",
-          "publishedOn": "2022-12-04T05:01:10.000Z",
-          "wordCount": 21648,
-          "title": "Advent of Code 2022 day 4",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zbse3t/new_haskell_docker_maintainers_wanted/",
-          "author": null,
-          "description": "Hi all,\n I have been maintaining the official Haskell docker images for about 2 years now. I have tried to push the project forward in various ways and I’m pleased with where they are now.\n There is more work to be done, such as Alpine and Windows support (both almost done, but blocked on GHC issues or need a final push).\n Unfortunately, I don’t have much time anymore for anything other than basic maintenance. Most of my time is taken up by my day job and my 8 month old. I also no longer work in Haskell, which lowers my motivation. I’d like to hand off maintenance, ideally to multiple new maintainers.\n Is anyone interested? If so, you can post here or on this github issue.\n    submitted by    /u/AlistairBuzz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zbse3t/new_haskell_docker_maintainers_wanted/",
-          "publishedOn": "2022-12-03T22:15:24.000Z",
-          "wordCount": 19212,
-          "title": "New Haskell docker maintainers wanted",
-          "imageUrl": "https://external-preview.redd.it/vtsDgC-FpNSWH6iQlKe6d044Or1Keqa2Nb8J4zMfdw4.jpg?auto=webp&s=ac7d4db334b3150201d84ecbebe7ffe38982c085"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zbhwpk/the_unreasonable_effectiveness_of_polymorphic/",
-          "author": null,
-          "description": "submitted by    /u/Faucelme  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zbhwpk/the_unreasonable_effectiveness_of_polymorphic/",
-          "publishedOn": "2022-12-03T14:46:21.000Z",
-          "wordCount": 20085,
-          "title": "The unreasonable effectiveness of polymorphic records",
-          "imageUrl": null
         }
       ]
     },
@@ -2009,6 +2059,46 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/101lqzx/functional_eventdriven_architecture_powered_by/",
+          "author": null,
+          "description": "submitted by    /u/volpegabriel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/101lqzx/functional_eventdriven_architecture_powered_by/",
+          "publishedOn": "2023-01-02T19:50:12.000Z",
+          "wordCount": 14747,
+          "title": "Functional Event-Driven Architecture: Powered by Scala 3 is now 100% complete",
+          "imageUrl": "https://external-preview.redd.it/HiGBlWAwmgFOCy6EvAP8cbN2ocuH7cQk_0Zrm5Y_3_M.jpg?auto=webp&s=23c4f335b6888d9af7c362f29c774419af02b98b"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/101eovj/data_quality_at_government_scale_using_scala_by/",
+          "author": null,
+          "description": "In this talk, Daniel covers how his team used Scala to create a sophisticated data quality and data rules engine that works at the scale of government: https://www.youtube.com/watch?v=jJcRaEJNzzY\n    submitted by    /u/Agataziverge  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/101eovj/data_quality_at_government_scale_using_scala_by/",
+          "publishedOn": "2023-01-02T15:03:13.000Z",
+          "wordCount": 14554,
+          "title": "\"Data Quality at Government Scale using Scala\" by Daniel Smith at Functional Scala 2022.",
+          "imageUrl": "https://external-preview.redd.it/63wJxTK54qQiH6YPy3kmXMedCCnFmDBoKmihf5vvvbI.jpg?auto=webp&s=b799b2cb79026fc75185083cc0f0efe86af1c0eb"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/101bq8a/value_is_not_a_member/",
+          "author": null,
+          "description": "Hello Scala Family, I am new to scala and currently on symbol literals topic. I am getting this error \n Index.scala:35: error: value nameField is not a member of Index.Person \n code \n object Index { class Person { val name = \"Zoned\" def sayHello():Unit = { println(\"Mockery\") } } def main(args: Array[String]): Unit = { val person = new Person val nameField = Symbol(\"name\") println(person.nameField) } } \n I understand the overall definition of it and its use but it isn't accessing the name variable inside Person class as It should be.\n Is there something I am missing? \n Scala Version: \n Scala code runner version 2.13.4 -- Copyright 2002-2020, LAMP/EPFL and Lightbend, Inc.\n    submitted by    /u/FizzFaa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/101bq8a/value_is_not_a_member/",
+          "publishedOn": "2023-01-02T12:42:25.000Z",
+          "wordCount": 14811,
+          "title": "Value is not a member",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/101bpn7/nix_flake_for_scala/",
+          "author": null,
+          "description": "submitted by    /u/agilesteel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/101bpn7/nix_flake_for_scala/",
+          "publishedOn": "2023-01-02T12:41:36.000Z",
+          "wordCount": 14851,
+          "title": "Nix Flake for Scala",
+          "imageUrl": "https://external-preview.redd.it/lweV2t82Y7MW-sDXRqcFduk-UUuImySkC6Mdj49VY18.jpg?auto=webp&s=f0a4ec1447b0cc5aff1bdcfb76f1af85ada6c26c"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/100nspe/who_is_hiring_monthly_rscala_job_postings_thread/",
           "author": null,
@@ -2888,16 +2978,6 @@
           "wordCount": 16052,
           "title": "Please help our academic research!",
           "imageUrl": "https://external-preview.redd.it/9uvW4rC4IyNXMkDW4V78Wa47UjYHKzRuSWQ8wI26g5U.jpg?auto=webp&s=bf353aa29bddce3612063cd17db3d7d948210339"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/zble8t/learning_scala_2_or_3_first/",
-          "author": null,
-          "description": "I've been learning Scala 3 and recently read some comments here that made me worry if I made the right choice by starting with 3.\n Assuming that a majority of production code is still in Scala 2 or in process of going Scala 3, are there any gotchas one should be aware of?\n    submitted by    /u/aasdfunc  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/zble8t/learning_scala_2_or_3_first/",
-          "publishedOn": "2022-12-03T17:24:11.000Z",
-          "wordCount": 19155,
-          "title": "Learning Scala 2 or 3 first",
-          "imageUrl": null
         }
       ]
     },
@@ -3059,6 +3139,36 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/101jlnd/noncoder_want_to_use_orgzly/",
+          "author": null,
+          "description": "I've used TickTick for years but it's bloated in comparison to what I've seen with the Orgzly app on Android. I'm a non-coder. Do you think I'm going to run into problems using this app for task and project management without having coding knowledge? I also was wondering if there is a way to embed Orgzly into Notion. Eventually I'd like to learn something like Org Mode but for the time being I'm going to use Notion due to life being busy.\n    submitted by    /u/CapriCorny15  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/101jlnd/noncoder_want_to_use_orgzly/",
+          "publishedOn": "2023-01-02T18:24:23.000Z",
+          "wordCount": 14216,
+          "title": "Non-coder - Want to use Orgzly",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/101cf8a/export_to_html_and_format_with_gnu_docs_style/",
+          "author": null,
+          "description": "I've got used to the aesthetics of the GNU emacs manual (for instance: https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html) so I was wondering if you guys know how to export org files and format them to that style.\n Thanks for all your help!\n    submitted by    /u/Gus_Gustavsohn  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/101cf8a/export_to_html_and_format_with_gnu_docs_style/",
+          "publishedOn": "2023-01-02T13:18:06.000Z",
+          "wordCount": 13962,
+          "title": "Export to html and format with GNU docs style",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1011kvu/my_exocortex_using_orgroam_and_orgpublish/",
+          "author": null,
+          "description": "submitted by    /u/BrettW-CD  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1011kvu/my_exocortex_using_orgroam_and_orgpublish/",
+          "publishedOn": "2023-01-02T03:05:50.000Z",
+          "wordCount": 15108,
+          "title": "My Exocortex using org-roam and org-publish",
+          "imageUrl": "https://external-preview.redd.it/TzMRu85S_bhMgzlmeBgUZ5rhV86vu4FpQ1dXgPr2NrA.jpg?auto=webp&s=050af5adaf5881462e881205297c39bf75cdc994"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/100cw2r/implementing_the_para_method_in_orgmode/",
           "author": null,
@@ -3528,16 +3638,6 @@
           "wordCount": 19689,
           "title": "does remapping `C` predate much orgmode?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/zbtlj7/ways_to_attach_org_tables_to_a_database_via_odbc/",
-          "author": null,
-          "description": "I have lots of Org tables (no table.el tables) and a couple of SQL based databases. I don't know if I can reconfigure ODBC to access different table formats, but maybe can just convert the Org tables to .csv files and hook them up that way.\n Did I miss any easier ways? Has anyone gone down this path before me?\n Thanks.\n    submitted by    /u/DriveByPosting17  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/zbtlj7/ways_to_attach_org_tables_to_a_database_via_odbc/",
-          "publishedOn": "2022-12-03T23:05:50.000Z",
-          "wordCount": 15128,
-          "title": "Ways to attach Org tables to a database via ODBC?",
-          "imageUrl": null
         }
       ]
     },
@@ -3546,6 +3646,76 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/gerrit-20230102.1714.tar",
+          "author": null,
+          "description": "The gerrit package has been updated to version 20230102.1714.",
+          "link": "https://melpa.org/#/gerrit",
+          "publishedOn": "2023-01-02T17:14:00.000Z",
+          "wordCount": 105,
+          "title": "gerrit (20230102.1714) --- Gerrit client",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-ref-20230102.1658.tar",
+          "author": null,
+          "description": "The org-ref package has been updated to version 20230102.1658.",
+          "link": "https://melpa.org/#/org-ref",
+          "publishedOn": "2023-01-02T16:58:00.000Z",
+          "wordCount": 105,
+          "title": "org-ref (20230102.1658) --- citations, cross-references and bibliographies in org-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/soria-theme-20230102.1459.tar",
+          "author": null,
+          "description": "The soria-theme package has been updated to version 20230102.1459.",
+          "link": "https://melpa.org/#/soria-theme",
+          "publishedOn": "2023-01-02T14:59:00.000Z",
+          "wordCount": 105,
+          "title": "soria-theme (20230102.1459) --- A xoria256 theme with some colors from openSUSE",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lfe-mode-20230102.1421.tar",
+          "author": null,
+          "description": "The lfe-mode package has been updated to version 20230102.1421.",
+          "link": "https://melpa.org/#/lfe-mode",
+          "publishedOn": "2023-01-02T14:21:00.000Z",
+          "wordCount": 105,
+          "title": "lfe-mode (20230102.1421) --- Lisp Flavoured Erlang mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/my-repo-pins-20230102.1308.el",
+          "author": null,
+          "description": "The my-repo-pins package has been updated to version 20230102.1308.",
+          "link": "https://melpa.org/#/my-repo-pins",
+          "publishedOn": "2023-01-02T13:08:00.000Z",
+          "wordCount": 105,
+          "title": "my-repo-pins (20230102.1308) --- Keep your git repositories organized",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/suomalainen-kalenteri-20230102.904.tar",
+          "author": null,
+          "description": "The suomalainen-kalenteri package has been updated to version 20230102.904.",
+          "link": "https://melpa.org/#/suomalainen-kalenteri",
+          "publishedOn": "2023-01-02T09:04:00.000Z",
+          "wordCount": 105,
+          "title": "suomalainen-kalenteri (20230102.904) --- Finnish national and Christian holidays for calendar",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/timu-spacegrey-theme-20230102.59.el",
+          "author": null,
+          "description": "The timu-spacegrey-theme package has been updated to version 20230102.59.",
+          "link": "https://melpa.org/#/timu-spacegrey-theme",
+          "publishedOn": "2023-01-02T00:59:00.000Z",
+          "wordCount": 105,
+          "title": "timu-spacegrey-theme (20230102.59) --- Color theme inspired by the Spacegray theme in Sublime Text",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/php-mode-20230101.1753.tar",
           "author": null,
@@ -4067,6 +4237,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/rustic-20221229.1543.tar",
+          "author": null,
+          "description": "The rustic package has been updated to version 20221229.1543.",
+          "link": "https://melpa.org/#/rustic",
+          "publishedOn": "2022-12-29T15:43:00.000Z",
+          "wordCount": 105,
+          "title": "rustic (20221229.1543) --- Rust development environment",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/kubernetes-20221229.1519.tar",
           "author": null,
           "description": "The kubernetes package has been updated to version 20221229.1519.",
@@ -4407,6 +4587,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/tao-theme-20221227.1710.tar",
+          "author": null,
+          "description": "The tao-theme package has been updated to version 20221227.1710.",
+          "link": "https://melpa.org/#/tao-theme",
+          "publishedOn": "2022-12-27T17:10:00.000Z",
+          "wordCount": 105,
+          "title": "tao-theme (20221227.1710) --- This package provides two parametrized uncoloured color themes for Emacs: tao-yin and tao-yang.",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/lsp-java-20221227.1331.tar",
           "author": null,
           "description": "The lsp-java package has been updated to version 20221227.1331.",
@@ -4437,6 +4627,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/gpt-20221227.559.tar",
+          "author": null,
+          "description": "The gpt package has been updated to version 20221227.559.",
+          "link": "https://melpa.org/#/gpt",
+          "publishedOn": "2022-12-27T05:59:00.000Z",
+          "wordCount": 105,
+          "title": "gpt (20221227.559) --- Run instruction-following language models",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/consult-notes-20221227.17.tar",
           "author": null,
           "description": "The consult-notes package has been updated to version 20221227.17.",
@@ -4454,6 +4654,16 @@
           "publishedOn": "2022-12-26T22:07:00.000Z",
           "wordCount": 105,
           "title": "git-commit (20221226.2207) --- Edit Git commit messages.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/timu-rouge-theme-20221226.1551.el",
+          "author": null,
+          "description": "The timu-rouge-theme package has been updated to version 20221226.1551.",
+          "link": "https://melpa.org/#/timu-rouge-theme",
+          "publishedOn": "2022-12-26T15:51:00.000Z",
+          "wordCount": 105,
+          "title": "timu-rouge-theme (20221226.1551) --- Color theme inspired by the Rouge Theme for VSCode",
           "imageUrl": null
         },
         {
@@ -4564,6 +4774,16 @@
           "publishedOn": "2022-12-24T18:35:00.000Z",
           "wordCount": 105,
           "title": "catppuccin-theme (20221224.1835) --- Catppuccin Theme",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/embark-consult-20221224.1741.el",
+          "author": null,
+          "description": "The embark-consult package has been updated to version 20221224.1741.",
+          "link": "https://melpa.org/#/embark-consult",
+          "publishedOn": "2022-12-24T17:41:00.000Z",
+          "wordCount": 105,
+          "title": "embark-consult (20221224.1741) --- Consult integration for Embark",
           "imageUrl": null
         },
         {
@@ -6965,86 +7185,6 @@
           "wordCount": 105,
           "title": "flatfluc-theme (20221204.939) --- Custom merge of flucui and flatui themes",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/attrap-20221204.803.el",
-          "author": null,
-          "description": "The attrap package has been updated to version 20221204.803.",
-          "link": "https://melpa.org/#/attrap",
-          "publishedOn": "2022-12-04T08:03:00.000Z",
-          "wordCount": 105,
-          "title": "attrap (20221204.803) --- ATtempt To Repair At Point",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/clojure-mode-20221203.2256.el",
-          "author": null,
-          "description": "The clojure-mode package has been updated to version 20221203.2256.",
-          "link": "https://melpa.org/#/clojure-mode",
-          "publishedOn": "2022-12-03T22:56:00.000Z",
-          "wordCount": 105,
-          "title": "clojure-mode (20221203.2256) --- Major mode for Clojure code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/restclient-20221203.1808.el",
-          "author": null,
-          "description": "The restclient package has been updated to version 20221203.1808.",
-          "link": "https://melpa.org/#/restclient",
-          "publishedOn": "2022-12-03T18:08:00.000Z",
-          "wordCount": 105,
-          "title": "restclient (20221203.1808) --- An interactive HTTP client for Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dwim-shell-command-20221203.1801.tar",
-          "author": null,
-          "description": "The dwim-shell-command package has been updated to version 20221203.1801.",
-          "link": "https://melpa.org/#/dwim-shell-command",
-          "publishedOn": "2022-12-03T18:01:00.000Z",
-          "wordCount": 105,
-          "title": "dwim-shell-command (20221203.1801) --- Shell commands with DWIM behaviour",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/puni-20221203.1548.el",
-          "author": null,
-          "description": "The puni package has been updated to version 20221203.1548.",
-          "link": "https://melpa.org/#/puni",
-          "publishedOn": "2022-12-03T15:48:00.000Z",
-          "wordCount": 105,
-          "title": "puni (20221203.1548) --- Parentheses Universalistic",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/http-twiddle-20221203.1351.el",
-          "author": null,
-          "description": "The http-twiddle package has been updated to version 20221203.1351.",
-          "link": "https://melpa.org/#/http-twiddle",
-          "publishedOn": "2022-12-03T13:51:00.000Z",
-          "wordCount": 105,
-          "title": "http-twiddle (20221203.1351) --- send & twiddle & resend HTTP requests",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/cider-20221203.1148.tar",
-          "author": null,
-          "description": "The cider package has been updated to version 20221203.1148.",
-          "link": "https://melpa.org/#/cider",
-          "publishedOn": "2022-12-03T11:48:00.000Z",
-          "wordCount": 105,
-          "title": "cider (20221203.1148) --- Clojure Interactive Development Environment that Rocks",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/glue-20221203.914.el",
-          "author": null,
-          "description": "The glue package has been updated to version 20221203.914.",
-          "link": "https://melpa.org/#/glue",
-          "publishedOn": "2022-12-03T09:14:00.000Z",
-          "wordCount": 105,
-          "title": "glue (20221203.914) --- Emacs - Common Lisp interop using SLIME or SLY",
-          "imageUrl": null
         }
       ]
     },
@@ -7053,6 +7193,66 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/101ep83/orgpreview_is_awesome/",
+          "author": null,
+          "description": "I have been watching Karthink's org-auctex library for a while. While I was never able to get it working well for me I kept checking in on it because I so wanted faster latex previews in org. This morning I found that Karthink had a new repo org-preview which is amazing. It is super fast, worked for me out of the box, and centers display math! Plus it works with org-fragtog which I also love. \n Repo says its still in very early development (seems to only be a week or so old) but figured I would share my enthusiasm about it. \n (Thank you u/karthink!)\n    submitted by    /u/JustinSilverman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/101ep83/orgpreview_is_awesome/",
+          "publishedOn": "2023-01-02T15:03:38.000Z",
+          "wordCount": 16107,
+          "title": "Org-Preview is awesome!",
+          "imageUrl": "https://external-preview.redd.it/JKu_tGLyYU45QLFs_h9bdujL8OjDAFfZLCkoC8G3Eik.jpg?auto=webp&s=fced04d4221222a8922f5084980292a5c8459a6b"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1019per/oc_evaluate_chess_portable_game_notation_inside/",
+          "author": null,
+          "description": "submitted by    /u/Mahdi_Amel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1019per/oc_evaluate_chess_portable_game_notation_inside/",
+          "publishedOn": "2023-01-02T10:45:31.000Z",
+          "wordCount": 15812,
+          "title": "[OC] Evaluate Chess Portable Game Notation inside org-babel",
+          "imageUrl": "https://external-preview.redd.it/txSQXWB8wL0aUTfGBn_Q1hHMUMSL4MHcyXQaxUyIqr0.png?format=pjpg&auto=webp&s=54510d98e0c8a9a33d705bb9a72f4651b4c07679"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1014b4k/using_emacs_as_a_study_environment/",
+          "author": null,
+          "description": "org mode is already great for note taking. does anyone have any packages that would allow for using emacs as a study tool?\n    submitted by    /u/noobCodeKid  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1014b4k/using_emacs_as_a_study_environment/",
+          "publishedOn": "2023-01-02T05:24:23.000Z",
+          "wordCount": 17408,
+          "title": "Using emacs as a study environment",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/100zyl1/is_there_a_way_to_show_completed_habits_and/",
+          "author": null,
+          "description": "I have already set up showing completion of regular org-mode TODOs in my agenda log, and I have the variables org-agenda-start-with-log-mode and org-log-done both set to t. However, I would really like it if there was a way to log completion of habits and repeating tasks in the same place. I am guessing it doesn't work because when these tasks are done, the state doesn't change from TODO to DONE, but I'm not aware of the way to get around this. Can anyone help? Thanks!\n    submitted by    /u/Time-Web-4623  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/100zyl1/is_there_a_way_to_show_completed_habits_and/",
+          "publishedOn": "2023-01-02T01:48:14.000Z",
+          "wordCount": 16161,
+          "title": "Is there a way to show completed habits and repeating tasks in agenda log?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/100vrll/chatgpt_vim_v_emacs_hiphop_style_battle_posted_by/",
+          "author": null,
+          "description": "​\n https://preview.redd.it/ajrmtmezei9a1.jpg?width=647&format=pjpg&auto=webp&s=7190e520889cbe1f3b5569b98128e797ccd79718\n    submitted by    /u/velbunadur  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/100vrll/chatgpt_vim_v_emacs_hiphop_style_battle_posted_by/",
+          "publishedOn": "2023-01-01T22:43:03.000Z",
+          "wordCount": 18585,
+          "title": "ChatGPT Vim v Emacs hip-hop style battle (posted by @MelMitchell1 on Twitter)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/100tufs/adding_keywords_to_highlight_when_programming_c/",
+          "author": null,
+          "description": "Hi. I'm curious where I can find the config that contains which words to highlight using which colors in emacs. I am using the Zenburn theme as my default theme, if it matters.\n    submitted by    /u/DistilledProblems  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/100tufs/adding_keywords_to_highlight_when_programming_c/",
+          "publishedOn": "2023-01-01T21:22:56.000Z",
+          "wordCount": 16653,
+          "title": "Adding keywords to highlight when programming? (C specifically)",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/100sj3y/straightel/",
           "author": null,
@@ -11131,56 +11331,6 @@
           "publishedOn": "2022-12-04T09:35:52.000Z",
           "wordCount": 14859,
           "title": "how to upgrade Emacs + Org",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zc3nue/rethinking_about_emacs_keybindings/",
-          "author": null,
-          "description": "Tweaking emacs with satisfication is not easy, but I am trying to think how it would work efficiently. The problem of the naive emacs keybindings is that it over relies on the ctrl key, default layout of modern computer keyboard makes it effort-some to do navigation. In my opinion, the alt (or meta) key should be paid more attention as we can balance between those two kinds.\n The first thing I found is that using arrow keys to navigate is fine, but not efficient, as its up and down arrow is not so coherent, and most of times we need rely on the thumb to hit the keys separately. While ctrl-n and ctrl-p can be an alternative to move around between lines, the same as alt-n and alt-p, for which I would suggest that using it as forward-paragraph and backward-paragraph. It can be smoother as oppose to the ctrl-<down> and ctrl-<up>, in the mean time, you can utilize the other combinations such as alt-f, alt-b to move forward word or backward. In that sense, alt key becomes a bold version of ctrl key, since it jumps fast and corresponds to every navigation key that ctrl has. We can therefore switch between those two modifier keys to move in a small pace or in a larger pace without intervening the arrow keys. At the same time, we can assign more combinations to the prefix key alt-s corresponding the ctrl-x. If we can stay mostly at the left region, the keystroke would be more efficient. If we can utilize those two kinds to the best, we can balance the left and right region, such as buffer navigation uses right hand-side alt-[ and alt-], and buffer switch uses alt-\\.\n I also want to listen to your suggestions, as I believe everyone has their own opinions and configurations to make a balance, not be overloaded, while be efficient.\n Edit: I have remapped caps to ctrl.\n    submitted by    /u/OutOfCharm  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zc3nue/rethinking_about_emacs_keybindings/",
-          "publishedOn": "2022-12-04T07:39:02.000Z",
-          "wordCount": 21420,
-          "title": "Rethinking about Emacs keybindings",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zbzwky/i_reasonably_tricked_openapi_gpt3_chatbot_into/",
-          "author": null,
-          "description": "submitted by    /u/TabCompletion  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zbzwky/i_reasonably_tricked_openapi_gpt3_chatbot_into/",
-          "publishedOn": "2022-12-04T04:04:08.000Z",
-          "wordCount": 16904,
-          "title": "I reasonably tricked OpenAPI GPT-3 chatbot into pretending it was an emacs lisp interpreter",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zbpa42/how_to_use_emacs_29_treesitter/",
-          "author": null,
-          "description": "I've been looking everywhere, but I can't seems to find any documentation on how to setup tree-sitter (the official one integrated in emacs 29). I know it is new and documentation might be missing for now. \n I'm on mac and using these builds https://github.com/jimeh/emacs-builds and C-h v and system-configuration-features outputs this\n system-configuration-features is a variable defined in ‘C source code’. Its value is \"ACL DBUS GIF GLIB GMP GNUTLS JPEG JSON LCMS2 LIBXML2 MODULES NATIVE_COMP NOTIFY KQUEUE NS PDUMPER PNG RSVG SQLITE3 THREADS TIFF TOOLKIT_SCROLL_BARS TREE_SITTER WEBP XIM XWIDGETS ZLIB\" \n So, it is compiled with tree-sitter. When I activate any major mode like js-ts-mode or tsx-ts-mode I get\n ⛔ Warning (treesit): Cannot activate tree-sitter, because language definition for javascript is unavailable (not-found): (libtree- sitter-javascript.so libtree-sitter-javascript.dylib) No such file or directory \n How do I find languages definition and install them and make them available to emacs official tree-sitter?\n    submitted by    /u/ticinese00  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zbpa42/how_to_use_emacs_29_treesitter/",
-          "publishedOn": "2022-12-03T20:08:08.000Z",
-          "wordCount": 15733,
-          "title": "How to use Emacs 29 Tree-sitter?",
-          "imageUrl": "https://external-preview.redd.it/od7kM1_B6cn7ptj9fAW5-2qaDddTG17l5cLvJZYsynE.jpg?auto=webp&s=81d93ed2ac94f6ddca629f929bd8d49f5b643a73"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zbkbyy/is_there_a_way_to_have_eglot_pickup_the_virtual/",
-          "author": null,
-          "description": "Hi everyone, \n When I use a virtualenv, it seems that Eglot does not pick it up, which means that I don't get completion and type warning for the packages I installed. Is there an easy fix for that?\n    submitted by    /u/NoisyFrequency  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zbkbyy/is_there_a_way_to_have_eglot_pickup_the_virtual/",
-          "publishedOn": "2022-12-03T16:37:06.000Z",
-          "wordCount": 17594,
-          "title": "Is there a way to have Eglot pickup the virtual env?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zbh50h/is_emacsconf_going_on/",
-          "author": null,
-          "description": "I'm on the watch page and getting nothing.\n    submitted by    /u/owmagow  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zbh50h/is_emacsconf_going_on/",
-          "publishedOn": "2022-12-03T14:09:21.000Z",
-          "wordCount": 15462,
-          "title": "Is EmacsConf going on?",
           "imageUrl": null
         }
       ]
