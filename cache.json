@@ -44,16 +44,6 @@
           "wordCount": 444,
           "title": "Issue 348",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/347.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nAnnouncing Dekking: Next generation code coverage reports for Haskell by Tom Sydney Kerckhove\nThis post announces Dekking, a next-generation code coverage tool for Haskell.\nHaddock Performance by Matt Parsons\nI decided to look at the source code and see if there were any low hanging fruit. Fortunately, there was!\nHaskell and C++ FFI for Fun and Profit by Topi Kettunen\nLately, I’ve been banging my head against the wall with the FFI of Haskell since I wanted to write a particular piece of code in mainly Haskell, but I needed something from the world of C++.\nHow does Prettyprinter print pre…",
-          "link": "https://haskellweekly.news/issue/347.html",
-          "publishedOn": "2022-12-22T12:00:00.000Z",
-          "wordCount": 536,
-          "title": "Issue 347",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,46 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/10i08cf/dealing_with_getting_rate_limited_when_using/",
+          "author": null,
+          "description": "For a small project I've been using servant to access the lichess API. I currently have something that more ore less looks like this (copied from the servant tutorial):\n manager' <- newManager defaultManagerSettings res <- runClientM (<object> :: ClientM Type) (mkClientEnv manager' <url>) \n where <object> is some big tree like structure which needs many requests to build. The problem is that the lichess API is rate limited (here they say: only one request at a time and wait for a minute after receiving 429). Is there a way to slow down servant-client (or http-client) so that they obey these restrictions?\n I haven't found anything in the docs of servant-client or http-client, and googling only gives result for the server side part. servant-rate-limit has a client module, but when you look at the code you see that it doesn't do anything. managerConnCount and managerIdleConnectionCount don't help either.\n    submitted by    /u/ant-arctica  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/10i08cf/dealing_with_getting_rate_limited_when_using/",
+          "publishedOn": "2023-01-21T20:05:56.000Z",
+          "wordCount": 12353,
+          "title": "Dealing with getting rate limited when using servant-client",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/10hsdkw/writing_a_simple_haskell_persistence_layer_using/",
+          "author": null,
+          "description": "https://thma.github.io/posts/2023-01-21-a-haskell-persistence-layer-using-generics-and-reflection.html\n In this post I’ll describe how to write a minimalistic Haskell persistence layer (on top of HDBC). My approach will rely heavily on Generics (Data.Data, Data.Typeable) and Reflection (Type.Reflection).\n The overall design goal is to avoid any boilerplate code for the API user.\n The library is by no means complete. Right now it’s just a proof of concept. But it shows that it is possible to use Generics to eliminate a lot of handwritten code for API users.\n I’m explicitely asking for your feedback here:\n  \nDo you regard such a persistence library as useful?\n Do you have any suggestions for improvements?\n Which feature would you like to see most urgently?\n Do you think it makes sense to extend this proof of concept to a full fledged solution, or are there already enough libraries out there that do the same?\n  \n   submitted by    /u/thma32  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/10hsdkw/writing_a_simple_haskell_persistence_layer_using/",
+          "publishedOn": "2023-01-21T14:25:04.000Z",
+          "wordCount": 12568,
+          "title": "Writing a simple Haskell Persistence layer using Generics and Reflection",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/10hr8qg/everything_you_never_wanted_to_know_about/",
+          "author": null,
+          "description": "I've spent some time recently going down this particular rabbit hole. The original motivation was replacing the current formulation of Applicative laws with the Monoidal-ish one, but one thing led to the other and I ended up making a post about the various sets of laws and related free theorems: Everything you never wanted to know about Applicative laws and more\n    submitted by    /u/alexfmpe  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/10hr8qg/everything_you_never_wanted_to_know_about/",
+          "publishedOn": "2023-01-21T13:28:15.000Z",
+          "wordCount": 12195,
+          "title": "Everything you never wanted to know about Applicative laws and more",
+          "imageUrl": "https://external-preview.redd.it/UkkhX8ZwUxlC_UQ7cPBp-jP3HAQjpm6cl-WPuhGRh-s.jpg?auto=webp&v=enabled&s=d4c70bdad1f47f346a856a964dbbabfd145d7846"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/10hoth2/why_does_cannot_work_while_work_in_my_code/",
+          "author": null,
+          "description": "Trying out very simple example and playing with applicative and monad operators. So, the following code works:\n basic :: IO () basic = putStrLn \"First Log\" *> putStrLn \"Second Log\" >>= (\\_ -> putStrLn \"Third Log\") >> putStrLn \"End of program\" \n But when I replace >> with *> on the last line, it fails:\n basic3 :: IO () basic3 = putStrLn \"First Log\" *> putStrLn \"Second Log\" >>= (\\_ -> putStrLn \"Third Log\") *> putStrLn \"End of program\" \n The error is extremely confusing:\n  \nCouldn't match expected type: () -> IO ()\n with actual type: IO ()\n Possible cause: ‘(\\>)’ is applied to too many arguments*\n In the second argument of ‘(>>=)’, namely\n ‘(\\ _ -> putStrLn \"Third Log\") \\> putStrLn \"End of program\"’*\n  \nAs far as I understand, >> comes from the Monad class while *> is provided by the Applicative class and >> can always be replaced by *>. Any suggestion what's wrong here?\n    submitted by    /u/mistyharsh  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/10hoth2/why_does_cannot_work_while_work_in_my_code/",
+          "publishedOn": "2023-01-21T11:02:50.000Z",
+          "wordCount": 12747,
+          "title": "Why does *> cannot work while >> work in my code?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/10h2rnk/how_to_create_a_type_that_adds_a_space_or_nothing/",
           "author": null,
@@ -1771,76 +1801,6 @@
           "wordCount": 17229,
           "title": "GTree - Tree with any number of children",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zt6x8j/advent_of_code_2022_day_23/",
-          "author": null,
-          "description": "https://adventofcode.com/2022\n    submitted by    /u/taylorfausak  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zt6x8j/advent_of_code_2022_day_23/",
-          "publishedOn": "2022-12-23T05:01:11.000Z",
-          "wordCount": 19615,
-          "title": "Advent of Code 2022 day 23",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zt5ftk/yesodauth_google_oauth2_timing_out/",
-          "author": null,
-          "description": "I've been learning Yesod, and I've gotten to the section on Authentication and authorization. I've been trying to set up a minimal example according to the book, but it's resulting in a timeout:  HttpExceptionRequest Request { host = \"accounts.google.com\" port = 443 secure = True requestHeaders = [(\"Content-Type\",\"application/x-www-form-urlencoded\")] path = \"/o/oauth2/token\" queryString = \"\" method = \"POST\" proxy = Nothing rawBody = False redirectCount = 10 responseTimeout = ResponseTimeoutDefault requestVersion = HTTP/1.1 proxySecureMode = ProxySecureWithConnect } ConnectionTimeout \n I tried using yesod-auth-oauth2 instead, but I still got a timeout error:  HttpExceptionRequest Request { host = \"www.googleapis.com\" port = 443 secure = True requestHeaders = [(\"Content-Type\",\"application/x-www-form-urlencoded\"),(\"Authorization\",\"<REDACTED>\"),(\"User-Agent\",\"hoauth2\"),(\"Accept\",\"application/json\")] path = \"/oauth2/v3/token\" queryString = \"\" method = \"POST\" proxy = Nothing rawBody = False redirectCount = 10 responseTimeout = ResponseTimeoutDefault requestVersion = HTTP/1.1 proxySecureMode = ProxySecureWithConnect } ConnectionTimeout \n Trying with the Python Flask version on Google's website for the same OAuth works, so I am wondering if YesodAuth is broken. I am using LTS 20.3.\n    submitted by    /u/HXSC  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zt5ftk/yesodauth_google_oauth2_timing_out/",
-          "publishedOn": "2022-12-23T03:39:35.000Z",
-          "wordCount": 17163,
-          "title": "YesodAuth Google OAuth2 timing out?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zt0qap/does_anyone_use_the_haddock_synopsis/",
-          "author": null,
-          "description": "I always do CTRL-F to search for something, then the synopsis opens unhelpfully, then the hyperlink in the synopsis doesn't work (on chrome), then I have to scroll up to arrive again at the collapse synopsis button.\n    submitted by    /u/jberryman  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zt0qap/does_anyone_use_the_haddock_synopsis/",
-          "publishedOn": "2022-12-22T23:43:36.000Z",
-          "wordCount": 17433,
-          "title": "Does anyone use the haddock \"synopsis\"?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zstl64/gigtk_why_does_calling_a_function_added_via/",
-          "author": null,
-          "description": "background: i want to make a game and do so with minimal effort there are some options to do so i chose gi-gtk for all menus and cairo to draw anything more complex, gtk has a class called builder which uses a xml file to make a user interface in this file you can specify the name of handlers for signals so i created a simple main.ui which had a button and in this button i added a signal handler.\n first time i ran it complained that there wasn't a signal handler for the click which makes sense as my function is not a c global symbol.;\n i then used addCallbackSymbol to add my function as a signal handler however when i do so although it does call my function it also causes a segmentation fault.\n    submitted by    /u/thedarknight2002  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zstl64/gigtk_why_does_calling_a_function_added_via/",
-          "publishedOn": "2022-12-22T18:46:56.000Z",
-          "wordCount": 19634,
-          "title": "gi-gtk: why does calling a function added via addCallbackSymbol cause a SegmentationFault?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zssibb/how_to_parse_time_w_tz/",
-          "author": null,
-          "description": "Hi folks!\n Noob question here - I have some time data in the following structure:\n - Time column in the format: \"\"%FT%TZ\" - ie. \"2022-08-12T16:00:00Z\" (always UTC)\n - Timezone column in the format: \"America/New_York\", etc\n And I need to parse that into a \"ZonedTime\" and later convert it to other timezones (using the same timezone format) - ie Europe/London.\n I couldn't find a package to do so and the tz formats in the Time package seem to be the three letters only (as far as I can tell...)\n Is there any way of doing so in the time package I'm not seeing? or any other package to do so?\n    submitted by    /u/Randomteby  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zssibb/how_to_parse_time_w_tz/",
-          "publishedOn": "2022-12-22T18:01:59.000Z",
-          "wordCount": 17379,
-          "title": "How to parse time w tz?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zspu5w/uncertain_how_to_interpret_lambda_calculus/",
-          "author": null,
-          "description": "Hello\n I'm studying Haskell at the moment and stumbled upon a program I wasn't sure how it worked. It involved the following the lambda expression:\n data Server = MkServer Domain [Email] deriving (Eq, Show) data Report = MkReport Domain [Email] deriving (Eq, Show) map (\\(MkServer domain emails) -> MkReport domain (filter ((/=) domain . emailDomain) emails)) \n I am aware about how lambda expressions work, but I'm unsure about:\n 1. how this lambda expression spawns two arguments for map\n 2. the dot is a function composition but how exactly is it applied in this case?\n 3. on what arguments is filter applied?\n Thanks in advance.\n    submitted by    /u/StudyingProlog  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zspu5w/uncertain_how_to_interpret_lambda_calculus/",
-          "publishedOn": "2022-12-22T16:14:52.000Z",
-          "wordCount": 18295,
-          "title": "Uncertain how to interpret lambda calculus",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/zsl0hf/making_ghc_faster_at_emitting_code/",
-          "author": null,
-          "description": "submitted by    /u/n00bomb  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/zsl0hf/making_ghc_faster_at_emitting_code/",
-          "publishedOn": "2022-12-22T12:29:44.000Z",
-          "wordCount": 18047,
-          "title": "Making GHC faster at emitting code",
-          "imageUrl": "https://external-preview.redd.it/Bj50fREKn41m6v1UPb2_hlrczuDz1nxR1tSRjFf-mzU.jpg?auto=webp&s=6803e63008eaa75aac55167a9225dd6c2f0316a7"
         }
       ]
     },
@@ -2688,66 +2648,6 @@
           "wordCount": 14520,
           "title": "\"Build a Scalable Blockchain in Scala\" by Cheng Wang at Functional Scala 2022",
           "imageUrl": "https://external-preview.redd.it/0xShP1-ZxmIX9FB1VKAUNHdn1B_HcMvlbc4FfYc08q4.jpg?auto=webp&s=772f412e41627f11bfa7a9eefb3645044e51fef7"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/zswe8g/support_scala_center_eed3si9n/",
-          "author": null,
-          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/zswe8g/support_scala_center_eed3si9n/",
-          "publishedOn": "2022-12-22T20:46:54.000Z",
-          "wordCount": 14854,
-          "title": "🎄 support Scala Center 🎄 · eed3si9n",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/zsvo5b/failed_to_load_data_source_for_config/",
-          "author": null,
-          "description": "Hi, so I've been trying to solve this problem all day, I'm learning about connecting to databases in scala and I've got stuck. My colleague who is tutoring me has no problem running this on his laptop with the postgres db in a docker container. Yet mine won't load the config file for some reason.\n I have a basic tutorial example that I did thankst to RTJVM and that works fine, but it is very basic and just connects. Here however, no such joy. \n So far, the docker container gets spun up, and the database table with correct columns and headers gets created, but for some reason it then fails to write to the database. I can't see anything in the logs, I just have this stack trace and I can't read it, it doesn't seem to say much:\n <FAIL> Results: Fail(java.lang.IllegalStateException: Failed to …",
-          "link": "https://www.reddit.com/r/scala/comments/zsvo5b/failed_to_load_data_source_for_config/",
-          "publishedOn": "2022-12-22T20:15:23.000Z",
-          "wordCount": 15783,
-          "title": "Failed to load data source for config: 'Config(SimpleConfigObject",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/zsucun/best_book_to_learn_scala_as_a_functional/",
-          "author": null,
-          "description": "Hi! I'm already fluent in functional programming via haskell and clojure. What would be the best book to read in order to get productive with scala?\n    submitted by    /u/Most-Tie-8919  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/zsucun/best_book_to_learn_scala_as_a_functional/",
-          "publishedOn": "2022-12-22T19:19:31.000Z",
-          "wordCount": 15829,
-          "title": "Best book to learn Scala as a functional programmer?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/zsq0mq/switch_to_scala3_in_intellij/",
-          "author": null,
-          "description": "Hi there, It seems that I am running scala 2 in intellj when I'm supposed to be running scala3, but I have no idea how to choose between the two is there a way to do it easily. I just don't know enough about java to know if this is a big rebuild of just a switch somewhere, I know I have both here on my Mac, that I'm certain of, but going from one to the other, I'm not so sure about. \n Any pointers or docs that would explain it would be appreciated,\n    submitted by    /u/tgbnju  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/zsq0mq/switch_to_scala3_in_intellij/",
-          "publishedOn": "2022-12-22T16:22:10.000Z",
-          "wordCount": 15694,
-          "title": "Switch to scala3 in IntelliJ",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/zsodzm/vivisecting_the_veil_of_variance_video_lesson/",
-          "author": null,
-          "description": "submitted by    /u/kitlangton  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/zsodzm/vivisecting_the_veil_of_variance_video_lesson/",
-          "publishedOn": "2022-12-22T15:15:24.000Z",
-          "wordCount": 15509,
-          "title": "Vivisecting the Veil of Variance (Video Lesson)",
-          "imageUrl": "https://external-preview.redd.it/66KWaQF0uO511jb8jS65Kx08r4V07gU5N_m6KtkFj2Y.jpg?auto=webp&s=cc70d70a3860a07c147815d249930ec78a08de97"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/zsnqca/behold_the_happy_path_to_captivate_your_users/",
-          "author": null,
-          "description": "In this presentation, Jorge Vásquez shows you how to easily build beautiful command-line applications that your users will love: https://www.youtube.com/watch?v=0c3zbUq4lQo\n    submitted by    /u/Agataziverge  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/zsnqca/behold_the_happy_path_to_captivate_your_users/",
-          "publishedOn": "2022-12-22T14:46:13.000Z",
-          "wordCount": 14949,
-          "title": "\"Behold! The Happy Path To Captivate Your Users With Stunning CLI Apps!\" by Jorge Vasquez at Functional Scala 2022.",
-          "imageUrl": "https://external-preview.redd.it/ufZkna1Au5SMqcQ7eS-ydKMSvQnN3_zlE6O1igbmvzA.jpg?auto=webp&s=577039076d3cfe0afdb6b625f2e4268b005d301e"
         }
       ]
     },
@@ -2756,6 +2656,16 @@
       "feedUrl": "https://reddit.com/r/purescript/.rss",
       "siteUrl": "https://www.reddit.com/r/purescript/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/purescript/comments/10hqzva/looking_to_define_some_colours_just_checking_but/",
+          "author": null,
+          "description": "Anyone have any good ideas here? Not a fan of using a hex String and then having to deal with then resulting Maybe when parsing its value. Also feels awkward to store a colour as a decimal value. Maybe rgb is the way...\n    submitted by    /u/daigoro_sensei  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/purescript/comments/10hqzva/looking_to_define_some_colours_just_checking_but/",
+          "publishedOn": "2023-01-21T13:15:10.000Z",
+          "wordCount": 12011,
+          "title": "Looking to define some colours. Just checking but there is no `0xffffff` style hex Int type right?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/purescript/comments/10bs13n/confused_by_the_nesting_in_datatuplenested/",
           "author": null,
@@ -2899,6 +2809,46 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/10hqhxv/i_dont_think_org_task_management_is_a_production/",
+          "author": null,
+          "description": "I see that a lot of people have moved into org mode, and say org mode is amazing as task management solution. So I've been convinced org mode is the ideal task management tool for geek.\n Then I discover that org mode miss some essential basic feature for task management. For instance, I estimated the effort for a project. After finishing some tasks, I try to track the remaining effort to complete the project. I discover that there is no straightforward solution to do that in org column view, org column view can only display estimated effort. I should write a custom function for this basic and essential feature of task management. No built-in solution or elisp package exists for that. Only a advanced emacs user (who masters elisp) can do this basic and essential action. I suppose probably that it exists maybe other basic and essential feature aren't implemented in org mode.\n That make me to doubt when so many people says org mode is a amazing task management tool. Did they used really org mode in production for task management? I can't understand how people can survive in task management without such feature.\n Org mode is maybe a good platform to build a task management tool, but it isn't a mature task management tool.\n Fortunately,org can export to taskjuggler, I intent to explore the taskjuggler solution.\n    submitted by    /u/terhyrzht  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/10hqhxv/i_dont_think_org_task_management_is_a_production/",
+          "publishedOn": "2023-01-21T12:48:26.000Z",
+          "wordCount": 15423,
+          "title": "I don't think org task management is a production ready solution",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/10hphew/custom_agenda_search_for_todos_with_no_priority/",
+          "author": null,
+          "description": "Sorry for the newb question. For some reading, searching for this:\n tags \"TODO=\\\"TODO\\\"+SCHEDULED<=\\\"<today>\\\"+PRIORITY=\\\"A\\\"\"\n Is bringing up Todos with priority A, but also those with no priority. I can filter those no priority ones out with an org-agenda-skip-entry-if command (notregexp to drop anything that’s not explicitly [#A]) but that seems like it should be unnecessary.\n And then, I can’t figure out how to show anything due today/overdue with no priority in a separate search. What’s the best command for that?\n Any thoughts for me?\n —-SORT OF SOLVED—-\n I set the default priority to “D” (which is not one of the priorities I cycle through) and set up a search for that priority. Not sure if that’s the orthodox solution, but it works.\n    submitted by    /u/columbcille  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/10hphew/custom_agenda_search_for_todos_with_no_priority/",
+          "publishedOn": "2023-01-21T11:48:38.000Z",
+          "wordCount": 12349,
+          "title": "Custom agenda search for TODOs with no priority",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/10hhyey/how_to_fuzzysearch_html_pages_generated_from_org/",
+          "author": null,
+          "description": "Hi,\n I am looking for the functionality like a search box on this page: https://frankaemika.github.io/docs/search.html?q=test&check_keywords=yes&area=default\n EDIT: both search or fuzzy search functionality will be great to have.\n EDIT2: I found org-info-js which is said to be outdated. \n Ideally to be used across several subpages, beyond the way Read-The-Org simple wiki page layout. Use case: for knowledge base building, and quick access. I explain something to a co-worker and, using their computer, I can quickly search a topic I am explaining, and this topic is present on my website with my openly available notes.\n I could not see a search box in the pages generated from org to html.Someone said a few years ago that this required JavaScript to run, and that was not a feature of org to html conversion at a time.\n What are the solutions today?Thank you for your help and support. Please point me to right direction if I missed something obvious.\n Regards,Jakub\n    submitted by    /u/jakub37  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/10hhyey/how_to_fuzzysearch_html_pages_generated_from_org/",
+          "publishedOn": "2023-01-21T03:52:31.000Z",
+          "wordCount": 12375,
+          "title": "How to fuzzy-search html pages generated from org?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/10h7k32/aborting_orgcapture_processes_without_leaving/",
+          "author": null,
+          "description": "Hello everybody.\n I sometimes accidentally create new captures with wrong inputs by mistake or choose the wrong template. I then try to abort the capture process (C-c C-k or org-capture-kill). Unfortunately, this still creates an empty file for that capture and performs a find-file on it. \n I added :no-save t to my templates (inspired by this thread), but this makes aborted captures' buffers to stay open. Adding :kill-buffer t somehow causes org-capture to write the file to disk on abort (ignoring :no-save t). \n Is there a way to not create an empty file and to close the capture buffer when aborting an org-capture process?\n    submitted by    /u/Usual_Fruit7752  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/10h7k32/aborting_orgcapture_processes_without_leaving/",
+          "publishedOn": "2023-01-20T20:41:00.000Z",
+          "wordCount": 12250,
+          "title": "Aborting org-capture processes without leaving empty files",
+          "imageUrl": "https://external-preview.redd.it/VRMXgXVRMTz9kCK9M4m9RZ2blPEURIPfr84hzwH7dG0.jpg?auto=webp&v=enabled&s=b8e11b91250e4b5601be8d433912c413b5e828ce"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/10h0dik/ann_cv_bibliography_with_orgcite_and_csl_a/",
           "author": null,
@@ -3357,6 +3307,126 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/ivy-migemo-20230121.1934.el",
+          "author": null,
+          "description": "The ivy-migemo package has been updated to version 20230121.1934.",
+          "link": "https://melpa.org/#/ivy-migemo",
+          "publishedOn": "2023-01-21T19:34:00.000Z",
+          "wordCount": 105,
+          "title": "ivy-migemo (20230121.1934) --- Use migemo on ivy",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/grugru-20230121.1825.tar",
+          "author": null,
+          "description": "The grugru package has been updated to version 20230121.1825.",
+          "link": "https://melpa.org/#/grugru",
+          "publishedOn": "2023-01-21T18:25:00.000Z",
+          "wordCount": 105,
+          "title": "grugru (20230121.1825) --- Rotate text at point",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/evil-collection-20230121.1523.tar",
+          "author": null,
+          "description": "The evil-collection package has been updated to version 20230121.1523.",
+          "link": "https://melpa.org/#/evil-collection",
+          "publishedOn": "2023-01-21T15:23:00.000Z",
+          "wordCount": 105,
+          "title": "evil-collection (20230121.1523) --- A set of keybindings for Evil mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/zig-mode-20230121.1229.el",
+          "author": null,
+          "description": "The zig-mode package has been updated to version 20230121.1229.",
+          "link": "https://melpa.org/#/zig-mode",
+          "publishedOn": "2023-01-21T12:29:00.000Z",
+          "wordCount": 105,
+          "title": "zig-mode (20230121.1229) --- A major mode for the Zig programming language",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orgtbl-aggregate-20230121.955.el",
+          "author": null,
+          "description": "The orgtbl-aggregate package has been updated to version 20230121.955.",
+          "link": "https://melpa.org/#/orgtbl-aggregate",
+          "publishedOn": "2023-01-21T09:55:00.000Z",
+          "wordCount": 105,
+          "title": "orgtbl-aggregate (20230121.955) --- Create an aggregated Org table from another one",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tempel-20230121.857.el",
+          "author": null,
+          "description": "The tempel package has been updated to version 20230121.857.",
+          "link": "https://melpa.org/#/tempel",
+          "publishedOn": "2023-01-21T08:57:00.000Z",
+          "wordCount": 105,
+          "title": "tempel (20230121.857) --- Tempo templates/snippets with in-buffer field editing",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/elogcat-20230121.459.el",
+          "author": null,
+          "description": "The elogcat package has been updated to version 20230121.459.",
+          "link": "https://melpa.org/#/elogcat",
+          "publishedOn": "2023-01-21T04:59:00.000Z",
+          "wordCount": 105,
+          "title": "elogcat (20230121.459) --- logcat interface",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/apheleia-20230121.334.el",
+          "author": null,
+          "description": "The apheleia package has been updated to version 20230121.334.",
+          "link": "https://melpa.org/#/apheleia",
+          "publishedOn": "2023-01-21T03:34:00.000Z",
+          "wordCount": 105,
+          "title": "apheleia (20230121.334) --- Reformat buffer stably",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lurk-mode-20230120.2226.el",
+          "author": null,
+          "description": "The lurk-mode package has been updated to version 20230120.2226.",
+          "link": "https://melpa.org/#/lurk-mode",
+          "publishedOn": "2023-01-20T22:26:00.000Z",
+          "wordCount": 105,
+          "title": "lurk-mode (20230120.2226) --- A major mode for editing lurk files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/todoist-20230120.2208.el",
+          "author": null,
+          "description": "The todoist package has been updated to version 20230120.2208.",
+          "link": "https://melpa.org/#/todoist",
+          "publishedOn": "2023-01-20T22:08:00.000Z",
+          "wordCount": 105,
+          "title": "todoist (20230120.2208) --- Extension for interacting and managing todoist tasks",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/matlab-mode-20230120.1938.tar",
+          "author": null,
+          "description": "The matlab-mode package has been updated to version 20230120.1938.",
+          "link": "https://melpa.org/#/matlab-mode",
+          "publishedOn": "2023-01-20T19:38:00.000Z",
+          "wordCount": 105,
+          "title": "matlab-mode (20230120.1938) --- Major mode for MATLAB(R) dot-m files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/axe-20230120.1915.tar",
+          "author": null,
+          "description": "The axe package has been updated to version 20230120.1915.",
+          "link": "https://melpa.org/#/axe",
+          "publishedOn": "2023-01-20T19:15:00.000Z",
+          "wordCount": 105,
+          "title": "axe (20230120.1915) --- AWS Extensions",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/org-modern-20230120.1751.el",
           "author": null,
           "description": "The org-modern package has been updated to version 20230120.1751.",
@@ -3737,6 +3807,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/auto-compile-20230117.1612.el",
+          "author": null,
+          "description": "The auto-compile package has been updated to version 20230117.1612.",
+          "link": "https://melpa.org/#/auto-compile",
+          "publishedOn": "2023-01-17T16:12:00.000Z",
+          "wordCount": 105,
+          "title": "auto-compile (20230117.1612) --- Automatically compile Emacs Lisp libraries",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/helm-20230117.1512.tar",
           "author": null,
           "description": "The helm package has been updated to version 20230117.1512.",
@@ -3994,6 +4074,16 @@
           "publishedOn": "2023-01-15T05:29:00.000Z",
           "wordCount": 105,
           "title": "git-link (20230115.529) --- Get the GitHub/Bitbucket/GitLab URL for a buffer location",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/yaml-pro-20230115.427.tar",
+          "author": null,
+          "description": "The yaml-pro package has been updated to version 20230115.427.",
+          "link": "https://melpa.org/#/yaml-pro",
+          "publishedOn": "2023-01-15T04:27:00.000Z",
+          "wordCount": 105,
+          "title": "yaml-pro (20230115.427) --- Parser-aided YAML editing features",
           "imageUrl": null
         },
         {
@@ -7045,86 +7135,6 @@
           "wordCount": 105,
           "title": "circadian (20221223.1419) --- Theme-switching based on daytime",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/shx-20221222.2026.el",
-          "author": null,
-          "description": "The shx package has been updated to version 20221222.2026.",
-          "link": "https://melpa.org/#/shx",
-          "publishedOn": "2022-12-22T20:26:00.000Z",
-          "wordCount": 105,
-          "title": "shx (20221222.2026) --- Extras for the comint-mode shell",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ansilove-20221222.1932.el",
-          "author": null,
-          "description": "The ansilove package has been updated to version 20221222.1932.",
-          "link": "https://melpa.org/#/ansilove",
-          "publishedOn": "2022-12-22T19:32:00.000Z",
-          "wordCount": 105,
-          "title": "ansilove (20221222.1932) --- Display buffers as PNG images using ansilove",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/el-fetch-20221222.1930.el",
-          "author": null,
-          "description": "The el-fetch package has been updated to version 20221222.1930.",
-          "link": "https://melpa.org/#/el-fetch",
-          "publishedOn": "2022-12-22T19:30:00.000Z",
-          "wordCount": 105,
-          "title": "el-fetch (20221222.1930) --- Show system information in Neofetch-like style (eg CPU, RAM)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/justl-20221222.1650.el",
-          "author": null,
-          "description": "The justl package has been updated to version 20221222.1650.",
-          "link": "https://melpa.org/#/justl",
-          "publishedOn": "2022-12-22T16:50:00.000Z",
-          "wordCount": 105,
-          "title": "justl (20221222.1650) --- Major mode for driving just files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/flycheck-deno-20221222.1646.el",
-          "author": null,
-          "description": "The flycheck-deno package has been updated to version 20221222.1646.",
-          "link": "https://melpa.org/#/flycheck-deno",
-          "publishedOn": "2022-12-22T16:46:00.000Z",
-          "wordCount": 105,
-          "title": "flycheck-deno (20221222.1646) --- Flycheck for deno-lint",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pydoc-20221222.1426.el",
-          "author": null,
-          "description": "The pydoc package has been updated to version 20221222.1426.",
-          "link": "https://melpa.org/#/pydoc",
-          "publishedOn": "2022-12-22T14:26:00.000Z",
-          "wordCount": 105,
-          "title": "pydoc (20221222.1426) --- functional, syntax highlighted pydoc navigation",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/merlin-20221222.1239.tar",
-          "author": null,
-          "description": "The merlin package has been updated to version 20221222.1239.",
-          "link": "https://melpa.org/#/merlin",
-          "publishedOn": "2022-12-22T12:39:00.000Z",
-          "wordCount": 105,
-          "title": "merlin (20221222.1239) --- Mode for Merlin, an assistant for OCaml",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/liberime-20221222.1141.tar",
-          "author": null,
-          "description": "The liberime package has been updated to version 20221222.1141.",
-          "link": "https://melpa.org/#/liberime",
-          "publishedOn": "2022-12-22T11:41:00.000Z",
-          "wordCount": 105,
-          "title": "liberime (20221222.1141) --- Rime elisp binding",
-          "imageUrl": null
         }
       ]
     },
@@ -7133,6 +7143,186 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hzpru/why_are_commands_displayed_as_solid_blocks/",
+          "author": null,
+          "description": "submitted by    /u/Top-Cake-3937  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hzpru/why_are_commands_displayed_as_solid_blocks/",
+          "publishedOn": "2023-01-21T19:44:19.000Z",
+          "wordCount": 12150,
+          "title": "Why are commands displayed as solid blocks?",
+          "imageUrl": "https://preview.redd.it/yuq1kmjy9gda1.png?auto=webp&v=enabled&s=9535df4c9a98af74a7c619e49d9bbc6754e47ad5"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hz3en/how_are_eq_and_equal_different_as_regards_my/",
+          "author": null,
+          "description": "In setting savehist-additional-variables I accidentally added a list and caused it to stop working properly.\n ie instead of being (a b c d e) I accidentally made it ((a b) a b c d e) and the problem was easily fixed by (setq savehist-additional-variables (cdr savehist-additional-variables)). However this was only possible because the(a b)` was the head of the list.\n The functions delete|remove, delq | remq remove an element from the list, with the former using equal to compare and the latter eq to compare.\n According to the docs equal \n  \nReturn t if two Lisp objects have similar structure and contents.\n  \neq\n  \nReturn t if the two args are the same Lisp object.\n  \n(delete '(a b) ((a b) a b c d e) works and (delq '(a b) ((a b) a b c d e)) doesn't.\n Why do eq and equal treat the (a b)/'(a b) comparison differently?\n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hz3en/how_are_eq_and_equal_different_as_regards_my/",
+          "publishedOn": "2023-01-21T19:18:02.000Z",
+          "wordCount": 12523,
+          "title": "How are 'eq' and 'equal' different as regards my problem?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hwwxn/recoverthisfile_prompt_is_not_working/",
+          "author": null,
+          "description": "Something seems to have changed in my configuration that when I open files and there is a newer recovery file I don't get the prompt to decide if I want to recover it?\n What could that be?\n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hwwxn/recoverthisfile_prompt_is_not_working/",
+          "publishedOn": "2023-01-21T17:47:24.000Z",
+          "wordCount": 12216,
+          "title": "\"recover-this-file\" prompt is not working.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10huk2p/ann_new_package_tmsuel/",
+          "author": null,
+          "description": "Hello! For some time I've been developing a package to integrate the TMSU file tagging system with Emacs and dired. While I find TMSU great, I didn't really like its UI, so I've turned Emacs into a subjectively better one.\n https://github.com/vifon/tmsu.el\n While not a full replacement for more intricate TMSU CLI use cases, tmsu.el handles all the regular workflows such as tagging, tag modification and tag based queries (with results in dired, similar to M-x find-dired).\n It was one of my goals to integrate tmsu.el with the Emacs ecosystem as well as possible:\n  \ntag editing uses the standard completing-read-multiple (or any frontend to it, such as vertico)\n most dired features are usable in the query results\n the queries can be saved both with the Emacs-native bookmarks (C-x r m) and the org-mode links (M-x org-store-link)\n  \nHere is a screenshot of an example query made with M-x tmsu-dired-query:\n https://preview.redd.it/m3frsus24fda1.png?width=936&format=png&auto=webp&v=enabled&s=1bbe0270074bf8186bb416fb86c6529d3ba4d866\n tmsu.el was usable for quite a while, but only recently I've published it as a separate project (previously it was just living in my ~/.emacs.d/) and consider its feature set relatively complete and stable. Hopefully someone else will find it as useful as I do!\n Any further input is very appreciated.\n    submitted by    /u/vifon  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10huk2p/ann_new_package_tmsuel/",
+          "publishedOn": "2023-01-21T16:05:50.000Z",
+          "wordCount": 12563,
+          "title": "[ANN] New package: tmsu.el",
+          "imageUrl": "https://external-preview.redd.it/MDym9qYv1jN-MATkZa18xpzeENzTlXFPQ3Mz5v19gL0.png?auto=webp&v=enabled&s=3346a2cfc3eae8404e6cf833886eb20adad8433f"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hpsn3/create_a_normal_regex_in_emacs/",
+          "author": null,
+          "description": "How do I convert something like:\n VStack(alignment: .padding)\n VStack\\(alignment. .padding\\)\n (replace-regexp-in-string \"\\(\" \"\\\\\\\\(\" my-string) will insert double \"\\\\\" before \"(\" but I only want one \"\\\" because it will be sent to an external shelll program using \"normal unqoted regex\".\n    submitted by    /u/konrad1977  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hpsn3/create_a_normal_regex_in_emacs/",
+          "publishedOn": "2023-01-21T12:07:44.000Z",
+          "wordCount": 12294,
+          "title": "Create a normal \"Regex\" in emacs?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hmaqw/champagne_countdown_timer_for_bubbly_events/",
+          "author": null,
+          "description": "Champagne\n Need a slick, \"modern\" countdown timer for the Lunar New Year? Of course Emacs can do it! I'm working on a screencap. This package won't be on any package repository soon, so use the install instructions for straight, elpaca etc.\n Also see the countdown package.\n I left some notes in the Elisp so you can figure out where to customize further.\n I'm also working on another \"game\" package that is similar to snow, but we will see if it's time time for this Lunar New Year or has to wait until next NYE.\n    submitted by    /u/Psionikus  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hmaqw/champagne_countdown_timer_for_bubbly_events/",
+          "publishedOn": "2023-01-21T08:13:15.000Z",
+          "wordCount": 12328,
+          "title": "Champagne - countdown timer for bubbly events",
+          "imageUrl": "https://external-preview.redd.it/M3lWZ0l-OwuBhumqIKzkfYOiUNnLAkNwdRQcief2pt0.jpg?auto=webp&v=enabled&s=1f95c5b5fafb128b8c08237520856f32fcfb99e3"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hm92r/emacs_and_knowledge_management_for_scientists/",
+          "author": null,
+          "description": "I am a mathematics graduate student who has been dabbling with Emacs for a little under a year, on and off. I have the following use case, and I've felt a little overwhelmed at the possible choices of packages, so I'd like some advice on how to set up something that works for me.\n In my studies I often find myself encountering problems and ideas that I had thought about a long time ago, but can no longer reconstruct. What I'd like to create is a system where I can dash off my summary of a theorem or proof technique that I encounter, and be able to link these documents to each other. More specifically, I'd like to have a big folder filled with LaTeX files (or org files) that are tagged somehow so I don't have to keep track of them myself. I want to be able to refer to specific theorems/definitions/equations in other files in the system, as I would in LaTeX. And, importantly, I want to be able to produce a nicely formatted PDF from a selection of these files, with all the internal links to equations, definitions etc. working properly. So for example if this semester I'm studying harmonic analysis, I want to produce notes on all the theorems and techniques I pick up, and by the end I should be able to stitch them together in a PDF. If next semester something I'm studying relies on one of those theorems, I want to still be able to point to the corresponding file and again include it in a different PDF. A nice plus would be the ability to smoothly manage citations and references to books, papers etc.\n There are packages in the so-called personal knowledge management ecosystem (org-roam, deft, org-brain, Zetteldeft etc.) that seem to do what I'm looking for. I'd appreciate anyone who's tried out a bunch of them giving their opinion on what makes the most sense to do. If anyone's done something similar, any advice, links or helpful blog posts describing your setup would be very appreciated.\n    submitted by    /u/gerretsen  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hm92r/emacs_and_knowledge_management_for_scientists/",
+          "publishedOn": "2023-01-21T08:10:09.000Z",
+          "wordCount": 15644,
+          "title": "Emacs and knowledge management for scientists",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hkg07/orgagenda_conky_integration/",
+          "author": null,
+          "description": "I've been using more and more org-agenda. But it would be really useful to have my tasks listed in my desktop. I thought about conky, but i still haven't managed a way to make it work (beautifully)\n Since it's really easy to export your agenda to a file, what conky is doing now is just reading the file where I export my default agenda view of the week. But I've encountered a few problems:\n  \nI would like to make the days of the week different colored, but since conky is just reading the file it's not possible (at least I couldn't do it, please tell me I'm wrong)\n The TODO and priority levels are really annoying (this is easier to deal with, but still)\n I have multiple files for different tasks. While I do want all the tasks to be listed and, when I'm on agenda view, from which file they come from, again, is really annoying on conky\n  \nHave any of you guys dealt with this before? How would you implement that?\n    submitted by    /u/tezne  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hkg07/orgagenda_conky_integration/",
+          "publishedOn": "2023-01-21T06:13:16.000Z",
+          "wordCount": 13368,
+          "title": "Org-agenda + conky integration?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hiuiz/consistently_find_the_directory_where_an_elisp/",
+          "author": null,
+          "description": "Hello, I was wondering if there is a better way to determine the directory location for an elisp script.\n When running as a script I used (file-name-directory load-file-name), but that is nil when running the file with eval-buffer etc.. So for those cases I use the default-directory variable. This is my current solution:\n  (defun my/get-script-directory () (if (null load-file-name) (expand-file-name default-directory) (file-name-directory load-file-name)) \n My main concern is that default-directory does not always point to the same directory that the file is in since it can be changed with cd. \n Thanks in advance!\n    submitted by    /u/taingram  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hiuiz/consistently_find_the_directory_where_an_elisp/",
+          "publishedOn": "2023-01-21T04:42:10.000Z",
+          "wordCount": 12480,
+          "title": "Consistently find the directory where an elisp file is located",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hhstq/funcall_and_lisp2/",
+          "author": null,
+          "description": "I'm slightly confused by why if I write ((-cut + 2 <>) 2) I get an Invalid function error but ((lambda (q) (+ 2 q)) 2) is totally fine. I know I need to add a funcall and I'd get that for places where I get passed a procedure from a variable or something but this is a macro. Those should get expanded before evaluation, so why if -cut expands to the exact same code does it behave differently in this case? And do ELisp macros have more quirks other lisps' don't?\n    submitted by    /u/Michal_Atlas  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hhstq/funcall_and_lisp2/",
+          "publishedOn": "2023-01-21T03:43:54.000Z",
+          "wordCount": 13775,
+          "title": "Funcall and Lisp2",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hhika/problems_with_orgnodeinsert_entries_at_the_begin/",
+          "author": null,
+          "description": "Hey, whenever I do org-node-insert at the start of a line, it results in problems, when I want to move this entry.\n #+title: Viterbi Algorithm [[idadasdasdfas | [viterbi]] is an algorithm \n Now when I put the pointer to the most left position with my arrow keys, the pointer isn't really left to the brackets, but somewhere in between and thus a SPACE would result in e.g.\n #+title: Viterbi Algorithm [[idadasdasdfas | [ viterbi]] is an algorithm \n And not\n #+title: Viterbi Algorithm [[idadasdasdfas | [viterbi]] is an algorithm \n How do you place the pointer at the left of a node link?\n    submitted by    /u/Rapiz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hhika/problems_with_orgnodeinsert_entries_at_the_begin/",
+          "publishedOn": "2023-01-21T03:28:42.000Z",
+          "wordCount": 12345,
+          "title": "Problems with Org-node-insert entries at the begin of a new line.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10he3fc/globalautorevertmode_stopped_working/",
+          "author": null,
+          "description": "Hi folks, been using emacs and Org Mode for a few years now. global-auto-revert-mode used to work fine -- if I changed a file remotely, the emacs process would pick it up and revert that file's buffer.\n Around 6 months or so ago it became only 'intermittently' working... maybe 1 out of 5 or 10 times, it will notice the file has changed and revert the buffer. Most of the time (almost always) it doesn't. I find myself now doing 'C-x x g' to revert by hand, before I start modifying my Org agenda, otherwise I'll have a conflict when I try to save.\n I have this in my .emacs:\n '(global-auto-revert-mode t)\n I have also tried it with '1' instead of 't' but made no difference.\n My setup is:\n - Fedora 37 as a Virtualbox VM (running under a Windows 10 host)\n - emacs version 28.2\n - file in question is being synchronized via Syncthing (the remote device is an Android phone, as my main use case is Orgzly)\n I've done some searching but haven't found an answer for this scenario so far. Can anyone give some pointers on what else I might look for, or any means of directly troubleshooting this?\n    submitted by    /u/NotDeletedManyJs  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10he3fc/globalautorevertmode_stopped_working/",
+          "publishedOn": "2023-01-21T00:35:57.000Z",
+          "wordCount": 12728,
+          "title": "global-auto-revert-mode stopped working",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hcz5s/color_theme_with_alacrittys_pallete/",
+          "author": null,
+          "description": "does anyone know if there's a color theme for emacs with a similar color theme to alacritty or foot terminal's default?\n    submitted by    /u/PreferredBadger672  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hcz5s/color_theme_with_alacrittys_pallete/",
+          "publishedOn": "2023-01-20T23:45:43.000Z",
+          "wordCount": 12218,
+          "title": "color theme with alacritty's pallete",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10hcv5q/emacs_crash_and_glitch_when_setting_frame/",
+          "author": null,
+          "description": "Macbook air with G9 second monitor, and opening emacs onto the center of the big monitor:\n (setq default-frame-alist '((top + -334) (left + -3769) (width . 230) (height . 75))) (set-frame-size (selected-frame) 230 75) \n The result is it pops from the laptop to the main monitor, but the height is clipped to the height of the laptop. And the minibuffer and modeline are gone/hidden, like the bottom of the frame is truly clipped. Any meaningful interaction in this state, like expanding an org headline, results in a crash/core dump.\n I need to drag the bottom a bit with the mouse to snap emacs out of it and get the minibuffer back and leave the crash-ready state.\n Executing the set-frame works fine when the frame is already on the second monitor, but i can recreate the same issue by moving the window to the laptop and executing the size and then dragging the window back.\n Anyone experience this? Ideas for a fix? Thankyou for any info.\n (GNU Emacs 28.2 (build 1, aarch64-apple-darwin21.1.0, NS appkit-2113.00 Version 12.0.1 (Build 21A559)) of 2022-09-12) homebrew install\n    submitted by    /u/ImportanceFit1412  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10hcv5q/emacs_crash_and_glitch_when_setting_frame/",
+          "publishedOn": "2023-01-20T23:40:59.000Z",
+          "wordCount": 12519,
+          "title": "EMacs crash (and glitch) when setting frame location and size... (how to fix for larger second monitor??)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10h9jf0/beautify_markdown_on_emacs/",
+          "author": null,
+          "description": "Hi everyone,\n I know org-mode is more complete than markdown, but I don't need all the features of org-mode, so I prefer to use markdown.\n There are a lot of articles or tips to beautify org-mode on emacs, but not much on markdown. Maybe other users are like me, so I share a tip to beautify markdown titles in emacs (Doom emacs actually):\n (custom-set-faces! '(markdown-header-delimiter-face :foreground \"#616161\" :height 0.9) '(markdown-header-face-1 :height 1.8 :foreground \"#A3BE8C\" :weight extra-bold :inherit markdown-header-face) '(markdown-header-face-2 :height 1.4 :foreground \"#EBCB8B\" :weight extra-bold :inherit markdown-header-face) '(markdown-header-face-3 :height 1.2 :foreground \"#D08770\" :weight extra-bold :inherit markdown-header-face) '(markdown-header-face-4 :height 1.15 :foregr…",
+          "link": "https://www.reddit.com/r/emacs/comments/10h9jf0/beautify_markdown_on_emacs/",
+          "publishedOn": "2023-01-20T21:54:08.000Z",
+          "wordCount": 13220,
+          "title": "Beautify markdown on emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10h944h/how_do_i_tell_helmag_to_ignore_files_with_a/",
+          "author": null,
+          "description": "Helm-Ag is wonderful.\n I would like to tell helm~ag to ignore showing files that have the extension \".org_archive\", and probably later also \".html\".\n Based off the sample configuration on the github readme...\n (custom-set-variables '(helm-ag-base-command \"ag --nocolor --nogroup --ignore-case\") '(helm-ag-command-option \"--all-text\") '(helm-ag-insert-at-point 'symbol) '(helm-ag-ignore-buffer-patterns '(\"\\\\.txt\\\\'\" \"\\\\.mkd\\\\'\"))) \n ... I figured that that would require me to add the following to my emacs init.el file:\n (custom-set-variables '(helm-ag-ignore-buffer-patterns '(\"\\\\.org_archive\\\\'\" \"\\\\.html\\\\'\")) '(helm-ag-ignore-patterns '(\"\\\\.org_archive\\\\'\" \"\\\\.html\\\\'\")) ) \n I probably don't need both. However this doesn't seem to be true. I.E. it doesn't exclude those files, although I do see my customisations via customize-group.\n Can someone please tell me what I'm failing to understand?\n Thank you.\n    submitted by    /u/Paddypatpat  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10h944h/how_do_i_tell_helmag_to_ignore_files_with_a/",
+          "publishedOn": "2023-01-20T21:41:38.000Z",
+          "wordCount": 12396,
+          "title": "How do I tell helm-ag to ignore files with a particular file extension?",
+          "imageUrl": "https://external-preview.redd.it/7WaKfDjKpu6yLrHNGDqx7b4rCQuJ_nSdhhDh6m477wI.jpg?auto=webp&v=enabled&s=ff51b1c989128adf777f39709be84c5ac041efea"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10h8htf/when_using_consultbuffer_minibuffer_sometimes/",
+          "author": null,
+          "description": "I haven't quite been able to reproduce this behavior reliably. But it's irritating and I'm hoping someone here might have a clue.\n I use consult and vertico. Sometimes, when moving down the list of buffers I get after calling consult-buffer, the following happens when point (in the mini buffer) is on the name of a buffer visiting an org file: As soon as the preview of the buffer is visible, the minibuffer is replaced with a temporary buffer in Fundamental mode containing just a string with the tags from one heading in the org file.\n I've tried bisecting my config to see what could be causing this. But since I cannot reproduce the behavior reliably, I'm never quite sure whether I've found the culprit or I simply haven't run into the problem. My best guess at the moment is a little hook whic…",
+          "link": "https://www.reddit.com/r/emacs/comments/10h8htf/when_using_consultbuffer_minibuffer_sometimes/",
+          "publishedOn": "2023-01-20T21:20:06.000Z",
+          "wordCount": 12997,
+          "title": "When using `consult-buffer`, minibuffer sometimes stops acting like it?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/10h80km/org_mode/",
+          "author": null,
+          "description": "Is emacs org mode worth using even if emacs isn't my day to day text editor/ide?\n    submitted by    /u/Mikey_codes  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/10h80km/org_mode/",
+          "publishedOn": "2023-01-20T21:00:31.000Z",
+          "wordCount": 13096,
+          "title": "org mode",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/10h3s4b/editing_tramps_list_of_previously_used_connections/",
           "author": null,
@@ -10822,156 +11012,6 @@
           "wordCount": 16654,
           "title": "Position the cursor on today's date in org-agenda on startup",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsy1am/is_it_possible_to_use_imenu_or_ideally/",
-          "author": null,
-          "description": "Imenu seems to be smarter than dumb-jump but much easier to get working than a full LSP server for languages I don't use very often. Is there any way to get xref jump to definition working with imenu as a backend so I can just use M-. instead of having to manually search the imenu?\n    submitted by    /u/markasoftware  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsy1am/is_it_possible_to_use_imenu_or_ideally/",
-          "publishedOn": "2022-12-22T21:56:50.000Z",
-          "wordCount": 16184,
-          "title": "Is it possible to use imenu (or ideally imenu-anywhere) as an xref backend?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zswuqf/orgstorelink_overrides_the_default_orgmode/",
-          "author": null,
-          "description": "submitted by    /u/Constant_Try_2065  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zswuqf/orgstorelink_overrides_the_default_orgmode/",
-          "publishedOn": "2022-12-22T21:06:17.000Z",
-          "wordCount": 15457,
-          "title": "org-store-link overrides the default org-mode behavior",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsrycd/correct_way_to_set_input_method_for_a_specific/",
-          "author": null,
-          "description": "I'm trying to get emacs to automatically use the Agda input mode whenever I load an Agda file. I currently have the following in my config.el: ```elisp (add-hook 'agda2-mode-hook '(lambda () ; If you do not want to use any input method: (message \"DEBUG setting Agda method\") (set-input-method 'Agda) ))\n `` TheDEBUGmessage appears in the Messages buffer, so the hook is running, but any time I open a new Agda file, the input mode isnil, and I have to manually callset-input-method`.\n Is this the wrong way to set the input method for a specific mode? If not, is there a way to debug this, so I can see why the input method isn't getting set, or if something is un-setting it?\n    submitted by    /u/jmite  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsrycd/correct_way_to_set_input_method_for_a_specific/",
-          "publishedOn": "2022-12-22T17:39:59.000Z",
-          "wordCount": 15200,
-          "title": "Correct way to set input method for a specific mode? i.e. why doesn't this work",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsq9ym/ann_vcusepackage/",
-          "author": null,
-          "description": "submitted by    /u/slinchisl  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsq9ym/ann_vcusepackage/",
-          "publishedOn": "2022-12-22T16:32:26.000Z",
-          "wordCount": 15478,
-          "title": "[ANN]: vc-use-package",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsohkm/ann_vertico_10_and_marginalia_10/",
-          "author": null,
-          "description": "At the end of the year, I am happy to announce the stable Vertico 1.0 and Marginalia 1.0 releases. Vertico is a minimalist, yet flexible and responsive vertical completion UI. Marginalia provides helpful annotations for many completion contexts. Both packages have been solid for a while but I rather let things mature slowly. These releases finally put the stamp \"stable\" on these two packages. I expect the other members of the package suite to follow soon after. Both packages have been updated recently to support the newest Emacs 29 features. They are compatible with Emacs 27, 28 and the upcoming 29.\n I got a lot of positive and constructive feedback over the last two years and the packages have seen some growing adoption in the community. This is all very encouraging. I learned about many different subsystems and packages through your feedback and given the ubiquity of completion in Emacs. Thank you, Emacs community!\n If my packages make your daily Emacs live better, please consider sponsoring me on GitHub Sponsors. I plan to develop and maintain my packages in the long term. I am the author of Vertico and Marginalia is co-authored by /u/oantolin and me. Take a look at minad's sponsor page and oantolin's sponsor page.\n If you have questions or feedback I am happy to hear!\n    submitted by    /u/minad-emacs  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsohkm/ann_vertico_10_and_marginalia_10/",
-          "publishedOn": "2022-12-22T15:19:50.000Z",
-          "wordCount": 15083,
-          "title": "[ANN] Vertico 1.0 and Marginalia 1.0",
-          "imageUrl": "https://external-preview.redd.it/riDpEQJpiVXmH-HX2nnQdD5CupmSDNwUtcFP7yJ-SMQ.jpg?auto=webp&s=8e459732dbe8e62d2547702201138fee9656a872"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zso7j5/centaur_emacs_how_disable_autoalign_code/",
-          "author": null,
-          "description": "Sorry for an elementary question. I'm using Centaur emacs and it's very comfortable. However, it auto-align the code by default. Does anyone know to be disable this function ?\n    submitted by    /u/StatisticianKey4099  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zso7j5/centaur_emacs_how_disable_autoalign_code/",
-          "publishedOn": "2022-12-22T15:07:10.000Z",
-          "wordCount": 15106,
-          "title": "Centaur Emacs : How disable auto-align code ?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsnxp7/yamlpro_v03_treesitter_support/",
-          "author": null,
-          "description": "https://github.com/zkry/yaml-pro\n My first implementation of yaml-pro used an elisp yaml parser which was really slow. In the latest version of yaml-pro, I've re-implemented all of the features to use the new Emacs tree-sitter integration. Not only was it much easier to implement, but the resulting code also runs much faster and can handle syntax errors. Also, I was able to get eldoc and imenu support in using tree-sitter.\n    submitted by    /u/Prudent-Dimension554  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsnxp7/yamlpro_v03_treesitter_support/",
-          "publishedOn": "2022-12-22T14:55:30.000Z",
-          "wordCount": 15503,
-          "title": "yaml-pro v0.3: Tree-sitter support",
-          "imageUrl": "https://external-preview.redd.it/BUFGpfUZj-F0RVgiiOYoS0hjK1fJjAPbXo1FVFsClEA.jpg?auto=webp&s=b530621842fbb339a3b48bd9022837a3f80da8a9"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsnkp0/multiple_cursor_mode_problem/",
-          "author": null,
-          "description": "I have installed multiple cursors and have these bindings:\n ; Multiple cursors\n (global-set-key (kbd \"C-S-c C-S-c\") 'mc/edit-lines)\n (global-set-key (kbd \"C->\") 'mc/mark-next-like-this)\n (global-set-key (kbd \"C-<\") 'mc/mark-previous-like-this)\n (global-set-key (kbd \"M-<f3>\") 'mc/mark-all-like-this)\n (global-set-key (kbd \"C-z\") 'mc/edit-beginnings-of-lines)\n If I select a word and use mc/mark-next-like-this, then all instances are selected and multiple cursors appear. I can delete multiple instances like this, but when I try to type new text, only one cursor flashes and the typed text appears only at the first cursor. What am I doing wrong?\n    submitted by    /u/revrari100  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsnkp0/multiple_cursor_mode_problem/",
-          "publishedOn": "2022-12-22T14:39:01.000Z",
-          "wordCount": 15574,
-          "title": "Multiple cursor mode problem",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsm6ff/creating_quarto_files_with_denote/",
-          "author": null,
-          "description": "submitted by    /u/data_dan_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsm6ff/creating_quarto_files_with_denote/",
-          "publishedOn": "2022-12-22T13:32:57.000Z",
-          "wordCount": 16166,
-          "title": "Creating Quarto Files with Denote",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zslyem/package_cl_is_deprecated_debugging/",
-          "author": null,
-          "description": "I am getting \"Package cl is deprecated\" on EMACS startup.\n cl is not directly called in my init.el file, so one of my packages must be calling it.\n I found this video https://www.youtube.com/watch?v=RVUxjGymcY0 which says to use\n (require 'loadhist)\n (file-dependents (feature-file 'cl))\n To identify the culprit.\n I am using EMACS 28.1 with ESS. It is unclear to me how to evaluate these commands. I can get loadhist via \" ‘C-h v load-history’ \" but then I do not know how to evaluate\n (file-dependents (feature-file 'cl)).\n ​\n I am sure this is a noob question, but any help would be great. \n    submitted by    /u/JacboianMatrix  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zslyem/package_cl_is_deprecated_debugging/",
-          "publishedOn": "2022-12-22T13:21:06.000Z",
-          "wordCount": 15546,
-          "title": "Package cl is deprecated debugging",
-          "imageUrl": "https://external-preview.redd.it/ccPGoYW874cI1xICRMSJTrMJYmwLT1PFdPO55a7vu6Q.jpg?auto=webp&s=7a7589bc8c0692cf2537504016b26fb23887deb1"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsl4uf/everything_is_gone_everything/",
-          "author": null,
-          "description": "submitted by    /u/DistilledProblems  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsl4uf/everything_is_gone_everything/",
-          "publishedOn": "2022-12-22T12:36:34.000Z",
-          "wordCount": 18453,
-          "title": "Everything is gone. EVERYTHING",
-          "imageUrl": "https://preview.redd.it/jsr4jna92g7a1.gif?format=png8&s=a1f4502744d495e3af59446d8535d3476970b96d"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zskwzq/tumblesocks_cant_get_it_to_work/",
-          "author": null,
-          "description": "Tumblesocks doesn't work for me. On WSL with GNU Emacs 28.2 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.35, cairo version 1.16.0) of 2022-12-20, modified by Debian tumblesocks-api-test-auth generates a nil token. The URL is: https://www.tumblr.com/oauth/authorize?oauth_token=nil. elpa gives me the following dependencies: oauth-20130128.151, htmlize-20210825.2150, markdown-mode-20221105.236. I read https://billisalive.tumblr.com/ and https://danzorx.tumblr.com/post/36832512247/a-weird-oauth-el-issue-when-trying-to-set-up but couldn't get tumblesocks to work :/ \n Anyone else experiencing the same? Google doesn't provide much.\n I logged a comment on https://github.com/gcr/tumblesocks/issues/23.\n    submitted by    /u/johlae  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zskwzq/tumblesocks_cant_get_it_to_work/",
-          "publishedOn": "2022-12-22T12:24:02.000Z",
-          "wordCount": 14986,
-          "title": "Tumblesocks, can't get it to work.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsj538/orgmode_date_for_a_file_the_correct_way/",
-          "author": null,
-          "description": "When I create an org-mode file I usually create a title thus:\n #+title: Name of Document\n I follow that with my options and an org-mode time stamp, as follows:\n <2022-12-22 Thu>\n I noticed however that there is also a #+date: option. Why would I want to use this instead of a simple timestamp, and what would the format need to be?\n    submitted by    /u/revrari100  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsj538/orgmode_date_for_a_file_the_correct_way/",
-          "publishedOn": "2022-12-22T10:43:10.000Z",
-          "wordCount": 18834,
-          "title": "org-mode date for a file -- the correct way",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsik8f/what_unit_test_framework_do_you_recommend_to_use/",
-          "author": null,
-          "description": "I am checking out Emacs wiki https://www.emacswiki.org/emacs/UnitTesting but uncertain whether info is actual. What I expect from framework is to be similar to pytest. And definitely I against writing unit tests in Markdown like in Buttercup as: there is no Lisp completion for such unit tests out of the box and highlighting. By all means maybe there are any plugins fixing this issue with Markdown code blocks but I don't think it's the best option to utilize markdown as a unit test source.\n    submitted by    /u/EmilySeville7cfg  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsik8f/what_unit_test_framework_do_you_recommend_to_use/",
-          "publishedOn": "2022-12-22T10:09:15.000Z",
-          "wordCount": 15510,
-          "title": "What unit test framework do you recommend to use?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/zsi4bm/use_emacs_to_read_english_classic_books/",
-          "author": null,
-          "description": "submitted by    /u/redguardtoo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/zsi4bm/use_emacs_to_read_english_classic_books/",
-          "publishedOn": "2022-12-22T09:42:58.000Z",
-          "wordCount": 16894,
-          "title": "Use Emacs to read English classic books efficiently",
-          "imageUrl": null
         }
       ]
     },
@@ -11219,26 +11259,6 @@
           "wordCount": 870,
           "title": "[Zettel Feedback]: Poetry Is The Science Of The Real",
           "imageUrl": null
-        },
-        {
-          "id": "2468@/discussions",
-          "author": "ctietze",
-          "description": "Matt Gemmell -- https://mattgemmell.scot/atomic-thoughts/\n\n  \nIf you can’t hold an entire idea in your mind, crystal clear and ready for manipulation and expansion, then you haven’t broken it down far enough yet.\n\n\nMatt summarizes \"atomicity\" beautifully in this essay.",
-          "link": "https://forum.zettelkasten.de/discussion/2468/atomic-thoughts-by-matt-gemmell",
-          "publishedOn": "2022-12-22T12:00:19.000Z",
-          "wordCount": 389,
-          "title": "\"Atomic Thoughts\" by Matt Gemmell",
-          "imageUrl": null
-        },
-        {
-          "id": "2467@/discussions",
-          "author": "ctietze",
-          "description": "A new maintainer for org-caldav has been found and a big update was published this week to sync tasks/todo's:\nhttps://github.com/dengste/org-caldav\nWith this, you can have your plain text todo files and appointments (in Emacs + org-mode) and sync with a proper Calendar service/app -- e.g. \"make stuff appear on your mobile devices\". Then you can also have your regular Calendar app prompt you to get going before appointments by all the buzzing and beeping you'd usually expect. The origin of the information is outside of your calendar app, though, in Emacs. Which may or may not be your cup of tea \nYou can now, from the \"\"\"comfort\"\"\" of Emacs and your org-mode files, sync all this stuff to a \"CalDav\" server. That means: basically every mail + calendar server, including Google's, though I'll be trying iCloud and Nextcloud.\nThe tool exports all your .org info to iCalendar files (.ical) and then syncs these with a server. It's a two way sync, so you also get new entries for calendar events you've created.\nAt the end of the process, org-caldav acts as a bridge between your plain text stuff and your normal Calendar + Todo stuff.\nApple users beware: don't expect this to \"just work\" with Reminders, though. From work, I know that the Reminders app is basically a glorified hack. I'll report back when I find out anything substantial about this.",
-          "link": "https://forum.zettelkasten.de/discussion/2467/org-caldav-syncs-to-dos-and-appointments",
-          "publishedOn": "2022-12-22T09:30:56.000Z",
-          "wordCount": 627,
-          "title": "org-caldav syncs to-dos and appointments",
-          "imageUrl": "https://forum.zettelkasten.de/resources/emoji/smile.png"
         }
       ]
     }
