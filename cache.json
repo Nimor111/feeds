@@ -53,6 +53,36 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1183q1r/optimizing_haskell_code_for_runtime_verification/",
+          "author": null,
+          "description": "submitted by    /u/Serokell  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1183q1r/optimizing_haskell_code_for_runtime_verification/",
+          "publishedOn": "2023-02-21T13:42:27.000Z",
+          "wordCount": 12719,
+          "title": "Optimizing Haskell Code for Runtime Verification",
+          "imageUrl": "https://external-preview.redd.it/Yi-ZNNw01-3ENqX62ADPtQx8xAKwStyxrKF0HRUexHM.jpg?auto=webp&v=enabled&s=9b1e8aa8d4963bfcc31895ebb817c3c49aaa936e"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1180x2d/why_does_an_orphan_instance_require_dependence_on/",
+          "author": null,
+          "description": "https://pvp.haskell.org/ says\n  \nClient defines orphan instance. If a package defines an orphan instance, it MUST depend on the minor version of the packages that define the data type and the type class to be backwards compatible.\n  \nI don't really understand why this is required. Can anyone understand this?\n    submitted by    /u/kenji-amano  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1180x2d/why_does_an_orphan_instance_require_dependence_on/",
+          "publishedOn": "2023-02-21T11:06:39.000Z",
+          "wordCount": 13011,
+          "title": "Why does an orphan instance require dependence on minor versions of packages that define data type and type class?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/117x0b9/hotcode_swapping_%C3%A0_la_erlang_with_arrowbased/",
+          "author": null,
+          "description": "Hi all,\n I've implemented a small prototype of type-safe remote hot-code swapping using Arrow-based (or more accurately, Cartesian-category-based) state machines of type input -> state -> (state, output):\n https://github.com/stevana/hot-swapping-state-machines#hot-swapping-state-machines\n The readme is written a bit like a blog post and contains code for how hot-code swapping is done in Erlang, how it's done using the prototype, implementation details and a couple of ideas for possible extensions and refinements.\n I hope you find it interesting and I'd be curious to hear your thoughts!\n    submitted by    /u/stevana  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/117x0b9/hotcode_swapping_%C3%A0_la_erlang_with_arrowbased/",
+          "publishedOn": "2023-02-21T06:55:48.000Z",
+          "wordCount": 13318,
+          "title": "Hot-code swapping à la Erlang with Arrow-based state machines",
+          "imageUrl": "https://external-preview.redd.it/MAFkwvfgL3ttgWgWTpTlBxj7BkcdV9iB8nGwOEcRygk.jpg?auto=webp&v=enabled&s=c772ea3684d0e205f150a3738dea5e37b8487599"
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/117cgac/haskelljs_will_not_suck_for_that_much_longer/",
           "author": null,
           "description": "I already tried to explain why the Haskell/JS story currently IMHO sucks: https://old.reddit.com/r/haskell/comments/115csmc/my_main_beef_with_haskelljs/\n But it turns out that it won't suck for much longer, and the reason is that \"foreign export\" is coming. I wasn't aware of this. Please accept my humble apologies. https://engineering.iog.io/2023-01-24-javascript-browser-tutorial/\n Here is why Haskell/JS won't suck anymore after \"foreign export\" is here:\n  \nI will be able to code a standard HTML/CSS website that mostly works even on text-based browsers and Tor Browser without JS enabled. Users of text-based browsers will get graceful \"<foo.jpg>\" placeholders. To code this website, I will obviously use Haskell on the backend.\n If the user has JS enabled, I can have a link on the site that says \"activate interactive JavaScript features (5 MB download)\". It is IMHO incredibly disrespectful to activate this mode by default, shoving something down the user's throat he didn't ask for. (Maybe the user is running a slow computer, or e.g. Qubes with lack of nice GPU integration and prefers the simple site because it has all the needed info.)\n Once clicked, a nice download indicator now spins for half a second.\n Boom!!\n The JS parts are now live. Static JPG images (previously rendered on the server) have turned into interactive HTML canvases with websockets support. A text counter that previously required a website refresh is now updating live through websockets. And so on.\n  \nThis is the way. This is the future. This is the only way to stop the web from becoming an increasingly ugly place. (If you don't get it - if you e.g. really believe the new Reddit is better than old.reddit - you're lost and beyond saving IMHO, sorry.)\n    submitted by    /u/NixOverSlicedBread  \n [link]   [comments]",
@@ -1671,106 +1701,6 @@
           "wordCount": 13804,
           "title": "\"Learn Haskell by building a blog generator\" is a great resource for learning",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10j6yvc/chaining_m_maybe_as_or_an_operator_of_type_m/",
-          "author": null,
-          "description": "A common pattern I've found has been wanting to chain m (Maybe a)s, such as IO (Maybe a)s, or Parser (Maybe a)s (where a may differ at different points). The obvious way to me to do this would be\n (>>=?) :: Monad m => m (Maybe a) -> (a -> m (Maybe b)) -> m (Maybe b) xm >>=? f = xm >>= \\case Just x -> f x Nothing -> pure Nothing \n or use MaybeT like\n (>>=?) :: Monad m => m (Maybe a) -> (a -> m (Maybe b)) -> m (Maybe b) xm >>=? f = runMaybeT $ do x <- MaybeT xm MaybeT $ f x \n but the pattern seems common enough that I feel like there would be a \"best practice\" or accepted way to do so, or some existing operator, that I'm unaware of. It also feels like there should be some way to generalize Maybe to any instance of MonadFail but I haven't been able to figure that out.\n Is there a less verbose way of doing this, or are the two options above what I should stick with, or are there existing implementation(s) somewhere in some library/libraries that are accepted as the idiomatic way to do this?\n    submitted by    /u/segft  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/10j6yvc/chaining_m_maybe_as_or_an_operator_of_type_m/",
-          "publishedOn": "2023-01-23T07:41:29.000Z",
-          "wordCount": 13740,
-          "title": "Chaining m (Maybe a)s, or an operator of type m (Maybe a) -> (a -> Maybe b) -> m (Maybe b)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10j5s5k/emacs_how_to_get_lspmode_like_type_hints_in_eglot/",
-          "author": null,
-          "description": "So emacs has mainlined eglot, it is apparently the future default emacs language server client. I tried switching over from lspmode to eglot, however it was missing the very helpful Haskell Language Server (HLS) type hints. The ones where you type a function without a signature, and it suggests, correctly most of the time, the most generic constraint or typing for what you are trying to do. Does anybody know how to get such behaviour with eglot/HLS?\n Thanks\n    submitted by    /u/Apprehensive_Bet5287  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/10j5s5k/emacs_how_to_get_lspmode_like_type_hints_in_eglot/",
-          "publishedOn": "2023-01-23T06:23:38.000Z",
-          "wordCount": 12924,
-          "title": "Emacs - How to get lspmode like type hints in eglot",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10j36ft/how_does_ghc_built_from_source_set_header_search/",
-          "author": null,
-          "description": "I'm using this Docker image that built ghc with the new JS backend, and building basement with it gives the following output:\n In file included from /opt/ghc/_build/stage1/lib/../lib/js-ghcjs-ghc-9.7.20230119/rts-1.0.2/include/Rts.h:38, from cbits/foundation_prim.h:3, from cbits/foundation_mem.c:3:0: error: /opt/ghc/_build/stage1/lib/../lib/js-ghcjs-ghc-9.7.20230119/rts-1.0.2/include/Stg.h:400:10: error: fatal error: stg/DLL.h: No such file or directory 400 | #include \"stg/DLL.h\" | ^~~~~~~~~~~ \n I noticed that stg/DLL.h indeed does not exist in /opt/ghc/_build/stage1/lib/js-ghcjs-ghc-9.7.20230119/rts-1.0.2/include/, but that both Rts.h and stg/DLL.h exist in /opt/ghc/rts/include/. My primary question is: how does /opt/ghc/_build/stage1/bin/js-unknown-ghcjs-ghc know to look at _build/stage1/.../rts-1.0.2/include/? Why does it not look in /opt/ghc/rts/include/?\n A minimal reproduction:\n $ echo '#include \"Rts.h\"' > foo.c $ /opt/ghc/_build/stage1/bin/js-unknown-ghcjs-ghc -c foo.c -v3 /usr/bin/gcc -x c -c foo.c -o foo.o.tmp -fno-PIC -Wimplicit -include /opt/ghc/_build/stage1/lib/../lib/js-ghcjs-ghc-9.7.20230119/rts-1.0.2/include/ghcversion.h -I/opt/ghc/_build/stage1/lib/../lib/js-ghcjs-ghc-9.7.20230119/base-4.18.0.0/include -I/opt/ghc/_build/stage1/lib/../lib/js-ghcjs-ghc-9.7.20230119/rts-1.0.2/include Created temporary directory: /tmp/ghc24_0 In file included from /opt/ghc/_build/stage1/lib/../lib/js-ghcjs-ghc-9.7.20230119/rts-1.0.2/include/Rts.h:38, from foo.c:1:0: error: /opt/ghc/_build/stage1/lib/../lib/js-ghcjs-ghc-9.7.20230119/rts-1.0.2/include/Stg.h:400:10: error: fatal error: stg/DLL.h: No such file or directory 400 | #include \"stg/DLL.h\" | ^~~~~~~~~~~ \n    submitted by    /u/brandonchinn178  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/10j36ft/how_does_ghc_built_from_source_set_header_search/",
-          "publishedOn": "2023-01-23T03:58:58.000Z",
-          "wordCount": 12728,
-          "title": "How does GHC built from source set header search path?",
-          "imageUrl": "https://external-preview.redd.it/0JMwbL7RsfkEU_3OOi20baNZLsIfLEDKU6eEmfKLvcs.jpg?auto=webp&v=enabled&s=786984de0cc5b6eb9806ec58df966288d1ed8514"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10j15bn/experience_with_hls_vim/",
-          "author": null,
-          "description": "Hi all, I'm wondering if anyone else is using the Haskell Language Server + CoC + Vim, and how useful they're finding it. To be honest, I'm finding it has only one advantage over ALE + Vim + the now defunct Intero – namely, it offers auto-completion – and has a number of drawbacks (no way to get a variable's type, that I can see, and requires an entire Node.js installation). Is there some killer feature of HLS that I'm missing?\n tbh, most of what I'd want out of HLS can already be got from ghci (using the :type-at and :loc-at commands), so I'm thinking of writing a small Vim plugin to hook ghci into Vim similar to what Intero did.\n    submitted by    /u/phlummox  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/10j15bn/experience_with_hls_vim/",
-          "publishedOn": "2023-01-23T02:13:49.000Z",
-          "wordCount": 14354,
-          "title": "Experience with HLS + vim?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10iz8sv/job_listing_haskell_developer_domain_specific/",
-          "author": null,
-          "description": "Hello,\n I'm from Manifold Valley Inc. in Los Angeles California. We are a machine learning research venture that is building processes to address existing needs in the film and game industries. We are using haskell both as a host language for our ML pipeline compiler and as a front-end development language using Monomer. We are also using Futhark, a related functional language for GPU kernels, so far with great success. We are looking for a passionate functional programmer who is interested in joining our team as we are approaching our first product and starting to expand. This is an exciting in-person job with a broad team of developers with backgrounds in mathematics, physics, game development, film-making and art. We are working on hard problems and having a blast. \n Currently accepting resumes at manifoldvalley.com . The mail address begins with my name ian at-symbol. Competitive salary and benefits package. Relocation is possible but this is not a remote position.\n Thanks.\n    submitted by    /u/manifoldian  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/10iz8sv/job_listing_haskell_developer_domain_specific/",
-          "publishedOn": "2023-01-23T00:40:49.000Z",
-          "wordCount": 13425,
-          "title": "Job Listing - Haskell Developer - Domain Specific Compilers and Monomer Front End",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10irfcv/ways_to_preview_a_prism_after_a_traversal/",
-          "author": null,
-          "description": "While doing some data manipulations involving filtering by a single field of a tuple and manipulating it at the same time I found myself doing some weird transformations, and I felt like there should be an easier way to do the same but I can't find it. So here I am asking for help.\n For the purpose of this problem the type I'll be working with is\n data Resource = GoodResource Int | BadResource \n for which there are the prisms _GoodResource and _BadResource (generate with makePrisms ''Resource).\n What I want to achieve is the following: given some items\n allItems :: [(String, Resource)] \n I want to filter only those that are constructed with GoodResource and keep the inner Int obtaining\n goodItems :: [(String, Int)] \n (and possibly generalize this process over (String,), since I expect it t…",
-          "link": "https://www.reddit.com/r/haskell/comments/10irfcv/ways_to_preview_a_prism_after_a_traversal/",
-          "publishedOn": "2023-01-22T19:09:39.000Z",
-          "wordCount": 13108,
-          "title": "Ways to preview a prism after a traversal",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/",
-          "author": null,
-          "description": "submitted by    /u/slinchisl  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/",
-          "publishedOn": "2023-01-22T15:10:29.000Z",
-          "wordCount": 12570,
-          "title": "Pygmentising Hakyll's Syntax Highlighting",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10ilrpj/rules_update/",
-          "author": null,
-          "description": "Hello r/Haskell readers! I'm u/taylorfausak, one of the moderators here. \n As you might have noticed, this subreddit typically moderates with a light touch. The community guidelines encourage moderators to err on the side of leaving content in. \n Those guidelines will remain in place. However the moderators here routinely get the same questions or take the same actions on certain types of posts or comments. In an effort to make those decisions more transparent and predictable, I have created a new set of rules for this subreddit. You should be able to see them in the sidebar and use them when reporting things to the moderators. I will copy them here for posterity:\n  \n \nAll content must be related to Haskell. All content must be related to the Haskell programming language. Simply being abou…",
-          "link": "https://www.reddit.com/r/haskell/comments/10ilrpj/rules_update/",
-          "publishedOn": "2023-01-22T15:10:19.000Z",
-          "wordCount": 14095,
-          "title": "Rules update",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10iia50/haskell_deep_learning_tutorials_blog/",
-          "author": null,
-          "description": "penkovsky.com/neural-networks/\n Greetings!\n Some time ago, I have started a series of tutorials dedicated to deep learning in Haskell.\n Now, I am about to finish this series. What would you rather read?\n    submitted by    /u/p_bogdan  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/10iia50/haskell_deep_learning_tutorials_blog/",
-          "publishedOn": "2023-01-22T12:09:38.000Z",
-          "wordCount": 12563,
-          "title": "Haskell deep learning tutorials [Blog]",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10igp1o/parallel_strategies/",
-          "author": null,
-          "description": "Count the frequency of letters in texts using parallel computation.\n  \nFrequency.hs\n  {-# OPTIONS_GHC -Wno-unused-local-binds #-} module Frequency (frequency) where import Control.Parallel.Strategies (Strategy) import qualified Control.Parallel.Strategies as S import qualified Data.Char as C import Data.Map (Map) import qualified Data.Map as M import Data.Text (Text) import qualified Data.Text as T type Freq = Map Char Int frequency :: Int -> [Text] -> Map Char Int frequency n texts = M.unionsWith (+) (map freq texts `S.using` chunks) where {- parListChunk divides a list into chunks, and evaluates all chunks in parallel. Each chunk is evaluated according to the given strategy (here rdeepseq). -} chunks :: Strategy [Freq] chunks = S.parListChunk n S.rdeepseq {- parBuffer evaluates up to the…",
-          "link": "https://www.reddit.com/r/haskell/comments/10igp1o/parallel_strategies/",
-          "publishedOn": "2023-01-22T10:31:11.000Z",
-          "wordCount": 14490,
-          "title": "Parallel strategies",
-          "imageUrl": null
         }
       ]
     },
@@ -1779,6 +1709,56 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/118e4up/an_incomplete_guide_to_scala_3_macros_and/",
+          "author": null,
+          "description": "submitted by    /u/doofin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/118e4up/an_incomplete_guide_to_scala_3_macros_and/",
+          "publishedOn": "2023-02-21T20:27:09.000Z",
+          "wordCount": 13434,
+          "title": "An incomplete guide to Scala 3 macros and Multi-stage programming",
+          "imageUrl": "https://external-preview.redd.it/1mIDvSncffCmWlqJQKluGlzmjwUC379_csCvwzkV6fs.jpg?auto=webp&v=enabled&s=7a0241180546f5629721dc1e71bf8e934b929fc1"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/118dl7t/probar_c%C3%B3digo_as%C3%ADncrono_con_cats/",
+          "author": null,
+          "description": "submitted by    /u/emanuelpeg  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/118dl7t/probar_c%C3%B3digo_as%C3%ADncrono_con_cats/",
+          "publishedOn": "2023-02-21T20:01:47.000Z",
+          "wordCount": 13424,
+          "title": "Probar código asíncrono con cats",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1185jrs/web_scraping_with_scala/",
+          "author": null,
+          "description": "submitted by    /u/BobbyTaylor_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1185jrs/web_scraping_with_scala/",
+          "publishedOn": "2023-02-21T15:06:28.000Z",
+          "wordCount": 13524,
+          "title": "Web Scraping with Scala",
+          "imageUrl": "https://external-preview.redd.it/uVl4-Pm8CCdqKWbBkp8pUO-0F9QJ_G1ULqLyVDwsKGE.jpg?auto=webp&v=enabled&s=42feb32b7b3420ce11d5a5646646e4f0743e8b22"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/117xtg5/what_libraryframework_should_i_use_for_backend/",
+          "author": null,
+          "description": "Edit: Sorry for not clarifying more. I am currently learning Haskell and used a bit of yesod and scotty. I am looking for a similar framework in Scala that is pure functional and stable. So far it seems like http4s is one good choice\n    submitted by    /u/one-xbox-one-x-box  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/117xtg5/what_libraryframework_should_i_use_for_backend/",
+          "publishedOn": "2023-02-21T07:46:53.000Z",
+          "wordCount": 14112,
+          "title": "what library/framework should I use for backend development?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/117m7m3/restrict_uses_of_annotation_in_scala/",
+          "author": null,
+          "description": "Given a custom defined annotation `class GreaterThan(m: Double) extends scala.annotation.StaticAnnotation` and a case class `case class Person(name: String, @ GreaterThan(0) age: Double)`, how can make sure that the uses of the annotation `GreaterThan`are used on doubles but not strings, obviously `GreaterThan` does not make sense to use on the `name` parameter.\n ​\n Is there a way to emit a warning if the user uses an annotation in the wrong place( that I define), or like an error ?\n    submitted by    /u/0utlawImmortalz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/117m7m3/restrict_uses_of_annotation_in_scala/",
+          "publishedOn": "2023-02-20T22:12:49.000Z",
+          "wordCount": 13730,
+          "title": "Restrict uses of annotation in Scala",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1177c7k/exploring_binary_search_in_scala/",
           "author": null,
@@ -2748,66 +2728,6 @@
           "wordCount": 13509,
           "title": "Arbitrary functions of n dimensions in Scala",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10ixqmi/vscode_metal_project_recommendation/",
-          "author": null,
-          "description": "Using VsCode and Metal to hold all airflow dags, how would you recommend the project structure? I would imagine each DAG (written in Scala) would be a separate sub project in the repo. I'm very new to Scala and project structure so would love any pointers\n    submitted by    /u/alwaysSearching23  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/10ixqmi/vscode_metal_project_recommendation/",
-          "publishedOn": "2023-01-22T23:31:36.000Z",
-          "wordCount": 13387,
-          "title": "VsCode Metal Project Recommendation",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10ixhgw/scala_jwt_library/",
-          "author": null,
-          "description": "Just released my library to a new place. For anyone interested to see how manipulation of JWT tokens could become simpler with this API feel free to reach out.\n scala-jwt/oath (github.com)\n    submitted by    /u/Kavafhs  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/10ixhgw/scala_jwt_library/",
-          "publishedOn": "2023-01-22T23:20:47.000Z",
-          "wordCount": 13206,
-          "title": "Scala JWT Library",
-          "imageUrl": "https://external-preview.redd.it/WO3z1NAFAZmfody1fpzy8t-LVLLmSYRUw4sNlzLDWmU.jpg?auto=webp&v=enabled&s=4cbc0cbed30724f2d1b8aef3996eb23eef3f3ee1"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10imfi8/this_week_in_scala_jan_23_2023/",
-          "author": null,
-          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/10imfi8/this_week_in_scala_jan_23_2023/",
-          "publishedOn": "2023-01-22T15:40:17.000Z",
-          "wordCount": 13106,
-          "title": "This week in #Scala (Jan 23, 2023)",
-          "imageUrl": "https://external-preview.redd.it/6LB5lfGBk7VebtJ8L6vcInNCZbPH9ErOR1WYwI-cnw8.jpg?auto=webp&v=enabled&s=5fec7a02b7738cc5bae258b8693262eb19d2db29"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10il9tb/how_to_define_a_function_to_return_an_object_when/",
-          "author": null,
-          "description": "I'm trying to use generic insert function that would return object when inserting data using Slick. I've tried with following code ```scala // This works without any issues but limited to specific entity and table def insertEmployee(employee: Employee): IO[Employee] = DB.run(db, { def returnObj = (EmployeeTable.instance returning EmployeeTable.instance.map(_.id)).into((obj, id) => obj.copy(id = id)) returnObj += employee })\n // This doesn't work and returns error on \"copy\". Error: Cannot resolve symbol copy def withReturningObj[E <: BaseEntity, T <: BaseTable[E]](query: TableQuery[T]) = (query returning query.map(_.id)).into((obj, id) => obj.copy(id = id)) \n ```\n Any suggestion to fix above?\n    submitted by    /u/spbaniya  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/10il9tb/how_to_define_a_function_to_return_an_object_when/",
-          "publishedOn": "2023-01-22T14:47:30.000Z",
-          "wordCount": 13300,
-          "title": "How to define a function to return an object when inserting in Slick?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10iis3w/how_to_define_generic_encoder_trait_for_case/",
-          "author": null,
-          "description": "I'm trying to define a trait for encoder/decoder for case class using io.circe. But it's throwing error on compile\n ```scala trait BaseEntity { val id: Long }\n trait BaseEntityEncoder[T <: BaseEntity] { implicit val decoder: Decoder[T] = deriveDecoder[T] implicit val entityDecoder: EntityDecoder[IO, T] = jsonOf implicit val listEntityDecoder: EntityDecoder[IO, List[T]] = jsonOf\n implicit val encoder: Encoder[T] = deriveEncoder[T] implicit val entityEncoder: EntityEncoder[IO, T] = jsonEncoderOf implicit val listEntityEncoder: EntityEncoder[IO, List[T]] = jsonEncoderOf \n } ``` When compiling I'm getting following error\n ```scala could not find Lazy implicit value of type io.circe.generic.decoding.DerivedDecoder[T] [error] implicit val decoder: Decoder[T] = deriveDecoder[T]\n could not find Lazy implicit value of type io.circe.generic.encoding.DerivedAsObjectEncoder[T] [error] implicit val encoder: Encoder[T] = deriveEncoder[T] ```\n Please help\n    submitted by    /u/spbaniya  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/10iis3w/how_to_define_generic_encoder_trait_for_case/",
-          "publishedOn": "2023-01-22T12:39:20.000Z",
-          "wordCount": 13857,
-          "title": "How to define generic encoder trait for case class in io.circe?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10ihu9f/for_comprehension_and_some_questions/",
-          "author": null,
-          "description": "I vaguely have idea on how for comprehension is working. However, I find there are still several parts that I don't understand very well. So I attempt to learn by implementing some simple operations, checking which part I don't understand.\n I am not looking for a thorough monad implementation. Just something that would work for this case.\n Please bear with me, some of my questions may be very stupid. The code is as below. And my questions:\n  \nIs the following code the right direction to implement for-comprehension operations? If not, what should be the right way to implement for such purpose?\n The example I use as reference is [1], but it doesn't specify type. When implementing it, I find I am confused, particularly the type e.g. extends Dataset[A] specified in each Ops class. Should I spe…",
-          "link": "https://www.reddit.com/r/scala/comments/10ihu9f/for_comprehension_and_some_questions/",
-          "publishedOn": "2023-01-22T11:42:53.000Z",
-          "wordCount": 14766,
-          "title": "for comprehension and some questions",
-          "imageUrl": "https://external-preview.redd.it/QgPvRTknlY3rMNDqH1k4I37XGiq9tZF_FsygC_Xht4o.jpg?auto=webp&v=enabled&s=19b4a59f036ea2f314ff2033c11e54cdc240f8d8"
         }
       ]
     },
@@ -2979,6 +2899,66 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/118cpiy/new_user_of_both_reddit_and_emacs_in_need_of_some/",
+          "author": null,
+          "description": "A while back, I started to transcribe my mother's old recipes written on 3×5\" note cards into a digital format. Portability is important to me, as I wanted to be able to send them to friends and family and not have to worry about apps needed to view them. I initially opted to write them in Markdown. Then I became an Emacs user. 🤩 I like the idea of being able to write the recipes in org files and exporting to whatever format convenient for family, like perhaps PDF. Hosting a little website for them might be a neat project for a future date.\n ​\n I installed org-chef, but as far as I can tell, it's meant for scraping recipes from websites. I don't need functionality to adjust proportions, either. Being able to generate a shopping list might be useful someday, but it's not currently something I need to do. I've written a few recipe files in org-mode, but I'm not sure if this is the mode I should be using. I also experimented with using markdown-mode, but wouldn't it be better to write in another mode and export to Markdown? I'd prefer to have the recipes in separate files, rather than one big file, but I'm open to good reasons why I might not want to do that.\n ​\n I'm currently writing them with a few keywords and some tags for metadata. I searched a lot online, here on reddit, as well as asked ChatGPT (it worked well till it gave me a bunch of what seems to be incorrect advice 🫠), about how to create a basic template, but I haven't been able to figure out how to do it on my own. I'm currently using a file that I fill my stuff into and then save with a new name. That works well enough, but it seems to me like there'd be a more elegant way to do it.\n ​\n So, that's where I'm at. Part of me is starting to wonder if I should instead try to learn some database software for this... Though I really only want to be able to search for titles and basic tags, so a database sounds like overkill. Any advice and direction pointing is appreciated.\n    submitted by    /u/BogStandard9999  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/118cpiy/new_user_of_both_reddit_and_emacs_in_need_of_some/",
+          "publishedOn": "2023-02-21T18:47:33.000Z",
+          "wordCount": 13384,
+          "title": "New user of both reddit and Emacs in need of some guidance",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/118alqk/how_to_improve_visibility_and_navigability_in/",
+          "author": null,
+          "description": "Hi! \n I want to use some of my org-roam files like a “database” (not in the strict sense), to keep some metadata about my files. \n In this spirit, I want to save in the PROPERTIES drawer some information, which I want to put it in a table. My idea is to do the same process with several files and copy/paste those small tables into another (a large one) with all this information. \n The problem with this approach is the visibility and navigation around the tables. \n This example\n * test :PROPERTIES: :TOPIC: test :column_A: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis vehicula mi. Maecenas laoreet bibendum augue, ac faucibus leo euismod in. Suspendisse elit nunc, cursus eu mollis vel, rutrum in metus. Nulla posuere nisl eu lorem euismod, quis gravida lacus convallis. Ves…",
+          "link": "https://www.reddit.com/r/orgmode/comments/118alqk/how_to_improve_visibility_and_navigability_in/",
+          "publishedOn": "2023-02-21T17:18:49.000Z",
+          "wordCount": 13632,
+          "title": "How to improve visibility and navigability in tables with long-line rows in column view?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1184wfj/why_doesnt_this_render_properly_on_latex_export/",
+          "author": null,
+          "description": "In an org file this works up until I add captions. How can I fix this?\n #+begin_center #+attr_latex: :options {0.4\\textwidth} #+begin_minipage #+attr_latex: :width 0.4\\linewidth #+caption: Oh caption [[file:images/image.png]] #+end_minipage #+attr_latex: :options {0.4\\textwidth} #+begin_minipage #+attr_latex: :width 0.2\\linewidth #+caption: My caption [[file:images/image.png]] #+end_minipage #+end_center \n    submitted by    /u/Far-Anywhere2876  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1184wfj/why_doesnt_this_render_properly_on_latex_export/",
+          "publishedOn": "2023-02-21T14:37:20.000Z",
+          "wordCount": 12442,
+          "title": "Why doesn't this render properly on latex export?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/117zq1j/column_view_rollup_tags/",
+          "author": null,
+          "description": "Good day, good people...\n Does anyone know if it is possible to \"roll-up\" (I can't think of a better word) TAGS in the columns view.\n ALLTAGS seems to \"push tags down\", or inherit tags, but I want to push them up (the way {+} or {:} will sum something.\n an e.g.\n org * Project ** Task 1 :tag1: ** Task 2 :tag1:tag2: ** Task 3 :tag3:  \n in column view could display as\n org | Project | :tag1:tag2:tag3: | \n    submitted by    /u/CouthlessWonder  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/117zq1j/column_view_rollup_tags/",
+          "publishedOn": "2023-02-21T09:50:47.000Z",
+          "wordCount": 12503,
+          "title": "column view, \"Roll-up\" tags",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/117xx32/anyone_seen_neorg_opinions/",
+          "author": null,
+          "description": "I know this is from neovim land's but still it's very interesting.\n Neorg (Neo - new, org - organization) - https://github.com/nvim-neorg/neorg\n Its description says it's a is a Neovim plugin designed to reimagine organization as you know it. Grab some coffee, start writing some notes, let your editor handle the rest. \n The first point of its philosophy is to\n  \n Revise the org format: simple, extensible, unambiguous. Will make you feel right at home. Alternate markup formats have several flaws, but the most notable one is the requirement for complex and slow parsers. What if we told you it's possible to alleviate those problems, all whilst keeping that familiar feel? Enter the .norg file format, whose specification can be found here. The cross between all the best things from org and the best things from markdown, revised and merged into one.\n  \n    submitted by    /u/dareenzo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/117xx32/anyone_seen_neorg_opinions/",
+          "publishedOn": "2023-02-21T07:53:29.000Z",
+          "wordCount": 12974,
+          "title": "Anyone seen neorg ? Opinions?",
+          "imageUrl": "https://external-preview.redd.it/d3Clln_NrwEbOUDy5W6caEkV4kVrZkVOiygDB1-_C3I.jpg?auto=webp&v=enabled&s=7f24c6bd89f5de72aceafaa0027947c724af966a"
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/117q10j/some_asterisks_showing_before_heading/",
+          "author": null,
+          "description": "For some time I've been having this weird issue where some asterisks are showing in some heading levels as they were, it seems, emphasis markers... I'm not sure what is happening, since using SPC h ' shows they have org-hide as face and only those in headings multiple of three have this issue. Any tips on how to find the cause of the problem?\n ​\n Some headings have their \\\"bullets\\\" showing wrongly\n org-hide-emphasis-markers does not change the situation. Even when using describe-char, it says the asterisks are being shown as just the background.\n ​\n describe-char of the two incorrect asterisks in each heading.\n Some things point towards emphasis markers, Only the headings which have a multiple of 3 asterisks suffer from this problem, the middle asterisk is higher than the other two (although no boldness is indicated by describe-char), the left one and the last one in the affected lines are a little closer to the middle one and not centered.\n I have no idea on how to pursuit this problem... any tips?\n    submitted by    /u/Ieremies  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/117q10j/some_asterisks_showing_before_heading/",
+          "publishedOn": "2023-02-21T00:56:00.000Z",
+          "wordCount": 12810,
+          "title": "Some asterisks showing before heading",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/11773hy/is_it_possible_to_horizontally_center_a_table/",
           "author": null,
@@ -3648,36 +3628,6 @@
           "wordCount": 12869,
           "title": "Is the *Org Tags* buffer customizable?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/10j78fh/im_trying_to_use_julia_in_orgmode_but_its/",
-          "author": null,
-          "description": "Hi all,\n Basically the title. When I execute the following code in a Julia repl, \n a=[0 0.5 0.5;0.75 0 0.25;0.75 0.25 0]; print(map(x->getindex(a^3,x),[1,4,7])) \n I the definition for a is empty, as I've silenced the output with the semicolon.\n However, when I run this code from within org-mode, I get the following output: \n  #+RESULTS: : 3×3 Matrix{Float64}: : 0.0 0.5 0.5 : 0.75 0.0 0.25 : 0.75 0.25 0.0 : [0.1875, 0.40625, 0.40625] \n That last row is the one I actually wanted to print, whereas the Matrix definition output should definitely not be there.\n I assume one of two things is happening: either org-mode is ignoring the semicolon when it executes the src block, resulting in this error, or julia is wigging out in the org-minibuffer since it's not in a vterm (which apparently matters to julia for some reason).\n I've referred to the julia specific docs, as well as the org-mode evaluation of code blocks and results of code execution docs, with no solution. \n Any help would be greatly appreciated.\n    submitted by    /u/john_abs  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/10j78fh/im_trying_to_use_julia_in_orgmode_but_its/",
-          "publishedOn": "2023-01-23T08:00:01.000Z",
-          "wordCount": 12770,
-          "title": "I'm trying to use Julia in org-mode but it's returning values for expressions that should be silent.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/10j1zkc/orgmode_converted_emojis_in_file_to_escaped/",
-          "author": null,
-          "description": "I was just looking at something I'd written earlier in the week and noticed that org-mode had (somehow) changed a source code block I'd created from having the emojis I'd had in it (quite a few, which is how I noticed), to escaped numeric codes. I am unsure why this may have happened (and the fact is, I can add in the emojis but the file is a bit broke at the moment.\n Eg. 🐧 to \\360\\237\\220\\247 \n Is there any particular reason why this would have happened, and more to the point, is there a way to prevent it? (I should point out I'm on OSX and these were default emoji from Apple's font.). It's the first time I've seen it happen in files (though I recently changed my config which, for example, removed the Apple emoji front from being defaulted.). I'm on emacs 29.0.60. Latest version of org-mode and using org-roam.\n    submitted by    /u/wakatara  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/10j1zkc/orgmode_converted_emojis_in_file_to_escaped/",
-          "publishedOn": "2023-01-23T02:56:52.000Z",
-          "wordCount": 12573,
-          "title": "Org-mode converted emojis in file to escaped strings",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/10ixu7p/question_on_setting_up_orgattach_folder_per_file/",
-          "author": null,
-          "description": "Guys hi,\n I need to 1) specify folder where all org-attach files will be stored, and 2) specify folder name per file. Basically i need\n OrgAttach/FileA OrgAttach/FileB etc \n I did 1) by adidng this to init.el\n (setq org-attach-id-dir (substitute-in-file-name \"${SUPPL}/OrgAttach\")) \n And tried to do 2) by adding this to top of my file\n #+PROPERTY: ATTACH_DIR FileA #+PROPERTY: ATTACH_DIR_INHERIT t \n It didn't work, (seems they renamed ATTACH_DIR to DIR, and depreciated _INHERIT), tried \n #+PROPERTY: DIR FileA \n Still no luck, what am i doing wrong?\n    submitted by    /u/rtwyyn  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/10ixu7p/question_on_setting_up_orgattach_folder_per_file/",
-          "publishedOn": "2023-01-22T23:36:03.000Z",
-          "wordCount": 12634,
-          "title": "Question on setting up org-attach folder per file.",
-          "imageUrl": null
         }
       ]
     },
@@ -3686,6 +3636,116 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/fzf-20230221.1639.el",
+          "author": null,
+          "description": "The fzf package has been updated to version 20230221.1639.",
+          "link": "https://melpa.org/#/fzf",
+          "publishedOn": "2023-02-21T16:39:00.000Z",
+          "wordCount": 105,
+          "title": "fzf (20230221.1639) --- A front-end for fzf.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/conda-20230221.1603.el",
+          "author": null,
+          "description": "The conda package has been updated to version 20230221.1603.",
+          "link": "https://melpa.org/#/conda",
+          "publishedOn": "2023-02-21T16:03:00.000Z",
+          "wordCount": 105,
+          "title": "conda (20230221.1603) --- Work with your conda environments",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/kubernetes-helm-20230221.1438.el",
+          "author": null,
+          "description": "The kubernetes-helm package has been updated to version 20230221.1438.",
+          "link": "https://melpa.org/#/kubernetes-helm",
+          "publishedOn": "2023-02-21T14:38:00.000Z",
+          "wordCount": 105,
+          "title": "kubernetes-helm (20230221.1438) --- extension for helm, the package manager for kubernetes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-link-beautify-20230221.1311.tar",
+          "author": null,
+          "description": "The org-link-beautify package has been updated to version 20230221.1311.",
+          "link": "https://melpa.org/#/org-link-beautify",
+          "publishedOn": "2023-02-21T13:11:00.000Z",
+          "wordCount": 105,
+          "title": "org-link-beautify (20230221.1311) --- Beautify Org Links",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/vertico-prescient-20230221.1257.el",
+          "author": null,
+          "description": "The vertico-prescient package has been updated to version 20230221.1257.",
+          "link": "https://melpa.org/#/vertico-prescient",
+          "publishedOn": "2023-02-21T12:57:00.000Z",
+          "wordCount": 105,
+          "title": "vertico-prescient (20230221.1257) --- prescient.el + Vertico",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/gotest-20230221.945.el",
+          "author": null,
+          "description": "The gotest package has been updated to version 20230221.945.",
+          "link": "https://melpa.org/#/gotest",
+          "publishedOn": "2023-02-21T09:45:00.000Z",
+          "wordCount": 105,
+          "title": "gotest (20230221.945) --- Launch GO unit tests",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/hotfuzz-20230221.844.el",
+          "author": null,
+          "description": "The hotfuzz package has been updated to version 20230221.844.",
+          "link": "https://melpa.org/#/hotfuzz",
+          "publishedOn": "2023-02-21T08:44:00.000Z",
+          "wordCount": 105,
+          "title": "hotfuzz (20230221.844) --- Fuzzy completion style",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/hindent-20230221.619.el",
+          "author": null,
+          "description": "The hindent package has been updated to version 20230221.619.",
+          "link": "https://melpa.org/#/hindent",
+          "publishedOn": "2023-02-21T06:19:00.000Z",
+          "wordCount": 105,
+          "title": "hindent (20230221.619) --- Indent haskell code using the \"hindent\" program",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/doom-themes-20230221.610.tar",
+          "author": null,
+          "description": "The doom-themes package has been updated to version 20230221.610.",
+          "link": "https://melpa.org/#/doom-themes",
+          "publishedOn": "2023-02-21T06:10:00.000Z",
+          "wordCount": 105,
+          "title": "doom-themes (20230221.610) --- an opinionated pack of modern color-themes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/devdocs-20230220.2042.el",
+          "author": null,
+          "description": "The devdocs package has been updated to version 20230220.2042.",
+          "link": "https://melpa.org/#/devdocs",
+          "publishedOn": "2023-02-20T20:42:00.000Z",
+          "wordCount": 105,
+          "title": "devdocs (20230220.2042) --- Emacs viewer for DevDocs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tempel-20230220.1700.el",
+          "author": null,
+          "description": "The tempel package has been updated to version 20230220.1700.",
+          "link": "https://melpa.org/#/tempel",
+          "publishedOn": "2023-02-20T17:00:00.000Z",
+          "wordCount": 105,
+          "title": "tempel (20230220.1700) --- Tempo templates/snippets with in-buffer field editing",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/dpkg-dev-el-20230220.1635.tar",
           "author": null,
@@ -3907,6 +3967,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/scad-mode-20230218.2025.tar",
+          "author": null,
+          "description": "The scad-mode package has been updated to version 20230218.2025.",
+          "link": "https://melpa.org/#/scad-mode",
+          "publishedOn": "2023-02-18T20:25:00.000Z",
+          "wordCount": 105,
+          "title": "scad-mode (20230218.2025) --- A major mode for editing OpenSCAD code",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/gnuplot-20230218.1717.tar",
           "author": null,
           "description": "The gnuplot package has been updated to version 20230218.1717.",
@@ -3914,6 +3984,16 @@
           "publishedOn": "2023-02-18T17:17:00.000Z",
           "wordCount": 105,
           "title": "gnuplot (20230218.1717) --- Major-mode and interactive frontend for gnuplot",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/goggles-20230218.1710.el",
+          "author": null,
+          "description": "The goggles package has been updated to version 20230218.1710.",
+          "link": "https://melpa.org/#/goggles",
+          "publishedOn": "2023-02-18T17:10:00.000Z",
+          "wordCount": 105,
+          "title": "goggles (20230218.1710) --- Pulse modified regions",
           "imageUrl": null
         },
         {
@@ -4334,6 +4414,16 @@
           "publishedOn": "2023-02-14T20:35:00.000Z",
           "wordCount": 105,
           "title": "boon (20230214.2035) --- Ergonomic Command Mode for Emacs.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/evil-collection-20230214.1800.tar",
+          "author": null,
+          "description": "The evil-collection package has been updated to version 20230214.1800.",
+          "link": "https://melpa.org/#/evil-collection",
+          "publishedOn": "2023-02-14T18:00:00.000Z",
+          "wordCount": 105,
+          "title": "evil-collection (20230214.1800) --- A set of keybindings for Evil mode",
           "imageUrl": null
         },
         {
@@ -7065,106 +7155,6 @@
           "wordCount": 105,
           "title": "ox-pandoc (20230123.924) --- An Org-mode exporter using pandoc",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ibrowse-20230123.737.tar",
-          "author": null,
-          "description": "The ibrowse package has been updated to version 20230123.737.",
-          "link": "https://melpa.org/#/ibrowse",
-          "publishedOn": "2023-01-23T07:37:00.000Z",
-          "wordCount": 105,
-          "title": "ibrowse (20230123.737) --- Interact with your browser",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-static-blog-20230123.658.el",
-          "author": null,
-          "description": "The org-static-blog package has been updated to version 20230123.658.",
-          "link": "https://melpa.org/#/org-static-blog",
-          "publishedOn": "2023-01-23T06:58:00.000Z",
-          "wordCount": 105,
-          "title": "org-static-blog (20230123.658) --- a simple org-mode based static blog generator",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/loopy-20230123.346.tar",
-          "author": null,
-          "description": "The loopy package has been updated to version 20230123.346.",
-          "link": "https://melpa.org/#/loopy",
-          "publishedOn": "2023-01-23T03:46:00.000Z",
-          "wordCount": 105,
-          "title": "loopy (20230123.346) --- A looping macro",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eglot-java-20230122.2144.el",
-          "author": null,
-          "description": "The eglot-java package has been updated to version 20230122.2144.",
-          "link": "https://melpa.org/#/eglot-java",
-          "publishedOn": "2023-01-22T21:44:00.000Z",
-          "wordCount": 105,
-          "title": "eglot-java (20230122.2144) --- Java extension for the eglot LSP client",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/syntactic-close-20230122.1946.el",
-          "author": null,
-          "description": "The syntactic-close package has been updated to version 20230122.1946.",
-          "link": "https://melpa.org/#/syntactic-close",
-          "publishedOn": "2023-01-22T19:46:00.000Z",
-          "wordCount": 105,
-          "title": "syntactic-close (20230122.1946) --- Insert closing delimiter",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/workroom-20230122.1645.tar",
-          "author": null,
-          "description": "The workroom package has been updated to version 20230122.1645.",
-          "link": "https://melpa.org/#/workroom",
-          "publishedOn": "2023-01-22T16:45:00.000Z",
-          "wordCount": 105,
-          "title": "workroom (20230122.1645) --- Named rooms for work without irrelevant distracting buffers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/flymake-languagetool-20230122.1609.el",
-          "author": null,
-          "description": "The flymake-languagetool package has been updated to version 20230122.1609.",
-          "link": "https://melpa.org/#/flymake-languagetool",
-          "publishedOn": "2023-01-22T16:09:00.000Z",
-          "wordCount": 105,
-          "title": "flymake-languagetool (20230122.1609) --- Flymake support for LanguageTool",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eyebrowse-restore-20230122.1510.el",
-          "author": null,
-          "description": "The eyebrowse-restore package has been updated to version 20230122.1510.",
-          "link": "https://melpa.org/#/eyebrowse-restore",
-          "publishedOn": "2023-01-22T15:10:00.000Z",
-          "wordCount": 105,
-          "title": "eyebrowse-restore (20230122.1510) --- Persistent Eyebrowse for all frames",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/khalel-20230122.1139.tar",
-          "author": null,
-          "description": "The khalel package has been updated to version 20230122.1139.",
-          "link": "https://melpa.org/#/khalel",
-          "publishedOn": "2023-01-22T11:39:00.000Z",
-          "wordCount": 105,
-          "title": "khalel (20230122.1139) --- Import, edit and create calendar events through khal",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/marginalia-20230122.1118.el",
-          "author": null,
-          "description": "The marginalia package has been updated to version 20230122.1118.",
-          "link": "https://melpa.org/#/marginalia",
-          "publishedOn": "2023-01-22T11:18:00.000Z",
-          "wordCount": 105,
-          "title": "marginalia (20230122.1118) --- Enrich existing commands with completion annotations",
-          "imageUrl": null
         }
       ]
     },
@@ -7173,6 +7163,156 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/118dtu6/what_do_you_use_to_for_managing/",
+          "author": null,
+          "description": "I've installed poetry, and I've created a virtual env (in the project folder), and I can call `poetry shell` from powershell (I'm on windows), but I can't emacs' poetry to recognize the environment.. when I call env-toggle I get \"not in a poetry project\"..\n I don't need anything fancy, I just want to be able to install modules and be able to work with them in emacs' python REPL or other in-emacs interpreter.\n I've tried to just use pip install, but packages installed that way are still not available from the REPL.\n feeling exhusted :/\n Edit to add: I do have pyright configured, and it seems like it's working, if that gives more information.\n    submitted by    /u/S4h4rJ  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/118dtu6/what_do_you_use_to_for_managing/",
+          "publishedOn": "2023-02-21T20:13:25.000Z",
+          "wordCount": 12696,
+          "title": "what do you use to for managing environments/dependencies in python?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/118bjjn/killed_it/",
+          "author": null,
+          "description": "submitted by    /u/RevolutionaryBit6264  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/118bjjn/killed_it/",
+          "publishedOn": "2023-02-21T17:55:38.000Z",
+          "wordCount": 12490,
+          "title": "Killed it",
+          "imageUrl": "https://external-preview.redd.it/7Cw_bHTF2RZ6jgxixfLMz5YJ-Rtot0kfuh6skkbARQw.jpg?auto=webp&v=enabled&s=05cb7de73d0fc255921525e0e051cee2c9d0a9a0"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/118avdd/emacsappindicator_create_and_control_tray_icons/",
+          "author": null,
+          "description": "Hi r/emacs!\n I would like to share with you my humble project - library for creating and managing tray icons Emacs-Appindicator.\n ​\n https://preview.redd.it/yn9vdccnqkja1.png?width=532&format=png&auto=webp&s=b90dfa4f2e477d10b79ec7751d0a8a8e430e9217\n ​\n You can hide/show icons, labels, create context menus with lisp callbacks for each menu item. The library uses svg-lib so you can use icons from various online collections supported by it. Under the hood it has tiny daemon, written in C that interacts with system tray via libappindicator. So, at least for now, the only supported OS is Linux.\n I planned to keep minor modes in separate repo - Emacs Appindicator Modes. For now there is only icon for pomm.el , but I plan to add more useful packages soon.\n I will be glad to hear your thoughts about package. Also I suppose it is the good time to change something in api, so if you have any idea - please share it!\n    submitted by    /u/jumper047  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/118avdd/emacsappindicator_create_and_control_tray_icons/",
+          "publishedOn": "2023-02-21T17:28:04.000Z",
+          "wordCount": 12921,
+          "title": "Emacs-Appindicator - create and control tray icons with Elisp!",
+          "imageUrl": "https://external-preview.redd.it/z7YlZdqnSkvX-CGzzMDIMudHV7SZASAr1QUAkuyM7D8.jpg?auto=webp&v=enabled&s=8bf6af90482b54464d95cf7bfcc2a5a6e0e350a5"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/118am97/how_to_improve_visibility_and_navigability_in/",
+          "author": null,
+          "description": "submitted by    /u/mklsls  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/118am97/how_to_improve_visibility_and_navigability_in/",
+          "publishedOn": "2023-02-21T17:19:16.000Z",
+          "wordCount": 13596,
+          "title": "How to improve visibility and navigability in tables with long-line rows in column view?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/118a5x4/why_does_flycheck_report_that_it_cant_find_a_file/",
+          "author": null,
+          "description": "Even when the file is in the same directory as the file being checked it produces that error.\n Checking the load-path variable shows that it contains the directory.\n Can symlinks affect the behaviour?\n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/118a5x4/why_does_flycheck_report_that_it_cant_find_a_file/",
+          "publishedOn": "2023-02-21T17:05:38.000Z",
+          "wordCount": 12552,
+          "title": "Why does flycheck report that it can't find a file even though it is on the load-path?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1189swb/adding_a_property_in_orgmode_fails_with_this/",
+          "author": null,
+          "description": "submitted by    /u/senkijun  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1189swb/adding_a_property_in_orgmode_fails_with_this/",
+          "publishedOn": "2023-02-21T16:56:31.000Z",
+          "wordCount": 12519,
+          "title": "Adding a property in org-mode fails with this error. Can anybody help me resolve this ?",
+          "imageUrl": "https://preview.redd.it/x2q12eb1okja1.png?auto=webp&v=enabled&s=52f160b82cc4e947d9b164db496a094c4a944276"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1187mmq/can_magit_update_synce_and_init_all_submodules/",
+          "author": null,
+          "description": "Typically in my workflow, when I switch branches, I run git submodule update --init --recursive on the command line to sync/init/update all my submodules in one command. Is there a way to do this in magit?\n What I have tried:\n  \nopen the submodule transient with o\n specify the --recursive infix with r\n sync all submodules with c-u s\n init all submodules with c-u p\n update all submodules with c-u u\n  \nThis effectively does the same as the git submodule update --init --recursive, but requires 3 separate commands, each with a prefix argument.\n I'm looking for a way to create another entry in the submodule transient (under the \"All modules actions\" section) to run git submodule update --init --recursive. If that can't be done, is there a way to more easily run all three commands (sync, init, update)?\n    submitted by    /u/pa2ees  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1187mmq/can_magit_update_synce_and_init_all_submodules/",
+          "publishedOn": "2023-02-21T16:06:29.000Z",
+          "wordCount": 12920,
+          "title": "Can Magit update, synce, and init all submodules recursively with one command?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11836xw/roam_daily_template_not_working/",
+          "author": null,
+          "description": "Hi all! \n I'm a beginner in emacs configuration. Please excuse me if the answer here is obvious, but I am unable to find the solution online :/ I am having trouble configuring org-roam-dailies. I want each daily note to be pre-populated with the contents of a template file. My current configuration is as follows: \n ```elisp\n (defun note-path (subpath) (let ((note-directory \"/Users/<MY_USERNAME>/Library/Mobile Documents/com~apple~CloudDocs/notes\")) (file-truename (concat note-directory subpath))))\n (defun org-template (filename) (note-path (concat \"/templates/\" filename)))\n (use-package org :ensure t)\n (use-package org-roam :ensure t :config (setq org-roam-db-update-on-save t) (setq org-roam-directory (note-path \"/\")) (setq org-roam-dailies-directory \"\") (setq org-roam-dailies-capture-templates '((\"d\" \"default\" entry (org-template \"daily-note.org\") :target (file+head \"%<%Y-%m-%d>.org\" \"#+title: %<%Y-%m-%d>\\n\")))))\n ```\n My issue specifically is with the last statement: setq org-roam-dailies-capture-templates. I expect this to read the content of daily-note.org and create a new note with this as the content. However, it simply creates an empty note. I have ensured that the value of (org-template \"daily-note.org\") is correct; substituting it for an absolute path (e.g. ~/test.org) behaves the same way. \n Are any of you kind people able to see where I'm misunderstanding?\n EDIT: fixed code formatting\n    submitted by    /u/Olav_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11836xw/roam_daily_template_not_working/",
+          "publishedOn": "2023-02-21T13:16:50.000Z",
+          "wordCount": 12822,
+          "title": "Roam daily template not working",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1181bjb/elisp_help/",
+          "author": null,
+          "description": "Hey, I have this piece of code over here:\n  (evil-define-key 'normal dired-mode-map (kbd \"SPC\") nil) (evil-define-key 'normal Info-mode-map (kbd \"SPC\") nil) \n This feels redundant, and frankly very non lispy. I tried to write a better way:\n  (dolist (var '(Info-mode-map dired-mode-map)) (evil-define-key 'normal var (kbd \"SPC\") nil)) \n However it does not work. Can't seem to debug this at all, any help is greatly appreciated.\n    submitted by    /u/SasukeUchiha231  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1181bjb/elisp_help/",
+          "publishedOn": "2023-02-21T11:31:26.000Z",
+          "wordCount": 12679,
+          "title": "ELisp Help",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1180xap/automatically_setting_cmode/",
+          "author": null,
+          "description": "Usually C++ source files automatically set c++-mode, but every once in a while I have a source file that does not. Today, I wanted to find out, but I'm a bit of an emacs noob, so I turn to you!\n From my experiments it seems to have to do with the filename. I have a bunch of identical files containing some c++ code:\n [~] $ cat importfromdesktop.cpp #include <iostream> int main() { return 0; } [~] $ md5sum *.cpp 1824f46236ad646997b49e6414e1ed10 importfromdesktop.cpp # no good 1824f46236ad646997b49e6414e1ed10 importfromdeskto.cpp # no good 1824f46236ad646997b49e6414e1ed10 importfromdesk.cpp # no good 1824f46236ad646997b49e6414e1ed10 importfromd.cpp # no good 1824f46236ad646997b49e6414e1ed10 importfrom.cpp # WORKS! 1824f46236ad646997b49e6414e1ed10 importfro.cpp # WORKS! 1824f46236ad646997b49e6414e1ed10 importfr.cpp # WORKS! 1824f46236ad646997b49e6414e1ed10 fromdesktop.cpp # no good 1824f46236ad646997b49e6414e1ed10 verylongfilenamehereman.cpp # WORKS! \n When opening the first importfromdesktop.cpp, c++-mode is not started (this was the original filename that was problematic, when I copied the file's contents to a main.cpp it worked, so I started testing the filename).\n I kept removing a letter from the end and starting from importfrom.cpp, c++-mode would engage. So I thought maybe it has to do with the filename length? But testing doesn't show that either.\n Nothing different shows in the messages buffer in all these cases. How do I debug this?\n Thanks!\n    submitted by    /u/bepaald  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1180xap/automatically_setting_cmode/",
+          "publishedOn": "2023-02-21T11:07:05.000Z",
+          "wordCount": 13094,
+          "title": "Automatically setting c++-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11803ju/how_does_defvarlocal_differ_from_setqdefault/",
+          "author": null,
+          "description": "submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11803ju/how_does_defvarlocal_differ_from_setqdefault/",
+          "publishedOn": "2023-02-21T10:14:13.000Z",
+          "wordCount": 12674,
+          "title": "How does defvar-local differ from setq-default conceptually?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/117zdnu/what_are_the_benefits_of_vertico_over_helm_or_ivy/",
+          "author": null,
+          "description": "As I read more about autocompletion packages I find that everyone seems to be moving away from Helm or Ivy to Vertico? Why?\n I use Helm. I would like to understand if I should make the switch to Vertico. What does Vertico do better than Helm or Ivy?\n And is Ivy even worth trying out at this point or should I just jump straight to Vertico?\n    submitted by    /u/brightlystar  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/117zdnu/what_are_the_benefits_of_vertico_over_helm_or_ivy/",
+          "publishedOn": "2023-02-21T09:28:30.000Z",
+          "wordCount": 17185,
+          "title": "What are the benefits of Vertico over Helm or Ivy?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/117nyw1/correctly_show_markdown_in_eldoc_buffer/",
+          "author": null,
+          "description": "I have been testing emacs 29 using eglot/eldoc for viewing documentation through LSP.\n I noticed that documentation is not formatted correctly in the minibuffer or the eldoc buffer (e.g. after calling `eldoc` manually).\n I see the literal markdown text instead of the formatted version, like this:\n left is typescript file, right is the eldoc buffer (it also shows the same way in the minibuffer)\n Is this expected? My eglot/eldoc configuration is essentially vanilla, just with these additions:\n (setq eglot-ignored-server-capabilites '(:documentHighlightProvider)) (setq eldoc-echo-area-use-multiline-p nil) \n edit: solved needed markdown mode thanks\n    submitted by    /u/Sevenstrangemelons  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/117nyw1/correctly_show_markdown_in_eldoc_buffer/",
+          "publishedOn": "2023-02-20T23:23:55.000Z",
+          "wordCount": 12845,
+          "title": "correctly show markdown in eldoc buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/117mezb/emacs_283_rc1_pretest_is_available_fixing/",
+          "author": null,
+          "description": "As mentioned in today's Emacs News, Steven Kangas has backported the fix CVE-2022-45939 to Emacs 28 - you can build 28.3 (rc1) from pre-release sources or look in the windows/emacs-28 folder for updated installer/binaries.\n    submitted by    /u/mplscorwin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/117mezb/emacs_283_rc1_pretest_is_available_fixing/",
+          "publishedOn": "2023-02-20T22:20:57.000Z",
+          "wordCount": 12685,
+          "title": "Emacs 28.3 rc1 pretest is available, fixing CVE-2022-45939",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/117lt5x/are_modeline_elements_restricted_in_the_text_and/",
+          "author": null,
+          "description": "submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/117lt5x/are_modeline_elements_restricted_in_the_text_and/",
+          "publishedOn": "2023-02-20T21:56:44.000Z",
+          "wordCount": 12515,
+          "title": "Are mode-line elements restricted in the text and face properties can be applied to them?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/117f2e3/emacs_replace_combination_of_multiple_letters_on/",
           "author": null,
@@ -10992,186 +11132,6 @@
           "wordCount": 12303,
           "title": "Typescript and Eglot: what keybinding to \"find references\"?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10j5ojr/emacs_shell_frame_height/",
-          "author": null,
-          "description": "When I invoke M-x shell the shell opens in a full window. I would prefer to open it at the bottom of the screen. I am not sure if that is the default or if I've done something to change the default. Ideally, I would like to have the shell in a frame of about 4 inches.\n    submitted by    /u/revrari100  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10j5ojr/emacs_shell_frame_height/",
-          "publishedOn": "2023-01-23T06:17:37.000Z",
-          "wordCount": 12404,
-          "title": "Emacs shell frame height",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10j54nq/csvmode_with_colors/",
-          "author": null,
-          "description": "Hi, \n could you advice a csv-mode package where I can check the headers easily for a field on a row.\n what I mean, if I'm in a value / field the I would like to know the header for it.\n    submitted by    /u/zsome  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10j54nq/csvmode_with_colors/",
-          "publishedOn": "2023-01-23T05:45:29.000Z",
-          "wordCount": 12585,
-          "title": "csv-mode with colors",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10izsid/who_can_i_disable_the_q_in_evilnormalstatemap_in/",
-          "author": null,
-          "description": "When I try to use the q key to close the helpful-mode buffers it doesn't work because tt is mapped to evil-record-macro REGISTER but I need other evil related keys to work, except the q key which has to key to work as it does in many such help or temporary windows.\n What else do I need here?\n (use-package helpful :bind ( :map helpful-mode-map (\"C-c q\" . kill-this-buffer) (\"q\" . kill-this-buffer)) :commands (helpful-function helpful-variable) ) \n    submitted by    /u/vfclists  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10izsid/who_can_i_disable_the_q_in_evilnormalstatemap_in/",
-          "publishedOn": "2023-01-23T01:06:44.000Z",
-          "wordCount": 13270,
-          "title": "Who can I disable the `q` in evil-normal-state-map in the helpful-mode?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10ixw6e/question_on_setting_up_orgattach_folder_per_file/",
-          "author": null,
-          "description": "Guys hi, (crossposting with /r/orgmode for more replies)\n I need to 1) specify folder where all org-attach files will be stored, and 2) specify folder name per file. Basically i need\n OrgAttach/FileA OrgAttach/FileB etc \n I did 1) by adidng this to init.el\n (setq org-attach-id-dir (substitute-in-file-name \"${SUPPL}/OrgAttach\")) \n And tried to do 2) by adding this to top of my file\n #+PROPERTY: ATTACH_DIR FileA #+PROPERTY: ATTACH_DIR_INHERIT t \n It didn't work, (seems they renamed ATTACH_DIR to DIR, and depreciated _INHERIT), tried \n #+PROPERTY: DIR FileA \n Still no luck, what am i doing wrong?\n    submitted by    /u/rtwyyn  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10ixw6e/question_on_setting_up_orgattach_folder_per_file/",
-          "publishedOn": "2023-01-22T23:38:33.000Z",
-          "wordCount": 12364,
-          "title": "Question on setting up org-attach folder per file.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10ivkga/ann_cmdlistel_automated_latex_command_maintenance/",
-          "author": null,
-          "description": "Hello! I am advertising a package for writing LaTeX in emacs (alongside AUCTeX). It allows you to maintain a list of your favorite command definitions, and automatically inserts them into the file you're editing when you use them.\n https://github.com/jojhelfer/cmdlist.el\n It has a few other related features as well.\n It has really improved my experience editing LaTeX in emacs, and I'm sure it would be useful to anyone who does so.\n Any comments or suggestions would be appreciated!\n    submitted by    /u/bergesalte  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10ivkga/ann_cmdlistel_automated_latex_command_maintenance/",
-          "publishedOn": "2023-01-22T22:00:29.000Z",
-          "wordCount": 12346,
-          "title": "[ANN] cmdlist.el: automated LaTeX command maintenance",
-          "imageUrl": "https://external-preview.redd.it/sX2y_sSygjets9pZNCQeD6ZV51_1Qjep5x7pFi0inVY.jpg?auto=webp&v=enabled&s=a3f83e05b615dc7359e447b8f63b45d2c24839b0"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10iuim1/getting_emacs_29_to_automatically_use_treesitter/",
-          "author": null,
-          "description": "submitted by    /u/renzmann  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10iuim1/getting_emacs_29_to_automatically_use_treesitter/",
-          "publishedOn": "2023-01-22T21:17:27.000Z",
-          "wordCount": 13623,
-          "title": "Getting Emacs 29 to Automatically Use Tree-sitter Modes · robbmann",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10iug2z/hacking_orgmode_export_for_footnotes_as_sidenotes/",
-          "author": null,
-          "description": "submitted by    /u/takeonrules  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10iug2z/hacking_orgmode_export_for_footnotes_as_sidenotes/",
-          "publishedOn": "2023-01-22T21:14:30.000Z",
-          "wordCount": 12211,
-          "title": "Hacking Org-Mode Export for Footnotes as Sidenotes // Take on Rules",
-          "imageUrl": "https://external-preview.redd.it/QKAOjiJRv3JU1-5eYUJhivyh_CsV6fO2oRUj04P-Krk.jpg?auto=webp&v=enabled&s=9b365cc905b9d0725e48483d05eef92819427295"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10itbqb/some_questions_about_eglot_and_eldocbox/",
-          "author": null,
-          "description": "I'm using eglot for coding c++, which is lightweight and provides just enough functionalities for me (Glad it's integrated into emacs 29!)\n One thing I'm not 100% satisfied is the diagnostics when the cursor is hovering on a symbol. By default it shows the information in the echo area through eldoc, which is not quite convenient because usually it's far from where the cursor is. A better solution is provided by eldoc-box, which shows information in a child frame, like this.\n As can be seen in the screenshot, the child frame blocks some part of the window. I'm wondering if possible to set the child frame transparent so that I can see the code below. I tried to set eldoc-box-frame-parameters with (alpha . 0.5) but it has no effect. What do I miss?\n Moreover, the eglot shows the information with some formatting. There is a long line separating different kinds of information, which is fine for the echo area, but in the child frame, it is wrapped into several pieces, occupying additional lines. I'm curious if there is a way to change the format. \n Another question which is related is that the documentation is truncated. I'd rather to see a long child frame to show all the information, which is usually possible if there is no redundant things like the wrapped line. I cannot find an option in eglot to turn off the truncation. Is there any solution for this problem?\n Thanks for reading this long post!\n    submitted by    /u/linwaytin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10itbqb/some_questions_about_eglot_and_eldocbox/",
-          "publishedOn": "2023-01-22T20:28:36.000Z",
-          "wordCount": 12630,
-          "title": "Some questions about eglot and eldoc-box",
-          "imageUrl": "https://external-preview.redd.it/q91zm7hNUgebNiDj5BK3cy4w8O78ycg8zpKEkMSwCJ4.png?auto=webp&v=enabled&s=34ccce88e3dfaf37bc4db9933d8df63ab472721f"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10is9cx/are_there_orgappear_orgfragtog_equivalents_for/",
-          "author": null,
-          "description": "Hi all,\n I'm trying to setup my emacs to edit markdown files. Ideally I'd like to have links, emphasis, images, equations, etc. previewed inline when the point is not inside them, and displayed as raw source code when the point is inside them (the functionality provided in org-mode by org-appear and org-fragtog).\n Does anyone have a setup like this? I found this, but I'm wondering if there's a solution that works per fragment instead of per line (and isn't a \"quick and dirty proof of concept\", as the author describes it).\n Thanks!\n edit: add links to org-appear and org-fragtog\n    submitted by    /u/BlithePanda  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10is9cx/are_there_orgappear_orgfragtog_equivalents_for/",
-          "publishedOn": "2023-01-22T19:44:26.000Z",
-          "wordCount": 12340,
-          "title": "Are there org-appear & org-fragtog equivalents for markdown?",
-          "imageUrl": "https://external-preview.redd.it/DEUI61paLBYS1XRgOR4LAXwqhgIPtgRMt8N3yGDeLKI.jpg?auto=webp&v=enabled&s=30590b8563e680bf332a9987051fe6f0c09db6ad"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10ipmhc/nativecompiling_time_for_emacs_28/",
-          "author": null,
-          "description": "When Emacs 28 was about to come out, I remember John Wiegley said something like it took on average about 30 minutes for a user to natively compile it. Later on I also came across one online article saying it takes a lot more time to do native compilation.\n But according to my experience, on my mediocre desktop, it probably takes less than 10 minutes for native compilation. And I wonder if I'm doing it in a correct way. I run `./configure --with-native-compilation` then `make -j$(nproc)`. I also tried `make NATIVE_FULL_AOT=1 -j$(nproc)` per EmacsWiki. But the compilation time is always very well under 10 minutes. After compilation, the evaluation of (native-comp-available-p) returns t.\n Am I doing it correctly or am I missing something?\n    submitted by    /u/shadowsock  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10ipmhc/nativecompiling_time_for_emacs_28/",
-          "publishedOn": "2023-01-22T17:55:24.000Z",
-          "wordCount": 12610,
-          "title": "Native-compiling time for emacs 28",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10iota8/check_if_external_shell_command_exists_in_elisp/",
-          "author": null,
-          "description": "How does one verify if an external command (ie a shell command) is installed/available to run in elisp? I guess I'm primarily asking if there's a built in function or something to put in the conditional statement or a workaround to do in the absence thereof. Thanks.\n    submitted by    /u/EmacsN00b  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10iota8/check_if_external_shell_command_exists_in_elisp/",
-          "publishedOn": "2023-01-22T17:21:04.000Z",
-          "wordCount": 12251,
-          "title": "Check if external shell command exists in elisp",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10iomy2/setup_for_python_dev/",
-          "author": null,
-          "description": "Does someone have a python dev setup with eglot and black for format on save? I tried to make python-black package work but I can't seem to get it right and there is little to no documentation on the github page of the package...\n    submitted by    /u/IcePhoneX_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10iomy2/setup_for_python_dev/",
-          "publishedOn": "2023-01-22T17:14:00.000Z",
-          "wordCount": 12230,
-          "title": "setup for python dev?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10inera/the_first_elisp_code_that_ive_ever_written_to/",
-          "author": null,
-          "description": "submitted by    /u/BrokenMayo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10inera/the_first_elisp_code_that_ive_ever_written_to/",
-          "publishedOn": "2023-01-22T16:22:11.000Z",
-          "wordCount": 13765,
-          "title": "The first elisp code that I've ever written, to solve a problem I was having when using edit-indirect.el - Please congratulate me (and also tell me if there was a better solution to the problem)",
-          "imageUrl": "https://preview.redd.it/s4f4qhzmemda1.png?auto=webp&v=enabled&s=151b7f6bd995b484a500ce37ed14f578a99b6a04"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10ilyav/using_guix_to_manage_emacs_packages_and_patches/",
-          "author": null,
-          "description": "After a long time, I forked Melpa to create my TxGVNN/giaelpa@869cc17 to keep modifying packages for my configuration. I have time to consider using straight, borg. But now, I decided to using Guix to manage Emacs packages.\n Here TxGVNN/guxti is my Guix channel to maintain packages and patches.\n Pros\n  \nPatches are centrally stored, easy to see what is patch and don't need to fork any source to modify.\n Reproducible, I can roll back any point (time traveling).\n It will be easy to install package need external libs like vterm, telega(Telegram client), tree-sitter,...\n Build your ELPA by elpa-mirror power tool. I exported to my giaelpa TxGVNN/giaelpa@master, so it still works well for my dotfiles without GUIX\n Keep working with use-package style.\n With guix pack --format=deb I can install all of them (emacs version, packages, 3rd libs) on debian machine without GUIX\n When cloud IDEs are using more (Gitpod, Codespace), it helps me to a certain uniform environment. I implement on my Gitpod dotfiles, you can have a look TxGVNN/gitpod@701546\n  \nCons\n  \nHeavy and slow, I think\n  \n   submitted by    /u/txgvnn  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10ilyav/using_guix_to_manage_emacs_packages_and_patches/",
-          "publishedOn": "2023-01-22T15:18:47.000Z",
-          "wordCount": 12643,
-          "title": "Using Guix to manage emacs packages and patches.",
-          "imageUrl": "https://external-preview.redd.it/ESzPlZxC5xhZ-TpJM0R2LMkE1sdyx68qkzgVp9kNfvw.jpg?auto=webp&v=enabled&s=be49707355a5b841e56c28b37ea5c4edb2feabbe"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10ilgkd/like_companyorgblock_but_for_completionatpoint/",
-          "author": null,
-          "description": "submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10ilgkd/like_companyorgblock_but_for_completionatpoint/",
-          "publishedOn": "2023-01-22T14:56:29.000Z",
-          "wordCount": 13221,
-          "title": "Like company-org-block, but for completion-at-point, corfu, and friends…",
-          "imageUrl": "https://preview.redd.it/aapl84v1hnda1.jpg?auto=webp&v=enabled&s=8cda2d614b8d4f15ab02e58769a1d31d5a7d4346"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10ildnn/how_can_i_get_emacs_to_stop_aligning_my_arguments/",
-          "author": null,
-          "description": "What I get by default in JavaScript and C++:\n https://preview.redd.it/0h1qwx9lylda1.png?width=334&format=png&auto=webp&s=364ce3578a55e989526350de82c3f32f731c3d13\n What I want:\n https://preview.redd.it/4mn7ynyjylda1.png?width=285&format=png&auto=webp&s=9713b6ff7d337528d075f4b172a32fefb99cf0d8\n Any ideas about what is at work here? Or, any ideas about how I can figure out what is at work here?\n    submitted by    /u/UtensilUtilizer  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10ildnn/how_can_i_get_emacs_to_stop_aligning_my_arguments/",
-          "publishedOn": "2023-01-22T14:52:37.000Z",
-          "wordCount": 12308,
-          "title": "How can I get emacs to stop aligning my arguments with my parentheses?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10ijqgo/how_to_run_completingread_in_a_whole_buffer_but/",
-          "author": null,
-          "description": "I want to make a sort of landing screen or dashboard for my emacs. I want it to be a vertically-displayed completing-read menu over some sources (recent files, recent buffers, bookmarks, etc.). I can write the completion command easily enough (and I already use vertico, so I would get the standard vertical display), but I want the completion candidates to fill the a whole window, a bit like vertico-buffer does. Importantly, I only want this to happen for this one thing -- the dashboard -- I don't just want to enable vertico-buffer generally. If I switch to another buffer and invoke a minibuffer command, it should show up at the bottom like usual.\n It would be really great if invoking any minibuffer-using command while in the dashboard buffer would reuse the dashboard buffer for completion, but that might be a separate issue.\n    submitted by    /u/Jack-o-tall-tales  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10ijqgo/how_to_run_completingread_in_a_whole_buffer_but/",
-          "publishedOn": "2023-01-22T13:31:22.000Z",
-          "wordCount": 12598,
-          "title": "How to run completing-read in a whole buffer (but only in that buffer)?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10iiu0b/hook_specific_to_focusing_the_buffer/",
-          "author": null,
-          "description": "I was looking for a some kind of hook that is local to the buffer that runs whenever the buffer is focused, is there such hook or can I emulate such functionality ?\n    submitted by    /u/ntrysii  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10iiu0b/hook_specific_to_focusing_the_buffer/",
-          "publishedOn": "2023-01-22T12:42:28.000Z",
-          "wordCount": 12449,
-          "title": "hook specific to focusing the buffer ?",
-          "imageUrl": null
         }
       ]
     },
@@ -11399,16 +11359,6 @@
           "wordCount": 674,
           "title": "Zettel About The Diference Between Internet and Web Terms",
           "imageUrl": "https://forum.zettelkasten.de/resources/emoji/lol.png"
-        },
-        {
-          "id": "2495@/discussions",
-          "author": "ctietze",
-          "description": "202301121952 Record urban sketching in 5s intervals with the camera in your hand\n#recording #urbansketching #camera\nTo record timelapses of drawings, just use the camera with the left hand while you paint with the right and record a couple of seconds.\nPaul Heaston (@paulheaston) shared on Instagram that he's not using tools to hold his camera while he's recording sketches most of the time instead of using a table mount.\nUsually, he picks up the phone mid-sketch with the left hand, draws with the right, and records the drawing process for a couple of seconds only to capture something interesting on video. Finally, combine the clips into 1 video.",
-          "link": "https://forum.zettelkasten.de/discussion/2495/zettel-feedback-record-urban-sketching-in-5s-intervals-with-the-camera-in-your-hand",
-          "publishedOn": "2023-01-23T07:47:15.000Z",
-          "wordCount": 876,
-          "title": "[Zettel Feedback] Record urban sketching in 5s intervals with the camera in your hand",
-          "imageUrl": null
         }
       ]
     }
