@@ -53,6 +53,46 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/11deo9k/ghc_927_is_now_available/",
+          "author": null,
+          "description": "submitted by    /u/bezirg  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/11deo9k/ghc_927_is_now_available/",
+          "publishedOn": "2023-02-27T15:34:02.000Z",
+          "wordCount": 12758,
+          "title": "GHC 9.2.7 is now available",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/11dc1qj/is_haskell_okay_for_prototyping_machine_learning/",
+          "author": null,
+          "description": "I've wanted to have a reason to do Haskell for some time now, the type system and guarantees are just too good. I have used some Haskell-like languages and I liked it. I also prefer functional programming to others. However, I came to realize, having a dynamic type system is a headache and missed type guarantees. \n So now, I want to try to give Haskell a try. I read a little on DataHaskell, but not sure yet.\n I just want a language that can replace python as my exploration language. I mainly use the jax (functional-style) library anyway. I'm not going to do big neural networks (I plan to use another language for that case), and my interest lies in small machine learning scales (think of toy problems).\n With this, is haskell okay for this? \n Further background: I have been trying languages here and there (for varying purposes) and I usually go back to a non-functional language just because of the lack of libraries or development or !documentation (Elm, ML-based languages, etc).\n Maybe Haskell, being very rich in types... can it type check matrix types(shapes) (or can I write them my own)?\n    submitted by    /u/MysticalDragoneer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/11dc1qj/is_haskell_okay_for_prototyping_machine_learning/",
+          "publishedOn": "2023-02-27T13:38:08.000Z",
+          "wordCount": 14631,
+          "title": "Is Haskell okay for prototyping machine learning models for research (discovery and exploration)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/11d9kyo/haskell_for_security_and_privacy_alejandro_russo/",
+          "author": null,
+          "description": "submitted by    /u/tritlo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/11d9kyo/haskell_for_security_and_privacy_alejandro_russo/",
+          "publishedOn": "2023-02-27T11:26:13.000Z",
+          "wordCount": 12713,
+          "title": "Haskell for Security and Privacy - Alejandro Russo on the Haskell Interlude",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/11d060v/why_isnt_foldl1_defined_in_terms_of_foldr/",
+          "author": null,
+          "description": "Left folds are by default defined via right folds in base, because this way left folds play better with fusion as explained in the Call Arity paper:\n  \nCall Arity was devised mainly to allow for a fusing foldl, i.e. a definition of foldl in terms of foldr that takes part in list fusion while still producing good code.\n  \nE.g. the default definition of Data.Foldable.foldl' is \n foldl' :: (b -> a -> b) -> b -> t a -> b foldl' f z0 xs = foldr f' id xs z0 where f' x k z = k $! f z x \n On the other hand the default definition of Data.Foldable.foldl1 is this:\n foldl1 :: Foldable t => (a -> a -> a) -> t a -> a foldl1 f xs = fromMaybe (errorWithoutStackTrace \"foldl1: empty structure\") (foldl mf Nothing xs) where mf m y = Just (case m of Nothing -> y Just x -> f x y) \n Why not something like\n foldl1 :: Foldable t => (a -> a -> a) -> t a -> a foldl1 f xs = foldr step (const id) xs (const id) $ errorWithoutStackTrace \"foldl1: empty structure\" where step x k f' z = k f (f' z x) {-# INLINE step #-} {-# INLINE foldl1 #-} \n ? The latter seems like it would play much better with fusion. I didn't check, but perhaps it's more efficient too? Both versions generalize trivially to foldl1', which would be great to add to base if only to define maximumBy and minimumBy in terms of it. Those are currently defined as\n maximumBy :: Foldable t => (a -> a -> Ordering) -> t a -> a maximumBy cmp = fromMaybe (errorWithoutStackTrace \"maximumBy: empty structure\") . foldl' max' Nothing where max' mx y = Just $! case mx of Nothing -> y Just x -> case cmp x y of GT -> x _ -> y {-# INLINEABLE maximumBy #-} minimumBy :: Foldable t => (a -> a -> Ordering) -> t a -> a minimumBy cmp = fromMaybe (errorWithoutStackTrace \"minimumBy: empty structure\") . foldl' min' Nothing where min' mx y = Just $! case mx of Nothing -> y Just x -> case cmp x y of GT -> y _ -> x {-# INLINEABLE minimumBy #-} \n Or am I missing something?\n    submitted by    /u/effectfully  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/11d060v/why_isnt_foldl1_defined_in_terms_of_foldr/",
+          "publishedOn": "2023-02-27T02:22:49.000Z",
+          "wordCount": 15141,
+          "title": "Why isn't `foldl1` defined in terms of `foldr`?",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/11cjej5/2023_call_for_nominations_for_the_haskell/",
           "author": null,
           "description": "submitted by    /u/dreixel  \n [link]   [comments]",
@@ -1571,16 +1611,6 @@
           "wordCount": 12996,
           "title": "How do you hard code something like a map in Haskell?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/10nsn9t/about_monad_transformers/",
-          "author": null,
-          "description": "Hello everyone!\n I'm learning haskell and also interested in functional programming relatively newly. I used to develop in many programming languages such as Rust, Ruby, Python, C++, C#, Java, Kotlin and Swift. So I got used to all those programming approaches, design patterns etc. After all, I had seen the functional programming way and really loved the idea and that gave me another way of thinking. I'm still learning. \n I think I understood what a monad is, even that knowledge helped me in oop way of programming. And now I'm learning about monad transformers. I have read a few blogs and pages about them but they are still not that clear to me. \n Could anyone please explain those to me? Maybe with examples or comparisons to oop. \n Because such questions always have answers out there but they are usually either so high level therefore only the ones who have experience in the field can understand or so basic examples and information that no one can properly understand the \"needs\" and the importance of it so it becomes useless. It is why I'm asking here to the community. \n Thank you for your answers in advance\n    submitted by    /u/akirova  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/10nsn9t/about_monad_transformers/",
-          "publishedOn": "2023-01-28T23:19:55.000Z",
-          "wordCount": 17435,
-          "title": "About monad transformers",
-          "imageUrl": null
         }
       ]
     },
@@ -1589,6 +1619,86 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/11djyq3/what_certificate_would_help_with_getting_a_scala/",
+          "author": null,
+          "description": "I'm 8 year web developer mainly in JS/TS. I really enjoy learning scala and realize I can use it to model a problem in a more clean, abstract way, and it gives more customizability than JS/TS can ever give.\n Now with some burnout from web dev I want to explore backend development but I have very limited experience on that domain. So I'm thinking maybe getting a certificate can help me start, need some suggestions.\n    submitted by    /u/qwzlt  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/11djyq3/what_certificate_would_help_with_getting_a_scala/",
+          "publishedOn": "2023-02-27T19:09:40.000Z",
+          "wordCount": 13729,
+          "title": "What certificate would help with getting a scala job?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/11dil2j/10_off_for_scala_3_metaprogramming_allnew_course/",
+          "author": null,
+          "description": "In this course, you will obtain a systematic and incremental introduction to building your own macros using Scala 3 metaprogramming. Covering trees and expressions, inlines and givens, quoting, splicing, and deriving, coming out of this course you will be able to implement your own Scala 3 macros with confidence. \n Use the following code to claim a 10% discount and sign up: www.eventbrite.com/e/344848309577/?discount=Reddit10OFF\n    submitted by    /u/Agataziverge  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/11dil2j/10_off_for_scala_3_metaprogramming_allnew_course/",
+          "publishedOn": "2023-02-27T18:14:45.000Z",
+          "wordCount": 13608,
+          "title": "10% OFF for Scala 3 Metaprogramming (ALL-NEW) Course by John A. De Goes",
+          "imageUrl": "https://external-preview.redd.it/ABewKyg9VOFOTUOgYjT7IDFxiYwHUJazo4s6KXe1Hy8.jpg?auto=webp&v=enabled&s=30320a096b41e3a5074c616dedb1938e662854be"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/11dd17a/fs2kafka_introduction_lib_for_adtevents/",
+          "author": null,
+          "description": "Hi all!\n Tried to come up with fs2-kafka study case that touches:\n 1. ADT-events serialization with self-crafted lib.\n 2. at-least-once consumption and idempotent writes.\n 3. offset commitment optimization.\n I hope it'll be helpful for somebody :)\n https://antonkw.github.io/scala/fs2-kafka-pt2/\n    submitted by    /u/antonkw_sky  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/11dd17a/fs2kafka_introduction_lib_for_adtevents/",
+          "publishedOn": "2023-02-27T14:23:00.000Z",
+          "wordCount": 13496,
+          "title": "fs2-kafka introduction: lib for ADT-events, idempotent writes and batches of offsets",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/11dckzq/please_try_my_json_library/",
+          "author": null,
+          "description": "submitted by    /u/bowbahdoe  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/11dckzq/please_try_my_json_library/",
+          "publishedOn": "2023-02-27T14:02:41.000Z",
+          "wordCount": 13560,
+          "title": "Please try my JSON library",
+          "imageUrl": "https://external-preview.redd.it/CQMlEIcbO4-IG0F3CgtPMnCdwtQh70ZREMIMGcBmlJI.jpg?auto=webp&v=enabled&s=5a18ad7a8bbac2708709c4e911f8c0bbe44a3c9d"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/11dc0e7/vs_code_profile_for_scala/",
+          "author": null,
+          "description": "submitted by    /u/agilesteel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/11dc0e7/vs_code_profile_for_scala/",
+          "publishedOn": "2023-02-27T13:36:19.000Z",
+          "wordCount": 13417,
+          "title": "VS Code Profile for Scala",
+          "imageUrl": "https://external-preview.redd.it/5N0kvkIgK_yelpFSSvAYSSd2vjOpMCVn5NNAH2H0B6k.jpg?auto=webp&v=enabled&s=c8bead85e9886888e226fe04dfab3e821c9fa30d"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/11d10ke/scala_collections_benchmark_revisited/",
+          "author": null,
+          "description": "I'm sure many people are familiar with Li Haoyi's excellent article, \"Benchmarking Scala Collections,\" which can be found at https://www.lihaoyi.com/post/BenchmarkingScalaCollections.html. However, the article was written six years ago for Scala 2.11 and an unspecified version of the JDK. Time flies so fast! Regardless, I have taken the time to update the old benchmark to Scala 3, added some new tests, and run it on Scala 3.2.2 and JDK 19.0.1.\n Here are results: https://gist.github.com/scf37/36a86427697bcf1fdae161edbc2bb2c9\n Some conclusions:\n - mutable.Map and mutable.Set are no slower than their immutable counterparts on all operations\n - Lookups on immutable Maps/Sets are 5 times slower\n - foreach is good enough on Scala collections but is horrible on arrays\n - Vector lookup performance is much closer to HashMap than to mutable.Buffer\n - mutable collections are as fast as their Java counterparts\n ​\n Source code: https://github.com/scf37/scala-bench\n    submitted by    /u/Scf37  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/11d10ke/scala_collections_benchmark_revisited/",
+          "publishedOn": "2023-02-27T03:05:13.000Z",
+          "wordCount": 13823,
+          "title": "Scala collections benchmark - revisited",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/11cv6yi/type_products_for_adts_2_questions/",
+          "author": null,
+          "description": "Q1: Is it possible for a given type idea to determine the necessary methods to create an Algebraic Data Type using a standard method? Put the other way around, is it possible, using any standard method, to create all the methods needed to have a complete ADT?\n Q2: Is there, in the abstract, some complete set of method factors to create a complete ADT without knowing much of anything about the type?\n I know what I'm asking is sort of like how one goes about solving a Rubik's cube having seen only the final position desired and knowing how the cube can be moved. But, any input on this may be helpful.\n    submitted by    /u/MarkHathaway1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/11cv6yi/type_products_for_adts_2_questions/",
+          "publishedOn": "2023-02-26T22:43:41.000Z",
+          "wordCount": 13793,
+          "title": "Type Products for ADTs, 2 questions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/11csqr9/any_recommended_design_pattern_resources/",
+          "author": null,
+          "description": "I had done some search here and on the internet, finding some talks, articles resources such as [1][2][3][4]. While they are good, somehow I feel something is missing based on my current level - a person who has experience and works on Scala projects, but still feels himself lacking of \"something\" or advance knowledge.\n For instance, [1] is nice which helps me get started in understanding the differences between OOP and FP when applying related concepts. [2] is also good that points out some usages that I was not aware of like case class's copy. [3] and [4] are probably the resources that are closest to my expectation because I am looking for materials that I don't need to rely on third party library, and can build/ design the artifact of my own after learning; however, [3] seemingly is not finished while [4] looks like a starting point.\n So I would like to know if any recommended resources (doc, links, videos, and so on) of such topics that fill in this gap? Or diving the library such as cats is the only way to go? I appreciate any suggestions, and commentary.\n [1]. Functional Design Patterns - Scott Wlaschin\n [2]. [Scala Central] - Richard Ashworth - Functional Design Patterns with Scala\n [3]. Patterns in Functional Programming\n [4]. Functional Design Patterns\n    submitted by    /u/scalausr  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/11csqr9/any_recommended_design_pattern_resources/",
+          "publishedOn": "2023-02-26T21:07:56.000Z",
+          "wordCount": 14824,
+          "title": "Any recommended design pattern resources?",
+          "imageUrl": "https://external-preview.redd.it/bUPUN9TCPxPGn5-Xwfj3MIXkh3EQX-mBZqUj1Mh6Ujo.jpg?auto=webp&v=enabled&s=ec7d7c5378cdb149c48aa76628ceb0402821fa4b"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/11cjzp0/this_week_in_scala_feb_27_2023/",
           "author": null,
@@ -2508,46 +2618,6 @@
           "wordCount": 13702,
           "title": "The size of sbt became big",
           "imageUrl": "https://external-preview.redd.it/TP-IjRB-feMBP7m81W0PPxnbwTkpe7sapJgidSC8RxM.jpg?auto=webp&v=enabled&s=fd93ed1fc914cff5cb7c4bc2f016cbe31ef0b8dc"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10nqw4w/bindingscala_122_and_htmlscala_30_reactive_web/",
-          "author": null,
-          "description": "submitted by    /u/yang_bo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/10nqw4w/bindingscala_122_and_htmlscala_30_reactive_web/",
-          "publishedOn": "2023-01-28T22:03:23.000Z",
-          "wordCount": 13264,
-          "title": "Binding.scala 12.2 and html.scala 3.0: reactive web framework for Scala 3",
-          "imageUrl": "https://external-preview.redd.it/L9WnkKUtXC-hHdGGzMMzE7zBzSqOAdbI7xXs0Csb7-M.jpg?auto=webp&v=enabled&s=de77bbf0ba675607a2c3532fbc7c0bf6d9e224db"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10nl15x/is_the_scala_center_really_working_on_scala_4/",
-          "author": null,
-          "description": "The recent JDG article (won't link it, you can easily find it) mentioned the new Caprese project and hypothesized that it could turn into a Scala 4. Is that really the plan? That seems really bad for Scala adoption/investment in industry.\n I understand that Martin Odersky is an academic and his job is to do language research, not necessarily support industry or Scala adoption, so it's not for me to say that Caprese isn't the best way to do that. However, I think it would be much better for it to be released as a completely separate language as opposed to the next version of Scala. Scala 3 is awesome as a language but it was disruptive to commercial efforts in Scala. I am not sure we can take another hit like that.\n    submitted by    /u/The-_Captain  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/10nl15x/is_the_scala_center_really_working_on_scala_4/",
-          "publishedOn": "2023-01-28T17:54:19.000Z",
-          "wordCount": 14124,
-          "title": "Is the Scala Center really working on Scala 4?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10nkdry/desktop_applications_with_javascala_html_and_css/",
-          "author": null,
-          "description": "This is a minimal Java/Scala Framework for developing Desktop Applications completely inside Java/Scala with Chromium for rendering HTML/CSS.\n Very barebones, first release, but should show where I am heading with this framework. Tell me what you guys think!\n https://github.com/Osiris-Team/Desku\n    submitted by    /u/OsirisTeam  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/10nkdry/desktop_applications_with_javascala_html_and_css/",
-          "publishedOn": "2023-01-28T17:26:05.000Z",
-          "wordCount": 13329,
-          "title": "Desktop Applications with Java/Scala, HTML and CSS",
-          "imageUrl": "https://external-preview.redd.it/_C2naBJrsFlQuc87D-MsAc8LfhQwXbD0iVVPr4wwnsQ.jpg?auto=webp&v=enabled&s=b0d125d22e698c02f7e872a0527c2e6771e88dcc"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/10nfev5/foldable_y_traverse_parte_5/",
-          "author": null,
-          "description": "submitted by    /u/emanuelpeg  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/10nfev5/foldable_y_traverse_parte_5/",
-          "publishedOn": "2023-01-28T13:44:37.000Z",
-          "wordCount": 13312,
-          "title": "Foldable y Traverse parte 5",
-          "imageUrl": null
         }
       ]
     },
@@ -2698,6 +2768,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/11ddlct/qi_wish_php_syntax_highlighting_in_orgbabel/",
+          "author": null,
+          "description": "I tried to post this one in this sub reddit. So far, I didn't get any answer. I would like to highlight PHP code within #+begin_src and #+end_src. I would appriciate any help in this regard.\n    submitted by    /u/sreekumar_r  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/11ddlct/qi_wish_php_syntax_highlighting_in_orgbabel/",
+          "publishedOn": "2023-02-27T14:48:00.000Z",
+          "wordCount": 12487,
+          "title": "[Q]I wish PHP syntax highlighting in org-babel.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/11d57p4/orgnewheading_returns_wrongtypeargument_listp_t/",
+          "author": null,
+          "description": "So, there I was moving along, minding my own business, not doing anything that should cause this error, and then shazam. I am now unable to execute the function \"org-insert-heading\". \n Debugger entered--Lisp error: (wrong-type-argument listp t) \n org--blank-before-heading-p(nil) \n org-insert-heading(nil) \n funcall-interactively(org-insert-heading nil) \n call-interactively(org-insert-heading) \n org-meta-return() \n hsys-org-meta-return() \n eval((hsys-org-meta-return)) \n actype:act(hsys-org-meta-return) \n apply(actype:act hsys-org-meta-return) \n hact(hsys-org-meta-return) \n smart-org() \n eval((smart-org)) \n hkey-execute(nil) \n action-key-internal() \n action-key() \n hkey-either(nil) \n funcall-interactively(hkey-either nil) \n call-interactively(hkey-either nil nil) \n command-execute(hkey-either)\n Does anyone have an idea what is causing this? I know this is a type error, but I do not understand what could be causing it?\n    submitted by    /u/anoduck  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/11d57p4/orgnewheading_returns_wrongtypeargument_listp_t/",
+          "publishedOn": "2023-02-27T06:53:41.000Z",
+          "wordCount": 12688,
+          "title": "\"org-new-heading\" returns \"wrong-type-argument listp t\" WTF?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/11cm2h3/emacs_and_orgbabel_for_flaw_analysis/",
           "author": null,
@@ -3466,6 +3556,116 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/tempel-collection-20230227.1536.tar",
+          "author": null,
+          "description": "The tempel-collection package has been updated to version 20230227.1536.",
+          "link": "https://melpa.org/#/tempel-collection",
+          "publishedOn": "2023-02-27T15:36:00.000Z",
+          "wordCount": 105,
+          "title": "tempel-collection (20230227.1536) --- Collection of templates for Tempel",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/soria-theme-20230227.1454.tar",
+          "author": null,
+          "description": "The soria-theme package has been updated to version 20230227.1454.",
+          "link": "https://melpa.org/#/soria-theme",
+          "publishedOn": "2023-02-27T14:54:00.000Z",
+          "wordCount": 105,
+          "title": "soria-theme (20230227.1454) --- A xoria256 theme with some colors from openSUSE",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-contacts-20230227.1417.el",
+          "author": null,
+          "description": "The org-contacts package has been updated to version 20230227.1417.",
+          "link": "https://melpa.org/#/org-contacts",
+          "publishedOn": "2023-02-27T14:17:00.000Z",
+          "wordCount": 105,
+          "title": "org-contacts (20230227.1417) --- Contacts management system for Org Mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/unfill-20230227.1349.el",
+          "author": null,
+          "description": "The unfill package has been updated to version 20230227.1349.",
+          "link": "https://melpa.org/#/unfill",
+          "publishedOn": "2023-02-27T13:49:00.000Z",
+          "wordCount": 105,
+          "title": "unfill (20230227.1349) --- Do the opposite of fill-paragraph or fill-region",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/brec-mode-20230227.1146.el",
+          "author": null,
+          "description": "The brec-mode package has been updated to version 20230227.1146.",
+          "link": "https://melpa.org/#/brec-mode",
+          "publishedOn": "2023-02-27T11:46:00.000Z",
+          "wordCount": 105,
+          "title": "brec-mode (20230227.1146) --- A major mode for editing Breccian text",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/planemo-mode-20230227.1139.el",
+          "author": null,
+          "description": "The planemo-mode package has been updated to version 20230227.1139.",
+          "link": "https://melpa.org/#/planemo-mode",
+          "publishedOn": "2023-02-27T11:39:00.000Z",
+          "wordCount": 105,
+          "title": "planemo-mode (20230227.1139) --- Minor mode for editing Galaxy XML files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/gptai-20230227.1036.el",
+          "author": null,
+          "description": "The gptai package has been updated to version 20230227.1036.",
+          "link": "https://melpa.org/#/gptai",
+          "publishedOn": "2023-02-27T10:36:00.000Z",
+          "wordCount": 105,
+          "title": "gptai (20230227.1036) --- Integrate with the OpenAI API",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/consult-ag-20230227.406.el",
+          "author": null,
+          "description": "The consult-ag package has been updated to version 20230227.406.",
+          "link": "https://melpa.org/#/consult-ag",
+          "publishedOn": "2023-02-27T04:06:00.000Z",
+          "wordCount": 105,
+          "title": "consult-ag (20230227.406) --- The silver searcher integration using Consult",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/popper-20230227.200.tar",
+          "author": null,
+          "description": "The popper package has been updated to version 20230227.200.",
+          "link": "https://melpa.org/#/popper",
+          "publishedOn": "2023-02-27T02:00:00.000Z",
+          "wordCount": 105,
+          "title": "popper (20230227.200) --- Summon and dismiss buffers as popups",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/live-py-mode-20230227.18.tar",
+          "author": null,
+          "description": "The live-py-mode package has been updated to version 20230227.18.",
+          "link": "https://melpa.org/#/live-py-mode",
+          "publishedOn": "2023-02-27T00:18:00.000Z",
+          "wordCount": 105,
+          "title": "live-py-mode (20230227.18) --- Live Coding in Python",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ob-cfengine3-20230226.1954.el",
+          "author": null,
+          "description": "The ob-cfengine3 package has been updated to version 20230226.1954.",
+          "link": "https://melpa.org/#/ob-cfengine3",
+          "publishedOn": "2023-02-26T19:54:00.000Z",
+          "wordCount": 105,
+          "title": "ob-cfengine3 (20230226.1954) --- Org Babel functions for CFEngine 3",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/flymake-yamllint-20230226.1024.el",
           "author": null,
           "description": "The flymake-yamllint package has been updated to version 20230226.1024.",
@@ -3523,6 +3723,16 @@
           "publishedOn": "2023-02-25T19:00:00.000Z",
           "wordCount": 105,
           "title": "related-files (20230225.1900) --- Easily find files related to the current one",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/pyconf-20230225.1741.el",
+          "author": null,
+          "description": "The pyconf package has been updated to version 20230225.1741.",
+          "link": "https://melpa.org/#/pyconf",
+          "publishedOn": "2023-02-25T17:41:00.000Z",
+          "wordCount": 105,
+          "title": "pyconf (20230225.1741) --- Set up python execution configurations like dap-mode ones",
           "imageUrl": null
         },
         {
@@ -3706,6 +3916,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/kkp-20230224.918.el",
+          "author": null,
+          "description": "The kkp package has been updated to version 20230224.918.",
+          "link": "https://melpa.org/#/kkp",
+          "publishedOn": "2023-02-24T09:18:00.000Z",
+          "wordCount": 105,
+          "title": "kkp (20230224.918) --- Enable support for the Kitty Keyboard Protocol",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/ocamlformat-20230224.907.el",
           "author": null,
           "description": "The ocamlformat package has been updated to version 20230224.907.",
@@ -3776,6 +3996,26 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/magit-stats-20230223.1819.el",
+          "author": null,
+          "description": "The magit-stats package has been updated to version 20230223.1819.",
+          "link": "https://melpa.org/#/magit-stats",
+          "publishedOn": "2023-02-23T18:19:00.000Z",
+          "wordCount": 105,
+          "title": "magit-stats (20230223.1819) --- Generates GIT Repo Statistics Report",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/modus-themes-20230223.717.tar",
+          "author": null,
+          "description": "The modus-themes package has been updated to version 20230223.717.",
+          "link": "https://melpa.org/#/modus-themes",
+          "publishedOn": "2023-02-23T07:17:00.000Z",
+          "wordCount": 105,
+          "title": "modus-themes (20230223.717) --- Elegant, highly legible and customizable themes",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/org-roam-20230223.645.tar",
           "author": null,
           "description": "The org-roam package has been updated to version 20230223.645.",
@@ -3843,6 +4083,16 @@
           "publishedOn": "2023-02-22T21:53:00.000Z",
           "wordCount": 105,
           "title": "monky (20230222.2153) --- Control Hg from Emacs.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/slime-20230222.1526.tar",
+          "author": null,
+          "description": "The slime package has been updated to version 20230222.1526.",
+          "link": "https://melpa.org/#/slime",
+          "publishedOn": "2023-02-22T15:26:00.000Z",
+          "wordCount": 105,
+          "title": "slime (20230222.1526) --- Superior Lisp Interaction Mode for Emacs",
           "imageUrl": null
         },
         {
@@ -4053,6 +4303,26 @@
           "publishedOn": "2023-02-20T12:58:00.000Z",
           "wordCount": 105,
           "title": "notmuch (20230220.1258) --- run notmuch within emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/kconfig-ref-20230220.1207.el",
+          "author": null,
+          "description": "The kconfig-ref package has been updated to version 20230220.1207.",
+          "link": "https://melpa.org/#/kconfig-ref",
+          "publishedOn": "2023-02-20T12:07:00.000Z",
+          "wordCount": 105,
+          "title": "kconfig-ref (20230220.1207) --- A simple package for looking up kconfig symbol quickly",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/no-clown-fiesta-theme-20230220.1019.el",
+          "author": null,
+          "description": "The no-clown-fiesta-theme package has been updated to version 20230220.1019.",
+          "link": "https://melpa.org/#/no-clown-fiesta-theme",
+          "publishedOn": "2023-02-20T10:19:00.000Z",
+          "wordCount": 105,
+          "title": "no-clown-fiesta-theme (20230220.1019) --- Not-so-colorful-theme",
           "imageUrl": null
         },
         {
@@ -7034,76 +7304,6 @@
           "wordCount": 105,
           "title": "ssh-deploy (20230129.903) --- Deployment via Tramp, global or per directory.",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/consult-codesearch-20230129.415.el",
-          "author": null,
-          "description": "The consult-codesearch package has been updated to version 20230129.415.",
-          "link": "https://melpa.org/#/consult-codesearch",
-          "publishedOn": "2023-01-29T04:15:00.000Z",
-          "wordCount": 105,
-          "title": "consult-codesearch (20230129.415) --- Consult interface for codesearch",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/evil-20230128.2153.tar",
-          "author": null,
-          "description": "The evil package has been updated to version 20230128.2153.",
-          "link": "https://melpa.org/#/evil",
-          "publishedOn": "2023-01-28T21:53:00.000Z",
-          "wordCount": 105,
-          "title": "evil (20230128.2153) --- Extensible Vi layer for Emacs.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/emms-20230128.2102.tar",
-          "author": null,
-          "description": "The emms package has been updated to version 20230128.2102.",
-          "link": "https://melpa.org/#/emms",
-          "publishedOn": "2023-01-28T21:02:00.000Z",
-          "wordCount": 105,
-          "title": "emms (20230128.2102) --- The Emacs Multimedia System",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/flymake-ruff-20230128.1739.el",
-          "author": null,
-          "description": "The flymake-ruff package has been updated to version 20230128.1739.",
-          "link": "https://melpa.org/#/flymake-ruff",
-          "publishedOn": "2023-01-28T17:39:00.000Z",
-          "wordCount": 105,
-          "title": "flymake-ruff (20230128.1739) --- A flymake plugin for python files using ruff",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mastodon-20230128.1527.tar",
-          "author": null,
-          "description": "The mastodon package has been updated to version 20230128.1527.",
-          "link": "https://melpa.org/#/mastodon",
-          "publishedOn": "2023-01-28T15:27:00.000Z",
-          "wordCount": 105,
-          "title": "mastodon (20230128.1527) --- Client for Mastodon, a federated social network",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/language-id-20230128.1100.el",
-          "author": null,
-          "description": "The language-id package has been updated to version 20230128.1100.",
-          "link": "https://melpa.org/#/language-id",
-          "publishedOn": "2023-01-28T11:00:00.000Z",
-          "wordCount": 105,
-          "title": "language-id (20230128.1100) --- Library to work with programming language identifiers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/markdown-mode-20230128.1027.el",
-          "author": null,
-          "description": "The markdown-mode package has been updated to version 20230128.1027.",
-          "link": "https://melpa.org/#/markdown-mode",
-          "publishedOn": "2023-01-28T10:27:00.000Z",
-          "wordCount": 105,
-          "title": "markdown-mode (20230128.1027) --- Major mode for Markdown-formatted text",
-          "imageUrl": null
         }
       ]
     },
@@ -7112,6 +7312,166 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11derk3/whats_the_difference_between_vterm_and_eshell/",
+          "author": null,
+          "description": "Pretty much the title. I'm considering moving away from Kitty to Emacs, and I saw some cool things with eshell. However the video seemed to imply that eshell is a shell and not a terminal. But it seems vterm doesn't really provide support for doing stuff like capturing output like eshell does. So I'm kinda confused.\n    submitted by    /u/talgu  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11derk3/whats_the_difference_between_vterm_and_eshell/",
+          "publishedOn": "2023-02-27T15:38:00.000Z",
+          "wordCount": 12879,
+          "title": "What's the difference between vterm and eshell?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11deew2/displaying_a_org_subtree_from_another_file_in_a/",
+          "author": null,
+          "description": "Let's say I have two files: A and B. There is a org mode subtree in A, and it is a TODO item.\n A file contains the original TODO subtree, and I want to display that subtree in the buffer of B in a particular place. When the task is over, for example, if I was to change the state to 'DONE', I would like the changes to be reflected to the buffer of B file. How should I go about this?\n Maybe a better explanation would be this: I want to reference a subtree from another file, where the changes I make on one would be reflected on the other.\n File A... * All Tasks ** TODO my task 1 node id: 123123123 buy some important stuff ------------------------------------------------------------ File B... * Some tasks about household ... reference subtree 123123123 ... (The buffer should display this as:) ** TODO my task 1 node id: 123123123 buy some important stuff \n    submitted by    /u/StayerOfHydration  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11deew2/displaying_a_org_subtree_from_another_file_in_a/",
+          "publishedOn": "2023-02-27T15:22:56.000Z",
+          "wordCount": 12769,
+          "title": "Displaying a org subtree from another file in a file buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11ddlst/qi_wish_php_syntax_highlighting_in_orgbabel/",
+          "author": null,
+          "description": "submitted by    /u/sreekumar_r  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11ddlst/qi_wish_php_syntax_highlighting_in_orgbabel/",
+          "publishedOn": "2023-02-27T14:48:31.000Z",
+          "wordCount": 12551,
+          "title": "[Q]I wish PHP syntax highlighting in org-babel.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11dd0tq/what_are_the_best_plugins_to_pair_with_orgmode/",
+          "author": null,
+          "description": "submitted by    /u/cidra_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11dd0tq/what_are_the_best_plugins_to_pair_with_orgmode/",
+          "publishedOn": "2023-02-27T14:22:32.000Z",
+          "wordCount": 12570,
+          "title": "What are the best plugins to pair with org-mode?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11dbeig/need_for_help_multiple_exported_files_from_only/",
+          "author": null,
+          "description": "Hi everyone !\n I struggled to find some resources on the subject, so I'm looking for help.\n In org-mode, i would like to export in pdf a document with and without headlines tagged differently in two or more separated files.\n For example, if we considered this file, named a_dumb_example.org :\n  \n# Headline one :foo: \n Some contents \n # Headline two :bar: \n Another contents\n  \nI would like to export it in two files :\n  \na_dumb_example_foo.pdf : containing only the contents of the first headline\n a_dumb_example_bar.pdf : containing only the contents of the second headline\n  \nIt's seemed like you can do almost anything with elisp, but i can't manage to find anything. Theses days, as I mentioned in another post (https://www.reddit.com/r/orgmode/comments/10fyjyc/comment/j5edzha/?utm_source=share&utm_medium=web2x&context=3) I do everything this manually, but I want to speed up the process. \n Any hints ?\n    submitted by    /u/SuLinab  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11dbeig/need_for_help_multiple_exported_files_from_only/",
+          "publishedOn": "2023-02-27T13:05:45.000Z",
+          "wordCount": 12704,
+          "title": "[Need for help] Multiple exported files from only one org document",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11dbbe9/how_to_set_todo_sequences_per_subtree_in_org/",
+          "author": null,
+          "description": "I know I can set for the whole document like this:\n #+TODO: TASK | IN-PROGRESS | IN-REVIEW | DONE \n But I want some subtrees to have different TODO sequences/keywords, so they would be scoped to a subtree.\n One way I found was to set the sequences I'd use in the document like this:\n #+TODO: TASK | IN-PROGRESS | IN-REVIEW | DONE #+TODO: TODO | DONE \n This way the TODOs would have both sequences, but maybe there's a better way to achieve that?\n Ideally, it would be a property where I could set the steps/keywords there, like I can do with :LOGGING: so I would avoid cycling the wrong sequence in the subtrees.\n    submitted by    /u/josior  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11dbbe9/how_to_set_todo_sequences_per_subtree_in_org/",
+          "publishedOn": "2023-02-27T13:01:43.000Z",
+          "wordCount": 12721,
+          "title": "How to set TODO sequences per subtree in org?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11db404/most_useful_efficient_or_interesting_ways_to_use/",
+          "author": null,
+          "description": "I've been an org-mode user for a long time, but have really under-used one of its major features: tags.\n Now after all these years, I'm starting to get in to heavy tags usage, and wanted to ask the emacs community what are some of the most useful, efficient or interesting ways to use, search, or manipulate tags?\n Are there any exceptionally useful workflows or extensions to tags or tag search/creation/manipulation out there?\n    submitted by    /u/trimorphic  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11db404/most_useful_efficient_or_interesting_ways_to_use/",
+          "publishedOn": "2023-02-27T12:50:55.000Z",
+          "wordCount": 12598,
+          "title": "Most useful, efficient, or interesting ways to use org-mode tags?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11daqsz/elpaca_the_basics/",
+          "author": null,
+          "description": "The following video covers the basics of:\n  \nInstalling Elpaca\n Elpaca's UI/search engine\n Finding, installing, updating and removing packages\n  \nhttps://www.youtube.com/watch?v=5Ud-TE3iIQY\n    submitted by    /u/nv-elisp  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11daqsz/elpaca_the_basics/",
+          "publishedOn": "2023-02-27T12:31:33.000Z",
+          "wordCount": 14262,
+          "title": "Elpaca: The Basics",
+          "imageUrl": "https://external-preview.redd.it/x6FsqTIgWoNd5CeeUkbrgvr-DBci81uPVnw7R13zRhA.jpg?auto=webp&v=enabled&s=740f71c65a7a02f3847114c533e121a3b821bae6"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11d7pu1/is_it_possible_to_use_alignto_to_align_a/",
+          "author": null,
+          "description": "I have been trying to learn about fontification in emacs and applying it to org mode. I have been trying to use :align-to to align something an org mode buffer. \n I have been trying to figure out how to make this test function work... \n (defun my/org-fontify-hello () (interactive) (font-lock-add-keywords nil `((\"\\\\bHello\\\\b\" 1 (propertize \"Hi\" 'display `(space :align-to ,50)))))) (add-hook 'org-mode-hook 'my/org-fontify-hello) \n Does anyone have any advice?\n    submitted by    /u/Far-Anywhere2876  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11d7pu1/is_it_possible_to_use_alignto_to_align_a/",
+          "publishedOn": "2023-02-27T09:32:06.000Z",
+          "wordCount": 12695,
+          "title": "Is it possible to use `:align-to` to align a fontified thing in an org-mode buffer?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11d7316/orgroamuiopen_inside_emacs/",
+          "author": null,
+          "description": "Hello there,\n When I do org-roam-ui-open, it opens the url http://localhost:35901/ in firefox.\n Has anyone able to open this url into an emacs buffer ? I was unable to open it even with eww.\n    submitted by    /u/Apprehensive_Law1483  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11d7316/orgroamuiopen_inside_emacs/",
+          "publishedOn": "2023-02-27T08:51:52.000Z",
+          "wordCount": 12755,
+          "title": "org-roam-ui-open inside emacs ?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11d6sur/emacs_dynamic_modules_and_joysticks/",
+          "author": null,
+          "description": "submitted by    /u/geospeck  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11d6sur/emacs_dynamic_modules_and_joysticks/",
+          "publishedOn": "2023-02-27T08:33:22.000Z",
+          "wordCount": 12450,
+          "title": "Emacs, Dynamic Modules, and Joysticks",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11d5av6/copypaste_with_xtermmousemode/",
+          "author": null,
+          "description": "spent like 2 hours and couldn’t find sufficient advice from google. \n i like working in emacs with mouse mode on. the problem is, i can’t select text and copy and paste it with command-c/command-v with mouse mode on. (i’m on mac). this works fine with mouse mode toggled off. anybody know how i can fix this?\n thanks\n    submitted by    /u/frankzigs  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11d5av6/copypaste_with_xtermmousemode/",
+          "publishedOn": "2023-02-27T06:59:08.000Z",
+          "wordCount": 12630,
+          "title": "Copy/paste with xterm-mouse-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11d422p/emacs_doesnt_initialize_packages/",
+          "author": null,
+          "description": "Emacs newbie here, be gentle. I'm rewriting my config and trying to keep packages to a minimum. Since I want to use emacs as an IDE, I want to install eglot for the LSP client and company to have a better completion UI. I went with eglot over lsp mode because I have previously used lsp mode and it seemed slow. Plus, eglot is shipping with emacs 29 by default, which means it is good enough to be included in emacs, so I might as well use it.\n Anyway, I do the typical thing. M-x package-install RET eglot RET. Gets installed from elpa as expected. Same with company: M-x package-install RET company RET. They both work, all is good, but upon restarting, they're not longer there.\n After some head scratching I realized they are not being initialized. After running package-initialize they both work again. If I add that same function to the end of my init.el, then it works. But why? The package-enable-at-startup variable is set to true, as it should.\n Here's my config, it's not very big.\n Also as an extra. Anyway to move the eln-cache folder? Thanks.\n EDIT: I know the packages.el file isn't being loaded. That's fine, I'm not done with it yet. I have installed the packages manually with the built-in package manager.\n    submitted by    /u/SnooPets20  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11d422p/emacs_doesnt_initialize_packages/",
+          "publishedOn": "2023-02-27T05:44:51.000Z",
+          "wordCount": 13335,
+          "title": "emacs doesn't initialize packages",
+          "imageUrl": "https://external-preview.redd.it/zffoM2PrO-Z69di2U8CAF2vJA0cZiHX9cGr-SnAdSpA.jpg?auto=webp&v=enabled&s=1cf7fa0edda7a090d7f2247ee921f7522b6af728"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11d3bx0/a_package_to_display_cpu_temperature_in_emacs/",
+          "author": null,
+          "description": "https://github.com/zhenhua-wang/emacs-cpu-temperature\n    submitted by    /u/Zwzhhh  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11d3bx0/a_package_to_display_cpu_temperature_in_emacs/",
+          "publishedOn": "2023-02-27T05:03:51.000Z",
+          "wordCount": 12616,
+          "title": "A package to display CPU temperature in emacs",
+          "imageUrl": "https://external-preview.redd.it/WSGWQ2RtfVanyRe76q7vSAVr_o4NpyuzSOh004WCu4c.jpg?auto=webp&v=enabled&s=1e7c013eb47013b4cc685d9b938eb97b845853b6"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11d27mu/get_a_list_of_file_in_a_directory_and_its/",
+          "author": null,
+          "description": "I want to have a list of files of my home dir, to be used in completing-read. I tried directory-files-recursive but there are too many files and it takes like 10 seconds to finish the job. \n I want to exclude the hidden directories. Can I achieve this with directory-files-recursive? It seems the regexp is only applied to the basenames, without the paths. \n Thanks.\n    submitted by    /u/linwaytin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11d27mu/get_a_list_of_file_in_a_directory_and_its/",
+          "publishedOn": "2023-02-27T04:04:58.000Z",
+          "wordCount": 12904,
+          "title": "Get a list of file in a directory and its subdirectories",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/11csro8/using_emacs_to_upload_backups_to_s3/",
+          "author": null,
+          "description": "submitted by    /u/AdjointFunctor  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/11csro8/using_emacs_to_upload_backups_to_s3/",
+          "publishedOn": "2023-02-26T21:08:57.000Z",
+          "wordCount": 12546,
+          "title": "Using Emacs to upload backups to S3",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/11cqd7b/it_looks_like_the_kellyk_emacs_ppa_is_no_longer/",
           "author": null,
@@ -10840,126 +11200,6 @@
           "publishedOn": "2023-01-29T11:04:48.000Z",
           "wordCount": 14191,
           "title": "Newbie here! Need Help!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10nr7vu/beautifying_org_plot_with_yasnippet_and_context/",
-          "author": null,
-          "description": "Made a blog post on beautifying plots from Org Plot using YASnippet and Emacs 28 context menus.\n “Beautifying Org Plot with YASnippet and Context Menus”\n ngl, this might replace nearly every use case I have for plotting with a spreadsheet.\n Hope folks find this useful, feel free to provide feedback here.\n ​\n Context menu with Org Plot actions\n    submitted by    /u/kickingvegas1  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10nr7vu/beautifying_org_plot_with_yasnippet_and_context/",
-          "publishedOn": "2023-01-28T22:17:34.000Z",
-          "wordCount": 12452,
-          "title": "Beautifying Org Plot with YASnippet and Context Menus",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10npd8w/how_to_fix_formatting_in_config_file/",
-          "author": null,
-          "description": "I was working on a new function and I was trying to format the content in the minibuffer using this line:\n (setq variable-path-list (mapcar (lambda (x) (fill-region (point-min) (point-max) 80 nil t)) variable-path-list)) \n Before adding the above line everything in my config was fine. But now it messed up all the formatting in my config.org file like the following example:\n https://preview.redd.it/9yanaac1luea1.png?width=1212&format=png&auto=webp&s=accc4200a35c2db560817067cb73f6c286511bdf\n It now creates errors when I load up doom emacs since the config.org was tangled into config.el. I am trying to figure out how to fix the formatting and I am not sure why some of the brackets are red since I never had any issues before.\n    submitted by    /u/Actual_Persimmon_964  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10npd8w/how_to_fix_formatting_in_config_file/",
-          "publishedOn": "2023-01-28T20:58:18.000Z",
-          "wordCount": 12549,
-          "title": "How to fix formatting in config file?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10no92b/how_could_i_delete_jstsls_on_emacs/",
-          "author": null,
-          "description": "Hey there,\n Currently I installed jsts-ls lsp on my emacs. However, whenever I will program in another language (like c++) jsts-ls is still activacted.\n I would like to uninstall it. How could I do that?\n    submitted by    /u/TechWithGeek  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10no92b/how_could_i_delete_jstsls_on_emacs/",
-          "publishedOn": "2023-01-28T20:10:29.000Z",
-          "wordCount": 12365,
-          "title": "How could I delete jsts-ls on emacs?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10no4vt/struggling_with_understanding_tramp_to_remotely/",
-          "author": null,
-          "description": "Hi all,\n tldr; Probably a total noob Q, but I need to edit my config.yaml file on the headless pi running my HA instance. That file needs to be accessed as my home assistant user (not the regular user of my local or remote machine)\n I can:\n  \nEdit the file remotely:\n  \n $ ssh me@raspberry_pi $ sudo -u homeassistant -H -s $ nano /filepath \n  \nVisit my regular user's files in emacs:\n  \n``` SPC .\n /ssh:me@raspberry_pi:/file/path ```\n I am struggling to understand what I need to do within emacs to replicate (1). \n The main issue I'm finding baffling is the logical jump from editing as my normal user, to editing as the HA user (a user setup with no password). \n Is anyone able to explain to me like I'm 5?\n Also, maybe a doom emacs issue, but tramp crashes emacs a lot. For example if I mistype a password or file path. Which during trying to figure out the above has caused me to enter many a killall emacs into my terminal emulator\n    submitted by    /u/thephatmaster  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10no4vt/struggling_with_understanding_tramp_to_remotely/",
-          "publishedOn": "2023-01-28T20:05:27.000Z",
-          "wordCount": 12628,
-          "title": "Struggling with understanding TRAMP to remotely edit my Home Assistant config file",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10nmcus/dont_fear_the_emacs/",
-          "author": null,
-          "description": "submitted by    /u/koalillo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10nmcus/dont_fear_the_emacs/",
-          "publishedOn": "2023-01-28T18:50:20.000Z",
-          "wordCount": 12390,
-          "title": "Don't fear the Emacs",
-          "imageUrl": "https://external-preview.redd.it/zOvIv6zF2jP_sjngYeVeiRhjl4kYl6X2bdAw90Glx0E.jpg?auto=webp&v=enabled&s=b970732d8353ad4e4f8ddac52d0eb3a4aeff250a"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10nmb21/org_agenda_view_as_link/",
-          "author": null,
-          "description": "Hi!\n I am trying to create an Elisp link in an Org document that would display an agenda view matching a particular tag in the current buffer.\n Here is what I could do so far:\n [[elisp:(org-agenda nil \"m\" t)][test]] \n This opens a \"match\" agenda view with a restriction on the current buffer. However I still have to choose the tag.\n Is there any way to pass the tag programmatically? I'd prefer to avoid tricks such as executing a saved keyboard macro.\n Thanks :)\n    submitted by    /u/nwUhLW38  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10nmb21/org_agenda_view_as_link/",
-          "publishedOn": "2023-01-28T18:48:06.000Z",
-          "wordCount": 12539,
-          "title": "[Org] Agenda view as link",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10nipqs/org_macro_expansion/",
-          "author": null,
-          "description": "I've been using org-macro-replace-all recently, and I've noticed that macros on the same line as a colon don't get expanded. For example foo doesn't expand here:\n (with-temp-buffer (insert \"https://mydomain.com/{{{foo}}}\") (org-macro-replace-all (list (cons \"foo\" \"bar\"))) (buffer-string)) \n I couldn't find anything about the edge cases of this function in the docs or online, does anyone know why this is the case or how to circumvent it?\n    submitted by    /u/AblatedSprocket  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10nipqs/org_macro_expansion/",
-          "publishedOn": "2023-01-28T16:14:46.000Z",
-          "wordCount": 12415,
-          "title": "Org Macro Expansion",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10nih0o/the_best_beorg_or_alt_setup_for_iphone_to/",
-          "author": null,
-          "description": "The most recent thread I found was 3 years old, and it looks like the app has added features since then so I'm looking for the current 'best way.'\n - beOrg defaults to using it's org dir in iCloud... is there a way I can link my current ~/org into iCloud? I move between mac and pc and would rather not make my org dir live directly in the clould dir and then need to link out.\n - People mention webdav, are people still rolling their for this?\n - Working Copy would work but then everything has to go through a commit, which seems silly. (I use github, but not for everytime I check off an item).\n ​\n Anyway... what's your setup and how do you like it?\n    submitted by    /u/ImportanceFit1412  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10nih0o/the_best_beorg_or_alt_setup_for_iphone_to/",
-          "publishedOn": "2023-01-28T16:04:12.000Z",
-          "wordCount": 12905,
-          "title": "The best beOrg (or alt) setup for iPhone to integrate to my emacs org workflow...",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10ngrna/add_80_character_line_customizing_is_overwhelming/",
-          "author": null,
-          "description": "Hello all.\n I want to add line on the 80 character mark. Rather simple think right? But Customizing Emacs is so overwhelming, that I don't even know how to do it. \n Is there some config file? Is every customizing option in M-x customizing menu? How to save such a settings globally, to have it whenever I run Emacs? \n Thank you for you answers.\n    submitted by    /u/476f6f64206a6f6221  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10ngrna/add_80_character_line_customizing_is_overwhelming/",
-          "publishedOn": "2023-01-28T14:48:37.000Z",
-          "wordCount": 12608,
-          "title": "Add 80 character line (customizing is overwhelming)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10nenxk/how_do_i_use_the_python_interpreter/",
-          "author": null,
-          "description": "Hey, I am a super noob with programming, but I actually prefer to use emacs over sites like replit when learning about code. I couldn't really find an answer to this question online:\n When I start the interpreter on a default emacs install in Ubuntu, it seems that I can only enter one command at a time. How do I get the interpreter in the bottom window to run all of my code in the top window? Why do I have to re-enter my code into the bottom window? Sorry if this is an obvious question, but I can't seem to figure it out myself\n    submitted by    /u/somename777  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10nenxk/how_do_i_use_the_python_interpreter/",
-          "publishedOn": "2023-01-28T13:07:17.000Z",
-          "wordCount": 12694,
-          "title": "How do I use the Python interpreter?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10ndfeg/trying_to_use_a_variable_when_loading_a_theme_but/",
-          "author": null,
-          "description": "If I add this to an empty .emacs (28.2, Debian)\n (load-theme 'misterioso)\n the theme loads fine when emacs starts. But if I do\n (setq myvar \"misterioso\") (load-theme myvar)\n I get the error 'error: Invalid theme name 'misterioso' What am I doing wrong?\n    submitted by    /u/effo70  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10ndfeg/trying_to_use_a_variable_when_loading_a_theme_but/",
-          "publishedOn": "2023-01-28T11:57:18.000Z",
-          "wordCount": 12458,
-          "title": "Trying to use a variable when loading a theme but fails",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/10nctt8/elpy_or_lsp_plus_x/",
-          "author": null,
-          "description": "Hi,\n i have kind of an open unbiased question.\n Is switching form elpy to lsp worth it? what do you think? \n ​\n Thank you all for your experience\n    submitted by    /u/Novel_Conclusion4226  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/10nctt8/elpy_or_lsp_plus_x/",
-          "publishedOn": "2023-01-28T11:18:30.000Z",
-          "wordCount": 12503,
-          "title": "Elpy or lsp plus x",
           "imageUrl": null
         }
       ]
