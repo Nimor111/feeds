@@ -2,10 +2,409 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2023-04-02T20:34:50.900Z</updated>
+    <updated>2023-04-03T20:34:59.876Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[Data.Complex instances]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/12awdgy/datacomplex_instances/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/12awdgy/datacomplex_instances/"/>
+        <updated>2023-04-03T20:16:19.000Z</updated>
+        <summary type="html"><![CDATA[Was going to quickly write some complex computations and took a look at the source code for Data.Complex just to see what tools I get out of the box. Many of the formulas are what you would expect like:
+ sin (x:+y) = sin x * cosh y :+ cos x * sinh y 
+ But the instances make no sense at all:
+ instance Monad Complex where a :+ b >>= f = realPart (f a) :+ imagPart (f b) instance Applicative Complex where pure a = a :+ a f :+ g <*> a :+ b = f a :+ g b 
+ I'm not seeing how the bind definition works at all. f is going to return a real and complex number when applied to both a and b so you are going to have to scramble. Moreover unless f is linear there is no reason to believe that f(a +ib) = f(a) + i*f(b). It would seem to me a much more reasonable assumption would be to use numerical methods and compute a Taylor expansion for real a and then extend to b. That's still highly questionable but at least don't fail for functions as simple as f x = x^2. Similarly the definition for pure makes no sense at all.
+ Haskell normally doesn't get obvious math wrong so I'm assuming the fault lies with me. What am I missing?
+    submitted by    /u/JeffB1517  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[consult-company (20230403.1911) --- Consult frontend for company]]></title>
+        <id>https://melpa.org/packages/consult-company-20230403.1911.el</id>
+        <link href="https://melpa.org/#/consult-company"/>
+        <updated>2023-04-03T19:11:00.000Z</updated>
+        <summary type="html"><![CDATA[The consult-company package has been updated to version 20230403.1911.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[treehouse: Create a multi-page static website from a *single* org file.]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/12au8ul/treehouse_create_a_multipage_static_website_from/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/12au8ul/treehouse_create_a_multipage_static_website_from/"/>
+        <updated>2023-04-03T19:04:40.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/burlupar  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[desktop-environment (20230403.1823) --- Helps you control your GNU/Linux computer]]></title>
+        <id>https://melpa.org/packages/desktop-environment-20230403.1823.el</id>
+        <link href="https://melpa.org/#/desktop-environment"/>
+        <updated>2023-04-03T18:23:00.000Z</updated>
+        <summary type="html"><![CDATA[The desktop-environment package has been updated to version 20230403.1823.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[how to get a nice sly setup]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/12as4x3/how_to_get_a_nice_sly_setup/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/12as4x3/how_to_get_a_nice_sly_setup/"/>
+        <updated>2023-04-03T17:54:59.000Z</updated>
+        <summary type="html"><![CDATA[whenever i turn on sly to edit a lisp file or to use the repl, i would like to have something like lispy mode turned on. This would autocomplete parentheses and allow me to work comfortably with s-exps. Just turning on lispy mode causes some annoying behavior in the repl. Specifically, if im typing 
+ (defun f (x).) 
+ and point is at . then pressing ENTER evaluates the form, rather than inserting a new line. Maybe I set this up wrong or the lispy package doesnt interact nicely with sly?
+    submitted by    /u/cuntymccuntlicker  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Replacing concrete with an abstract type]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/12as0ic/replacing_concrete_with_an_abstract_type/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/12as0ic/replacing_concrete_with_an_abstract_type/"/>
+        <updated>2023-04-03T17:50:48.000Z</updated>
+        <summary type="html"><![CDATA[Existing code: ``` -- in ModuleA data X a = ... deriving (...)
+ -- in ModuleB import ModuleA
+ fun :: arg -> X a
+ newtype Y a = Y (ReaderT Bool X a) deriving (...Monad)
+ funY :: arg1 -> Y a ```
+ What I would like to achieve is to replace usage of concrete type X with a (constrained) abstract type without touching code in ModuleB - shadowing ModuleA import with a Cabal mixin.
+ I tried: ``` class ApiX m where ...
+ type X a = forall m. (ApiX m) => m a ```
+ It almost works - except newtype Y a above. Compilation fails with the message that X is partially applied. Note that this already exists in ModuleB and the goal is not to touch source code in this module.
+ Is there any way to achieve that (using type families or whatever)?
+ EDIT: The end goal is to make all functions defined in ModuleB polymorphic without touching any code in this module. In other words transform all functions from
+ f :: a -> b -> c -> X d
+ to
+ f :: ApiX m => a -> b -> c -> m d
+    submitted by    /u/klekpl  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[My basic keybinding setup for Emacs with evil-mode and Kmonad to avoid using pinkies]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/12arjtn/my_basic_keybinding_setup_for_emacs_with_evilmode/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/12arjtn/my_basic_keybinding_setup_for_emacs_with_evilmode/"/>
+        <updated>2023-04-03T17:35:31.000Z</updated>
+        <summary type="html"><![CDATA[I use evil-mode with a few modifications.
+ In normal mode:
+  
+s
+ s is remapped to org-cycle and S (uppercase s) to org-shifttab as I don't use the substitute key in evil-mode, and for me org-cycle is the most used command in org-mode, Tab key is just a little bit too far away from the home row. Correspondingly cycle keys in magit diff view and pdf-tool's outline view are also remapped to s.
+ 
+x
+ x is changed to evil-visual-line for a quick single key press. Remap X (uppercase x) to evil-delete-char to retain x's original function.
+ 
+Leader keys
+ Main leader keys are Space, f, t.
+ F (uppercase f) and T (uppercase t) are rebound to keep f and t's original evil commands.
+ 
+e
+ e is set to avy-goto-char.
+ 
+u and U
+ u is for evil-undo, U (uppercase u) is changed to evil-redo.
+ 
+Swap n with p
+ ev…]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ORM in Scala]]></title>
+        <id>https://www.reddit.com/r/scala/comments/12aqusa/orm_in_scala/</id>
+        <link href="https://www.reddit.com/r/scala/comments/12aqusa/orm_in_scala/"/>
+        <updated>2023-04-03T17:12:03.000Z</updated>
+        <summary type="html"><![CDATA[What are my options to implement ORM in Scala. Looking for something for Scala as Hibernate is to Java.
+    submitted by    /u/Stolaine  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Neotree file is missing. HELP]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/12aofmz/neotree_file_is_missing_help/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/12aofmz/neotree_file_is_missing_help/"/>
+        <updated>2023-04-03T15:49:02.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/RedRightHand-  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to make forward-sentence ignore non-breaking spaces?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/12amgsb/how_to_make_forwardsentence_ignore_nonbreaking/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/12amgsb/how_to_make_forwardsentence_ignore_nonbreaking/"/>
+        <updated>2023-04-03T14:39:00.000Z</updated>
+        <summary type="html"><![CDATA[I have set sentence-end-double-space to nil, and I'm trying to use non-breaking spaces after things like "Mr." in "Mr. Johnson" so as to distinguish abbreviation dots from end of sentence dots. However, even when I include a non-breaking space (C-x 8 SPC), commands like forward-sentence and backward-sentence will still stop on those.
+ My sentence-end variable is nil, so according to the sentence-end function, the value will come from the variables ‘sentence-end-base’, ‘sentence-end-double-space’, ‘sentence-end-without-period’ and ‘sentence-end-without-space’. I've checked all of them, and the only one that seems to be pertaining is sentence-end-base, which says:
+  
+Its value is "[.?!…‽][]\"'”’)}»›]*" 
+ Regexp matching the basic end of a sentence, not including following space.
+  
+It doesn't say anything about distinguishing spaces from non-breaking spaces. Any clues on how to change this behavior?
+ Also, can you see any unintended consequences of the setup I'm planning to use (one space after sentences, one non-breaking space after things that should not be ending sentences)?
+    submitted by    /u/copperbranch  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Ergonomic newtypes for Haskell strings and numbers]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/12am0fv/ergonomic_newtypes_for_haskell_strings_and_numbers/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/12am0fv/ergonomic_newtypes_for_haskell_strings_and_numbers/"/>
+        <updated>2023-04-03T14:23:00.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/Tekmo  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[org-hyperscheduler]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/12alo1x/orghyperscheduler/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/12alo1x/orghyperscheduler/"/>
+        <updated>2023-04-03T14:10:42.000Z</updated>
+        <summary type="html"><![CDATA[I just ran across this: https://www.youtube.com/watch?v=8vhhIYIS0zY
+ It looks useful.
+    submitted by    /u/BobKoss  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[I combined MUnit with Expecty. I hope you like it!]]></title>
+        <id>https://www.reddit.com/r/scala/comments/12albwz/i_combined_munit_with_expecty_i_hope_you_like_it/</id>
+        <link href="https://www.reddit.com/r/scala/comments/12albwz/i_combined_munit_with_expecty_i_hope_you_like_it/"/>
+        <updated>2023-04-03T13:59:01.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/agilesteel  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[oer-reveal (20230403.1322) --- OER with reveal.js, plugins, and org-re-reveal]]></title>
+        <id>https://melpa.org/packages/oer-reveal-20230403.1322.tar</id>
+        <link href="https://melpa.org/#/oer-reveal"/>
+        <updated>2023-04-03T13:22:00.000Z</updated>
+        <summary type="html"><![CDATA[The oer-reveal package has been updated to version 20230403.1322.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[fzf (20230403.1304) --- A front-end for fzf.]]></title>
+        <id>https://melpa.org/packages/fzf-20230403.1304.el</id>
+        <link href="https://melpa.org/#/fzf"/>
+        <updated>2023-04-03T13:04:00.000Z</updated>
+        <summary type="html"><![CDATA[The fzf package has been updated to version 20230403.1304.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Go-like channels using project Loom and Scala]]></title>
+        <id>https://www.reddit.com/r/scala/comments/12ajd88/golike_channels_using_project_loom_and_scala/</id>
+        <link href="https://www.reddit.com/r/scala/comments/12ajd88/golike_channels_using_project_loom_and_scala/"/>
+        <updated>2023-04-03T12:46:40.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/adamw1pl  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Food for thought regarding note taking]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/12ahq20/food_for_thought_regarding_note_taking/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/12ahq20/food_for_thought_regarding_note_taking/"/>
+        <updated>2023-04-03T11:40:52.000Z</updated>
+        <summary type="html"><![CDATA[I've found this to be an interesting take on the subject.
+ I personally don't do note taking, though I sure am guilty of abusing init.el as a procrastination tool.
+ https://www.youtube.com/watch?v=baKCC2uTbRc
+    submitted by    /u/101b147ch  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CLC Update (April 2023)]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/12agu0w/clc_update_april_2023/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/12agu0w/clc_update_april_2023/"/>
+        <updated>2023-04-03T11:02:54.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/chshersh  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Functional Error Handling in Scala]]></title>
+        <id>https://www.reddit.com/r/scala/comments/12agds9/functional_error_handling_in_scala/</id>
+        <link href="https://www.reddit.com/r/scala/comments/12agds9/functional_error_handling_in_scala/"/>
+        <updated>2023-04-03T10:42:54.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/alexgarella  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello everyone, Emacs EAF is a great tool. I'm wondering if anyone has successfully used it on Guix System and can share their experience?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/12affbc/hello_everyone_emacs_eaf_is_a_great_tool_im/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/12affbc/hello_everyone_emacs_eaf_is_a_great_tool_im/"/>
+        <updated>2023-04-03T09:56:50.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/nowislewis  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Overlays/Annotations with command output?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/12aeiy6/overlaysannotations_with_command_output/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/12aeiy6/overlaysannotations_with_command_output/"/>
+        <updated>2023-04-03T09:03:36.000Z</updated>
+        <summary type="html"><![CDATA[This is a bit of a nice-to-have, but as a programmer I sometimes wish for a way to augment code/data I'm looking at. My concrete example of yesterday was a compact hex-representation of some joystick input data. I discovered recently the highlight-functionality, and that has already been super helpful in making visibly distinct marks in long logfiles.
+ I know that Emacs can do overlays (and I know that they are costly), so I wonder if anybody is aware of something like svg-annotate/git blame where for each line I get an annotation of the meaning of that line.
+    submitted by    /u/__deeetz__  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[clause (20230403.830) --- Functions to move, mark, kill by clause]]></title>
+        <id>https://melpa.org/packages/clause-20230403.830.el</id>
+        <link href="https://melpa.org/#/clause"/>
+        <updated>2023-04-03T08:30:00.000Z</updated>
+        <summary type="html"><![CDATA[The clause package has been updated to version 20230403.830.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[nimbus-theme (20230403.819) --- Nimbus dark theme]]></title>
+        <id>https://melpa.org/packages/nimbus-theme-20230403.819.el</id>
+        <link href="https://melpa.org/#/nimbus-theme"/>
+        <updated>2023-04-03T08:19:00.000Z</updated>
+        <summary type="html"><![CDATA[The nimbus-theme package has been updated to version 20230403.819.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Performance: magit vs mgit (Meta git)]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/12aakes/performance_magit_vs_mgit_meta_git/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/12aakes/performance_magit_vs_mgit_meta_git/"/>
+        <updated>2023-04-03T05:27:43.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/atamariya  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Import of iCalendar .ical into org-mode file question]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/12a83uf/import_of_icalendar_ical_into_orgmode_file/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/12a83uf/import_of_icalendar_ical_into_orgmode_file/"/>
+        <updated>2023-04-03T03:28:46.000Z</updated>
+        <summary type="html"><![CDATA[icsorg - Import Calendar Events into Emacs Org Mode will import a .ical file into an org-mode file. So I have this
+ * Snow removal B-building :PROPERTIES: :ICAL_EVENT: t :ID: 3jc3scg84omih16ns715t70blo@google.com :STATUS: CONFIRMED :LAST_MODIFIED: [2023-04-02 Sun 16:23] :DURATION: 00:30 hh:mm :END: <2023-04-02 Sun 16:00-16:30> B-building sidewalk snow removal. (A was clear.) * Garage assessment :PROPERTIES: :ICAL_EVENT: t :ID: 71003vjbq6aln1594pnp5p2qce@google.com :STATUS: CONFIRMED :LAST_MODIFIED: [2023-04-02 Sun 20:05] :DURATION: 01:00 hh:mm :END: <2023-03-30 Thu 14:30-15:30> <ul><li>get new lock for middle shed from store</li><li>buy cleaning supplies from Ace Hardware</li></ul> ... 
+ ...and more entries. It supposedly will also work with org-agenda -- and so C-a a gives "Agenda for current week." 
+ Month-agenda (W13-W18): Sunday 2 April 2023 undefined: 16:00-16:30 Snow removal B-building 22:24 ┄┄┄┄┄ ← now ─────────────────────────────────────────────── 20:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 18:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 16:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 14:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 12:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 10:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 8:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ Monday 3 April 2023 W14 Tuesday 4 April 2023 ... 
+ Good. But how can I get a view of previous weeks, future weeks? And how is it even doing this? I don't see any TODOs or such in the exported org-mode file. What is it, how is it populating org-agenda?
+    submitted by    /u/teilchen010  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[company (20230403.214) --- Modular text completion framework]]></title>
+        <id>https://melpa.org/packages/company-20230403.214.tar</id>
+        <link href="https://melpa.org/#/company"/>
+        <updated>2023-04-03T02:14:00.000Z</updated>
+        <summary type="html"><![CDATA[The company package has been updated to version 20230403.214.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Arbitrary splitting of priority queues]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/12a4i5d/arbitrary_splitting_of_priority_queues/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/12a4i5d/arbitrary_splitting_of_priority_queues/"/>
+        <updated>2023-04-03T00:58:40.000Z</updated>
+        <summary type="html"><![CDATA[I realized a while back that it should be pretty easy to write an unordered split function for the pqueue package.
+ splitU :: Int -> MinQueue a -> (MinQueue a, MinQueue a) 
+ splitU n q divides q into a priority queue of size min n (size q) and a priority queue of size max 0 (size q - n). I believe this can be achieved in amortized time O(log(min(n,|q|))) and worst case time O(log(max(n,|q|))) by operating in a manner analogous to binary subtraction. Which elements end up in which priority queue would be largely arbitrary. Would such an operation be useful for anything in practice? I haven't been able to think of anything, but I really want to have a reason to write this ;-).
+ Edit: those bounds are wrong, but the real ones are still logarithmic.
+    submitted by    /u/davidfeuer  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Haskell book after Get Programming with Haskell?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/12a2o2d/haskell_book_after_get_programming_with_haskell/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/12a2o2d/haskell_book_after_get_programming_with_haskell/"/>
+        <updated>2023-04-02T23:48:09.000Z</updated>
+        <summary type="html"><![CDATA[I'm looking for a printed book to read after finishing with Manning Publication's Get Programming with Haskell.
+ Some things to consider are that, though I can't say for sure why, I don't like this book. I think the issue is that it's light. Not just verbose, but lacking in substance. Since it isn't entirely vapid and having paid money for it, I will finish the book. It's just anemic. And the capstone projects are fun.
+ Two books which worked well for me are Manning's The Joy of Clojure 2nd Ed. and PragProg's Programming Clojure 3rd Ed. This is of particular significance since at least 90% of the first seven chapters of The Joy of Clojure are redundant with Programming Clojure, which I read first. I feel like I'm getting less from reading Get Programming with Haskell than I did reading content I had already covered in another book. The content just isn't there.
+ (Also, it's worth noting that the code examples are kind of crappy. I'm finding myself refactoring this "expert's" code because it's ugly and horribly redundant. One thing I like about Haskell is that it's beautiful, with minimal boilerplate, and code I write in Haskell looks great to me. I don't like looking at unsightly code, and his code is mostly that. But for the sake of learning, I can look beyond that.)
+ So, with this in mind, what might /r/Haskell recommend as a second Haskell book?
+ Edit: I should probably mention (admit?) that I am not a programmer, and if you exclude my Numerical Analysis textbook from grad school, those two Clojure books are the only programming books I've read. I have been programming at some level for decades, but I don't have a typical CompSci background. (Which may or may not be a good thing since it does also mean I don't need to unlearn OOP.)
+    submitted by    /u/nstgc  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Am I right in saying that Excorporate is broken on O365 since circa Sept 2022?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/129xph5/am_i_right_in_saying_that_excorporate_is_broken/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/129xph5/am_i_right_in_saying_that_excorporate_is_broken/"/>
+        <updated>2023-04-02T20:49:43.000Z</updated>
+        <summary type="html"><![CDATA[I start a new job tomorrow, and I wanted to try retrieving calendar information using excorporate.
+ However, the EWS url returns a 401 when an attempt is made to access it. Increasing the verbosity of the logging from request ((setq request-log-level 'blather)) allows us to see that basic auth is being attempted against the https://outlook.office365.com/EWS/Services.wsdl url.
+ This article would indicate that Basic Auth is no longer supported: https://techcommunity.microsoft.com/t5/exchange-team-blog/basic-authentication-deprecation-in-exchange-online-september/ba-p/3609437
+ I think this means that Excorporate can no longer authenticate with O365 as a result.
+    submitted by    /u/FederalPirate2867  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[eshell-syntax-highlighting (20230402.2034) --- Highlight eshell commands]]></title>
+        <id>https://melpa.org/packages/eshell-syntax-highlighting-20230402.2034.el</id>
+        <link href="https://melpa.org/#/eshell-syntax-highlighting"/>
+        <updated>2023-04-02T20:34:00.000Z</updated>
+        <summary type="html"><![CDATA[The eshell-syntax-highlighting package has been updated to version 20230402.2034.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[LSP Bridge with LSP UI?]]></title>
         <id>https://www.reddit.com/r/emacs/comments/129wa1s/lsp_bridge_with_lsp_ui/</id>
@@ -16,6 +415,16 @@
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[elpy (20230402.1946) --- Emacs Python Development Environment]]></title>
+        <id>https://melpa.org/packages/elpy-20230402.1946.tar</id>
+        <link href="https://melpa.org/#/elpy"/>
+        <updated>2023-04-02T19:46:00.000Z</updated>
+        <summary type="html"><![CDATA[The elpy package has been updated to version 20230402.1946.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -53,6 +462,46 @@
  [link]   [comments]]]></summary>
         <author>
             <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[copy-file-on-save (20230402.1829) --- Copy file on save, automatic deployment it]]></title>
+        <id>https://melpa.org/packages/copy-file-on-save-20230402.1829.el</id>
+        <link href="https://melpa.org/#/copy-file-on-save"/>
+        <updated>2023-04-02T18:29:00.000Z</updated>
+        <summary type="html"><![CDATA[The copy-file-on-save package has been updated to version 20230402.1829.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[sideline-flymake (20230402.1816) --- Show flymake errors with sideline]]></title>
+        <id>https://melpa.org/packages/sideline-flymake-20230402.1816.el</id>
+        <link href="https://melpa.org/#/sideline-flymake"/>
+        <updated>2023-04-02T18:16:00.000Z</updated>
+        <summary type="html"><![CDATA[The sideline-flymake package has been updated to version 20230402.1816.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[sideline-flycheck (20230402.1816) --- Show flycheck errors with sideline]]></title>
+        <id>https://melpa.org/packages/sideline-flycheck-20230402.1816.el</id>
+        <link href="https://melpa.org/#/sideline-flycheck"/>
+        <updated>2023-04-02T18:16:00.000Z</updated>
+        <summary type="html"><![CDATA[The sideline-flycheck package has been updated to version 20230402.1816.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dune (20230402.1815) --- Integration with the dune build system]]></title>
+        <id>https://melpa.org/packages/dune-20230402.1815.tar</id>
+        <link href="https://melpa.org/#/dune"/>
+        <updated>2023-04-02T18:15:00.000Z</updated>
+        <summary type="html"><![CDATA[The dune package has been updated to version 20230402.1815.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -152,6 +601,36 @@ thank you Zoe]]></summary>
  [link]   [comments]]]></summary>
         <author>
             <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vcsh (20230402.1229) --- vcsh integration]]></title>
+        <id>https://melpa.org/packages/vcsh-20230402.1229.el</id>
+        <link href="https://melpa.org/#/vcsh"/>
+        <updated>2023-04-02T12:29:00.000Z</updated>
+        <summary type="html"><![CDATA[The vcsh package has been updated to version 20230402.1229.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[stripes (20230402.1228) --- highlight alternating lines differently]]></title>
+        <id>https://melpa.org/packages/stripes-20230402.1228.el</id>
+        <link href="https://melpa.org/#/stripes"/>
+        <updated>2023-04-02T12:28:00.000Z</updated>
+        <summary type="html"><![CDATA[The stripes package has been updated to version 20230402.1228.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[magit-vcsh (20230402.1219) --- Magit vcsh integration]]></title>
+        <id>https://melpa.org/packages/magit-vcsh-20230402.1219.el</id>
+        <link href="https://melpa.org/#/magit-vcsh"/>
+        <updated>2023-04-02T12:19:00.000Z</updated>
+        <summary type="html"><![CDATA[The magit-vcsh package has been updated to version 20230402.1219.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -953,6 +1432,16 @@ In one repo we have a library A with two main executables Ex1 and Ex2.
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[org-inline-anim (20230331.1048) --- Inline playback of animated GIF/PNG for Org]]></title>
+        <id>https://melpa.org/packages/org-inline-anim-20230331.1048.el</id>
+        <link href="https://melpa.org/#/org-inline-anim"/>
+        <updated>2023-03-31T10:48:00.000Z</updated>
+        <summary type="html"><![CDATA[The org-inline-anim package has been updated to version 20230331.1048.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -13737,408 +14226,6 @@ Second: do you keep biographical information in your zettelkasten? In this same 
         <summary type="html"><![CDATA[The adoc-mode package has been updated to version 20230305.853.]]></summary>
         <author>
             <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[What happened to org-superstar-mode?]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/11ir81h/what_happened_to_orgsuperstarmode/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/11ir81h/what_happened_to_orgsuperstarmode/"/>
-        <updated>2023-03-05T07:51:58.000Z</updated>
-        <summary type="html"><![CDATA[I had to disable org-superstar-mode for a while now as it seems to stuck in a loop and throw errors. Is this package still maintained?
-    submitted by    /u/danderzei  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Implementing isDigit using genetic algorithms]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/11iqku3/implementing_isdigit_using_genetic_algorithms/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/11iqku3/implementing_isdigit_using_genetic_algorithms/"/>
-        <updated>2023-03-05T07:14:26.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/mmaruseacph2  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ffmpeg-utils (20230305.709) --- FFmpeg command utilities wrappers]]></title>
-        <id>https://melpa.org/packages/ffmpeg-utils-20230305.709.el</id>
-        <link href="https://melpa.org/#/ffmpeg-utils"/>
-        <updated>2023-03-05T07:09:00.000Z</updated>
-        <summary type="html"><![CDATA[The ffmpeg-utils package has been updated to version 20230305.709.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Equivalent of Notion SyncedBlocks]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/11iojep/equivalent_of_notion_syncedblocks/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/11iojep/equivalent_of_notion_syncedblocks/"/>
-        <updated>2023-03-05T05:22:43.000Z</updated>
-        <summary type="html"><![CDATA[My journey to eMacs and orgmode started from Notion and Obsidian, so pardon my analogies. 
- Is there an equivalent feature to Notion Synced Blocks in Orgmode?
- My requirement: I journal every day and note down my interactions with people and entities in my journal. I also maintain a ‘people.org’ file for all my contacts. I want the note about a person, John Doe, that I wrote in my journal to also appear in people.org under John Doe.
-    submitted by    /u/sen-san  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[websocket (20230305.410) --- Emacs WebSocket client and server]]></title>
-        <id>https://melpa.org/packages/websocket-20230305.410.el</id>
-        <link href="https://melpa.org/#/websocket"/>
-        <updated>2023-03-05T04:10:00.000Z</updated>
-        <summary type="html"><![CDATA[The websocket package has been updated to version 20230305.410.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[multiple-cursors with bar cursor issue]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/11imz03/multiplecursors_with_bar_cursor_issue/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/11imz03/multiplecursors_with_bar_cursor_issue/"/>
-        <updated>2023-03-05T04:04:25.000Z</updated>
-        <summary type="html"><![CDATA[I have (setq cursor-type 'bar) in my config. 
- When I use multiple-cursors, the "fake" cursors are shifting the text to the right: 
- https://imgur.com/OBGF9xM
- Has anybody figure out how to tell multiple-cursors to use the same cursor style as the default?
-    submitted by    /u/grLng  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[dtk (20230304.2348) --- access SWORD content via diatheke]]></title>
-        <id>https://melpa.org/packages/dtk-20230304.2348.el</id>
-        <link href="https://melpa.org/#/dtk"/>
-        <updated>2023-03-04T23:48:00.000Z</updated>
-        <summary type="html"><![CDATA[The dtk package has been updated to version 20230304.2348.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Why are FP devs obsessed with Referential Transparency?]]></title>
-        <id>https://www.reddit.com/r/scala/comments/11igold/why_are_fp_devs_obsessed_with_referential/</id>
-        <link href="https://www.reddit.com/r/scala/comments/11igold/why_are_fp_devs_obsessed_with_referential/"/>
-        <updated>2023-03-04T23:23:30.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/IamZelenya  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[dash (20230304.2223) --- A modern list library for Emacs]]></title>
-        <id>https://melpa.org/packages/dash-20230304.2223.tar</id>
-        <link href="https://melpa.org/#/dash"/>
-        <updated>2023-03-04T22:23:00.000Z</updated>
-        <summary type="html"><![CDATA[The dash package has been updated to version 20230304.2223.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[cmake-font-lock (20230304.2223) --- Advanced, type aware, highlight support for CMake]]></title>
-        <id>https://melpa.org/packages/cmake-font-lock-20230304.2223.el</id>
-        <link href="https://melpa.org/#/cmake-font-lock"/>
-        <updated>2023-03-04T22:23:00.000Z</updated>
-        <summary type="html"><![CDATA[The cmake-font-lock package has been updated to version 20230304.2223.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Would you pay for an Emacs distro?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/11iexxq/would_you_pay_for_an_emacs_distro/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/11iexxq/would_you_pay_for_an_emacs_distro/"/>
-        <updated>2023-03-04T22:13:09.000Z</updated>
-        <summary type="html"><![CDATA[Hi,
- Would you pay for a yearly license for an Emacs distro preloaded with things such as Magit, lsp-mode, etc? Basically, a good out of the box IDE experience. The majority (80%?) of the proceeds could be donated to the devs of the packages. Basically, a nice value add that also benefits our package devs.
-    submitted by    /u/Ok-Plum-6937  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[wiki-nav (20230304.2212) --- Simple file navigation using [[WikiStrings]]]]></title>
-        <id>https://melpa.org/packages/wiki-nav-20230304.2212.el</id>
-        <link href="https://melpa.org/#/wiki-nav"/>
-        <updated>2023-03-04T22:12:00.000Z</updated>
-        <summary type="html"><![CDATA[The wiki-nav package has been updated to version 20230304.2212.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[button-lock (20230304.2212) --- Clickable text defined by regular expression]]></title>
-        <id>https://melpa.org/packages/button-lock-20230304.2212.el</id>
-        <link href="https://melpa.org/#/button-lock"/>
-        <updated>2023-03-04T22:12:00.000Z</updated>
-        <summary type="html"><![CDATA[The button-lock package has been updated to version 20230304.2212.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[High-Performance Haskell?]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/11ielep/highperformance_haskell/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/11ielep/highperformance_haskell/"/>
-        <updated>2023-03-04T21:59:32.000Z</updated>
-        <summary type="html"><![CDATA[What are the secrets to high performance Haskell? I've met people who claim that Haskell code should perform around 5-10x slower than C, Tikhon Jelvis says that mildly optimized Haskell can perform around 3x C in time, kuribas claims that Haskell should perform at least at 50% of C, an acquaintance can get Haskell to half of Rust's performance, and there's libraries like Attoparsec and Streamly that claim 80-90% of C performance. And of course, there's Don Stewart.
- ​
- What's the secret to getting high performance Haskell? Are the ultra-fast libraries concurrency scams (i.e, C is single-threaded, Haskell is parallel)? Or are the ultra-fast libraries actually as fast as they claim, and that it's possible to get Haskell to near-C speeds? 
- Because I love Haskell as a fun toying-around language, given how concise the language (and functional style) can be. Especially when you have defections to the Rust camp, keeping Haskell performant is a worthy goal, and I guess high-performance Haskell is joked about as "only if you're Don Stewart" or "dark magic, summoned by sacrificing puppies and kittens".
- ​
- Any tips, links, advice to get ultra-high-performance Haskell, other than, perhaps, inline-C? ;)
-    submitted by    /u/Instrume  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How to properly display code blocks in Latex export?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/11ibpsy/how_to_properly_display_code_blocks_in_latex/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/11ibpsy/how_to_properly_display_code_blocks_in_latex/"/>
-        <updated>2023-03-04T20:06:37.000Z</updated>
-        <summary type="html"><![CDATA[I have trying out writing in org mode and exporting it as latex following this guide.
- I wrote the following org file to test it out and exported it to latex:
- ITLE: Org Latex Test #+SUBTITLE: /Straightforward Emacs/ #+AUTHOR: Jack #+SETUPFILE: ~/.emacs.d/jake-latex-standard.org * First Heading :noexport: Hello this is a test sample * Second headings This is another header with code block #+begin_src python print("hello world") print("This is a code block") #+end_src #+CAPTION: This is a Table | Name | id | Age | | Peter | 1234 | 50 | | Sue | 4321 | 54 | | | | | * Third Headings 
- But the code block in the pdf looks messy and I was wondering how I can properly format the code block in org mode so that when it gets exported to latex it looks professional?
- ​
- https://preview.redd.it/w7vowii74sla1.png?width=756&format=png&auto=webp&s=a691a2a5205be108c3f146fab1f48dc1f2852c5d
-    submitted by    /u/waterstrider123  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Haskell help]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/11iaz1r/haskell_help/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/11iaz1r/haskell_help/"/>
-        <updated>2023-03-04T19:38:23.000Z</updated>
-        <summary type="html"><![CDATA[Are there any experienced Haskell coders who could help me with a project. Ive recently learnt how to do data types and they are very confusing. My whole project is basically just data types.
-    submitted by    /u/LeoSucksAtCoding  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-ml (20230304.1913) --- Functional Org Mode API]]></title>
-        <id>https://melpa.org/packages/org-ml-20230304.1913.tar</id>
-        <link href="https://melpa.org/#/org-ml"/>
-        <updated>2023-03-04T19:13:00.000Z</updated>
-        <summary type="html"><![CDATA[The org-ml package has been updated to version 20230304.1913.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Why use Emacs for LaTeX instead of Overleaf?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/11ia8zg/why_use_emacs_for_latex_instead_of_overleaf/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/11ia8zg/why_use_emacs_for_latex_instead_of_overleaf/"/>
-        <updated>2023-03-04T19:10:15.000Z</updated>
-        <summary type="html"><![CDATA[I know emacs has much better autocomplete (e.g. yasnippets) than Overleaf. However, I've found that simply defining new commands in overleaf goes a long way and provides similar benefits to using snippets. Also, org mode has the option to render LaTeX directly inside the editor instead of having one screen for the editor and another for the rendered output. I guess the bullet point features of org mode are also pretty cool. However, despite all of these cool features, I find when I use emacs I end up wasting a lot of time researching how to do stuff. In practice I find simply writing things up in Overleaf to be a lot faster. Does emacs eventually get faster if you're good enough at it?
-    submitted by    /u/TiloRC  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[fb2-reader (20230304.1832) --- Read FB2 and FB2.ZIP documents]]></title>
-        <id>https://melpa.org/packages/fb2-reader-20230304.1832.el</id>
-        <link href="https://melpa.org/#/fb2-reader"/>
-        <updated>2023-03-04T18:32:00.000Z</updated>
-        <summary type="html"><![CDATA[The fb2-reader package has been updated to version 20230304.1832.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CDlatex giving me a 'Wrong type argument: char-or-string-p, 134217777' error]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/11i8abv/cdlatex_giving_me_a_wrong_type_argument/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/11i8abv/cdlatex_giving_me_a_wrong_type_argument/"/>
-        <updated>2023-03-04T17:55:12.000Z</updated>
-        <summary type="html"><![CDATA[Everything was working fine. I was editing a tex document and when I pressed ' followed by M-1 (because I wanted to wrap the previous word in a \mathrm{}), i got that error. I had not made any changes to any .el files, I was just editing my tex document as usual. My fingers may have spazzed out like they sometimes do when trying to input a complicated keychord, but it is weird that all of a sudden this is not working. Does anyone have any idea what to do? I restarted emacs but that does not solve the problem, and neither does re-evaluating the cdlatex.el file.
-    submitted by    /u/cuntymccuntlicker  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How can I get the pulp docs generator to just generate docs for my files?]]></title>
-        <id>https://www.reddit.com/r/purescript/comments/11i83u4/how_can_i_get_the_pulp_docs_generator_to_just/</id>
-        <link href="https://www.reddit.com/r/purescript/comments/11i83u4/how_can_i_get_the_pulp_docs_generator_to_just/"/>
-        <updated>2023-03-04T17:48:51.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/daigoro_sensei  
- [link]   [comments]]]></summary>
-        <author>
-            <name>PureScript</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[marginalia with helm?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/11i3y6c/marginalia_with_helm/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/11i3y6c/marginalia_with_helm/"/>
-        <updated>2023-03-04T16:18:56.000Z</updated>
-        <summary type="html"><![CDATA[Curious if anybody has tried this integration. just tried it out of the box to see if it would pick up but didn’t, don’t see anything about helm on the github (or closed issues) but maybe curious if someone uses helm+marginalia?
-    submitted by    /u/Hooxen  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ekg version 0.2 release: info, recent notes, templates, and embeddings!]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/11i29j5/ekg_version_02_release_info_recent_notes/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/11i29j5/ekg_version_02_release_info_recent_notes/"/>
-        <updated>2023-03-04T15:43:59.000Z</updated>
-        <summary type="html"><![CDATA[Hi all, I've released ekg version 0.2. Why it feels like just yesterday I was release ekg version 0.1, and in fact it wasn't that long ago.
- ekg is a note taking application for emacs that stores all data in sqlite, is very tag-oriented, and designed to be easy to extend.
- The changes for version 0.2 are:
-  
-Added hooks ekg-add-schema-hook, ekg-note-pre-save-hook, ekg-note-save-hook, ekg-note-delete-hook, and ekg-note-add-tag-hook to enable customization.
- New commands ekg-show-notes-latest-captured, =kg-show-notes-latest-modified, for showing notes created or modified recently.
- Introduced variable ekg-notes-size to control the default page size for limited views such as ekg-show-notes-latest-captured.
- Added templating.
- Added embedding as an optional add-on, to enable note similarity and note search; requires an account at OpenAI or similar embedding provider.
- Added new function ekg-active-notes to easily get all non-trashed notes.
- Improved ability to have note list buffers that have flexible titles and operation, notably improving the ekg-show-notes-in-trash command.
- Standardized buffer names for ekg-notes-mode buffers, which all are prepended with "ekg" and surrounded by asterisks, to denote that they are non-file-based.
- Added documentation in texinfo, viewable via M-x info.
- Fixed bug interfering with completion at the beginning of the tag property line.
-  
-For details, watch the demo of 0.2 changes. I think the templating is done via a unique way that shows off the power of ekg, and embedding stuff is advanced, super useful, and virtually no other note app in any system has it. On the other hand, the embeddings costs a very small amount of money and has unfortunate privacy implications. I think it's well worth it, and I hope that you enjoy this update.
-    submitted by    /u/ahyatt  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[poetry (20230304.1540) --- Interface to Poetry]]></title>
-        <id>https://melpa.org/packages/poetry-20230304.1540.el</id>
-        <link href="https://melpa.org/#/poetry"/>
-        <updated>2023-03-04T15:40:00.000Z</updated>
-        <summary type="html"><![CDATA[The poetry package has been updated to version 20230304.1540.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[inf-ruby (20230304.1512) --- Run a Ruby process in a buffer]]></title>
-        <id>https://melpa.org/packages/inf-ruby-20230304.1512.el</id>
-        <link href="https://melpa.org/#/inf-ruby"/>
-        <updated>2023-03-04T15:12:00.000Z</updated>
-        <summary type="html"><![CDATA[The inf-ruby package has been updated to version 20230304.1512.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[powerthesaurus (20230304.1454) --- Powerthesaurus integration]]></title>
-        <id>https://melpa.org/packages/powerthesaurus-20230304.1454.el</id>
-        <link href="https://melpa.org/#/powerthesaurus"/>
-        <updated>2023-03-04T14:54:00.000Z</updated>
-        <summary type="html"><![CDATA[The powerthesaurus package has been updated to version 20230304.1454.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[A minimal org mode *scratch* area for your iPhone]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/11i0wjj/a_minimal_org_mode_scratch_area_for_your_iphone/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/11i0wjj/a_minimal_org_mode_scratch_area_for_your_iphone/"/>
-        <updated>2023-03-04T14:48:05.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/xenodium  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[A minimal org mode *scratch* area for your iPhone]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/11i0hv6/a_minimal_org_mode_scratch_area_for_your_iphone/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/11i0hv6/a_minimal_org_mode_scratch_area_for_your_iphone/"/>
-        <updated>2023-03-04T14:30:34.000Z</updated>
-        <summary type="html"><![CDATA[https://apps.apple.com/us/app/scratch/id1671420139
-    submitted by    /u/xenodium  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Documentation for `car` and `cdr` inside Emacs is circular]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/11hz4x2/documentation_for_car_and_cdr_inside_emacs_is/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/11hz4x2/documentation_for_car_and_cdr_inside_emacs_is/"/>
-        <updated>2023-03-04T13:28:14.000Z</updated>
-        <summary type="html"><![CDATA[Hear me out here. Before you downvote me, I'm not advocating that any functional changes be made to Emacs regarding car and cdr. I've looked up a brief history of the terms and their origins. They have their uses and should be neither removed nor renamed.
- However, as someone who's only recently learned about these terms, Emacs' self-documentation for these terms was not helpful at all to me. I saw the function being used in existing Elisp and thought, "What's car and cdr?" So I looked it up inside Emacs, and it told me that car returned the car of LIST. Wow... super helpful...
- I'd offer to submit a pull request to update the documentation if the source code wasn't managed via email, but it is. So, I'm just putting my opinion out here where someone else who contributes might read this. ``` car is a function defined in C source code.
- Signature (car LIST)
- Documentation Return the car of LIST. If LIST is nil, return nil.
- Error if LIST is not nil and not a cons cell. See also car-safe.
- See Info node (elisp)Cons Cells for a discussion of related basic Lisp concepts such as car, cdr, cons cell and list.
- Other relevant functions are documented in the list group.   cdr is a function defined in C source code.
- Signature (cdr LIST)
- Documentation Return the cdr of LIST. If LIST is nil, return nil.
- Error if LIST is not nil and not a cons cell. See also cdr-safe.
- See Info node (elisp)Cons Cells for a discussion of related basic Lisp concepts such as cdr, car, cons cell and list.
- Other relevant functions are documented in the list group. ```
-    submitted by    /u/bluecubedly  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[transient (20230304.1149) --- Transient commands]]></title>
-        <id>https://melpa.org/packages/transient-20230304.1149.tar</id>
-        <link href="https://melpa.org/#/transient"/>
-        <updated>2023-03-04T11:49:00.000Z</updated>
-        <summary type="html"><![CDATA[The transient package has been updated to version 20230304.1149.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Run IO every day, week and month]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/11hv7cw/run_io_every_day_week_and_month/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/11hv7cw/run_io_every_day_week_and_month/"/>
-        <updated>2023-03-04T09:33:37.000Z</updated>
-        <summary type="html"><![CDATA[I have three IO’s to be run every day, week and month respectively. Could you propose me some (idiomatic?) solutuon to schedule them? For the first one I use threadDelay with the difference between: number of seconds in the day and number of seconds from midnight.
-    submitted by    /u/henry_kwinto  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Orgmode is amazing]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/11huq5o/orgmode_is_amazing/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/11huq5o/orgmode_is_amazing/"/>
-        <updated>2023-03-04T09:05:06.000Z</updated>
-        <summary type="html"><![CDATA[Managing of todo lists has always been a pain in the ass for me.
- I tried evernote, but it depends on an account, it's centralized and proprietary
- I tried discord, but besides other points, it doesn't have UI needed for proper task management
- I heard about orgmode. I hang out in r/emacs and whenever someone asks "why not vim/vscode/etc.", besides other points it's orgmode. So I've been tempted to try it out. And I don't regret
- My setup is neovim with orgmode plugin on laptop, orgzly on phone, syncthing to sync and git to back up.
- Works well so far!
-    submitted by    /u/WhiteBlackGoose  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
         </author>
     </entry>
 </feed>

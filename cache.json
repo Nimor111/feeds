@@ -53,6 +53,66 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/12awdgy/datacomplex_instances/",
+          "author": null,
+          "description": "Was going to quickly write some complex computations and took a look at the source code for Data.Complex just to see what tools I get out of the box. Many of the formulas are what you would expect like:\n sin (x:+y) = sin x * cosh y :+ cos x * sinh y \n But the instances make no sense at all:\n instance Monad Complex where a :+ b >>= f = realPart (f a) :+ imagPart (f b) instance Applicative Complex where pure a = a :+ a f :+ g <*> a :+ b = f a :+ g b \n I'm not seeing how the bind definition works at all. f is going to return a real and complex number when applied to both a and b so you are going to have to scramble. Moreover unless f is linear there is no reason to believe that f(a +ib) = f(a) + i*f(b). It would seem to me a much more reasonable assumption would be to use numerical methods and compute a Taylor expansion for real a and then extend to b. That's still highly questionable but at least don't fail for functions as simple as f x = x^2. Similarly the definition for pure makes no sense at all.\n Haskell normally doesn't get obvious math wrong so I'm assuming the fault lies with me. What am I missing?\n    submitted by    /u/JeffB1517  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/12awdgy/datacomplex_instances/",
+          "publishedOn": "2023-04-03T20:16:19.000Z",
+          "wordCount": 13291,
+          "title": "Data.Complex instances",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/12as0ic/replacing_concrete_with_an_abstract_type/",
+          "author": null,
+          "description": "Existing code: ``` -- in ModuleA data X a = ... deriving (...)\n -- in ModuleB import ModuleA\n fun :: arg -> X a\n newtype Y a = Y (ReaderT Bool X a) deriving (...Monad)\n funY :: arg1 -> Y a ```\n What I would like to achieve is to replace usage of concrete type X with a (constrained) abstract type without touching code in ModuleB - shadowing ModuleA import with a Cabal mixin.\n I tried: ``` class ApiX m where ...\n type X a = forall m. (ApiX m) => m a ```\n It almost works - except newtype Y a above. Compilation fails with the message that X is partially applied. Note that this already exists in ModuleB and the goal is not to touch source code in this module.\n Is there any way to achieve that (using type families or whatever)?\n EDIT: The end goal is to make all functions defined in ModuleB polymorphic without touching any code in this module. In other words transform all functions from\n f :: a -> b -> c -> X d\n to\n f :: ApiX m => a -> b -> c -> m d\n    submitted by    /u/klekpl  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/12as0ic/replacing_concrete_with_an_abstract_type/",
+          "publishedOn": "2023-04-03T17:50:48.000Z",
+          "wordCount": 13474,
+          "title": "Replacing concrete with an abstract type",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/12am0fv/ergonomic_newtypes_for_haskell_strings_and_numbers/",
+          "author": null,
+          "description": "submitted by    /u/Tekmo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/12am0fv/ergonomic_newtypes_for_haskell_strings_and_numbers/",
+          "publishedOn": "2023-04-03T14:23:00.000Z",
+          "wordCount": 1917,
+          "title": "Ergonomic newtypes for Haskell strings and numbers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/12agu0w/clc_update_april_2023/",
+          "author": null,
+          "description": "submitted by    /u/chshersh  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/12agu0w/clc_update_april_2023/",
+          "publishedOn": "2023-04-03T11:02:54.000Z",
+          "wordCount": 13060,
+          "title": "CLC Update (April 2023)",
+          "imageUrl": "https://external-preview.redd.it/uUxcC4pq2wPNhEfNaesM3eWEpkU7wsrPRqmskOz28TI.jpg?auto=webp&v=enabled&s=b6fe39d11433020f7c7da993edc35cfcb6ba28d6"
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/12a4i5d/arbitrary_splitting_of_priority_queues/",
+          "author": null,
+          "description": "I realized a while back that it should be pretty easy to write an unordered split function for the pqueue package.\n splitU :: Int -> MinQueue a -> (MinQueue a, MinQueue a) \n splitU n q divides q into a priority queue of size min n (size q) and a priority queue of size max 0 (size q - n). I believe this can be achieved in amortized time O(log(min(n,|q|))) and worst case time O(log(max(n,|q|))) by operating in a manner analogous to binary subtraction. Which elements end up in which priority queue would be largely arbitrary. Would such an operation be useful for anything in practice? I haven't been able to think of anything, but I really want to have a reason to write this ;-).\n Edit: those bounds are wrong, but the real ones are still logarithmic.\n    submitted by    /u/davidfeuer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/12a4i5d/arbitrary_splitting_of_priority_queues/",
+          "publishedOn": "2023-04-03T00:58:40.000Z",
+          "wordCount": 13400,
+          "title": "Arbitrary splitting of priority queues",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/12a2o2d/haskell_book_after_get_programming_with_haskell/",
+          "author": null,
+          "description": "I'm looking for a printed book to read after finishing with Manning Publication's Get Programming with Haskell.\n Some things to consider are that, though I can't say for sure why, I don't like this book. I think the issue is that it's light. Not just verbose, but lacking in substance. Since it isn't entirely vapid and having paid money for it, I will finish the book. It's just anemic. And the capstone projects are fun.\n Two books which worked well for me are Manning's The Joy of Clojure 2nd Ed. and PragProg's Programming Clojure 3rd Ed. This is of particular significance since at least 90% of the first seven chapters of The Joy of Clojure are redundant with Programming Clojure, which I read first. I feel like I'm getting less from reading Get Programming with Haskell than I did reading content I had already covered in another book. The content just isn't there.\n (Also, it's worth noting that the code examples are kind of crappy. I'm finding myself refactoring this \"expert's\" code because it's ugly and horribly redundant. One thing I like about Haskell is that it's beautiful, with minimal boilerplate, and code I write in Haskell looks great to me. I don't like looking at unsightly code, and his code is mostly that. But for the sake of learning, I can look beyond that.)\n So, with this in mind, what might /r/Haskell recommend as a second Haskell book?\n Edit: I should probably mention (admit?) that I am not a programmer, and if you exclude my Numerical Analysis textbook from grad school, those two Clojure books are the only programming books I've read. I have been programming at some level for decades, but I don't have a typical CompSci background. (Which may or may not be a good thing since it does also mean I don't need to unlearn OOP.)\n    submitted by    /u/nstgc  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/12a2o2d/haskell_book_after_get_programming_with_haskell/",
+          "publishedOn": "2023-04-02T23:48:09.000Z",
+          "wordCount": 2221,
+          "title": "Haskell book after Get Programming with Haskell?",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1294p3i/general_type/",
           "author": null,
           "description": "Given the function foo x y z = if x==y the x else z Which one is the most general type?\n I checked with the compiler and it gave me this one foo :: Eq a => a -> a -> a -> a\n First I thought about something like this foo :: (Eq a, Eq b) => a -> b -> a -> a\n So why does it forces x and y to be of the same type? Wouldnt the second option be more general as it gives the option of x and y being from the same or different type?\n Thanks in advance!\n    submitted by    /u/Jaded-Armadillo8348  \n [link]   [comments]",
@@ -1541,46 +1601,6 @@
           "wordCount": 12702,
           "title": "Core Libraries Committee (CLC) Update (March 2023)",
           "imageUrl": "https://external-preview.redd.it/uUxcC4pq2wPNhEfNaesM3eWEpkU7wsrPRqmskOz28TI.jpg?auto=webp&v=enabled&s=b6fe39d11433020f7c7da993edc35cfcb6ba28d6"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/11iqku3/implementing_isdigit_using_genetic_algorithms/",
-          "author": null,
-          "description": "submitted by    /u/mmaruseacph2  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/11iqku3/implementing_isdigit_using_genetic_algorithms/",
-          "publishedOn": "2023-03-05T07:14:26.000Z",
-          "wordCount": 13077,
-          "title": "Implementing isDigit using genetic algorithms",
-          "imageUrl": "https://external-preview.redd.it/j-uSYbYqGoC1uSWH7NqOHoMn7APItJAfX53Eov81p_k.jpg?auto=webp&v=enabled&s=38ec609d685e7aadc9e810c0ad952920ec5524a2"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/11ielep/highperformance_haskell/",
-          "author": null,
-          "description": "What are the secrets to high performance Haskell? I've met people who claim that Haskell code should perform around 5-10x slower than C, Tikhon Jelvis says that mildly optimized Haskell can perform around 3x C in time, kuribas claims that Haskell should perform at least at 50% of C, an acquaintance can get Haskell to half of Rust's performance, and there's libraries like Attoparsec and Streamly that claim 80-90% of C performance. And of course, there's Don Stewart.\n ​\n What's the secret to getting high performance Haskell? Are the ultra-fast libraries concurrency scams (i.e, C is single-threaded, Haskell is parallel)? Or are the ultra-fast libraries actually as fast as they claim, and that it's possible to get Haskell to near-C speeds? \n Because I love Haskell as a fun toying-around language, given how concise the language (and functional style) can be. Especially when you have defections to the Rust camp, keeping Haskell performant is a worthy goal, and I guess high-performance Haskell is joked about as \"only if you're Don Stewart\" or \"dark magic, summoned by sacrificing puppies and kittens\".\n ​\n Any tips, links, advice to get ultra-high-performance Haskell, other than, perhaps, inline-C? ;)\n    submitted by    /u/Instrume  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/11ielep/highperformance_haskell/",
-          "publishedOn": "2023-03-04T21:59:32.000Z",
-          "wordCount": 16330,
-          "title": "High-Performance Haskell?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/11iaz1r/haskell_help/",
-          "author": null,
-          "description": "Are there any experienced Haskell coders who could help me with a project. Ive recently learnt how to do data types and they are very confusing. My whole project is basically just data types.\n    submitted by    /u/LeoSucksAtCoding  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/11iaz1r/haskell_help/",
-          "publishedOn": "2023-03-04T19:38:23.000Z",
-          "wordCount": 12873,
-          "title": "Haskell help",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/11hv7cw/run_io_every_day_week_and_month/",
-          "author": null,
-          "description": "I have three IO’s to be run every day, week and month respectively. Could you propose me some (idiomatic?) solutuon to schedule them? For the first one I use threadDelay with the difference between: number of seconds in the day and number of seconds from midnight.\n    submitted by    /u/henry_kwinto  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/11hv7cw/run_io_every_day_week_and_month/",
-          "publishedOn": "2023-03-04T09:33:37.000Z",
-          "wordCount": 13483,
-          "title": "Run IO every day, week and month",
-          "imageUrl": null
         }
       ]
     },
@@ -1589,6 +1609,46 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/12aqusa/orm_in_scala/",
+          "author": null,
+          "description": "What are my options to implement ORM in Scala. Looking for something for Scala as Hibernate is to Java.\n    submitted by    /u/Stolaine  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/12aqusa/orm_in_scala/",
+          "publishedOn": "2023-04-03T17:12:03.000Z",
+          "wordCount": 14151,
+          "title": "ORM in Scala",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/12albwz/i_combined_munit_with_expecty_i_hope_you_like_it/",
+          "author": null,
+          "description": "submitted by    /u/agilesteel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/12albwz/i_combined_munit_with_expecty_i_hope_you_like_it/",
+          "publishedOn": "2023-04-03T13:59:01.000Z",
+          "wordCount": 13569,
+          "title": "I combined MUnit with Expecty. I hope you like it!",
+          "imageUrl": "https://external-preview.redd.it/U5mY56HpvJ8MA3c88W4VnhYGXJTRMY-iHI44Y6EHjl0.jpg?auto=webp&v=enabled&s=a8deede277392690799969df33a85e3586152502"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/12ajd88/golike_channels_using_project_loom_and_scala/",
+          "author": null,
+          "description": "submitted by    /u/adamw1pl  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/12ajd88/golike_channels_using_project_loom_and_scala/",
+          "publishedOn": "2023-04-03T12:46:40.000Z",
+          "wordCount": 13543,
+          "title": "Go-like channels using project Loom and Scala",
+          "imageUrl": "https://external-preview.redd.it/iRi1ZM4sOaamKM8lSCjdLb-dgaYqTl_disEoq9JscPI.jpg?auto=webp&v=enabled&s=cc5217fd5959b8e6ea5867951e20b8c428ed7885"
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/12agds9/functional_error_handling_in_scala/",
+          "author": null,
+          "description": "submitted by    /u/alexgarella  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/12agds9/functional_error_handling_in_scala/",
+          "publishedOn": "2023-04-03T10:42:54.000Z",
+          "wordCount": 13539,
+          "title": "Functional Error Handling in Scala",
+          "imageUrl": "https://external-preview.redd.it/lwxbzd0RcwxMr0inAOI4iitzlIGj6MSPXlV0tjJJES0.jpg?auto=webp&v=enabled&s=d7e44fd05e657f2b8f91f5aed6b87d3ed556de3b"
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/129qu0w/library_for_batching_requests/",
           "author": null,
@@ -2378,16 +2438,6 @@
           "wordCount": 14483,
           "title": "Is it a good idea to work in a pure scala role?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/11igold/why_are_fp_devs_obsessed_with_referential/",
-          "author": null,
-          "description": "submitted by    /u/IamZelenya  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/11igold/why_are_fp_devs_obsessed_with_referential/",
-          "publishedOn": "2023-03-04T23:23:30.000Z",
-          "wordCount": 13602,
-          "title": "Why are FP devs obsessed with Referential Transparency?",
-          "imageUrl": "https://external-preview.redd.it/MCzsSkQkZVKdJ5mo9t77dIByjP27A9IBu5B-wgsAtTM.jpg?auto=webp&v=enabled&s=79f625efe691d751617124461d6ce4ca8597a98f"
         }
       ]
     },
@@ -2425,16 +2475,6 @@
           "wordCount": 12170,
           "title": "The Second Annual PureScript Survey!",
           "imageUrl": "https://external-preview.redd.it/sCqmJNCitAcGAJ6x1yWYPPbcgyNZBhEYFq7q3HSb7dg.jpg?auto=webp&v=enabled&s=121c3c0bb7eaa3893d0f06ac4c32653f9e659357"
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/11i83u4/how_can_i_get_the_pulp_docs_generator_to_just/",
-          "author": null,
-          "description": "submitted by    /u/daigoro_sensei  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/11i83u4/how_can_i_get_the_pulp_docs_generator_to_just/",
-          "publishedOn": "2023-03-04T17:48:51.000Z",
-          "wordCount": 12654,
-          "title": "How can I get the pulp docs generator to just generate docs for my files?",
-          "imageUrl": "https://preview.redd.it/189g4tylfrla1.png?auto=webp&v=enabled&s=4fc7b87f8197ddcc72fa2bf3c8e52dc571e7e0d2"
         }
       ]
     },
@@ -2569,6 +2609,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/12au8ul/treehouse_create_a_multipage_static_website_from/",
+          "author": null,
+          "description": "submitted by    /u/burlupar  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/12au8ul/treehouse_create_a_multipage_static_website_from/",
+          "publishedOn": "2023-04-03T19:04:40.000Z",
+          "wordCount": 12728,
+          "title": "treehouse: Create a multi-page static website from a *single* org file.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/12alo1x/orghyperscheduler/",
+          "author": null,
+          "description": "I just ran across this: https://www.youtube.com/watch?v=8vhhIYIS0zY\n It looks useful.\n    submitted by    /u/BobKoss  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/12alo1x/orghyperscheduler/",
+          "publishedOn": "2023-04-03T14:10:42.000Z",
+          "wordCount": 12684,
+          "title": "org-hyperscheduler",
+          "imageUrl": "https://external-preview.redd.it/RXDrcDq5vXTlijVO5YGmM75yvBJ7PtS50uEPe0DIFtg.jpg?auto=webp&v=enabled&s=2e4c95806db54f7bf2176122776ca81e2e9fb58d"
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/129uln6/how_to_switch_agenda_views_or_go_back_from_a_view/",
           "author": null,
@@ -3008,46 +3068,6 @@
           "wordCount": 12427,
           "title": "Read code source from file into code block?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/11ir81h/what_happened_to_orgsuperstarmode/",
-          "author": null,
-          "description": "I had to disable org-superstar-mode for a while now as it seems to stuck in a loop and throw errors. Is this package still maintained?\n    submitted by    /u/danderzei  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/11ir81h/what_happened_to_orgsuperstarmode/",
-          "publishedOn": "2023-03-05T07:51:58.000Z",
-          "wordCount": 12459,
-          "title": "What happened to org-superstar-mode?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/11iojep/equivalent_of_notion_syncedblocks/",
-          "author": null,
-          "description": "My journey to eMacs and orgmode started from Notion and Obsidian, so pardon my analogies. \n Is there an equivalent feature to Notion Synced Blocks in Orgmode?\n My requirement: I journal every day and note down my interactions with people and entities in my journal. I also maintain a ‘people.org’ file for all my contacts. I want the note about a person, John Doe, that I wrote in my journal to also appear in people.org under John Doe.\n    submitted by    /u/sen-san  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/11iojep/equivalent_of_notion_syncedblocks/",
-          "publishedOn": "2023-03-05T05:22:43.000Z",
-          "wordCount": 12573,
-          "title": "Equivalent of Notion SyncedBlocks",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/11i0wjj/a_minimal_org_mode_scratch_area_for_your_iphone/",
-          "author": null,
-          "description": "submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/11i0wjj/a_minimal_org_mode_scratch_area_for_your_iphone/",
-          "publishedOn": "2023-03-04T14:48:05.000Z",
-          "wordCount": 12419,
-          "title": "A minimal org mode *scratch* area for your iPhone",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/11huq5o/orgmode_is_amazing/",
-          "author": null,
-          "description": "Managing of todo lists has always been a pain in the ass for me.\n I tried evernote, but it depends on an account, it's centralized and proprietary\n I tried discord, but besides other points, it doesn't have UI needed for proper task management\n I heard about orgmode. I hang out in r/emacs and whenever someone asks \"why not vim/vscode/etc.\", besides other points it's orgmode. So I've been tempted to try it out. And I don't regret\n My setup is neovim with orgmode plugin on laptop, orgzly on phone, syncthing to sync and git to back up.\n Works well so far!\n    submitted by    /u/WhiteBlackGoose  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/11huq5o/orgmode_is_amazing/",
-          "publishedOn": "2023-03-04T09:05:06.000Z",
-          "wordCount": 13154,
-          "title": "Orgmode is amazing",
-          "imageUrl": null
         }
       ]
     },
@@ -3056,6 +3076,136 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/consult-company-20230403.1911.el",
+          "author": null,
+          "description": "The consult-company package has been updated to version 20230403.1911.",
+          "link": "https://melpa.org/#/consult-company",
+          "publishedOn": "2023-04-03T19:11:00.000Z",
+          "wordCount": 105,
+          "title": "consult-company (20230403.1911) --- Consult frontend for company",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/desktop-environment-20230403.1823.el",
+          "author": null,
+          "description": "The desktop-environment package has been updated to version 20230403.1823.",
+          "link": "https://melpa.org/#/desktop-environment",
+          "publishedOn": "2023-04-03T18:23:00.000Z",
+          "wordCount": 105,
+          "title": "desktop-environment (20230403.1823) --- Helps you control your GNU/Linux computer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/oer-reveal-20230403.1322.tar",
+          "author": null,
+          "description": "The oer-reveal package has been updated to version 20230403.1322.",
+          "link": "https://melpa.org/#/oer-reveal",
+          "publishedOn": "2023-04-03T13:22:00.000Z",
+          "wordCount": 105,
+          "title": "oer-reveal (20230403.1322) --- OER with reveal.js, plugins, and org-re-reveal",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/fzf-20230403.1304.el",
+          "author": null,
+          "description": "The fzf package has been updated to version 20230403.1304.",
+          "link": "https://melpa.org/#/fzf",
+          "publishedOn": "2023-04-03T13:04:00.000Z",
+          "wordCount": 105,
+          "title": "fzf (20230403.1304) --- A front-end for fzf.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/clause-20230403.830.el",
+          "author": null,
+          "description": "The clause package has been updated to version 20230403.830.",
+          "link": "https://melpa.org/#/clause",
+          "publishedOn": "2023-04-03T08:30:00.000Z",
+          "wordCount": 105,
+          "title": "clause (20230403.830) --- Functions to move, mark, kill by clause",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/nimbus-theme-20230403.819.el",
+          "author": null,
+          "description": "The nimbus-theme package has been updated to version 20230403.819.",
+          "link": "https://melpa.org/#/nimbus-theme",
+          "publishedOn": "2023-04-03T08:19:00.000Z",
+          "wordCount": 105,
+          "title": "nimbus-theme (20230403.819) --- Nimbus dark theme",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/company-20230403.214.tar",
+          "author": null,
+          "description": "The company package has been updated to version 20230403.214.",
+          "link": "https://melpa.org/#/company",
+          "publishedOn": "2023-04-03T02:14:00.000Z",
+          "wordCount": 105,
+          "title": "company (20230403.214) --- Modular text completion framework",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/eshell-syntax-highlighting-20230402.2034.el",
+          "author": null,
+          "description": "The eshell-syntax-highlighting package has been updated to version 20230402.2034.",
+          "link": "https://melpa.org/#/eshell-syntax-highlighting",
+          "publishedOn": "2023-04-02T20:34:00.000Z",
+          "wordCount": 105,
+          "title": "eshell-syntax-highlighting (20230402.2034) --- Highlight eshell commands",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/elpy-20230402.1946.tar",
+          "author": null,
+          "description": "The elpy package has been updated to version 20230402.1946.",
+          "link": "https://melpa.org/#/elpy",
+          "publishedOn": "2023-04-02T19:46:00.000Z",
+          "wordCount": 105,
+          "title": "elpy (20230402.1946) --- Emacs Python Development Environment",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/copy-file-on-save-20230402.1829.el",
+          "author": null,
+          "description": "The copy-file-on-save package has been updated to version 20230402.1829.",
+          "link": "https://melpa.org/#/copy-file-on-save",
+          "publishedOn": "2023-04-02T18:29:00.000Z",
+          "wordCount": 105,
+          "title": "copy-file-on-save (20230402.1829) --- Copy file on save, automatic deployment it",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/sideline-flymake-20230402.1816.el",
+          "author": null,
+          "description": "The sideline-flymake package has been updated to version 20230402.1816.",
+          "link": "https://melpa.org/#/sideline-flymake",
+          "publishedOn": "2023-04-02T18:16:00.000Z",
+          "wordCount": 105,
+          "title": "sideline-flymake (20230402.1816) --- Show flymake errors with sideline",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/sideline-flycheck-20230402.1816.el",
+          "author": null,
+          "description": "The sideline-flycheck package has been updated to version 20230402.1816.",
+          "link": "https://melpa.org/#/sideline-flycheck",
+          "publishedOn": "2023-04-02T18:16:00.000Z",
+          "wordCount": 105,
+          "title": "sideline-flycheck (20230402.1816) --- Show flycheck errors with sideline",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dune-20230402.1815.tar",
+          "author": null,
+          "description": "The dune package has been updated to version 20230402.1815.",
+          "link": "https://melpa.org/#/dune",
+          "publishedOn": "2023-04-02T18:15:00.000Z",
+          "wordCount": 105,
+          "title": "dune (20230402.1815) --- Integration with the dune build system",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/php-runtime-20230402.1648.el",
           "author": null,
@@ -3074,6 +3224,36 @@
           "publishedOn": "2023-04-02T15:54:00.000Z",
           "wordCount": 105,
           "title": "all-the-icons-ibuffer (20230402.1554) --- Display icons for all buffers in ibuffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/vcsh-20230402.1229.el",
+          "author": null,
+          "description": "The vcsh package has been updated to version 20230402.1229.",
+          "link": "https://melpa.org/#/vcsh",
+          "publishedOn": "2023-04-02T12:29:00.000Z",
+          "wordCount": 105,
+          "title": "vcsh (20230402.1229) --- vcsh integration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/stripes-20230402.1228.el",
+          "author": null,
+          "description": "The stripes package has been updated to version 20230402.1228.",
+          "link": "https://melpa.org/#/stripes",
+          "publishedOn": "2023-04-02T12:28:00.000Z",
+          "wordCount": 105,
+          "title": "stripes (20230402.1228) --- highlight alternating lines differently",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/magit-vcsh-20230402.1219.el",
+          "author": null,
+          "description": "The magit-vcsh package has been updated to version 20230402.1219.",
+          "link": "https://melpa.org/#/magit-vcsh",
+          "publishedOn": "2023-04-02T12:19:00.000Z",
+          "wordCount": 105,
+          "title": "magit-vcsh (20230402.1219) --- Magit vcsh integration",
           "imageUrl": null
         },
         {
@@ -3174,6 +3354,16 @@
           "publishedOn": "2023-03-31T13:24:00.000Z",
           "wordCount": 105,
           "title": "amread-mode (20230331.1324) --- A minor mode helper user speed-reading",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-inline-anim-20230331.1048.el",
+          "author": null,
+          "description": "The org-inline-anim package has been updated to version 20230331.1048.",
+          "link": "https://melpa.org/#/org-inline-anim",
+          "publishedOn": "2023-03-31T10:48:00.000Z",
+          "wordCount": 105,
+          "title": "org-inline-anim (20230331.1048) --- Inline playback of animated GIF/PNG for Org",
           "imageUrl": null
         },
         {
@@ -6225,136 +6415,6 @@
           "wordCount": 105,
           "title": "adoc-mode (20230305.853) --- a major-mode for editing AsciiDoc files",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ffmpeg-utils-20230305.709.el",
-          "author": null,
-          "description": "The ffmpeg-utils package has been updated to version 20230305.709.",
-          "link": "https://melpa.org/#/ffmpeg-utils",
-          "publishedOn": "2023-03-05T07:09:00.000Z",
-          "wordCount": 105,
-          "title": "ffmpeg-utils (20230305.709) --- FFmpeg command utilities wrappers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/websocket-20230305.410.el",
-          "author": null,
-          "description": "The websocket package has been updated to version 20230305.410.",
-          "link": "https://melpa.org/#/websocket",
-          "publishedOn": "2023-03-05T04:10:00.000Z",
-          "wordCount": 105,
-          "title": "websocket (20230305.410) --- Emacs WebSocket client and server",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dtk-20230304.2348.el",
-          "author": null,
-          "description": "The dtk package has been updated to version 20230304.2348.",
-          "link": "https://melpa.org/#/dtk",
-          "publishedOn": "2023-03-04T23:48:00.000Z",
-          "wordCount": 105,
-          "title": "dtk (20230304.2348) --- access SWORD content via diatheke",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dash-20230304.2223.tar",
-          "author": null,
-          "description": "The dash package has been updated to version 20230304.2223.",
-          "link": "https://melpa.org/#/dash",
-          "publishedOn": "2023-03-04T22:23:00.000Z",
-          "wordCount": 105,
-          "title": "dash (20230304.2223) --- A modern list library for Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/cmake-font-lock-20230304.2223.el",
-          "author": null,
-          "description": "The cmake-font-lock package has been updated to version 20230304.2223.",
-          "link": "https://melpa.org/#/cmake-font-lock",
-          "publishedOn": "2023-03-04T22:23:00.000Z",
-          "wordCount": 105,
-          "title": "cmake-font-lock (20230304.2223) --- Advanced, type aware, highlight support for CMake",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/wiki-nav-20230304.2212.el",
-          "author": null,
-          "description": "The wiki-nav package has been updated to version 20230304.2212.",
-          "link": "https://melpa.org/#/wiki-nav",
-          "publishedOn": "2023-03-04T22:12:00.000Z",
-          "wordCount": 105,
-          "title": "wiki-nav (20230304.2212) --- Simple file navigation using [[WikiStrings]]",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/button-lock-20230304.2212.el",
-          "author": null,
-          "description": "The button-lock package has been updated to version 20230304.2212.",
-          "link": "https://melpa.org/#/button-lock",
-          "publishedOn": "2023-03-04T22:12:00.000Z",
-          "wordCount": 105,
-          "title": "button-lock (20230304.2212) --- Clickable text defined by regular expression",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-ml-20230304.1913.tar",
-          "author": null,
-          "description": "The org-ml package has been updated to version 20230304.1913.",
-          "link": "https://melpa.org/#/org-ml",
-          "publishedOn": "2023-03-04T19:13:00.000Z",
-          "wordCount": 105,
-          "title": "org-ml (20230304.1913) --- Functional Org Mode API",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/fb2-reader-20230304.1832.el",
-          "author": null,
-          "description": "The fb2-reader package has been updated to version 20230304.1832.",
-          "link": "https://melpa.org/#/fb2-reader",
-          "publishedOn": "2023-03-04T18:32:00.000Z",
-          "wordCount": 105,
-          "title": "fb2-reader (20230304.1832) --- Read FB2 and FB2.ZIP documents",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/poetry-20230304.1540.el",
-          "author": null,
-          "description": "The poetry package has been updated to version 20230304.1540.",
-          "link": "https://melpa.org/#/poetry",
-          "publishedOn": "2023-03-04T15:40:00.000Z",
-          "wordCount": 105,
-          "title": "poetry (20230304.1540) --- Interface to Poetry",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/inf-ruby-20230304.1512.el",
-          "author": null,
-          "description": "The inf-ruby package has been updated to version 20230304.1512.",
-          "link": "https://melpa.org/#/inf-ruby",
-          "publishedOn": "2023-03-04T15:12:00.000Z",
-          "wordCount": 105,
-          "title": "inf-ruby (20230304.1512) --- Run a Ruby process in a buffer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/powerthesaurus-20230304.1454.el",
-          "author": null,
-          "description": "The powerthesaurus package has been updated to version 20230304.1454.",
-          "link": "https://melpa.org/#/powerthesaurus",
-          "publishedOn": "2023-03-04T14:54:00.000Z",
-          "wordCount": 105,
-          "title": "powerthesaurus (20230304.1454) --- Powerthesaurus integration",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/transient-20230304.1149.tar",
-          "author": null,
-          "description": "The transient package has been updated to version 20230304.1149.",
-          "link": "https://melpa.org/#/transient",
-          "publishedOn": "2023-03-04T11:49:00.000Z",
-          "wordCount": 105,
-          "title": "transient (20230304.1149) --- Transient commands",
-          "imageUrl": null
         }
       ]
     },
@@ -6363,6 +6423,106 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/12as4x3/how_to_get_a_nice_sly_setup/",
+          "author": null,
+          "description": "whenever i turn on sly to edit a lisp file or to use the repl, i would like to have something like lispy mode turned on. This would autocomplete parentheses and allow me to work comfortably with s-exps. Just turning on lispy mode causes some annoying behavior in the repl. Specifically, if im typing \n (defun f (x).) \n and point is at . then pressing ENTER evaluates the form, rather than inserting a new line. Maybe I set this up wrong or the lispy package doesnt interact nicely with sly?\n    submitted by    /u/cuntymccuntlicker  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/12as4x3/how_to_get_a_nice_sly_setup/",
+          "publishedOn": "2023-04-03T17:54:59.000Z",
+          "wordCount": 13218,
+          "title": "how to get a nice sly setup",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/12arjtn/my_basic_keybinding_setup_for_emacs_with_evilmode/",
+          "author": null,
+          "description": "I use evil-mode with a few modifications.\n In normal mode:\n  \ns\n s is remapped to org-cycle and S (uppercase s) to org-shifttab as I don't use the substitute key in evil-mode, and for me org-cycle is the most used command in org-mode, Tab key is just a little bit too far away from the home row. Correspondingly cycle keys in magit diff view and pdf-tool's outline view are also remapped to s.\n \nx\n x is changed to evil-visual-line for a quick single key press. Remap X (uppercase x) to evil-delete-char to retain x's original function.\n \nLeader keys\n Main leader keys are Space, f, t.\n F (uppercase f) and T (uppercase t) are rebound to keep f and t's original evil commands.\n \ne\n e is set to avy-goto-char.\n \nu and U\n u is for evil-undo, U (uppercase u) is changed to evil-redo.\n \nSwap n with p\n ev…",
+          "link": "https://www.reddit.com/r/emacs/comments/12arjtn/my_basic_keybinding_setup_for_emacs_with_evilmode/",
+          "publishedOn": "2023-04-03T17:35:31.000Z",
+          "wordCount": 14060,
+          "title": "My basic keybinding setup for Emacs with evil-mode and Kmonad to avoid using pinkies",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/12aofmz/neotree_file_is_missing_help/",
+          "author": null,
+          "description": "submitted by    /u/RedRightHand-  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/12aofmz/neotree_file_is_missing_help/",
+          "publishedOn": "2023-04-03T15:49:02.000Z",
+          "wordCount": 12595,
+          "title": "Neotree file is missing. HELP",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/12amgsb/how_to_make_forwardsentence_ignore_nonbreaking/",
+          "author": null,
+          "description": "I have set sentence-end-double-space to nil, and I'm trying to use non-breaking spaces after things like \"Mr.\" in \"Mr. Johnson\" so as to distinguish abbreviation dots from end of sentence dots. However, even when I include a non-breaking space (C-x 8 SPC), commands like forward-sentence and backward-sentence will still stop on those.\n My sentence-end variable is nil, so according to the sentence-end function, the value will come from the variables ‘sentence-end-base’, ‘sentence-end-double-space’, ‘sentence-end-without-period’ and ‘sentence-end-without-space’. I've checked all of them, and the only one that seems to be pertaining is sentence-end-base, which says:\n  \nIts value is \"[.?!…‽][]\\\"'”’)}»›]*\" \n Regexp matching the basic end of a sentence, not including following space.\n  \nIt doesn't say anything about distinguishing spaces from non-breaking spaces. Any clues on how to change this behavior?\n Also, can you see any unintended consequences of the setup I'm planning to use (one space after sentences, one non-breaking space after things that should not be ending sentences)?\n    submitted by    /u/copperbranch  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/12amgsb/how_to_make_forwardsentence_ignore_nonbreaking/",
+          "publishedOn": "2023-04-03T14:39:00.000Z",
+          "wordCount": 13074,
+          "title": "How to make forward-sentence ignore non-breaking spaces?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/12ahq20/food_for_thought_regarding_note_taking/",
+          "author": null,
+          "description": "I've found this to be an interesting take on the subject.\n I personally don't do note taking, though I sure am guilty of abusing init.el as a procrastination tool.\n https://www.youtube.com/watch?v=baKCC2uTbRc\n    submitted by    /u/101b147ch  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/12ahq20/food_for_thought_regarding_note_taking/",
+          "publishedOn": "2023-04-03T11:40:52.000Z",
+          "wordCount": 13386,
+          "title": "Food for thought regarding note taking",
+          "imageUrl": "https://external-preview.redd.it/_nAewViDSYkB0gCFXddb0NdMd1jl8JOvsw-RG7K8R4Y.jpg?auto=webp&v=enabled&s=6fccc39117f84e1fab303a34ab7d8fc2f75eb2e3"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/12affbc/hello_everyone_emacs_eaf_is_a_great_tool_im/",
+          "author": null,
+          "description": "submitted by    /u/nowislewis  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/12affbc/hello_everyone_emacs_eaf_is_a_great_tool_im/",
+          "publishedOn": "2023-04-03T09:56:50.000Z",
+          "wordCount": 12920,
+          "title": "Hello everyone, Emacs EAF is a great tool. I'm wondering if anyone has successfully used it on Guix System and can share their experience?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/12aeiy6/overlaysannotations_with_command_output/",
+          "author": null,
+          "description": "This is a bit of a nice-to-have, but as a programmer I sometimes wish for a way to augment code/data I'm looking at. My concrete example of yesterday was a compact hex-representation of some joystick input data. I discovered recently the highlight-functionality, and that has already been super helpful in making visibly distinct marks in long logfiles.\n I know that Emacs can do overlays (and I know that they are costly), so I wonder if anybody is aware of something like svg-annotate/git blame where for each line I get an annotation of the meaning of that line.\n    submitted by    /u/__deeetz__  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/12aeiy6/overlaysannotations_with_command_output/",
+          "publishedOn": "2023-04-03T09:03:36.000Z",
+          "wordCount": 1995,
+          "title": "Overlays/Annotations with command output?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/12aakes/performance_magit_vs_mgit_meta_git/",
+          "author": null,
+          "description": "submitted by    /u/atamariya  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/12aakes/performance_magit_vs_mgit_meta_git/",
+          "publishedOn": "2023-04-03T05:27:43.000Z",
+          "wordCount": 13394,
+          "title": "Performance: magit vs mgit (Meta git)",
+          "imageUrl": "https://external-preview.redd.it/cbdTUbK2Q8qIF7-va_h6OyghlPXjTdfTkajYZ06yq5Y.jpg?auto=webp&v=enabled&s=35d93287e234c3be48bef71cd1e3f4f566c16707"
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/12a83uf/import_of_icalendar_ical_into_orgmode_file/",
+          "author": null,
+          "description": "icsorg - Import Calendar Events into Emacs Org Mode will import a .ical file into an org-mode file. So I have this\n * Snow removal B-building :PROPERTIES: :ICAL_EVENT: t :ID: 3jc3scg84omih16ns715t70blo@google.com :STATUS: CONFIRMED :LAST_MODIFIED: [2023-04-02 Sun 16:23] :DURATION: 00:30 hh:mm :END: <2023-04-02 Sun 16:00-16:30> B-building sidewalk snow removal. (A was clear.) * Garage assessment :PROPERTIES: :ICAL_EVENT: t :ID: 71003vjbq6aln1594pnp5p2qce@google.com :STATUS: CONFIRMED :LAST_MODIFIED: [2023-04-02 Sun 20:05] :DURATION: 01:00 hh:mm :END: <2023-03-30 Thu 14:30-15:30> <ul><li>get new lock for middle shed from store</li><li>buy cleaning supplies from Ace Hardware</li></ul> ... \n ...and more entries. It supposedly will also work with org-agenda -- and so C-a a gives \"Agenda for current week.\" \n Month-agenda (W13-W18): Sunday 2 April 2023 undefined: 16:00-16:30 Snow removal B-building 22:24 ┄┄┄┄┄ ← now ─────────────────────────────────────────────── 20:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 18:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 16:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 14:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 12:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 10:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 8:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ Monday 3 April 2023 W14 Tuesday 4 April 2023 ... \n Good. But how can I get a view of previous weeks, future weeks? And how is it even doing this? I don't see any TODOs or such in the exported org-mode file. What is it, how is it populating org-agenda?\n    submitted by    /u/teilchen010  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/12a83uf/import_of_icalendar_ical_into_orgmode_file/",
+          "publishedOn": "2023-04-03T03:28:46.000Z",
+          "wordCount": 2095,
+          "title": "Import of iCalendar .ical into org-mode file question",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/129xph5/am_i_right_in_saying_that_excorporate_is_broken/",
+          "author": null,
+          "description": "I start a new job tomorrow, and I wanted to try retrieving calendar information using excorporate.\n However, the EWS url returns a 401 when an attempt is made to access it. Increasing the verbosity of the logging from request ((setq request-log-level 'blather)) allows us to see that basic auth is being attempted against the https://outlook.office365.com/EWS/Services.wsdl url.\n This article would indicate that Basic Auth is no longer supported: https://techcommunity.microsoft.com/t5/exchange-team-blog/basic-authentication-deprecation-in-exchange-online-september/ba-p/3609437\n I think this means that Excorporate can no longer authenticate with O365 as a result.\n    submitted by    /u/FederalPirate2867  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/129xph5/am_i_right_in_saying_that_excorporate_is_broken/",
+          "publishedOn": "2023-04-02T20:49:43.000Z",
+          "wordCount": 12984,
+          "title": "Am I right in saying that Excorporate is broken on O365 since circa Sept 2022?",
+          "imageUrl": "https://external-preview.redd.it/95e5QnXNHWhOCa0B_aBFcrZuqSu-z8I5zS2PW3COheo.jpg?auto=webp&v=enabled&s=dd9c59efdcee52c19751ea5995263be3bbb19fb7"
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/129wa1s/lsp_bridge_with_lsp_ui/",
           "author": null,
@@ -10331,96 +10491,6 @@
           "publishedOn": "2023-03-05T11:47:47.000Z",
           "wordCount": 12621,
           "title": "UnicodeText",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/11imz03/multiplecursors_with_bar_cursor_issue/",
-          "author": null,
-          "description": "I have (setq cursor-type 'bar) in my config. \n When I use multiple-cursors, the \"fake\" cursors are shifting the text to the right: \n https://imgur.com/OBGF9xM\n Has anybody figure out how to tell multiple-cursors to use the same cursor style as the default?\n    submitted by    /u/grLng  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/11imz03/multiplecursors_with_bar_cursor_issue/",
-          "publishedOn": "2023-03-05T04:04:25.000Z",
-          "wordCount": 12813,
-          "title": "multiple-cursors with bar cursor issue",
-          "imageUrl": "https://external-preview.redd.it/C6QtAZK0fpYv5jljCJbzoNJ9czyC_eg_3F-mN5GwmfM.jpg?auto=webp&v=enabled&s=7ce7ac11c50b2e4783b31796a95ece86c7e70239"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/11iexxq/would_you_pay_for_an_emacs_distro/",
-          "author": null,
-          "description": "Hi,\n Would you pay for a yearly license for an Emacs distro preloaded with things such as Magit, lsp-mode, etc? Basically, a good out of the box IDE experience. The majority (80%?) of the proceeds could be donated to the devs of the packages. Basically, a nice value add that also benefits our package devs.\n    submitted by    /u/Ok-Plum-6937  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/11iexxq/would_you_pay_for_an_emacs_distro/",
-          "publishedOn": "2023-03-04T22:13:09.000Z",
-          "wordCount": 15118,
-          "title": "Would you pay for an Emacs distro?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/11ibpsy/how_to_properly_display_code_blocks_in_latex/",
-          "author": null,
-          "description": "I have trying out writing in org mode and exporting it as latex following this guide.\n I wrote the following org file to test it out and exported it to latex:\n ITLE: Org Latex Test #+SUBTITLE: /Straightforward Emacs/ #+AUTHOR: Jack #+SETUPFILE: ~/.emacs.d/jake-latex-standard.org * First Heading :noexport: Hello this is a test sample * Second headings This is another header with code block #+begin_src python print(\"hello world\") print(\"This is a code block\") #+end_src #+CAPTION: This is a Table | Name | id | Age | | Peter | 1234 | 50 | | Sue | 4321 | 54 | | | | | * Third Headings \n But the code block in the pdf looks messy and I was wondering how I can properly format the code block in org mode so that when it gets exported to latex it looks professional?\n ​\n https://preview.redd.it/w7vowii74sla1.png?width=756&format=png&auto=webp&s=a691a2a5205be108c3f146fab1f48dc1f2852c5d\n    submitted by    /u/waterstrider123  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/11ibpsy/how_to_properly_display_code_blocks_in_latex/",
-          "publishedOn": "2023-03-04T20:06:37.000Z",
-          "wordCount": 12714,
-          "title": "How to properly display code blocks in Latex export?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/11ia8zg/why_use_emacs_for_latex_instead_of_overleaf/",
-          "author": null,
-          "description": "I know emacs has much better autocomplete (e.g. yasnippets) than Overleaf. However, I've found that simply defining new commands in overleaf goes a long way and provides similar benefits to using snippets. Also, org mode has the option to render LaTeX directly inside the editor instead of having one screen for the editor and another for the rendered output. I guess the bullet point features of org mode are also pretty cool. However, despite all of these cool features, I find when I use emacs I end up wasting a lot of time researching how to do stuff. In practice I find simply writing things up in Overleaf to be a lot faster. Does emacs eventually get faster if you're good enough at it?\n    submitted by    /u/TiloRC  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/11ia8zg/why_use_emacs_for_latex_instead_of_overleaf/",
-          "publishedOn": "2023-03-04T19:10:15.000Z",
-          "wordCount": 13433,
-          "title": "Why use Emacs for LaTeX instead of Overleaf?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/11i8abv/cdlatex_giving_me_a_wrong_type_argument/",
-          "author": null,
-          "description": "Everything was working fine. I was editing a tex document and when I pressed ' followed by M-1 (because I wanted to wrap the previous word in a \\mathrm{}), i got that error. I had not made any changes to any .el files, I was just editing my tex document as usual. My fingers may have spazzed out like they sometimes do when trying to input a complicated keychord, but it is weird that all of a sudden this is not working. Does anyone have any idea what to do? I restarted emacs but that does not solve the problem, and neither does re-evaluating the cdlatex.el file.\n    submitted by    /u/cuntymccuntlicker  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/11i8abv/cdlatex_giving_me_a_wrong_type_argument/",
-          "publishedOn": "2023-03-04T17:55:12.000Z",
-          "wordCount": 12672,
-          "title": "CDlatex giving me a 'Wrong type argument: char-or-string-p, 134217777' error",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/11i3y6c/marginalia_with_helm/",
-          "author": null,
-          "description": "Curious if anybody has tried this integration. just tried it out of the box to see if it would pick up but didn’t, don’t see anything about helm on the github (or closed issues) but maybe curious if someone uses helm+marginalia?\n    submitted by    /u/Hooxen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/11i3y6c/marginalia_with_helm/",
-          "publishedOn": "2023-03-04T16:18:56.000Z",
-          "wordCount": 12526,
-          "title": "marginalia with helm?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/11i29j5/ekg_version_02_release_info_recent_notes/",
-          "author": null,
-          "description": "Hi all, I've released ekg version 0.2. Why it feels like just yesterday I was release ekg version 0.1, and in fact it wasn't that long ago.\n ekg is a note taking application for emacs that stores all data in sqlite, is very tag-oriented, and designed to be easy to extend.\n The changes for version 0.2 are:\n  \nAdded hooks ekg-add-schema-hook, ekg-note-pre-save-hook, ekg-note-save-hook, ekg-note-delete-hook, and ekg-note-add-tag-hook to enable customization.\n New commands ekg-show-notes-latest-captured, =kg-show-notes-latest-modified, for showing notes created or modified recently.\n Introduced variable ekg-notes-size to control the default page size for limited views such as ekg-show-notes-latest-captured.\n Added templating.\n Added embedding as an optional add-on, to enable note similarity and note search; requires an account at OpenAI or similar embedding provider.\n Added new function ekg-active-notes to easily get all non-trashed notes.\n Improved ability to have note list buffers that have flexible titles and operation, notably improving the ekg-show-notes-in-trash command.\n Standardized buffer names for ekg-notes-mode buffers, which all are prepended with \"ekg\" and surrounded by asterisks, to denote that they are non-file-based.\n Added documentation in texinfo, viewable via M-x info.\n Fixed bug interfering with completion at the beginning of the tag property line.\n  \nFor details, watch the demo of 0.2 changes. I think the templating is done via a unique way that shows off the power of ekg, and embedding stuff is advanced, super useful, and virtually no other note app in any system has it. On the other hand, the embeddings costs a very small amount of money and has unfortunate privacy implications. I think it's well worth it, and I hope that you enjoy this update.\n    submitted by    /u/ahyatt  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/11i29j5/ekg_version_02_release_info_recent_notes/",
-          "publishedOn": "2023-03-04T15:43:59.000Z",
-          "wordCount": 12960,
-          "title": "ekg version 0.2 release: info, recent notes, templates, and embeddings!",
-          "imageUrl": "https://external-preview.redd.it/T4j70TpBrmN_kdD7vo8BHu3xKns3FgnVspKP-5qiIXY.jpg?auto=webp&v=enabled&s=d111120a732993974a79805d7a78a4f60e4f03ed"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/11i0hv6/a_minimal_org_mode_scratch_area_for_your_iphone/",
-          "author": null,
-          "description": "https://apps.apple.com/us/app/scratch/id1671420139\n    submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/11i0hv6/a_minimal_org_mode_scratch_area_for_your_iphone/",
-          "publishedOn": "2023-03-04T14:30:34.000Z",
-          "wordCount": 12927,
-          "title": "A minimal org mode *scratch* area for your iPhone",
-          "imageUrl": "https://external-preview.redd.it/wwa3PuwwTrrVv9JAkclAapZfaUEOaGvIpKJwwtHHDps.png?format=pjpg&auto=webp&v=enabled&s=a63364645325aec6a8a6e885d47576fcc0dcf657"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/11hz4x2/documentation_for_car_and_cdr_inside_emacs_is/",
-          "author": null,
-          "description": "Hear me out here. Before you downvote me, I'm not advocating that any functional changes be made to Emacs regarding car and cdr. I've looked up a brief history of the terms and their origins. They have their uses and should be neither removed nor renamed.\n However, as someone who's only recently learned about these terms, Emacs' self-documentation for these terms was not helpful at all to me. I saw the function being used in existing Elisp and thought, \"What's car and cdr?\" So I looked it up inside Emacs, and it told me that car returned the car of LIST. Wow... super helpful...\n I'd offer to submit a pull request to update the documentation if the source code wasn't managed via email, but it is. So, I'm just putting my opinion out here where someone else who contributes might read this. ``` car is a function defined in C source code.\n Signature (car LIST)\n Documentation Return the car of LIST. If LIST is nil, return nil.\n Error if LIST is not nil and not a cons cell. See also car-safe.\n See Info node (elisp)Cons Cells for a discussion of related basic Lisp concepts such as car, cdr, cons cell and list.\n Other relevant functions are documented in the list group.   cdr is a function defined in C source code.\n Signature (cdr LIST)\n Documentation Return the cdr of LIST. If LIST is nil, return nil.\n Error if LIST is not nil and not a cons cell. See also cdr-safe.\n See Info node (elisp)Cons Cells for a discussion of related basic Lisp concepts such as cdr, car, cons cell and list.\n Other relevant functions are documented in the list group. ```\n    submitted by    /u/bluecubedly  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/11hz4x2/documentation_for_car_and_cdr_inside_emacs_is/",
-          "publishedOn": "2023-03-04T13:28:14.000Z",
-          "wordCount": 15869,
-          "title": "Documentation for `car` and `cdr` inside Emacs is circular",
           "imageUrl": null
         }
       ]
