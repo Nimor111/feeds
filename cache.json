@@ -53,6 +53,36 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/135tvj1/manual_qa_for_cabalinstall/",
+          "author": null,
+          "description": "submitted by    /u/TechnoEmpress  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/135tvj1/manual_qa_for_cabalinstall/",
+          "publishedOn": "2023-05-02T17:06:30.000Z",
+          "wordCount": 2172,
+          "title": "Manual QA for cabal-install",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/135k6tx/fmap_fmap_const_h_just_huynothingjust_huyhuy/",
+          "author": null,
+          "description": "UPDATE: solved\n Thank you all, really. I've spent about 6 days to understand that\n I've just missed thing that outer fmap now takes function fmap (const 'h')\n LOL\n /thread\n Hi, I don't understand how fmap . fmap evaluates, please help. I've spent already 6 days and I don't get it still\n for example:(fmap . fmap) (const 'h') [Just \"huy\",Nothing,Just \"huyhuy\"]\n I've understood how we get the final type\n Here it is:\n (.) :: ((g x -> g y) -> (f (g x) -> f (g y))) -> ((x -> y) -> (g x -> g y)) -> (x -> y) -> (f (g x) -> f (g y)) fmap . fmap :: (x -> y) -> f (g x) -> f (g y) (fmap . fmap) (const 'h') :: (b -> Char) -> f (g b) -> f (g Char) (fmap . fmap) (const 'h') [Just \"huy\",Nothing,Just \"huyhuy\"] -- -- :: List (Maybe String) -> List (Maybe Char) \n Here is a full signature\n (fmap . fmap) (const 'h') [Just \"huy\",Nothing,Just \"huyhuy\"] -- :: ((Maybe String -> Maybe Char) -> (List (Maybe String) -> List (Maybe Char))) -> ((String -> Char) -> (Maybe String -> Maybe Char)) -> (String -> Char) -> (List (Maybe String) -> List (Maybe Char)) \n But not I'm trying to understand how it evaluates\n As I understood, composition will apply first and we get this:\n (.) fmap fmap = \\x -> fmap (fmap x) \n Then we apply const 'h' like this\n fmap (fmap const 'h') fmap (fmap (const ‘h’)) [UPDATED] \n And then we wait for our list, so inner fmap will evaluate first, right? Like this:\n fmap f lms case lms of [] -> [] (x:xs) -> const 'h' Just \"huy\" : map f xs -- 'p' (x:xs) -> const 'p' Nothing : map f xs -- 'p' (x:xs) -> const 'p' Just \"woohoo\" : map f xs -- 'p' [] -> [] -- 'p':'p':'p':[] -- \"ppp\" \n Am I right? If yes, then how the next fmap will evaluate?\n It doesn't has function applied, just only \"ppp\"\n That's absurd\n PLEASE, HELP, sorry for english if so\n    submitted by    /u/Interesting-Pack-814  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/135k6tx/fmap_fmap_const_h_just_huynothingjust_huyhuy/",
+          "publishedOn": "2023-05-02T12:45:04.000Z",
+          "wordCount": 2512,
+          "title": "(fmap . fmap) (const 'h') [Just \"huy\",Nothing,Just \"huyhuy\"]",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1355jm7/help_compiling_to_wasm/",
+          "author": null,
+          "description": "Hello, I need to compile this program https://github.com/domoszlai/juicy-gcode to a WASM exe, because I want to use it on a Android app. But it throws this error, I'm absolutely new in Haskell, does anybody can help me to compile it or and alternative please? Thanks.\n $ wasm32-wasi-cabal build --minimize-conflict-set\n Resolving dependencies...\n Error: cabal: Could not resolve dependencies:\n [__0] trying: juicy-gcode-0.3.0.0 (user goal)\n [__1] next goal: text (dependency of juicy-gcode)\n [__1] rejecting: text-2.0.2/installed-2.0.2 (conflict: juicy-gcode =>\n text>=1.2.2 && <1.3)\n [__1] skipping: text-2.0.2, text-2.0.1, text-2.0 (has the same characteristics\n that caused the previous version to fail: excluded by constraint '>=1.2.2 &&\n <1.3' from 'juicy-gcode')\n [__1] trying: text-1.2.5.0\n [__2] next goal: base (dependency of juicy-gcode)\n [__2] rejecting: base-4.18.0.0/installed-4.18.0.0 (conflict: text =>\n ghc-prim>=0.2 && <0.9, base => ghc-prim==0.10.0/installed-0.10.0)\n [__2] rejecting: base-4.18.0.0, base-4.17.1.0, base-4.17.0.0, base-4.16.4.0,\n base-4.16.3.0, base-4.16.2.0, base-4.16.1.0, base-4.16.0.0, base-4.15.1.0,\n base-4.15.0.0, base-4.14.3.0, base-4.14.2.0, base-4.14.1.0, base-4.14.0.0,\n base-4.13.0.0, base-4.12.0.0, base-4.11.1.0, base-4.11.0.0, base-4.10.1.0,\n base-4.10.0.0, base-4.9.1.0, base-4.9.0.0, base-4.8.2.0, base-4.8.1.0,\n base-4.8.0.0, base-4.7.0.2, base-4.7.0.1, base-4.7.0.0, base-4.6.0.1,\n base-4.6.0.0, base-4.5.1.0, base-4.5.0.0, base-4.4.1.0, base-4.4.0.0,\n base-4.3.1.0, base-4.3.0.0, base-4.2.0.2, base-4.2.0.1, base-4.2.0.0,\n base-4.1.0.0, base-4.0.0.0, base-3.0.3.2, base-3.0.3.1 (constraint from\n non-upgradeable package requires installed instance)\n [__2] fail (backjumping, conflict set: base, juicy-gcode, text)\n After searching the rest of the dependency tree exhaustively, these were the\n goals I've had most trouble fulfilling: text, base, juicy-gcode\n    submitted by    /u/Fabian222005  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1355jm7/help_compiling_to_wasm/",
+          "publishedOn": "2023-05-01T23:58:39.000Z",
+          "wordCount": 2366,
+          "title": "Help compiling to WASM.",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/134u77f/display_calling_context_for_constraint_typeerror/",
           "author": null,
           "description": "I would like to be able to define custom constraint error messages that show the location of the calling context where the constraint error originated from, without template haskell, instead of where the error is defined. Is there a type that assumes the calling context? Or, is there a way to pass the calling context to a type function?\n Example\n 1 type MyError (a :: Symbol) = TypeError (Text a) 2 3 abc :: MyError \"ABC\" => a -> b \n I would like line 3 to be in the error not line 1.\n Unsatisfiable may be an option but it is not implemented yet.\n    submitted by    /u/HateUsernamesMore  \n [link]   [comments]",
@@ -1341,26 +1371,6 @@
           "wordCount": 13060,
           "title": "CLC Update (April 2023)",
           "imageUrl": "https://external-preview.redd.it/uUxcC4pq2wPNhEfNaesM3eWEpkU7wsrPRqmskOz28TI.jpg?auto=webp&v=enabled&s=b6fe39d11433020f7c7da993edc35cfcb6ba28d6"
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/12a4i5d/arbitrary_splitting_of_priority_queues/",
-          "author": null,
-          "description": "I realized a while back that it should be pretty easy to write an unordered split function for the pqueue package.\n splitU :: Int -> MinQueue a -> (MinQueue a, MinQueue a) \n splitU n q divides q into a priority queue of size min n (size q) and a priority queue of size max 0 (size q - n). I believe this can be achieved in amortized time O(log(min(n,|q|))) and worst case time O(log(max(n,|q|))) by operating in a manner analogous to binary subtraction. Which elements end up in which priority queue would be largely arbitrary. Would such an operation be useful for anything in practice? I haven't been able to think of anything, but I really want to have a reason to write this ;-).\n Edit: those bounds are wrong, but the real ones are still logarithmic.\n    submitted by    /u/davidfeuer  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/12a4i5d/arbitrary_splitting_of_priority_queues/",
-          "publishedOn": "2023-04-03T00:58:40.000Z",
-          "wordCount": 13400,
-          "title": "Arbitrary splitting of priority queues",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/12a2o2d/haskell_book_after_get_programming_with_haskell/",
-          "author": null,
-          "description": "I'm looking for a printed book to read after finishing with Manning Publication's Get Programming with Haskell.\n Some things to consider are that, though I can't say for sure why, I don't like this book. I think the issue is that it's light. Not just verbose, but lacking in substance. Since it isn't entirely vapid and having paid money for it, I will finish the book. It's just anemic. And the capstone projects are fun.\n Two books which worked well for me are Manning's The Joy of Clojure 2nd Ed. and PragProg's Programming Clojure 3rd Ed. This is of particular significance since at least 90% of the first seven chapters of The Joy of Clojure are redundant with Programming Clojure, which I read first. I feel like I'm getting less from reading Get Programming with Haskell than I did reading content I had already covered in another book. The content just isn't there.\n (Also, it's worth noting that the code examples are kind of crappy. I'm finding myself refactoring this \"expert's\" code because it's ugly and horribly redundant. One thing I like about Haskell is that it's beautiful, with minimal boilerplate, and code I write in Haskell looks great to me. I don't like looking at unsightly code, and his code is mostly that. But for the sake of learning, I can look beyond that.)\n So, with this in mind, what might /r/Haskell recommend as a second Haskell book?\n Edit: I should probably mention (admit?) that I am not a programmer, and if you exclude my Numerical Analysis textbook from grad school, those two Clojure books are the only programming books I've read. I have been programming at some level for decades, but I don't have a typical CompSci background. (Which may or may not be a good thing since it does also mean I don't need to unlearn OOP.)\n    submitted by    /u/nstgc  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/12a2o2d/haskell_book_after_get_programming_with_haskell/",
-          "publishedOn": "2023-04-02T23:48:09.000Z",
-          "wordCount": 2221,
-          "title": "Haskell book after Get Programming with Haskell?",
-          "imageUrl": null
         }
       ]
     },
@@ -1369,6 +1379,76 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/135t39y/help_with_abstraction_over_slick_in_scala_21310/",
+          "author": null,
+          "description": "to make it short I'm trying to make an abstraction for slick table manipulation to be as general as possible for any table in a given database, after a long time the code below is prototype that is as far as I have been able to make it, and it works (I've made basic CRUD using it)but I think it can be more abstract especially the 'baseTbl' but the compiler is having trouble inferring the types properly if I make it any more abstract, can any one help?\n ps: the (_Propety) is used because the code is supposed to run in a scalafx GUI and they are needed by scalafx objects\n ps2: also the reason for 2 classes (one generic and the second for Int) is because most tables have a simple id column that is integer with autoincrement but may not always be the case\n import scalafx.beans.property.{Boolea…",
+          "link": "https://www.reddit.com/r/scala/comments/135t39y/help_with_abstraction_over_slick_in_scala_21310/",
+          "publishedOn": "2023-05-02T16:37:43.000Z",
+          "wordCount": 2938,
+          "title": "help with abstraction over slick in scala 2.13.10",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/135t2i2/top_scala_hiring_companies_april_2023/",
+          "author": null,
+          "description": "Taken from 300+ Scala jobs on FairJoin.com\n X-Axis is number of Scala job postings\n https://preview.redd.it/wmhbw82j3gxa1.png?width=1058&format=png&auto=webp&s=e4a3a004e40e895cf0606746a543f6fc79f5abb6\n    submitted by    /u/FairJoin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/135t2i2/top_scala_hiring_companies_april_2023/",
+          "publishedOn": "2023-05-02T16:36:58.000Z",
+          "wordCount": 2151,
+          "title": "Top Scala Hiring Companies - April 2023",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/135ilwr/daniel_beskin_fixingup_production_with/",
+          "author": null,
+          "description": "submitted by    /u/smlaccount  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/135ilwr/daniel_beskin_fixingup_production_with/",
+          "publishedOn": "2023-05-02T11:40:37.000Z",
+          "wordCount": 2138,
+          "title": "Daniel Beskin FIXING-UP PRODUCTION WITH PROPERTY-BASED TESTING Scalar Conference 2023",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/135huw7/is_the_jvm_a_upside_or_downside_to_scala/",
+          "author": null,
+          "description": "I am still relatively new to Scala, and when I read stuff online about Scala there seems to be a schism between people who think the JVM is an exciting selling point and those who think the JVM is a necessary evil to get the language working. I don’t have much experience with the JVM or non-Scala JVM languages, and I only notice the JVM in error logs, so I don’t know why so many people are passionately for or against the JVM. Is there something I am missing about it?\n    submitted by    /u/winklon  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/135huw7/is_the_jvm_a_upside_or_downside_to_scala/",
+          "publishedOn": "2023-05-02T11:03:50.000Z",
+          "wordCount": 2230,
+          "title": "Is the JVM a upside or downside to Scala?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/135f4tt/accumulate_errors_with_typelevel_cats/",
+          "author": null,
+          "description": "submitted by    /u/julien-truffaut  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/135f4tt/accumulate_errors_with_typelevel_cats/",
+          "publishedOn": "2023-05-02T08:29:15.000Z",
+          "wordCount": 2146,
+          "title": "Accumulate errors with typelevel cats",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1356tz7/alex_nedelcu_monix_about_scala_3/",
+          "author": null,
+          "description": "submitted by    /u/UtilFunction  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1356tz7/alex_nedelcu_monix_about_scala_3/",
+          "publishedOn": "2023-05-02T00:57:07.000Z",
+          "wordCount": 2136,
+          "title": "Alex Nedelcu (Monix) about Scala 3",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1351jid/ducktape_016_is_out_now_with_fallible/",
+          "author": null,
+          "description": "submitted by    /u/_arain  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1351jid/ducktape_016_is_out_now_with_fallible/",
+          "publishedOn": "2023-05-01T21:16:23.000Z",
+          "wordCount": 2156,
+          "title": "ducktape 0.1.6 is out - now with Fallible Transformers and cross-compilation to Scala.js and Native!",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/134u4w4/one_and_done_embrace_singlefile_jvm_apps_for/",
           "author": null,
@@ -2138,26 +2218,6 @@
           "wordCount": 13539,
           "title": "Functional Error Handling in Scala",
           "imageUrl": "https://external-preview.redd.it/lwxbzd0RcwxMr0inAOI4iitzlIGj6MSPXlV0tjJJES0.jpg?auto=webp&v=enabled&s=d7e44fd05e657f2b8f91f5aed6b87d3ed556de3b"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/129qu0w/library_for_batching_requests/",
-          "author": null,
-          "description": "Hello,\n I have been working on a library to batch requests transparently, eg: transforming multiple concurrent dynamodb GetItem requests in one BatchGetItem requests or multiple concurrent elasticesearch index request to one batched request. \n https://github.com/filosganga/batcher\n    submitted by    /u/filosganga  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/129qu0w/library_for_batching_requests/",
-          "publishedOn": "2023-04-02T16:51:20.000Z",
-          "wordCount": 13828,
-          "title": "Library for batching requests",
-          "imageUrl": "https://external-preview.redd.it/cflbZ40J3fBWAfjkSEuMX-2bugKLXk6SwKAEn4CjorY.jpg?auto=webp&v=enabled&s=3258a384ece1cc34863fa1daf2a217f7fb890df4"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/129np1r/this_week_in_scala_apr_3_2023/",
-          "author": null,
-          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/129np1r/this_week_in_scala_apr_3_2023/",
-          "publishedOn": "2023-04-02T14:58:55.000Z",
-          "wordCount": 13544,
-          "title": "This week in #Scala (Apr 3, 2023)",
-          "imageUrl": "https://external-preview.redd.it/5nGVEtR5qJNdS2Go3aYZjLRHT6G4lZx5YWpMKxokE08.jpg?auto=webp&v=enabled&s=a68c893ef611ac952f85ea112089db606720f2a1"
         }
       ]
     },
@@ -2309,6 +2369,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/135ze1y/ai_generated_todos_task_list_org_mode/",
+          "author": null,
+          "description": "I do see a lot of potential in the below tool that uses AI to generate a draft task list with the correct subtasks broken down. I think it would honestly be a great quality of life to be able to export an org markdown file directly from a tool like this, insert it into org mode and already have a lot of the boilerplate work done in structuring relatively common tasks/projects (I don't imagine this tool would work well for more obscure tasks).\n https://goblin.tools/\n I sent some feedback to the dev of this to ask for org markdown export functionality but if they don't do it someone else will eventually, the application of \"AI\" is just too sensible. When my ADHD is bad, just breaking down tasks into subtasks is exhausting, if an AI can do the stupid simple work (that isn't demanding, complex mental work) of just getting most of my tasks written down than it is so much easier to start.\n    submitted by    /u/ChimpdenEarwicker  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/135ze1y/ai_generated_todos_task_list_org_mode/",
+          "publishedOn": "2023-05-02T20:33:02.000Z",
+          "wordCount": 2331,
+          "title": "AI generated Todos Task List -> org mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/13532oo/personal_project_simple_blogging_system_for/",
+          "author": null,
+          "description": "submitted by    /u/ultraphasor  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/13532oo/personal_project_simple_blogging_system_for/",
+          "publishedOn": "2023-05-01T22:16:46.000Z",
+          "wordCount": 2189,
+          "title": "Personal project: Simple blogging system for org-mode notes",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/134xzwa/orgmodern_todo_faces_not_applying_in_custom/",
           "author": null,
@@ -2798,16 +2878,6 @@
           "wordCount": 12684,
           "title": "org-hyperscheduler",
           "imageUrl": "https://external-preview.redd.it/RXDrcDq5vXTlijVO5YGmM75yvBJ7PtS50uEPe0DIFtg.jpg?auto=webp&v=enabled&s=2e4c95806db54f7bf2176122776ca81e2e9fb58d"
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/129uln6/how_to_switch_agenda_views_or_go_back_from_a_view/",
-          "author": null,
-          "description": "Edit: I thought just pressing C-c a and then choosing a different view would not work, because when I did that, the main window switched from the buffer I was editing to the agenda view, so I thought I was going to lose focus of the buffer I was editing.\n But once I selected a new agenda view, the buffer I was editing regained focus.\n So the answer is, just press C-c a and then choose the new view you want.\n --\n Original post:\n Let's say I'm in the week view of the Agenda (C-c a a) and I want to go to the view of my to-dos.\n I could press q to quit the week view, then press C-c a t.\n Is that the quickest way? I was wondering if there is a way to go \"back\" from an agenda view to the dispatcher, or to \"switch\" from one agenda view to another without quitting the agenda view entirely.\n I'm sorry if this is documented somewhere. I've looked in the manual and online and I'm coming up blank.\n    submitted by    /u/loopernow  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/129uln6/how_to_switch_agenda_views_or_go_back_from_a_view/",
-          "publishedOn": "2023-04-02T19:02:13.000Z",
-          "wordCount": 12844,
-          "title": "How to switch agenda views or go back from a view to the agenda dispatcher?",
-          "imageUrl": null
         }
       ]
     },
@@ -2816,6 +2886,46 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/lsp-java-20230502.1403.tar",
+          "author": null,
+          "description": "The lsp-java package has been updated to version 20230502.1403.",
+          "link": "https://melpa.org/#/lsp-java",
+          "publishedOn": "2023-05-02T14:03:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-java (20230502.1403) --- Java support for lsp-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/jet-20230502.1216.el",
+          "author": null,
+          "description": "The jet package has been updated to version 20230502.1216.",
+          "link": "https://melpa.org/#/jet",
+          "publishedOn": "2023-05-02T12:16:00.000Z",
+          "wordCount": 105,
+          "title": "jet (20230502.1216) --- Emacs integration for jet Clojure tool",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/nickel-mode-20230502.841.el",
+          "author": null,
+          "description": "The nickel-mode package has been updated to version 20230502.841.",
+          "link": "https://melpa.org/#/nickel-mode",
+          "publishedOn": "2023-05-02T08:41:00.000Z",
+          "wordCount": 105,
+          "title": "nickel-mode (20230502.841) --- A major mode for editing Nickel source code",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/diff-ansi-20230501.2304.el",
+          "author": null,
+          "description": "The diff-ansi package has been updated to version 20230501.2304.",
+          "link": "https://melpa.org/#/diff-ansi",
+          "publishedOn": "2023-05-01T23:04:00.000Z",
+          "wordCount": 105,
+          "title": "diff-ansi (20230501.2304) --- Display diff's using alternative diffing tools",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/org-assistant-20230501.1817.el",
           "author": null,
@@ -2864,6 +2974,16 @@
           "publishedOn": "2023-05-01T10:34:00.000Z",
           "wordCount": 105,
           "title": "transient (20230501.1034) --- Transient commands",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-tag-beautify-20230501.354.el",
+          "author": null,
+          "description": "The org-tag-beautify package has been updated to version 20230501.354.",
+          "link": "https://melpa.org/#/org-tag-beautify",
+          "publishedOn": "2023-05-01T03:54:00.000Z",
+          "wordCount": 105,
+          "title": "org-tag-beautify (20230501.354) --- Beautify Org mode tags",
           "imageUrl": null
         },
         {
@@ -4064,6 +4184,16 @@
           "publishedOn": "2023-04-19T16:16:00.000Z",
           "wordCount": 105,
           "title": "shell-maker (20230419.1616) --- Interaction mode for making comint shells",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ess-20230419.1527.tar",
+          "author": null,
+          "description": "The ess package has been updated to version 20230419.1527.",
+          "link": "https://melpa.org/#/ess",
+          "publishedOn": "2023-04-19T15:27:00.000Z",
+          "wordCount": 105,
+          "title": "ess (20230419.1527) --- Emacs Speaks Statistics",
           "imageUrl": null
         },
         {
@@ -5995,176 +6125,6 @@
           "wordCount": 105,
           "title": "citar-denote (20230403.1038) --- Minor mode to integrate Citar and Denote",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/clause-20230403.830.el",
-          "author": null,
-          "description": "The clause package has been updated to version 20230403.830.",
-          "link": "https://melpa.org/#/clause",
-          "publishedOn": "2023-04-03T08:30:00.000Z",
-          "wordCount": 105,
-          "title": "clause (20230403.830) --- Functions to move, mark, kill by clause",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elixir-ts-mode-20230403.823.el",
-          "author": null,
-          "description": "The elixir-ts-mode package has been updated to version 20230403.823.",
-          "link": "https://melpa.org/#/elixir-ts-mode",
-          "publishedOn": "2023-04-03T08:23:00.000Z",
-          "wordCount": 105,
-          "title": "elixir-ts-mode (20230403.823) --- Major mode for Elixir with tree-sitter support",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/nimbus-theme-20230403.819.el",
-          "author": null,
-          "description": "The nimbus-theme package has been updated to version 20230403.819.",
-          "link": "https://melpa.org/#/nimbus-theme",
-          "publishedOn": "2023-04-03T08:19:00.000Z",
-          "wordCount": 105,
-          "title": "nimbus-theme (20230403.819) --- Nimbus dark theme",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/company-20230403.214.tar",
-          "author": null,
-          "description": "The company package has been updated to version 20230403.214.",
-          "link": "https://melpa.org/#/company",
-          "publishedOn": "2023-04-03T02:14:00.000Z",
-          "wordCount": 105,
-          "title": "company (20230403.214) --- Modular text completion framework",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eshell-syntax-highlighting-20230402.2034.el",
-          "author": null,
-          "description": "The eshell-syntax-highlighting package has been updated to version 20230402.2034.",
-          "link": "https://melpa.org/#/eshell-syntax-highlighting",
-          "publishedOn": "2023-04-02T20:34:00.000Z",
-          "wordCount": 105,
-          "title": "eshell-syntax-highlighting (20230402.2034) --- Highlight eshell commands",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elpy-20230402.1946.tar",
-          "author": null,
-          "description": "The elpy package has been updated to version 20230402.1946.",
-          "link": "https://melpa.org/#/elpy",
-          "publishedOn": "2023-04-02T19:46:00.000Z",
-          "wordCount": 105,
-          "title": "elpy (20230402.1946) --- Emacs Python Development Environment",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/powerthesaurus-20230402.1904.el",
-          "author": null,
-          "description": "The powerthesaurus package has been updated to version 20230402.1904.",
-          "link": "https://melpa.org/#/powerthesaurus",
-          "publishedOn": "2023-04-02T19:04:00.000Z",
-          "wordCount": 105,
-          "title": "powerthesaurus (20230402.1904) --- Powerthesaurus integration",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/kaolin-themes-20230402.1851.tar",
-          "author": null,
-          "description": "The kaolin-themes package has been updated to version 20230402.1851.",
-          "link": "https://melpa.org/#/kaolin-themes",
-          "publishedOn": "2023-04-02T18:51:00.000Z",
-          "wordCount": 105,
-          "title": "kaolin-themes (20230402.1851) --- A set of eye pleasing themes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/copy-file-on-save-20230402.1829.el",
-          "author": null,
-          "description": "The copy-file-on-save package has been updated to version 20230402.1829.",
-          "link": "https://melpa.org/#/copy-file-on-save",
-          "publishedOn": "2023-04-02T18:29:00.000Z",
-          "wordCount": 105,
-          "title": "copy-file-on-save (20230402.1829) --- Copy file on save, automatic deployment it",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sideline-flymake-20230402.1816.el",
-          "author": null,
-          "description": "The sideline-flymake package has been updated to version 20230402.1816.",
-          "link": "https://melpa.org/#/sideline-flymake",
-          "publishedOn": "2023-04-02T18:16:00.000Z",
-          "wordCount": 105,
-          "title": "sideline-flymake (20230402.1816) --- Show flymake errors with sideline",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sideline-flycheck-20230402.1816.el",
-          "author": null,
-          "description": "The sideline-flycheck package has been updated to version 20230402.1816.",
-          "link": "https://melpa.org/#/sideline-flycheck",
-          "publishedOn": "2023-04-02T18:16:00.000Z",
-          "wordCount": 105,
-          "title": "sideline-flycheck (20230402.1816) --- Show flycheck errors with sideline",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dune-20230402.1815.tar",
-          "author": null,
-          "description": "The dune package has been updated to version 20230402.1815.",
-          "link": "https://melpa.org/#/dune",
-          "publishedOn": "2023-04-02T18:15:00.000Z",
-          "wordCount": 105,
-          "title": "dune (20230402.1815) --- Integration with the dune build system",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/php-runtime-20230402.1648.el",
-          "author": null,
-          "description": "The php-runtime package has been updated to version 20230402.1648.",
-          "link": "https://melpa.org/#/php-runtime",
-          "publishedOn": "2023-04-02T16:48:00.000Z",
-          "wordCount": 105,
-          "title": "php-runtime (20230402.1648) --- Language binding bridge to PHP",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/all-the-icons-ibuffer-20230402.1554.el",
-          "author": null,
-          "description": "The all-the-icons-ibuffer package has been updated to version 20230402.1554.",
-          "link": "https://melpa.org/#/all-the-icons-ibuffer",
-          "publishedOn": "2023-04-02T15:54:00.000Z",
-          "wordCount": 105,
-          "title": "all-the-icons-ibuffer (20230402.1554) --- Display icons for all buffers in ibuffer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/vcsh-20230402.1229.el",
-          "author": null,
-          "description": "The vcsh package has been updated to version 20230402.1229.",
-          "link": "https://melpa.org/#/vcsh",
-          "publishedOn": "2023-04-02T12:29:00.000Z",
-          "wordCount": 105,
-          "title": "vcsh (20230402.1229) --- vcsh integration",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/stripes-20230402.1228.el",
-          "author": null,
-          "description": "The stripes package has been updated to version 20230402.1228.",
-          "link": "https://melpa.org/#/stripes",
-          "publishedOn": "2023-04-02T12:28:00.000Z",
-          "wordCount": 105,
-          "title": "stripes (20230402.1228) --- highlight alternating lines differently",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/magit-vcsh-20230402.1219.el",
-          "author": null,
-          "description": "The magit-vcsh package has been updated to version 20230402.1219.",
-          "link": "https://melpa.org/#/magit-vcsh",
-          "publishedOn": "2023-04-02T12:19:00.000Z",
-          "wordCount": 105,
-          "title": "magit-vcsh (20230402.1219) --- Magit vcsh integration",
-          "imageUrl": null
         }
       ]
     },
@@ -6173,6 +6133,106 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/135xiif/can_i_search_and_jump_between_open_windowssplits/",
+          "author": null,
+          "description": "Is there a package that is simillar to neovim's leap?\n For example, I have opened two windows. I want to incrementally search across both windows and get the ability to jump to text. \n I have tried the evil-snipe package but as I understand it only works in one active window.\n I am using doom emacs with evil-mode (don't know if it matters)\n Thanks\n    submitted by    /u/titoOdUA  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/135xiif/can_i_search_and_jump_between_open_windowssplits/",
+          "publishedOn": "2023-05-02T19:20:50.000Z",
+          "wordCount": 2222,
+          "title": "Can I search and jump between open windows/splits aka neovim leap plugin?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/135oyr6/tmux_sessionslike_package_for_emacs/",
+          "author": null,
+          "description": "I use Emacs (Evil) with eyebrowse and desktop.el for a persistent session. I would like to have multiple persistent sessions, each with its own eyebrowse workspaces and ideally its own set of persistent open buffers. Each session would be its own project with persistent window layouts.\n Is there a package that supports this? Not sure if desktop.el is conducive to multiple sessions. For a single session, last I checked, having more than one instance of Emacs when using desktop.el may cause some undesirable behavior when it comes to closing instances and saving them, at least with typical settings.\n  \nEDIT: C-x t 2 does not preserve eyebrowse workspaces, e.g. If there's 3 workspaces in one Emacs tab, closing one of the eyebrowse workspaces also closes it on the rest of the tabs.\n    submitted by    /u/immortal192  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/135oyr6/tmux_sessionslike_package_for_emacs/",
+          "publishedOn": "2023-05-02T15:14:47.000Z",
+          "wordCount": 2283,
+          "title": "Tmux sessions-like package for Emacs?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/135nyev/unable_to_scroll_back_in_vterm_buffer/",
+          "author": null,
+          "description": "I'm using tmux in vterm however I cannot scroll back through the history/buffer. When I need to go back through the history I find myself attaching the session in an standard terminal. \n I'm using doom emacs. Is there some really basic setting that I am just missing? To enable history when scrolling etc?\n    submitted by    /u/Arachnid_Independent  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/135nyev/unable_to_scroll_back_in_vterm_buffer/",
+          "publishedOn": "2023-05-02T14:59:31.000Z",
+          "wordCount": 2207,
+          "title": "Unable to scroll back in vterm buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/135kkx5/fyi_ch_typebreakmode/",
+          "author": null,
+          "description": "type-break-mode does what it sounds like it. Reminds you to take a break and as always, pretty customizable.\n Handy little feature i discovered yesterday when browsing the built in modes. Hope somebody finds it useful :)\n    submitted by    /u/gopar  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/135kkx5/fyi_ch_typebreakmode/",
+          "publishedOn": "2023-05-02T13:01:14.000Z",
+          "wordCount": 2186,
+          "title": "FYI: C-h type-break-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/135kjl1/what_is_wrong_with_this_face_definition_error/",
+          "author": null,
+          "description": "Edit:\n I am using emacs29, which is not specifically supported, btw!!\n Hi everyone,\n I get an error message that I do not understand, when trying to apply nano-emacs from u/Nicolas-Rougier in my vanilla emacs\n Debugger entered--Lisp error: (error \"Invalid face\" bookmark-menu-heading) internal-set-lisp-face-attribute(bookmark-menu-heading :family unspecified 0) set-face-attribute(bookmark-menu-heading nil :foreground unspecified :background unspecified :family unspecified :slant unspecified :weight unspecified :height unspecified :underline unspecified :overline unspecified :box unspecified :inherit nano-face-strong) set-face(bookmark-menu-heading nano-face-strong) #<subr F616e6f6e796d6f75732d6c616d626461_anonymous_lambda_4>() eval-after-load-helper(\"/usr/local/share/emacs/29.0.90/lisp/book…",
+          "link": "https://www.reddit.com/r/emacs/comments/135kjl1/what_is_wrong_with_this_face_definition_error/",
+          "publishedOn": "2023-05-02T12:59:58.000Z",
+          "wordCount": 2701,
+          "title": "What is wrong with this face definition??? (error \"Invalid face\" bookmark-menu-heading)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/135f7tw/treemacs_shows_wrong_directory_icon/",
+          "author": null,
+          "description": "Hello,\n Recently, treemacs started to show wrong directory icon when I open treemacs in a new directory. It updates the icon to directory icon only after I expand the node.\n e.g.\n before (with wrong icon in elpa node)\n ​\n https://preview.redd.it/1i2gr56zrdxa1.png?width=519&format=png&auto=webp&s=bb1ba47ae02fa374c650bf7f36f41ad25813c30e\n after expanding the elpa node:\n ​\n https://preview.redd.it/g91i97szrdxa1.png?width=511&format=png&auto=webp&s=500ec52d23f8cb1da9558ac5babc9126a832e1c5\n Any idea what could be the reason?\n    submitted by    /u/External-Spirited  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/135f7tw/treemacs_shows_wrong_directory_icon/",
+          "publishedOn": "2023-05-02T08:34:24.000Z",
+          "wordCount": 2202,
+          "title": "treemacs shows wrong directory icon",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/135dhh5/code_snippet_to_switch_between_multiple/",
+          "author": null,
+          "description": "If you have more than one Zettlekasten to manage, you may find org-roam to be a bit clunky when dealing with them. The proposed solution in the manual is to have an elist file that locally modifies the org-roam-directory and org-roam-db-location variables. I didn't really like this approach, so I made something better, a very simple function that between a given list of Zettlekasten:\n (setq zettlekasten-paths-alist '((\"Main\" . \"~/Some/Path/\") (\"Zettlekasten2\" . \"~/Other/Path/\"))) (defun switch-zettlekasten () (interactive) (let* ((keys (mapcar #'car zettlekasten-paths-alist)) (prompt (format \"Select Zettlekasten:\")) (key (completing-read prompt keys)) (chosen-zettlekasten-path (cdr (assoc key zettlekasten-paths-alist)))) (setq org-roam-directory chosen-zettlekasten-path) (setq org-roam-db-location (concat chosen-zettlekasten-path \"org-roam.db\")) (org-roam-db-sync))) \n I have personally bound this to C-c n s since C-c n is the prefix for org-roam related commands. The s stands for switch. You may use anything else of course. Hope you find it useful.\n EDIT: Oops, I made a mistake when first posting this. Make sure the paths in the alist end with a forward slash, otherwise when concatenating to create the database file path you'll end up with ~/Some/Pathorg-roam.db.\n    submitted by    /u/SnooPets20  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/135dhh5/code_snippet_to_switch_between_multiple/",
+          "publishedOn": "2023-05-02T06:43:21.000Z",
+          "wordCount": 2331,
+          "title": "Code snippet to switch between multiple Zettlekasten with org-roam",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/135d2v8/meow_modal_package_mode_line/",
+          "author": null,
+          "description": "Is it possible to change the entire mode line color depending on what state you’re in using modeling-indicator?\n https://github.com/meow-edit/meow/blob/master/CUSTOMIZATIONS.org\n    submitted by    /u/radioactiveoctopi  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/135d2v8/meow_modal_package_mode_line/",
+          "publishedOn": "2023-05-02T06:18:57.000Z",
+          "wordCount": 2171,
+          "title": "Meow Modal Package mode line",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/135d1t7/reading_keybindings_from_an_orgtable_and_generate/",
+          "author": null,
+          "description": "I am fairly new to elisp, having started on vanilla emacs last month. I hacked together some code to read <leader> key bindings from an org table. It is specific to evil mode and has lots of scope for improvement. Here it is: https://github.com/sooriravindra/DotFiles/blob/master/emacs/.emacs.rsoori/bindings.org\n In my init.el (in the same repo) I check if bindings.el exists. If it doesn't I execute the source block in bindings.org which reads the org table and generates bindings.el\n Please let me know if you have ideas to improve or critique my rather hacky snippet.\n    submitted by    /u/notthatfellow  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/135d1t7/reading_keybindings_from_an_orgtable_and_generate/",
+          "publishedOn": "2023-05-02T06:17:06.000Z",
+          "wordCount": 2247,
+          "title": "Reading keybindings from an org-table and generate relevant elisp code.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1356q9t/removing_selected_items_from_completion_when/",
+          "author": null,
+          "description": "I feel like I've got to be missing something – because this feels like behavior that would be applicable to many situations.\n I'm looking to remove candidates from completion if they're present in the user's current selection.\n I'm personally using Vertico, but I would appreciate any core emacs config for this, if it exists. I'm not hopeful after my read of completing-read-multiple – which does not appear to ever modify TABLE.\n    submitted by    /u/vermiculus  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1356q9t/removing_selected_items_from_completion_when/",
+          "publishedOn": "2023-05-02T00:52:13.000Z",
+          "wordCount": 2226,
+          "title": "Removing selected items from completion when using completing-read-multiple",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/134s5be/integrate_zotero_pdf_notes_with_org_roam/",
           "author": null,
@@ -9622,126 +9682,6 @@
           "wordCount": 1995,
           "title": "Overlays/Annotations with command output?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12aakes/performance_magit_vs_mgit_meta_git/",
-          "author": null,
-          "description": "submitted by    /u/atamariya  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12aakes/performance_magit_vs_mgit_meta_git/",
-          "publishedOn": "2023-04-03T05:27:43.000Z",
-          "wordCount": 13394,
-          "title": "Performance: magit vs mgit (Meta git)",
-          "imageUrl": "https://external-preview.redd.it/cbdTUbK2Q8qIF7-va_h6OyghlPXjTdfTkajYZ06yq5Y.jpg?auto=webp&v=enabled&s=35d93287e234c3be48bef71cd1e3f4f566c16707"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12a83uf/import_of_icalendar_ical_into_orgmode_file/",
-          "author": null,
-          "description": "icsorg - Import Calendar Events into Emacs Org Mode will import a .ical file into an org-mode file. So I have this\n * Snow removal B-building :PROPERTIES: :ICAL_EVENT: t :ID: 3jc3scg84omih16ns715t70blo@google.com :STATUS: CONFIRMED :LAST_MODIFIED: [2023-04-02 Sun 16:23] :DURATION: 00:30 hh:mm :END: <2023-04-02 Sun 16:00-16:30> B-building sidewalk snow removal. (A was clear.) * Garage assessment :PROPERTIES: :ICAL_EVENT: t :ID: 71003vjbq6aln1594pnp5p2qce@google.com :STATUS: CONFIRMED :LAST_MODIFIED: [2023-04-02 Sun 20:05] :DURATION: 01:00 hh:mm :END: <2023-03-30 Thu 14:30-15:30> <ul><li>get new lock for middle shed from store</li><li>buy cleaning supplies from Ace Hardware</li></ul> ... \n ...and more entries. It supposedly will also work with org-agenda -- and so C-a a gives \"Agenda for current week.\" \n Month-agenda (W13-W18): Sunday 2 April 2023 undefined: 16:00-16:30 Snow removal B-building 22:24 ┄┄┄┄┄ ← now ─────────────────────────────────────────────── 20:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 18:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 16:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 14:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 12:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 10:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ 8:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ Monday 3 April 2023 W14 Tuesday 4 April 2023 ... \n Good. But how can I get a view of previous weeks, future weeks? And how is it even doing this? I don't see any TODOs or such in the exported org-mode file. What is it, how is it populating org-agenda?\n    submitted by    /u/teilchen010  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12a83uf/import_of_icalendar_ical_into_orgmode_file/",
-          "publishedOn": "2023-04-03T03:28:46.000Z",
-          "wordCount": 2095,
-          "title": "Import of iCalendar .ical into org-mode file question",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129xph5/am_i_right_in_saying_that_excorporate_is_broken/",
-          "author": null,
-          "description": "I start a new job tomorrow, and I wanted to try retrieving calendar information using excorporate.\n However, the EWS url returns a 401 when an attempt is made to access it. Increasing the verbosity of the logging from request ((setq request-log-level 'blather)) allows us to see that basic auth is being attempted against the https://outlook.office365.com/EWS/Services.wsdl url.\n This article would indicate that Basic Auth is no longer supported: https://techcommunity.microsoft.com/t5/exchange-team-blog/basic-authentication-deprecation-in-exchange-online-september/ba-p/3609437\n I think this means that Excorporate can no longer authenticate with O365 as a result.\n    submitted by    /u/FederalPirate2867  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129xph5/am_i_right_in_saying_that_excorporate_is_broken/",
-          "publishedOn": "2023-04-02T20:49:43.000Z",
-          "wordCount": 12984,
-          "title": "Am I right in saying that Excorporate is broken on O365 since circa Sept 2022?",
-          "imageUrl": "https://external-preview.redd.it/95e5QnXNHWhOCa0B_aBFcrZuqSu-z8I5zS2PW3COheo.jpg?auto=webp&v=enabled&s=dd9c59efdcee52c19751ea5995263be3bbb19fb7"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129wa1s/lsp_bridge_with_lsp_ui/",
-          "author": null,
-          "description": "I have been using LSP-Bridge and it has been a much smoother experience for me compared to both Eglot and Lsp-Mode. Though it does seem to me missing the ability to have overlays similar to lsp-UI. Anyone using LSP-Bridge know how to set this up?\n    submitted by    /u/Hercislife23  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129wa1s/lsp_bridge_with_lsp_ui/",
-          "publishedOn": "2023-04-02T20:00:49.000Z",
-          "wordCount": 12672,
-          "title": "LSP Bridge with LSP UI?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129vqtt/emacs_on_android_some_questions_and_observations/",
-          "author": null,
-          "description": "Installed on a cheap Teclast 10-inch tablet, running Android12, from F-droid.\n It appears to run in isolation, in a container, so I cannot access the file system of the tablet. Can't see a way to copy my config over...? Any ideas? \n It initially starts up with a tiny, tiny font size, so I managed to set up a one line .emacs to increase the font size, so it is at least readable.\n Totally unsuited for an on-screen keyboard (tried swiftkey and the hacker keyboard).\n Hacker keyboard only shows the modifiers in landscape orientation\n And lastly, how the hell do you install fonts on Android??\n    submitted by    /u/xircon  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129vqtt/emacs_on_android_some_questions_and_observations/",
-          "publishedOn": "2023-04-02T19:42:08.000Z",
-          "wordCount": 12788,
-          "title": "Emacs on Android - some questions... and observations.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129rs7f/bytecompiling_issue_with_defhydra_and_require/",
-          "author": null,
-          "description": "I'm having a problem with byte-compiling a package that uses defhydra.\n The package defines a hydra only if the hydra package is available, but since it's a macro, it expands during byte-compilation and some users see \"void-variable\" error when trying to use the package.\n The relevant code looks like this:\n (when (require 'hydra nil :noerror) (defhydra powerthesaurus-hydra ...)) \n The idea is not to explicitly depend on hydra (or transient), but still define such interfaces if the corresponding package is available.\n I tried using eval-after-load and with-eval-after-load, but no luck there.\n I'd really appreciate any advice or approach to try. Thanks!\n    submitted by    /u/vsavchenko  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129rs7f/bytecompiling_issue_with_defhydra_and_require/",
-          "publishedOn": "2023-04-02T17:24:54.000Z",
-          "wordCount": 12861,
-          "title": "Byte-compiling issue with defhydra and require",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129q8km/any_resources_for_creating_a_good/",
-          "author": null,
-          "description": "I'm somewhat new to Emacs but I feel fairly comfortable writing Clojure in my stock Prelude Emacs setup. But I'm primarily a Java dev. I've watched Torstein Johansen's videos but I haven't been able to get things up and running yet. Anyone know of any step-by-step tutorials or plugins for Java?\n    submitted by    /u/bushwald  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129q8km/any_resources_for_creating_a_good/",
-          "publishedOn": "2023-04-02T16:29:44.000Z",
-          "wordCount": 12729,
-          "title": "Any resources for creating a good Gradle-compatible Java workflow?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129jlj4/emacs_in_odd_places/",
-          "author": null,
-          "description": "submitted by    /u/unixbhaskar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129jlj4/emacs_in_odd_places/",
-          "publishedOn": "2023-04-02T12:18:24.000Z",
-          "wordCount": 12648,
-          "title": "Emacs in odd places",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129invu/common_lisp_formatting/",
-          "author": null,
-          "description": "I find the formatting extremely awkward and wild:\n https://preview.redd.it/7kw7vi8kjgra1.png?width=970&format=png&auto=webp&s=b8dbbafe050f8ca2f678f40d49681494980e76d9\n Is there a way to make it looks something like:\n https://preview.redd.it/n6lxag6sjgra1.png?width=541&format=png&auto=webp&s=3f5d36b983b836dd8cb05f7a460cbe129453d183\n I tried to (setq-default tab-width 2), but that doesn't achieve anything\n    submitted by    /u/kSPvhmTOlwvMd7Y7E  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129invu/common_lisp_formatting/",
-          "publishedOn": "2023-04-02T11:38:17.000Z",
-          "wordCount": 12997,
-          "title": "Common Lisp formatting",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129hycg/task_prerequisites_for_org_agenda/",
-          "author": null,
-          "description": "Hello, I was planning to use org-agenda to empty my head of the (long-term) tasks that keep bothering me to focus better on the present. However, one requirement for whatever goal/task-planner system I wanted to use came up as having a system of \"prerequisites\". \n For example, say I want to do a book/course on Advanced Calculus, then a prerequisite for that would be Basic Calculus. Now, I'd love the planner system to not show the Advanced Calculus until I complete all its prerequisites. But when I do complete all its prerequisites, I want it to automatically show the Advanced Calculus goal.\n Is this pre-provided by org-agenda? If not, could someone please suggest what modifications I might need to do in order to enable this?\n org-enforce-todo-dependencies seems relevant, but this seems to assume that one task's completion may only enable at most one other task (its parent), while I can imagine that there can be one-to-many such links.\n    submitted by    /u/digikar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129hycg/task_prerequisites_for_org_agenda/",
-          "publishedOn": "2023-04-02T11:04:29.000Z",
-          "wordCount": 12975,
-          "title": "Task Prerequisites for Org Agenda",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129fuuj/help_wanted_new_package_emacs_stutter_when/",
-          "author": null,
-          "description": "I was inspired by code metrics that was announced a few days back that shows the complexity of a function as a overlay above the function so I wrote a simple POC that uses RipGrep to shows number of references of that function signature. SourceKit-LSP that I uses for code completions doesn't support code lenses so I thought it would be nice to have something similar. \n Now to my problem. When my overlay-usage-mode is enabled the scroll/trackpad is starting to behave extremely bad, it hangs and sometimes it scrolls back to the area over and over. Its the exactly the same behavior I get when using pixel-precision-mode in Emacs 29.x\n So I would like to get some help to fix my code, or at least some pointers in the right direction.\n I am using Emacs 29.x on MacOS on a M1 Pro Max so I got a lot of CPU power.\n Source: https://github.com/konrad1977/emacs/blob/main/localpackages/overlay-usage.el\n ​\n https://preview.redd.it/mm5dnuzttfra1.png?width=2564&format=png&auto=webp&s=72dcdb5e3953627d854b30a75c01cb9dbe82765c\n    submitted by    /u/konrad1977  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129fuuj/help_wanted_new_package_emacs_stutter_when/",
-          "publishedOn": "2023-04-02T09:13:33.000Z",
-          "wordCount": 12894,
-          "title": "Help wanted: New package, Emacs stutter when scrolling (it scrolling back)",
-          "imageUrl": "https://external-preview.redd.it/VMyNj_cICrWTTgZVKQXWZNByYiZvvXxscGY8xOLihS4.jpg?auto=webp&v=enabled&s=f5bb87c0c8bcdafb5aa1c4e5a482e206c01665e7"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/129fjtj/how_get_weather_report_of_wttrin_displayed_in/",
-          "author": null,
-          "description": "I add current weather report to org diary as:\n * 2023-04-02 Sunday #+BEGIN_SRC shell :results raw curl wttr.in/shanghai?T0 #+END_SRC #+RESULTS: Weather report: shanghai \\ / Sunny .-. +24(25) °C ― ( ) ― ← 15 km/h `-’ 10 km / \\ 0.0 mm \n It works well. but when to add more days, it displayed badly.\n https://preview.redd.it/g0t2gqwfpfra1.png?width=1013&format=png&auto=webp&s=c983a59106eedd60543e4b3a568c78f5abb6bcf1\n No matter how to scale the fonts, the table stay formatted badly.\n I tried it in Vterm, term, shell, eshell, ansi-term, they displayed the same as above.\n How could get it correctly displayed as in a decent terminal such as Konsole? (Emacs 28.2 on ubuntu)\n ​\n https://preview.redd.it/1lg3uv8u1gra1.png?width=749&format=png&auto=webp&s=f763856c172e32241736604fad6520ce0cf67050\n ​\n    submitted by    /u/AbstProcDo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/129fjtj/how_get_weather_report_of_wttrin_displayed_in/",
-          "publishedOn": "2023-04-02T08:58:14.000Z",
-          "wordCount": 12933,
-          "title": "How get weather report of wttr.in displayed in good manner",
-          "imageUrl": null
         }
       ]
     },
@@ -9928,26 +9868,6 @@
           "publishedOn": "2023-04-05T10:13:45.000Z",
           "wordCount": 406,
           "title": "Improved Translation of “Communications with Zettelkastens”",
-          "imageUrl": null
-        },
-        {
-          "id": "2545@/discussions",
-          "author": "ZH215",
-          "description": "Hi I am getting confused as to how to tackle a whole book or research paper and the production of notes.  I'm doing a literature review as part of a phd, so academic level critique needed.  The referencing I can easily cite at the end of the note so that isn't a concern. Does one research paper produce many notes, how does one title these notes please?  Is it the concept or the book etc.  thank you\nZoe",
-          "link": "https://forum.zettelkasten.de/discussion/2545/lit-review-template-or-not",
-          "publishedOn": "2023-04-02T16:32:35.000Z",
-          "wordCount": 883,
-          "title": "Lit review template OR not?",
-          "imageUrl": null
-        },
-        {
-          "id": "2544@/discussions",
-          "author": "ZH215",
-          "description": "Hi,  newbie here.  I'm not overly confident or comfortable with notion, have seen hypernotes that seems easier for me, however I've been using Notion for a while.  I like notion as I can directly link out to a google doc.  I've sort of constructed the page to use notion and files embedded as if it were scrivener.  I digress.  I am writing a phd.  I do a lot of literature reviews etc.\nMy question here is there really much value in having a tool that presents a map of notes as per obsidian.  If I build my zettelkasten in notion which is basically a relational database is this not sufficient.  I do really want to concentrate on writing.  As notion supports my writing very well the idea of having the zettel database in the same tool is appealing to me.\nAny thoughts please?\nthank you Zoe",
-          "link": "https://forum.zettelkasten.de/discussion/2544/thinking-of-using-notion-but-it-doesnt-have-a-map",
-          "publishedOn": "2023-04-02T16:25:53.000Z",
-          "wordCount": 760,
-          "title": "Thinking of Using Notion, but it doesn't have a map?",
           "imageUrl": null
         }
       ]
