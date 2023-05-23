@@ -53,6 +53,16 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/13p33pa/sum_type_inside_sum_type/",
+          "author": null,
+          "description": "I apologize if this question has been asked, but I can't find a solution or an explanation online.\n I'm writing a compiler, and have the following definitions in order to get a more organized pattern matching when I'm messing with the AST: haskell data WYType = WYNum | WYArray | WYString | WYBool data Token = Identifier | WYType | ... \n What confuses me is that the compiler doesn't recognize WYNum/WYArray/WYString/WYBool as a Token. I feel like mathematically is possible. Shouldn't a | (b | c) | d = a | b | c | d?\n Thank you for your answer!\n Edit: for more context, this is the error message I get from my Alex file:  • Couldn't match type ‘WYType’ with ‘Token’ Expected: String -> Token Actual: String -> WYType • In the expression: alex_action_7 In the expression: (1, alex_action_7) In the second argument of ‘array’, namely ‘[(5, alex_action_3), (4, alex_action_4), (3, alex_action_5), (2, alex_action_6), ....]’  The corresponding section of Lexer.x: ``` tokens: :- <0>「([\\s\\「]+)」 { \\s -> Identifier s } <0> 數 { _ -> WYNum }\n { data WYType = WYNum | WYArray | WYString | WYBool\n data Token = Identifier String | WYType -- More definitions... } ```\n    submitted by    /u/gzgavinzhao  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/13p33pa/sum_type_inside_sum_type/",
+          "publishedOn": "2023-05-22T20:58:33.000Z",
+          "wordCount": 2446,
+          "title": "Sum type inside sum type",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/13or8t9/my_quest_for_the_perfect_ast_representation/",
           "author": null,
           "description": "I am looking for a way to represent an AST with metadata (such as source location info, types, etc). My first attempt at this was making the AST a functor over the metadata type:\n data AST m = Apply m (AST m) (AST m) | Var m Symbol | ... \n or when the AST consists of multiple types:\n data Expression m = Apply m (AST m) (AST m) | Var m Symbol | ... data TopLevel m = Assign m Symbol (Expression m) | ... \n But this gets harder and more annoying if I want to have a different type of metadata for the different types in the AST. I then heard about the Fix type constructor:\n data Fix f = Fix (f (Fix f)) \n which allows you to generalize a recursive type, and you can add metadata by making a product with the Const functor. This still has the problem with representing an AST with multiple types, so …",
@@ -1241,56 +1251,6 @@
           "wordCount": 2268,
           "title": "How do you like me split function? I am a beginner.",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/12x7hgx/beginner_question/",
-          "author": null,
-          "description": "The following pattern is provided for a function:\n f :: [[(a,[b])]] -> Int\n f [(x,xs):[y,ys]] = 0 f ([]:[(x,[xs])]:[y,ys]:[]) = 1 f ([(x,y::[])]:[]) = 2\n The task is to write 3 example parameters, that match the patterns, one for each pattern and i cant seem to wrap my head around them. Could someone please help me with them?\n    submitted by    /u/yyyyeoJ  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/12x7hgx/beginner_question/",
-          "publishedOn": "2023-04-24T07:33:51.000Z",
-          "wordCount": 2210,
-          "title": "Beginner question",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/12wxwd7/xmonad_installaton_instructions/",
-          "author": null,
-          "description": "from https://xmonad.org/INSTALL.html\n I'm trying to install xmonad and get:\n nyck33@nyck33-VirtualBox:~$ xmonad XMonad is recompiling and replacing itself with another XMonad process because the current process is called \"xmonad\" but the compiled configuration should be called \"xmonad-x86_64-linux\" XMonad will use stack ghc --stack-yaml \"/home/nyck33/.config/xmonad/stack.yaml\" to recompile. XMonad recompiling because some files have changed. Errors detected while compiling xmonad config: /home/nyck33/.config/xmonad/xmonad.hs $ stack build --silent --stack-yaml /home/nyck33/.config/xmonad/stack.yaml $ stack ghc --stack-yaml /home/nyck33/.config/xmonad/stack.yaml -- --make xmonad.hs -i -ilib -fforce-recomp -main-is main -v0 -outputdir /home/nyck33/.cache/xmonad/build-x86_64-linux -o /home/ny…",
-          "link": "https://www.reddit.com/r/haskell/comments/12wxwd7/xmonad_installaton_instructions/",
-          "publishedOn": "2023-04-24T01:22:27.000Z",
-          "wordCount": 2556,
-          "title": "xmonad installaton instructions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/12wtmzb/haskell_vs_python_for_production_old_compose/",
-          "author": null,
-          "description": "https://www.youtube.com/watch?v=O-z8hDXIQSg\n ​\n It's not such an interesting video; the immediate impression I get from the video is that the firm had a spaghetti Python codebase, were looking for something to migrate into, and they coincidentally had a moderately-skilled Haskeller on the team who was able to Just Do It and hack together something that worked, whereas the Rust attempt got stuck at the borrow checker and OCaml didn't have the libraries available for the task.\n ​\n On the negative side, they were unable to deal with Haskell's laziness semantics and had to enable strict for everything. Same thing happened with NoRedInk; they just wanted Elm for backend, Elm's BDFL locked down the compiler and kicked all the backenders into Haskell, and NRI ended up putting Strict into their Cabal / Stack files.\n ​\n You can also tell that there's some level of tension; the Haskell engineer is relatively bubbly, but her boss seems offput and somewhat horrified that they went with Haskell and that's messed up their power dynamics.\n    submitted by    /u/Instrume  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/12wtmzb/haskell_vs_python_for_production_old_compose/",
-          "publishedOn": "2023-04-23T23:00:44.000Z",
-          "wordCount": 2327,
-          "title": "Haskell vs Python for Production: Old Compose Conference Video from 2019",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/12wi57i/template_repo_for_github_classroom/",
-          "author": null,
-          "description": "Hi!\n I teach Haskell at the university. Every year I have a problem setting up everything on school computers. Especially for testing during midterms and finals.\n So I made a small repo with scaffolding for GitHub Classroom. It includes devcontainer. So it can be used in browser with complete Haskell environment (in codespace). No need for any local installation. Of course it can be used locally with VS Code. Also autograding GitHub action is set up. It uses HSpec for testing.\n If this is useful to anyone you can find repo here:\n https://github.com/Idokorro/haskell-exam-autograding\n It's nothing much. It's an empty project. But it took me a while to set everything up. Maybe it can save someone some time.\n    submitted by    /u/Idokorro  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/12wi57i/template_repo_for_github_classroom/",
-          "publishedOn": "2023-04-23T16:59:57.000Z",
-          "wordCount": 2272,
-          "title": "Template repo for GitHub Classroom",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/12wd9pz/haskell_function_overload_by_return_value/",
-          "author": null,
-          "description": "Hi newbie question. I am coming from OOP background and have some difficulty understanding how Haskell treats what in other languages I would call \"functions overload (by return value)\" \n The following code does not compile \n foo 5 = \"5\"\n foo 5 = 5 \n Compiler tells that it \"cannot deduce ...\". OK, get it. The compiler infers the function type from first foo definition and cannot match second definition with this type. However consider this. I can define infinite instances of say type Applicative Functor a for different types a, with multiple function definitions of \"pure\" that takes operator and returns something of type Application Functor a. Eventually it is the same multiple functions definitions which only differ by return value. \n Why then it is allowed?\n    submitted by    /u/klazklaz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/12wd9pz/haskell_function_overload_by_return_value/",
-          "publishedOn": "2023-04-23T15:08:02.000Z",
-          "wordCount": 2281,
-          "title": "Haskell Function Overload (By Return Value)",
-          "imageUrl": null
         }
       ]
     },
@@ -1299,6 +1259,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/13ps9an/encoding_base58_understanding_and_implementing_in/",
+          "author": null,
+          "description": "submitted by    /u/mundacho  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/13ps9an/encoding_base58_understanding_and_implementing_in/",
+          "publishedOn": "2023-05-23T15:46:56.000Z",
+          "wordCount": 2222,
+          "title": "Encoding Base58: Understanding and implementing in Scala",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/13p4b2w/i_have_decided_to_connect_my_future_with_scala_if/",
+          "author": null,
+          "description": "This post is a continuation of the discussion found here: [Link to Reddit post](https://www.reddit.com/r/scala/comments/13guvo3/should_i_go_with_scala_or/), and I would like to share my conclusions.\n ​\n I am thrilled to embark on a journey with Scala and dedicate a significant amount of time to writing projects, starting with my personal blog/portfolio. However, I do have a couple of questions that I hope you can help me with:\n ​\n 1) What technology stack should I consider?\n ​\n After careful consideration, I have made the decision to use tapir and http4s for my projects. However, I am currently torn between ZIO and Cats. Personally, I am leaning towards ZIO as it seems to offer a comprehensive and user-friendly effect system. Nevertheless, I am aware that Typelevel/Cats is more widely adopted in the industry. Could you please advise me on which one has a greater demand in the market?\n ​\n 2) Is it necessary for newcomers to have knowledge of Akka?\n ​\n I have some experience with GraphQL and have been exposed to RPC-like concepts and classic MVC patterns. However, I feel hesitant about diving into actors, as they remind me of the unnecessary complexity I encountered with redux-saga. Would it be mandatory for me to learn Akka for my first few projects, or can I initially focus on other aspects?\n ​\n Thank you in advance for your assistance!\n ​\n P.S. #1 I would greatly appreciate it if you could also recommend any helpful materials such as books or project ideas to aid me on this journey.\n ​\n P.S. #2 As a more serious and long-term project idea, I am considering developing a \"Job Aggregator (Scraper)\" or a \"Job Board.\" Personally, I lean towards the first variant as it aligns more with data processing, and I am eager to spend time designing a system that can scrape data in real-time and notify subscribers. \n P.S. #3 I would like to extend my appreciation to ChatGPT for its assistance in crafting this beautifully written post in English.\n View Poll\n    submitted by    /u/PilipchukBogdan  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/13p4b2w/i_have_decided_to_connect_my_future_with_scala_if/",
+          "publishedOn": "2023-05-22T21:40:21.000Z",
+          "wordCount": 2549,
+          "title": "I have decided to connect my future with Scala (if possible), need little advice",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/13ny10u/this_week_in_scala_may_22_2023/",
           "author": null,
@@ -2128,26 +2108,6 @@
           "wordCount": 2157,
           "title": "Zio-channel, Go-like channels for your ZIO application",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/12wqzqk/beginners_guide_to_derivations_in_scala/",
-          "author": null,
-          "description": "submitted by    /u/majkp  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/12wqzqk/beginners_guide_to_derivations_in_scala/",
-          "publishedOn": "2023-04-23T21:32:44.000Z",
-          "wordCount": 2140,
-          "title": "Beginner's guide to derivations in Scala",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/12wdzi6/this_week_in_scala_apr_24_2023/",
-          "author": null,
-          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/12wdzi6/this_week_in_scala_apr_24_2023/",
-          "publishedOn": "2023-04-23T15:18:51.000Z",
-          "wordCount": 13553,
-          "title": "This week in #Scala (Apr 24, 2023)",
-          "imageUrl": "https://external-preview.redd.it/5nGVEtR5qJNdS2Go3aYZjLRHT6G4lZx5YWpMKxokE08.jpg?auto=webp&v=enabled&s=a68c893ef611ac952f85ea112089db606720f2a1"
         }
       ]
     },
@@ -2309,6 +2269,36 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/13pp0t0/orgagendacustomcommands_with/",
+          "author": null,
+          "description": "In every work releted org-file, I set the category like this: #+CATEGORY: work\n I then use org-agenda-custom-commands like those below to show work related content or not work related content. This works in Org version 9.5.5/Emacs 28.2, but in Org version 9.6.4/Emacs 29.0.90, both custom-commands shows the content of every file, category \"work\" or not. Has anything changed between the versions that can explain this behaviour? I haven't found any relevant information saying so.\n  '(org-agenda-custom-commands '((\"p\" \"private\" ((agenda \"\" nil) (alltodo \"\" ((org-agenda-category-filter-preset '(\"-work\"))))) nil) (\"w\" \"Work\" ((agenda \"\" nil) (alltodo \"\" ((org-agenda-category-filter-preset '(\"+work\"))))) nil nil))) \n    submitted by    /u/polardfront  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/13pp0t0/orgagendacustomcommands_with/",
+          "publishedOn": "2023-05-23T13:45:39.000Z",
+          "wordCount": 2350,
+          "title": "org-agenda-custom-commands with org-agenda-category-filter-preset not working in Org version 9.6.4/Emacs 29.0.90",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/13pef7f/exporting_with_custom_accent_markers/",
+          "author": null,
+          "description": "Is it possible to export from org mode to markdown (or another format) and it respect my custom accent markers?\n    submitted by    /u/Arachnid_Independent  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/13pef7f/exporting_with_custom_accent_markers/",
+          "publishedOn": "2023-05-23T04:54:12.000Z",
+          "wordCount": 2269,
+          "title": "Exporting with custom accent markers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/13p9zog/internal_links_asking_for_tags_table/",
+          "author": null,
+          "description": "I am seeing this weird behaviour. When I start emacs, internal links work as expected: I have a table of contents (created with org-toc) and I can jump from the entry in the TOC to the headline with simply typing return.\n But at some point (and I have been unable to find out what triggers it) when typing return on an internal link I am asked to provide a tags table: \"Visit tags table (defaults TAGs): ...\". \n  \nDoes anybody know if visiting a tags table is expected org behaviour? I traced the code to the best of my abilities and I see that org-link-open is being executed.\n Does anybody know how to inhibit the \"visit tags table\" behaviour?\n  \nI do have many packages installed (emacs-prelude) so it might be something else. I tried to use the debugger, but failed to understand how to use it.\n thank you in advance for any hints/ideas.\n    submitted by    /u/dm_g  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/13p9zog/internal_links_asking_for_tags_table/",
+          "publishedOn": "2023-05-23T01:28:43.000Z",
+          "wordCount": 2402,
+          "title": "internal links asking for tags table",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/13ools4/mathematical_expressions_and_formular_using/",
           "author": null,
@@ -2816,6 +2806,86 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/flex-compile-20230523.1546.tar",
+          "author": null,
+          "description": "The flex-compile package has been updated to version 20230523.1546.",
+          "link": "https://melpa.org/#/flex-compile",
+          "publishedOn": "2023-05-23T15:46:00.000Z",
+          "wordCount": 105,
+          "title": "flex-compile (20230523.1546) --- Run, evaluate and compile across many languages",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dune-20230523.942.tar",
+          "author": null,
+          "description": "The dune package has been updated to version 20230523.942.",
+          "link": "https://melpa.org/#/dune",
+          "publishedOn": "2023-05-23T09:42:00.000Z",
+          "wordCount": 105,
+          "title": "dune (20230523.942) --- Integration with the dune build system",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/leuven-theme-20230523.841.tar",
+          "author": null,
+          "description": "The leuven-theme package has been updated to version 20230523.841.",
+          "link": "https://melpa.org/#/leuven-theme",
+          "publishedOn": "2023-05-23T08:41:00.000Z",
+          "wordCount": 105,
+          "title": "leuven-theme (20230523.841) --- Elegant Emacs color theme for a white background",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/noaa-20230523.606.el",
+          "author": null,
+          "description": "The noaa package has been updated to version 20230523.606.",
+          "link": "https://melpa.org/#/noaa",
+          "publishedOn": "2023-05-23T06:06:00.000Z",
+          "wordCount": 105,
+          "title": "noaa (20230523.606) --- Get NOAA weather data",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/nsis-mode-20230522.2251.tar",
+          "author": null,
+          "description": "The nsis-mode package has been updated to version 20230522.2251.",
+          "link": "https://melpa.org/#/nsis-mode",
+          "publishedOn": "2023-05-22T22:51:00.000Z",
+          "wordCount": 105,
+          "title": "nsis-mode (20230522.2251) --- NSIS-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/oauth-20230522.1900.el",
+          "author": null,
+          "description": "The oauth package has been updated to version 20230522.1900.",
+          "link": "https://melpa.org/#/oauth",
+          "publishedOn": "2023-05-22T19:00:00.000Z",
+          "wordCount": 105,
+          "title": "oauth (20230522.1900) --- OAuth 1.0 client library",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orgmdb-20230522.1817.el",
+          "author": null,
+          "description": "The orgmdb package has been updated to version 20230522.1817.",
+          "link": "https://melpa.org/#/orgmdb",
+          "publishedOn": "2023-05-22T18:17:00.000Z",
+          "wordCount": 105,
+          "title": "orgmdb (20230522.1817) --- An OMDb API client with some convenience functions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/shampoo-20230522.1722.tar",
+          "author": null,
+          "description": "The shampoo package has been updated to version 20230522.1722.",
+          "link": "https://melpa.org/#/shampoo",
+          "publishedOn": "2023-05-22T17:22:00.000Z",
+          "wordCount": 105,
+          "title": "shampoo (20230522.1722) --- A remote Smalltalk development mode",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/company-php-20230522.1329.el",
           "author": null,
@@ -6105,96 +6175,6 @@
           "wordCount": 105,
           "title": "kotlin-ts-mode (20230424.916) --- A mode for editing Kotlin files based on tree-sitter",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pet-20230423.2326.el",
-          "author": null,
-          "description": "The pet package has been updated to version 20230423.2326.",
-          "link": "https://melpa.org/#/pet",
-          "publishedOn": "2023-04-23T23:26:00.000Z",
-          "wordCount": 105,
-          "title": "pet (20230423.2326) --- Executable and virtualenv tracker for python-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/all-the-icons-20230423.2324.tar",
-          "author": null,
-          "description": "The all-the-icons package has been updated to version 20230423.2324.",
-          "link": "https://melpa.org/#/all-the-icons",
-          "publishedOn": "2023-04-23T23:24:00.000Z",
-          "wordCount": 105,
-          "title": "all-the-icons (20230423.2324) --- A library for inserting Developer icons",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/clj-refactor-20230423.2147.tar",
-          "author": null,
-          "description": "The clj-refactor package has been updated to version 20230423.2147.",
-          "link": "https://melpa.org/#/clj-refactor",
-          "publishedOn": "2023-04-23T21:47:00.000Z",
-          "wordCount": 105,
-          "title": "clj-refactor (20230423.2147) --- A collection of commands for refactoring Clojure code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/bqn-mode-20230423.1816.tar",
-          "author": null,
-          "description": "The bqn-mode package has been updated to version 20230423.1816.",
-          "link": "https://melpa.org/#/bqn-mode",
-          "publishedOn": "2023-04-23T18:16:00.000Z",
-          "wordCount": 105,
-          "title": "bqn-mode (20230423.1816) --- Emacs mode for BQN",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-zettelkasten-20230423.1804.tar",
-          "author": null,
-          "description": "The org-zettelkasten package has been updated to version 20230423.1804.",
-          "link": "https://melpa.org/#/org-zettelkasten",
-          "publishedOn": "2023-04-23T18:04:00.000Z",
-          "wordCount": 105,
-          "title": "org-zettelkasten (20230423.1804) --- A Zettelkasten mode leveraging Org",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/consult-eglot-20230423.1505.el",
-          "author": null,
-          "description": "The consult-eglot package has been updated to version 20230423.1505.",
-          "link": "https://melpa.org/#/consult-eglot",
-          "publishedOn": "2023-04-23T15:05:00.000Z",
-          "wordCount": 105,
-          "title": "consult-eglot (20230423.1505) --- A consulting-read interface for eglot",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/chatgpt-shell-20230423.1118.el",
-          "author": null,
-          "description": "The chatgpt-shell package has been updated to version 20230423.1118.",
-          "link": "https://melpa.org/#/chatgpt-shell",
-          "publishedOn": "2023-04-23T11:18:00.000Z",
-          "wordCount": 105,
-          "title": "chatgpt-shell (20230423.1118) --- Interaction mode for ChatGPT",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mu4e-marker-icons-20230423.1039.el",
-          "author": null,
-          "description": "The mu4e-marker-icons package has been updated to version 20230423.1039.",
-          "link": "https://melpa.org/#/mu4e-marker-icons",
-          "publishedOn": "2023-04-23T10:39:00.000Z",
-          "wordCount": 105,
-          "title": "mu4e-marker-icons (20230423.1039) --- Display icons for mu4e markers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pg-20230423.839.el",
-          "author": null,
-          "description": "The pg package has been updated to version 20230423.839.",
-          "link": "https://melpa.org/#/pg",
-          "publishedOn": "2023-04-23T08:39:00.000Z",
-          "wordCount": 105,
-          "title": "pg (20230423.839) --- Emacs Lisp socket-level interface to the PostgreSQL RDBMS",
-          "imageUrl": null
         }
       ]
     },
@@ -6203,6 +6183,166 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pzplb/is_it_possible_to_dynamically_bind_an_alias_in/",
+          "author": null,
+          "description": "Eshell has a profile and alias file that act like .rc files. Normally to define an alias you can put it in the alias file like this\n alias 'recent \"ls -lrt\" \n But that won't help me on Windows. When on Windows I'd like to map it to the powershell equivalent instead, but I'm not sure how to get it to work in the alias (or profile) file. I've tried variations of this\n (cond ((eq system-type 'windows-nt) (alias 'recent \"Get-ChildItem | Sort-Object LastWriteTime -Descending\")) ((or (eq system-type 'gnu/linux) (eq system-type 'darwin)) alias 'recent \"ls -lrt\")) \n but it doesn't work. Does anyone know how to achieve this in Eshell?\n    submitted by    /u/Fibreman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pzplb/is_it_possible_to_dynamically_bind_an_alias_in/",
+          "publishedOn": "2023-05-23T20:27:16.000Z",
+          "wordCount": 2353,
+          "title": "Is it possible to dynamically bind an alias in eshell depending on the OS?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pz1h7/problems_with_ess_and_emacs/",
+          "author": null,
+          "description": "Hi! \n I'm having a problem in installing the ess-18.10.2 in the emacs-28.2. The problem is related to \n \"Wrong number of arguments: (3 . 4), 2\"\n and occur in a lot of files. I traced to ess-r-package.el, in the line:\n (define-obsolete-function-alias 'ess-r-devtools-check-package-buildwin 'ess-r-devtools-check-with-winbuilder)\n This seems to be only code line with the problem. The other occurencies of the error are in the \"require\" statement. \n The funniest thing is that the problem occurs only in my laptop. I have a desktop with exactly the same software configuration (ess-18.10.2, emacs-28.2, OpenSuse Tumbleweed) and this pack works fine. (in both cases I downloaded the tar.gz from emacs and compiled manualy).\n Someone has any ideia of why it happens? I really can't remenber if I made something different in the desktop installation.\n    submitted by    /u/Pseifer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pz1h7/problems_with_ess_and_emacs/",
+          "publishedOn": "2023-05-23T20:02:16.000Z",
+          "wordCount": 2364,
+          "title": "Problems with ess and emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pz0oc/macos_how_do_i_disable_these_icons_from_showing/",
+          "author": null,
+          "description": "submitted by    /u/_bingqilin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pz0oc/macos_how_do_i_disable_these_icons_from_showing/",
+          "publishedOn": "2023-05-23T20:01:32.000Z",
+          "wordCount": 2254,
+          "title": "[macOS] How do I disable these icons from showing up in the titlebar?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pwgp3/emacs_web_buttons/",
+          "author": null,
+          "description": "submitted by    /u/dargscisyhp  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pwgp3/emacs_web_buttons/",
+          "publishedOn": "2023-05-23T18:26:05.000Z",
+          "wordCount": 2235,
+          "title": "Emacs Web Buttons",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13puht9/orgish_org_content_and_its_exported_html_in_one/",
+          "author": null,
+          "description": "So, I created this little something called orgish https://github.com/ChanderG/orgish which allows you to manage an org file as a comment embedded inside its own exported html output.\n The idea is to enable use of org to create one-off/standalone html pages - removing the headache of managing 2 files. Just work with a single html file that you can throw onto a static file server.\n    submitted by    /u/chandergovind  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13puht9/orgish_org_content_and_its_exported_html_in_one/",
+          "publishedOn": "2023-05-23T17:09:58.000Z",
+          "wordCount": 2306,
+          "title": "Orgish: Org content and its exported html in one file",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pts6v/new_package_autoolivettiautomatically_turn_on/",
+          "author": null,
+          "description": "submitted by    /u/varsderk  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pts6v/new_package_autoolivettiautomatically_turn_on/",
+          "publishedOn": "2023-05-23T16:43:01.000Z",
+          "wordCount": 2243,
+          "title": "New package: Auto-Olivetti—automatically turn on olivetti-mode when the window gets wide",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pr891/problem_installing_doommodeline_in_emacs/",
+          "author": null,
+          "description": "I am new to emacs. When i tried to install doom modeline using use-package thing, and evaluated, then a popup came and show fatal error and some message which tells do you want to attach debugger with options yes or no. I was able to install other things using use-package without any error but failed with doom modeline. Plz help me.\n    submitted by    /u/E1nzelganger  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pr891/problem_installing_doommodeline_in_emacs/",
+          "publishedOn": "2023-05-23T15:08:39.000Z",
+          "wordCount": 2309,
+          "title": "Problem installing doom-modeline in emacs.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pp502/help_install_simple_package_htmlzmode/",
+          "author": null,
+          "description": "I would greatly appreciate help with trying to install htmlz-mode package - it's a very simple package - single htmlz.el file that needs to be evaluated. That's it.\n For some reason this (Doom) emacs macro (using straight.el) won't work:\n (package! htmlz-mode :recipe (:host github :repo \"0xekez/htmlz-mode\")) \n What does straight.el needs to simply evaluate this damn file on start or when entering \"web-mode\"?\n I imagine that the author of htmlz-mode haven't looked for a way to \"properly\" package it, but given how complex looking for information on emacs is I can't blame him. \n Is there no way to simply collect tracelog from emacs? Why are there no warnings that it didn't evaluate the file? Where would you look for logs? How do you troubleshoot emacs? How do you call this thing \"self-documenting\" when I experienced the worst documentation out of any open-source tools out there on that user-scale.\n    submitted by    /u/danielkraj  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pp502/help_install_simple_package_htmlzmode/",
+          "publishedOn": "2023-05-23T13:50:00.000Z",
+          "wordCount": 2384,
+          "title": "Help install simple package (htmlz-mode)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pop7s/selfmotivation_by_daily_progress_in_emacs_for/",
+          "author": null,
+          "description": "For me, one thing that is important other than the technical aspects (and Emacs most certainly helps me to work faster and more efficiently on my novels) is the question of self-motivation. To help me with that, I have made a little function that shows me the current progress I have made today when I press s-#.\n It even has a \"graphical\" aspect to it, the color changes bit by bit from gray to green, and it simulates a \"bar\" that fills up. The number of characters/pages needed for my daily goal to be done is in a variable I have in my init file.\n I am sorry I opened a new thread, I wanted to post this in the thread \"Emacs for literature\", but I don't know how to post a picture in an answer to thread. So here is the Minibuffer a few times during the day, to give you some idea of what I mean.\n It is in German, the translation would be: 92.791 characters, 30 pages, equals 56 percent [today new: 0/2] Current page 93 percent, scene 1 page, chapter 1 page.\n In the modeline, I also show what \"page\" I am on. It just divides the length of the Buffer through the average number of characters on a standard page (3000 characters). Must seem like a very un-Emacsy way of doing things to you, but it helps me to get a feeling of getting things done somehow. :) \n https://preview.redd.it/unxa09de2l1b1.png?width=2560&format=png&auto=webp&s=09c7e520182c65caa1f4513aa336507c96b71fdc\n    submitted by    /u/TiMueller  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pop7s/selfmotivation_by_daily_progress_in_emacs_for/",
+          "publishedOn": "2023-05-23T13:33:36.000Z",
+          "wordCount": 2483,
+          "title": "Self-motivation by daily progress (in Emacs for literature)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pi9oh/what_is_the_alternative_to_indentline_in_emacs/",
+          "author": null,
+          "description": "Before my emacs days, I used nvim with this package called indentLine. Basically it displays (maybe semi-transparent?) vertical lines for same indentation levels . It's visually helpful when I'm in long python code.\n Check these images from this repo: - img1 - img2\n ...\n Is there any alternative to this package (or built-in function) in emacs?\n    submitted by    /u/gry3000  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pi9oh/what_is_the_alternative_to_indentline_in_emacs/",
+          "publishedOn": "2023-05-23T08:21:11.000Z",
+          "wordCount": 2294,
+          "title": "What is the alternative to indentLine in Emacs?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pfroj/just_showing_off_how_nice_lisp_can_look_in/",
+          "author": null,
+          "description": "submitted by    /u/hz44100  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pfroj/just_showing_off_how_nice_lisp_can_look_in/",
+          "publishedOn": "2023-05-23T06:03:47.000Z",
+          "wordCount": 2248,
+          "title": "Just showing off how nice lisp can look in prism-mode. Check reply for the config :)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13pbigb/markdownnotebook_mode_my_weekend_hacking_project/",
+          "author": null,
+          "description": "I sometimes write markdown documents in which I want to quickly add some python code. Maybe this is the readme of a python project on github, or its a quick blog post that will be processed by my static site generator.\n I know there are million projects along these lines, and many very complex, but I threw my own dead simple one: markdown-notebook minor mode.\n  \nLoad the code.\n Open a markdown document and load the minor mode.\n If you press C-c b it creates a markdown python code block.\n If you press C-c C-c inside a python code block, it sends it to a python shell, and pastes the results back into a blank code block right after the python code block.\n C-c C-x will restart the shell, in case you want to start fresh.\n  \nPlease free to use. Any simple improvements are welcome.\n    submitted by    /u/abdullahkhalids  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13pbigb/markdownnotebook_mode_my_weekend_hacking_project/",
+          "publishedOn": "2023-05-23T02:37:09.000Z",
+          "wordCount": 2382,
+          "title": "Markdown-notebook mode: my weekend hacking project",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13p80q1/lem_200_released_now_with_an_sdl2_frontend_cl/",
+          "author": null,
+          "description": "Official release page: https://github.com/lem-project/lem/releases/tag/v2.0.0\n It looks great. Here is a screenshot: https://i.imgur.com/3EUPvfx.png\n - 180 new themes added (beautiful default theme)\n - now works without Electron\n - available on Linux, MacOS, and Windows \n Background information: Lem is a Common Lisp editor/IDE with high expansibility. I'm happy to see all these great CL projects growing. Here is a link to another recent CL project Nyxt 3.0.0 that was posted in the Emacs subreddit: https://www.reddit.com/r/emacs/comments/13grpgd/nyxt_300_two_years_of_work_finally_complete/\n    submitted by    /u/SequentialDesign  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13p80q1/lem_200_released_now_with_an_sdl2_frontend_cl/",
+          "publishedOn": "2023-05-23T00:05:52.000Z",
+          "wordCount": 2314,
+          "title": "Lem 2.0.0 released! Now with an SDL2 frontend (CL editor)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13p33l4/automatically_keep_current_line_centered/",
+          "author": null,
+          "description": "Hej fellows!\n When writing my diary, I find myself regularly using C-l in order to recenter-top-bottom until the current line vertically centered.\n Then, I realized that Id love to have a solution that is less manual than automatic.\n I know about centered-cursor-mode, and while it is already better than the default behavior, I am still not satisfied: I literally want point to stay -- in a particular buffer -- in the vertical center, at all times.\n Do you happen to know a package that achieves this?\n Thanks, have a good day!\n    submitted by    /u/olivuser  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13p33l4/automatically_keep_current_line_centered/",
+          "publishedOn": "2023-05-22T20:58:26.000Z",
+          "wordCount": 2329,
+          "title": "Automatically keep current line centered vertically",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13p2uml/compile_emacs_to_wasm/",
+          "author": null,
+          "description": "I just wondering if it'd be possible to compile emacs to wasm and run emacs in the browser.\n    submitted by    /u/ram535  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13p2uml/compile_emacs_to_wasm/",
+          "publishedOn": "2023-05-22T20:49:49.000Z",
+          "wordCount": 2254,
+          "title": "Compile emacs to wasm?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13p2gmz/symbols_function_definition_is_void_map/",
+          "author": null,
+          "description": "I had been using doom emacs for a while and had the following shortcut listed in my config.el:\n (map! :leader (:prefix-map (\"r\" . \"regular\") :desc \"find file\" \"f\" #'org-roam-node-find :desc \"find ref\" \"F\" #'org-roam-ref-find :desc \"search in org-roam\" \"s\" #'bms/org-roam-rg-search :desc \"toggle buffer\" \"b\" #'org-roam-buffer-toggle :desc \"insert note\" \"i\" #'org-roam-node-insert :desc \"get ref from DOI\" \"g\" #'org-ref-insert-link-hydra/doi-add-bibtex-entry :desc \"quit notes\" \"q\" #'org-noter-kill-session :desc \"tag (roam)\" \"t\" #'org-roam-tag-add :desc \"rebuid db\" \"d\" #'org-roam-db-build-cache :desc \"insert citation\" \"c\" #'citar-insert-citation :desc \"create citation note\" \"n\" #'citar-create-note :desc \"open paper note\" \"p\" #'citar-open-notes :desc \".bib citations buffer\" \"B\" #'citar-export-local-bib-file (:prefix (\"r\" . \"orui\") :desc \"orui-mode\" \"r\" #'org-roam-ui-mode :desc \"zoom\" \"z\" #'orui-node-zoom :desc \"open\" \"o\" #'orui-open :desc \"local\" \"l\" #'orui-node-local :desc \"sync theme\" \"t\" #'orui-sync-theme :desc \"follow\" \"f\" #'orui-follow-mode) ) ) \n However, I was trying to figure out how to use this in vanilla emacs but it does not work since I get the error symbols function definition is void: map! \n Is there a way to port this to vanilla emacs?\n    submitted by    /u/waterstrider123  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13p2gmz/symbols_function_definition_is_void_map/",
+          "publishedOn": "2023-05-22T20:36:12.000Z",
+          "wordCount": 2404,
+          "title": "symbols function definition is void: map!",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/13p2e7u/lspuidoc_vertico_stuck_when_doc_show/",
           "author": null,
@@ -9591,136 +9731,6 @@
           "publishedOn": "2023-04-24T11:03:29.000Z",
           "wordCount": 2296,
           "title": "If you're having trouble getting Emacs-29 to run under SystemD in Fedora....",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wyimc/is_there_any_way_to_fix_new_line_indentation_in/",
-          "author": null,
-          "description": "In SRC blocks, if I write a piece of code then decide to insert a line break in the middle of it, every line of code gets indented. The desired behavior would be that the code after the broken line gets placed at the correct indentation level, while each other line of code remains in the same position. Is there a fix to this issue?\n    submitted by    /u/Far-Anywhere2876  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wyimc/is_there_any_way_to_fix_new_line_indentation_in/",
-          "publishedOn": "2023-04-24T01:44:49.000Z",
-          "wordCount": 2217,
-          "title": "Is there any way to fix new line indentation in SRC blocks?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12ws8b8/flyrun/",
-          "author": null,
-          "description": "I'm familiar with flymake and similar packages which invoke the compiler on your code in background to highlight errors, etc\n Is there anyway easy to set up a system to incrementally compile+RUN your code and display your program's output in an updated emacs window as you are editing it? Basically the equivalent of some of the web compiler explorers except using your local system+compiler+editor instead of a web page?\n    submitted by    /u/ChristopherHGreen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12ws8b8/flyrun/",
-          "publishedOn": "2023-04-23T22:13:08.000Z",
-          "wordCount": 2209,
-          "title": "\"flyrun\"?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wrjpz/emacs_runattime_function_stops_running_on_certain/",
-          "author": null,
-          "description": "so I'm trying to create a function that uses emacs-requests to access and API. the function looks like this:\n (defun call-api-function () (json-parse-string (request-response-data (request \"<URL>\" :type \"GET\" :sync t ))) ) \n then I use another function to to parse the output from the call-api-function\n (defun parse-output-function (callback) (let* ((content (call-api-function )) (output (gethash \"output\" content)) (finish (gethash \"finish\" content))) (when (= finish 1) (cancel-timer my-timer) (apply callback (list output)) )) ) \n then a third interactive function to run the parse-output-function\n (defun query-api () (interactive ) (setq my-last-point (point ) my-timer (run-at-time 0 1 'parse-output-function 'callback))) (defun callback (output) (save-excursion (goto-char my-last-point) (insert output ) ) ) \n when I move the cursor to anywhere in the buffer and start typing the function parse-output-function suddenly stops printing anything which means it has stopped working, but its entry in the list-timers is still there.\n I don't know what I'm doing wrong here but I guess it is just a basic pooling where I keep requesting content from the API until the finish flag is set, then I cancel the timer, but this all suddenly stops when I go somewhere else in the buffer and start typing anything.\n Thanks in advance.\n    submitted by    /u/ntrysii  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wrjpz/emacs_runattime_function_stops_running_on_certain/",
-          "publishedOn": "2023-04-23T21:50:48.000Z",
-          "wordCount": 2355,
-          "title": "emacs run-at-time function stops running on certain events even though it is still in the list-timers functions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wpnqz/new_windows_open_below_current_horizontal_split/",
-          "author": null,
-          "description": "Before, I used to have that windows would open on the right of my current window for things like M-x man and M-x shell. Now I have that they open below. All I've done is uninstall and reinstall my emacs via homebrew (was trying to get rid of invalid image type: svg unsuccessfully). Here is my init.el:\n ``` ;; the next two lines make tabs into 4 spaces\n (setq-default indent-tabs-mode nil) (setq-default tab-width 4)\n ;; the next lines are intended to make 'man-mode' easier to use\n (global-set-key (kbd \"M-o\") 'man)\n (defun shell-other-window () \"Open a `shell' in a new window.\" (interactive) (let ((buf (shell))) (switch-to-buffer (other-buffer buf)) (switch-to-buffer-other-window buf)))\n (global-set-key (kbd \"M-p\") 'shell-other-window) ```\n Specifically, when I type M-o RET read(2), I would like it to open in a new window to the right, not below. I have my Man-notify-method set as friendly.\n    submitted by    /u/SS4L1234  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wpnqz/new_windows_open_below_current_horizontal_split/",
-          "publishedOn": "2023-04-23T20:49:41.000Z",
-          "wordCount": 2290,
-          "title": "New windows open below current (horizontal split) by default",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wp6jt/bindel_a_key_binder_with_prefix_autoload/",
-          "author": null,
-          "description": "I welcome you to read through examples in GitHub README.\n Here is a hypothetical example,\n (bind (my-window-map (bind-repeat (bind-prefix \"m\" \"h\" #'windmove-left \"j\" #'windmove-down \"k\" #'windmove-up \"l\" #'windmove-right) \"d\" #'delete-window \"D\" #'delete-other-windows (bind-autoload :my-package (bind-prefix \"l\" \"b\" #'split-window-below \"r\" #'split-window-right)))) (my-leader-map \"o\" my-open-map \"w\" my-window-map) ((current-global-map) \"SPC\" my-leader-map)) \n Let me know what you think. Would you also like to see hook and unhook in the same manner?\n    submitted by    /u/repelliuss  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wp6jt/bindel_a_key_binder_with_prefix_autoload/",
-          "publishedOn": "2023-04-23T20:34:25.000Z",
-          "wordCount": 2219,
-          "title": "bind.el -- A key binder with prefix, autoload, repeat-mode and save&restore support",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wnde9/building_emacs_via_source_on_macos/",
-          "author": null,
-          "description": "Here is what I've ran:\n $ git clone git://git.savannah.gnu.org/emacs.git $ cd emacs && ./autogen.sh $ ./configure --with-native-compilation --with-librsvg checking for X... no checking for AppKit/AppKit.h... no configure: error: The include files (AppKit/AppKit.h etc) that are required for a Nextstep build are missing or cannot be compiled. Either fix this, or re-configure with the option '--without-ns'. \n I was wondering for advice on how to fix this. I began this journey because my brew install --cask emacs was giving me a invalid image type: svg error, and now, I am trying to obtain the best version of emacs I can for MacOS Ventura 13.3.1. Any information or advice is appreciated. Additional performance and good options to --configure are also appreciated.\n I do have the Appkit.h on my machine. I found it in Finder.\n    submitted by    /u/SS4L1234  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wnde9/building_emacs_via_source_on_macos/",
-          "publishedOn": "2023-04-23T19:37:55.000Z",
-          "wordCount": 13043,
-          "title": "Building emacs via source on MacOS",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wn7yk/best_emacs_configs_for_javascript_andor_users_who/",
-          "author": null,
-          "description": "I'm trying to get into Emacs. I am interested in using it for JavaScript/Node.js and maybe a couple of other things. Also I hate to memorize keybindings. Do you have good configurations for JavaScript developers or users who don't like to memorize or both?\n    submitted by    /u/B_A_Skeptic  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wn7yk/best_emacs_configs_for_javascript_andor_users_who/",
-          "publishedOn": "2023-04-23T19:33:15.000Z",
-          "wordCount": 2197,
-          "title": "Best emacs configs for Javascript and/or users who don't like to memorize keybindings?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wjthd/i_need_help_with_centaur_tabs_grouping/",
-          "author": null,
-          "description": "If I have an elisp file open and then I want to open an org file, the org file shows up in a different tab group, so I can't just click between tabs. Is there a way to fix this?\n    submitted by    /u/Far-Anywhere2876  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wjthd/i_need_help_with_centaur_tabs_grouping/",
-          "publishedOn": "2023-04-23T17:50:06.000Z",
-          "wordCount": 2187,
-          "title": "I need help with centaur tabs grouping.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wgvpy/spacemacs_or_emacs_configurations_maintained_by/",
-          "author": null,
-          "description": "If you have access or are able to find configurations maintained by organizations would you like to share links to them so we can try them and share what we think of them in another post? \n ChatGPT provided me a few organization maintained configs (below), but I haven't been able to find any of them so far. Could it be that these are not publicly available (anymore)? \n  \nHere are a few examples of organizations that maintain Emacs configurations for their employees: 1. Google: Google has a large and active community of Emacs users who maintain a shared Emacs configuration called \"emacs-config.\" This configuration includes a variety of packages and tools that are optimized for Google's specific needs, including integration with the company's internal systems and tools. 2. GitHub: GitHub mai…",
-          "link": "https://www.reddit.com/r/emacs/comments/12wgvpy/spacemacs_or_emacs_configurations_maintained_by/",
-          "publishedOn": "2023-04-23T16:20:53.000Z",
-          "wordCount": 13857,
-          "title": "Spacemacs or Emacs configurations maintained by professional organizations",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wekrq/why_does_elpaca_make_emacs_startup_so_much_faster/",
-          "author": null,
-          "description": "Just switched to elpaca and was pleasantly surprised how fast it was to spin up a new installation (minutes down to seconds). But I'm surprised to see how much faster startup time is. I had spent a lot of time tuning my config with use-package, and was pretty pleased with a seven second startup. I use emacsclient, so this only really mattered when tuning the config and restarting - but still acceptable.\n But with elpaca, my startup time is just over a second! (measured via time emacs --eval \"(save-buffers-kill-terminal)\" It's possible that some of this is due to no longer loading things that have been added into Emacs over the time that my configuration has grown (when was org-mode made native??) - and a side benefit of elpaca is that it complained about this and made me fix it.\n But does multi-threading improve both installation time AND start-up time?\n    submitted by    /u/kentrose  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wekrq/why_does_elpaca_make_emacs_startup_so_much_faster/",
-          "publishedOn": "2023-04-23T15:27:51.000Z",
-          "wordCount": 2298,
-          "title": "Why does elpaca make emacs startup so much faster?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12weaec/novel_text_justification_help/",
-          "author": null,
-          "description": "Hello everyone,\n I am currently using nov.el to read some e-books in Emacs and I am having trouble justifying the text. I have tried using the justify-kp package but the code provided on https://depp.brause.cc/nov.el/ doesn't seem to work for me.\n I was wondering if anyone could help me out with this issue or provide me with some working code for justifying text in nov.el using justify-kp. Any help would be greatly appreciated!\n Thank you in advance.\n    submitted by    /u/AsterOps  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12weaec/novel_text_justification_help/",
-          "publishedOn": "2023-04-23T15:23:26.000Z",
-          "wordCount": 2221,
-          "title": "Nov.el text justification - help",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wd1co/simple_package_to_jump_between_tabs_tabbar_or/",
-          "author": null,
-          "description": "submitted by    /u/isamert  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wd1co/simple_package_to_jump_between_tabs_tabbar_or/",
-          "publishedOn": "2023-04-23T15:04:31.000Z",
-          "wordCount": 2161,
-          "title": "Simple package to jump between tabs (tab-bar or tab-line tabs)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/12wc5er/rare_letter_combinations_and_key_chords/",
-          "author": null,
-          "description": "submitted by    /u/Downtown-Potential86  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/12wc5er/rare_letter_combinations_and_key_chords/",
-          "publishedOn": "2023-04-23T14:51:03.000Z",
-          "wordCount": 2151,
-          "title": "Rare letter combinations and key chords",
           "imageUrl": null
         }
       ]
