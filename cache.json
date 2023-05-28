@@ -53,6 +53,36 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/13u23yz/custom_set_implementation/",
+          "author": null,
+          "description": "I am working the Exercism Haskell Track and one of the questions asks for a custom set implementation. I studied some community solutions to see what other folks are doing, and came across something that I don't quite understand.\n intersection :: (Ord a) => CustomSet a -> CustomSet a -> CustomSet a isDisjointFrom :: (Ord a) => CustomSet a -> CustomSet a -> Bool isDisjointFrom = (null .) . intersection \n What is this (null .) . intersection ? Should it not be just null . intersection ?\n    submitted by    /u/sarkara1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/13u23yz/custom_set_implementation/",
+          "publishedOn": "2023-05-28T14:43:39.000Z",
+          "wordCount": 2356,
+          "title": "Custom set implementation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/13tl9aq/my_haskell_snippet_collection_for_neovim_with/",
+          "author": null,
+          "description": "For my fellow Neovim users:\n I have decided to extract my Haskell snippets for LuaSnip into a plugin: haskell-snippets.nvim.\n For those who don't know LuaSnip, here's an introduction. If you have nvim-treesitter and the parser for Haskell installed, and if you use haskell-language-server, some snippets will be enhanced (e.g. qualified imports and module names).\n I've only recently migrated to LuaSnip, and I expect to add more snippets that leverage tree-sitter and the LSP client in the future (probably also for Nix).\n    submitted by    /u/Comfortable_Ability4  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/13tl9aq/my_haskell_snippet_collection_for_neovim_with/",
+          "publishedOn": "2023-05-27T23:20:33.000Z",
+          "wordCount": 2358,
+          "title": "My Haskell snippet collection for Neovim - with tree-sitter and LSP",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/13tj5na/timeloop_time_travelling_for_all/",
+          "author": null,
+          "description": "Killing your own grandfather has never been more easy.\n https://github.com/cdupont/Timeloop\n This is a demonstrator for studying time travel in a simple setting.\n Have fun!\n    submitted by    /u/kaukaukau  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/13tj5na/timeloop_time_travelling_for_all/",
+          "publishedOn": "2023-05-27T21:47:18.000Z",
+          "wordCount": 2295,
+          "title": "TimeLoop: Time travelling for all!",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/13tg9yg/the_genesis_layerzero_airdrop/",
           "author": null,
           "description": "https://layerzero.solutions\n    submitted by    /u/Weekly_Success_6260  \n [link]   [comments]",
@@ -1241,26 +1271,6 @@
           "wordCount": 2362,
           "title": "Counting Lambda subexpressions",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/132jxog/extending_de_bruijn_notation_as_a_nested_datatype/",
-          "author": null,
-          "description": "I just figured out how to encode pattern matching into \"De Bruijn Notation as a Nested Datatype\":\n {-# LANGUAGE GADTs #-} module NestedPattern where import Control.Monad import Data.Functor.Compose import Data.Traversable import Data.Void data Term x where Var :: x -> Term x App :: Term x -> Term x -> Term x Lam :: Traversable f => Pattern f -> Term (f x) -> Term x data Pattern f where Bind :: Pattern Maybe Pair :: Pattern f -> Pattern g -> Pattern (Compose f g) instance Functor Term where fmap = liftM instance Applicative Term where pure = return (<*>) = ap instance Monad Term where return = Var Var x >>= f = f x App e1 e2 >>= f = App (e1 >>= f) (e2 >>= f) Lam pm e >>= f = Lam pm (e >>= traverse f) instance Foldable Term where foldMap = foldMapDefault instance Traversable Term where traverse f (Var x) = Var <$> f x traverse f (App e1 e2) = App <$> traverse f e1 <*> traverse f e2 traverse f (Lam pm e) = Lam pm <$> (traverse (traverse f) e) left, right :: Term Void left = Lam (Pair Bind Bind) (Var $ Compose $ Just $ Nothing) right = Lam (Pair Bind Bind) (Var $ Compose $ Nothing) \n For those unaware, De Bruijn Notation as a Nested Datatype shows to use nested data types to encode debrujin indexes in the type system. In the encoding, an abstract syntax tree is parameterized by their free variables. Lambdas in this encoding simply add an extra inhabitant to their child term.\n My extension here uses GADTs (and HKTs) to make this work with patterns as well. A pattern in this encoding is something that describes how to map free variables, so Bind just adds an extra inhabit like what a normal lambda would do and Pair composes the maps of other patterns.\n    submitted by    /u/superstar64  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/132jxog/extending_de_bruijn_notation_as_a_nested_datatype/",
-          "publishedOn": "2023-04-29T05:11:35.000Z",
-          "wordCount": 2463,
-          "title": "Extending \"De Bruijn Notation as a Nested Datatype\" with Pattern Matching.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/131s2nb/a_blockbased_functional_programming_language/",
-          "author": null,
-          "description": "Hi All, \n Im a Univeristy Student currently studying Computer Science at the University of Southampton, and as apart of my Dissertation / Thesis i have created a proof-of-concept tool that combines ideas from the Functional Language Haskell with the Block-Based visual paradigm.\n Ive spent alot of time and effort on this project, and whilst i havent managed to achieve all my goals, im still proud of its outcome and am here to share it!\n You can find the project at https://blockell.netlify.app/, where you can create small programs using blocks to declare functions and generate haskell code. Unfortionately, there are no tutorials for the tool, and to run the code you have to copy it into a haskell file and run it locally on your machine. :( \n Anyways, if you like the tool, or have any comments, suggestions or improvements feel free to comment them below or answer this anonymous feedback form here: https://forms.office.com/e/nd6sJ3Gq0U \n Any and all commments with be tremendous help to my project, but also Im just proud of this language and want others to see it :)\n    submitted by    /u/d1r3w00lf  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/131s2nb/a_blockbased_functional_programming_language/",
-          "publishedOn": "2023-04-28T13:39:52.000Z",
-          "wordCount": 2316,
-          "title": "A Block-Based Functional Programming Language",
-          "imageUrl": null
         }
       ]
     },
@@ -1269,6 +1279,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/13u40s4/this_week_in_scala_may_29_2023/",
+          "author": null,
+          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/13u40s4/this_week_in_scala_may_29_2023/",
+          "publishedOn": "2023-05-28T16:05:04.000Z",
+          "wordCount": 2257,
+          "title": "This week in #Scala (May 29, 2023)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/13u3xcm/how_to_test_tagless_final_algebra/",
+          "author": null,
+          "description": "I have been learning about tagless final. I prepared a simple usecase to just create user in a repository. I started with example based tests and also tried with property based testing. Had some doubts and got it clarified in stackoverflow. My intention was to have a defined set of rules for the UserAlgebra. Since the interpreters are expected to follow the same rules, it would be easier to develop. Usually, I start with an InmemoryInterpreter implementation. Later another interpreter would be implemented for the real persistence based repository. \n Slowly, I got pulled in cats-laws && disciple with scalacheck until I ran into a considerably long phase that I dont understand why the compilation fails. \n Here is the snippet. https://scastie.scala-lang.org/itsnashter/HxcapljGSZylOtLyssJbLg/2. Can experts take a look to help me understand the following? \n  \nWhat is the general convention to test the tagless final algebraic resources? I dont want to use unsaferunSync() even in tests. \n Is having laws for repositories like \"create and get\" ( & rest like mentioned in scastie) really needed ? The Laws look like they were meant for structures like Monad. \n Cats laws seem interesting but there is not much to understand for a beginner like me. Are there any blogs? \n  \nI have gone through the following - https://www.iteratorshq.com/blog/tagless-with-discipline-testing-scala-code-the-right-way/\n    submitted by    /u/ItsNashter  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/13u3xcm/how_to_test_tagless_final_algebra/",
+          "publishedOn": "2023-05-28T16:01:24.000Z",
+          "wordCount": 2454,
+          "title": "How to test Tagless Final Algebra?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/13tdrs8/fs2kafka_pipes_offset_commitment_races_and_test/",
           "author": null,
@@ -2168,36 +2198,6 @@
           "wordCount": 2115,
           "title": "SBT",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1329k7e/small_rescala_project_for_presentation/",
-          "author": null,
-          "description": "Hey guys!\n I'm studying CS and currently attend a course that involves creating a small project using REScala to give a little introduction to functional-reactive programming (in addition to doing all the necessary research and writing a small paper about it).\n My professor added, that everything we intend to demonstrate during our presentation should not be something trivial like a `Hello, world!` programs or similar, so I figured I might ask here if anybody has some small project ideas that are feasible for a Scala and FRP newbie yet ideally impress my professor.\n Thanks in advance for any help! \n EDIT:\n I might've added that I am not new to functional programming in general and definitely know my way around (have some experience using various languages, mainly Haskell).\n    submitted by    /u/decayed___  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1329k7e/small_rescala_project_for_presentation/",
-          "publishedOn": "2023-04-28T20:56:31.000Z",
-          "wordCount": 2236,
-          "title": "Small REScala project for presentation",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1323w1t/blog_on_some_of_the_notsocommon_sbt_features/",
-          "author": null,
-          "description": "Hi Scala Peeps,\n I wrote a new blog about some of the not-so-obvious and common features of SBT, especially for the newbies. Here is the link: https://yadukrishnan.live/unlocking-the-power-of-sbt-a-beginners-guide-to-understanding-not-so-common-features\n With this, I am hoping that I can help some of the new comers to SBT to use these powerful features of SBT. \n Please do read the blog and let me know if you find it useful and informative. \n Thanks!\n    submitted by    /u/yadukrishnank  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1323w1t/blog_on_some_of_the_notsocommon_sbt_features/",
-          "publishedOn": "2023-04-28T17:30:14.000Z",
-          "wordCount": 2180,
-          "title": "Blog on some of the not-so-common SBT Features",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/131og1e/type_erased_on_implicit_evidence_check/",
-          "author": null,
-          "description": "I'm trying to create a poor man version of refined types implementation with a simple validation of string content and check the return type via Implicit evidence on another function. It seems that the type got erased after it got returned from the check\n function. Can someone suggest me an scala trick to do this effectively? \n sealed trait Validate sealed trait Pass extends Validate sealed trait Fail extends Validate type SUCCESS = Pass case class Validator[State <: Validate: TypeTag](s: String = \"\") { def check = { if (s == \"awesome\") { Validator[Pass](s) } else { Validator[Fail](s) } } def pass: Validator[Pass] = Validator[Pass](s) def fail: Validator[Fail] = Validator[Fail](s) def validate(implicit ev: State =:= SUCCESS): String = s def testResult = typeOf[State] =:= typeOf[SUCCESS] } Validator(\"awesome\").check.testResult // true Validator(\"awesome\").check.validate // Cannot prove that _1 =:= MdocApp.this.SUCCESS. \n    submitted by    /u/krayoola  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/131og1e/type_erased_on_implicit_evidence_check/",
-          "publishedOn": "2023-04-28T11:02:18.000Z",
-          "wordCount": 2247,
-          "title": "Type erased on implicit evidence check",
-          "imageUrl": null
         }
       ]
     },
@@ -2359,6 +2359,36 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/13u6f34/it_is_possible_to_show_a_error_message_under/",
+          "author": null,
+          "description": "Hi, first post here. I have a noob question arround Org Babel. I want to generate an error for didactic purposes on a Java code. There is a way to evaluate the SRC code block and output the error message? Currently the code executes, stdout the expected errors in another buffer but don't show the errors in the results section. Here is my code:\n #+begin_src java float a = 3; float b = 2; float div = a / b; int sum = a + b; int mult = a * b; int subt = a - b; System.out.println(\"Sum: \" + sum + \" || Sub: \" + subt + \" || Mult: \" + mult + \" || Div: \" + div); #+end_src \n The idea is to show the type error under the #+RESULTS:Section\n    submitted by    /u/SpaceLenin1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/13u6f34/it_is_possible_to_show_a_error_message_under/",
+          "publishedOn": "2023-05-28T17:43:41.000Z",
+          "wordCount": 2416,
+          "title": "It is possible to show a error message under #+RESULTS in org babel?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/13u1hze/carrara_a_stylesheet_collection_centered_around/",
+          "author": null,
+          "description": "submitted by    /u/grtcdr  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/13u1hze/carrara_a_stylesheet_collection_centered_around/",
+          "publishedOn": "2023-05-28T14:15:40.000Z",
+          "wordCount": 2276,
+          "title": "Carrara - a stylesheet collection centered around Org-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/13tuggo/caption_position_of_listings_captionposb_is/",
+          "author": null,
+          "description": "My org-latex-listings-options are the following:\n  (setq org-latex-listings-options '( (\"basicstyle\" \"\\\\linespread{0.85}\\\\ttfamily\") (\"numbers\" \"left\") (\"numberstyle\" \"\\\\tiny\") (\"frame\" \"tb\") (\"tabsize\" \"4\") (\"columns\" \"fixed\") (\"showstringspaces\" \"false\") (\"showtabs\" \"false\") (\"keepspaces\" \"true\") (\"commentstyle\" \"\\\\color{red}\") (\"keywordstyle\" \"\\\\color{blue}\") (\"breaklines\" \"true\") (\"captionpos\" \"t\") )) \n My tex output is:\n  \\lstset{basicstyle=\\linespread{0.85}\\ttfamily,numbers=left, numberstyle=\\tiny,frame=tb,tabsize=4,columns=fixed,showstringspaces=false, showtabs=false,keepspaces=true,commentstyle=\\color{red},keywordstyle=\\color{blue}, breaklines=true,captionpos=t,language=Lisp,label=lst1, caption={hello world},captionpos=b} \n since, captionpos=b is adding itself at last, its overriding my value captionpos=t. I looked into ox-latex and I found this:\n `((\"captionpos\" ,(if caption-above-p \"t\" \"b\"))). \n I do not understand caption-above-p, how is it assigned?\n How can I stop adding captionpos=b or make it =t?\n Note: I am using Doom Emacs.\n Thank you for your time.\n    submitted by    /u/Constant_Try_2065  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/13tuggo/caption_position_of_listings_captionposb_is/",
+          "publishedOn": "2023-05-28T07:43:59.000Z",
+          "wordCount": 2378,
+          "title": "caption position of listings (captionpos=b) is appending itself at last",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/13svi8q/agenda_blocks_filtered_by_category/",
           "author": null,
@@ -2818,16 +2848,6 @@
           "wordCount": 2272,
           "title": "Blogging: org-publish vs ox-hugo? What's your opinion/experience on these 2?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/132blut/generating_elisp_org_docs/",
-          "author": null,
-          "description": "submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/132blut/generating_elisp_org_docs/",
-          "publishedOn": "2023-04-28T22:21:16.000Z",
-          "wordCount": 2139,
-          "title": "Generating elisp org docs",
-          "imageUrl": null
         }
       ]
     },
@@ -2836,6 +2856,46 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/hotfuzz-20230528.1112.el",
+          "author": null,
+          "description": "The hotfuzz package has been updated to version 20230528.1112.",
+          "link": "https://melpa.org/#/hotfuzz",
+          "publishedOn": "2023-05-28T11:12:00.000Z",
+          "wordCount": 105,
+          "title": "hotfuzz (20230528.1112) --- Fuzzy completion style",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/consult-org-roam-20230528.855.tar",
+          "author": null,
+          "description": "The consult-org-roam package has been updated to version 20230528.855.",
+          "link": "https://melpa.org/#/consult-org-roam",
+          "publishedOn": "2023-05-28T08:55:00.000Z",
+          "wordCount": 105,
+          "title": "consult-org-roam (20230528.855) --- Consult integration for org-roam",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/treepy-20230528.750.el",
+          "author": null,
+          "description": "The treepy package has been updated to version 20230528.750.",
+          "link": "https://melpa.org/#/treepy",
+          "publishedOn": "2023-05-28T07:50:00.000Z",
+          "wordCount": 105,
+          "title": "treepy (20230528.750) --- Generic tree traversal tools",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/vscode-dark-plus-theme-20230527.2110.el",
+          "author": null,
+          "description": "The vscode-dark-plus-theme package has been updated to version 20230527.2110.",
+          "link": "https://melpa.org/#/vscode-dark-plus-theme",
+          "publishedOn": "2023-05-27T21:10:00.000Z",
+          "wordCount": 105,
+          "title": "vscode-dark-plus-theme (20230527.2110) --- Default Visual Studio Code Dark+ theme",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/navigel-20230527.1620.el",
           "author": null,
@@ -2884,6 +2944,16 @@
           "publishedOn": "2023-05-26T23:14:00.000Z",
           "wordCount": 105,
           "title": "editorconfig (20230526.2314) --- EditorConfig Emacs Plugin",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/eldoc-box-20230526.2100.el",
+          "author": null,
+          "description": "The eldoc-box package has been updated to version 20230526.2100.",
+          "link": "https://melpa.org/#/eldoc-box",
+          "publishedOn": "2023-05-26T21:00:00.000Z",
+          "wordCount": 105,
+          "title": "eldoc-box (20230526.2100) --- Display documentation in childframe",
           "imageUrl": null
         },
         {
@@ -3137,6 +3207,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/python-mls-20230522.2131.el",
+          "author": null,
+          "description": "The python-mls package has been updated to version 20230522.2131.",
+          "link": "https://melpa.org/#/python-mls",
+          "publishedOn": "2023-05-22T21:31:00.000Z",
+          "wordCount": 105,
+          "title": "python-mls (20230522.2131) --- Multi-line shell for (i)Python",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/oauth-20230522.1900.el",
           "author": null,
           "description": "The oauth package has been updated to version 20230522.1900.",
@@ -3364,6 +3444,16 @@
           "publishedOn": "2023-05-21T17:00:00.000Z",
           "wordCount": 105,
           "title": "php-mode (20230521.1700) --- Major mode for editing PHP code",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/embark-20230521.1511.tar",
+          "author": null,
+          "description": "The embark package has been updated to version 20230521.1511.",
+          "link": "https://melpa.org/#/embark",
+          "publishedOn": "2023-05-21T15:11:00.000Z",
+          "wordCount": 105,
+          "title": "embark (20230521.1511) --- Conveniently act on minibuffer completions",
           "imageUrl": null
         },
         {
@@ -3794,6 +3884,16 @@
           "publishedOn": "2023-05-17T15:27:00.000Z",
           "wordCount": 105,
           "title": "mermaid-mode (20230517.1527) --- major mode for working with mermaid graphs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/khoj-20230517.1434.el",
+          "author": null,
+          "description": "The khoj package has been updated to version 20230517.1434.",
+          "link": "https://melpa.org/#/khoj",
+          "publishedOn": "2023-05-17T14:34:00.000Z",
+          "wordCount": 105,
+          "title": "khoj (20230517.1434) --- A search assistant for your second brain",
           "imageUrl": null
         },
         {
@@ -5955,96 +6055,6 @@
           "wordCount": 105,
           "title": "zk-index (20230429.1230) --- Index for zk",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/logview-20230428.2158.el",
-          "author": null,
-          "description": "The logview package has been updated to version 20230428.2158.",
-          "link": "https://melpa.org/#/logview",
-          "publishedOn": "2023-04-28T21:58:00.000Z",
-          "wordCount": 105,
-          "title": "logview (20230428.2158) --- Major mode for viewing log files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/autobuild-20230428.2118.el",
-          "author": null,
-          "description": "The autobuild package has been updated to version 20230428.2118.",
-          "link": "https://melpa.org/#/autobuild",
-          "publishedOn": "2023-04-28T21:18:00.000Z",
-          "wordCount": 105,
-          "title": "autobuild (20230428.2118) --- Define and execute build rules and compilation pipelines",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/tide-20230428.1846.tar",
-          "author": null,
-          "description": "The tide package has been updated to version 20230428.1846.",
-          "link": "https://melpa.org/#/tide",
-          "publishedOn": "2023-04-28T18:46:00.000Z",
-          "wordCount": 105,
-          "title": "tide (20230428.1846) --- Typescript Interactive Development Environment",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-docker-20230428.1825.el",
-          "author": null,
-          "description": "The lsp-docker package has been updated to version 20230428.1825.",
-          "link": "https://melpa.org/#/lsp-docker",
-          "publishedOn": "2023-04-28T18:25:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-docker (20230428.1825) --- LSP Docker integration",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/format-all-20230428.1823.el",
-          "author": null,
-          "description": "The format-all package has been updated to version 20230428.1823.",
-          "link": "https://melpa.org/#/format-all",
-          "publishedOn": "2023-04-28T18:23:00.000Z",
-          "wordCount": 105,
-          "title": "format-all (20230428.1823) --- Auto-format C, C++, JS, Python, Ruby and 50 other languages",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/magit-section-20230428.1518.tar",
-          "author": null,
-          "description": "The magit-section package has been updated to version 20230428.1518.",
-          "link": "https://melpa.org/#/magit-section",
-          "publishedOn": "2023-04-28T15:18:00.000Z",
-          "wordCount": 105,
-          "title": "magit-section (20230428.1518) --- Sections for read-only buffers.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/brf-20230428.1402.tar",
-          "author": null,
-          "description": "The brf package has been updated to version 20230428.1402.",
-          "link": "https://melpa.org/#/brf",
-          "publishedOn": "2023-04-28T14:02:00.000Z",
-          "wordCount": 105,
-          "title": "brf (20230428.1402) --- Brf-mode provides features from the legendary editor Brief",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elcord-20230428.1334.tar",
-          "author": null,
-          "description": "The elcord package has been updated to version 20230428.1334.",
-          "link": "https://melpa.org/#/elcord",
-          "publishedOn": "2023-04-28T13:34:00.000Z",
-          "wordCount": 105,
-          "title": "elcord (20230428.1334) --- Allows you to integrate Rich Presence from Discord",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/hl-todo-20230428.1332.el",
-          "author": null,
-          "description": "The hl-todo package has been updated to version 20230428.1332.",
-          "link": "https://melpa.org/#/hl-todo",
-          "publishedOn": "2023-04-28T13:32:00.000Z",
-          "wordCount": 105,
-          "title": "hl-todo (20230428.1332) --- Highlight TODO and similar keywords",
-          "imageUrl": null
         }
       ]
     },
@@ -6053,6 +6063,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13u99sv/people_with_literate_configs_in_orgmode_how_do/",
+          "author": null,
+          "description": "I have all my config in a single giant org mode file. This file produces three others when tangled, init.el, early-init.el and a custom theme for my colorscheme. Problem is, whenever I make a change in the org file, and tangle the changes, the git repo for my dotfiles now sees two different files being modified (obviously) with the same changes. It makes it really cumbersome to do proper commits, since if I did many changes and I'd like to do various commits for each of them, I have to add not only the changes in the org file, but also hunt down the same modifications in the init and early-init files (mostly init tho).\n I recently tried to fix this by dropping all of the init.el contents into some other file, call it \"real-init.el\". Then, I would have a very minimal init.el that would check if init and early-init exist, and if they don't, it would tangle the org file and restart emacs. I would just keep track of the org file and the minimal init file in the git repo, and since the init file is very minimal and wouldn't change very often, it would be a fine compromise.\n For some odd reason, while the files did get tangled, emacs would just restart indefinitely. It opened, then closed, then opened, then closed. I had to force kill it.\n Has anyone else faced this problem? How did you solve it?\n    submitted by    /u/SnooPets20  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13u99sv/people_with_literate_configs_in_orgmode_how_do/",
+          "publishedOn": "2023-05-28T19:46:37.000Z",
+          "wordCount": 2509,
+          "title": "People with literate configs in org-mode, how do you handle \"commit duplication\"?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13u8vo0/help_with_deno_lsp/",
+          "author": null,
+          "description": "I'm trying to work with Deno in Emacs. The lsp-mode can easily connect to the lsp-server. However, it is unable to resolve the import maps. For example, can't go to definition even though VS Code can easily do that. \n I've tries setting the lsp-clients-deno-import-map to the impart_map.json file in the project folder, but still that didn't work.\n Any suggestions or links to a working configurations that I can have a look at?\n    submitted by    /u/omarbassam88  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13u8vo0/help_with_deno_lsp/",
+          "publishedOn": "2023-05-28T19:30:24.000Z",
+          "wordCount": 2333,
+          "title": "Help with Deno + LSP",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13u6rgs/it_is_possible_to_show_a_error_message_under/",
+          "author": null,
+          "description": "submitted by    /u/SpaceLenin1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13u6rgs/it_is_possible_to_show_a_error_message_under/",
+          "publishedOn": "2023-05-28T17:58:34.000Z",
+          "wordCount": 2422,
+          "title": "It is possible to show a error message under #+RESULTS in org babel?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13u5u7f/emacs_is_the_least_userfriendly_program_on_linux/",
+          "author": null,
+          "description": "*the least friendly operating system on linux\n Try opening ipython notebook in vscode. Then try to open ipython notebook via emacs.\n Vscode takes you directly to the rendered buffer ready to edit in less than a second.\n Emacs won't work and won't tell you how to fix it. You go search for a package - you find ein. You get it installed, you get jupyter package install. Turns out it was the wrong package, so now you get the correct jupyter notebook pacakge installed. It turns out that ein now needs you to separately start the server, open the server, switch to the file that you ALREADY HAD OPENED and then switch to that buffer. It opens five other buffers in the meantime, three of them cluttering your workspace.\n It also crashed twice while getting there...\n I don't doubt that it has some great features going (extensibility, minimalism), but for the love of emperor don't be an idiot and create sane defaults!\n This is the time where you can't pretend anymore and have to admit that vscode extension just did it plain better...\n    submitted by    /u/danielkraj  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13u5u7f/emacs_is_the_least_userfriendly_program_on_linux/",
+          "publishedOn": "2023-05-28T17:19:23.000Z",
+          "wordCount": 2453,
+          "title": "Emacs is the least user-friendly program on linux (case of ein and ipython notebooks)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13u0qwn/easy_automatic_encryption_for_orgmode_with_ageel/",
+          "author": null,
+          "description": "submitted by    /u/nayanld  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13u0qwn/easy_automatic_encryption_for_orgmode_with_ageel/",
+          "publishedOn": "2023-05-28T13:40:49.000Z",
+          "wordCount": 2263,
+          "title": "Easy automatic encryption for orgmode with age.el",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13tum8v/caption_position_of_listings_captionposb_is/",
+          "author": null,
+          "description": "submitted by    /u/Constant_Try_2065  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13tum8v/caption_position_of_listings_captionposb_is/",
+          "publishedOn": "2023-05-28T07:54:32.000Z",
+          "wordCount": 2379,
+          "title": "caption position of listings (captionpos=b) is appending itself at last",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13ts5ys/how_do_i_get_lsp_diagnostics_in_a_floating_buffer/",
+          "author": null,
+          "description": "I use both emacs and neovim , the one thing I miss from neovim in emacs is the ability to see LSP diagnostics in a pop up buffer just under my cursor.\n ​\n https://preview.redd.it/hdmgjm2xhi2b1.png?width=768&format=png&auto=webp&s=4aefaca19d6b0153c9b97711f03a11cc1f03c7ac\n Currently, I see diagnostics as virtual text.\n Am using doom emacs.\n    submitted by    /u/Celibistrial  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13ts5ys/how_do_i_get_lsp_diagnostics_in_a_floating_buffer/",
+          "publishedOn": "2023-05-28T05:17:18.000Z",
+          "wordCount": 2313,
+          "title": "How do I get lsp diagnostics in a floating buffer / pop up window?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13trgfw/orgnavigator_programmable_composable_shortcuts/",
+          "author": null,
+          "description": "I use org-refile to navigate and file things all the time. While it is functional, I have long craved something a little more flexible.\n So I've written a package that allows you to programmatically set composable shortcuts for org-refile.\n https://github.com/thread314/org-navigator\n It allows the user to set prefix shortcut keys to various actions (refile to, go-to, clock in to etc), and combine these with suffix keys that define the target for the desired action.\n So for example, typing C-c fa might file the current subtree to the subtree set to \"a\", whereas C-c ia would instead jump to that subtree and open it in an indirect buffer.\n It also allows the user to define the destination suffix keys by setting a property on the target subtree itself from within the org-mode file.\n I'm not a programmer so always very open to any feedback or suggestions.\n    submitted by    /u/patchikin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13trgfw/orgnavigator_programmable_composable_shortcuts/",
+          "publishedOn": "2023-05-28T04:35:11.000Z",
+          "wordCount": 2406,
+          "title": "Org-Navigator: Programmable, Composable Shortcuts For Org-Refile",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13tqis2/in_markdownmode_how_open_video_links_with_default/",
+          "author": null,
+          "description": "I add a internal video as:\n - [ ] Jackson's Thriller [Thriller](~/Videos/MTVs/MichaelJackson-Thriller(OfficialVideo-ShortenedVersion).webm) \n When click the link, the video is opened literally but not played with default player.\n https://preview.redd.it/ru623ee4uh2b1.png?width=846&format=png&auto=webp&s=793fac075ea0521d2b2d926983f3339701fa094a\n How could set it opened with player? I am on emacs28.2 of win10.\n    submitted by    /u/AbstProcDo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13tqis2/in_markdownmode_how_open_video_links_with_default/",
+          "publishedOn": "2023-05-28T03:44:36.000Z",
+          "wordCount": 2305,
+          "title": "In markdown-mode, how open video links with default player",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13tq8qh/tramp_against_remote_freebsd_or_macos/",
+          "author": null,
+          "description": "I'm trying to troubleshoot problems of Tramp via ssh on remote FreeBSD or MacOS. Tramp works fine when the remote is Linux.\n I've set this at the first line of the remote .zshrc in the case of MacOS:\n [[ $TERM == \"dumb\" ]] && unsetopt zle && PS1='$ ' && return \n At least connect does not just hang, but it shows this (testing connecting to localhost):\n /ssh:USER@localhost:/Users/USER:\n (blank page)\n ​\n The value of dired-listing-switches is \"-al\".\n ​\n Anything to try here? I've tried starting up Emacs with -Q to rule out any local config. The Emacs I'm using is on MacOS and version is:\n GNU Emacs 30.0.50 (build 1, x86_64-apple-darwin22.4.0, NS appkit-2299.50 Version 13.3.1 (a) (Build 22E772610a)) of 2023-05-02 \n    submitted by    /u/AnotherDevArchSecOps  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13tq8qh/tramp_against_remote_freebsd_or_macos/",
+          "publishedOn": "2023-05-28T03:29:08.000Z",
+          "wordCount": 2379,
+          "title": "Tramp against remote FreeBSD or MacOS?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13thr7c/tangle_files_in_a_different_folder/",
+          "author": null,
+          "description": "Hi, \n I am wondering if it is possible to tangle src blocks from a given .org such that the .el file is created in a separate folder. Any possible leads? Thank you!\n    submitted by    /u/meaning-what  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13thr7c/tangle_files_in_a_different_folder/",
+          "publishedOn": "2023-05-27T20:46:36.000Z",
+          "wordCount": 2294,
+          "title": "tangle files in a different folder",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/13thjus/how_to_get_started_with_treesitter/",
+          "author": null,
+          "description": "submitted by    /u/mickeyp  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/13thjus/how_to_get_started_with_treesitter/",
+          "publishedOn": "2023-05-27T20:37:41.000Z",
+          "wordCount": 2273,
+          "title": "How to Get Started with Tree-Sitter",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/13tc2is/how_to_apply_set_dark_theme_in_nano_emacs/",
           "author": null,
@@ -9382,126 +9512,6 @@
           "wordCount": 2312,
           "title": "Getting backwards jumps working in org agenda and helpful mode in Doom",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/132luar/add_a_prefix_to_keymap_for_specific_mode/",
-          "author": null,
-          "description": "I want to assign a prefix key for org-noter-doc-mode-map when org-noter minor mode is active.\n I have found the following solution in stackexchange, but it uses global map.\n ```\n (define-prefix-command 'foo-mode-map)\n (define-key global-map (kbd \"<f9>\") 'foo-mode-map)\n ```\n i.e., I am using Doom Emacs\n ​\n    submitted by    /u/Constant_Try_2065  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/132luar/add_a_prefix_to_keymap_for_specific_mode/",
-          "publishedOn": "2023-04-29T07:02:58.000Z",
-          "wordCount": 2173,
-          "title": "add a prefix to keymap for specific mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/132gmsp/cursor_seems_to_get_stuck_when_scrolling_need/",
-          "author": null,
-          "description": "I am running emacs-29. I have pixel-scroll-precision-mode enabled and fast-but-imprecise-scrolling set to t. For some reason, when I scroll with my mousepad slowly, if I try to scroll past the current line number, it will jump back to the original position that the screen was in. i am wondering if anyone else has encountered a similar issue and if there is any way to fix this. This seems to only happen in evil non-insert states. Thanks.\n    submitted by    /u/Far-Anywhere2876  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/132gmsp/cursor_seems_to_get_stuck_when_scrolling_need/",
-          "publishedOn": "2023-04-29T02:14:55.000Z",
-          "wordCount": 2209,
-          "title": "Cursor seems to get stuck when scrolling, need help fixing.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/132blhj/generating_elisp_org_docs/",
-          "author": null,
-          "description": "submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/132blhj/generating_elisp_org_docs/",
-          "publishedOn": "2023-04-28T22:20:50.000Z",
-          "wordCount": 2129,
-          "title": "Generating elisp org docs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/131ymo1/emacs_pretest_29_freeze_on_macos/",
-          "author": null,
-          "description": "Hi Guys,\n does anybody experience freeze on mac (intel) with emacs 29 (emacs-pretest) from homebrew. Any hints?\n    submitted by    /u/xmatoha  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/131ymo1/emacs_pretest_29_freeze_on_macos/",
-          "publishedOn": "2023-04-28T15:54:09.000Z",
-          "wordCount": 2146,
-          "title": "Emacs pretest (29) freeze on MacOS",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/131sswg/using_a_csl_file_for_org_latex_export_just_once/",
-          "author": null,
-          "description": "(Updated) Hi \n I am writing a paper, and I need to use a specific CLS file. I don't want to add it to my init.el in the list org-latex-classes, is it possible to using .dir-locals.el for this? Couls you show me an example?\n Thanks in advance\n Update: confused CLS with CSL\n    submitted by    /u/nanounanue  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/131sswg/using_a_csl_file_for_org_latex_export_just_once/",
-          "publishedOn": "2023-04-28T14:07:58.000Z",
-          "wordCount": 2183,
-          "title": "Using a CSL file for Org LaTeX export just once",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/131s1ov/avoiding_the_loading_of_tramp_projects_at_startup/",
-          "author": null,
-          "description": "Hi there,\n I've been recently spending a lot of time inside docker containers (or Podman in my case), and because of this, project.el has picked up a project and stored it in the projects file. If Emacs reboots and the container is no longer there, project attempts to open the file in TRAMP, and TRAMP hangs until I press q to allow tramp to exit.\n I can think of two ways to hypothetically fix this:\n The first is by modifying the project-find-functions list. It's a list of functions which are ran in succession until one of them returns a truthy value. My current project-find-functions is (project-try-vc project-try-local). I believe in my case project-try-vc is returning t.\n The second is by telling TRAMP to move on after a failure, allowing the boot to complete even when some projects are not accessible. I'm thinking an advice might be necessary to achieve this.\n Are there any other options? Does anyone out there have a solution to this already?\n Thanks!\n    submitted by    /u/FederalPirate2867  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/131s1ov/avoiding_the_loading_of_tramp_projects_at_startup/",
-          "publishedOn": "2023-04-28T13:38:51.000Z",
-          "wordCount": 2296,
-          "title": "Avoiding the loading of TRAMP projects at startup",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/131qmkk/custombuilt_emacs_vs_prebuilt_emacs_benchmarks/",
-          "author": null,
-          "description": "I tested to see how much I could improve performance by compiled my own Emacs on Windows. \n Hardware and OS\n CPU : Ryzen 5800X OS: Windows 11 Pro 10.0.22621\n Mostly CPU is the only relevant hardware here.\n Emacs environment\n Custom-built binary: Emacs master branch, commit a57a8b. I built using the configure flags in this guide: https://www.reddit.com/r/emacs/comments/131354i/guide_compile_your_own_emacs_to_make_it_really/\n Prebuilt binary: Download the official website, commit bc61a1: https://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-30/\n I tried to build from source with the same commit, but it failed. Both differ not too much anyway.\n Both run the same .emacs.d and all built-in Elisp libraries are compiled to eln.\n Benchmarks\n Fibonacci 40\n Elisp code, tested in scratch buffer:\n ```…",
-          "link": "https://www.reddit.com/r/emacs/comments/131qmkk/custombuilt_emacs_vs_prebuilt_emacs_benchmarks/",
-          "publishedOn": "2023-04-28T12:41:53.000Z",
-          "wordCount": 2549,
-          "title": "Custom-built Emacs vs Pre-built Emacs benchmarks (v30.0.50) and current Emacs performance on Windows",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/131ovtw/emacs_pyright_eglot_make_an_excellent_python_ide/",
-          "author": null,
-          "description": "submitted by    /u/torsteinkrause  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/131ovtw/emacs_pyright_eglot_make_an_excellent_python_ide/",
-          "publishedOn": "2023-04-28T11:24:03.000Z",
-          "wordCount": 2129,
-          "title": "Emacs, Pyright & Eglot make an excellent Python IDE",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/131okef/orgagenda_keep_projects_and_subtasks_grouped_even/",
-          "author": null,
-          "description": "I hope this is the right place to ask.\n Is there any easy way to keep projects and their subtasks grouped in the agenda view, even if the priority of them is different? I.e. this is how it is without priorities set https://imgur.com/1QML6US (I assume based on the order the files are processed) And this is what it looks like after changing the priorirty: https://imgur.com/Dfven4b\n And this is what I would like for it to look like: https://imgur.com/NUwAy8K or https://imgur.com/lsire7C\n    submitted by    /u/MailRegular8914  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/131okef/orgagenda_keep_projects_and_subtasks_grouped_even/",
-          "publishedOn": "2023-04-28T11:08:20.000Z",
-          "wordCount": 2212,
-          "title": "Org-Agenda Keep Projects and Subtasks grouped, even with different priority.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/131ogki/substituring_dashfunctional_with_dash_in_emacs/",
-          "author": null,
-          "description": "Hi,\n I have based my emacs config on Emacs Prelude from u/bbatsov, because I did not trust starting from vanilla emacs.\n When starting my emacs, I get a warning saying the the package dash-functional is no valid anylonger and must be replaced by the package dash from the same author,\n Is it some thing I can dom or only the author of Prelude?\n So far, I have installed dashm but it does not seem to fix the problem. Thx for your insights,\n    submitted by    /u/fmou67  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/131ogki/substituring_dashfunctional_with_dash_in_emacs/",
-          "publishedOn": "2023-04-28T11:03:07.000Z",
-          "wordCount": 2220,
-          "title": "substituring dash-functional with dash in emacs Prelude: can I do it or only the package creator",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/131nklq/how_to_rebind_orginsertstructuretemplate_to/",
-          "author": null,
-          "description": "The org-insert-structure-template is bound to C-c C-,. My problem is that this doesn't work when using Emacs over SSH shell. I don't know a solution for this. It might be easier to set a new shortcut to it.\n  \nWhich shortcut should I use? Or what are the general rules? C-c, C-x, C-i or something else?.\n \nHow to rebind it? I often struggle with that simple keybinding stuff because of different modes and keymaps. I didn't get the concept of it and often fail of rebind keys.\n \n    submitted by    /u/wWA5RnA4n2P3w2WvfHq  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/131nklq/how_to_rebind_orginsertstructuretemplate_to/",
-          "publishedOn": "2023-04-28T10:16:46.000Z",
-          "wordCount": 2218,
-          "title": "How to re-bind \"org-insert-structure-template\" to something different then \"C-c C-,\"?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/131mboz/is_there_something_that_provides_undotree_for/",
-          "author": null,
-          "description": "I always use undo-tree and haven't acquired the intuition of Emacs built-in undo/redo interface. However, winner-mode seems to use the same model? Is there any package that provide tree visualization of window configuration state?\n    submitted by    /u/BlueFlo0d  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/131mboz/is_there_something_that_provides_undotree_for/",
-          "publishedOn": "2023-04-28T09:08:35.000Z",
-          "wordCount": 2164,
-          "title": "Is there something that provides undo-tree for winner-mode?",
-          "imageUrl": null
         }
       ]
     },
@@ -9510,6 +9520,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2580@/discussions",
+          "author": "Will",
+          "description": "I've been thinking about my ZK and if it supports my dreams. I wonder if I'm feeding it appropriately. Maybe I should articulate the dream I have for my zettelkasting. \"I want it to support my writing.\" Is this clear enough? Should I rearticulate it more concretely? What does support mean if I break it down as my stated goal?\nOf course, that means that I have to start writing. Does journaling count? Part of how I've procrastinated writing is trying to automate my irregular blog posting. I've spent too much time exploring other alternatives. Automating the publishing of a post is difficult or impossible with my web host, Squarespace.\nHere is a fine example of 'Task Switching as opposed to Flow,' my most recent note. I should take my advice and start and see what develops.\nI've been wrestling with Python. I am learning new skills like the application of decorators, building modules, and profiling.\nI'm currently reading:\nJalāl al-Dīn Rūmī and Gafori, Haleh Liza. Gold, Simon & Schuster. 2022.\nAckerman, Diane. The planets: a cosmic pastoral: [poems], 1976.\nCohen, Gerald and Cunningham, Donald H.. Creating technical manuals: a step-by-step approach to writing user-friendly instructions, HarperVia. 1984.\n\n\nFaulkner, Grant. The art of brevity: crafting the very short story, Prometheus Books. 2023.\n\n\n\nI've told you about my week, now it's your turn to tell me about yours.\n\nMy ten day zettel production",
+          "link": "https://forum.zettelkasten.de/discussion/2580/ideas-im-grappling-with-may-27-2023",
+          "publishedOn": "2023-05-27T22:48:10.000Z",
+          "wordCount": 674,
+          "title": "Ideas I'm grappling with - May 27, 2023",
+          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/uj/r06cfw0uudpp.png"
+        },
         {
           "id": "2579@/discussions",
           "author": "akiradenko",
