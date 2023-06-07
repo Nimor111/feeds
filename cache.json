@@ -53,6 +53,36 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/143j5wl/how_to_write_test_using_hunit/",
+          "author": null,
+          "description": "data TestEnv = TestEnv {rateLimiter' :: !TokenBucket , apiManager :: !Manager , apiKey :: !BS.ByteString } data BunnyEnv = BunnyEnv{ rateLimiter :: !TokenBucket , mgr :: !Manager , apiKey':: !BS.ByteString} newtype BunnyReaderT a = BunnyReaderT{ runBunny :: ReaderT BunnyEnv IO a} class MonadIO m => HasBunny m where runRequest :: Request -> m (Response BSL.ByteString) applyAuth :: Request -> m Request fetchAuth :: m BS.ByteString runRequest req = do manager <- newTlsManager authReq <- applyAuth req liftIO $ httpLbs authReq manager applyAuth req = do apiKey <- fetchAuth return $ req { requestHeaders = (\"AccessKey\", apiKey) : requestHeaders req } fetchAuth = liftIO $ BS.pack <$> getEnv \"AccessKey\" instance (MonadIO BunnyReaderT, MonadReader TestEnv BunnyReaderT) => HasBunny BunnyReaderT where…",
+          "link": "https://www.reddit.com/r/haskell/comments/143j5wl/how_to_write_test_using_hunit/",
+          "publishedOn": "2023-06-07T17:19:33.000Z",
+          "wordCount": 2595,
+          "title": "How to write Test using Hunit",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/14306iu/final_project/",
+          "author": null,
+          "description": "Hi, I have tried to find similar questions to this here, and haven't found, but if there are, please point me.\n I am a CS undergrad and currently taking a functional programming class. The teacher has left us about 8 weeks to make a final project, without any directions. If you were to make some project in haskell, that would take about 6 weeks, what would you do?\n    submitted by    /u/teosalves  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/14306iu/final_project/",
+          "publishedOn": "2023-06-07T02:00:31.000Z",
+          "wordCount": 2343,
+          "title": "Final project",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/142y23m/need_project_idea/",
+          "author": null,
+          "description": "Hi, I’m learning haskell for the 2nd time and this time it’s really cliking and I love it.\n The problem is I need to find a project where I can use it. \n I’m an embedded engineer, I mostly do linux stuff and sometimes bare metal, I mainly use cpp. My dev set up is mainly comprised of neovim and terminal app. \n Ideally I would love to create a tool that I would use often and keep expanding so that I keep practicing haskell. \n Any idea? :)\n    submitted by    /u/D4rzok  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/142y23m/need_project_idea/",
+          "publishedOn": "2023-06-07T00:21:41.000Z",
+          "wordCount": 2392,
+          "title": "Need project idea",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/14245q8/crypton_is_forked_from_cryptonite_with_the/",
           "author": null,
           "description": "submitted by    /u/n00bomb  \n [link]   [comments]",
@@ -1151,36 +1181,6 @@
           "wordCount": 2206,
           "title": "I asked chat gpt to explain monads to a 5 year old. Like a caveman...",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/13c1ga5/on_the_verge_of_giving_up_learning_haskell/",
-          "author": null,
-          "description": "I would LOVE to use the language. I learnt the basics, wrote some simple programs. But the whole tooling (stack, cabal, hls, ghcup etc.) just confuses and frustrates me because NOTHING works (atleast not without hours of trying). I just want my vscode setup so it shows me errors and warnings and maybe type signatures (hls), but i just always get errors when i want to import modules, for example:\n  Multi Cradle: No prefixes matched pwd: c:\\Users\\nubch\\Documents\\haskell\\tictactoe\\tictactoe2 filepath: C:\\Users\\nubch\\Documents\\haskell\\tictactoe\\tictactoe2\\app\\Libr.hs prefixes: (\"app/Main.hs\",Cabal {component = Just \"tictactoe2:exe:tictactoe2\"}) \n Can someone PLEASE give me an overview what everything is and how to set it up so that is just works. The last weeks I always want to program and learn the language but i just waste hours because something doesnt work. its terrible, i just want to code.\n ​\n I have stack and cabal installed and hls in vscode. I just want to make a simple program, where do I start? Should I use cabal or stack, or none?\n    submitted by    /u/Keksgurke  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/13c1ga5/on_the_verge_of_giving_up_learning_haskell/",
-          "publishedOn": "2023-05-08T19:06:46.000Z",
-          "wordCount": 2335,
-          "title": "On the verge of giving up learning Haskell because of the terrible tooling.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/13bqdsb/generating_random_functions_for_quickcheck/",
-          "author": null,
-          "description": "I would like to test a function that processes a partition of a list, for example\n concat' :: [[a]] -> [a] concat' = foldr (++) [] \n For any partition of a list I would like to test the property concat' . anyPartition === id. So I thought about something like this (pseudo code):\n property $ \\xs -> concat' (anyPartition xs) === xs \n Of course anyPartition can't be a pure function. As a first step I tried to create a function\n partitionOf :: [a] -> Gen [[a]] partitionOf [] = return [] partitionOf xs = do i <- choose (2, 8) let (c, cs) = splitAt i xs (c:) <$> partitionOf cs \n but I don't know how to write a property test with a function like that. Do I need an Arbitrary ([a] -> Gen [[a]]) instance for it? How does this instance from Test.QuickCheck help?\n  (CoArbitrary a, Arbitrary b) => Arbitrary (a -> b) \n What's the best way to accomplish this partition handling test? Most of these things like Gen, Arbitrary and CoArbitrary are pretty new to me.\n    submitted by    /u/mirkeau  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/13bqdsb/generating_random_functions_for_quickcheck/",
-          "publishedOn": "2023-05-08T14:02:04.000Z",
-          "wordCount": 2341,
-          "title": "Generating random functions for QuickCheck",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/13blztw/runghc_in_vs_code/",
-          "author": null,
-          "description": "Hi, I'm trying to compile a program using runghc in VS code but it didn't work. When I compile the program with runghc in command prompt, it works properly. What should I do to be able to use runghc in VS code. Thank you so much and please spare me, I am a total beginner.\n    submitted by    /u/nguyennguyen8998  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/13blztw/runghc_in_vs_code/",
-          "publishedOn": "2023-05-08T11:17:56.000Z",
-          "wordCount": 2217,
-          "title": "runghc in VS code",
-          "imageUrl": null
         }
       ]
     },
@@ -1189,6 +1189,16 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/143iabq/scala_21311_and_21218_are_here/",
+          "author": null,
+          "description": "The Scala team at Lightbend is proud to announce Scala 2.13.11 and 2.12.18!\n 2.13.11 improves collections, adds support for JDK 20 and 21, adds support for JDK 17 sealed, aids migration to Scala 3, and more.\n 2.12.18 adds support for JDK 20 and 21 and aids migration to Scala 2.13 and Scala 3.\n For details, refer to the release notes on GitHub: * https://github.com/scala/scala/releases/tag/v2.13.11 * https://github.com/scala/scala/releases/tag/v2.12.18\n    submitted by    /u/Seth_Lightbend  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/143iabq/scala_21311_and_21218_are_here/",
+          "publishedOn": "2023-06-07T16:45:21.000Z",
+          "wordCount": 2316,
+          "title": "Scala 2.13.11 and 2.12.18 are here",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/142mpec/iron_updates_turning_opaque_types_into_value/",
           "author": null,
@@ -2028,36 +2038,6 @@
           "wordCount": 2329,
           "title": "Why is the Scala community being demoralized on Twitter?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/13c469j/stackoverflow_developer_survey_2023_is_out/",
-          "author": null,
-          "description": "submitted by    /u/BrilliantArmadillo64  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/13c469j/stackoverflow_developer_survey_2023_is_out/",
-          "publishedOn": "2023-05-08T20:43:30.000Z",
-          "wordCount": 2147,
-          "title": "Stackoverflow Developer Survey 2023 is out",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/13bvx5u/replacing_sbt_with_scalacli_in_a_simple_project/",
-          "author": null,
-          "description": "submitted by    /u/AlexITC  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/13bvx5u/replacing_sbt_with_scalacli_in_a_simple_project/",
-          "publishedOn": "2023-05-08T15:47:57.000Z",
-          "wordCount": 2139,
-          "title": "Replacing sbt with scala-cli in a simple project",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/13bop3v/is_scala_to_java_the_same_relationship_as/",
-          "author": null,
-          "description": "submitted by    /u/Call-MeNilo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/13bop3v/is_scala_to_java_the_same_relationship_as/",
-          "publishedOn": "2023-05-08T13:11:38.000Z",
-          "wordCount": 2141,
-          "title": "Is Scala to Java the same relationship as TypeScript has with ECMAScript?",
-          "imageUrl": null
         }
       ]
     },
@@ -2132,16 +2112,6 @@
           "wordCount": 3791,
           "title": "Haskell in Production: CollegeVine",
           "imageUrl": "https://serokell.io/files/ce/opengraph.cesrja3a.normal-Haskell_in_Production_CollegeVine_(1).png"
-        },
-        {
-          "id": "https://serokell.io/blog/word2vec",
-          "author": "hi+inna-logunova@serokell.io (Inna Logunova)",
-          "description": "Word2vec, short for \"word to vector,\" is a technology used to represent the relationships between different words in the form of a graph. This technology is widely used in machine learning for embedding and text analysis.",
-          "link": "https://serokell.io/blog/word2vec",
-          "publishedOn": "2023-05-09T00:00:00.000Z",
-          "wordCount": 3380,
-          "title": "Word2Vec: Why Do We Need Word Representations?",
-          "imageUrl": "https://serokell.io/files/dn/opengraph.dnsf8cyq.normal-Word2Vec.png"
         }
       ]
     },
@@ -2219,6 +2189,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/143ehvc/how_do_i_fix_my_org_mode/",
+          "author": null,
+          "description": "I added a piece of code for prettify-symbols-mode but it turned my org mode more ugly and would love to get it fixed. The piece of code is given below:\n (defun custom-org-pretty () (interactive) (setq prettify-symbols-alist '((\"#+begin_src\" . ⬇) (\"#+BEGIN_SRC\" . ⬇) (\"#+end_src\" . ⬆) (\"#+END_SRC\" . ⬆))) (global-prettify-symbols-mode 1)) (add-hook 'org-mode-hook 'custom-org-pretty) (setq prettify-symbols-unprettify-at-point t) \n The image attached is the code only for org-mode\n ​\n https://preview.redd.it/92qpisd2ul4b1.png?width=2880&format=png&auto=webp&s=d13bfbf5b1154f2f376ec119dc511632a7302878\n After I ran the code, my table of content became like this:\n ​\n https://preview.redd.it/i8vn45txul4b1.png?width=1436&format=png&auto=webp&s=ff578c7fd304d7272067c5bd0b6bfe1cc7d1a497\n    submitted by    /u/BoulderBaby12  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/143ehvc/how_do_i_fix_my_org_mode/",
+          "publishedOn": "2023-06-07T14:17:44.000Z",
+          "wordCount": 2359,
+          "title": "How do I fix my org mode?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1438x6j/orgnavigator_programmable_composable_shortcuts/",
+          "author": null,
+          "description": "I use org-refile to navigate and file things all the time. While it is functional, I have long craved something a little more flexible.\n So I've written a package that allows you to programmatically set composable shortcuts for org-refile.\n https://github.com/thread314/org-navigator\n It allows the user to set prefix shortcut keys to various actions (refile to, go-to, clock in to etc), and combine these with suffix keys that define the target for the desired action.\n So for example, typing C-c fa might file the current subtree to the subtree set to \"a\", whereas C-c ia would instead jump to that subtree and open it in an indirect buffer.\n It also allows the user to define the destination suffix keys by setting a property on the target subtree itself from within the org-mode file.\n I'm not a programmer so always very open to any feedback or suggestions.\n    submitted by    /u/patchikin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1438x6j/orgnavigator_programmable_composable_shortcuts/",
+          "publishedOn": "2023-06-07T09:58:24.000Z",
+          "wordCount": 2425,
+          "title": "Org-Navigator: Programmable, Composable Shortcuts For Org-Refile",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/142rbig/how_to_use_scrivener_with_org_mode/",
           "author": null,
@@ -2678,26 +2668,6 @@
           "wordCount": 2326,
           "title": "Org Timestamp overriding active buffer, instead of staying in minibuffer [MacOS + DoomEmacs]",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/13c22q5/starless_mode_or_a_way_to_remove_space_occupied/",
-          "author": null,
-          "description": "I find it really annoying the space that the hidden stars in headings in org files take, what you people recommend to completly hide the stars? I will use a font system with emojis to show in which level of a heading I am\n    submitted by    /u/BigCandySurprise  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/13c22q5/starless_mode_or_a_way_to_remove_space_occupied/",
-          "publishedOn": "2023-05-08T19:28:52.000Z",
-          "wordCount": 2216,
-          "title": "Starless mode or a way to remove space occupied by hidden stars",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/13c0r26/creating_video_scripts_is_there_a_better_way_in/",
-          "author": null,
-          "description": "Hi all, Linux focused content creator, I currently use Obsidian to store my video ideas and scripts/research. I am trying to focus on including both the visual and audio portion of the script now. Obsidian has multi-column mode, but I'm unable to edit the columns side by side. I find having the columns under each other in editing view to hinder me trying to think through the process.\n This got me thinking, I should open two files side by side, a <video\\_title>_audio and _visual file. I could kind of do this in Obsidian, though with the current way kanban works, it would not be an ideal setup. I'd have to link the audio or visual (or both) file to the entry from kanban. This seems like it would get difficult to deal with after a while.\n This has led me to think about neovim with markdown fi…",
-          "link": "https://www.reddit.com/r/orgmode/comments/13c0r26/creating_video_scripts_is_there_a_better_way_in/",
-          "publishedOn": "2023-05-08T18:41:56.000Z",
-          "wordCount": 2587,
-          "title": "Creating video scripts, is there a better way in org?",
-          "imageUrl": null
         }
       ]
     },
@@ -2706,6 +2676,66 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/org-re-reveal-20230607.1503.tar",
+          "author": null,
+          "description": "The org-re-reveal package has been updated to version 20230607.1503.",
+          "link": "https://melpa.org/#/org-re-reveal",
+          "publishedOn": "2023-06-07T15:03:00.000Z",
+          "wordCount": 105,
+          "title": "org-re-reveal (20230607.1503) --- Org export to reveal.js presentations",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/centaur-tabs-20230607.1501.tar",
+          "author": null,
+          "description": "The centaur-tabs package has been updated to version 20230607.1501.",
+          "link": "https://melpa.org/#/centaur-tabs",
+          "publishedOn": "2023-06-07T15:01:00.000Z",
+          "wordCount": 105,
+          "title": "centaur-tabs (20230607.1501) --- Aesthetic, modern looking customizable tabs plugin",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/bash-completion-20230607.931.el",
+          "author": null,
+          "description": "The bash-completion package has been updated to version 20230607.931.",
+          "link": "https://melpa.org/#/bash-completion",
+          "publishedOn": "2023-06-07T09:31:00.000Z",
+          "wordCount": 105,
+          "title": "bash-completion (20230607.931) --- Bash completion for the shell buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/elfeed-tube-mpv-20230607.717.el",
+          "author": null,
+          "description": "The elfeed-tube-mpv package has been updated to version 20230607.717.",
+          "link": "https://melpa.org/#/elfeed-tube-mpv",
+          "publishedOn": "2023-06-07T07:17:00.000Z",
+          "wordCount": 105,
+          "title": "elfeed-tube-mpv (20230607.717) --- Control mpv from Elfeed",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/gruvbox-theme-20230607.21.tar",
+          "author": null,
+          "description": "The gruvbox-theme package has been updated to version 20230607.21.",
+          "link": "https://melpa.org/#/gruvbox-theme",
+          "publishedOn": "2023-06-07T00:21:00.000Z",
+          "wordCount": 105,
+          "title": "gruvbox-theme (20230607.21) --- A retro-groove colour theme for Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/gap-mode-20230606.2358.tar",
+          "author": null,
+          "description": "The gap-mode package has been updated to version 20230606.2358.",
+          "link": "https://melpa.org/#/gap-mode",
+          "publishedOn": "2023-06-06T23:58:00.000Z",
+          "wordCount": 105,
+          "title": "gap-mode (20230606.2358) --- Major mode for editing files in the GAP programming language.",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/khalel-20230606.1909.tar",
           "author": null,
@@ -3994,6 +4024,16 @@
           "publishedOn": "2023-05-25T07:52:00.000Z",
           "wordCount": 105,
           "title": "jenkinsfile-mode (20230525.752) --- Major mode for editing Jenkins declarative pipeline syntax",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/eide-20230525.651.tar",
+          "author": null,
+          "description": "The eide package has been updated to version 20230525.651.",
+          "link": "https://melpa.org/#/eide",
+          "publishedOn": "2023-05-25T06:51:00.000Z",
+          "wordCount": 105,
+          "title": "eide (20230525.651) --- IDE interface",
           "imageUrl": null
         },
         {
@@ -6085,76 +6125,6 @@
           "wordCount": 105,
           "title": "metal-archives-shopping-list (20230509.1130) --- Add shopping list generation support to metal-archives",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dwim-shell-command-20230509.716.tar",
-          "author": null,
-          "description": "The dwim-shell-command package has been updated to version 20230509.716.",
-          "link": "https://melpa.org/#/dwim-shell-command",
-          "publishedOn": "2023-05-09T07:16:00.000Z",
-          "wordCount": 105,
-          "title": "dwim-shell-command (20230509.716) --- Shell commands with DWIM behaviour",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/jupyter-20230508.1952.tar",
-          "author": null,
-          "description": "The jupyter package has been updated to version 20230508.1952.",
-          "link": "https://melpa.org/#/jupyter",
-          "publishedOn": "2023-05-08T19:52:00.000Z",
-          "wordCount": 105,
-          "title": "jupyter (20230508.1952) --- Jupyter",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/evil-cleverparens-20230508.1710.tar",
-          "author": null,
-          "description": "The evil-cleverparens package has been updated to version 20230508.1710.",
-          "link": "https://melpa.org/#/evil-cleverparens",
-          "publishedOn": "2023-05-08T17:10:00.000Z",
-          "wordCount": 105,
-          "title": "evil-cleverparens (20230508.1710) --- Evil friendly minor-mode for editing lisp.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ghq-20230508.1649.el",
-          "author": null,
-          "description": "The ghq package has been updated to version 20230508.1649.",
-          "link": "https://melpa.org/#/ghq",
-          "publishedOn": "2023-05-08T16:49:00.000Z",
-          "wordCount": 105,
-          "title": "ghq (20230508.1649) --- Ghq interface for emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mame-20230508.1256.tar",
-          "author": null,
-          "description": "The mame package has been updated to version 20230508.1256.",
-          "link": "https://melpa.org/#/mame",
-          "publishedOn": "2023-05-08T12:56:00.000Z",
-          "wordCount": 105,
-          "title": "mame (20230508.1256) --- A MAME front-end",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/undohist-20230508.1226.el",
-          "author": null,
-          "description": "The undohist package has been updated to version 20230508.1226.",
-          "link": "https://melpa.org/#/undohist",
-          "publishedOn": "2023-05-08T12:26:00.000Z",
-          "wordCount": 105,
-          "title": "undohist (20230508.1226) --- Persistent undo history for GNU Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/devil-20230508.1214.el",
-          "author": null,
-          "description": "The devil package has been updated to version 20230508.1214.",
-          "link": "https://melpa.org/#/devil",
-          "publishedOn": "2023-05-08T12:14:00.000Z",
-          "wordCount": 105,
-          "title": "devil (20230508.1214) --- Minor mode for Devil-like command entering",
-          "imageUrl": null
         }
       ]
     },
@@ -6163,6 +6133,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/143kcrm/does_anyone_here_use_left_alt_as_ctrl_and_right/",
+          "author": null,
+          "description": "Haven’t seen anyone mention this but it seems like the best way to rebind the keys. You can stay on the home row and use your thumbs for ctrl and meta. Then maybe rebind caps lock as escape.\n    submitted by    /u/Altruistic-Carpet-43  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/143kcrm/does_anyone_here_use_left_alt_as_ctrl_and_right/",
+          "publishedOn": "2023-06-07T18:06:16.000Z",
+          "wordCount": 2314,
+          "title": "Does anyone here use left alt as ctrl and right alt as meta?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/143he8l/how_do_i_fix_my_org_mode/",
+          "author": null,
+          "description": "submitted by    /u/BoulderBaby12  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/143he8l/how_do_i_fix_my_org_mode/",
+          "publishedOn": "2023-06-07T16:10:41.000Z",
+          "wordCount": 2359,
+          "title": "How do I fix my org mode?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/143fdhn/graceful_lsp_failures/",
+          "author": null,
+          "description": "So I am not looking for specific advice, but I'd like to know if anyone has this issue and their various fixes. A bit of context: I am on 29.0.91, Mac OSX, I use lsp(pylsp)+lsp-ui+company+flycheck+treesitter. Occasionally, pylsp fails in some way, via a timeout or an actual bug. This is fine, but I sometimes can't keep going because my syntax highlighting stops updating. I understand that LSP servers will sometimes have bugs and fail - it is a hard problem, but I'd like to make emacs robust to this: how can I make it so other aspects of my emacs setup, especially syntax highlighting and basic emacs functionality, are robust to failures in LSP mode?\n    submitted by    /u/wraith1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/143fdhn/graceful_lsp_failures/",
+          "publishedOn": "2023-06-07T14:53:20.000Z",
+          "wordCount": 2381,
+          "title": "Graceful LSP Failures",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/143f2m7/is_there_a_way_to_replace_the_colon_for_the/",
+          "author": null,
+          "description": "I'd like to change the marker for org-babel's evaluation to something like >>>, so that if I run code inside an org notebook, the output will look like...\n #+results: >>> <my result here> \n Any help is appreciated.\n    submitted by    /u/Far-Anywhere2876  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/143f2m7/is_there_a_way_to_replace_the_colon_for_the/",
+          "publishedOn": "2023-06-07T14:41:06.000Z",
+          "wordCount": 2315,
+          "title": "Is there a way to replace the colon (:) for the results of org-babel evaluation?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/143dg2d/creative_fix_needed_for_a_jedi_feature/",
+          "author": null,
+          "description": "I have installed Jedi - the python autocomplete package - on my emacs. The autocomplete feature is great, but causes me issues when I am navigating through the code. \n A simple example is: when I comment a line in my code, and try to move to the line above or below, I can't do it. This is because the auto-complete pops up, and it scrolls through those options rather than go up or down in my code. As a result, every time I need to comment -> move left -> move up, instead of just moving up. Commenting is just one example. There are several other times (changing variables and so on) where this happens.\n I want the autocomplete to help me when I am trying to finish a variable or call a function, not unnecessarily bother me like this. Do you guys know of any solution to fix this? Maybe changing the keys for scrolling through autocomplete might help (although that might make it difficult to use it in normal circumstances, I am open to ideas). Any suggestions are welcome.\n    submitted by    /u/InstinctsInFlow  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/143dg2d/creative_fix_needed_for_a_jedi_feature/",
+          "publishedOn": "2023-06-07T13:33:24.000Z",
+          "wordCount": 2481,
+          "title": "Creative fix needed for a Jedi feature",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/143cyw3/sicp_in_emacs/",
+          "author": null,
+          "description": "submitted by    /u/Kostas_Chou  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/143cyw3/sicp_in_emacs/",
+          "publishedOn": "2023-06-07T13:13:10.000Z",
+          "wordCount": 2266,
+          "title": "SICP in Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1437udn/determine_the_location_of_initel_at_runtime/",
+          "author": null,
+          "description": "At runtime, is there a way to determine where init.el or .emacs or the equivalent of .emacs.d is?\n    submitted by    /u/cheyrn  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1437udn/determine_the_location_of_initel_at_runtime/",
+          "publishedOn": "2023-06-07T08:54:20.000Z",
+          "wordCount": 2290,
+          "title": "Determine the location of init.el at runtime (before 29)?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1437qxn/ruby_mode_indentation/",
+          "author": null,
+          "description": "My company use this indentation for ruby files. I have no idea how to configure this in my config. Can someone help me out? \n This is my current indentation \n  creator = Creator.create!(:company => example.company, :player => 2, :start_date => Date.today) \n But what other people are doing is as follows. I can't find resources online how to configure this. Seems its weird but everyone is using this so i need to follow too. \n  creator = Creator.create!(:company => example.company, :player => 2, :start_date => Date.today) \n    submitted by    /u/SnooRobots2422  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1437qxn/ruby_mode_indentation/",
+          "publishedOn": "2023-06-07T08:48:26.000Z",
+          "wordCount": 2349,
+          "title": "Ruby mode indentation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/14377k9/weekly_tips_tricks_c_thread/",
+          "author": null,
+          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n See this search for previous \"Weekly Tips, Tricks, &c.\" Threads.\n Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/14377k9/weekly_tips_tricks_c_thread/",
+          "publishedOn": "2023-06-07T08:15:08.000Z",
+          "wordCount": 2316,
+          "title": "Weekly Tips, Tricks, &c. Thread",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1431j32/what_is_your_favorite_color_scheme/",
+          "author": null,
+          "description": "I’ve cycled through quite a few dark themes but haven’t really found one that lights my world on fire. So someone please try and convince me to use your favorite theme.\n    submitted by    /u/burningEyeballs  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1431j32/what_is_your_favorite_color_scheme/",
+          "publishedOn": "2023-06-07T03:02:57.000Z",
+          "wordCount": 2300,
+          "title": "What is your favorite color scheme?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/142zduq/what_is_this_color_scheme/",
+          "author": null,
+          "description": "​\n https://preview.redd.it/go231ewvzh4b1.png?width=1919&format=png&auto=webp&s=ebbc4c6b2eafc1c089fd576880928f3f85848e62\n    submitted by    /u/artyuriy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/142zduq/what_is_this_color_scheme/",
+          "publishedOn": "2023-06-07T01:23:31.000Z",
+          "wordCount": 2268,
+          "title": "What is this color scheme?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/142w8rs/obgore_literate_go_run_via_the_gore_repl/",
+          "author": null,
+          "description": "submitted by    /u/AndreaSomePostfix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/142w8rs/obgore_literate_go_run_via_the_gore_repl/",
+          "publishedOn": "2023-06-06T23:02:06.000Z",
+          "wordCount": 2271,
+          "title": "ob-gore: literate Go run via the Gore REPL",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/142rys5/how_to_use_scrivener_with_org_mode/",
           "author": null,
@@ -9451,156 +9541,6 @@
           "publishedOn": "2023-05-09T10:25:30.000Z",
           "wordCount": 2152,
           "title": "Converting an Excel spreadsheet into an org-table",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13cjg24/orgcapture_how_to_prompt_for_a_value_to_insert/",
-          "author": null,
-          "description": "I'm trying to use org-capture and doct to insert entries in an org file. The content it needs to insert is not always the same, but the position in the file is. I've written my function to go to the correct position and tried with %c to capture and insert the latest value in the kill ring that I populated with the hook function that prompts me for a contact and formats it correctly.\n  (let ((org-capture-templates (doct `(\"new item\" :keys \"i\" :type entry :template \"* %c\" :function my/goto-current-project-contacts :hook ,(kill-new (completing-read \"Select contact: \" (org-ql-select my/contacts-file '(level 1) :action #'my/contact-format))) :immediate-finish t)))) (org-capture nil \"i\")) \n However this gives me an error:\n doct--convert-declaration-maybe: DOCT Wrong type argument: (functionp doct--variable-p null), (:hook \"selected contact\"), (\"new item\" :keys \"i\" :type entry :template \"* %c\" :function my/current-project-contacts :hook \"selected contact\" :immediate-finish t)\n EDIT: I just discovered you can use progn in the template string. Should this not be added to the wiki or am I blind and looked over it for a couple of times? https://orgmode.org/manual/Template-expansion.html\n So this works:\n ``` (defun testtest () (completing-read \"Select contact: \" (org-ql-select my/contacts-file '(level 1) :action #'my/contact-format)))\n (let ((org-capture-templates (doct (\"new item\" :keys \"i\" :type entry :template \"* %(progn (testtest))\" :function my/goto-current-project-contacts :immediate-finish t)))) (org-capture nil \"i\")) ``\n Can I move the testtest function into the template so I don't need to declare it separately? I can't seem to figure out the quotes of the \"Select contact: \" string.\n    submitted by    /u/VerdwaaldeStutte  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13cjg24/orgcapture_how_to_prompt_for_a_value_to_insert/",
-          "publishedOn": "2023-05-09T08:16:48.000Z",
-          "wordCount": 2395,
-          "title": "Org-capture, how to prompt for a value to insert?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13ciqyc/demoting_a_subtree_in_orgmode_adds_newlines_in/",
-          "author": null,
-          "description": "Hello everyone. \n Did anyone face the issue I described in the title? Here is an example:\n * Heading 1 Some text ** Heading 2 Some text * Heading 3 \n If I select the Heading 1 and run org-do-demote, I get\n ** Heading 1 Some text *** Heading 2 Some text \n If you know how to solve this or an alternative command, please let me know!\n    submitted by    /u/ThinAd4092  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13ciqyc/demoting_a_subtree_in_orgmode_adds_newlines_in/",
-          "publishedOn": "2023-05-09T07:34:18.000Z",
-          "wordCount": 2222,
-          "title": "Demoting a subtree in orgmode adds newlines in all lines",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13cip0t/hey_emacs_set_input_method/",
-          "author": null,
-          "description": "Sometimes I found myself writing non-English documents in Emacs.\n Is possibile to tell Emacs to set the appropriate input method from the “Hey, Emacs!” Comment line? All my attempt failed so far and I’m not able to find any solution on the internet.\n    submitted by    /u/Jak_from_Venice  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13cip0t/hey_emacs_set_input_method/",
-          "publishedOn": "2023-05-09T07:31:13.000Z",
-          "wordCount": 2195,
-          "title": "Hey Emacs! Set input method",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13chck7/fyi_github_ci_for_mirroredforked_emacs/",
-          "author": null,
-          "description": "I struggled a few days, and finally success building feature/android branch of my fork of Emacs repo(forked from mirror of Emacs on savannah) with Github Actions.\n I was looking for as such, because I donnot have android development environment.\n If there is Emacs user on android like me, it will little help such problem.\n To use this, it requires only a few,\n  \nMirror/Fork Emacs repositry from repositry on savannah or gitlab , or emacs-mirror repositry on github self(my case, https://github.com/ayatakesi/copy-of-emacs-mirror/).\n \nCreate Github Actions' workflow(simply add [https://github.com/ayatakesi/copy-of-emacs-mirror/blob/feature/android/.github/workflows/build.yml](.github/workflows/build.yml) to the repository, and enable workflow from Github web UI).\n \nChange the permission of the workflow from 'Read repository contents permission' to 'Read and write permissions'(also from Github web UI).\n \n If you check ./configure step, you will notice this workflow could work very limited target(me), but adjust ./configure option if architecture it may work your architecture of android device.\n ※ I donnot have any android development experience since, I often run another workflow[https://github.com/ayatakesi/copy-of-emacs-mirror/blob/feature/android/.github/workflows/build.yml](learn_android.yml) to adjust configure cited in [https://github.com/ayatakesi/copy-of-emacs-mirror/blob/feature/android/java/INSTALL](java/INSTALL).\n I hope this will help.\n    submitted by    /u/ayatakesi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13chck7/fyi_github_ci_for_mirroredforked_emacs/",
-          "publishedOn": "2023-05-09T06:13:16.000Z",
-          "wordCount": 2325,
-          "title": "FYI: Github CI for mirrored/forked Emacs' feature/android branch.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13caudx/if_you_like_straight_you_should_try_elpaca/",
-          "author": null,
-          "description": "It's like straight, but much faster, and has a built-in package browser. It's also very easy to swap out straight for elpaca.\n    submitted by    /u/Downtown-Potential86  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13caudx/if_you_like_straight_you_should_try_elpaca/",
-          "publishedOn": "2023-05-09T01:08:49.000Z",
-          "wordCount": 2177,
-          "title": "If you like Straight, you should try Elpaca",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13c80sx/orgroampygraph_build_a_graph_of_your_orgroam/",
-          "author": null,
-          "description": "submitted by    /u/nanowillis  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13c80sx/orgroampygraph_build_a_graph_of_your_orgroam/",
-          "publishedOn": "2023-05-08T23:05:26.000Z",
-          "wordCount": 2185,
-          "title": "org-roam-pygraph: Build a graph of your org-roam collection for use in Python",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13c5f85/encrypt_orgroam_directory/",
-          "author": null,
-          "description": "I've been using org-roam for a while, and it's going great; however, I sense some inconvenience with having a big amount of encrypted org files, especially when they don't use the same key. This makes it much harder to search through the notes since I've to decrypt them each. So I was thinking if giving up the mix for having all the notes to be encrypted in one directory would fix that, like having all the notes encrypted by default but all of them also decrypt at once, so they become easier to search & query. But I don't know even how to do that, the best came to my mind is to encrypt the directory itself, but I also have no idea of how this can be done :P \n Any suggestions? \n p.s. I use disk encryption already if that matters, but I want extra protection.\n    submitted by    /u/larrasket  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13c5f85/encrypt_orgroam_directory/",
-          "publishedOn": "2023-05-08T21:27:44.000Z",
-          "wordCount": 2296,
-          "title": "Encrypt org-roam directory?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13by8vx/switching_from_neomutt_to_emacs/",
-          "author": null,
-          "description": "Hello,\n I would like to use Emacs for everything, and currently my E-Mail is the last thing that is missing.\n Currently, my Neomutt is set up with the following in mind:\n  \nPOP3. I download it to maildirs with mpop for several accounts\n msmtp is configured for the same accounts\n Abook is used for address book\n  \nWhich client, methods, etc. would you recommend so that I can continue using the already set up mpop with maildirs and msmtp, with multiple accounts?\n Abook is not necessary, as I bet there are ways to keep contact information in Emacs?\n Thanks in advance.\n    submitted by    /u/Vjalmr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13by8vx/switching_from_neomutt_to_emacs/",
-          "publishedOn": "2023-05-08T17:11:43.000Z",
-          "wordCount": 2252,
-          "title": "Switching from Neomutt to Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13bxwfy/might_have_killed_emacs_from_my_install/",
-          "author": null,
-          "description": "so basically im a dumbass\n was frustrated with installing emacs through apt (ubuntu 22.10) so i went into my /bin and deleted everything emacs related. i installed the flatpak, hated the UI and wanted to install emacs with apt again, only for it to say it was \"downloaded\", but it never populated my /bin again.\n    submitted by    /u/paltamunoz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13bxwfy/might_have_killed_emacs_from_my_install/",
-          "publishedOn": "2023-05-08T16:59:29.000Z",
-          "wordCount": 2210,
-          "title": "might have killed emacs from my install",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13bxc7y/reinstall_emacs_with_native_comp_using_brew_on/",
-          "author": null,
-          "description": "Hi all, I've previously installed emacs with brew using brew install emacs, then I installed doom emacs. However, now I want to install emacs with native comp but that doesn't work. I tried brew install emacs --with-native-comp and brew reinstall emacs --with-native-comp, but both gives this error:\n brew reinstall emacs --with-native-comp ─╯ Usage: brew reinstall [options] formula|cask [...] Uninstall and then reinstall a formula or cask using the same options it was originally installed with, plus any appended options specific to a formula. Unless HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK is set, brew upgrade or brew reinstall will be run for outdated dependents and dependents with broken linkage, respectively. Unless HOMEBREW_NO_INSTALL_CLEANUP is set, brew cleanup will then be run for the reinstalled formulae or, every 30 days, for all formulae. Error: invalid option: --with-native-comp \n Any help is appreciated, thank you so much!\n    submitted by    /u/Ok-Painter573  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13bxc7y/reinstall_emacs_with_native_comp_using_brew_on/",
-          "publishedOn": "2023-05-08T16:39:24.000Z",
-          "wordCount": 2294,
-          "title": "Reinstall emacs with native comp using brew on macos",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13bx3of/what_is_the_problem_here_on_windows_10/",
-          "author": null,
-          "description": "Hi everyone, I have my init.org tangled to 3 different files (vanilla emacs) : - init.el - linux.el - windows.el My config has been written under Linux.\n I have set a few variables so that the right el is loaded depending on the machine it is loaded on (linux vs windows). I have removed the eln cache, the whole straight directory, so that everything is downloaded againwhen installing on the Windows machine..\n And I get the following error message when starting emacs 28 on Windows.\n  Debugger entered--Lisp error: (void-variable dbus-registered-objects-table) dbus-unregister-service(:session \"org.freedesktop.Notifications\") ednc--stop-server() ednc-mode(-1) load-with-code-conversion(\"c:/Users/frederic.mougel/.emacs.d/init.el\" \"c:/Users/frederic.mougel/.emacs.d/init.el\" t t) load(\"c:/Users/frederic.mougel/.emacs.d/init\" noerror nomessage) startup--load-user-init-file(#f(compiled-function () #<bytecode 0xba46176d86b0f5c>) #f(compiled-function () #<bytecode -0x1f3c686ddc0da035>) t) command-line() normal-top-level()  I have searched for dbus or freedesktop in my emacs.d, did not find any mention of them.\n Do you have any idea where/why a linux module dbus inevitable is? I am lost here... Thanks for your help\n    submitted by    /u/fmou67  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13bx3of/what_is_the_problem_here_on_windows_10/",
-          "publishedOn": "2023-05-08T16:30:47.000Z",
-          "wordCount": 2304,
-          "title": "What is the problem here on Windows 10 (void-variable dbus-registered-objects-table)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13bpal1/using_a_sandboxed_emacs_as_a_safe_instanced/",
-          "author": null,
-          "description": "I have a bit of a galaxy brained idea I've been sitting on for a while, I want to build a (my own) robust blog engine using mostly emacs and org to the best of my ability.\n Part of the functionality I would like to have is executable source blocks in my org files, the issue is that sending code to a remote emacs instance and sending the results right back sounds like some kind of security nightmare. So I need to sandbox it.\n One option I've considered is using a docker container (or similar), I feel like there is a better approach though. Have any of you done anything like this?\n    submitted by    /u/arylcyclohexylameme  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13bpal1/using_a_sandboxed_emacs_as_a_safe_instanced/",
-          "publishedOn": "2023-05-08T13:34:40.000Z",
-          "wordCount": 2269,
-          "title": "Using a 'sandboxed' emacs as a safe, instanced interpreter",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13bnt38/i_want_to_learn_how_to_create_structures_andor/",
-          "author": null,
-          "description": "Hi y'all\n After starting with emacs-lisp, I fell into kind of a rabbit hole, and now I'd like to use emacs-lisp and or the common-lisp extension to rework some kinks in my personal configuration.\n I have found some good resources myself, but I simply trust this community more than search engines or ChatGPT.\n Often there isn't any correct way to program something. But there always are exponential amount of horrible ways to program something. And many of those bad solutions get the job done in finite time and with finite resources.\n [disclaimer: while likely irrelevant in this case, I do use doom emacs] \n After my last question I spend some time learning more about programming generally, as well as lisp syntax. So now I feel I have bit better understanding of emacs-lisp thanks to that. I act…",
-          "link": "https://www.reddit.com/r/emacs/comments/13bnt38/i_want_to_learn_how_to_create_structures_andor/",
-          "publishedOn": "2023-05-08T12:35:57.000Z",
-          "wordCount": 2788,
-          "title": "I want to learn how to create structures and/or closures for emacs-lisp configuration",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13bm845/doom_completion_in_vanilla_emacs/",
-          "author": null,
-          "description": "Hi fellow emacsers, What do I need to install / configure in my vanilla emacs in order to get this kind of completion? https://imgur.io/qAbjG42\n I have company installed with among others the company-elisp backend, but no elisp functions completion. This comes from doom emacs by the way.\n Thanks for the info.\n    submitted by    /u/fmou67  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13bm845/doom_completion_in_vanilla_emacs/",
-          "publishedOn": "2023-05-08T11:28:41.000Z",
-          "wordCount": 2204,
-          "title": "Doom completion in vanilla emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/13bjfvi/survey_on_using_and_designing_automated_actions/",
-          "author": null,
-          "description": "Dear r/emacs community,\n We are researchers at Inria (EP Loki) studying how users automate frequent actions in their daily use of interactive software (e.g., macros in Emacs, actions in Blender, or actions in the Adobe Suite). We recently created a questionnaire that takes 30 to 45 minutes to complete and are looking for participants (we tried to shorten it as much as we could). We unfortunately cannot offer compensation for that, but are hoping data from volunteers will help us design more customizable systems on the long term. Any help would be deeply appreciated.\n Questionnaire : https://expe.lille.inria.fr/limesurvey/index.php/526753?lang=en&community=emacs\n If this research is of any interest to you, we are also looking for participants to interview about their specific solutions to automate frequent actions. Please contact use if you are willing to share your experience, our emails are available in the first page of the questionnaire or you can simply DM me.\n Note: be aware our questionnaire relies on LimeSurvey which uses non-libre JS libraries.\n    submitted by    /u/b_fruchard  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/13bjfvi/survey_on_using_and_designing_automated_actions/",
-          "publishedOn": "2023-05-08T09:14:00.000Z",
-          "wordCount": 2325,
-          "title": "Survey on using and designing automated actions with interactive software such as Emacs' macros",
           "imageUrl": null
         }
       ]
