@@ -2,10 +2,322 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2023-06-26T20:35:16.380Z</updated>
+    <updated>2023-06-27T20:35:10.922Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[How to properly configure dependencies when using LSP + nix]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14kn5nt/how_to_properly_configure_dependencies_when_using/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14kn5nt/how_to_properly_configure_dependencies_when_using/"/>
+        <updated>2023-06-27T19:33:25.000Z</updated>
+        <summary type="html"><![CDATA[I'm using nix to manage python dependencies (see excerpt of flake.nix below) but this means those python dependencies are in a /nix directory, so when lsp tries to figure out project root for them, it thinks they have nothing to do with my own project. Also I'm using emacs-direnv to transparently switch into nix environments (.envrc + use flake), so direnv (correctly) unloads my LSP executable (configured in flake.nix), so even if they should be considered totally separate projects LSP-mode doesn't know how to start up the server.
+ a) should I somehow convince projectile that these files in /nix are actually part of my project?
+ b) should I convince direnv to not unload upon visiting these files?
+ c) should I tell LSP mode to not try to reconfigure upon visiting dependencies?
+ excerpt of flake.nix:
+  devShell = pkgs.mkShell { buildInputs = with pkgs; [ (python3.withPackages(ps: with ps; [ python-lsp-server pandas numpy ]) ] } 
+    submitted by    /u/wombat8756  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Automatic light/dark switch 2023]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14kmeds/automatic_lightdark_switch_2023/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14kmeds/automatic_lightdark_switch_2023/"/>
+        <updated>2023-06-27T19:03:18.000Z</updated>
+        <summary type="html"><![CDATA[A while ago I posted about how I was changing light and dark themes in Emacs. I wanted to provide an update, as it has changed a bit. 
+ I am now using the top-right menu on Gnome to enable and disable dark mode. However, old GTK3 applications do not "see" this setting at all.
+ To solve this problem I am using:
+  
+Python script that monitors dbus and changes the GTK theme when selecting dark
+ Systemd unit to ensure the script is running all time
+ Emacs snippet to react to this change
+  
+With this setup, having Emacs complied with pure GTK, changing the dark mode on gnome triggers a theme change, while the script triggers a change on the frame decoration. It sounds hacky, but the transition is very smooth and seamless.
+ Also, this new code, makes sure that only one theme is configured in Emacs, as having multiple themes selected might be problematic, if themes change different settings.
+ (use-package dbus :init (defun theme-switcher (value) ;; 0 = No Preference ;; 1 = Prefers dark ;; 2 = Prefers light. Not currently used by Gnome (let* ((dark-theme 'ef-dark) (light-theme 'ef-frost) (new-theme (if (= value 1) dark-theme light-theme)) (switch? (not (member new-theme custom-enabled-themes)))) (when switch? (mapc #'disable-theme custom-enabled-themes) (load-theme new-theme)))) (defun handler (value) (theme-switcher (car (car value)))) (defun signal-handler (namespace key value) (if (and (string-equal namespace "org.freedesktop.appearance") (string-equal key "color-scheme")) (theme-switcher (car value)))) :config (dbus-call-method-asynchronously :session "org.freedesktop.portal.Desktop" "/org/freedesktop/portal/desktop" "org.freedesktop.portal.Settings" "Read" #'handler "org.freedesktop.appearance" "color-scheme") (dbus-register-signal :session "org.freedesktop.portal.Desktop" "/org/freedesktop/portal/desktop" "org.freedesktop.portal.Settings" "SettingChanged" #'signal-handler)) 
+    submitted by    /u/noi-gai  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[scpaste (20230627.1800) --- Paste to the web via scp.]]></title>
+        <id>https://melpa.org/packages/scpaste-20230627.1800.tar</id>
+        <link href="https://melpa.org/#/scpaste"/>
+        <updated>2023-06-27T18:00:00.000Z</updated>
+        <summary type="html"><![CDATA[The scpaste package has been updated to version 20230627.1800.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[sculpture-themes (20230627.1755) --- Themes with vivid colors]]></title>
+        <id>https://melpa.org/packages/sculpture-themes-20230627.1755.tar</id>
+        <link href="https://melpa.org/#/sculpture-themes"/>
+        <updated>2023-06-27T17:55:00.000Z</updated>
+        <summary type="html"><![CDATA[The sculpture-themes package has been updated to version 20230627.1755.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[lsp-docker (20230627.1601) --- LSP Docker integration]]></title>
+        <id>https://melpa.org/packages/lsp-docker-20230627.1601.tar</id>
+        <link href="https://melpa.org/#/lsp-docker"/>
+        <updated>2023-06-27T16:01:00.000Z</updated>
+        <summary type="html"><![CDATA[The lsp-docker package has been updated to version 20230627.1601.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Evil mode's kinda hacky]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14kgnsh/evil_modes_kinda_hacky/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14kgnsh/evil_modes_kinda_hacky/"/>
+        <updated>2023-06-27T15:23:36.000Z</updated>
+        <summary type="html"><![CDATA[Been using Neovim as my "ide", like to switch to Emacs.
+ Neovim pros:
+  
+Very fast workflow
+ well chosen keybindings
+ great Project overview
+ works in Terminal
+ Tabs ❤️
+  
+Cons: - lack of features (no standardized) - many plugins unstable - sometimes freezes - not all plugins Crossplatform
+ Emacs Pros:
+  
+Lots of features for development and more
+ Lisp better than lua or vimscript
+ GUI and Terminal
+ Org-mode, Magit, ...
+ self documentation, file opening, ...
+  
+Cons: - Bad default movement - complicated Keybindings general
+ Some things that are important to me. Biggest thing holding me off from switching are the Keybindings. Just Moving the cursor is already such a strech. I've installed Evil mode but you have to configure it with every other plugin and often end up with doubled behaviour and not everything working as expected. It's still very hacky and i'm not sute if i should be using it.
+ My Question is if i should just commit to the default binding? I've heard that they are subjectively bad and cause pinky strain and don't allow a fast workflow, and i can see that being the case. But maybe it just comes down to practice.
+ Any of you had the same experience coming from Vim? Who uses the default bindings? Do you experience any problems with them?
+ Thank you in advance!
+    submitted by    /u/ppNoHamster  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[pr-review (20230627.1404) --- Review github PR]]></title>
+        <id>https://melpa.org/packages/pr-review-20230627.1404.tar</id>
+        <link href="https://melpa.org/#/pr-review"/>
+        <updated>2023-06-27T14:04:00.000Z</updated>
+        <summary type="html"><![CDATA[The pr-review package has been updated to version 20230627.1404.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[r/haskell will remain read-only]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/14kb9y7/rhaskell_will_remain_readonly/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/14kb9y7/rhaskell_will_remain_readonly/"/>
+        <updated>2023-06-27T11:36:48.000Z</updated>
+        <summary type="html"><![CDATA[Until further notice, r/haskell will be read-only. You can still comment, but you cannot post. 
+ I recommend that you use the official Haskell Discourse instead: https://discourse.haskell.org
+ If you feel that this is unfair, please let the Reddit admins know. 
+ Thank you to everyone who voted in the poll! I appreciate your feedback. And I look forward to talking with everyone in Discourse. See you there!
+    submitted by    /u/taylorfausak  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Interesting patterns to consume ZIO Streams]]></title>
+        <id>https://www.reddit.com/r/scala/comments/14kb8yh/interesting_patterns_to_consume_zio_streams/</id>
+        <link href="https://www.reddit.com/r/scala/comments/14kb8yh/interesting_patterns_to_consume_zio_streams/"/>
+        <updated>2023-06-27T11:35:29.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/bilal-fazlani  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Dired Marks vs. Flags]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14kavx6/dired_marks_vs_flags/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14kavx6/dired_marks_vs_flags/"/>
+        <updated>2023-06-27T11:17:58.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/progalienware  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Functional World | Breaking framework chains with vanilla Scala]]></title>
+        <id>https://www.reddit.com/r/scala/comments/14ka4f0/functional_world_breaking_framework_chains_with/</id>
+        <link href="https://www.reddit.com/r/scala/comments/14ka4f0/functional_world_breaking_framework_chains_with/"/>
+        <updated>2023-06-27T10:39:48.000Z</updated>
+        <summary type="html"><![CDATA[Join us tomorrow, June 28 at 6 pm CEST at the online event organized by Scalac. During the meeting, you will learn:
+  
+A minimalist approach to web application development using independent libraries in Scala
+ The power of Vanilla Scala and pushing beyond framework boundaries
+ Exploration of libraries such as Jsoniter-Scala, Chimney, MacWire, Sttp, Diffx, Dijon
+ Augmenting the development process with these libraries
+ Delve into a streamlined approach while respecting the role of frameworks
+ Demonstrating how simplicity can empower developers to exceed expectations
+  
+Read more & register here: https://scalac.io/functional-world/
+ Don't forget to join our Meetup group to be up to date with our events: meetup.com/functionalworld/events/294159469/
+ https://preview.redd.it/rieoj21fhj8b1.jpg?width=2560&format=pjpg&auto=webp&s=96c424b2242efde23ec6cc7a68da5e2acdbb46a7
+    submitted by    /u/ComprehensiveSell578  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Bring literate programming outside eMacs]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14ka4ca/bring_literate_programming_outside_emacs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14ka4ca/bring_literate_programming_outside_emacs/"/>
+        <updated>2023-06-27T10:39:40.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/Ideabile  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Learning Emacs: Where to Start?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14k9nsy/learning_emacs_where_to_start/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14k9nsy/learning_emacs_where_to_start/"/>
+        <updated>2023-06-27T10:15:55.000Z</updated>
+        <summary type="html"><![CDATA[Hey folks, I have been using Neovim for the past 2 years, don't have any complaints, however, I really want to give Emacs an honest try but not really sure where to start. I want to do basic text editing, programming and something similar to vimwiki (https://github.com/vimwiki/vimwiki)
+    submitted by    /u/ultiMEIGHT  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Introducing Consult-GH]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14k89m6/introducing_consultgh/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14k89m6/introducing_consultgh/"/>
+        <updated>2023-06-27T08:59:03.000Z</updated>
+        <summary type="html"><![CDATA[https://github.com/armindarvish/consult-gh/
+ consult-gh provides an interface to interact with GitHub repositories (search, view files and issues, clone, fork, …) from inside Emacs. It uses GitHub CLI and consult to provide an intuitive user-friendly UI in the minibuffer completion familiar to Emacs users. 
+ For more in-depth details and example, see my blog post here: https://www.armindarvish.com/en/post/consult-gh_working_with_github_inside_emacs_in_2023_/
+    submitted by    /u/armindarvish  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ox-pandoc (20230627.643) --- An Org-mode exporter using pandoc]]></title>
+        <id>https://melpa.org/packages/ox-pandoc-20230627.643.tar</id>
+        <link href="https://melpa.org/#/ox-pandoc"/>
+        <updated>2023-06-27T06:43:00.000Z</updated>
+        <summary type="html"><![CDATA[The ox-pandoc package has been updated to version 20230627.643.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[where is the function org-roam-node-list used in a video of u/daviwil]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14k561k/where_is_the_function_orgroamnodelist_used_in_a/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14k561k/where_is_the_function_orgroamnodelist_used_in_a/"/>
+        <updated>2023-06-27T06:04:22.000Z</updated>
+        <summary type="html"><![CDATA[HI,
+ I am testing the hacks from u/daviwil (5 Roam hacks), but I get an error from emacs (emacs28):
+ Debugger entered--Lisp error: (void-function org-roam-node-list) (org-roam-node-list) (seq-filter (my/org-roam-filter-by-tag tag-name) (org-roam-node-list)) (mapcar #'org-roam-node-file (seq-filter (my/org-roam-filter-by-tag tag-name) (org-roam-node-list))) my/org-roam-list-notes-by-tag("Project") (setq org-agenda-files (my/org-roam-list-notes-by-tag "Project")) my/org-roam-refresh-agenda-list() eval-buffer(#<buffer *load*> nil "/home/fred/.emacs.d/init.el" nil t) ; Reading at buffer position 93895 load-with-code-conversion("/home/fred/.emacs.d/init.el" "/home/fred/.emacs.d/init.el" t t) load("/home/fred/.emacs.d/init" noerror nomessage) startup--load-user-init-file(#f(compiled-function () #<bytecode 0x1ac43e1fc1142638>) #f(compiled-function () #<bytecode -0x1f3c61addc0b8a75>) t) command-line() normal-top-level() 
+ Has this function been replaced by another in a later version of org-roam? I am on Org-roam 2.2.2.42
+ Thanks for your help
+    submitted by    /u/fmou67  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[What is the buffer that appears at the bottom of the screen that's used by the *warning* and *help* buffer called?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14jxxag/what_is_the_buffer_that_appears_at_the_bottom_of/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14jxxag/what_is_the_buffer_that_appears_at_the_bottom_of/"/>
+        <updated>2023-06-27T00:13:00.000Z</updated>
+        <summary type="html"><![CDATA[As the title says, what are these called? Does it have a name at all? I was wanting to use it for some custom stuff I'd like to do like how Doom Emacs uses it for finding files and such.
+ Edit: To help give an example, it's what's used when you use the context-menu-open command
+    submitted by    /u/DOMINATORLORD9872  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[mode specific association list from plist]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14jvr2m/mode_specific_association_list_from_plist/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14jvr2m/mode_specific_association_list_from_plist/"/>
+        <updated>2023-06-26T22:42:00.000Z</updated>
+        <summary type="html"><![CDATA[I do not know if the title is accurate. As you are seeing, I am a newbie to elisp. 
+ Following is my code, I am trying to get an association list based on the major mode. The code returns no value, I do not which of the property declaration is right or do I need to fix the argument of plist-get? 
+ thank you.
+ ``` (setq xx '( :org-mode (("aa" . 11) ("bb" . 22)) org-mode (("cc" . 33) ("dd" . 44))
+ 'org-mode (("ee" . 55) ("ff" . 66))
+ "org-mode" (("gg" . 77) ("hh" . 88)) ))
+ (plist-get xx (symbol-name major-mode))
+ ```
+    submitted by    /u/Constant_Try_2065  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How many years have you been using Emacs?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14jvbh8/how_many_years_have_you_been_using_emacs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14jvbh8/how_many_years_have_you_been_using_emacs/"/>
+        <updated>2023-06-26T22:23:56.000Z</updated>
+        <summary type="html"><![CDATA[I have been using Emacs for 13 years, since 2010, as my main editor and IDE, for every job that I've gone through. There were ups and downs, but overall, I am happy with Emacs especially with the performance improvements in recent years. It makes Emacs on Windows much more joyful.
+ Edit: wow, so many people with over 20 years or even 40 years of Emacs experience.That means there are 60 or even 70 year-old users here. Neat.
+    submitted by    /u/tuhdo  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to fix too dark R session colors in ESS (right pane)?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/14ju0f1/how_to_fix_too_dark_r_session_colors_in_ess_right/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/14ju0f1/how_to_fix_too_dark_r_session_colors_in_ess_right/"/>
+        <updated>2023-06-26T21:33:25.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/lf_araujo  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[xcscope (20230626.2109) --- cscope interface for (X)Emacs]]></title>
+        <id>https://melpa.org/packages/xcscope-20230626.2109.tar</id>
+        <link href="https://melpa.org/#/xcscope"/>
+        <updated>2023-06-26T21:09:00.000Z</updated>
+        <summary type="html"><![CDATA[The xcscope package has been updated to version 20230626.2109.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[icsql (20230626.2045) --- Interactive iSQL iteraface to ciSQL]]></title>
+        <id>https://melpa.org/packages/icsql-20230626.2045.tar</id>
+        <link href="https://melpa.org/#/icsql"/>
+        <updated>2023-06-26T20:45:00.000Z</updated>
+        <summary type="html"><![CDATA[The icsql package has been updated to version 20230626.2045.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Getting back to making Emacs content - building Emacs and elfeed-webkit]]></title>
         <id>https://www.reddit.com/r/emacs/comments/14jrdv7/getting_back_to_making_emacs_content_building/</id>
@@ -34,6 +346,16 @@ Thanks!
 IanH]]></summary>
         <author>
             <name>Haywire</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[flycheck-hledger (20230626.1939) --- Flycheck module to check hledger journals]]></title>
+        <id>https://melpa.org/packages/flycheck-hledger-20230626.1939.tar</id>
+        <link href="https://melpa.org/#/flycheck-hledger"/>
+        <updated>2023-06-26T19:39:00.000Z</updated>
+        <summary type="html"><![CDATA[The flycheck-hledger package has been updated to version 20230626.1939.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -10477,337 +10799,6 @@ I build Emacs from source, and the problem existed on the previous build yesterd
  [link]   [comments]]]></summary>
         <author>
             <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[wucuo (20230529.735) --- Fastest solution to spell check camel case code or plain text]]></title>
-        <id>https://melpa.org/packages/wucuo-20230529.735.tar</id>
-        <link href="https://melpa.org/#/wucuo"/>
-        <updated>2023-05-29T07:35:00.000Z</updated>
-        <summary type="html"><![CDATA[The wucuo package has been updated to version 20230529.735.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Primeros pasos con ZIO]]></title>
-        <id>https://www.reddit.com/r/scala/comments/13ulynr/primeros_pasos_con_zio/</id>
-        <link href="https://www.reddit.com/r/scala/comments/13ulynr/primeros_pasos_con_zio/"/>
-        <updated>2023-05-29T05:33:01.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/emanuelpeg  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Khalel org-back-to-heading: Directory / write-protected]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13ulq1m/khalel_orgbacktoheading_directory_writeprotected/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13ulq1m/khalel_orgbacktoheading_directory_writeprotected/"/>
-        <updated>2023-05-29T05:19:09.000Z</updated>
-        <summary type="html"><![CDATA[I am trying to get Khardel and Khalel working with vdirsyncer. I already succeeded with Khardel. But Khalel is giving the error below.
- How do I resolve this error?
- I created the calendar.org file in the relevant ~/Dropbox/org section of my config so I think it is something to do with /tmp permissions?
- The programs will allow me to sync both my Google and my Etesyc Contacts and Calendars. Etesync also needs Etesync-Dav installed on the desktop but that is well explained on Github.
- Basically I have Google Calendar because of my iTalki lesson appointments and Airline Flight bookings which automagically appear there. Etesync is for anything else as I want to reduce my dependence on Google.
- ID properties created in file "/tmp/khalel-capture-NajqkZ-tmp.org" Wrote /tmp/khalel-capture-NajqkZ-tmp.ics Buffer calendar.org modified; kill anyway? (y or n) y org-back-to-heading: Directory / write-protected 
- There is no information in the buffer Khalel Errors.
- Yes I am on Doom Emacs but I think this is specific to Khalel or maybe Debian.
- ;; Khalel - Emacs program compatible with vdirsyncer and Khal ;; https://github.com/emacsmirror/khalel (use-package! khalel :after org :config (khalel-add-capture-template)) (setq khalel-khal-command "~/.local/bin/khal") (setq khalel-vdirsyncer-command "vdirsyncer") (setq khalel-capture-key "e") (setq khalel-import-org-file (concat org-directory "/" "calendar.org")) (setq safe-local-variable-values (quote ((buffer-read-only . 1)))) 
- I am on Emacs 28.3 on Debian 12 Bookworm.
-    submitted by    /u/MethAddictedMonkey  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[mpvi (20230529.401) --- Integrated MPV Tool]]></title>
-        <id>https://melpa.org/packages/mpvi-20230529.401.tar</id>
-        <link href="https://melpa.org/#/mpvi"/>
-        <updated>2023-05-29T04:01:00.000Z</updated>
-        <summary type="html"><![CDATA[The mpvi package has been updated to version 20230529.401.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[tao-theme (20230529.234) --- This package provides two parametrized uncoloured color themes for Emacs: tao-yin and tao-yang.]]></title>
-        <id>https://melpa.org/packages/tao-theme-20230529.234.tar</id>
-        <link href="https://melpa.org/#/tao-theme"/>
-        <updated>2023-05-29T02:34:00.000Z</updated>
-        <summary type="html"><![CDATA[The tao-theme package has been updated to version 20230529.234.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[evil-mc (20230529.210) --- Multiple cursors for evil-mode]]></title>
-        <id>https://melpa.org/packages/evil-mc-20230529.210.tar</id>
-        <link href="https://melpa.org/#/evil-mc"/>
-        <updated>2023-05-29T02:10:00.000Z</updated>
-        <summary type="html"><![CDATA[The evil-mc package has been updated to version 20230529.210.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[The Emacs HELP you never knew you needed]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13uggrb/the_emacs_help_you_never_knew_you_needed/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13uggrb/the_emacs_help_you_never_knew_you_needed/"/>
-        <updated>2023-05-29T00:57:06.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/unixbhaskar  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Is there any package for OCR automatic handwritten notes to text conversion available or on going?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13ufw34/is_there_any_package_for_ocr_automatic/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13ufw34/is_there_any_package_for_ocr_automatic/"/>
-        <updated>2023-05-29T00:30:34.000Z</updated>
-        <summary type="html"><![CDATA[Reference
-    submitted by    /u/inquisitive-user_  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[HELP! how to undo a quick fix that it's impossible to undo due to closing the VSC with the changes?]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/13ufarj/help_how_to_undo_a_quick_fix_that_its_impossible/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/13ufarj/help_how_to_undo_a_quick_fix_that_its_impossible/"/>
-        <updated>2023-05-29T00:04:23.000Z</updated>
-        <summary type="html"><![CDATA[I'm a student, and I accidentally used the "quick fix" option. however it seemed to be some sort of quick fix that changed the enviroment fully, and I don't know how to change it. it was a change of adding "add.splash.string."... it was something like that, if it can help to have a idea of the category that has been changed.
- The thing is THIS code worked for my teacher, but as for me it doesn't! so it made a change about how declare and i can't do it right. this is making me difficult to practice for the test.
- I tried to undo, but I closed VSC before, thinking that it'll undo itself. however it didn't and I can't undo it anymore.
- I tried to reinstall VSC... but as you can see, it didn't helped neither. all the config stay there.
- what can I do now?
- https://preview.redd.it/2jyq9k11wn2b1.jpg?width=1600&format=pjpg&auto=webp&s=c894c5381c9087b2cb5d74f6b1f0798bd287e3d2
- https://preview.redd.it/gskd2vt0wn2b1.jpg?width=1600&format=pjpg&auto=webp&s=f3a96fcb994cbafc1a328c00d41785539e8a41a4
-    submitted by    /u/Dummat  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[conda (20230528.2355) --- Work with your conda environments]]></title>
-        <id>https://melpa.org/packages/conda-20230528.2355.el</id>
-        <link href="https://melpa.org/#/conda"/>
-        <updated>2023-05-28T23:55:00.000Z</updated>
-        <summary type="html"><![CDATA[The conda package has been updated to version 20230528.2355.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How can I pass arguments to a function called interactively?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13uc4qb/how_can_i_pass_arguments_to_a_function_called/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13uc4qb/how_can_i_pass_arguments_to_a_function_called/"/>
-        <updated>2023-05-28T21:48:00.000Z</updated>
-        <summary type="html"><![CDATA[Consider this:
-  (defun kill-arg-words (arg) "kill `arg' words ahead of you" (interactive) (kill-region (point) (progn (forward-word arg) (point) ))) 
- I want to call it as M-x kill-arg-words <RET> 5 <RET>, but instead, it does not provide me the option to type in arguments after the first <RET>. How can I enable this?
-    submitted by    /u/SS4L1234  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Help with inferior python performance]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13ubm25/help_with_inferior_python_performance/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13ubm25/help_with_inferior_python_performance/"/>
-        <updated>2023-05-28T21:25:35.000Z</updated>
-        <summary type="html"><![CDATA[I've been working with python lately, and on a few occasions I evaluate variables that end up producing a ton of output (e.g. dumping 1,000 filepaths).
- In my terminal, the output finishes in less than 1 second. In emacs it makes the editor unusable for about 10-20 seconds.
- So far I've tried enabling global-so-long-mode and disabling font locking in the inferior python buffer, which are the solutions I found online, but that is still resulting in unusable performance.
- Has anyone solved this? Two potential solutions I thought of would be either to find a way to truncate output and creating a command to expand it when needed, or to find a way to connect to a remote python repl running in another terminal tab, but I'm not sure how to do either of those.
-    submitted by    /u/mumbo1134  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[People with literate configs in org-mode, how do you handle "commit duplication"?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13u99sv/people_with_literate_configs_in_orgmode_how_do/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13u99sv/people_with_literate_configs_in_orgmode_how_do/"/>
-        <updated>2023-05-28T19:46:37.000Z</updated>
-        <summary type="html"><![CDATA[I have all my config in a single giant org mode file. This file produces three others when tangled, init.el, early-init.el and a custom theme for my colorscheme. Problem is, whenever I make a change in the org file, and tangle the changes, the git repo for my dotfiles now sees two different files being modified (obviously) with the same changes. It makes it really cumbersome to do proper commits, since if I did many changes and I'd like to do various commits for each of them, I have to add not only the changes in the org file, but also hunt down the same modifications in the init and early-init files (mostly init tho).
- I recently tried to fix this by dropping all of the init.el contents into some other file, call it "real-init.el". Then, I would have a very minimal init.el that would check if init and early-init exist, and if they don't, it would tangle the org file and restart emacs. I would just keep track of the org file and the minimal init file in the git repo, and since the init file is very minimal and wouldn't change very often, it would be a fine compromise.
- For some odd reason, while the files did get tangled, emacs would just restart indefinitely. It opened, then closed, then opened, then closed. I had to force kill it.
- Has anyone else faced this problem? How did you solve it?
-    submitted by    /u/SnooPets20  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Help with Deno + LSP]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13u8vo0/help_with_deno_lsp/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13u8vo0/help_with_deno_lsp/"/>
-        <updated>2023-05-28T19:30:24.000Z</updated>
-        <summary type="html"><![CDATA[I'm trying to work with Deno in Emacs. The lsp-mode can easily connect to the lsp-server. However, it is unable to resolve the import maps. For example, can't go to definition even though VS Code can easily do that. 
- I've tries setting the lsp-clients-deno-import-map to the impart_map.json file in the project folder, but still that didn't work.
- Any suggestions or links to a working configurations that I can have a look at?
-    submitted by    /u/omarbassam88  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[It is possible to show a error message under #+RESULTS in org babel?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13u6rgs/it_is_possible_to_show_a_error_message_under/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13u6rgs/it_is_possible_to_show_a_error_message_under/"/>
-        <updated>2023-05-28T17:58:34.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/SpaceLenin1  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[It is possible to show a error message under #+RESULTS in org babel?]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/13u6f34/it_is_possible_to_show_a_error_message_under/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/13u6f34/it_is_possible_to_show_a_error_message_under/"/>
-        <updated>2023-05-28T17:43:41.000Z</updated>
-        <summary type="html"><![CDATA[Hi, first post here. I have a noob question arround Org Babel. I want to generate an error for didactic purposes on a Java code. There is a way to evaluate the SRC code block and output the error message? Currently the code executes, stdout the expected errors in another buffer but don't show the errors in the results section. Here is my code:
- #+begin_src java float a = 3; float b = 2; float div = a / b; int sum = a + b; int mult = a * b; int subt = a - b; System.out.println("Sum: " + sum + " || Sub: " + subt + " || Mult: " + mult + " || Div: " + div); #+end_src 
- The idea is to show the type error under the #+RESULTS:Section
-    submitted by    /u/SpaceLenin1  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Emacs is the least user-friendly program on linux (case of ein and ipython notebooks)]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13u5u7f/emacs_is_the_least_userfriendly_program_on_linux/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13u5u7f/emacs_is_the_least_userfriendly_program_on_linux/"/>
-        <updated>2023-05-28T17:19:23.000Z</updated>
-        <summary type="html"><![CDATA[*the least friendly operating system on linux
- Try opening ipython notebook in vscode. Then try to open ipython notebook via emacs.
- Vscode takes you directly to the rendered buffer ready to edit in less than a second.
- Emacs won't work and won't tell you how to fix it. You go search for a package - you find ein. You get it installed, you get jupyter package install. Turns out it was the wrong package, so now you get the correct jupyter notebook pacakge installed. It turns out that ein now needs you to separately start the server, open the server, switch to the file that you ALREADY HAD OPENED and then switch to that buffer. It opens five other buffers in the meantime, three of them cluttering your workspace.
- It also crashed twice while getting there...
- I don't doubt that it has some great features going (extensibility, minimalism), but for the love of emperor don't be an idiot and create sane defaults!
- This is the time where you can't pretend anymore and have to admit that vscode extension just did it plain better...
-    submitted by    /u/danielkraj  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[0x0 (20230528.1625) --- Upload sharing to 0x0.st]]></title>
-        <id>https://melpa.org/packages/0x0-20230528.1625.el</id>
-        <link href="https://melpa.org/#/0x0"/>
-        <updated>2023-05-28T16:25:00.000Z</updated>
-        <summary type="html"><![CDATA[The 0x0 package has been updated to version 20230528.1625.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[This week in #Scala (May 29, 2023)]]></title>
-        <id>https://www.reddit.com/r/scala/comments/13u40s4/this_week_in_scala_may_29_2023/</id>
-        <link href="https://www.reddit.com/r/scala/comments/13u40s4/this_week_in_scala_may_29_2023/"/>
-        <updated>2023-05-28T16:05:04.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/petrzapletal  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How to test Tagless Final Algebra?]]></title>
-        <id>https://www.reddit.com/r/scala/comments/13u3xcm/how_to_test_tagless_final_algebra/</id>
-        <link href="https://www.reddit.com/r/scala/comments/13u3xcm/how_to_test_tagless_final_algebra/"/>
-        <updated>2023-05-28T16:01:24.000Z</updated>
-        <summary type="html"><![CDATA[I have been learning about tagless final. I prepared a simple usecase to just create user in a repository. I started with example based tests and also tried with property based testing. Had some doubts and got it clarified in stackoverflow. My intention was to have a defined set of rules for the UserAlgebra. Since the interpreters are expected to follow the same rules, it would be easier to develop. Usually, I start with an InmemoryInterpreter implementation. Later another interpreter would be implemented for the real persistence based repository. 
- Slowly, I got pulled in cats-laws && disciple with scalacheck until I ran into a considerably long phase that I dont understand why the compilation fails. 
- Here is the snippet. https://scastie.scala-lang.org/itsnashter/HxcapljGSZylOtLyssJbLg/2. Can experts take a look to help me understand the following? 
-  
-What is the general convention to test the tagless final algebraic resources? I dont want to use unsaferunSync() even in tests. 
- Is having laws for repositories like "create and get" ( & rest like mentioned in scastie) really needed ? The Laws look like they were meant for structures like Monad. 
- Cats laws seem interesting but there is not much to understand for a beginner like me. Are there any blogs? 
-  
-I have gone through the following - https://www.iteratorshq.com/blog/tagless-with-discipline-testing-scala-code-the-right-way/
-    submitted by    /u/ItsNashter  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Custom set implementation]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/13u23yz/custom_set_implementation/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/13u23yz/custom_set_implementation/"/>
-        <updated>2023-05-28T14:43:39.000Z</updated>
-        <summary type="html"><![CDATA[I am working the Exercism Haskell Track and one of the questions asks for a custom set implementation. I studied some community solutions to see what other folks are doing, and came across something that I don't quite understand.
- intersection :: (Ord a) => CustomSet a -> CustomSet a -> CustomSet a isDisjointFrom :: (Ord a) => CustomSet a -> CustomSet a -> Bool isDisjointFrom = (null .) . intersection 
- What is this (null .) . intersection ? Should it not be just null . intersection ?
-    submitted by    /u/sarkara1  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Carrara - a stylesheet collection centered around Org-mode]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/13u1hze/carrara_a_stylesheet_collection_centered_around/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/13u1hze/carrara_a_stylesheet_collection_centered_around/"/>
-        <updated>2023-05-28T14:15:40.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/grtcdr  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Easy automatic encryption for orgmode with age.el]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/13u0qwn/easy_automatic_encryption_for_orgmode_with_ageel/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/13u0qwn/easy_automatic_encryption_for_orgmode_with_ageel/"/>
-        <updated>2023-05-28T13:40:49.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/nayanld  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[blackjack (20230528.1152) --- The game of Blackjack]]></title>
-        <id>https://melpa.org/packages/blackjack-20230528.1152.el</id>
-        <link href="https://melpa.org/#/blackjack"/>
-        <updated>2023-05-28T11:52:00.000Z</updated>
-        <summary type="html"><![CDATA[The blackjack package has been updated to version 20230528.1152.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[hotfuzz (20230528.1112) --- Fuzzy completion style]]></title>
-        <id>https://melpa.org/packages/hotfuzz-20230528.1112.el</id>
-        <link href="https://melpa.org/#/hotfuzz"/>
-        <updated>2023-05-28T11:12:00.000Z</updated>
-        <summary type="html"><![CDATA[The hotfuzz package has been updated to version 20230528.1112.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[consult-org-roam (20230528.855) --- Consult integration for org-roam]]></title>
-        <id>https://melpa.org/packages/consult-org-roam-20230528.855.tar</id>
-        <link href="https://melpa.org/#/consult-org-roam"/>
-        <updated>2023-05-28T08:55:00.000Z</updated>
-        <summary type="html"><![CDATA[The consult-org-roam package has been updated to version 20230528.855.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
         </author>
     </entry>
 </feed>
