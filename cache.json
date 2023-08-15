@@ -53,6 +53,46 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/15s1suy/working_with_typenats/",
+          "author": null,
+          "description": "I've run into a nice use case for some GADTs using GHC.TypeNats in a project, but I'm having trouble getting anything to typecheck. Specifically, I've isolated the following example:\n data Foo (n :: Nat) where FooZ :: Foo 0 FooS :: Foo n -> Foo (n+1) fooMax :: Foo n -> Foo m -> Foo (max n m) fooMax FooZ x = x fooMax x FooZ = x fooMax (FooS x) (FooS y) = FooS (fooMax x y) \n (In my actual use case I have some data structure where n encodes a kind of depth, and I want a \"merge\" function which produces a structure whose depth is the maximum of the depths, but I think the above reproduces my issues quite well.)\n This fails to typecheck, since ghc doesn't infer that max n 0 ~ n, max 0 n ~ n, and max n1 n2 + 1 ~ max n m given n ~ n1+1 and m~n2+1. I've played with agda in the past, where the solution would be to pass along some kind of witnesses to these relations constructed via induction over the structure of Nat, but here I'm a bit stumped, since as far as I can tell GHC.TypeNats and the operations on them are not built via Peano axioms.\n Can anyone shed some light on how one would go about convincing GHC of the above?\n    submitted by    /u/krush_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/15s1suy/working_with_typenats/",
+          "publishedOn": "2023-08-15T19:14:03.000Z",
+          "wordCount": 2755,
+          "title": "Working with TypeNats",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/15rzx60/how_are_gadts_represented_at_runtime/",
+          "author": null,
+          "description": "I played around with GADTs and realized that data constructor definitions look really confusing to me:\n data Term a where IntTerm :: Int -> Term Int BoolTerm :: Bool -> Term Bool SumTerm :: Term Int -> Term Int -> Term Int EqTerm :: (Show x) => Term x -> Term x -> Term Bool \n The main reason is that they just look like function type definitions, I do not define their \"implementation\" anywhere. Yet they can be used at runtime and somehow construct values of the type Term a.\n Is it correct to say that a definition like\n EqTerm :: (Show x) => Term x -> Term x -> Term Bool \n ultimately means something like \"at runtime store a tuple of (ADT tag for EqTerm, x, x), call it EqTerm in pattern matching, and for type checking assume that this value has type Term Bool and that the contents implement Show\"?\n And also, does using a GADT prevent some optimizations that could be possible for a regular ADT, like storing unboxed representation of contents?\n Thanks!\n    submitted by    /u/smthamazing  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/15rzx60/how_are_gadts_represented_at_runtime/",
+          "publishedOn": "2023-08-15T18:03:41.000Z",
+          "wordCount": 2705,
+          "title": "How are GADTs represented at runtime?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/15rbxvj/ann_bonus_announcement_unfork_of_mysqlhaskell/",
+          "author": null,
+          "description": "submitted by    /u/jappieofficial  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/15rbxvj/ann_bonus_announcement_unfork_of_mysqlhaskell/",
+          "publishedOn": "2023-08-15T00:10:38.000Z",
+          "wordCount": 2542,
+          "title": "ANN Bonus announcement, unfork of mysql-haskell - Announcements",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/15r727m/do_vs_lambda_with_blockargument/",
+          "author": null,
+          "description": "A few days ago someone on discourse came with an interesting way of using (or abusing?) the block argument extension which allows this \n example = fmap do \\x → x^2 + 1 do [1, 2, 3] \n to compile. Basically it allows to use do to replace $ or parenthesis. Beside the fact that it can be a good idea or not it makes me look at the BlockArgument doc.\n I've learn a few usefull stuff. \n  \nThe grammar is ambiguous regarding the extent of lambda abstractions, let expressions, and conditionals. The ambiguity is resolved by the meta-rule that each of these constructs extends as far to the right as possible.\n  \nThe \"as far to the right as possible\" means that we don't need the second do.\n so\n example2 = fmap do \\x -> x^2 + 1 [1, 2, 3] \n shoud work and does !. Also \n  \nThey include do, lambda, if, case, and let expressions.\n  \nSo we shouldn't need the first do because lambda does the same job.\n example3 = fmap \\x -> x^2 + 1 [1, 2, 3] \n But it doesn't compile.\n Neither does\n example4 = fmap \\x -> x^2 + 1 do [1, 2, 3] \n So my question why is that example2 works but example3 and exapmle4 don't ? Is it a bug or am I misunderstanding the doc ?\n    submitted by    /u/maxigit  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/15r727m/do_vs_lambda_with_blockargument/",
+          "publishedOn": "2023-08-14T21:05:35.000Z",
+          "wordCount": 2748,
+          "title": "do vs lambda with BlockArgument",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/15r62hc/the_most_general_type_for_callcc/",
           "author": null,
           "description": "I realized today that the most general callCC type is the following:\n newtype Cont r a = Cont {runCont :: (a -> r) -> r} callCC :: ((forall b. a -> Cont r b) -> Cont r a) -> Cont r a callCC f = Cont \\k -> runCont (f \\a -> Cont \\_ -> k a) k \n The \"exit\" argument never returns, so it should have arbitrary return type, like any other Haskell function that never returns. Equivalently, it could return Cont r Void. \n After a quick search I found that the above type was already suggested in 1991. What's the reason behind the current callCC type in Haskell? Is it just because of the lack of RankNTypes or Void support from when it was introduced? Or maybe the more general type is problematic in MonadCont for some reason?\n    submitted by    /u/AndrasKovacs  \n [link]   [comments]",
@@ -1221,16 +1261,6 @@
           "wordCount": 15227,
           "title": "What are some of the more pragmatic names for functor/applicative/monads?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/151uuzn/interlude_episode_30_bartosz_milewski/",
-          "author": null,
-          "description": "submitted by    /u/nomeata  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/151uuzn/interlude_episode_30_bartosz_milewski/",
-          "publishedOn": "2023-07-17T07:25:18.000Z",
-          "wordCount": 13286,
-          "title": "Interlude Episode 30: Bartosz Milewski",
-          "imageUrl": null
         }
       ]
     },
@@ -1239,6 +1269,36 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/15rtkym/scala_coding_interviews/",
+          "author": null,
+          "description": "Hi all, I’m hoping to start interviewing for Scala engineering positions, but I’m wondering about the best way to actually interview for those positions.\n The issue that I’m having is that I am able to solve LeetCode questions quite easily with an imperative style of Scala code. When it comes to the functional approach… I just really struggle to come up with idiomatic solutions in a reasonable amount of time.\n How important is it when interviewing for Scala positions to code in a functional style?\n I’ve read about half of the red book (and have done the problems)… but I just don’t code quickly in the functional paradigm.\n    submitted by    /u/Internal_Sky_8726  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/15rtkym/scala_coding_interviews/",
+          "publishedOn": "2023-08-15T14:00:43.000Z",
+          "wordCount": 2607,
+          "title": "Scala coding interviews",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/15rezwr/video_the_making_of_the_comlihaoyi_ecosystem/",
+          "author": null,
+          "description": "submitted by    /u/lihaoyi  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/15rezwr/video_the_making_of_the_comlihaoyi_ecosystem/",
+          "publishedOn": "2023-08-15T02:19:57.000Z",
+          "wordCount": 2506,
+          "title": "[Video] The Making of the com.lihaoyi Ecosystem | Scala Days 2023 Seattle",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/15ramvv/how_to_access_monix_task_data/",
+          "author": null,
+          "description": "I'm a complete beginner to Scala (though not programming). I know I need to learn a lot of the scala basics but right now I am trying to hack on some co-workers code and hitting a block.\n They pass everything around as Options in a Monix task. I'm trying to pull it apart to get at the data but am struggling. I'm guessing I need to somehow ?evaluate it? but just can't find the right combinations of {} flatmaps, for comprehensions, etc :(\n // some class with a parameter class Person(val name: String) // In some func with a param passed in of the sort val personT: Task[Option[Person]] = Task(Some(new Person(\"Frank\"))) // something like this? but actually works val name = for { personOpt <- personT person <- personOpt.?? personName <- person.name }yield {personName} \n    submitted by    /u/qetuop1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/15ramvv/how_to_access_monix_task_data/",
+          "publishedOn": "2023-08-14T23:18:24.000Z",
+          "wordCount": 2636,
+          "title": "How to access Monix task data",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/15qnv05/apache_pekko_management_has_been_released/",
           "author": null,
@@ -1958,26 +2018,6 @@
           "wordCount": 14001,
           "title": "Signature polymorphic methods in Scala",
           "imageUrl": "https://external-preview.redd.it/lPU93dx7L8FycHF7U2OtlOdr9psl9WhfqYWlDvL-b40.jpg?auto=webp&s=4da3b2e2e90a420f03b3906f8c46007d9b9e2c50"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/151hsa5/indigo_games_get_physical_0150rc3_released/",
-          "author": null,
-          "description": "Good Evening Scala Folks,\n A brief post to announce that Indigo 0.15.0-RC3 has been released, with an all new* axis-aligned physics engine.\n (* Read: Limited, inaccurate, no doubt buggy, but nonetheless rather satisfying...)\n (Please note that the lag in the image below is the gif recording, and doesn't not reflect the true frame rate, which is displayed in the top left.)\n Animation of axis-aligned physics in the Indigo game engine\n There are lots of details in the release notes linked below:\n https://github.com/PurpleKingdomGames/indigo/releases/tag/v0.15.0-RC3\n If you'd like to see a simple game / demo built with it, here's one I made earlier:\n  \nCode - https://github.com/davesmith00000/pong\n Play - https://davesmith00000.github.io/pong/\n  \nI hope you try building something with it. Please feel free to report any issues, or come and get help / hang out on our Discord server.\n If any of you have even the slightest passing interest in physics and / or maths ...then you're already more qualified than I am to have built such a thing! Do consider joining in and helping me improve it.\n ​\n    submitted by    /u/davesmith00000  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/151hsa5/indigo_games_get_physical_0150rc3_released/",
-          "publishedOn": "2023-07-16T21:11:51.000Z",
-          "wordCount": 14327,
-          "title": "Indigo games get physical, 0.15.0-RC3 released!",
-          "imageUrl": "https://external-preview.redd.it/KE-5m9KiH32Rr5Oy7d3WjIWraRaspDKrbd76DhHYQfA.jpg?auto=webp&s=f67243c2a63ff68d5a284f675d0c45cbda3f80a6"
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1516wzp/this_week_in_scala_jul_17_2023/",
-          "author": null,
-          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1516wzp/this_week_in_scala_jul_17_2023/",
-          "publishedOn": "2023-07-16T13:56:01.000Z",
-          "wordCount": 2401,
-          "title": "This week in #Scala (Jul 17, 2023)",
-          "imageUrl": null
         }
       ]
     },
@@ -2013,6 +2053,16 @@
       "feedUrl": "https://serokell.io/blog.rss.xml",
       "siteUrl": "https://serokell.io/blog",
       "articles": [
+        {
+          "id": "https://serokell.io/blog/ml-model-deployment",
+          "author": "hi+inna-logunova@serokell.io (Inna Logunova)",
+          "description": "Machine learning models are mainly developed offline but must be deployed in a production environment to process real-time data and handle the problem they were designed to solve. In this blog post, we will explore the fundamentals of deploying an ML model, discuss the challenges you may encounter, and provide steps to streamline the process for greater efficiency.",
+          "link": "https://serokell.io/blog/ml-model-deployment",
+          "publishedOn": "2023-08-15T00:00:00.000Z",
+          "wordCount": 3456,
+          "title": "ML Models: Deployment and Testing in Production",
+          "imageUrl": "https://serokell.io/files/7c/opengraph.7cnf63v7.normal-ML_Models_in_Production.jpg"
+        },
         {
           "id": "https://serokell.io/blog/whats-that-typeclass-alternative",
           "author": "hi@serokell.io (Serokell staff)",
@@ -2109,6 +2159,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/15rpxmc/org_mode_and_problem_sheets/",
+          "author": null,
+          "description": "I am a math grad student who has been looking for personal knowledge management solutions, and a while back I posted here on my use case. Many people recommended Org Roam, so I took the plunge and have been very happy with that decision. I've used roam to learn new things and better organize and consolidate what I do know, and the results have been excellent so far.\n I'm now trying to extend my system to handle problem sheets and exercises. When I'm working through a math book, I'd like to record of the exercises I solve.\n So for example, if I was working through Hartshorne's Algebraic Geometry, I'd like to be able to create a node/org file \"Solutions to Hartshorne.org\" with the chapter titles as headlines and in each headline I'd have environments like:\n #+begin_problem\n Give an example of an irreducible polynomial f in R[x, y], whose zero set Z(f) is not irreducible.\n #+end_problem\n #+begin_solution\n BLAH BLAH\n #+end_solution\n What I'm hoping for is a good, lightweight LaTeX package or class defining such environments that I can include in the header or setup files so that I can export my org file to PDF and get a nice solution manual. I'd prefer to be able to easily customize the solution numbering to match that of different books i.e. alphabetical, roman, numbers etc. I'd also like to handle problems with multiple parts well. I'm not too worried about the other aspects of the formatting.\n I realize this may be more of a LaTeX question, but hopefully I can get some advice here on how to set up the kind of system I want. Any help or suggestions for a better setup would be very appreciated.\n    submitted by    /u/gerretsen  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/15rpxmc/org_mode_and_problem_sheets/",
+          "publishedOn": "2023-08-15T11:25:01.000Z",
+          "wordCount": 2814,
+          "title": "Org mode and problem sheets",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/15q619p/emacsios_users_how_would_you_pay_to_fund_a/",
           "author": null,
@@ -2588,16 +2648,6 @@
           "wordCount": 2457,
           "title": "Have anyone had sucess with integrating orgmode with Jira in a useful manner?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/151c6sd/describevariable_loads_a_function_i_dont_want_to/",
-          "author": null,
-          "description": "Perhaps somebody knows how to fix this.\n I have been having a weird problem, when once in a while, org-ctags gets loaded, and org-ctags-enable gets executed. Once org-ctags-enable gets executed, org-internal tags stop working (org-ctags wants a etags file for _any_ internal link). See https://www.reddit.com/r/orgmode/comments/13p9zog/internal_links_asking_for_tags_table/\n ​\n I don't want that.\n I traced it and here is what I have:\n  \nhelp--load-prefixes contains org-ctags (among many others)\n I ask for describe-variable org-reverse-note-order\n org-ctags gets loaded, and org-ctags-enable gets executed\n looking at the source code of org-ctags, it executes (org-ctags-enable) when it gets loaded.\n  \nHow can I remove org-ctags from the help--load-prefixes.\n But perhaps more importantly:\n should autoexecuting org-ctags-enable be considered a bug?\n ​\n    submitted by    /u/dm_g  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/151c6sd/describevariable_loads_a_function_i_dont_want_to/",
-          "publishedOn": "2023-07-16T17:33:47.000Z",
-          "wordCount": 2533,
-          "title": "describe-variable loads a function I don't want to load. how to disable?",
-          "imageUrl": null
         }
       ]
     },
@@ -2606,6 +2656,116 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/hl-todo-20230815.1422.tar",
+          "author": null,
+          "description": "The hl-todo package has been updated to version 20230815.1422.",
+          "link": "https://melpa.org/#/hl-todo",
+          "publishedOn": "2023-08-15T14:22:00.000Z",
+          "wordCount": 105,
+          "title": "hl-todo (20230815.1422) --- Highlight TODO and similar keywords",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/firrtl-mode-20230815.1312.tar",
+          "author": null,
+          "description": "The firrtl-mode package has been updated to version 20230815.1312.",
+          "link": "https://melpa.org/#/firrtl-mode",
+          "publishedOn": "2023-08-15T13:12:00.000Z",
+          "wordCount": 105,
+          "title": "firrtl-mode (20230815.1312) --- mode for working with FIRRTL files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/yasnippet-snippets-20230815.820.tar",
+          "author": null,
+          "description": "The yasnippet-snippets package has been updated to version 20230815.820.",
+          "link": "https://melpa.org/#/yasnippet-snippets",
+          "publishedOn": "2023-08-15T08:20:00.000Z",
+          "wordCount": 105,
+          "title": "yasnippet-snippets (20230815.820) --- Collection of yasnippet snippets",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ccls-20230815.731.tar",
+          "author": null,
+          "description": "The ccls package has been updated to version 20230815.731.",
+          "link": "https://melpa.org/#/ccls",
+          "publishedOn": "2023-08-15T07:31:00.000Z",
+          "wordCount": 105,
+          "title": "ccls (20230815.731) --- ccls client for lsp-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/psysh-20230815.730.tar",
+          "author": null,
+          "description": "The psysh package has been updated to version 20230815.730.",
+          "link": "https://melpa.org/#/psysh",
+          "publishedOn": "2023-08-15T07:30:00.000Z",
+          "wordCount": 105,
+          "title": "psysh (20230815.730) --- PsySH, PHP interactive shell (REPL)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lsp-haskell-20230815.718.tar",
+          "author": null,
+          "description": "The lsp-haskell package has been updated to version 20230815.718.",
+          "link": "https://melpa.org/#/lsp-haskell",
+          "publishedOn": "2023-08-15T07:18:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-haskell (20230815.718) --- Haskell support for lsp-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lsp-docker-20230815.718.tar",
+          "author": null,
+          "description": "The lsp-docker package has been updated to version 20230815.718.",
+          "link": "https://melpa.org/#/lsp-docker",
+          "publishedOn": "2023-08-15T07:18:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-docker (20230815.718) --- LSP Docker integration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lsp-sourcekit-20230815.717.tar",
+          "author": null,
+          "description": "The lsp-sourcekit package has been updated to version 20230815.717.",
+          "link": "https://melpa.org/#/lsp-sourcekit",
+          "publishedOn": "2023-08-15T07:17:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-sourcekit (20230815.717) --- sourcekit-lsp client for lsp-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lsp-origami-20230815.704.tar",
+          "author": null,
+          "description": "The lsp-origami package has been updated to version 20230815.704.",
+          "link": "https://melpa.org/#/lsp-origami",
+          "publishedOn": "2023-08-15T07:04:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-origami (20230815.704) --- origami.el support for lsp-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ob-julia-vterm-20230815.246.tar",
+          "author": null,
+          "description": "The ob-julia-vterm package has been updated to version 20230815.246.",
+          "link": "https://melpa.org/#/ob-julia-vterm",
+          "publishedOn": "2023-08-15T02:46:00.000Z",
+          "wordCount": 105,
+          "title": "ob-julia-vterm (20230815.246) --- Babel functions for Julia that work with julia-vterm",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lsp-sonarlint-20230814.1954.tar",
+          "author": null,
+          "description": "The lsp-sonarlint package has been updated to version 20230814.1954.",
+          "link": "https://melpa.org/#/lsp-sonarlint",
+          "publishedOn": "2023-08-14T19:54:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-sonarlint (20230814.1954) --- Emacs SonarLint lsp client",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/lsp-grammarly-20230814.1813.tar",
           "author": null,
@@ -2674,6 +2834,16 @@
           "publishedOn": "2023-08-14T03:02:00.000Z",
           "wordCount": 105,
           "title": "side-notes (20230814.302) --- Easy access to a directory notes file",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-project-capture-20230814.159.tar",
+          "author": null,
+          "description": "The org-project-capture package has been updated to version 20230814.159.",
+          "link": "https://melpa.org/#/org-project-capture",
+          "publishedOn": "2023-08-14T01:59:00.000Z",
+          "wordCount": 105,
+          "title": "org-project-capture (20230814.159) --- Repository todo capture and management for org-mode",
           "imageUrl": null
         },
         {
@@ -2844,6 +3014,16 @@
           "publishedOn": "2023-08-12T00:10:00.000Z",
           "wordCount": 105,
           "title": "org-ref (20230812.10) --- citations, cross-references and bibliographies in org-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/yeetube-20230811.1527.tar",
+          "author": null,
+          "description": "The yeetube package has been updated to version 20230811.1527.",
+          "link": "https://melpa.org/#/yeetube",
+          "publishedOn": "2023-08-11T15:27:00.000Z",
+          "wordCount": 105,
+          "title": "yeetube (20230811.1527) --- YouTube/Invidious Front End",
           "imageUrl": null
         },
         {
@@ -3414,6 +3594,16 @@
           "publishedOn": "2023-08-08T10:22:00.000Z",
           "wordCount": 105,
           "title": "for (20230808.1022) --- Iteration and sequence",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/norns-20230808.938.tar",
+          "author": null,
+          "description": "The norns package has been updated to version 20230808.938.",
+          "link": "https://melpa.org/#/norns",
+          "publishedOn": "2023-08-08T09:38:00.000Z",
+          "wordCount": 105,
+          "title": "norns (20230808.938) --- Interactive development environment for monome norns",
           "imageUrl": null
         },
         {
@@ -5685,86 +5875,6 @@
           "wordCount": 105,
           "title": "bibtex-completion (20230717.959) --- A BibTeX backend for completion frameworks",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/json-mode-20230717.818.tar",
-          "author": null,
-          "description": "The json-mode package has been updated to version 20230717.818.",
-          "link": "https://melpa.org/#/json-mode",
-          "publishedOn": "2023-07-17T08:18:00.000Z",
-          "wordCount": 105,
-          "title": "json-mode (20230717.818) --- Major mode for editing JSON files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/embark-20230716.2345.tar",
-          "author": null,
-          "description": "The embark package has been updated to version 20230716.2345.",
-          "link": "https://melpa.org/#/embark",
-          "publishedOn": "2023-07-16T23:45:00.000Z",
-          "wordCount": 105,
-          "title": "embark (20230716.2345) --- Conveniently act on minibuffer completions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/wildcharm-theme-20230716.2251.tar",
-          "author": null,
-          "description": "The wildcharm-theme package has been updated to version 20230716.2251.",
-          "link": "https://melpa.org/#/wildcharm-theme",
-          "publishedOn": "2023-07-16T22:51:00.000Z",
-          "wordCount": 105,
-          "title": "wildcharm-theme (20230716.2251) --- Port of vim-wildcharm colorscheme",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/wildcharm-light-theme-20230716.2251.tar",
-          "author": null,
-          "description": "The wildcharm-light-theme package has been updated to version 20230716.2251.",
-          "link": "https://melpa.org/#/wildcharm-light-theme",
-          "publishedOn": "2023-07-16T22:51:00.000Z",
-          "wordCount": 105,
-          "title": "wildcharm-light-theme (20230716.2251) --- Port of vim-wildcharm (light) colorscheme",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dumb-jump-20230716.1717.tar",
-          "author": null,
-          "description": "The dumb-jump package has been updated to version 20230716.1717.",
-          "link": "https://melpa.org/#/dumb-jump",
-          "publishedOn": "2023-07-16T17:17:00.000Z",
-          "wordCount": 105,
-          "title": "dumb-jump (20230716.1717) --- Jump to definition for 50+ languages without configuration",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pg-20230716.1440.tar",
-          "author": null,
-          "description": "The pg package has been updated to version 20230716.1440.",
-          "link": "https://melpa.org/#/pg",
-          "publishedOn": "2023-07-16T14:40:00.000Z",
-          "wordCount": 105,
-          "title": "pg (20230716.1440) --- Emacs Lisp socket-level interface to the PostgreSQL RDBMS",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/jazz-theme-20230716.1302.tar",
-          "author": null,
-          "description": "The jazz-theme package has been updated to version 20230716.1302.",
-          "link": "https://melpa.org/#/jazz-theme",
-          "publishedOn": "2023-07-16T13:02:00.000Z",
-          "wordCount": 105,
-          "title": "jazz-theme (20230716.1302) --- A warm color theme for Emacs 24+.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/opensub-20230716.1018.tar",
-          "author": null,
-          "description": "The opensub package has been updated to version 20230716.1018.",
-          "link": "https://melpa.org/#/opensub",
-          "publishedOn": "2023-07-16T10:18:00.000Z",
-          "wordCount": 105,
-          "title": "opensub (20230716.1018) --- Search and download from open-subtitles",
-          "imageUrl": null
         }
       ]
     },
@@ -5773,6 +5883,106 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15s2ydr/is_there_any_way_to_get_latex_previews_in_an_src/",
+          "author": null,
+          "description": "I am using pseudocode-mode to write algorithms in org mode. I'd like to allow latex previews in this type of src block only. Is there any way to do this? The only guidance I could kind of find was this, which involves defining a new generic mode and hacking the fontification. Any help is appreciated.\n    submitted by    /u/Far-Anywhere2876  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15s2ydr/is_there_any_way_to_get_latex_previews_in_an_src/",
+          "publishedOn": "2023-08-15T19:50:02.000Z",
+          "wordCount": 2584,
+          "title": "Is there any way to get latex previews in an SRC block for a specific language?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15s2pl6/elisp_eval_to_comment/",
+          "author": null,
+          "description": "I recently found eros, a package for displaying the result of evaluating a sexpr as an overlay. That's something I remember finding very useful back when I did more clojure development.\n Another thing I remember using was sort of eval-last-sexpr-and-insert-result-as-comment. Is there a package for doing that with elisp too?\n    submitted by    /u/magthe0  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15s2pl6/elisp_eval_to_comment/",
+          "publishedOn": "2023-08-15T19:42:37.000Z",
+          "wordCount": 2568,
+          "title": "Elisp - eval to comment?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15rva11/trouble_sourcing_orgmode_file_in_emacs/",
+          "author": null,
+          "description": "So, I'm making the transition from Neovim to Emacs, and now I'm working on setting up the Emacs configuration file using org-mode. Here's what I've done for that:\n I've created an init.el file with the following contents:\n (require 'org) (org-babel-load-file (expand-file-name \"config.org\" user-emacs-directory)) \n And here's the content of the config.org file:\n * Configuration #+BEGIN_SRC emacs-lisp (menu-bar-mode -1) (tool-bar-mode -1) #+END_SRC \n Both of these files are located in the ~/.config/emacs directory.\n However, the config.org file doesn't seem to be sourced in the init.el file, and I'm not quite sure why. I've watched a couple of YouTube videos and visited some websites, and I'm following the exact steps they're showing, but it's not working for me.\n Could you folks assist me in figuring out what I might be doing wrong here?\n    submitted by    /u/hemogolobin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15rva11/trouble_sourcing_orgmode_file_in_emacs/",
+          "publishedOn": "2023-08-15T15:05:55.000Z",
+          "wordCount": 2649,
+          "title": "Trouble Sourcing org-mode File in Emacs Configuration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15rv8lt/treesitter_performance_is_highly_variable/",
+          "author": null,
+          "description": "I've been playing with Emacs 29's native tree-sitter for indentation and other ideas. First impression: it's really so very powerful compared to the bad old days of regexp matching and even ppss. It just understand the code. So far so good.\n That said, I've been trying to assess performance impact for applications that run frequently, e.g. via font-lock. Finding node at point is insanely fast: a fraction of a µs. But to my surprise, tree-sitter actions like \"find all parent nodes starting from the current node\" tend to vary in duration from (still very fast) 2–10µs to hundreds of µs or even several ms, depending on where the search starts from. I certainly expect some variability as you navigate from different depths within the syntax tree, but repeatable factors of 1000 seems a bit extreme, and make it hard to predict performance for latency-sensitive code.\n Does anyone have insight into this performance variability? Do you experience it as well? Perhaps it depends on the parser backend (I've tried only python so far)? Or is it fundamental to the TS algorithm?\n An example simple code to try, from various code locations in a large-ish file:\n (benchmark-run 100000 (let ((n (treesit-node-at (point) 'python))) ; or whichever language you have (while n (setq n (treesit-node-parent n))))) \n Multiply the result by 10 and that is the number of µs each \"navigate up from node\" operation takes.\n    submitted by    /u/JDRiverRun  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15rv8lt/treesitter_performance_is_highly_variable/",
+          "publishedOn": "2023-08-15T15:04:20.000Z",
+          "wordCount": 2750,
+          "title": "tree-sitter performance is highly variable",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15ruhud/japanese_input_via_anthy_not_possible/",
+          "author": null,
+          "description": "On GNU/Linux I do use Anthy to activate Japanese input methods. This works fine with all my applications (Browser, LibreOffice, Geany, Thunderbird, Claws, Terminal Emulator, vim in Terminal window, ...).\n I never used it with Emacs before. But today I realized that it do not work.\n I do use Emacs 27 on Debian 11 with evil-mode.\n Why is Emacs an exception here? What is the technical reason behind it?\n Can I activate it somehow? How can I type Japanese in Emacs?\n    submitted by    /u/buhtz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15ruhud/japanese_input_via_anthy_not_possible/",
+          "publishedOn": "2023-08-15T14:35:57.000Z",
+          "wordCount": 2600,
+          "title": "Japanese input via Anthy not possible",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15rubhr/til_midnight_mode/",
+          "author": null,
+          "description": "Hey all, I found out about midnight-mode which is a minor mode that runs whatever functions are added to its hook. The hook is called midnight-hook unsurprisingly, and it will run this every time it hits midnight. This by itself is a little handy tool but the part that i really like is that it comes with a function called clean-buffer-list which you can probably guess what it does ;)\n I don't use midnight mode specifically but I do use clean-buffer-list since I found out about it. \n I made a YouTube video for those interested. I also have a playlist called Emacs Goodies that is the video format of TIL in which I have a few videos lined up. - Midnight Mode - Emacs Goodies Playlist\n    submitted by    /u/gopar  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15rubhr/til_midnight_mode/",
+          "publishedOn": "2023-08-15T14:29:19.000Z",
+          "wordCount": 2641,
+          "title": "TIL Midnight Mode 🌙",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15rncds/orgroam_error_with_emacs_291/",
+          "author": null,
+          "description": "I am using successfully org-roam (from melpa stable) with Emacs 27 and 28, but since I installed version 29.1 on my Artix box I continue to get this error message\n ` (use-package): org-roam/:config: Selecting deleted buffer`\n I already tried to cancel the sqlite database, but no success. Any suggestion?\n ​\n EDIT\n  \nRemoving elc files from org-roam didn't help\n tried to remove the sqlite database: no success\n upgrade packages didn't change anything\n tried different sqlite3 libraries doesn't work\n  \n[SOLVED]\n Ok, after some other attempts, I find a solution.\n  \nI changed the melpa repository to the melpa instead of melpa-stable;\n this allowed me to install emacsql-sqlite-builtin package\n I added the instructions  (use-package emacsql-sqlite-builtin) (setq org-roam-database-connector 'sqlite-builtin) \n  \nNow org-roam works.\n Thank you all for your help: I hope this will be useful in the future\n    submitted by    /u/Jak_from_Venice  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15rncds/orgroam_error_with_emacs_291/",
+          "publishedOn": "2023-08-15T09:08:51.000Z",
+          "wordCount": 2649,
+          "title": "Org-roam error with Emacs 29.1",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15rd8bc/one_month_to_go_please_submit_proposals_for/",
+          "author": null,
+          "description": "In an email just now Sacha says:\n  \nThe end of the EmacsConf 2023 call for participation is one month away (Sept 14; https://emacsconf.org/2023/cfp/).\n  \nTo date we've received 15 talks, eight of which are reviewed/approved and scheduled. \n Please submit your proposal(s), nudge your friends, borrow Pop's biplane and do some sky-writing...\n    submitted by    /u/mplscorwin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15rd8bc/one_month_to_go_please_submit_proposals_for/",
+          "publishedOn": "2023-08-15T01:04:54.000Z",
+          "wordCount": 2573,
+          "title": "One month to go: Please submit proposals for EmacsConf 2023",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15r9fkt/20230814_emacs_news_sacha_chua/",
+          "author": null,
+          "description": "submitted by    /u/jsled  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15r9fkt/20230814_emacs_news_sacha_chua/",
+          "publishedOn": "2023-08-14T22:32:05.000Z",
+          "wordCount": 2519,
+          "title": "2023-08-14 Emacs news :: Sacha Chua",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/15r8a32/emacs_291_homebrew_on_intel_mac_constantly/",
+          "author": null,
+          "description": "I installed emacs 29.1 from the homebrew cask on both my personal iMac (intel based) and my work macbook (M2). The M2 version is working flawlessly so far, but the Intel version is being very wonky. When performing various simple operations (such as scrolling) it very often completely blanks out the screen for a few seconds and then returns. What's worse, is that quite frequently, it gets in a state in which it won't respond to any key sequence (not even C-g), and needs to be force quit. They are both running the same init.el files and using the same packages, and both are running the latest version of Ventura. I never had any of these problems before upgrading to 29.1. Any suggestions?\n    submitted by    /u/algebravic  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/15r8a32/emacs_291_homebrew_on_intel_mac_constantly/",
+          "publishedOn": "2023-08-14T21:50:11.000Z",
+          "wordCount": 2647,
+          "title": "Emacs 29.1 (homebrew) on Intel Mac constantly blinking and blanking out.",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/15r0sfk/is_it_possible_to_create_a_minimal_emacs/",
           "author": null,
@@ -9502,126 +9712,6 @@
           "wordCount": 13654,
           "title": "Cannot get Emacs to display SF Mono font in italics on Windows",
           "imageUrl": "https://external-preview.redd.it/_X7Np8_Kb37nx5HhSsTRT64zIILMZj8tiu3mj-gp4ZY.jpg?auto=webp&s=4fffde0db37ac847d3633529df57d6e5a30614f4"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/151v0nf/remove_company_completion_labels/",
-          "author": null,
-          "description": "How can I remove the words that come after the completion suggstion\n Also is there any way change the margin\n    submitted by    /u/Coolrule360  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/151v0nf/remove_company_completion_labels/",
-          "publishedOn": "2023-07-17T07:34:12.000Z",
-          "wordCount": 12940,
-          "title": "Remove company completion labels",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/151uxjd/an_emacs_package_that_goes_back_to_the_dinosaurs/",
-          "author": null,
-          "description": "submitted by    /u/unixbhaskar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/151uxjd/an_emacs_package_that_goes_back_to_the_dinosaurs/",
-          "publishedOn": "2023-07-17T07:29:17.000Z",
-          "wordCount": 13224,
-          "title": "An Emacs package that goes back to the Dinosaurs: Avy",
-          "imageUrl": "https://external-preview.redd.it/imOkIiHngFWhFYQrRf_zh7O2PU9MWCMTcYzoZPh_I0U.jpg?auto=webp&s=45414bdb4548e93f46781b14d6a48c57be2cdd55"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/151lmp2/emacs_android_port/",
-          "author": null,
-          "description": "I just realized that there is an android port of emacs on f-droid; however, it seems to be almost completely useless, as it lives in its own little sandbox, so it can't access my files unless I move them there. I have my emacs config files and my org-mode notes synced to my phone via syncthing. Is there anything I can do to make emacs see them and also keep them synced with my other devices? I attempted to make some symlinks with the adb shell, but I have no idea where in the directory tree is the emacs root directory located.\n    submitted by    /u/acosmicjoke  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/151lmp2/emacs_android_port/",
-          "publishedOn": "2023-07-16T23:49:46.000Z",
-          "wordCount": 13516,
-          "title": "Emacs android port",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/151lg5m/instructing_flycheck_to_ignore_certain_lines_from/",
-          "author": null,
-          "description": "I'm using flycheck in Org mode and would like to skip certain lines, like property drawer, from being checked by the tool. Is there any way to do this? \n I suppose adding inline comment (like \"# noqa\") wouldn't work given it may not be recognized as comments. Otherwise, I would imagine that I need to use some hook to inspect each line and decide to filter in or out before the line being checked.\n I wonder if any standard solution already exists. \n    submitted by    /u/okomestudio  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/151lg5m/instructing_flycheck_to_ignore_certain_lines_from/",
-          "publishedOn": "2023-07-16T23:42:00.000Z",
-          "wordCount": 13070,
-          "title": "Instructing flycheck to ignore certain lines from checking",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/151ju59/why_cant_emacs_locate_3rd_party_functions_with/",
-          "author": null,
-          "description": "I'm trying out straight.el and if I use a rather straightforward configuration:\n ;; install straight.el (defvar bootstrap-version) (let ((bootstrap-file (expand-file-name \"straight/repos/straight.el/bootstrap.el\" user-emacs-directory)) (bootstrap-version 6)) (unless (file-exists-p bootstrap-file) (with-current-buffer (url-retrieve-synchronously \"https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el\" 'silent 'inhibit-cookies) (goto-char (point-max)) (eval-print-last-sexp))) (load bootstrap-file nil 'nomessage)) (straight-use-package 'use-package) (setq straight-use-package-by-default t) (use-package consult) \n And then M-x describe-function RET consult-mark tells me the source is in my init file. I've tried disabling both native compilation and bytecode compilation and the problem persists. If I install the package regularly using M-x package-install I don't have the problem.\n    submitted by    /u/bdzr_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/151ju59/why_cant_emacs_locate_3rd_party_functions_with/",
-          "publishedOn": "2023-07-16T22:34:33.000Z",
-          "wordCount": 13322,
-          "title": "Why can't emacs locate 3rd party functions with straight?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/151hd5b/does_anyone_know_some_good_altermatives_for_these/",
-          "author": null,
-          "description": "I've been using Vim/GVim for a long time and I've decided to switch to Emacs, however there are some plugins that I can't live without.\n Here are them:\n  \nfzf\n vim-visual-multi (only the multiple-cursor support, I don't care about the other features)\n coc.nvim\n  \nDo you know any good Emacs alternatives for these?\n    submitted by    /u/Alfika07  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/151hd5b/does_anyone_know_some_good_altermatives_for_these/",
-          "publishedOn": "2023-07-16T20:56:06.000Z",
-          "wordCount": 13939,
-          "title": "Does anyone know some good altermatives for these Vim plugins on Emacs?",
-          "imageUrl": "https://external-preview.redd.it/-ZJnucXQX0GtbZcMZnlw6K_vPTrNYs_FwxdvWdxaETw.jpg?auto=webp&s=c72c003d704ce527342eb52db5110c7de6cd1726"
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/151fplj/how_to_correctly_enable_treesitterhlmode_with/",
-          "author": null,
-          "description": "I'm working on rebuilding my emacs setup with some of the modern features like tree-sitter.\n My emacs is built from source.\n $ ./configure --with-native-compilation --with-json --with-tree-sitter --with-x --with-rsvg --with-modules \n I built from the tip of master (b76878c).\n I'm using straight with (setq straight-use-package-by-default t). \n I load tree-sitter like this.\n (use-package tree-sitter :hook (c++-ts-mode . (lambda () (tree-sitter-mode) (tree-sitter-hl-mode) ))) \n And tree-sitter-langs like this.\n (use-package tree-sitter-langs :config (add-to-list 'major-mode-remap-alist '(cc-mode . cc-ts-mode)) (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)) (add-to-list 'major-mode-remap-alist '(bash-mode . bash-ts-mode)) (add-to-list 'major-mode-remap-alist '(sh-mode . …",
-          "link": "https://www.reddit.com/r/emacs/comments/151fplj/how_to_correctly_enable_treesitterhlmode_with/",
-          "publishedOn": "2023-07-16T19:52:17.000Z",
-          "wordCount": 2675,
-          "title": "How to correctly enable tree-sitter-hl-mode with c++-ts-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/151a2vt/i_want_a_simpler_approach_to_emacs/",
-          "author": null,
-          "description": "I have used VI before and I do like it. However I don't like the fact that both vim and emacs are terminal based. I really don't like living on the CLI and as a windows user the terminals are terrible and there's no beauty in it either.\n Is there a GUI version of emacs I could download but have the same experience with? and get good customize-ability to?\n I use VSCodium(VSCODE) but I want something more lightweight. Is there any way to make running CPP and Python code as good as VSC via emacs.\n    submitted by    /u/majestybtw  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/151a2vt/i_want_a_simpler_approach_to_emacs/",
-          "publishedOn": "2023-07-16T16:08:40.000Z",
-          "wordCount": 2500,
-          "title": "I want a simpler approach to emacs.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/151860i/how_to_use_lsp_when_developping_app_using_flatpak/",
-          "author": null,
-          "description": "Hi everybody, I'm using flatpak to devellop some GNOME applications, I'd like to use the flatpak sdk for syntax checking and completion when using lsp-mode in Emacs, does someone has managed to do that ? Thanks !\n    submitted by    /u/Sellive  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/151860i/how_to_use_lsp_when_developping_app_using_flatpak/",
-          "publishedOn": "2023-07-16T14:49:08.000Z",
-          "wordCount": 2447,
-          "title": "How to use lsp when developping app using flatpak ?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/15151so/im_having_trouble_with_lsp_in_doom_emacs/",
-          "author": null,
-          "description": "Hi, i'm completely new to emacs (coming from vscode) and i just installed doom emacs\n after uncommenting python and bash under the languages section in init.el and running doom sync nothing changed, i still don't have a proper syntax highlighting no auto completion and all other stuff\n i added these lines to my init.el and made another doom sync but still nothing changed\n (package! lsp-mode)\n (package! lsp-pyright)\n (package! company-lsp)\n (package! python-black)\n what am i missing\n    submitted by    /u/Fate_sc  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/15151so/im_having_trouble_with_lsp_in_doom_emacs/",
-          "publishedOn": "2023-07-16T12:28:22.000Z",
-          "wordCount": 2480,
-          "title": "i'm having trouble with lsp in doom emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1514i99/tips_enhance_vim_insert_mode_with_many_emacs/",
-          "author": null,
-          "description": "Perhaps a \"sinful\" act, sometimes we still use vim for quick edits of small files even when we have emacsclient setup. Or it could be as innocent as going to a remote machine that doesn't have Emacs setup. Fear no more, building on top of the work from https://github.com/kentarosasaki/vim-emacs-bindings, I made a few more keybindings available including\n - C-f, C-p, C-n, C-b, C-a, C-e, M-f, M-b\n - C-d, C-k, C-y, C-_\n - M->, M-<\n - M-/\n - (for now)...\n All you need is to copy this to your ~/.vim/plugin/emacs-bindings.vim\n ​\n    submitted by    /u/hellwolf_rt  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1514i99/tips_enhance_vim_insert_mode_with_many_emacs/",
-          "publishedOn": "2023-07-16T12:00:57.000Z",
-          "wordCount": 2494,
-          "title": "Tips: enhance vim insert mode with many Emacs keybindings",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/15128dg/switching_from_mu4e_to_notmuch/",
-          "author": null,
-          "description": "Is there a guide out there for doing so? I currently use mu4e with my GMail account, which I sync using mbsync. I'd like to try notmuch to see if it's better for my workflow, but I don't want to bork my current setup too much.\n I can't find a good resource, although this blog post suggests it is fairly simple in doom. For standard GNU Emacs, do I just install notmuch from MELPA and configure it with the current maildir location?\n    submitted by    /u/nonreligious  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/15128dg/switching_from_mu4e_to_notmuch/",
-          "publishedOn": "2023-07-16T09:52:55.000Z",
-          "wordCount": 2487,
-          "title": "Switching from mu4e to notmuch?",
-          "imageUrl": null
         }
       ]
     },
@@ -9799,16 +9889,6 @@
           "wordCount": 361,
           "title": "Thesaurus linguae Latinae (TLL)",
           "imageUrl": null
-        },
-        {
-          "id": "2626@/discussions",
-          "author": "Will",
-          "description": "Another installment of the What Are You Working On? thread.\nWhat I'm reading:\nFaulkner, Grant. The art of brevity: crafting the very short story, Prometheus Books. 2023. Scribd (Slow progress.)\nVelitchkov, Ivo and Anadiotis, George. Personal Knowledge Graphs: Connected thinking to boost productivity, creativity, and discovery, C. Scribner's Sons. 2023. Scribd (Too theoretical for me at times.)\nAbbey, Edward. A Voice Crying in the Wilderness Vox Clamantis in Deserto: Notes from a Secret Journal, RosettaBooks. 2018. Scribd (I just finished.)\nCage, John. Diary: how to improve the world ; (you will only make matters worse). 2015. Physical (Crazy)\nWhat I am programming:\nLearning Pyside6 and QT for app development. \nArjan's code reviews.\nWhat I'm listening to:\nEsther Abrami\nHania Rani\nWhat I'm thinking about:\nThe Economics of Reading. \n\n\nOptimum Foraging Models. \n\n\nThe nuances of note linking.\n\n\nJohn Cage\n\n\nBlock Universe Physics\n\n\n\nThe \"My ten-day zettel production\" is produced by a script for attachment to my daily journaling template. I do my journaling in Bear in order to keep personal journaling separated from my knowledge work.\n\nMy ten-day zettel production.",
-          "link": "https://forum.zettelkasten.de/discussion/2626/please-share-with-us-what-ideas-youre-grappling-with-july-16-2023",
-          "publishedOn": "2023-07-16T18:01:24.000Z",
-          "wordCount": 969,
-          "title": "Please share with us what ideas you're grappling with. July 16, 2023",
-          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/vr/411c92m97fst.png"
         }
       ]
     }
