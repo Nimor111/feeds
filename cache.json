@@ -53,6 +53,36 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/17al5w9/codewars_calculating_with_functions/",
+          "author": null,
+          "description": "Hello, redditors. Haskell beginner here. So I tried to solve this problem on codewars. And this was the best I could do\n ​\n module CalculatingWithFunctions (plus, minus, times, dividedBy, zero, one, two, three, four, five, six, seven, eight, nine) where plus, minus, times, dividedBy :: Int -> Int -> Int plus = (+) minus = (-) times = (*) dividedBy = div zero, one, two, three, four, five, six, seven, eight, nine :: (a -> Int) zero _ = 0 one _ = 1 two _ = 2 three _ = 3 four _ = 4 five _ = 5 six _ = 6 seven _ = 7 eight _ = 8 nine _ = 9 \n When I try the following unit test:\n (one $ plus $ one) `shouldBe` (2 :: Int) \n I get the following error message\n test/CalculatingWithFunctionsSpec.hs:9:19: error: • Couldn't match expected type ‘Int’ with actual type ‘a0 -> Int’ • Probable cause: ‘one’ is applied to too few arguments In the second argument of ‘($)’, namely ‘one’ In the second argument of ‘($)’, namely ‘plus $ one’ In the first argument of ‘shouldBe’, namely ‘(one $ plus $ one)’ | 9 | (one $ plus $ one) `shouldBe` (2 :: Int) \n If I understand correctly, `one` expects some argument, but obviously nothing is provided. I'm just lost can't figure out what to do next. Please help.\n    submitted by    /u/sanapotter1229  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/17al5w9/codewars_calculating_with_functions/",
+          "publishedOn": "2023-10-18T07:50:12.000Z",
+          "wordCount": null,
+          "title": "Codewars calculating with functions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/17abplo/an_existential_pattern_for_transforming_datatypes/",
+          "author": null,
+          "description": "I have a pattern that I wanted help analyzing. It may be nothing but I wanted to give it more eyes. Applying it to the continuation Monad\n type Cont :: Type -> Type -> Type newtype Cont res a where Cont :: ((a -> res) -> res) -> Cont res a \n produces an equivalent definition using an existential Functor w. It does so by abstracting a -> .. into a functor application w .., then adding an extra argument of type w a.\n type Cont' :: Type -> Type -> Type data Cont' res a where Cont' :: Functor w => w a -> (w res -> res) -> Cont' res a \n Doesn't this look weird? Basically translating from Cont ~~> Cont' we decide what existential functor we want, and we instantiate w ~ (a ->).\n  Cont' @(a ->) :: (a -> a) -> ((a -> res) -> res) -> Cont' res a \n This turns the first argument w a into into a -> a a…",
+          "link": "https://www.reddit.com/r/haskell/comments/17abplo/an_existential_pattern_for_transforming_datatypes/",
+          "publishedOn": "2023-10-17T23:14:37.000Z",
+          "wordCount": null,
+          "title": "An existential pattern for transforming datatypes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/17a9p8c/naming_convention_what_should_receive_priority/",
+          "author": null,
+          "description": "Look at the following Haskell code:\n data Holder = Holder {object :: Object} holderLength :: Holder -> Int holderLength holder = length object where object = object holder -- Uh Oh \n Uh oh! We named both the variable and the field accessor function the same thing. We have two options:\n  \nRename the variable\n  data Holder = Holder {object :: Object} holderLength :: Holder -> Int holderLength holder = length o where o = object holder \n \nRename the field accessor function\n  data Holder = Holder {hObject :: Object} holderLength :: Holder -> Int holderLength holder = length object where object = hObject holder \n \n I know this is depends a lot on preference. Normally, when using other languages, I start functions with uppercase, and variables with lowercase, but I can't do this here.\n What do you prefer?\n    submitted by    /u/teaAssembler  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/17a9p8c/naming_convention_what_should_receive_priority/",
+          "publishedOn": "2023-10-17T21:47:00.000Z",
+          "wordCount": null,
+          "title": "Naming convention: What should receive priority? Functions or variables?",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/17a752g/haskell_interlude_episode_35_iavor_diatchki/",
           "author": null,
           "description": "submitted by    /u/nomeata  \n [link]   [comments]",
@@ -1081,36 +1111,6 @@
           "wordCount": 2551,
           "title": "Tetris bot in haskell on top of someone else's terminal tetris game",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/16mcxbw/pdf_manipulation_in_haskell/",
-          "author": null,
-          "description": "I've been writing a piece of software that, at some point, will have to split pdfs by their sections. The only thing is that there, to my knowledge, no library in hackage that does that. Considering this, what would you guys suggest I use to achieve this? I've thought about writing a python script that does this and then invoking it through Haskell, but I don't like the prospect of losing type safety in the process.\n    submitted by    /u/ComunistCapybara  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/16mcxbw/pdf_manipulation_in_haskell/",
-          "publishedOn": "2023-09-19T00:57:07.000Z",
-          "wordCount": 2608,
-          "title": "PDF manipulation in Haskell",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/16m7ca2/ghc_8107_entropy_and_macos_ventura_1352/",
-          "author": null,
-          "description": "Upgrade to 13.5.2 was forced by Xcode 15, unfortunately.\n After that GHC 8.10.7 stopped linking (Xcode brought a new gcc with it, and it seems like you can't change it), and after moving to GHC 9.6.2 it works, with some linker warnings.\n But now there are seem to be some changes around entropy access, getting this error:\n  user error (cryptonite: random: cannot get any source of entropy on this system) \n Any suggestions? Thank you!\n    submitted by    /u/epoberezkin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/16m7ca2/ghc_8107_entropy_and_macos_ventura_1352/",
-          "publishedOn": "2023-09-18T21:06:00.000Z",
-          "wordCount": 2609,
-          "title": "GHC 8.10.7, entropy and MacOS Ventura 13.5.2",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/16m3w5m/question_about_isomorphisms_and_proving_theorems/",
-          "author": null,
-          "description": "So in these days I came across \"Thinking with Types\" and the first part blew my mind. In particular, the Curry-Howard isomorphism really caught my interest, but I need help to know if I'm getting it correctly. What I've understood is that we can prove mathematical theorems through CH, for example to prove that a * 1 = a we just need to show that there is an isomorphism (hence, 2 functions that are one the inverse of the other) between (a, ()) and a. This gave me chills, so I wanted to try this way of reasoning with a theorem for natural numbers, but I'm stuck. In particular, I would like to prove that given two natural numbers m,n the GCD of m,n is the same as the GCD of (m mod n) and n. Again, here there is an equality so I think I would have to show there is an isomorphism between the two things. But I can't really imagine how to translate something like that in Haskell, and I'm not even sure if this is actually possible.\n P.S. As a side note, I also wanted to prove that there is no isomorphism between a set X and its power set, but imagining to prove that something doesn't exist with CH is even more complicated for me.\n    submitted by    /u/asshole_books_nerd  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/16m3w5m/question_about_isomorphisms_and_proving_theorems/",
-          "publishedOn": "2023-09-18T18:54:27.000Z",
-          "wordCount": 2780,
-          "title": "Question about isomorphisms and proving theorems",
-          "imageUrl": null
         }
       ]
     },
@@ -1119,6 +1119,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/17akubj/scala_center_2023_q3_activity_report/",
+          "author": null,
+          "description": "submitted by    /u/ckipp01  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/17akubj/scala_center_2023_q3_activity_report/",
+          "publishedOn": "2023-10-18T07:27:12.000Z",
+          "wordCount": 2494,
+          "title": "Scala Center 2023 Q3 Activity Report",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/17ac10z/announcing_typo_typed_postgresql_integration_for/",
+          "author": null,
+          "description": "Hey everybody!\n So I've been working with PostgreSQL and the JVM for very long now, and I've always been frustrated with the experience. The tedious manual writing, the ease with which you can break things, and the difficulty of testing have all been constant irritations.\n Some months back I started working towards my dream integration layer, with focus on type-safety and developer experience. Powered by cutting-edge code generation.\n I am excited to announce the first version of Typo, and invite you to have a look at what it can do. Through introduction and documentation at https://oyvindberg.github.io/typo/docs/ .\n Github repo with issues for future work here https://github.com/oyvindberg/typo . \n Curious to hear thoughts on the direction this is headed in :)\n    submitted by    /u/elacin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/17ac10z/announcing_typo_typed_postgresql_integration_for/",
+          "publishedOn": "2023-10-17T23:29:12.000Z",
+          "wordCount": 2615,
+          "title": "Announcing Typo - Typed PostgreSQL integration for Scala",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/179cg2k/fusing_transformations_of_strict_scala/",
           "author": null,
@@ -1828,16 +1848,6 @@
           "wordCount": 2516,
           "title": "is working in software industry so stressfull or does it depend on a company ?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/16lvoli/publish_your_scala_sbt_project_to_maven_in_5/",
-          "author": null,
-          "description": "submitted by    /u/_awwsmm  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/16lvoli/publish_your_scala_sbt_project_to_maven_in_5/",
-          "publishedOn": "2023-09-18T13:32:07.000Z",
-          "wordCount": 2538,
-          "title": "Publish your Scala sbt Project to Maven in 5 Minutes with Sonatype",
-          "imageUrl": null
         }
       ]
     },
@@ -1922,16 +1932,6 @@
           "wordCount": 3750,
           "title": "Markdown Markup Language",
           "imageUrl": "https://serokell.io/files/74/opengraph.74y5yfcf.normal-Markdown_markup_language.jpg"
-        },
-        {
-          "id": "https://serokell.io/blog/top-ai-tools-in-2023",
-          "author": "hi+yuliagavrilova@serokell.io (Yulia Gavrilova)",
-          "description": "In 2023, AI tools are incredibly versatile, encouraging content creators, designers, programmers, and even business owners to use them to achieve their professional goals. Artificial intelligence tools help businesses and individuals to automate processes, make more informed decisions, and improve efficiency.",
-          "link": "https://serokell.io/blog/top-ai-tools-in-2023",
-          "publishedOn": "2023-09-19T00:00:00.000Z",
-          "wordCount": 2251,
-          "title": "Which AI Tools to Use in 2023?",
-          "imageUrl": "https://serokell.io/files/ox/opengraph.oxb6dsdl.normal-AI_Tools.png"
         }
       ]
     },
@@ -1989,6 +1989,46 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/17awd51/warnings_for_arbitary_events_in_the_agenda/",
+          "author": null,
+          "description": "The org agenda can warn you about upcoming deadlines and scheduled items. It would be useful to optionally have warnings about other sorts of events. Birthdays are an obvious case but this should also include non-repeating events (e.g. a friend's concert). Has anyone achieved this?\n As suggested here, you can use diary-remind for this. But this is an awkard general solution, as it requires these entries to use a different syntax to normal agenda items. I'm just wondering if anyone's got a more integrated approach by now? I imagine this might use something like -7d in the timestamp, or a WARNING_PERIOD property.\n    submitted by    /u/arapede  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/17awd51/warnings_for_arbitary_events_in_the_agenda/",
+          "publishedOn": "2023-10-18T17:31:13.000Z",
+          "wordCount": 2626,
+          "title": "Warnings for arbitary events in the agenda?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/17atlij/is_there_a_way_to_recursively_unfold_a_specific/",
+          "author": null,
+          "description": "Thus far I've just been shift-tabbing to unfold the entire document, but it would be nicer if I could unfold everything in just one header. I'm using doom emacs but can't seem to find a built-in keybind and I can't seem to find a solution in the docs or from googling. Thank you!\n    submitted by    /u/big_joplinK_3x  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/17atlij/is_there_a_way_to_recursively_unfold_a_specific/",
+          "publishedOn": "2023-10-18T15:33:14.000Z",
+          "wordCount": 2581,
+          "title": "is there a way to recursively unfold a specific header",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/17af74z/tried_plantuml_for_drawing_and_it_amazing_on_org/",
+          "author": null,
+          "description": "submitted by    /u/AbstProcDo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/17af74z/tried_plantuml_for_drawing_and_it_amazing_on_org/",
+          "publishedOn": "2023-10-18T01:56:50.000Z",
+          "wordCount": null,
+          "title": "Tried plantuml for drawing and it amazing on org babel",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/17abmke/organizing_org_files_within_complex_hierarchies/",
+          "author": null,
+          "description": "First off, let me apologize if this has been covered ad nauseam in existing threads and I've missed it, but I didn't see anything that quite fit the bill. So, here's my question:\n Question\n In the context of having bigger hierarchical organizations of your files (around topic, context, purpose, whatever), how do you organize your org files specifically? \n Background\n What I have now is shown below (edited for privacy and compactness).\n ​\n  \nI have one Git repository (\"academics\") which is organized by projects and employers and topics, with .org files scattered kind of willy-nilly, the same way any other kind of file might be. This organization isn't structured around taking advantage of org-mode's inter/multi-file features at all.\n Within \"academics\" I have two directories that are (kind …",
+          "link": "https://www.reddit.com/r/orgmode/comments/17abmke/organizing_org_files_within_complex_hierarchies/",
+          "publishedOn": "2023-10-17T23:10:48.000Z",
+          "wordCount": null,
+          "title": "Organizing org files within complex hierarchies of not-just-org files?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/17a5yz1/which_orgmode_tools_could_i_use_for_my_workflow/",
           "author": null,
@@ -2398,56 +2438,6 @@
           "wordCount": 2662,
           "title": "org-set-property on special blocks",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/16mktes/clocktables_yes_but_time_intervals/",
-          "author": null,
-          "description": "I'm familiar with the ease of clock tables. Very wonderful. But does anybody know how to get similar information on exactly the time intervals worked in a nice table given a time range, tags etc,? Preferably with the project or tasks I was working on for that range. I've been learning emacs lisp for the purpose of making this as a function, but if something already exists I would like to try it out or get help making this function. I'm very new to lisp.\n - Doom Emacs user\n    submitted by    /u/Maxuvious  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/16mktes/clocktables_yes_but_time_intervals/",
-          "publishedOn": "2023-09-19T07:52:05.000Z",
-          "wordCount": 2625,
-          "title": "Clocktables, yes. But time intervals?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/16m3nxf/org_asana_sync/",
-          "author": null,
-          "description": "My job requires me to use asana, but I miss org. I figure other people must have solved this problem already, so I was wondering if anyone has a functional workflow for this already? I google around quickly but only found these two rather old repos:\n https://github.com/tmurph/todo-sync\n https://github.com/mengwong/org-asana \n If someone has an uptodate option I'd love to hear about it! thanks so much. \n ​\n    submitted by    /u/titaniumbones  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/16m3nxf/org_asana_sync/",
-          "publishedOn": "2023-09-18T18:45:53.000Z",
-          "wordCount": 2620,
-          "title": "org <--> asana sync",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/16m3jhf/using_emacs_for_just_orgroam_alone_with_gitvim/",
-          "author": null,
-          "description": "Hello all. I currently use neovim as my IDE and note taking application along with mdbook. I use markdown for notes. Prior to this when I was on windows I used obsidian for that purpose. \n I really liked the philosophy behind obsidian and bidirectional linking. However, ever since I started using Linux I feel the need of avoiding closed source applications. I've seen people use OrgMode and I believe I really like the extensibility. I also like the TODO/scheduling features of OrgMode and the Android app that syncs with it. For that I use calcurse atm. \n I want to use Emacs solely for the purpose of using OrgRoam alone. That's it. I don't want to go down another rabbit hole of configuration and tinkering (the previous ones being neovim, sway, kitty and gnome in order of recency). I need vim keybinds, a decent syntax highlighting for orgmode, git version control and a dark low contrast colouscheme. I believe OrgMode can already do what markdown does and probably better, so no worries there. \n What is the best plan of action for this? Thanks a lot for helping me out and I apologise if this sounds too stuck up/opinionated but I really cannot afford to go down that rabbit hole and I am looking for a (relatively) quick solution (preferably doable within a day). Once again, thanks a lot!\n    submitted by    /u/innocentzer0  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/16m3jhf/using_emacs_for_just_orgroam_alone_with_gitvim/",
-          "publishedOn": "2023-09-18T18:41:09.000Z",
-          "wordCount": 2794,
-          "title": "Using Emacs for JUST OrgRoam alone with git/vim keybinds. Is it possible?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/16lyoar/notifications_on_macos/",
-          "author": null,
-          "description": "Is there a way to get native notifications on MacOS? On iOS, I can get notifications through Beorg. But is there any way for MacOS to give me native notifications?\n    submitted by    /u/plazman30  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/16lyoar/notifications_on_macos/",
-          "publishedOn": "2023-09-18T15:31:13.000Z",
-          "wordCount": 2589,
-          "title": "Notifications on MacOS",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/16lqi44/unable_to_convert_latex_to_math_in_org_export_to/",
-          "author": null,
-          "description": "I am trying to export my .org to .odt file using the command C-c C-e o o but I am having this warning:\n Warning (emacs): ‘org-odt-with-latex’: LaTeX to MathML converter not available. Falling back to verbatim. \n My setup:\n  \nDebian 12 Testing (Gnome)\n emacs 29.1\n org-mode 9.7\n pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)\n kpathsea version 6.3.5\n  \nMy installation of LaTeX in Debian:\n sudo apt install texlive texlive-base texlive-latex-extra texlive-science texlive-pictures texlive-publishers texlive-xetex texlive-extra-utils \n I have also latexml and ttm installed.\n I tried converting the .tex file to .odt using pandoc using the command below but the math formulas are converted into image(?) and some symbols are not totally converted (indicated by `?` in the output).\n pandoc -f latex -t odt -o output.odt input.tex \n    submitted by    /u/TheGummyB3AR  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/16lqi44/unable_to_convert_latex_to_math_in_org_export_to/",
-          "publishedOn": "2023-09-18T09:13:08.000Z",
-          "wordCount": 2687,
-          "title": "Unable to convert latex to math in org export to odt",
-          "imageUrl": null
         }
       ]
     },
@@ -2456,6 +2446,46 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/kubedoc-20231018.1913.tar",
+          "author": null,
+          "description": "The kubedoc package has been updated to version 20231018.1913.",
+          "link": "https://melpa.org/#/kubedoc",
+          "publishedOn": "2023-10-18T19:13:00.000Z",
+          "wordCount": 105,
+          "title": "kubedoc (20231018.1913) --- Kubernetes API Documentation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ursa-ts-mode-20231018.1056.tar",
+          "author": null,
+          "description": "The ursa-ts-mode package has been updated to version 20231018.1056.",
+          "link": "https://melpa.org/#/ursa-ts-mode",
+          "publishedOn": "2023-10-18T10:56:00.000Z",
+          "wordCount": 105,
+          "title": "ursa-ts-mode (20231018.1056) --- Major mode for Ursa, using tree-sitter",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/language-id-20231018.1049.tar",
+          "author": null,
+          "description": "The language-id package has been updated to version 20231018.1049.",
+          "link": "https://melpa.org/#/language-id",
+          "publishedOn": "2023-10-18T10:49:00.000Z",
+          "wordCount": 105,
+          "title": "language-id (20231018.1049) --- Library to work with programming language identifiers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/format-all-20231018.954.tar",
+          "author": null,
+          "description": "The format-all package has been updated to version 20231018.954.",
+          "link": "https://melpa.org/#/format-all",
+          "publishedOn": "2023-10-18T09:54:00.000Z",
+          "wordCount": 105,
+          "title": "format-all (20231018.954) --- Auto-format C, C++, JS, Python, Ruby and 50 other languages",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/lem-20231017.1432.tar",
           "author": null,
@@ -2497,6 +2527,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/mistty-20231016.1730.tar",
+          "author": null,
+          "description": "The mistty package has been updated to version 20231016.1730.",
+          "link": "https://melpa.org/#/mistty",
+          "publishedOn": "2023-10-16T17:30:00.000Z",
+          "wordCount": 105,
+          "title": "mistty (20231016.1730) --- Shell/Comint alternative based on term.el",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/evil-pinyin-20231016.1558.tar",
           "author": null,
           "description": "The evil-pinyin package has been updated to version 20231016.1558.",
@@ -2527,6 +2567,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/wanderlust-20231016.1405.tar",
+          "author": null,
+          "description": "The wanderlust package has been updated to version 20231016.1405.",
+          "link": "https://melpa.org/#/wanderlust",
+          "publishedOn": "2023-10-16T14:05:00.000Z",
+          "wordCount": 105,
+          "title": "wanderlust (20231016.1405) --- Yet Another Message Interface on Emacsen",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/ros-20231016.1402.tar",
           "author": null,
           "description": "The ros package has been updated to version 20231016.1402.",
@@ -2534,6 +2584,16 @@
           "publishedOn": "2023-10-16T14:02:00.000Z",
           "wordCount": 105,
           "title": "ros (20231016.1402) --- Package to write code for ROS systems",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/verilog-ts-mode-20231016.1204.tar",
+          "author": null,
+          "description": "The verilog-ts-mode package has been updated to version 20231016.1204.",
+          "link": "https://melpa.org/#/verilog-ts-mode",
+          "publishedOn": "2023-10-16T12:04:00.000Z",
+          "wordCount": 105,
+          "title": "verilog-ts-mode (20231016.1204) --- Verilog Tree-sitter major mode",
           "imageUrl": null
         },
         {
@@ -2674,6 +2734,16 @@
           "publishedOn": "2023-10-15T13:28:00.000Z",
           "wordCount": 105,
           "title": "code-cells (20231015.1328) --- Lightweight notebooks with support for ipynb files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/llama-cpp-20231015.717.tar",
+          "author": null,
+          "description": "The llama-cpp package has been updated to version 20231015.717.",
+          "link": "https://melpa.org/#/llama-cpp",
+          "publishedOn": "2023-10-15T07:17:00.000Z",
+          "wordCount": 105,
+          "title": "llama-cpp (20231015.717) --- A client for llama-cpp server",
           "imageUrl": null
         },
         {
@@ -3337,6 +3407,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/elfeed-protocol-20231007.1535.tar",
+          "author": null,
+          "description": "The elfeed-protocol package has been updated to version 20231007.1535.",
+          "link": "https://melpa.org/#/elfeed-protocol",
+          "publishedOn": "2023-10-07T15:35:00.000Z",
+          "wordCount": 105,
+          "title": "elfeed-protocol (20231007.1535) --- Provide fever/newsblur/owncloud/ttrss protocols for elfeed",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/verilog-ext-20231007.1457.tar",
           "author": null,
           "description": "The verilog-ext package has been updated to version 20231007.1457.",
@@ -3444,6 +3524,16 @@
           "publishedOn": "2023-10-06T14:32:00.000Z",
           "wordCount": 105,
           "title": "dwim-shell-command (20231006.1432) --- Shell commands with DWIM behaviour",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/po-mode-20231006.1425.tar",
+          "author": null,
+          "description": "The po-mode package has been updated to version 20231006.1425.",
+          "link": "https://melpa.org/#/po-mode",
+          "publishedOn": "2023-10-06T14:25:00.000Z",
+          "wordCount": 105,
+          "title": "po-mode (20231006.1425) --- major mode for GNU gettext PO files",
           "imageUrl": null
         },
         {
@@ -5565,126 +5655,6 @@
           "wordCount": 105,
           "title": "metal-archives-shopping-list (20230919.851) --- Add shopping list generation support to metal-archives",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/multitran-20230919.706.tar",
-          "author": null,
-          "description": "The multitran package has been updated to version 20230919.706.",
-          "link": "https://melpa.org/#/multitran",
-          "publishedOn": "2023-09-19T07:06:00.000Z",
-          "wordCount": 105,
-          "title": "multitran (20230919.706) --- Interface to multitran",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/projectile-20230919.646.tar",
-          "author": null,
-          "description": "The projectile package has been updated to version 20230919.646.",
-          "link": "https://melpa.org/#/projectile",
-          "publishedOn": "2023-09-19T06:46:00.000Z",
-          "wordCount": 105,
-          "title": "projectile (20230919.646) --- Manage and navigate projects in Emacs easily",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pinyin-search-20230919.538.tar",
-          "author": null,
-          "description": "The pinyin-search package has been updated to version 20230919.538.",
-          "link": "https://melpa.org/#/pinyin-search",
-          "publishedOn": "2023-09-19T05:38:00.000Z",
-          "wordCount": 105,
-          "title": "pinyin-search (20230919.538) --- Search Chinese by Pinyin",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/shell-command-x-20230918.1955.tar",
-          "author": null,
-          "description": "The shell-command-x package has been updated to version 20230918.1955.",
-          "link": "https://melpa.org/#/shell-command-x",
-          "publishedOn": "2023-09-18T19:55:00.000Z",
-          "wordCount": 105,
-          "title": "shell-command-x (20230918.1955) --- Extensions for shell commands",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dart-mode-20230918.1801.tar",
-          "author": null,
-          "description": "The dart-mode package has been updated to version 20230918.1801.",
-          "link": "https://melpa.org/#/dart-mode",
-          "publishedOn": "2023-09-18T18:01:00.000Z",
-          "wordCount": 105,
-          "title": "dart-mode (20230918.1801) --- Major mode for editing Dart files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/wat-ts-mode-20230918.1757.tar",
-          "author": null,
-          "description": "The wat-ts-mode package has been updated to version 20230918.1757.",
-          "link": "https://melpa.org/#/wat-ts-mode",
-          "publishedOn": "2023-09-18T17:57:00.000Z",
-          "wordCount": 105,
-          "title": "wat-ts-mode (20230918.1757) --- Major mode for webassembly text format",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mastodon-20230918.1743.tar",
-          "author": null,
-          "description": "The mastodon package has been updated to version 20230918.1743.",
-          "link": "https://melpa.org/#/mastodon",
-          "publishedOn": "2023-09-18T17:43:00.000Z",
-          "wordCount": 105,
-          "title": "mastodon (20230918.1743) --- Client for fediverse services using the Mastodon API",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dap-mode-20230918.1618.tar",
-          "author": null,
-          "description": "The dap-mode package has been updated to version 20230918.1618.",
-          "link": "https://melpa.org/#/dap-mode",
-          "publishedOn": "2023-09-18T16:18:00.000Z",
-          "wordCount": 105,
-          "title": "dap-mode (20230918.1618) --- Debug Adapter Protocol mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/slint-mode-20230918.1141.tar",
-          "author": null,
-          "description": "The slint-mode package has been updated to version 20230918.1141.",
-          "link": "https://melpa.org/#/slint-mode",
-          "publishedOn": "2023-09-18T11:41:00.000Z",
-          "wordCount": 105,
-          "title": "slint-mode (20230918.1141) --- Major-mode for the Slint UI language",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/iota-20230918.1028.tar",
-          "author": null,
-          "description": "The iota package has been updated to version 20230918.1028.",
-          "link": "https://melpa.org/#/iota",
-          "publishedOn": "2023-09-18T10:28:00.000Z",
-          "wordCount": 105,
-          "title": "iota (20230918.1028) --- Replace marker with increasing integers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eask-20230918.1002.tar",
-          "author": null,
-          "description": "The eask package has been updated to version 20230918.1002.",
-          "link": "https://melpa.org/#/eask",
-          "publishedOn": "2023-09-18T10:02:00.000Z",
-          "wordCount": 105,
-          "title": "eask (20230918.1002) --- Core Eask APIs, for Eask CLI development",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/bibtex-completion-20230918.953.tar",
-          "author": null,
-          "description": "The bibtex-completion package has been updated to version 20230918.953.",
-          "link": "https://melpa.org/#/bibtex-completion",
-          "publishedOn": "2023-09-18T09:53:00.000Z",
-          "wordCount": 105,
-          "title": "bibtex-completion (20230918.953) --- A BibTeX backend for completion frameworks",
-          "imageUrl": null
         }
       ]
     },
@@ -5693,6 +5663,156 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17aybnd/dired_causes_pdftools_to_freeze_emacs_on_large/",
+          "author": null,
+          "description": "I use pdf-tools for reading and recently started using bookmark+ and dired+ for navigating. Unfortunately these two great packages seems to conflict. \n One of the issues I noticed was that the bookmark+ command for bookmarking a pdf location in a pdf-tools buffer didn't work; it gave an empty buffer warning. Turns out bookmark+ creator Drew Adams had already suggested a workaround which I discovered here: https://emacs.stackexchange.com/questions/72786/bookmark-plus-and-pdf-tools-pdf-view-error\n So that solved or at least patched that issue. But then I noticed that with dired+ installed and any fairly large pdf opened in pdf-tools, emacs will freeze if you attempt to do dired-jump or helm-find-files. Dired-jump without dired+ is not affected by the size of the pdf at all and just opens the underlying directory immediately. But with dired+ anything above about 1mb or so hangs it for quite a while, anything around 10mb or more just freezes it for minutes on end to the point that unless you want to go make yourself lunch and coffee, you will have to force kill emacs to keep working.\n As a noob, non-techie, non-developer, I just wanted to ask, what is the right way of asking about possibly getting this issue fixed, because I love these two packages and would love to have both in working order, but obviously don't have the coding know how to do it myself. Of course if anybody knows of a fix that's already out there for this issue, I'd love to know about that as well.\n    submitted by    /u/jcdix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17aybnd/dired_causes_pdftools_to_freeze_emacs_on_large/",
+          "publishedOn": "2023-10-18T18:55:28.000Z",
+          "wordCount": null,
+          "title": "dired+ causes pdf-tools to freeze emacs on large pdfs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17ay7o0/how_do_i_wait_for_resize_events_to_finish_in_elisp/",
+          "author": null,
+          "description": "I have a bunch of one off functions to do frame/window layout. But an issue I run into is that if I do, say  (set-frame-size (selected-frame) 255 80) (some-other-function-that-looks-at-frame-size-to-split-windows)  Half the time the resize hasn't finished by the time the split function runs, and so it splits incorrectly. I'm assuming the resize happens asynchronously, but I don't see a hook or event I can make use of to make sure I'm splitting after the fact. Is there something I'm missing? Sleeping doesn't seem to fix it because that just delays the resize as well.\n    submitted by    /u/jsadusk  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17ay7o0/how_do_i_wait_for_resize_events_to_finish_in_elisp/",
+          "publishedOn": "2023-10-18T18:50:50.000Z",
+          "wordCount": null,
+          "title": "How do I wait for resize events to finish in elisp?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17axpop/emacs_is_inconsistent_when_clicking_buttons_with/",
+          "author": null,
+          "description": "For some reason, when I click a button, be it in the customize buffer or hyperlinks in org documents, it sometimes works, and other times the whole buffer shifts to the left like a single pixel and it sets a mark (it says so in the minibuffer). The button is not clicked in those instances.\n Has someone experienced something similar? Is there a way to improve this?\n    submitted by    /u/SnooPets20  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17axpop/emacs_is_inconsistent_when_clicking_buttons_with/",
+          "publishedOn": "2023-10-18T18:29:19.000Z",
+          "wordCount": null,
+          "title": "Emacs is inconsistent when clicking buttons with the mouse",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17awvl7/emacs_android_getting_error_while_installing/",
+          "author": null,
+          "description": "I followed the process from https://sourceforge.net/projects/android-ports-for-gnu-emacs/files/ \n And whenever I try to install package, I get error 'invalid read syntax: \".\", 2, 3 '. Please help.\n    submitted by    /u/nayanld  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17awvl7/emacs_android_getting_error_while_installing/",
+          "publishedOn": "2023-10-18T17:53:31.000Z",
+          "wordCount": null,
+          "title": "Emacs Android: getting error while installing packages",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17awufl/whats_wrong_with_scrolling_in_emacs_why_is_it_so/",
+          "author": null,
+          "description": "submitted by    /u/BlackberryPerfect938  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17awufl/whats_wrong_with_scrolling_in_emacs_why_is_it_so/",
+          "publishedOn": "2023-10-18T17:52:08.000Z",
+          "wordCount": null,
+          "title": "What's wrong with scrolling in emacs, why is it so laggy (especially with touchpad)?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17awp12/help_with_functions_to_drag_and_drop_pdf_into/",
+          "author": null,
+          "description": "Drag and drop files into bibtex\n I found code here dnd images into auxtex. I am using the excellent Zotra package. I modified the dnd to auctex code to allow drag and drop pdf files into bibtex. My attempt below works. It creates a bibtex \"file\" field and fills it with the link to the file. However, it would be nice if I could add the following functionality: change the path of the uri to the directory citar-library-paths, change the file-name (excl ext) to the bib-key, move the file to the new path and then sets the file field. This will be useful when one has to manually add files to the bibtex database (in case where the Zotero translation server doesn't find the file. Any help or pointers to a package that works similarly would be appreciated.\n (defcustom BIBTex-dnd-protocol-alist '((\"^file:///\" . BIBTex-dnd-bibtex-file) (\"^file://\" . BIBTex-dnd-bibtex-file) (\"^file:\" . BIBTex-dnd-bibtex-file)) \"The functions to call when a drop in a .bib file is made.\" :type '(choice (repeat (cons (regexp) (function)))) :group 'bibtex) (define-minor-mode BIBTex-dnd-mode \"Minor mode to insert the name and full path of a dropped file into the 'file' entry of a .bib file.\" :lighter \" DND\" (when (boundp 'dnd-protocol-alist) (if BIBTex-dnd-mode (set (make-local-variable 'dnd-protocol-alist) (append BIBTex-dnd-protocol-alist 'dnd-protocol-alist)) (kill-local-variable 'dnd-protocol-alist)))) (defun BIBTex-dnd-bibtex-file (uri action) \"Insert the name and full path of a dropped file into the 'file' entry of a .bib file.\" (when (equal major-mode 'bibtex-mode) (let ((file (dnd-get-local-file-name uri t))) (when (and file (file-regular-p file)) (bibtex-set-field \"file\" file ))))) \n    submitted by    /u/Motor_Mouth_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17awp12/help_with_functions_to_drag_and_drop_pdf_into/",
+          "publishedOn": "2023-10-18T17:45:47.000Z",
+          "wordCount": null,
+          "title": "Help with functions to drag and drop pdf into bibtex file",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17au8bv/what_are_the_extensions_to_have_functional_ide_in/",
+          "author": null,
+          "description": "I have recently approached the world of Emacs, which I find great... The problem though is that I feel I'm wasting too much time trying to have it running in order to do the real work (and I've seen, there are several memes about it), so I was wondering what are the must-have extensions to quickly fire something functional (similar to vscode... Don't make me get back to that please) for development.\n By the way, I've seen several configurations scattered around the web, and something tells me that I've ended up in another anarchic realm (which is, something I both hate and love), as if that of distros -being the same except for one thing- wasn't enough.\n Of interest are: Python, Go, Bash, Clojure, Elixir, yaml (Docker, Terraform, Ansible), json, csv\n I would also appreciate the general must-have extensions, currently I'm getting lost navigating Doom Emacs and Melpa packages.\n Thank you!\n    submitted by    /u/Spatolone  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17au8bv/what_are_the_extensions_to_have_functional_ide_in/",
+          "publishedOn": "2023-10-18T16:01:12.000Z",
+          "wordCount": null,
+          "title": "What are the extensions to have functional IDE in zero time?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17aqygd/why_was_the_latest_version_of_spacemacs_released/",
+          "author": null,
+          "description": "submitted by    /u/ziplyx  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17aqygd/why_was_the_latest_version_of_spacemacs_released/",
+          "publishedOn": "2023-10-18T13:34:52.000Z",
+          "wordCount": null,
+          "title": "Why was the latest version of spacemacs released in 2018? Is the project no longer maintained?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17alspd/intelligent_paste_in_emacs/",
+          "author": null,
+          "description": "Hello,\n Anyone aware of any package/code snipped that could replicate the paste behavior of vs code? To elaborate what I mean by that. When I copy image in file manager and paste it in a markdown file in vscode it automatically converts it into relative path from the current file. Alternatively is there a way to auto complete in the `C-c C-i` mini buffer?\n    submitted by    /u/arkoinad  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17alspd/intelligent_paste_in_emacs/",
+          "publishedOn": "2023-10-18T08:35:15.000Z",
+          "wordCount": null,
+          "title": "Intelligent paste in Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17aliqg/weekly_tips_tricks_c_thread/",
+          "author": null,
+          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n See this search for previous \"Weekly Tips, Tricks, &c.\" Threads.\n Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17aliqg/weekly_tips_tricks_c_thread/",
+          "publishedOn": "2023-10-18T08:15:09.000Z",
+          "wordCount": null,
+          "title": "Weekly Tips, Tricks, &c. Thread",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17afhxu/getting_all_keybindings_working_in_the_tui/",
+          "author": null,
+          "description": "Hey guys, took me a while to figure this out since there isn't much information about this anywhere so I figured I'd leave this here for anyone else having the same issue.\n If you're a terminal aficionado and you're using Kitty, all you have to do is install kkp.el and enable it in your config and all keybindings will work properly.\n    submitted by    /u/infl3ct1on  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17afhxu/getting_all_keybindings_working_in_the_tui/",
+          "publishedOn": "2023-10-18T02:10:57.000Z",
+          "wordCount": null,
+          "title": "Getting all keybindings working in the TUI",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17af6qf/tried_plantuml_for_drawing_and_it_amazing_on_org/",
+          "author": null,
+          "description": "I am not skilled in drawing, but after trying PlantUML, I found that I can create visual representations directly using code. This has greatly aided my spatial imagination. \n Take, for example, the usecases diagram:\n @startuml :user: -right-> (Right) :user: -up-> (Up) @enduml \n https://preview.redd.it/1bx7h7sa7vub1.png?width=152&format=png&auto=webp&s=6271256f6855b88a93a62abf63569f1bc542ded5\n With the use of directional terms like \"up\" and \"right,\" you can intuitively draw the diagram as shown. it lowers barrier for non-artists - no drawing ability needed and focuses thought process on structural elements and relationships. \n When immersed in text, our spatial imagination can often become less active. For example, when trying to imagine the hierarchical structure of an article such as org-mode, our mental representation tends to be more like a bullet structure in an editor, rather than a graphical tree structure. \n PlantUML addresses the challenge of limited spatial imagination by providing an intuitive text-graph syntax. One notable feature is the Work Breakdown Structure (WBS) functionality.\n Consider the following example:\n @startwbs !theme mono Emamcs ** Texting Editing ** Note taking ** File Manager ** Literature Programming @endwbs \n https://preview.redd.it/95b2mg6w9vub1.png?width=567&format=png&auto=webp&s=2e0f00c54e4d411ec731eba7b23a46a665ed78fc\n The WBS feature in PlantUML facilitates the effortless transformation of a vertical structure into a horizontal representation. This allows me to mentally interpret and visualize the PlantUML code, automatically converting the vertical structure into a spatially-oriented horizontal structure in mind. Consequently, it effectively resolves the issue of my limited visual imagination and improving it continually.\n ​\n    submitted by    /u/AbstProcDo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17af6qf/tried_plantuml_for_drawing_and_it_amazing_on_org/",
+          "publishedOn": "2023-10-18T01:56:18.000Z",
+          "wordCount": null,
+          "title": "Tried plantuml for drawing and it amazing on org babel",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17af1q5/opening_magit_fullframe_then_restoring_windows_on/",
+          "author": null,
+          "description": "I'd like magit-status to open full frame, ie a single window. When I hit q to exit, I'd like my previous window configuration to be restored.\n What's the best way to do this? Setting the follow var causes it to open full frame, but removes all windows except for one upon exit:\n  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1) \n I can get to my previous window layout with winner-undo, but I'd like q to do the right thing in this case.\n Any thoughts?\n    submitted by    /u/unduly-noted  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17af1q5/opening_magit_fullframe_then_restoring_windows_on/",
+          "publishedOn": "2023-10-18T01:49:55.000Z",
+          "wordCount": null,
+          "title": "opening magit full-frame then restoring windows on q",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17aekjs/how_to_autofill_asyncshellcommand_with_last/",
+          "author": null,
+          "description": "Hello, I usually run the same command with async-shell-command, however I have to navigate back to the last command history to trigger my last run command, is there any way async-shell-command (and shell-command) can autofill with last run command so that I just hit enter without extra steps? (i am using doom emacs, btw)\n ​\n edit:\n answer to my own question, after a few hours of digging into 'advice', turns out it very simple, just 2 lines of code:\n (advice-add #'read-shell-command :filter-args #'(lambda(args) (list (car args) (car shell-command-history)))) \n    submitted by    /u/nqminhuit  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17aekjs/how_to_autofill_asyncshellcommand_with_last/",
+          "publishedOn": "2023-10-18T01:26:58.000Z",
+          "wordCount": null,
+          "title": "How to autofill \"async-shell-command\" with last command",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/17aealb/java_repl_driven_development_with_%F0%9D%93%94%F0%9D%93%B6%F0%9D%93%AA%F0%9D%93%AC%F0%9D%93%BC/",
+          "author": null,
+          "description": "submitted by    /u/moseswithhisbooks  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/17aealb/java_repl_driven_development_with_%F0%9D%93%94%F0%9D%93%B6%F0%9D%93%AA%F0%9D%93%AC%F0%9D%93%BC/",
+          "publishedOn": "2023-10-18T01:13:55.000Z",
+          "wordCount": null,
+          "title": "Java: REPL Driven Development with 𝓔𝓶𝓪𝓬𝓼",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/17a6p45/would_you_recommend_exwm_as_daily_driver/",
           "author": null,
@@ -8871,136 +8991,6 @@
           "publishedOn": "2023-09-19T12:13:02.000Z",
           "wordCount": 2513,
           "title": "Learning elisp built in data structures",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16ml5nj/check_syncthing_status_within_emacs/",
-          "author": null,
-          "description": "I use Syncthing to keep my files organized between my devices, and wrote this Elisp code to quickly see the sync status of my folders and devices without having to navigate to the Syncthing GUI. This code uses the Syncthing REST API and the request.el package to display the sync percentage and number/filesize of out of sync items in an Emacs buffer.\n https://github.com/bharadswami/syncthing-status.el\n I'm new to coding in Emacs lisp and not a Syncthing power user by any means, so if there are any improvements or suggestions I'm happy to hear them!\n Screenshot of syncthing status buffer\n    submitted by    /u/BBSnek  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16ml5nj/check_syncthing_status_within_emacs/",
-          "publishedOn": "2023-09-19T08:14:15.000Z",
-          "wordCount": 2610,
-          "title": "Check Syncthing status within Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16mkqbi/clocktables_yes_but_time_intervals/",
-          "author": null,
-          "description": "I'm familiar with the ease of clock tables. Very wonderful. But does anybody know how to get similar information on exactly the time intervals worked in a nice table given a time range, tags etc,? Preferably with the project or tasks I was working on for that range. I've been learning emacs lisp for the purpose of making this as a function, but if something already exists I would like to try it out or get help making this function. I'm very new to lisp.\n    submitted by    /u/Maxuvious  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16mkqbi/clocktables_yes_but_time_intervals/",
-          "publishedOn": "2023-09-19T07:46:29.000Z",
-          "wordCount": 2599,
-          "title": "Clocktables, yes. But time intervals?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16mbbzy/a_quick_elisp_video_before_i_go_on_vacation/",
-          "author": null,
-          "description": "Next learning elisp video - a quick review of some data structures: \n https://cestlaz.github.io/post/learning-elisp-10/\n    submitted by    /u/zamansky  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16mbbzy/a_quick_elisp_video_before_i_go_on_vacation/",
-          "publishedOn": "2023-09-18T23:45:55.000Z",
-          "wordCount": 2530,
-          "title": "A quick elisp video before I go on vacation",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16mafan/a_lot_of_warnings_after_updating_emacs_from_29_to/",
-          "author": null,
-          "description": "I installed emacs 30 and now when I open my files, this buffer with huge amounts of warning appears. Warnings are about different packages (lsp, projective, lsp-python, flycheck, etc.). What should I do about these warnings? Should I be worried?\n    submitted by    /u/hands0m3dude  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16mafan/a_lot_of_warnings_after_updating_emacs_from_29_to/",
-          "publishedOn": "2023-09-18T23:07:08.000Z",
-          "wordCount": 2561,
-          "title": "A lot of warnings after updating emacs from 29 to 30",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16m8jha/how_do_you_declutter_your_emacsd_folder/",
-          "author": null,
-          "description": "Per the title, what is your strategy for decluttering your .emacs.d folder?\n I generally like to follow the XDG Base Directory Spec because I like to separate the code that configures the program (emacs) from any installed packages, language-servers, etc. \n I have hacked together a solution to force emacs to use .cache/emacs/ where appropriate, but I'm wondering if that is worth the hassle. It seems like many packages want to default to using user-emacs-directory when they need to add files, which I agree is a sensible default, but I find it a bit cluttered when I want to edit my config.\n Curious what others think / do in their configs\n    submitted by    /u/rigwamt  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16m8jha/how_do_you_declutter_your_emacsd_folder/",
-          "publishedOn": "2023-09-18T21:51:50.000Z",
-          "wordCount": 2626,
-          "title": "How do you declutter your emacs.d folder?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16m5wg1/guix_channel_with_latest_emacs_packages_from/",
-          "author": null,
-          "description": "I'm frustruted updating Emacs manually on my Guix, so I've automated this with Codeberg CI. It's available at https://codeberg.org/akib/guix-channel-emacs-master, and it's updated at every midnight (0:00 UTC time). Now updating Emacs is just a guix pull ; guix upgrade for me (and anyone else). So I just thought to share it so that others can benefit too.\n The channel provides four packages:\n  \nemacs-master: Nothing special.\n emacs-master-tree-sitter: Tree-Sitter!\n emacs-master-pgtk: PGTK and Tree-Sitter.\n emacs-master-pgtk-xwidgets: PGTK, Xwidgets and Tree-Sitter.\n  \n   submitted by    /u/AkibAzmain  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16m5wg1/guix_channel_with_latest_emacs_packages_from/",
-          "publishedOn": "2023-09-18T20:10:19.000Z",
-          "wordCount": 2619,
-          "title": "Guix channel with latest Emacs packages from master branch",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16m44cq/help_request_mingw64_emacs_29_too_many_open_pipes/",
-          "author": null,
-          "description": "Hi all\n So I have emacs on my work laptop which unfortunately is windows 10. Thanks to some advice on here I got and compiled the mingw64 version, which is generally working well for me. \n However when I run git, treesitter (mostly python and yaml, with some md) after a while I get an error about too many open pipes. \n Also, if I compile it with aot native compilation it segfaults when I open any file under git, fine without native compiler.\n Is this a known issue? Is there a fix I need to do in mingw64?\n Thanks!\n    submitted by    /u/dacydergoth  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16m44cq/help_request_mingw64_emacs_29_too_many_open_pipes/",
-          "publishedOn": "2023-09-18T19:02:45.000Z",
-          "wordCount": 2640,
-          "title": "Help request: mingw64 EMACS 29 \"too many open pipes\"",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16m2ny0/how_to_activate_slashedzero_in_ibm_plex_mono_font/",
-          "author": null,
-          "description": "IBM Plex Mono font uses dotted-zero as default for \"0\" (zero) character, but the installed font contains the slashed-zero glyph. Is there a way to persuade Emacs (on macOS) to use/activate the slashed-zero instead of dotted-zero?\n    submitted by    /u/celibidaque  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16m2ny0/how_to_activate_slashedzero_in_ibm_plex_mono_font/",
-          "publishedOn": "2023-09-18T18:07:28.000Z",
-          "wordCount": 2579,
-          "title": "How to activate slashed-zero in IBM Plex Mono font?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16m2ivs/emacs_error_loading_autoloads/",
-          "author": null,
-          "description": "​\n The Problem:\n Emacs refuses to autoload the init.el file and apply the config therein.\n My Emacs Init File Contents:\n ```lisp ;; Load Init (load \"/Users/d369/.emacs.d/init.el\")\n ;; Load Theme (load-theme 'eNinja)\n ;; Encoding (set-language-environment \"UTF-8\")\n ;; Panel Padding (set-fringe-mode 12)\n ;; Font (set-face-attribute 'default nil :font \"MesloLGS NF\" :height 150) \n ;; Scroll Bar (scroll-bar-mode -1)\n ;; Make ESC quit prompts (global-set-key (kbd \"<escape>\") 'keyboard-escape-quit)\n ;; Require, Set, & Initialize Packages (require 'package)\n (setq package-archives '((\"melpa\" . \"https://melpa.org/packages/\") (\"org\" . \"https://orgmode.org/elpa/\") (\"elpa\" . \"https://elpa.gnu.org/packages/\")))\n (package-initialize) (unless package-archive-contents (package-refresh-contents))\n ;; Lexical Binding lexical-binding: t\n ;; Require Compat Package-Requires: ((emacs \"27.1\") (compat \"29.1.4.2\")) Code: (require 'compat)\n ;; Initialize use-package (unless (package-installed-p 'use-package) (package-install 'use-package)) ```\n The Error:\n Error loading autoloads: (file-missing Cannot open load file No such file or directory ~/.emacs.d/elpa/compat-29.1.4.2/compat-autoloads)\n Additional Info:\n The issue seems to be that there is no 'compat-autoloads' file to be found in the compat-29.1.4.2 directory, which is the latest version downloaded directly from elpa. I haven't been able to locate any information on this.\n    submitted by    /u/xynoculydema  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16m2ivs/emacs_error_loading_autoloads/",
-          "publishedOn": "2023-09-18T18:02:08.000Z",
-          "wordCount": 2700,
-          "title": "Emacs – Error loading autoloads",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16lyneo/do_you_know_that_warm_fuzzy_feeling_one_gets_from/",
-          "author": null,
-          "description": "My credit card expired. I had to update new information to Github. While being logged in, I noticed that there are currently 390 persons sponsoring Tarsius, the maintainer of Magit.\n Can we make it 400?\n Just today at work I did few small commits, then later on tweaked message from one commit, added few lines of code to the other. Searches to the log, see diffstats, patch contents and all... simple rebase there, small diff there... push to the upstream, all without sweat. Magit makes work feel like play.\n    submitted by    /u/Heikkiket  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16lyneo/do_you_know_that_warm_fuzzy_feeling_one_gets_from/",
-          "publishedOn": "2023-09-18T15:30:21.000Z",
-          "wordCount": 2634,
-          "title": "Do you know that warm fuzzy feeling one gets from using Magit?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16lwb0w/emacs_rust_lsp_or_eglot_formatting_error/",
-          "author": null,
-          "description": "Whenever I try to run lsp-format I get the following error\n  lsp-request: Failed to spawn \"rustfmt\" \"--edition\" \"2021\" \n I don't know why it calls rustfmt with the \"--edition 2021\" arguments.\n The command rustic-format in rustic-mode runs just \"rustfmt\" with no issues.\n I already had rustfmt install via rustup.\n I wanted to switch from rustic-mode to rust-ts-mode but this is forcing me to stay with rustic-mode for now.\n Any suggestions?\n    submitted by    /u/omarbassam88  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16lwb0w/emacs_rust_lsp_or_eglot_formatting_error/",
-          "publishedOn": "2023-09-18T13:58:09.000Z",
-          "wordCount": 2610,
-          "title": "Emacs Rust + LSP or EGLOT formatting error",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16lsk7m/rendering_emacs_in_opengl_so_i_can_code_my_game/",
-          "author": null,
-          "description": "submitted by    /u/collinalexbell  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16lsk7m/rendering_emacs_in_opengl_so_i_can_code_my_game/",
-          "publishedOn": "2023-09-18T11:08:45.000Z",
-          "wordCount": 2544,
-          "title": "Rendering emacs in OpenGL so I can code my game, in my game.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/16lrusl/how_to_fix_error_loading_autoloads/",
-          "author": null,
-          "description": "I have ignored them for now, but they keep piling up and I thought about how to tackle removing them.\n The warnings stem from (package-initialize) in my init.el. \n I added a message to package--activate-all and those packages generate it. Any way to fix this? I have like 45 of those warnings.\n For instance, below block-nav and ace-window generate the errors. Updating to the latest package version also does not help.\n brf Error loading autoloads: (invalid-read-syntax . 29 56) block-nav ... adaptive-wrap Error loading autoloads: (invalid-read-syntax . 20 56) ace-window \n    submitted by    /u/juicecelery  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/16lrusl/how_to_fix_error_loading_autoloads/",
-          "publishedOn": "2023-09-18T10:31:24.000Z",
-          "wordCount": 2634,
-          "title": "How to fix \"Error loading autoloads invalid-read-syntax .\" or invalid-read-syntax # warnings?",
           "imageUrl": null
         }
       ]
