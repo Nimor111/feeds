@@ -44,16 +44,6 @@
           "wordCount": 663,
           "title": "Issue 405",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/404.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nA look under GHC’s hood: desugaring linear types by Arnaud Spiwack\nI thought I’d take the opportunity to discuss some of GHC’s inner workings and how they explain some of the features of linear types in Haskell. We’ll be discussing a frequently asked question: why can’t Ur be a newtype? And some new questions such as: why must linear let-bindings have a !?\nGHC Steering Committee Retrospective by Joachim Breitner\nAfter seven years of service as member and secretary on the GHC Steering Committee, I have resigned from that role. So this is a good time to look back and retrace the formation …",
-          "link": "https://haskellweekly.news/issue/404.html",
-          "publishedOn": "2024-01-25T12:00:00.000Z",
-          "wordCount": 665,
-          "title": "Issue 404",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,36 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1az3o0o/is_there_a_way_to_bind_variable_while/",
+          "author": null,
+          "description": "Hi,\n This comes up all the time when I try to write some haskell but I don't know if there's a better way to handle it, it happens most often when I am using new type\n Suppose I have a new type\n  newtype Matrix = Matrix [[Int]] \n and in function pattern matching I am destructuring it:  invertMatrix :: Matrix -> Maybe Matrix invertMatrix (Matrix xss) = ................... \n but then in the function body I might have to use some other util functions that take the newtype Matrix instead of the internal representation. In this example I probably would need  determinant :: Matrix -> Float \n This often means I am rewrapping xss in Matrix just to pass it to determinant, which is cumbersome and I don't know if that would cause performance issue?\n Is there a way in the function pattern matching to get xss and an additional variable to bind the whole Matrix xss so I can pass it around? I believe in rust for example they have a way to do that by using @ like\n  match x { Constructor(inner) @ whole => .... } \n    submitted by    /u/bxsx0074  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1az3o0o/is_there_a_way_to_bind_variable_while/",
+          "publishedOn": "2024-02-24T19:55:50.000Z",
+          "wordCount": null,
+          "title": "Is there a way to bind variable while destructuring it during pattern matching?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1az3e75/using_rust_along_with_haskell/",
+          "author": null,
+          "description": "I'm a beginner in programing.\n Currently, I'm reading a Haskell (my first language) book and pretend to make a project with the intent of learning by doing things in practice; the project is: Design a game engine, I know there's a big potential of learning with such project, because it involves a lot of things (I also would like to make this engine \"a real thing\", if things go the right way)\n As I have read, people don't recommend using primarily Haskell for such, and I can't tell a lot of the reasons, because I'm a beginner; the reasons I'm aware of are:\n 1 - Worse performance compared to languages like C/C++/Rust (which is relevant to games).\n 2 - Haskell is not mainstream, so there's not much development being done with regards to games.\n I'm not sure if in someway it becomes \"bad\" to do \"game engine things\" with a functional language for some strange reason, I believe you guys might have the property to know about it.\n I pretend to learn Rust after getting a good understanding of Haskell (although I believe I might need to learn python first, considering the demand nowadays).\n Regarding the game engine project, I'd like to know if it would be a good idea to use Rust as the main language while Haskell for a lot of parts of it, or would it be a terrible thing to do? (losing a lot of performance or any other problem associated with this association of Rust + Haskell).\n Thanks to everyone. \n    submitted by    /u/to_ask_questions  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1az3e75/using_rust_along_with_haskell/",
+          "publishedOn": "2024-02-24T19:44:04.000Z",
+          "wordCount": null,
+          "title": "Using Rust along with Haskell.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ayejna/book_for_someone_with_a_background_in_c/",
+          "author": null,
+          "description": "I don't have any experience doing any functional programming.\n    submitted by    /u/24deadman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ayejna/book_for_someone_with_a_background_in_c/",
+          "publishedOn": "2024-02-23T23:00:32.000Z",
+          "wordCount": null,
+          "title": "Book for someone with a background in C++?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/1ay7mba/question_about_type_annotation_of_haskell/",
           "author": null,
@@ -1031,56 +1051,6 @@
           "wordCount": null,
           "title": "Nested field update",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1abcuhv/question_possibly_regarding_impredicative_types/",
-          "author": null,
-          "description": "edit: currently developingon ghc 9.4.8 \n Right now, I'm in a situation (context in the end), in which I believe I need to store a function with its context in an MVar , but I can't seem to wrap my head around on how this should work.\n I came up with a simplified example of What i would like to achieve:\n {-# LANGUAGE TypeApplications #-} {-# LANGUAGE ScopedTypeVariables #-} {-# LANGUAGE ImpredicativeTypes #-} example :: IO () example = do let f :: forall a. Show a => IO (a -> String) f = pure show g :: IO (forall a. Show a => a -> String) g = pure show f' <- f @Int -- needs type application g' <- g -- doesnt compile pure () \n I understand why f needs to be called with a type annotation, after all f :: forall a. Ctx a => function means that if i want to get function, I must first apply a typ…",
-          "link": "https://www.reddit.com/r/haskell/comments/1abcuhv/question_possibly_regarding_impredicative_types/",
-          "publishedOn": "2024-01-26T07:30:33.000Z",
-          "wordCount": null,
-          "title": "Question possibly regarding Impredicative types?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ab7zrm/ghcitui_a_tui_for_ghci_that_mimics_pudb_and_cgdb/",
-          "author": null,
-          "description": "submitted by    /u/CrystalLord  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ab7zrm/ghcitui_a_tui_for_ghci_that_mimics_pudb_and_cgdb/",
-          "publishedOn": "2024-01-26T02:54:47.000Z",
-          "wordCount": null,
-          "title": "GHCiTUI: A TUI for GHCi that Mimics pudb and cgdb Is Now Publicly Available",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/19fgwgn/a_sneak_peek_at_our_haskell_training_course/",
-          "author": null,
-          "description": "submitted by    /u/jleitgeb  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/19fgwgn/a_sneak_peek_at_our_haskell_training_course/",
-          "publishedOn": "2024-01-25T19:01:24.000Z",
-          "wordCount": null,
-          "title": "A Sneak Peek at our Haskell Training Course",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/19fdcx1/welltyped_eras_profiling_for_ghc/",
-          "author": null,
-          "description": "submitted by    /u/adamgundry  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/19fdcx1/welltyped_eras_profiling_for_ghc/",
-          "publishedOn": "2024-01-25T16:32:56.000Z",
-          "wordCount": null,
-          "title": "[Well-Typed] Eras profiling for GHC",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/19f6fbr/viercc_derive_applicative_monad_polynomially/",
-          "author": null,
-          "description": "/u/viercc just posted this fantastic code and I had to share. It lets you 1. generically1 define a polynomial interface to your type and 2. use it to derive Applicative and Monad:\n  \nhttps://github.com/viercc/polynomial-functor/tree/2e38df135d48ac820cb86c390c7660c4c3deff3f/finite-polynomial\n  \nThis is what it looks like:\n data Example a = Ex (Maybe (Maybe a)) (Maybe (Maybe a)) deriving stock (Show, Eq, Functor, Foldable, Traversable, Generic1) deriving PolynomialFunctor via Generically1 Example deriving Applicative via ViaPolynomial Zippy Example data Example' a = A a | B a a | C a | D a a a deriving stock (Show, Eq, Functor, Foldable, Traversable, Generic1) deriving PolynomialFunctor via Generically1 Example' deriving (Applicative, Monad) via ViaPolynomial Aligney Example' \n    submitted by    /u/Iceland_jack  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/19f6fbr/viercc_derive_applicative_monad_polynomially/",
-          "publishedOn": "2024-01-25T10:34:52.000Z",
-          "wordCount": null,
-          "title": "viercc: derive (Applicative, Monad) \"polynomially\"",
-          "imageUrl": null
         }
       ]
     },
@@ -1089,6 +1059,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ayqcx0/future_of_scala_libraries/",
+          "author": null,
+          "description": "Hey folks, \n I've been working professionally in Scala for the last year and a half and it was nothing but unrest.\n First, the Scala 3 migration started this painful event that fragments the already fragmented multi versions hassle that everyone needs to go through 2.12 / 2.13, and now 3. Have to mention, this is not only dependent on our codebase. For example, Databricks is still on 2.12, on the other hand, some new libraries are Scala 3 only, or Scala 2 support was deprecated.\n Then Akka became a non-open source, and we had to find a solution and picked the Typelevel ecosystem.\n There was another \"shock\" to the ZIO ecosystem when their leader left the project. Fortunately for us, we haven't invested in ZIO not a single hour, but this is another negative event in Scala ecosystem.\n After working for half a year with Typelevel, we wrote some services and a few internal libraries. It wasn't bad, maybe not as simple as Akka, but it worked as expected. However, it was a huge struggle for half of the team to understand this code and for some to even understand the concept.\n Then Pekko came out and we had another meeting, where 100% of the team voted against using Typelevel again.\n So, we are \"officially\" using Pekko for all our new services, which is basically the old Akka in maintenance mode. I don't see how this stack has any future.\n Now, it looks like a few experimental libraries evolve around virtual threads. My bet this is the future of Scala since they are simple yet powerful as Effect systems.\n But I hear more and more people are saying - until these are ready, there will be \"no Scala\", since the language in a rapid decline (sad, but true).\n Sharing this because I'm tired of the constant unrest in Scala, and curious what strategy your team has regarding this.\n Thanks\n    submitted by    /u/Confident_Cupcake861  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ayqcx0/future_of_scala_libraries/",
+          "publishedOn": "2024-02-24T09:16:48.000Z",
+          "wordCount": null,
+          "title": "Future of Scala libraries",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1aypivw/rescue_the_scalaexchange_videos_from_skillsmatter/",
+          "author": null,
+          "description": "It seems that SkillsMatter is no more (again), and the videos were completely removed from the internet. The Haskell Foundation, apparently, were able to secure the HaskellExchange videos from them, and are now working towards making them available online on youtube (https://discourse.haskell.org/t/haskell-video-archive-call-for-volunteers/8863)\n Can the Scala Center reach out to the SkillsMatter management and do the same? It would be a terrible shame to lose those amazing talks.\n    submitted by    /u/hmemcpy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1aypivw/rescue_the_scalaexchange_videos_from_skillsmatter/",
+          "publishedOn": "2024-02-24T08:21:26.000Z",
+          "wordCount": null,
+          "title": "Rescue the ScalaExchange videos from SkillsMatter.",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1ay601l/scammers_running_site_similar_to_scalalangorg/",
           "author": null,
@@ -1838,26 +1828,6 @@
           "wordCount": null,
           "title": "Full-stack Scala 3 with the ZIO stack workshop with Daniel Ciocirlan during the Scalar Conference",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/19fhg2y/organizing_scala_project/",
-          "author": null,
-          "description": "Hi guys it’s me again 🤡, i’m super new to Scala and i’ve been building a Scala project using the IntelliJ idea IDE with sbt, trying to be all functional programming about it.\n Currently I have all my case classes and functions, and main in an object file, which is src>main>scala>example>main.scala\n I put the CSVs i’m working with under src>main>resources\n How do i organize my code? Am i supposed to put my case classes functions in another object file? Would be great to know your thoughts on this\n    submitted by    /u/demiseofgodslove  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/19fhg2y/organizing_scala_project/",
-          "publishedOn": "2024-01-25T19:24:08.000Z",
-          "wordCount": null,
-          "title": "Organizing Scala Project",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/19f5txs/how_to_write_a_fullstack_scala_application_with/",
-          "author": null,
-          "description": "submitted by    /u/danielciocirlan  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/19f5txs/how_to_write_a_fullstack_scala_application_with/",
-          "publishedOn": "2024-01-25T09:52:08.000Z",
-          "wordCount": null,
-          "title": "How to Write a Full-Stack Scala Application with the Typelevel Stack",
-          "imageUrl": null
         }
       ]
     },
@@ -1959,6 +1929,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1ayfipx/is_there_a_way_to_get_the_roam_buffer_to_show/",
+          "author": null,
+          "description": "(edit, using org-roam, obviously... should have mentioned that in the title...)\n I am trying to extend the functionality of the roam buffer so that it not only updates to show backlinks for the node at point, but also so if point wanders over a link, it will show backlinks for the linked node, rather than the node I currently have open. I tried advising org-roam-node-at-point like this (code generated with chatgpt's help, apologies if anything is wrong; my elisp-fu is weak):\n ​\n (defun my-org-roam-node-at-point (&optional assert) \"Return the Org-roam node at point if it exists, or the node corresponding to the link at point.\" (interactive) (let ((id (plist-get (link-hint--get-link-at-point) :args))) (if (and id (string-prefix-p \"id:\" id)) (progn (print (substring id 3)) (org-roam-node-from-id (substring id 3))) (org-roam-node-at-point )))) (advice-add 'org-roam-node-at-point :override #'my-org-roam-node-at-point) \n This doesn't work, but it does succeed at breaking the roam-buffer, so I suspect an approach sort of like this could work, but I'm in over my depth. Anyone have any ideas, insight, or a snippet that does this already?\n ​\n Thanks!\n    submitted by    /u/bradmont  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1ayfipx/is_there_a_way_to_get_the_roam_buffer_to_show/",
+          "publishedOn": "2024-02-23T23:40:57.000Z",
+          "wordCount": null,
+          "title": "Is there a way to get the roam buffer to show backlinks for a node when point hits a link to it?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1aydhp1/org_agenda_issue_reoccuring_tasks/",
+          "author": null,
+          "description": "Hello, so I'm currently in uni trying my best to manage my time and I've found org-agenda very useful for that cuz of how simple it is. I am kinda new to doom emacs and org, but I've learnt how to set reoccuring tasks (refer to ss attached). However, only recently this issue has occured where tasks of previous days e.g. MATH1061 LEC1, scheduled for a monday, is at the bottom of Friday? Maybe i've accidently turned on a setting or there's a syntax error. Thank you!\n ​\n https://preview.redd.it/ae8knv8ytfkc1.png?width=1216&format=png&auto=webp&s=d626f4e316018bae59dc7962f3c5d51c291b2c43\n    submitted by    /u/elliefeng  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1aydhp1/org_agenda_issue_reoccuring_tasks/",
+          "publishedOn": "2024-02-23T22:17:52.000Z",
+          "wordCount": null,
+          "title": "Org Agenda Issue- Reoccuring Tasks",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1ay4glu/attach_file_without_a_mouse/",
           "author": null,
@@ -2416,6 +2406,96 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/fussy-20240224.1641.tar",
+          "author": null,
+          "description": "The fussy package has been updated to version 20240224.1641.",
+          "link": "https://melpa.org/#/fussy",
+          "publishedOn": "2024-02-24T16:41:00.000Z",
+          "wordCount": 105,
+          "title": "fussy (20240224.1641) --- Fuzzy completion style using `flx'",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dired-sidebar-20240224.1640.tar",
+          "author": null,
+          "description": "The dired-sidebar package has been updated to version 20240224.1640.",
+          "link": "https://melpa.org/#/dired-sidebar",
+          "publishedOn": "2024-02-24T16:40:00.000Z",
+          "wordCount": 105,
+          "title": "dired-sidebar (20240224.1640) --- Tree browser leveraging dired",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-modern-20240224.1614.tar",
+          "author": null,
+          "description": "The org-modern package has been updated to version 20240224.1614.",
+          "link": "https://melpa.org/#/org-modern",
+          "publishedOn": "2024-02-24T16:14:00.000Z",
+          "wordCount": 105,
+          "title": "org-modern (20240224.1614) --- Modern looks for Org",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/eslintd-fix-20240224.1517.tar",
+          "author": null,
+          "description": "The eslintd-fix package has been updated to version 20240224.1517.",
+          "link": "https://melpa.org/#/eslintd-fix",
+          "publishedOn": "2024-02-24T15:17:00.000Z",
+          "wordCount": 105,
+          "title": "eslintd-fix (20240224.1517) --- use eslint_d to automatically fix js files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orgtbl-join-20240224.749.tar",
+          "author": null,
+          "description": "The orgtbl-join package has been updated to version 20240224.749.",
+          "link": "https://melpa.org/#/orgtbl-join",
+          "publishedOn": "2024-02-24T07:49:00.000Z",
+          "wordCount": 105,
+          "title": "orgtbl-join (20240224.749) --- Join columns from another Org Mode table",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orgtbl-aggregate-20240224.729.tar",
+          "author": null,
+          "description": "The orgtbl-aggregate package has been updated to version 20240224.729.",
+          "link": "https://melpa.org/#/orgtbl-aggregate",
+          "publishedOn": "2024-02-24T07:29:00.000Z",
+          "wordCount": 105,
+          "title": "orgtbl-aggregate (20240224.729) --- Create an aggregated Org table from another one",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/justl-20240224.428.tar",
+          "author": null,
+          "description": "The justl package has been updated to version 20240224.428.",
+          "link": "https://melpa.org/#/justl",
+          "publishedOn": "2024-02-24T04:28:00.000Z",
+          "wordCount": 105,
+          "title": "justl (20240224.428) --- Major mode for driving just files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/replace-from-region-20240224.52.tar",
+          "author": null,
+          "description": "The replace-from-region package has been updated to version 20240224.52.",
+          "link": "https://melpa.org/#/replace-from-region",
+          "publishedOn": "2024-02-24T00:52:00.000Z",
+          "wordCount": 105,
+          "title": "replace-from-region (20240224.52) --- Replace commands whose query is from region",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/cframe-20240223.2335.tar",
+          "author": null,
+          "description": "The cframe package has been updated to version 20240223.2335.",
+          "link": "https://melpa.org/#/cframe",
+          "publishedOn": "2024-02-23T23:35:00.000Z",
+          "wordCount": 105,
+          "title": "cframe (20240223.2335) --- Customize a frame and fast switch size and positions",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/difftastic-20240223.1630.tar",
           "author": null,
@@ -5625,66 +5705,6 @@
           "wordCount": 105,
           "title": "lab (20240126.841) --- An interface for GitLab",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/transwin-20240126.720.tar",
-          "author": null,
-          "description": "The transwin package has been updated to version 20240126.720.",
-          "link": "https://melpa.org/#/transwin",
-          "publishedOn": "2024-01-26T07:20:00.000Z",
-          "wordCount": 105,
-          "title": "transwin (20240126.720) --- Make window/frame transparent",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/treemacs-20240126.642.tar",
-          "author": null,
-          "description": "The treemacs package has been updated to version 20240126.642.",
-          "link": "https://melpa.org/#/treemacs",
-          "publishedOn": "2024-01-26T06:42:00.000Z",
-          "wordCount": 105,
-          "title": "treemacs (20240126.642) --- A tree style file explorer package",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/gap-mode-20240126.359.tar",
-          "author": null,
-          "description": "The gap-mode package has been updated to version 20240126.359.",
-          "link": "https://melpa.org/#/gap-mode",
-          "publishedOn": "2024-01-26T03:59:00.000Z",
-          "wordCount": 105,
-          "title": "gap-mode (20240126.359) --- Major mode for editing files in the GAP programming language.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/kaolin-themes-20240125.1805.tar",
-          "author": null,
-          "description": "The kaolin-themes package has been updated to version 20240125.1805.",
-          "link": "https://melpa.org/#/kaolin-themes",
-          "publishedOn": "2024-01-25T18:05:00.000Z",
-          "wordCount": 105,
-          "title": "kaolin-themes (20240125.1805) --- A set of eye pleasing themes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/morlock-20240125.1741.tar",
-          "author": null,
-          "description": "The morlock package has been updated to version 20240125.1741.",
-          "link": "https://melpa.org/#/morlock",
-          "publishedOn": "2024-01-25T17:41:00.000Z",
-          "wordCount": 105,
-          "title": "morlock (20240125.1741) --- More font-lock keywords for elisp",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/closql-20240125.1741.tar",
-          "author": null,
-          "description": "The closql package has been updated to version 20240125.1741.",
-          "link": "https://melpa.org/#/closql",
-          "publishedOn": "2024-01-25T17:41:00.000Z",
-          "wordCount": 105,
-          "title": "closql (20240125.1741) --- Store EIEIO objects using EmacSQL",
-          "imageUrl": null
         }
       ]
     },
@@ -5693,6 +5713,116 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1az1l50/how_to_play_media_on_emacs_linux_and_android/",
+          "author": null,
+          "description": "Hi all,\n I have made a guide on how to play media (local and remote) using Emacs and MPV so it works with unified config across both Linux and Android.\n To install and configure the GUI Emacs app on Android and see my unified configuration file you can check out my dotfiles on danijelcamdzic/dotemacs and also read about it in one of my previous posts - Sharing my Emacs workflow and dotfiles\n Up until now, I wasn't able to get a working config which would allow me to play media through the MPV commands in my Android Emacs but I have figured it out and would like to share the steps for anyone who, like me, wishes to quickly check out their knowledge base, movie collection, song collection etc. in Emacs and quickly play them on your phone.\n The steps are described in my README - MPV section and this is how it looks like when I try to play a video on my Emacs Android:\n Android Emacs with MPV\n ​\n    submitted by    /u/X-Sailor  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1az1l50/how_to_play_media_on_emacs_linux_and_android/",
+          "publishedOn": "2024-02-24T18:29:57.000Z",
+          "wordCount": null,
+          "title": "How to play media on Emacs (Linux and Android) using MPV",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1az0rjg/fix_a_gap_in_my_elisp_understanding/",
+          "author": null,
+          "description": "I need some help resolving a gap in my understanding of elisp. I have a hard time understanding what kinds of arguments a function expects. Here is an example with define-key, but happens to me with lots of functions. Basically, I can never tell if an argument needs to be quoted. Correct usage of define-key:\n  (define-key gnus-article-map (kbd \"i\") #'gnus-article-show-images) \n I frequently make the error where I think I am supposed to quote the keymap. I have to look up some old code to see, oh yeah, you don't quote the keymap.\n Then when I use use-package, I would write\n (use-package gnus :bind (:map gnus-article-map (\"i\" . gnus-article-show-images))) \n Now the function gnus-article-show-images is unquoted, I guess, because this is a macro? The structure of the arg list to :bind is unclear from the function documentation, so I just have to look up another example where I used :bind to figure out the format. Anther example, in general-define-key both keymap and function are quoted. Why?\n What am I missing so that I can better understand whether args need to be quoted or not?\n    submitted by    /u/Ok-Estate-5226  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1az0rjg/fix_a_gap_in_my_elisp_understanding/",
+          "publishedOn": "2024-02-24T17:56:09.000Z",
+          "wordCount": null,
+          "title": "Fix a gap in my elisp understanding",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1az0iab/doom_emacs_eww_not_spiting_vertically/",
+          "author": null,
+          "description": "Hi, new to emacs world, been a vim user for years, wanted to try doom emacs, i was trying to read a wiki page using eww, and for some reason, it always spawns the window bottom, even if i tried to split that vertically, using c-w v. is there something I'm missing? or how do i solve this. I like to keep textbooks or wiki pages to the right side of code window. Thanks,\n    submitted by    /u/Ok-Minimum-453  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1az0iab/doom_emacs_eww_not_spiting_vertically/",
+          "publishedOn": "2024-02-24T17:45:49.000Z",
+          "wordCount": null,
+          "title": "DOOM EMACS EWW not spiting vertically",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ayxyz8/nativelispfileinconsistent_error_with_yesornop/",
+          "author": null,
+          "description": "I hate to use this sub to look for help but I am at the end of the rope.\n Since yesterday the execution of (fset 'yes-or-no-p 'y-or-n-p) leads to an error with the following backtrace\n Debugger entered--Lisp error: (native-lisp-file-inconsistent \"/home/xxxxxxx/.emacs.d/eln-cache/29.2-f682e022/subr...\") native-elisp-load(\"/home/xxxxxxx/.emacs.d/eln-cache/29.2-f682e022/subr...\") comp--native-compile((lambda (arg20 &optional) (let ((f #'yes-or-no-p)) (funcall f arg20))) nil \"/home/xxxxxxx/.emacs.d/eln-cache/29.2-f682e022/subr--trampoline-7965732d6f722d6e6f2d70_yes_or_no_p_0.eln\") comp-trampoline-compile(yes-or-no-p) comp-subr-trampoline-install(yes-or-no-p) fset(yes-or-no-p y-or-n-p) (progn (fset 'yes-or-no-p 'y-or-n-p)) elisp--eval-last-sexp(t) eval-last-sexp(t) eval-print-last-sexp(nil) fun…",
+          "link": "https://www.reddit.com/r/emacs/comments/1ayxyz8/nativelispfileinconsistent_error_with_yesornop/",
+          "publishedOn": "2024-02-24T16:02:24.000Z",
+          "wordCount": null,
+          "title": "native-lisp-file-inconsistent error with yes-or-no-p function",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ayxhk6/mumu4e_release_112/",
+          "author": null,
+          "description": "Hi all!\n As you may know, mu4e is an email client for emacs. It consists of a server program that scans your email messages and an emacs program talking to this server program, as well as a number of command-line utilities.\n I'm happy to announce mu 1.12, a new stable release which has been in development for ca. 1 year since the 1.10.\n Some highlights:\n  \nSignificant speedups in both mu and mu4e \n Reworked message composition, closer to its Gnus origins which adds many of its features\n Overhauled the query parser; squashing a number of bugs/limitations, incl. dealing with CJK messages \n Experimental folding of message threads \n Better and faster indexing of HTML messages \n Experimental search by (human) language wit CLD2\n  \nFor all the news: https://github.com/djcb/mu/blob/master/NEWS.org and grab the code here: https://github.com/djcb/mu/releases/tag/v1.12.0\n    submitted by    /u/djcb  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ayxhk6/mumu4e_release_112/",
+          "publishedOn": "2024-02-24T15:41:57.000Z",
+          "wordCount": null,
+          "title": "mu/mu4e release 1.12",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ayra55/eglot_omnisharproslyn_tramp_net8_timeout/",
+          "author": null,
+          "description": "Hi,\n do you have a working solution where the omnisharp-roslyn is working well with eglot and tramp ?\n should it work well ?\n    submitted by    /u/zsome  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ayra55/eglot_omnisharproslyn_tramp_net8_timeout/",
+          "publishedOn": "2024-02-24T10:18:28.000Z",
+          "wordCount": null,
+          "title": "eglot + omnisharp-roslyn + tramp .net8 timeout",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ayoep2/unknown_type_font_with_doom_emacs/",
+          "author": null,
+          "description": "I am learning how to configure doom emacs. \n If I add the following line to config.el in .config/doom on linux\n ``` (setq doom-font (font-spec :family \"FreeSans\" :size 20))\n ```\n I do not see any modification after stoping the emacs window and then turning it back on\n If I try doom/reload-fond I receive a warning in the .config/emacs/lisp/lib/fonts.el about unknown type: font.\n I have checked that the font exist with M-x describe font.\n    submitted by    /u/No-Entertainer-802  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ayoep2/unknown_type_font_with_doom_emacs/",
+          "publishedOn": "2024-02-24T07:08:37.000Z",
+          "wordCount": null,
+          "title": "Unknown type: font with doom emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1aylndb/justlmode_release_v014/",
+          "author": null,
+          "description": "justl is a major mode for driving justfiles. Justfiles are a way to save and run project-specific commands. Think of them like Makefiles, but they are purely focused on running commands and processes, and not for a build system.\n ​\n This mode gives the ability to execute just recipes from within the editor itself.\n ​\n The new release with the changelog details here: https://github.com/psibi/justl.el/blob/master/Changelog.org#014\n ​\n The major highlight in this release is support for per recipe buffer and a major rewrite from Steve Purcell.\n ​\n Links with more details:\n - Emacs extension: https://github.com/psibi/justl.el\n - Just project: https://github.com/casey/just\n    submitted by    /u/sibip  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1aylndb/justlmode_release_v014/",
+          "publishedOn": "2024-02-24T04:32:50.000Z",
+          "wordCount": null,
+          "title": "justl-mode release v0.14",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ayk92a/error_while_installing_doomemacs/",
+          "author": null,
+          "description": "i just build emacs 29.2 with native compile then i try download doom emacs with this git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs\n ~/.config/emacs/bin/doom install\n i get this error\n ​\n https://preview.redd.it/pi3svwbrbgkc1.png?width=1366&format=png&auto=webp&s=5c81992d3541c9fdd94c8ff23c14031d5369c101\n is the problem with my emacs or with doom repo\n ​\n    submitted by    /u/Abuabdelrahman_1413  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ayk92a/error_while_installing_doomemacs/",
+          "publishedOn": "2024-02-24T03:20:10.000Z",
+          "wordCount": null,
+          "title": "Error while installing doomemacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ayec4v/more_ui_progress_drag_and_drop_tabs/",
+          "author": null,
+          "description": "I've settled on using tab-line for my tabbing because it fits my normal workflow. However I like my tabs to basically operate the same way as in the browser and terminal. After some work and references to the tab-bar implementation I finally have drag and drop tab movement working. The prerequisite is keeping the tabs in a fixed order (also a desired behavior) rather than relying on whatever happens to be the state of buffer-list as is the default.\n  \n (setq my-tab-line-buffer-list ()) ;; Filter special buffers from tab-line while maintaining current order (setq tab-line-tabs-function (lambda () (let* ((current-tabs (--select (buffer-file-name it) (buffer-list))) (intersect-tabs (--select (member it current-tabs) my-tab-line-buffer-list)) (new-tabs (--select (not (member it my-tab-line-buf…",
+          "link": "https://www.reddit.com/r/emacs/comments/1ayec4v/more_ui_progress_drag_and_drop_tabs/",
+          "publishedOn": "2024-02-23T22:51:52.000Z",
+          "wordCount": null,
+          "title": "More UI progress - drag and drop tabs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ayckf6/lspmode_starting_every_lsp_server_ive_ever_used/",
+          "author": null,
+          "description": "This seems like really bizarre behavior to me, but when I enable lsp-mode in one project, it spawns lsp servers for every project I've used. \n ​\n This seems like really bizarre behavior to me, and I'd really prefer it to only use the lsp server for the current project. \n ​\n Anybody know how to get that working that way? \n    submitted by    /u/the_whalerus  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ayckf6/lspmode_starting_every_lsp_server_ive_ever_used/",
+          "publishedOn": "2024-02-23T21:39:49.000Z",
+          "wordCount": null,
+          "title": "`lsp-mode` starting every lsp server I've ever used",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1ay9jij/need_guidancelearning_on_how_list_works_with/",
           "author": null,
@@ -9312,116 +9442,6 @@
           "wordCount": null,
           "title": "How to log hooks in emacs? (didnt' find build it, trying custom functon)",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1abacih/essentials_of_dired_plus/",
-          "author": null,
-          "description": "submitted by    /u/unixbhaskar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1abacih/essentials_of_dired_plus/",
-          "publishedOn": "2024-01-26T04:57:22.000Z",
-          "wordCount": null,
-          "title": "Essentials of Dired Plus",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ab6bwk/release_v014_alphapapaementel_matrix_client_for/",
-          "author": null,
-          "description": "submitted by    /u/github-alphapapa  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ab6bwk/release_v014_alphapapaementel_matrix_client_for/",
-          "publishedOn": "2024-01-26T01:34:11.000Z",
-          "wordCount": null,
-          "title": "Release v0.14 · alphapapa/ement.el (Matrix client for Emacs)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/19fndr1/is_there_some_feature_magit_or_some_other_emacs/",
-          "author": null,
-          "description": "Background to the problem.\n I use the GUI form designer on Lazarus which saves changes to the form to a text file and in manipulating the form elements, spurious changes are made that I don't want.\n For instance if a form is moved around the screen during the edits, the top and left positions of the form are saved to the file even if they are not relevant to the task. Adjusting the size of an element to gain access to some other elements also result in spurios changes.\n Is there some way to revert those changes from the Magit diff view and only commit those desired?\n I know how to stage and commit tht hunks I need but I also need to revert the unwanted uncommitted changes in the working copy.\n Logically I can commit only the changes I want and check the file out again to restore the unwanted changes back to their original setting, but that applies to files containing hunks I have no use for.\n BONUS INFO\n After a bit of searching around I have realized that in addition to Magit there are quite a few package that provide the same functionality, two of those I already have installed.\n  \ndiff-hl\n git-undo\n git-gutter-plus\n git-gutter\n  \nSearching for stuff is difficult when you don't know or can't recollect the right terminology. All I had to do was to enter C-h f - hunk and their commands would have showed up.\n    submitted by    /u/vfclists  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/19fndr1/is_there_some_feature_magit_or_some_other_emacs/",
-          "publishedOn": "2024-01-25T23:42:53.000Z",
-          "wordCount": null,
-          "title": "Is there some feature Magit or some other Emacs tools that can be used used to revert changes to the parts of the file that are not going to be committed?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/19fms4j/the_unexpected_perils_of_being_an_emacs_user/",
-          "author": null,
-          "description": "submitted by    /u/123qwe33  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/19fms4j/the_unexpected_perils_of_being_an_emacs_user/",
-          "publishedOn": "2024-01-25T23:15:44.000Z",
-          "wordCount": null,
-          "title": "The unexpected perils of being an Emacs user",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/19fge6f/some_comments_regarding_orglatexlinebreaksafe/",
-          "author": null,
-          "description": "When I upgraded to Emacs 29.2 from 28.2 I was awaken to a rude shock that all my org exports to pdf was broken - after spending many hours to understand why I realised that all my line-breaks were supplied with \\\\[0pt] instead of the regular \\\\ - this broke any `verse` elements as well as any inline images with `[[file:...]` format - the change supposedly was brought in to accommodate a very rare case of triggering a parsing error when using [..] as the first element of a table - which I have never needed to trigger.\n So without any recourse, since the variable is defined using 'defconst` as opposed to `defcustom' and `setq` wouldnt work - I had to patch the source in ox-latex.el as\n ​\n ```\n --- ox-latex.el 2024-01-16 22:11:27.000000000 +0530\n +++ patched-ox-latex.el 2024-01-23 23:10:03.138039931 +0530\n @@ -278,7 +278,7 @@\n - `:lang-name' the actual name of the language.\")\n -(defconst org-latex-line-break-safe \"\\\\\\\\[0pt]\"\n +(defconst org-latex-line-break-safe \"\\\\\\\\\"\n \"Linebreak protecting the following [...].\n Without \\\"[0pt]\\\" it would be interpreted as an optional argument to\n ```\n ​\n later I read this thread at the org-mailing list\n https://list.orgmode.org/9ca74051-90b1-498f-92db-3d0730c1bc56@gmail.com/T/#t\n ​\n I hope this change is undone as it proved to be a source of my many miseries and many more that will have a rather rude awakening.\n ​\n    submitted by    /u/akashpal21  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/19fge6f/some_comments_regarding_orglatexlinebreaksafe/",
-          "publishedOn": "2024-01-25T18:39:44.000Z",
-          "wordCount": null,
-          "title": "some comments regarding `org-latex-line-break-safe' introduced in newer ox-latex.el",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/19few66/emacs_package_for_automating_local_devtest_loops/",
-          "author": null,
-          "description": "I have a feeling there must be a package for this kind of thing but I don't even know what I would use as a search string and I'm getting :side-eye from the LLMs atm... \n There are languages which have CLI tooling to automate the dev+test loop. As an example from Rust there is: \n cargo watch \n which will watch the directory for file changes and automatically run tests when a file changes. \n There are other languages/tools which don't have that sort of thing (or for which the tooling is just getting going). As an example, here's a much simplified version of what I do in the shell for Terraform: \n while true; do fsnotifywait -r -e close_write . ; terraform plan && terraform apply -auto-approve ; sleep 2; done \n There must be an Emacs package which combines the ability to watch a directory for changes and then automatically execute a pipeline like the above, yes? \n NOTE: Emacs LSP is fine for fmt and lint in most cases I've encountered. Also, yes, there is better tooling for automated testing in TF now. Like I said, that loop is much simplified.\n  \nEDIT: Interestingly, here's what I eventually managed to get out of an LLM for non-elisp tools perhaps reachable via an Emacs package:\n  \n Tool Name Language Written In Recursive Watch Support Config File Support in Work Directory Latest Release Date Emacs Package Available \n  \n inotify-tools C Yes No Sep 12, 2023 No \n  fswatch C++ Yes No Jul 1, 2023 No \n  Watchman C++ Yes Yes Jan 22, 2024 Yes (emacs-watchman) \n  entr C No No Not available No \n  nodemon JavaScript Yes Yes Jan 16, 2024 No \n  Git Hooks Various (Shell, Python, etc.) Not Applicable Yes (via scripts) Not applicable Not directly, but can be used with Emacs \n  watchexec Rust Yes No Jan 5, 2024 No \n \n    submitted by    /u/camber-weaver  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/19few66/emacs_package_for_automating_local_devtest_loops/",
-          "publishedOn": "2024-01-25T17:36:54.000Z",
-          "wordCount": null,
-          "title": "Emacs package for automating local dev+test loops?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/19feomy/when_does_org_omit_emitted_things/",
-          "author": null,
-          "description": "One of orgs big strengths is its ability to emit code. I use org-tangle for my literate emacs config, org-export for producing PDFs and HTML, and a variation of org-export MD for producing my Hugo blog posts. But I am unconfident about when org will skip lines. Is my understanding correct?\n  \n It seems that timestamps, including inactive timestamps, and DEADLINE and SCHEDULED are ALWAYS output. I wish this weren't so.\n  When tangling, COMMENT on a heading (shortcut key #) is skipped. I don't know if this omits things from org-agenda.\n  When marked with :ARCHIVE:, lines are skipped in org-agenda. I use this for optimizing long repeating sequences so that I only have one chunk (month, or school semester) at a time.\n  DEADLINES can have their visibility shortened with syntax like <span class=\"timestamp-wrapper\"><span class=\"timestamp\"><2024-01-25 Thu -2d></span></span>; however, the same seems to break stuff if put into SCHEDULED instead.\n \nTraditional syntax commenting with literal =# = at line start in an org file omits from all of the above, I think. But I'm not sure.\n Is this as confusing as I see, or is there a unifying principle here?\n \n    submitted by    /u/WorldsEndless  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/19feomy/when_does_org_omit_emitted_things/",
-          "publishedOn": "2024-01-25T17:28:33.000Z",
-          "wordCount": null,
-          "title": "When does org omit emitted things?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/19fccfl/screenshot_of_the_day_shopping_with_emacs_org/",
-          "author": null,
-          "description": "I'll use Orgzly on my Android little glowing rectangle as I shop\n WSL2 notebook computer running Emacs with Org mode\n    submitted by    /u/tbchambers  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/19fccfl/screenshot_of_the_day_shopping_with_emacs_org/",
-          "publishedOn": "2024-01-25T15:48:39.000Z",
-          "wordCount": null,
-          "title": "Screenshot of the day: Shopping with Emacs + Org mode + Orgzly",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/19faaqv/latest_learning_elisp_video_17_finishing_a/",
-          "author": null,
-          "description": "Latest #elsip #emacs video - finishing our thesaurus mode:\n ​\n https://cestlaz.github.io/post/learning-elisp-17/\n    submitted by    /u/zamansky  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/19faaqv/latest_learning_elisp_video_17_finishing_a/",
-          "publishedOn": "2024-01-25T14:15:28.000Z",
-          "wordCount": null,
-          "title": "Latest learning Elisp video - #17 - finishing a thesaurus mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/19f91kg/my_orgmode_setup_d/",
-          "author": null,
-          "description": "More Screenshots\n its not that much but i am happy to have this today. i have been using emacs for 2 months now but never tried to make it visually appealing. thanks to u/Typical-Win-1132 who suggested me to try svg-tag-mode.\n i still donot know how to do regex properly for svg tag mode. if someone now how to exclude #+title: or #+TITLE: from this regex let me know \"\\(#\\+[A-Za-z0-9#]+:\\)\"\n    submitted by    /u/bbroy4u  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/19f91kg/my_orgmode_setup_d/",
-          "publishedOn": "2024-01-25T13:13:27.000Z",
-          "wordCount": null,
-          "title": "My org-mode setup :D",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/19f7k3t/compile_emacs_from_source_version_29_not_30/",
-          "author": null,
-          "description": "I have followed many suggestions on the web for compiling emacs from source, but when I clone the repo and do a 'git checkout emacs-29', I keep getting emacs version 30, which fails for some packages.\n Here is the beginning of the README after checking out the emacs-29 branch:\n ```\n Copyright (C) 2001-2024 Free Software Foundation, Inc.\n See the end of the file for license conditions.\n This directory tree holds version 30.0.50 of GNU Emacs, the extensible,\n customizable, self-documenting real-time display editor.\n ```\n I know there must be something I'm doing wrong, but it's escaping me. Any suggestions? \n ​\n    submitted by    /u/lstrang  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/19f7k3t/compile_emacs_from_source_version_29_not_30/",
-          "publishedOn": "2024-01-25T11:49:27.000Z",
-          "wordCount": null,
-          "title": "Compile Emacs from Source: version 29, not 30",
-          "imageUrl": null
         }
       ]
     },
@@ -9668,16 +9688,6 @@
           "publishedOn": "2024-01-26T10:06:48.000Z",
           "wordCount": 580,
           "title": "Pandoc writing app",
-          "imageUrl": null
-        },
-        {
-          "id": "2811@/discussions",
-          "author": "System",
-          "description": "Field Report #7: Atomic Habits • Zettelkasten Method\r\nFirst, ask yourself what the source requires of you. The individual in “individualising the way of working” is the source you are processing, not you.\n\r\nRead the full story here",
-          "link": "https://forum.zettelkasten.de/discussion/2811/field-report-7-how-i-process-atomic-habits-by-james-clear",
-          "publishedOn": "2024-01-25T10:33:14.000Z",
-          "wordCount": 563,
-          "title": "Field Report #7: How I Process “Atomic Habits” by James Clear",
           "imageUrl": null
         }
       ]
