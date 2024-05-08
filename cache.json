@@ -53,6 +53,46 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1cnbu3h/development_notes_from_xkcds_machine_haskell/",
+          "author": null,
+          "description": "submitted by    /u/nh2_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1cnbu3h/development_notes_from_xkcds_machine_haskell/",
+          "publishedOn": "2024-05-08T18:34:43.000Z",
+          "wordCount": null,
+          "title": "Development notes from xkcd's \"Machine\" (Haskell backend)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1cnaue3/coercion_of_typestate_data_types_with_the_same/",
+          "author": null,
+          "description": "I'm working on a piece of software that transforms a piece of data through several states. To make sure data is only passed to steps in the right state, it is encoded in the type system. Additionally, in different states, parts of the data may have different types. For example (assume DataKinds and TypeFamilies):\n data State = A | B | C type family Foo (s :: State) where Foo 'A = String Foo 'B = [Int] Foo 'C = String data Bar (s :: State) = Bar { x :: Int, y :: Foo s } \n Now, even though Foo 'A and Foo 'C are equal, and we can have\n atoc :: Foo 'A -> Foo 'C atoc = id \n we can't have\n atoc' :: Bar 'A -> Bar 'C atoc' = id \n This makes sense to me, and I wouldn't want id to be a valid implementation anyway since the whole point of having the state in the type is that data in different states is not equal. That said, it would be nice if there was a way of coercing Bar 'A to Bar 'C. We can use record update syntax to assign y to itself, i.e.\n atoc'' :: Bar 'A -> Bar 'C atoc'' b = b { y = y b } \n but is there really no other way?\n    submitted by    /u/svkmpn  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1cnaue3/coercion_of_typestate_data_types_with_the_same/",
+          "publishedOn": "2024-05-08T17:53:21.000Z",
+          "wordCount": null,
+          "title": "Coercion of \"typestate\" data types with the same representation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1cn7gff/datakinds_doesnt_work/",
+          "author": null,
+          "description": "[SOLVED] Hi, all. I've decided to study DataKinds, but it doesn't work if I enable DataKinds through Pragma. However, it works in REPL if I activate it. Am I missed something? I've tested it on 9.2.8 and 9.6.4\n FILE\n {-# LANGUAGE DataKinds #-} module Lol where data Nat = Zero | Succ Nat ghci> :k Succ <interactive>:1:1: error: Not in scope: type constructor or class ‘Succ’ A data constructor of that name is in scope; did you mean DataKinds? ghci> :k 'Succ <interactive>:1:1: error: • Data constructor ‘Succ’ cannot be used here (perhaps you intended to use DataKinds) • In the type ‘'Succ’ \n REPL\n ghci> :set -XDataKinds ghci> :k Succ Succ :: Nat -> Nat ghci> :k Zero Zero :: Nat \n I'll appreciate you.\n    submitted by    /u/Interesting-Pack-814  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1cn7gff/datakinds_doesnt_work/",
+          "publishedOn": "2024-05-08T15:31:21.000Z",
+          "wordCount": null,
+          "title": "DataKinds doesn't work",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1cn7ebc/naming_request_hkd_functionality_in_prairie/",
+          "author": null,
+          "description": "I wrote a library prairie that allows you to work with record fields as regular values. There's a lot of neat functionality buried in here - you can take two Records and diff them to produce a [Update record], you can apply that with updateRecord :: (Record rec) => rec -> [Update rec] -> rec. Fields can be serialized and deserialized, allowing a type like [Update rec] to be parsed out of a JSON response - now you can have your API clients send just a list of fields to update on the underlying record.\n One of those functions is tabulateEntityA, which allows you to specify an applicative action f for every field, and construct a record from that.\n tabulateEntityA :: (Record rec, Applicative f) => (forall ty. Field rec ty -> f ty) -> f rec \n Several folks have recognizes that the form Applicative f => (forall ty. Field rec ty -> f ty) is a concept on it's own: the ability to distribute the type constructor f across each field of rec. In other words: the power of Higher Kinded Data without needing to incur the complexity costs for operations that do not require it.\n There is one last concern: the name. We have the concept, we have many functions that operate on the concept, but none of the proposed names have stuck out to me.\n I've got a GitHub issue to discuss the matter here: https://github.com/parsonsmatt/prairie/issues/16\n And I'll back-link the Reddit discussion here to GitHub so we can keep everything correlated.\n    submitted by    /u/ephrion  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1cn7ebc/naming_request_hkd_functionality_in_prairie/",
+          "publishedOn": "2024-05-08T15:28:59.000Z",
+          "wordCount": null,
+          "title": "Naming Request: HKD functionality in Prairie Records",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1cmd0lr/nix_build_gives_a_compiler_error_where_cabal/",
           "author": null,
           "description": "I've written a nix flake for my project.\n If I use cabal build, the project builds just fine, but if I use nix build I get a compiler (i.e. GHC) error:\n  src/GTF/Content/Projects.hs:26:22: error: • No instance for (FromJSON URI) arising from the 'deriving' clause of a data type declaration Possible fix: use a standalone 'deriving instance' declaration, so you can specify the instance context yourself • When deriving the instance for (FromJSON ProjectDetails) | 26 | deriving anyclass (FromJSON) | ^^^^^^^^ \n I've checked in the logs and the version of network-uri being used matches, so it's not a dependency version problem. I've also checked the GHC version, and it's 9.4.7 which is the same version I'm using with cabal.\n I'm not sure where to look to fix this, does anyone have any pointers?\n    submitted by    /u/gtf21  \n [link]   [comments]",
@@ -901,46 +941,6 @@
           "wordCount": null,
           "title": "How to compile a .exe file on Windows?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1bz2mqg/how_to_namespace_code_for_astronomical/",
-          "author": null,
-          "description": "My question is a bit more general this, but help me understand the best way to namespace some code:\n I work for the National Solar Observatory. We are NSF funded, and my team processes data from the DKIST solar telescope. I'm excited to build tools for this in Haskell.\n FITS is the digital format used for telescope images. I've been contributing to the fits-parse package, which uses Data.Fits as a namespace, but my needs are growing beyond the scope of that package. I need to add support for the ASDF file format (containing metadata for many FITS images) and for the World Coordinate System (WCS), among other things.\n So I'd like to make a new package containing all the tools one might need to work with astronomical images from modern telescopes/observatories. How should it be namespaced?\n There's an existing package that uses the Data.Astro namespace: https://hackage.haskell.org/package/astro. The fits-parse package uses Data.Fits\n Let's assume that I create a single package for this, and name it telescope. Should the code be namespaced under Data or not? If yes, should I use a different namespace than the Data.Astro that the astro package uses?\n Option 1: Pick my own Top-level Namespace\n import Telescope.Fits import Telescope.Asdf import Telescope.Wcs \n Option 2: Add packages to existing namespaces like `Data.Astro`, which is used by the `astro` package\n Note that the `astro` package deals with calculating the position of celestial bodies, which is every bit as as valid a use of the word astronomy, but has a very different focus from my work to process astronomical observations.\n -- from this package! import Data.Astro.Fits import Data.Astro.Wcs -- from `astro` package import Data.Astro.Sun \n Option 3: Pick a new namespace under `Data` to differentiate from the other packages\n import Data.Telescope.Fits import Data.Telescope.Wcs \n What's the right approach here?\n    submitted by    /u/embwbam  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1bz2mqg/how_to_namespace_code_for_astronomical/",
-          "publishedOn": "2024-04-08T16:40:49.000Z",
-          "wordCount": null,
-          "title": "How to namespace code for astronomical observations?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1byzaru/i_need_your_helpsuggestionsadvices/",
-          "author": null,
-          "description": "After 1 year of studying haskell, I decided to write small library which parses command line args.\n And since I haven't had much experience in haskell, I would ask your help.\n I would ask you all to see the code and mention what I can improve, maybe there is somewhere memory leaks or performance issues, or maybe you have some your own best practices of how to orgranise the code and so on and so forth.\n I haven't made tests and benchmarks, yet.\n I haven't move String to Text yet.\n Also, I left the example in the example folder and also I left comments in the code so you might understand what is going on there\n So, I please you very hard, look on the code and make your suggestions/advices. And, please, look on example folder, I made question there about existential type\n And sorry for english here and in the comments in the repo, English is not my native\n thank you\n https://github.com/max-grek/flags\n    submitted by    /u/Interesting-Pack-814  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1byzaru/i_need_your_helpsuggestionsadvices/",
-          "publishedOn": "2024-04-08T14:29:14.000Z",
-          "wordCount": null,
-          "title": "I need your help/suggestions/advices!!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1byxzna/how_do_i_decide_that_i_should_write_an/",
-          "author": null,
-          "description": "Now I'm writing a small application which manages some files in linux for my hobby.\n So I have tried to implement an abstraction of IO Monad to test as my file managing functions like below.\n ```hs\n imporrt qualified System.Directory as D\n class (Monad m) => FileManagerMonad m where\n moveFile :: FilePath -> FilePath -> m () doSomething :: FilePath -> FilePath -> m ()\n data FileObj = File | Dict [FileObj]\n data AppPure = AppPure\n { appDir :: FileObj\n }\n instance FileManagerMonad (Reader AppPure) where\n moveFile src dest = do\n // do logical file moving onto appDir as same as `D.renameFile` of directory package. \n doSomething src dest = do moveFile src dest // do something.\n instance FileManagedMonad IO where\n moveFile = D.renameFile doSomething src dest = do moveFile src dest // do something as same as for AppPure. ```\n After I wrote that, I have wondered that this implementation is meaningless at all because my FileManagerMoand implementation for AppPure is enable to be misimplemented and I don't want to test removeFile directly. I'm satisfied to D.renameFile function in actual usage.\n But I am not good at Haskell programming, I want to know that I should create an IO monad abstraction for just imitation like a unnecessary mocking in testing context.\n Though I think that should write or not is depended on contexts absolutely, I have no idea how to decide it.\n Sorry for my stupid noobie (poor English) question. If I was gave some comments, so pleasure. Thanks.\n    submitted by    /u/Unique-Staff-7593  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1byxzna/how_do_i_decide_that_i_should_write_an/",
-          "publishedOn": "2024-04-08T13:33:18.000Z",
-          "wordCount": null,
-          "title": "How do I decide that I should write an abstraction of IO Monad or not.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1byxvdx/should_i_write_an_abstraction_of_io_monad_for/",
-          "author": null,
-          "description": "Now I'm writing a small application which manages some files in linux for my hobby.\n So I have tried to implement an abstraction of IO Monad to test as my file managing functions like below.\n ```hs\n imporrt qualified System.Directory as D\n class (Monad m) => FileManagerMonad m where\n moveFile :: FilePath -> FilePath -> m () doSomething :: FilePath -> FilePath -> m ()\n data FileObj = File | Dict [FileObj]\n data AppPure = AppPure\n { appDir :: FileObj\n }\n instance FileManagerMonad (Reader AppPure) where\n moveFile src dest = do\n // do logical file moving onto appDir as same as `D.renameFile` of directory package. \n doSomething src dest = do moveFile src dest // do something.\n instance FileManagedMonad IO where\n moveFile = D.renameFile doSomething src dest = do moveFile src dest // do something as same as for AppPure. ```\n After I wrote that, I have wondered that this implementation is meaningless at all because my FileManagerMoand implementation for AppPure is enable to be misimplemented and I don't want to test removeFile directly. I'm satisfied to D.renameFile function in actual usage.\n But I am not good at Haskell programming, I want to know that I should create an IO monad abstraction for just imitation like a unnecessary mocking in testing context.\n Though I think that should write or not is depended on contexts absolutely, I have no idea how to decide it.\n Sorry for my stupid noobie (poor English) question. If I was gave some comments, so pleasure. Thanks.\n    submitted by    /u/Unique-Staff-7593  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1byxvdx/should_i_write_an_abstraction_of_io_monad_for/",
-          "publishedOn": "2024-04-08T13:28:17.000Z",
-          "wordCount": null,
-          "title": "Should I write an abstraction of IO Monad for (mainly) testing?",
-          "imageUrl": null
         }
       ]
     },
@@ -1718,36 +1718,6 @@
           "wordCount": null,
           "title": "Get better at programming in Scala",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1bzm3io/sbt_1100rc1_released/",
-          "author": null,
-          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1bzm3io/sbt_1100rc1_released/",
-          "publishedOn": "2024-04-09T07:20:03.000Z",
-          "wordCount": null,
-          "title": "sbt 1.10.0-RC1 released",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1bzl9m1/music_dsl_in_scalajs_with_paul_matthews/",
-          "author": null,
-          "description": "submitted by    /u/alexgarella  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1bzl9m1/music_dsl_in_scalajs_with_paul_matthews/",
-          "publishedOn": "2024-04-09T06:25:03.000Z",
-          "wordCount": null,
-          "title": "Music DSL in Scala.js with Paul Matthews",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1bzejw5/after_some_years_again_any_good_current_scala/",
-          "author": null,
-          "description": "I had a look for Scala podcasts -- and could not find any current podcasts dedicated to Scala. \n Everything I found is two years old or older. Only related current podcast I dug out is: Happy Path Programming with Bruce Eckel & James Ward (which actually is a good one).\n Is there anything else current?\n    submitted by    /u/jan_aloleo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1bzejw5/after_some_years_again_any_good_current_scala/",
-          "publishedOn": "2024-04-09T00:34:39.000Z",
-          "wordCount": null,
-          "title": "After some years again: Any good & current Scala podcasts?",
-          "imageUrl": null
         }
       ]
     },
@@ -1838,6 +1808,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1cn0xer/orgcapturetemplates_fileheadline_does_not_take/",
+          "author": null,
+          "description": "TLDR:\n Why does (file+headline ...) create a template when two strings are explicitly stated, but returns org-capture-set-target-location: Wrong type argument: stringp, (some-function) if a function is used to provide an input string?\n ;; Success! (setq org-capture-templates `((\"t\" \"Todo\" entry (file+headline \"~/agenda/work.org\" \"Some Header\")))) ;; FAIL (defun some-function () \"Function returns selected header\" \"Some Header\") (setq org-capture-templates `((\"t\" \"Todo\" entry (file+headline \"~/agenda/work.org\" (some-function))))) \n Background:\n I recently started exploring org-agenda and would like to incorporate org-capture-templates into my workflow. In my agenda file, I organize tasks at the top org-header level -- creating a template for top-level headers is easy enough. My current issue…",
+          "link": "https://www.reddit.com/r/orgmode/comments/1cn0xer/orgcapturetemplates_fileheadline_does_not_take/",
+          "publishedOn": "2024-05-08T10:07:46.000Z",
+          "wordCount": null,
+          "title": "Org-Capture-Templates: file+headline does not take function string output",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1cmti16/i_created_an_indepth_org_mode_tutorial_for_users/",
+          "author": null,
+          "description": "After reading many posts on r/emacs and r/orgmode I've realized that there are a lot of people who could benefit from using Org Mode but don't know where to start. Either they don't use Emacs at all and thus find the prospect too daunting or they find it too difficult to craft Org Mode into something useful. And this is a real shame because Org Mode is, in my opinion, one of the most useful features of Emacs. So, to help out new users I've created a tutorial geared towards people who are completely new to Org Mode and Emacs. I've included screenshots to show you what to expect as well as a configuration file you can drop in that will give you all the features described in the tutorial. Additionally, there is an org file with explanations of each element, so new users can more easily begin customizing their setup.\n I would encourage any new users to try it out and see if this helps you. For the Org Mode veterans in the crowd, I would appreciate any feedback you might have. \n You can find my tutorial on github here: Org Mode Better Defaults\n    submitted by    /u/he-who-greps  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1cmti16/i_created_an_indepth_org_mode_tutorial_for_users/",
+          "publishedOn": "2024-05-08T02:18:02.000Z",
+          "wordCount": null,
+          "title": "I created an in-depth Org Mode tutorial for users new to both Org Mode and Emacs",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1ckswau/what_are_templates/",
           "author": null,
@@ -2177,36 +2167,6 @@
           "wordCount": null,
           "title": "Simple workflow for a beginner",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1bzb76a/to_datetree_or_not_to_datetree/",
-          "author": null,
-          "description": "I have a bit of a love-hate relationship with Org's datetree structure, the most recent switch (from love back to hate on this occasion) being only two days ago. No doubt I'll flip back again, but it'll be short lived. If any given use of it lasted more than 10 weeks, I'd be surprised.\n So I was impressed to read u/github-alphapapa's answer to a recent question, on org-ql:\n  \nYou may also consider using datetrees in a smaller set of files, e.g. one file per year, or even for multiple years. My log.org file goes back over 10 years, ...\n  \nI'd be interested to hear (from the estimable u/github-alphapapa himself, but from anyone else too):\n In what way(s) do you find datetree to be useful and worth sticking with?\n TL;DR\n For context, and perhaps to head off at the pass answers like \"Coz it's.…",
-          "link": "https://www.reddit.com/r/orgmode/comments/1bzb76a/to_datetree_or_not_to_datetree/",
-          "publishedOn": "2024-04-08T22:13:58.000Z",
-          "wordCount": null,
-          "title": "To datetree or not to datetree?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1bz67q0/reason_for_existence_of_orgtables_and_tableel/",
-          "author": null,
-          "description": "What is the reason for the existence of org-tables and table.el tables? I mean why this two different types? Why not one?\n    submitted by    /u/buhtz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1bz67q0/reason_for_existence_of_orgtables_and_tableel/",
-          "publishedOn": "2024-04-08T19:03:12.000Z",
-          "wordCount": null,
-          "title": "Reason for existence of org-tables and table.el tables?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1bz5x65/how_to_code_blocks_with_orgcode_inside/",
-          "author": null,
-          "description": "Is this an appropriate way to have code blocks with org code in it?\n Paragraph #+begin_src org * Heading Paragraph - item 1 - item 2 #+end_src Paragraph \n Maybe something like \"begin_org\" or \"begin_src orgmode\"?\n    submitted by    /u/buhtz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1bz5x65/how_to_code_blocks_with_orgcode_inside/",
-          "publishedOn": "2024-04-08T18:51:37.000Z",
-          "wordCount": null,
-          "title": "How to: Code blocks with org-code inside?",
-          "imageUrl": null
         }
       ]
     },
@@ -2215,6 +2175,26 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/org-ai-20240508.1927.tar",
+          "author": null,
+          "description": "The org-ai package has been updated to version 20240508.1927.",
+          "link": "https://melpa.org/#/org-ai",
+          "publishedOn": "2024-05-08T19:27:00.000Z",
+          "wordCount": 105,
+          "title": "org-ai (20240508.1927) --- Use ChatGPT and other LLMs in org-mode and beyond",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/pyim-20240508.256.tar",
+          "author": null,
+          "description": "The pyim package has been updated to version 20240508.256.",
+          "link": "https://melpa.org/#/pyim",
+          "publishedOn": "2024-05-08T02:56:00.000Z",
+          "wordCount": 105,
+          "title": "pyim (20240508.256) --- A Chinese input method support quanpin, shuangpin, wubi, cangjie and rime.",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/init-dir-20240507.2003.tar",
           "author": null,
@@ -2303,6 +2283,16 @@
           "publishedOn": "2024-05-07T00:47:00.000Z",
           "wordCount": 105,
           "title": "rmsbolt (20240507.47) --- A compiler output viewer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tree-sitter-langs-20240506.2254.tar",
+          "author": null,
+          "description": "The tree-sitter-langs package has been updated to version 20240506.2254.",
+          "link": "https://melpa.org/#/tree-sitter-langs",
+          "publishedOn": "2024-05-06T22:54:00.000Z",
+          "wordCount": 105,
+          "title": "tree-sitter-langs (20240506.2254) --- Grammar bundle for tree-sitter",
           "imageUrl": null
         },
         {
@@ -2403,6 +2393,16 @@
           "publishedOn": "2024-05-05T22:45:00.000Z",
           "wordCount": 105,
           "title": "color-identifiers-mode (20240505.2245) --- Color identifiers based on their names",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/stgit-20240505.2218.tar",
+          "author": null,
+          "description": "The stgit package has been updated to version 20240505.2218.",
+          "link": "https://melpa.org/#/stgit",
+          "publishedOn": "2024-05-05T22:18:00.000Z",
+          "wordCount": 105,
+          "title": "stgit (20240505.2218) --- major mode for StGit interaction",
           "imageUrl": null
         },
         {
@@ -5664,86 +5664,6 @@
           "wordCount": 105,
           "title": "erlang (20240409.1209) --- Erlang major mode",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/vertico-20240409.436.tar",
-          "author": null,
-          "description": "The vertico package has been updated to version 20240409.436.",
-          "link": "https://melpa.org/#/vertico",
-          "publishedOn": "2024-04-09T04:36:00.000Z",
-          "wordCount": 105,
-          "title": "vertico (20240409.436) --- VERTical Interactive COmpletion",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/diredc-20240408.1930.tar",
-          "author": null,
-          "description": "The diredc package has been updated to version 20240408.1930.",
-          "link": "https://melpa.org/#/diredc",
-          "publishedOn": "2024-04-08T19:30:00.000Z",
-          "wordCount": 105,
-          "title": "diredc (20240408.1930) --- Midnight Commander features (plus) for dired",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/deadgrep-20240408.1537.tar",
-          "author": null,
-          "description": "The deadgrep package has been updated to version 20240408.1537.",
-          "link": "https://melpa.org/#/deadgrep",
-          "publishedOn": "2024-04-08T15:37:00.000Z",
-          "wordCount": 105,
-          "title": "deadgrep (20240408.1537) --- fast, friendly searching with ripgrep",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ghub-20240408.1356.tar",
-          "author": null,
-          "description": "The ghub package has been updated to version 20240408.1356.",
-          "link": "https://melpa.org/#/ghub",
-          "publishedOn": "2024-04-08T13:56:00.000Z",
-          "wordCount": 105,
-          "title": "ghub (20240408.1356) --- Client libraries for Git forge APIs.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/retraction-viewer-section-20240408.1355.tar",
-          "author": null,
-          "description": "The retraction-viewer-section package has been updated to version 20240408.1355.",
-          "link": "https://melpa.org/#/retraction-viewer-section",
-          "publishedOn": "2024-04-08T13:55:00.000Z",
-          "wordCount": 105,
-          "title": "retraction-viewer-section (20240408.1355) --- Show retraction information in the universal-sidecar",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sly-20240408.931.tar",
-          "author": null,
-          "description": "The sly package has been updated to version 20240408.931.",
-          "link": "https://melpa.org/#/sly",
-          "publishedOn": "2024-04-08T09:31:00.000Z",
-          "wordCount": 105,
-          "title": "sly (20240408.931) --- Sylvester the Cat's Common Lisp IDE",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/julia-repl-20240408.850.tar",
-          "author": null,
-          "description": "The julia-repl package has been updated to version 20240408.850.",
-          "link": "https://melpa.org/#/julia-repl",
-          "publishedOn": "2024-04-08T08:50:00.000Z",
-          "wordCount": 105,
-          "title": "julia-repl (20240408.850) --- A minor mode for a Julia REPL",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/el-get-20240408.837.tar",
-          "author": null,
-          "description": "The el-get package has been updated to version 20240408.837.",
-          "link": "https://melpa.org/#/el-get",
-          "publishedOn": "2024-04-08T08:37:00.000Z",
-          "wordCount": 105,
-          "title": "el-get (20240408.837) --- Manage the external elisp bits and pieces you depend upon",
-          "imageUrl": null
         }
       ]
     },
@@ -5752,6 +5672,146 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cnduz7/playing_with_boxes/",
+          "author": null,
+          "description": "submitted by    /u/Nicolas-Rougier  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cnduz7/playing_with_boxes/",
+          "publishedOn": "2024-05-08T20:00:22.000Z",
+          "wordCount": null,
+          "title": "Playing with boxes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cndu4x/what_am_i_doing_wrong/",
+          "author": null,
+          "description": "I’m trying to configure a simple Emacs + SLIME setup for CommonLISP. This is what I’ve done so far:\n Add this to .emacs:\n (require 'package) (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t) (package-initialize) \n Then I open Emacs and run M-x install-package RET slime RET\n After that, If I try to run M-x slime I get\n Symbol's value as variable is void: \"macrostep-\" mode-map\n What Am I doing wrong?\n Also I get a bunch of warning about weird conflicts every time I open up the editor. \n    submitted by    /u/Frosty-Pack  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cndu4x/what_am_i_doing_wrong/",
+          "publishedOn": "2024-05-08T19:59:27.000Z",
+          "wordCount": null,
+          "title": "What am I doing wrong?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cncbe2/do_you_react_when_a_package_depends_on_dash_why/",
+          "author": null,
+          "description": "I'm writing this in 2024, about 10 years after people started talking about \"deprecating\" dash.el.\n By now I've used a lot of cl-lib, seq, map, as well as dash.\n Here's the thing. Usually, I want a codebase to be consistent and use the minimum vocabulary. Basically \"pick a library and stick with it\", instead of mixing and matching.\n Seq/map can go a long way, but eventually without fail I'll arrive at a situation where I think \"ok, the vastly most elegant way to express this is with an --iterate\", or something. So now I have one dash invocation, and may as well factor out all uses of seq. So today, I don't even start using seq anymore because I know I will have to factor it out anyway.\n Dash always wins in the end. The only real contender is cl-lib, and if you pair it with llama, it can ev…",
+          "link": "https://www.reddit.com/r/emacs/comments/1cncbe2/do_you_react_when_a_package_depends_on_dash_why/",
+          "publishedOn": "2024-05-08T18:55:06.000Z",
+          "wordCount": null,
+          "title": "Do you react when a package depends on Dash? Why?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cnbt7o/ansi_sgrcolor_escape_codes_in_compilation_buffers/",
+          "author": null,
+          "description": "submitted by    /u/giant3  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cnbt7o/ansi_sgrcolor_escape_codes_in_compilation_buffers/",
+          "publishedOn": "2024-05-08T18:33:42.000Z",
+          "wordCount": null,
+          "title": "ANSI SGR(color escape codes) in compilation buffers.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cn920o/how_to_run_code_when_elpaca_queues_are_complete/",
+          "author": null,
+          "description": "I have some init code I want to run after several packages have been installed and loaded by elpaca. I can't just put them at top-level in my init file anymore because elpaca is async. If it were just one package, I think I could do  (elpaca transient (setup-my-transient-menus))  but I want to wait for transient and ekg and maybe other unrelated packages. I'm not looking to break up the main queue, just run code \"eventually\". I checked the elpaca manual but didn't see anything.\n    submitted by    /u/simplex5d  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cn920o/how_to_run_code_when_elpaca_queues_are_complete/",
+          "publishedOn": "2024-05-08T16:37:38.000Z",
+          "wordCount": null,
+          "title": "How to run code when elpaca queues are complete?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cn6vo0/packages_for_working_with_jsxhtml/",
+          "author": null,
+          "description": "I mostly do React for work, and work with html a lot of other times, and I've grown to love how smartparens works with parens and brackets, and I'm' wondering if there's a way to get similar behavior with html?\n Specifically, I want to delete all the contents inside of a tag with smart kill, a la smartparens and parens. I used to use evil mode, and I know you can do it with cit but I'm not really looking to go back.\n Does anybody have recommendations or good workflows they like for working with html a lot?\n    submitted by    /u/the_whalerus  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cn6vo0/packages_for_working_with_jsxhtml/",
+          "publishedOn": "2024-05-08T15:07:49.000Z",
+          "wordCount": null,
+          "title": "Packages for working with jsx/html",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cn6o7i/can_no_longer_click_on_doc_link_in_lsp_hover/",
+          "author": null,
+          "description": "I'm not sure if it was a package upgrade, or if I borked my config, but I used to be able to click on the link for documentation on the lsp ui that popped on hover. Now, the hover disappears immediately when I move the mouse so I have no opportunity to click the link.\n Does anyone else have this? How can I put it back to the way it was?\n    submitted by    /u/PersistentMosey  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cn6o7i/can_no_longer_click_on_doc_link_in_lsp_hover/",
+          "publishedOn": "2024-05-08T14:59:49.000Z",
+          "wordCount": null,
+          "title": "Can no longer click on doc link in lsp hover",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cn5d2x/what_does_org_mode_or_neorg_do_better_than_using/",
+          "author": null,
+          "description": "I read a bunch of comments comparing Org Mode to Markdown and editors like Obsidian but there are some points I want to discuss. A big benefit Emacs Org Mode seems to be the built in functionality for things like tasks and times, but that can be done in Obsidian with plugins like Dataview, for every other functionality Org Mode has like that can be done with an Obsidian plugin. I've also read a lot of comments that you can make your own Org Mode functionality using Elisp, Obsidian OTOH uses JS for plugins and code snippets, and I've written a handful of my own snippets. the JS library ecosystem is much larger.\n I get that Emacs has been around for much longer and the Lindy Effect where things that have lasted a long time are likely to last for much longer, however there seems to be far less support for Org outside of Emacs (besides Neorg). OTOH there are many Markdown editors and libraries, so if I decide I want to switch from Obsidian then I could and my Markdown Notes would render fine. I have many notes and don't have much proprietary Markdown in them. What if I became heavily invested in Emacs but in the future felt like using another editor? Or the slim possibility of Emacs development eventually stopping? A lot of Org Mode functionality seems to be specific to Emacs / Emacs' environment (same thing Obsidian JS really). I read one comment saying that implementations outside of Emacs are half baked, like support for Vim motions and features outside of Vim and Neovim.\n I've been spending lots of time setting up Neovim, and right now I'm thinking of using that with Obsidian for Markdown editing with Vim motions. But I want to know if Org Mode / Neorg would be worthwhile.\n    submitted by    /u/TheTwelveYearOld  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cn5d2x/what_does_org_mode_or_neorg_do_better_than_using/",
+          "publishedOn": "2024-05-08T14:04:17.000Z",
+          "wordCount": null,
+          "title": "What does Org Mode or Neorg do better than using Markdown and adding functionality to Obsidian with plugins and my own JS?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cn0yx5/question_about_orgcapturetemplates/",
+          "author": null,
+          "description": "submitted by    /u/Impossible_Win_9059  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cn0yx5/question_about_orgcapturetemplates/",
+          "publishedOn": "2024-05-08T10:10:27.000Z",
+          "wordCount": null,
+          "title": "Question about org-capture-templates",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cmzd47/weekly_tips_tricks_c_thread/",
+          "author": null,
+          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n See this search for previous \"Weekly Tips, Tricks, &c.\" Threads.\n Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cmzd47/weekly_tips_tricks_c_thread/",
+          "publishedOn": "2024-05-08T08:15:08.000Z",
+          "wordCount": null,
+          "title": "Weekly Tips, Tricks, &c. Thread",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cmynso/tramp_session_timeout_and_very_frequent_login/",
+          "author": null,
+          "description": "Hej fellow 'macsers,\n title says it all, basically. I would like to use TRAMP to edit files remotely, but a session will only last for five minutes, after which a new connection is opened. This leaves a massive papertrail on the machine which I'd like to avoid, instead staying connected for as long as I'd like.\n I already checked my SSH-settings and don't have these kinds of problems when I am connecting via SSH regularly, which leads me to believe that this is related to Emacs/TRAMP. I have tried to set the ssh session timeout to nil via `(add-to-list 'tramp-connection-properties '(\"/ssh:\" \"session-timeout\" nil))` but so far it does not seem to yield the desired result.\n The setup in which I work features a jump host, so that I connect via SSH twice (once to the jump host, than to my actual destination). I have adapted the SSH `ServerAliveInterval` accordingly on both machines, to no avail.\n Do you guys have another tip on how to configure TRAMP so as to make it work as desired? I'd really LOVE to use TRAMP, because it allows me to use Emacs when editing files remotely instead of vim (which is installed on remote machines).\n Have a good day, fellows!\n    submitted by    /u/olivuser  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cmynso/tramp_session_timeout_and_very_frequent_login/",
+          "publishedOn": "2024-05-08T07:23:35.000Z",
+          "wordCount": null,
+          "title": "TRAMP: Session timeout and very frequent login while editing remote files (time after 5 minutes). How to configure properly?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cmv1wj/possible_game_for_emacs/",
+          "author": null,
+          "description": "So, I'm an outsider: resident vim user. But more relevantly, I'm an online game developer. One thing I've just noticed is that unlike Emacs, the Vim community has a healthy collection of online vim games: VimAdventures, VimGolf, Vim-Racer (my personal favourite with lots of bias) etc.\n The idea just dawned on me that it would be a really low lift to add support for emacs in vim-racer. I'm curious if there would be any interest in an online game for emacs. The game is based around navigating code/text, and your speed determines where you place on the leaderboard.\n Is the lack of online games just a community culture difference i.e. Emacs users just aren't interested in emacs based games, or would you play a game like vim-racer if it had support for emacs?\n    submitted by    /u/Crippledupdown  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cmv1wj/possible_game_for_emacs/",
+          "publishedOn": "2024-05-08T03:38:13.000Z",
+          "wordCount": null,
+          "title": "Possible Game for Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cmtjs9/if_you_want_to_learn_org_mode_checkout_my/",
+          "author": null,
+          "description": "submitted by    /u/he-who-greps  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cmtjs9/if_you_want_to_learn_org_mode_checkout_my/",
+          "publishedOn": "2024-05-08T02:20:32.000Z",
+          "wordCount": null,
+          "title": "If you want to learn Org Mode checkout my tutorial, it has screenshots and a configuration file",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cmmqyc/lightdashboardel_simple_dashboard_that_may_be/",
+          "author": null,
+          "description": "Maybe should have called it light-menu.el or something like that, idk\n https://github.com/ichernyshovvv/light-dashboard\n    submitted by    /u/ichernyshovvv  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cmmqyc/lightdashboardel_simple_dashboard_that_may_be/",
+          "publishedOn": "2024-05-07T21:07:53.000Z",
+          "wordCount": null,
+          "title": "light-dashboard.el - Simple dashboard that may be used as a startup screen",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1cmkd1w/cycling_variable_value/",
           "author": null,
@@ -8591,136 +8651,6 @@
           "wordCount": null,
           "title": "[Hyprland] Reaching endgame level setup.. My Nix setup that powers all my machine, loving AGS and working on building and improving my GTK widgets in this rice .. Emacs LSP with Haskell, Nix and more languages 🤘",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bzn33b/apple_notes_global_shortcut_ctrl_q/",
-          "author": null,
-          "description": "Out of the blue Apple introduced a global shortcut for creating quick notes in Notes App: Control Q. It‘s supposed to be Fn+Q, but on my MacBook Pro it‘s Ctrl+Q. \n Now this intereres with a lot of shortcuts in my Emacs setup. For instance with C-c C-q (toggle edit in dired mode). \n Does anyone know how to disable Apple‘s global shortcut? I don’t want to delete Notes app, as I am using it. \n    submitted by    /u/pragmat1c1  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bzn33b/apple_notes_global_shortcut_ctrl_q/",
-          "publishedOn": "2024-04-09T08:32:13.000Z",
-          "wordCount": null,
-          "title": "Apple Notes global shortcut Ctrl Q",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bzlhy6/mozilla_readability_in_gnu_emacs/",
-          "author": null,
-          "description": "Output using Readability (left) and original eww (right)\n Power of Mozilla Reader mode in GNU Emacs.\n Details: https://lifeofpenguin.blogspot.com/2024/04/mozilla-readability-in-gnu-emacs.html\n    submitted by    /u/atamariya  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bzlhy6/mozilla_readability_in_gnu_emacs/",
-          "publishedOn": "2024-04-09T06:40:07.000Z",
-          "wordCount": null,
-          "title": "Mozilla Readability in GNU Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bzjkup/anybody_really_use_emacs_for_webbrowsing/",
-          "author": null,
-          "description": "tell me ur secrets\n    submitted by    /u/iamn0tthere  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bzjkup/anybody_really_use_emacs_for_webbrowsing/",
-          "publishedOn": "2024-04-09T04:41:53.000Z",
-          "wordCount": null,
-          "title": "anybody really use emacs for webbrowsing",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bzig4y/eager_loading_of_orgmode/",
-          "author": null,
-          "description": "I know it's fashionable to lazy load as much as possible in order to minimize startup time, but what's the best way to do the opposite?\n I'm almost always going to want at least one org file open, so I'd like to eagerly load org-mode on startup and pay the cost then as opposed to being interrupted by an annoying hitch when I'm trying to open my first org file.\n My first two theories were:\n (use-package org :demand t) \n and\n (require 'org) \n but neither worked.\n    submitted by    /u/pt-guzzardo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bzig4y/eager_loading_of_orgmode/",
-          "publishedOn": "2024-04-09T03:41:20.000Z",
-          "wordCount": null,
-          "title": "Eager loading of org-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bzho9l/what_packages_should_i_changeinstall_that_differ/",
-          "author": null,
-          "description": "Hello all,\n I've finally got my own configuration built and a fairly decent working understanding of Emacs. I followed the System Crafter's Emacs From Scratch YouTube playlist and then branched off into my own thing.\n I'm now wondering if there's anything that I should exchange from that baseline configuration? \n There's a package that Neovim has that I'd love to have in Emacs called oil. It's a buffer based directory and file tree modification system. \n So those who are more familiar with the meta of Emacs packages right now, would you be able to recommend some packages that I should exchange with what I built from this config mentioned above? \n    submitted by    /u/AnalystOrDeveloper  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bzho9l/what_packages_should_i_changeinstall_that_differ/",
-          "publishedOn": "2024-04-09T03:01:35.000Z",
-          "wordCount": null,
-          "title": "What Packages Should I change/install that differ from the amazing Emacs from Scratch Series provided by System Crafters?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bz77o7/amazing_vim_setup/",
-          "author": null,
-          "description": "submitted by    /u/meepingstee  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bz77o7/amazing_vim_setup/",
-          "publishedOn": "2024-04-08T19:42:20.000Z",
-          "wordCount": null,
-          "title": "Amazing vim setup",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bz668z/emacs_theater/",
-          "author": null,
-          "description": "submitted by    /u/rhangtuit  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bz668z/emacs_theater/",
-          "publishedOn": "2024-04-08T19:01:34.000Z",
-          "wordCount": null,
-          "title": "emacs theater",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bz4ljk/org_links_capitalized_breaking_file_links/",
-          "author": null,
-          "description": "I have been killing myself trying to figure out what is going on here. I wrote a function to match for every reference in an org file to a word, then replace it with a link back to the org roam node. However I am having an issue.\n ​\n The function\n (defun link-name-to-org-roam-file (name filepath)\n (interactive \"sName: \\nsOrg-roam File path (relative to Org-roam directory): \")\n ;; Debugging: Print the filepath and name to *Messages* buffer\n (message \"Debug: name = %s, filepath = %s\" name filepath)\n (let* ((org-roam-dir (file-truename (expand-file-name org-roam-directory)))\n (full-path (expand-file-name filepath org-roam-dir))\n (link (format \"[[file:%s][%s]]\" full-path name)))\n ;; Debugging: Print the full-path again right before replacement\n (message \"Debug: link before replace-match = %s\" link)\n (save-excursion\n (goto-char (point-min))\n (while (re-search-forward name nil t)\n ;; Debugging: Print what is actually being replaced\n (message \"Debug: replacing match with = %s\" link)\n (replace-match link)))))\n ​\n The following are the debugs that get printed to the console:\n ​\n Debug: name = Jane, filepath = book1-characters-jane.org\n Debug: link before replace-match = [[file:/home/john/org/RoamNotes/book1-characters-jane.org][Jane]]\n Debug: replacing match with = [[file:/home/john/org/RoamNotes/book1-characters-jane.org][Jane]] [28 times]\n ​\n ​\n However when I cat the org file from the CLI, the links in the file actually look like this:\n [[File:/Home/John/Org/RoamNotes/Book1-Characters-Jane.Org][Jane]]\n Because of this the links do not work. I know the issue is not the function, could there be some addon or function to org mode that is capitalizing all the links?\n    submitted by    /u/bufo333  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bz4ljk/org_links_capitalized_breaking_file_links/",
-          "publishedOn": "2024-04-08T17:58:16.000Z",
-          "wordCount": null,
-          "title": "org links capitalized breaking file links",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bz13zl/why_is_pdftools_slow/",
-          "author": null,
-          "description": "Maybe I compiled emacs without an option to speed up image viewing, but when compared to other pdf viewers, there is an annoying amount of lag when just scrolling a 4 page document. I have the same problem with docview, even when launching emacs with the -Q option. Turning off line number mode, as suggested by other answers, does nothing for me\n    submitted by    /u/Fluffy_Professor_639  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bz13zl/why_is_pdftools_slow/",
-          "publishedOn": "2024-04-08T15:41:48.000Z",
-          "wordCount": null,
-          "title": "Why is pdf-tools slow?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bz108o/creating_an_emacs_package_passwordmenu/",
-          "author": null,
-          "description": "https://bobonmedicaldevicesoftware.com/blog/2024/04/08/creating-an-emacs-package-password-menu/\n Feedback welcome.\n    submitted by    /u/rnadler  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bz108o/creating_an_emacs_package_passwordmenu/",
-          "publishedOn": "2024-04-08T15:37:42.000Z",
-          "wordCount": null,
-          "title": "Creating an Emacs package: ‘password-menu’",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1bz0ekn/company_vertico_corfu_corfusion/",
-          "author": null,
-          "description": "I switched to company + vertico + consult + marginalia + orderless a couple of years ago. I always run bleeding-edge emacs 30 compiled from source (I'm a glutton for punishment, been doing it that way for 30 years). \n Now I see corfu has become a good simpler alternative to company, but I'm unsure what the difference is between corfu & vertico, so I'm not sure if I can dump company or not. Minad says \"Vertico is the minibuffer completion counterpart of Corfu\" but what does that mean really?\n In my mind I think of company as a completion provider (on top of capf) and vertico as the UI for it. But corfu is a UI for capf, right? So do I still need vertico? And I assume I'll still need consult, I couldn't live without consult-buffer.\n I know I should just try it & see what happens, but any pointers would be helpful.\n    submitted by    /u/simplex5d  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1bz0ekn/company_vertico_corfu_corfusion/",
-          "publishedOn": "2024-04-08T15:14:05.000Z",
-          "wordCount": null,
-          "title": "Company, vertico(+), corfu = corfusion :-)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1byzraj/why_is_my_buildorder_failing_even_with_after_and/",
-          "author": null,
-          "description": "I try to run after restart transient that includes ffdata, I receive the error that FFData isn't loaded; and when I try to load it by manually evaling its use-package statement, it says that emacsql isn't loaded. So, I can get everything loaded by evaluating my emacsql use-package, and then my ff-data use-package. But why do I have to do this every load time? I thought I could get around it by using :after and :demand but for some reason this doesn't seem to change anything. I like to pretend that order doesn't matter in my init.el, so I would like to avoid repositioning them in some other order.\n Here are the important lines I am trying:\n (use-package emacsql :demand t) \n and above:\n  (use-package consult-ffdata :after emacsql :straight (consult-ffdata :type git :host github :repo \"chen-chao/consult-ffdata\") :custom (counsel-ffdata-database-path \"/home/torysa/.mozilla/firefox/aabkj82t.default/places.sqlite\") ) \n Why aren't the demand and after statements working, and why do I have to manually evaluate those lines to get things to work properly?\n    submitted by    /u/WorldsEndless  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1byzraj/why_is_my_buildorder_failing_even_with_after_and/",
-          "publishedOn": "2024-04-08T14:48:25.000Z",
-          "wordCount": null,
-          "title": "Why is my build-order failing, even with :after and :demand?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1byxogf/random_theme_code/",
-          "author": null,
-          "description": "Hallo I am total emacs noob (<1 week) but here is some lisp code I put together to load a random theme on startup\n ​\n ​\n (defun random-action ()\n (let ((random-number (random 6)))\n (cond ((= random-number 0) (load-theme 'material t))\n ((= random-number 1) (load-theme 'zenburn t)) \n  ((= random-number 2) (load-theme 'solarized-selenized-dark t)) \n ((= random-number 3) (load-theme 'gruvbox t))\n  ((= random-number 4) (load-theme 'solarized-wombat-dark t)) ((= random-number 5) (load-theme 'solarized-selenized-black t))))) \n ​\n No real use obviously but just wanted to share\n    submitted by    /u/Advanced-Active4115  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1byxogf/random_theme_code/",
-          "publishedOn": "2024-04-08T13:19:36.000Z",
-          "wordCount": null,
-          "title": "Random theme code",
-          "imageUrl": null
         }
       ]
     },
@@ -8877,16 +8807,6 @@
           "publishedOn": "2024-04-09T16:12:57.000Z",
           "wordCount": 650,
           "title": "Crowdfund iPad Dev",
-          "imageUrl": null
-        },
-        {
-          "id": "2872@/discussions",
-          "author": "System",
-          "description": "This discussion was created from comments split from: How do you link/navigate your notes?.",
-          "link": "https://forum.zettelkasten.de/discussion/2872/how-do-you-get-the-symbols-in-the-sidebar",
-          "publishedOn": "2024-04-08T18:19:19.000Z",
-          "wordCount": 609,
-          "title": "How do you get the symbols in the sidebar?",
           "imageUrl": null
         }
       ]
