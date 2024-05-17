@@ -63,6 +63,56 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1cu7bnl/datastar_realtime_hypermedia_framework_releases/",
+          "author": null,
+          "description": "submitted by    /u/opiniondevnull  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1cu7bnl/datastar_realtime_hypermedia_framework_releases/",
+          "publishedOn": "2024-05-17T14:56:58.000Z",
+          "wordCount": null,
+          "title": "Datastar (Real-time Hypermedia Framework) releases v0.13.0 https://data-star.dev",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1cu5bbb/hvm2_is_finally_production_ready_and_runs_on_gpus/",
+          "author": null,
+          "description": "HVM2 is a runtime for high-level languages like Haskell and Python. It is like Haskell's STG, and could, one day, be an alternative runtime that GHC targets. After years of hard work and polish, with emphasis on correctness, it is finally production ready. And it runs on GPUs now!\n Unfortunately, we do not compile Haskell to it yet. Turns out such project is much harder than I anticipated, and we don't have the scale to do it yet. There are still no brackets/croissants, as the performance impact of these is too harsh to keep it practical. I'll keep working hard to make it happen one day.\n I'm posting this because it might interest one of you. The new atomic linking algorithm on HVM2's paper is beautiful and I think some of you will enjoy. Please do delete the thread if you think it is off-topic here. HVM2 is written in Rust. We only use Haskell directly on Kind's new checker, but it isn't released yet. :(\n    submitted by    /u/SrPeixinho  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1cu5bbb/hvm2_is_finally_production_ready_and_runs_on_gpus/",
+          "publishedOn": "2024-05-17T13:34:14.000Z",
+          "wordCount": null,
+          "title": "HVM2 is finally production ready, and runs on GPUs.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ctwar4/monadfix_m_monad_backwards_m/",
+          "author": null,
+          "description": "Backwards is a way to run Applicative actions in backwards order.\n I decided to try if you could define a Monad backwards, but with a MonadFix constraint: \n instance MonadFix m => Monad (Backwards m) where (>>=) :: forall a b. Backwards m a -> (a -> Backwards m b) -> Backwards m b (>>=) = coerce bind where bind :: m a -> (a -> m b) -> m b bind as next = mdo b <- next a a <- as pure b \n I think it's pretty much useless, but who knows. I was able to run an example that is actually an Applicative instance, since the computations are independent. \n -- >> conversation putStrLn readLn -- Hello A -- < 100 -- Hello B -- < 200 -- Hello C -- = (100,200) conversation :: Monad m => (String -> m ()) -> m Int -> m (Int, Int) conversation say getInt = do say \"Hello A\" n <- getInt say \"Hello B\" m <- getInt say \"Hello C\" pure (n, m) -- >> conversationBackwards putStrLn readLn -- Hello C -- < 100 -- Hello B -- < 200 -- Hello A -- = (200,100) conversationBackwards :: forall m. MonadFix m => (String -> m ()) -> m Int -> m (Int, Int) conversationBackwards = coerce do conversation @(Backwards m) \n Adding a dependency, not surprisingly, gives me: Exception: cyclic evaluation in fixIO.\n    submitted by    /u/Iceland_jack  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ctwar4/monadfix_m_monad_backwards_m/",
+          "publishedOn": "2024-05-17T04:04:18.000Z",
+          "wordCount": null,
+          "title": "MonadFix m => Monad (Backwards m)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ctsvk4/json_parsing_paths/",
+          "author": null,
+          "description": "Greetings,\n Very new to Haskell and I'm trying to do real-world things with it, maybe too soon. I have this short program\n {-# LANGUAGE OverloadedStrings #-} module Substances where import qualified Control.Exception as E import Data.Aeson.Parser.Internal import Data.Aeson.Types import Data.ByteString import Network.HTTP.Simple getSubstancesJson :: IO (Response ByteString) getSubstancesJson = httpBS \"https://api.fda.gov/other/substance.json?limit=1\" getResults :: IO () getResults = do E.bracket resp onError $ \\body -> do let json_ = eitherDecodeStrictWith jsonEOF ifromJSON body case json_ of (Right j) -> putStrLn j Left (path, err) -> putStrLn (\"Error \" <> show err <> \" at \" <> show path) where json = getSubstancesJson resp = getResponseBody <$> json onError = const $ getResponseStatusCode <$> json \n This compiles and runs but it shows that the path is an empty list. The error message is \"expected String but encountered Object\". I know this data source produces valid JSON and I'm wondering where I am going wrong and how I might get a more descriptive error here. Also general style critiques are much appreciated. Thanks everyone in advance, this is a really cool language and I'm excited to finally learn!\n    submitted by    /u/bahol-de-jic  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ctsvk4/json_parsing_paths/",
+          "publishedOn": "2024-05-17T00:59:54.000Z",
+          "wordCount": null,
+          "title": "JSON parsing paths",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ctofyp/how_do_you_just_experiment_with_modules_from/",
+          "author": null,
+          "description": "EDIT: Thank you all for the helpful replies! I am currently bedridden and very ill but at least now I can have something to do!\n It seems like this is a recurring question but it is just really confusing and I need some guidance. \n I just want to hone my haskell programming skills meaning that whenever I find exercises or puzzles I will look for modules that implement functions I can use without having to write em myself. These packages aren't in base. For example on hackage I found digits. \n In python i would just create a venv, pip install away and trash the entire environment when done, leaving me with a clean global installation. \n Reading about cabal and messing with it ever so slightly I am already afraid that everything is about to go to hell. I read about hsenv and how supposedly it is kinda the same (https://hackage.haskell.org/package/hsenv) so I guess I can use that and just cabal install --lib away there but havent tried it yet.\n How do you guys do this? How do you mess around and experiment with non-base modules after which you remove what is unnecessary leaving you with a clean system? I just want to write some basic scripts, maybe at some point write some larger applications. Every single time I get drawn back in again (it is all for my own benefit, i am not required to learn haskell) I am met with this exact same nonsense where I just blank out and ditch it because my global installation gets f*cked. I am sick of it! I love the language! Have so for years! Help me love this tooling by telling me how you handle it!\n Edit: for the record i have everything installed using ghcup, i am also fairly familiar writing haskell code. I just want to know how everybody goes around writing basic scripts without initializing an entire project if you just need 50 LOC for some leetcode or advent of code puzzle.\n    submitted by    /u/SilentNightm4re  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ctofyp/how_do_you_just_experiment_with_modules_from/",
+          "publishedOn": "2024-05-16T21:27:42.000Z",
+          "wordCount": null,
+          "title": "How do you just experiment with modules from other packages?",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1ctj63l/tutorial_build_a_cli_speed_typing_game_in_haskell/",
           "author": null,
           "description": "submitted by    /u/Worldly_Dish_48  \n [link]   [comments]",
@@ -1011,56 +1061,6 @@
           "wordCount": null,
           "title": "Markdown To HTML Compiler⚙️",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1c6x85y/having_a_hard_time_wrapping_my_brain_around_the/",
-          "author": null,
-          "description": "So I've been using Haskell for a while now, I've gotten the hang of monads, applicatives, lazy evaluation, dabbled in mtl, lenses, and free monads, and I've absolutely loved all of it. But there's one single function that perpetually stumps me and I can't seem to understand how it works, and that's fix.\n The definition is\n fix f = let x = f x in x\n Trying to read through some stackoverflow answers explaining this function the closest I could get to understanding it is that the f passed into fix is infinitely composed with itself like so:\n  x = f . f $ x -- or x = f (f x) x = f . f . f $ x -- or x = f (f (f x)) x = f . f . f . f . f . f . f . f . f . f . f $ x -- etc. \n Given this explanation my question is, if a function is infinitely composed with itself, even if we were to have lazy evaluation here, how could it ever possibly terminate? The documentation says something about how fix produces the least fixed point of a function, looking that up I see something about domain theory and don't get any closer to understanding it. This is the one thing I feel like I simply can't get about this language. Can anyone help me out here?\n    submitted by    /u/lucid00000  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1c6x85y/having_a_hard_time_wrapping_my_brain_around_the/",
-          "publishedOn": "2024-04-18T07:16:01.000Z",
-          "wordCount": null,
-          "title": "Having a hard time wrapping my brain around the fix function",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1c6v27k/recruiting_haskell_developers_in_stockholm/",
-          "author": null,
-          "description": "Hello everyone! My company, Functional Software, is recruiting for several Haskell positions in the Stockholm (Sweden) area. If you live in or near Stockholm and want to work with Haskell, don't hesitate to reach out!\n We’re recruiting for several different positions for different clients; candidates should either be: - Haskell dev with several years of production Haskell experience - Junior Haskell dev; should have some years of working with functional programming in production (not necessarily Haskell)\n Compensation is negotiable and will depend on seniority.\n (Please note that employees must be on-site in Stockholm at least a few days per week)\n    submitted by    /u/JohnyTex  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1c6v27k/recruiting_haskell_developers_in_stockholm/",
-          "publishedOn": "2024-04-18T04:59:34.000Z",
-          "wordCount": null,
-          "title": "Recruiting Haskell developers in Stockholm",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1c6rsw9/call_for_participation_haskell_ecosystem_workshop/",
-          "author": null,
-          "description": "submitted by    /u/jmct  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1c6rsw9/call_for_participation_haskell_ecosystem_workshop/",
-          "publishedOn": "2024-04-18T02:01:24.000Z",
-          "wordCount": null,
-          "title": "Call for Participation: Haskell Ecosystem Workshop @ Zurihac",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1c6fpbj/symbolparser_type_level_string_parser_combinators/",
-          "author": null,
-          "description": "submitted by    /u/raehik  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1c6fpbj/symbolparser_type_level_string_parser_combinators/",
-          "publishedOn": "2024-04-17T17:24:56.000Z",
-          "wordCount": null,
-          "title": "symbol-parser: Type level string parser combinators",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1c68h5i/haskell_interlude_47_avi_press/",
-          "author": null,
-          "description": "submitted by    /u/nomeata  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1c68h5i/haskell_interlude_47_avi_press/",
-          "publishedOn": "2024-04-17T12:24:15.000Z",
-          "wordCount": null,
-          "title": "Haskell Interlude 47: Avi Press",
-          "imageUrl": null
         }
       ]
     },
@@ -1069,6 +1069,36 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1cu9lmy/gears_in_online_d/",
+          "author": null,
+          "description": "EDIT: I meant \"Gears [is] online\". 🤦.\n Sonatype Central. Gears Book.\n I heard about the book a while back, but the library wasn't published.\n //> using scala 3.4.0 //> using dep \"ch.epfl.lamp::gears::0.2.0\" //> using nativeVersion \"0.5.1\" import gears.async.* import gears.async.default.given u/main def main() = Async.blocking: val hello = Future: print(\"Hello\") val world = Future: hello.await println(\", world!\") world.await \n Now it runs :D\n Btw, I'm not related to the project, and I'm just a user. This is for anyone wanting to play around who also attempted it but didn't want to build it like me.\n On another note... I hate that Async.blocking can be closed with {}, but when I'm using the : syntax, I can't used end, like end Async.blocking or something of the like.\n Async.blocking: ... end Async.blocking \n ...when the language spoils you so much that you start wondering why it's not 100% perfect.\n To fewerBraces, I'm still not sure if I like you for getting rid of those annoying symbols, or if I am willing to put up with your irregularities.\n    submitted by    /u/julian-a-avar-c  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1cu9lmy/gears_in_online_d/",
+          "publishedOn": "2024-05-17T16:28:11.000Z",
+          "wordCount": null,
+          "title": "Gears in online :D",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1cu17h0/scala_times_issue_532/",
+          "author": null,
+          "description": "submitted by    /u/krzysztof_ciesielski  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1cu17h0/scala_times_issue_532/",
+          "publishedOn": "2024-05-17T09:42:55.000Z",
+          "wordCount": null,
+          "title": "Scala Times Issue #532",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ctzs5e/barely_functional_lets_build_a_lean_scala_app/",
+          "author": null,
+          "description": "Hi folks, \n Just letting you know Scala Open Hours + programming for fun and profit streams are up and today we continue to build a website using a lean Scala stack. We're starting in 5 minutes at 10:00 CEST.\n Links:\n https://www.twitch.tv/averagefpenjoyer\n https://www.youtube.com/@average.fp.enjoyer/streams\n    submitted by    /u/lbialy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ctzs5e/barely_functional_lets_build_a_lean_scala_app/",
+          "publishedOn": "2024-05-17T07:56:55.000Z",
+          "wordCount": null,
+          "title": "Barely Functional: let's build a lean Scala app",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1ctmqh5/apache_software_foundation_announces_new_toplevel/",
           "author": null,
@@ -1878,16 +1908,6 @@
           "wordCount": null,
           "title": "Exception Handling in Scala",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1c6wa8l/the_death_of_monads_direct_style_algebraic_effects/",
-          "author": null,
-          "description": "submitted by    /u/sideEffffECt  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1c6wa8l/the_death_of_monads_direct_style_algebraic_effects/",
-          "publishedOn": "2024-04-18T06:14:33.000Z",
-          "wordCount": null,
-          "title": "The Death of Monads? Direct Style Algebraic Effects",
-          "imageUrl": null
         }
       ]
     },
@@ -1983,16 +2003,6 @@
           "publishedOn": "2024-04-25T00:00:00.000Z",
           "wordCount": 3630,
           "title": "Re-implementing the Nix protocol in Rust",
-          "imageUrl": "https://tweag.io/logo.png"
-        },
-        {
-          "id": "https://tweag.io/blog/2024-04-18-cloud-native-pulse-2024/",
-          "author": null,
-          "description": "Last year, at the end of winter, we wrote our impressions of the trends and\nevolution of infrastructure and configuration management\nafter attending FOSDEM and CfgMgmtCamp. We’re\nat it again, but with Kubecon this year, the biggest cloud native\ncomputing conference.\nIf you’ve never heard of cloud native computing before, it has a number of definitions online, but the simplest one is that it’s mostly about Kubernetes.\nKubecon is a huge event with thousands of attendees. The conference spanned\nseveral levels of the main convention center in Paris, with a myriad of\nconference rooms and a whole floor for sponsor booths. FOSDEM already felt huge\ncompared to academic conferences, but Kubecon is even bigger.\nAlthough the program was filled with appealing talks, we ended up spending most\nof our ti…",
-          "link": "https://tweag.io/blog/2024-04-18-cloud-native-pulse-2024/",
-          "publishedOn": "2024-04-18T00:00:00.000Z",
-          "wordCount": 2951,
-          "title": "Cloud Native Computing in 2024—feeling the pulse at Kubecon",
           "imageUrl": "https://tweag.io/logo.png"
         }
       ]
@@ -2436,6 +2446,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/hyperdrive-20240515.433.tar",
+          "author": null,
+          "description": "The hyperdrive package has been updated to version 20240515.433.",
+          "link": "https://melpa.org/#/hyperdrive",
+          "publishedOn": "2024-05-15T04:33:00.000Z",
+          "wordCount": 105,
+          "title": "hyperdrive (20240515.433) --- P2P filesystem",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/champagne-20240515.310.tar",
           "author": null,
           "description": "The champagne package has been updated to version 20240515.310.",
@@ -2483,6 +2503,26 @@
           "publishedOn": "2024-05-14T15:54:00.000Z",
           "wordCount": 105,
           "title": "chatgpt-shell (20240514.1554) --- ChatGPT shell + buffer insert commands",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/racket-mode-20240514.1524.tar",
+          "author": null,
+          "description": "The racket-mode package has been updated to version 20240514.1524.",
+          "link": "https://melpa.org/#/racket-mode",
+          "publishedOn": "2024-05-14T15:24:00.000Z",
+          "wordCount": 105,
+          "title": "racket-mode (20240514.1524) --- Racket editing, REPL, and more",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lsp-mode-20240514.1430.tar",
+          "author": null,
+          "description": "The lsp-mode package has been updated to version 20240514.1430.",
+          "link": "https://melpa.org/#/lsp-mode",
+          "publishedOn": "2024-05-14T14:30:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-mode (20240514.1430) --- LSP mode",
           "imageUrl": null
         },
         {
@@ -5394,146 +5434,6 @@
           "wordCount": 105,
           "title": "wfnames (20240418.1005) --- Edit filenames",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/symex-20240418.806.tar",
-          "author": null,
-          "description": "The symex package has been updated to version 20240418.806.",
-          "link": "https://melpa.org/#/symex",
-          "publishedOn": "2024-04-18T08:06:00.000Z",
-          "wordCount": 105,
-          "title": "symex (20240418.806) --- An evil way to edit Lisp symbolic expressions as trees",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/js2-mode-20240418.6.tar",
-          "author": null,
-          "description": "The js2-mode package has been updated to version 20240418.6.",
-          "link": "https://melpa.org/#/js2-mode",
-          "publishedOn": "2024-04-18T00:06:00.000Z",
-          "wordCount": 105,
-          "title": "js2-mode (20240418.6) --- Improved JavaScript editing mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/etc-sudoers-mode-20240417.2126.tar",
-          "author": null,
-          "description": "The etc-sudoers-mode package has been updated to version 20240417.2126.",
-          "link": "https://melpa.org/#/etc-sudoers-mode",
-          "publishedOn": "2024-04-17T21:26:00.000Z",
-          "wordCount": 105,
-          "title": "etc-sudoers-mode (20240417.2126) --- Edit Sudo security policies",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dired-launch-20240417.1903.tar",
-          "author": null,
-          "description": "The dired-launch package has been updated to version 20240417.1903.",
-          "link": "https://melpa.org/#/dired-launch",
-          "publishedOn": "2024-04-17T19:03:00.000Z",
-          "wordCount": 105,
-          "title": "dired-launch (20240417.1903) --- Use dired as a launcher",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/compile-multi-20240417.1826.tar",
-          "author": null,
-          "description": "The compile-multi package has been updated to version 20240417.1826.",
-          "link": "https://melpa.org/#/compile-multi",
-          "publishedOn": "2024-04-17T18:26:00.000Z",
-          "wordCount": 105,
-          "title": "compile-multi (20240417.1826) --- A multi target interface to compile",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sesman-20240417.1723.tar",
-          "author": null,
-          "description": "The sesman package has been updated to version 20240417.1723.",
-          "link": "https://melpa.org/#/sesman",
-          "publishedOn": "2024-04-17T17:23:00.000Z",
-          "wordCount": 105,
-          "title": "sesman (20240417.1723) --- Generic Session Manager",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eshell-toggle-20240417.1536.tar",
-          "author": null,
-          "description": "The eshell-toggle package has been updated to version 20240417.1536.",
-          "link": "https://melpa.org/#/eshell-toggle",
-          "publishedOn": "2024-04-17T15:36:00.000Z",
-          "wordCount": 105,
-          "title": "eshell-toggle (20240417.1536) --- Show/hide eshell under active window.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/xref-js2-20240417.1454.tar",
-          "author": null,
-          "description": "The xref-js2 package has been updated to version 20240417.1454.",
-          "link": "https://melpa.org/#/xref-js2",
-          "publishedOn": "2024-04-17T14:54:00.000Z",
-          "wordCount": 105,
-          "title": "xref-js2 (20240417.1454) --- Jump to references/definitions using ag & js2-mode's AST",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/poly-ansible-20240417.1402.tar",
-          "author": null,
-          "description": "The poly-ansible package has been updated to version 20240417.1402.",
-          "link": "https://melpa.org/#/poly-ansible",
-          "publishedOn": "2024-04-17T14:02:00.000Z",
-          "wordCount": 105,
-          "title": "poly-ansible (20240417.1402) --- Polymode for Ansible: Jinja2 in YAML",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/babashka-20240417.1347.tar",
-          "author": null,
-          "description": "The babashka package has been updated to version 20240417.1347.",
-          "link": "https://melpa.org/#/babashka",
-          "publishedOn": "2024-04-17T13:47:00.000Z",
-          "wordCount": 105,
-          "title": "babashka (20240417.1347) --- Babashka Tasks Interface",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/consult-tex-20240417.1149.tar",
-          "author": null,
-          "description": "The consult-tex package has been updated to version 20240417.1149.",
-          "link": "https://melpa.org/#/consult-tex",
-          "publishedOn": "2024-04-17T11:49:00.000Z",
-          "wordCount": 105,
-          "title": "consult-tex (20240417.1149) --- Consult powered completion for tex",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/moe-theme-20240417.1111.tar",
-          "author": null,
-          "description": "The moe-theme package has been updated to version 20240417.1111.",
-          "link": "https://melpa.org/#/moe-theme",
-          "publishedOn": "2024-04-17T11:11:00.000Z",
-          "wordCount": 105,
-          "title": "moe-theme (20240417.1111) --- A colorful eye-candy theme. Moe, moe, kyun!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/evil-matchit-20240417.917.tar",
-          "author": null,
-          "description": "The evil-matchit package has been updated to version 20240417.917.",
-          "link": "https://melpa.org/#/evil-matchit",
-          "publishedOn": "2024-04-17T09:17:00.000Z",
-          "wordCount": 105,
-          "title": "evil-matchit (20240417.917) --- Vim matchit ported to Evil",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/kotlin-ts-mode-20240417.838.tar",
-          "author": null,
-          "description": "The kotlin-ts-mode package has been updated to version 20240417.838.",
-          "link": "https://melpa.org/#/kotlin-ts-mode",
-          "publishedOn": "2024-04-17T08:38:00.000Z",
-          "wordCount": 105,
-          "title": "kotlin-ts-mode (20240417.838) --- A mode for editing Kotlin files based on tree-sitter",
-          "imageUrl": null
         }
       ]
     },
@@ -5542,6 +5442,96 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cucwtm/how_to_access_emacs_top_menu/",
+          "author": null,
+          "description": "I want to transition from Libre Office Writer to Emacs Org-mode with my writing and pdf exporting needs. I am trying to learn Emacs and I struggle with the basics.\n I am able to launch emacs from terminal by typing $ emacs -nw\n I am able to close emacs by pressing Ctrl+X followed by Ctrl+C\n I have also installed the prelude addons by bbatsov.\n But could someone please tell me the basics for navigating in emacs?\n When I launch emacs I can see a top menu (File, Edit, Options, etc.) How can I access those by mouse and by keyboard? In windows I would press the Alt key followed by the arrow keys.\n Also what is the key for cancel? For example if I press Ctrl+X, how do I back up to the state before pressing those keys?\n    submitted by    /u/JumpyJuu  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cucwtm/how_to_access_emacs_top_menu/",
+          "publishedOn": "2024-05-17T18:44:14.000Z",
+          "wordCount": null,
+          "title": "How to access Emacs top menu?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cu82z8/is_there_a_good_way_to_make_emacsplus_downloaded/",
+          "author": null,
+          "description": "submitted by    /u/Dry-Question9673  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cu82z8/is_there_a_good_way_to_make_emacsplus_downloaded/",
+          "publishedOn": "2024-05-17T15:26:40.000Z",
+          "wordCount": null,
+          "title": "Is there a good way to make emacs-plus downloaded through homebrew appear via spotlight search on mac?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cu6k0m/adding_a_new_language_to_lspmode/",
+          "author": null,
+          "description": "I'm tinkering with a home made toy LSP server I'm writing myself. I am trying to get it interacting with emacs and have been working with This page from LSP-Mode's website. This is the code I've got in my init.el file. \n Two small questions. \n When I launch lsp in a buffer with a .T file lsp-log says command \"my_lsp is not present on path\" The my_lsp executable is in my .emacs.d/packages/ folder which is added to path at the top of my init file. It isn't advanced enough to require parameters yet. It also executes successfully if I type ./my_lsp in a terminal. It produceses a log file to confirm this. Is that not the path it means? I tried adding it to my Linux path with a source command but it didn't change anything. \n Second, does the fact that it's in fundamental mode matter if I'm using the regex syntax to add to lsp-language-id-config? By using regex I thought I understood that the mode didn't matter because I'm defining it by file extension instead. Any help clarifying this would be very helpful. Thanks\n (with-eval-after-load 'lsp-mode (add-to-list 'lsp-language-id-configuration '(\".*\\\\.T$\" . \"T\")) (lsp-register-client (make-lsp-client :new-connection (lsp-stdio-connection \"my_lsp\") :activation-fn (lsp-activate-on \"T\") :server-id 'my_lsp))) \n    submitted by    /u/Usual_Office_1740  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cu6k0m/adding_a_new_language_to_lspmode/",
+          "publishedOn": "2024-05-17T14:25:58.000Z",
+          "wordCount": null,
+          "title": "Adding a new language to LSP-Mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1cu3oan/accidental_font_changes_in_emacs/",
+          "author": null,
+          "description": "I'm on a laptop. The font changes outside of my conscious control.\n It happens when I have the control-key pressed and I touch the mousepad.\n I can't consistently figure out what I'm doing.\n What are the keystrokes that is torturing me and how do I make it go away?\n    submitted by    /u/yee_88  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1cu3oan/accidental_font_changes_in_emacs/",
+          "publishedOn": "2024-05-17T12:16:37.000Z",
+          "wordCount": null,
+          "title": "accidental font changes in EMACS",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ctvjjg/org_agenda_fundamentals_volume_2_todos_advanced/",
+          "author": null,
+          "description": "submitted by    /u/unixbhaskar  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ctvjjg/org_agenda_fundamentals_volume_2_todos_advanced/",
+          "publishedOn": "2024-05-17T03:21:30.000Z",
+          "wordCount": null,
+          "title": "Org Agenda Fundamentals Volume 2: TODOs (Advanced)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ctt5ow/prompt_for_image_with_previews/",
+          "author": null,
+          "description": "I want a function to pick an image from my photos folder and insert a link to it in my current org mode note. This isn't too hard to do without even needing to write a function; C-c C-l can do it well enough. The problem is, I also want:\n  \nThe list of images to be sorted newest first; and\n Make it possible to see a preview of the image.\n  \nVertico previews don't seem to handle images and completing-read ignores my sort order. I tried spawning a dired buffer and using dired-get-file-for-visit, but this is clumsy and inconvenient; I can't find a way to do it that is as simple as \"press keybinding, select file, link is inserted.\" Googling around gets me nothing. Is there anything else I can try?\n    submitted by    /u/D3nj4l  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ctt5ow/prompt_for_image_with_previews/",
+          "publishedOn": "2024-05-17T01:14:25.000Z",
+          "wordCount": null,
+          "title": "Prompt for image with previews",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ctsqxo/how_to_open_pdf_files_from_citar_in_evince/",
+          "author": null,
+          "description": "I have been a long-time user of helm-bibtex, where I could have a menu of actions on a given bibliographic entry. I keep hearing that citar has many advantages, so I am starting to use it. After configuring citar as:\n (use-package citar\n :straight t\n :custom\n (citar-bibliography my-bibliography)\n (citar-library-paths `(,my-library-path))\n (citar-notes-paths `(,my-notes-directory)))\n (I have previously defined my-bibliography, and the others) and runningM-x citar-open, I can choose to open the pdf file, but it opens in Emacs. How could I add the option of opening the file in Evince? (I use Ubuntu).\n    submitted by    /u/rvf0068  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ctsqxo/how_to_open_pdf_files_from_citar_in_evince/",
+          "publishedOn": "2024-05-17T00:53:17.000Z",
+          "wordCount": null,
+          "title": "How to open pdf files from citar in evince?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ctoaap/how_to_tell_if_theme_is_light_or_dark/",
+          "author": null,
+          "description": "I've been using Emacs for a very long time (back in the vt100 days even), but only starting to think about dark mode. VS Code must be infecting me or something. I see there's lots of work going on with Emacs theming these days.\n I have lots of individually customized :background color specs in my init file; should I just defconst theme-dark-p and use that everywhere to adjust my custom colors, or should I go all in and hook into the theming infrastructure rather than just (set-face-attribute ... nil :background #0d5)?\n    submitted by    /u/simplex5d  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ctoaap/how_to_tell_if_theme_is_light_or_dark/",
+          "publishedOn": "2024-05-16T21:21:07.000Z",
+          "wordCount": null,
+          "title": "How to tell if theme is light or dark?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ctni1g/git_renames_via_wdired/",
+          "author": null,
+          "description": "tl;dr use (setq dired-vc-rename-file t) more at https://lmno.lol/alvaro/emacs-git-rename-courtesy-of-dired\n    submitted by    /u/xenodium  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ctni1g/git_renames_via_wdired/",
+          "publishedOn": "2024-05-16T20:49:41.000Z",
+          "wordCount": null,
+          "title": "Git renames via wdired",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1ctcd92/company_mode_show_whitespaces_dots_in_completion/",
           "author": null,
@@ -8360,56 +8350,6 @@
           "publishedOn": "2024-04-18T11:15:30.000Z",
           "wordCount": null,
           "title": "Emacs successors?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1c6thvj/is_there_a_config_to_make_emacs_look_as_astronvim/",
-          "author": null,
-          "description": "I've used vanilla emacs for a long time for microcontroller work with stm32 and recently had to use vscode because of my work as a C++ developer. There I appreciated many of VsCode's features, but being based off Microsoft once my job finished I began planning on dropping it. However seems to be neovim with many of its distros is nowadays the best experience for out of the box similarity with many of vscode's features, however knowing emacs is emacs I know everything's possible but is it worth the effort? Also with vanilla emacs I've seen some performance drawbacks whit heavy configurations and things were sometimes not as smooth even as vscode and I've heard neovim is very fast and light. Do you think emacs is a good idea for my goals? Maybe doom emacs already has what I want? So I don't have to spend weeks configuring emacs.....\n Thnx in advance\n    submitted by    /u/bloomingFemme  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1c6thvj/is_there_a_config_to_make_emacs_look_as_astronvim/",
-          "publishedOn": "2024-04-18T03:29:28.000Z",
-          "wordCount": null,
-          "title": "Is there a config to make emacs look as astronvim, nvchad and similar?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1c6nrni/eglot_is_overriding_parentheses_style_and/",
-          "author": null,
-          "description": "New to emacs and I've been struggling so much with this. \n I've already tried customizing the emacs variables, I tried Editorconfig as well, nothing works. \n    submitted by    /u/Fakdo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1c6nrni/eglot_is_overriding_parentheses_style_and/",
-          "publishedOn": "2024-04-17T22:51:46.000Z",
-          "wordCount": null,
-          "title": "Eglot is overriding parentheses style and indentation for modes. How do I stop it?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1c6ib8n/emacs_glitch/",
-          "author": null,
-          "description": "For a long time I have been having the issue where my emacs would occasionally glitch, in the following 2 ways:\n  \nit will randomly hang when I'm doing something. this happens with M-x and honestly everything so I don't think it's caching \n when I type, it will randomly hang a bit and emit the text I type, but in the wrong sequence of keystrokes. I used to think that it might be completion-at-point taking too much time, but there's honestly nothing there, and there are various of times they are very fast.\n  \nI used to assume that it was my keyboard as I basically only use emacs when I'm using my computer, but I just tested that other program don't seem to have this problem\n So I suspect it is something with emacs.\n ​\n I tested the typing problem in firefox(I rolled \"123123123\" on my keyboard) and emacs. In firefox there's occasional delay but very brief and no sequence error, and in emacs this happened\n \"123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123121323232311123123123123123123123123\"\n notice the \"121323232311\" part at the back, that's when emacs hangs and emit the whole of them out altogether. My hand is quite consistent as you can see all other parts are consistent \"123123123\".\n ​\n I have no idea why this happens, my machine is generally fast, nothing else (that is only firefox) glitch, and emacs only takes 7% of CPU. I wonder if anyone else have seen this before?\n my emacs version is 29.1 with doomemacs. my config is on z.gehninfel.xyz/20230914114145-doomemacs_configuration.html\n ​\n    submitted by    /u/HermanHel  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1c6ib8n/emacs_glitch/",
-          "publishedOn": "2024-04-17T19:09:38.000Z",
-          "wordCount": null,
-          "title": "emacs glitch",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1c6epwl/lasgunel_avybacked_actionable_placement_of/",
-          "author": null,
-          "description": "​\n Demo of lasgun.el\n After writing some functionality for my personal configuration, I figured I may as well take a stab at writing my first package out of it.\n lasgun.el takes the Filter -> Select -> Act loop of avy and allows you to repeat the first two steps as needed, then act on the selections in bulk.\n It comes with two actions preloaded: one to place multiple-cursors.el cursors at each mark, and one to run embark-act-all on the positions. Users can define their own actions with the macro define-lasgun-action. Docstrings have usage information. \n Besides avy, there are no dependencies (optionally mc and embark are needed for the aforementioned actions).\n ​\n https://github.com/aatmunbaxi/lasgun.el \n    submitted by    /u/nanowillis  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1c6epwl/lasgunel_avybacked_actionable_placement_of/",
-          "publishedOn": "2024-04-17T16:45:29.000Z",
-          "wordCount": null,
-          "title": "lasgun.el: Avy-backed, actionable placement of multiple marks",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1c66ad9/axy_ad_hoc_expansion_of_yasnippet_from_anywhere/",
-          "author": null,
-          "description": "submitted by    /u/naiquevin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1c66ad9/axy_ad_hoc_expansion_of_yasnippet_from_anywhere/",
-          "publishedOn": "2024-04-17T10:21:23.000Z",
-          "wordCount": null,
-          "title": "axy - Ad hoc expansion of yasnippet from anywhere in emacs",
           "imageUrl": null
         }
       ]
