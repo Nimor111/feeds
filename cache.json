@@ -44,16 +44,6 @@
           "wordCount": 451,
           "title": "Issue 421",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/420.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nCabal-3.12.0.0 released! by Francesco Ariis\nThe Cabal team is happy to announce the release of Cabal the library version 3.12.0.0.\nCabal exact printing by Jappie J. T. Klooster\nFor a long time, I’ve been annoyed that cabal tells you to add modules to your cabal file. It’s can of detect missing modules, but won’t automatically add them. This is not a big deal for a single module, but if you like splitting code into many small modules, for example because you like fast compile times, then any refactor may cause many of these messages to appear, which becomes tedious to manage.\nEpisode 49 –…",
-          "link": "https://haskellweekly.news/issue/420.html",
-          "publishedOn": "2024-05-16T12:00:00.000Z",
-          "wordCount": 995,
-          "title": "Issue 420",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,16 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1dglofp/proposal_add_datalistnonemptyunfoldm/",
+          "author": null,
+          "description": "submitted by    /u/Bodigrim  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1dglofp/proposal_add_datalistnonemptyunfoldm/",
+          "publishedOn": "2024-06-15T16:25:11.000Z",
+          "wordCount": null,
+          "title": "Proposal: add Data.List[.NonEmpty].unfoldM",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/1dfpdtk/welltyped_part_3_higherorder_functions_of_the/",
           "author": null,
@@ -1071,56 +1071,6 @@
           "wordCount": null,
           "title": "HVM2 is finally production ready, and runs on GPUs.",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ctwar4/monadfix_m_monad_backwards_m/",
-          "author": null,
-          "description": "Backwards is a way to run Applicative actions in backwards order.\n I decided to try if you could define a Monad backwards, but with a MonadFix constraint: \n instance MonadFix m => Monad (Backwards m) where (>>=) :: forall a b. Backwards m a -> (a -> Backwards m b) -> Backwards m b (>>=) = coerce bind where bind :: m a -> (a -> m b) -> m b bind as next = mdo b <- next a a <- as pure b \n I think it's pretty much useless, but who knows. I was able to run an example that is actually an Applicative instance, since the computations are independent. \n -- >> conversation putStrLn readLn -- Hello A -- < 100 -- Hello B -- < 200 -- Hello C -- = (100,200) conversation :: Monad m => (String -> m ()) -> m Int -> m (Int, Int) conversation say getInt = do say \"Hello A\" n <- getInt say \"Hello B\" m <- getInt say \"Hello C\" pure (n, m) -- >> conversationBackwards putStrLn readLn -- Hello C -- < 100 -- Hello B -- < 200 -- Hello A -- = (200,100) conversationBackwards :: forall m. MonadFix m => (String -> m ()) -> m Int -> m (Int, Int) conversationBackwards = coerce do conversation @(Backwards m) \n Adding a dependency, not surprisingly, gives me: Exception: cyclic evaluation in fixIO.\n    submitted by    /u/Iceland_jack  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ctwar4/monadfix_m_monad_backwards_m/",
-          "publishedOn": "2024-05-17T04:04:18.000Z",
-          "wordCount": null,
-          "title": "MonadFix m => Monad (Backwards m)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ctsvk4/json_parsing_paths/",
-          "author": null,
-          "description": "Greetings,\n Very new to Haskell and I'm trying to do real-world things with it, maybe too soon. I have this short program\n {-# LANGUAGE OverloadedStrings #-} module Substances where import qualified Control.Exception as E import Data.Aeson.Parser.Internal import Data.Aeson.Types import Data.ByteString import Network.HTTP.Simple getSubstancesJson :: IO (Response ByteString) getSubstancesJson = httpBS \"https://api.fda.gov/other/substance.json?limit=1\" getResults :: IO () getResults = do E.bracket resp onError $ \\body -> do let json_ = eitherDecodeStrictWith jsonEOF ifromJSON body case json_ of (Right j) -> putStrLn j Left (path, err) -> putStrLn (\"Error \" <> show err <> \" at \" <> show path) where json = getSubstancesJson resp = getResponseBody <$> json onError = const $ getResponseStatusCode <$> json \n This compiles and runs but it shows that the path is an empty list. The error message is \"expected String but encountered Object\". I know this data source produces valid JSON and I'm wondering where I am going wrong and how I might get a more descriptive error here. Also general style critiques are much appreciated. Thanks everyone in advance, this is a really cool language and I'm excited to finally learn!\n    submitted by    /u/bahol-de-jic  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ctsvk4/json_parsing_paths/",
-          "publishedOn": "2024-05-17T00:59:54.000Z",
-          "wordCount": null,
-          "title": "JSON parsing paths",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ctofyp/how_do_you_just_experiment_with_modules_from/",
-          "author": null,
-          "description": "EDIT: Thank you all for the helpful replies! I am currently bedridden and very ill but at least now I can have something to do!\n It seems like this is a recurring question but it is just really confusing and I need some guidance. \n I just want to hone my haskell programming skills meaning that whenever I find exercises or puzzles I will look for modules that implement functions I can use without having to write em myself. These packages aren't in base. For example on hackage I found digits. \n In python i would just create a venv, pip install away and trash the entire environment when done, leaving me with a clean global installation. \n Reading about cabal and messing with it ever so slightly I am already afraid that everything is about to go to hell. I read about hsenv and how supposedly it is kinda the same (https://hackage.haskell.org/package/hsenv) so I guess I can use that and just cabal install --lib away there but havent tried it yet.\n How do you guys do this? How do you mess around and experiment with non-base modules after which you remove what is unnecessary leaving you with a clean system? I just want to write some basic scripts, maybe at some point write some larger applications. Every single time I get drawn back in again (it is all for my own benefit, i am not required to learn haskell) I am met with this exact same nonsense where I just blank out and ditch it because my global installation gets f*cked. I am sick of it! I love the language! Have so for years! Help me love this tooling by telling me how you handle it!\n Edit: for the record i have everything installed using ghcup, i am also fairly familiar writing haskell code. I just want to know how everybody goes around writing basic scripts without initializing an entire project if you just need 50 LOC for some leetcode or advent of code puzzle.\n    submitted by    /u/SilentNightm4re  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ctofyp/how_do_you_just_experiment_with_modules_from/",
-          "publishedOn": "2024-05-16T21:27:42.000Z",
-          "wordCount": null,
-          "title": "How do you just experiment with modules from other packages?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ctj63l/tutorial_build_a_cli_speed_typing_game_in_haskell/",
-          "author": null,
-          "description": "submitted by    /u/Worldly_Dish_48  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ctj63l/tutorial_build_a_cli_speed_typing_game_in_haskell/",
-          "publishedOn": "2024-05-16T17:57:50.000Z",
-          "wordCount": null,
-          "title": "Tutorial: Build a CLI Speed Typing Game in Haskell | Concurrency & State Transformers | Vty Library Tutorial",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1cteybx/folding_identity/",
-          "author": null,
-          "description": "I see a lot of posts here about understanding the fold functions. For those who have mastered them, I will just leave this beautiful fold here, for y'all to enjoy:\n  flip (foldr id) \n (Post your explanation of what this function does below!)\n    submitted by    /u/typeterrorist  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1cteybx/folding_identity/",
-          "publishedOn": "2024-05-16T14:59:45.000Z",
-          "wordCount": null,
-          "title": "Folding identity",
-          "imageUrl": null
         }
       ]
     },
@@ -1129,6 +1079,16 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1dgbn9m/combining_functional_programming_with_the_actor/",
+          "author": null,
+          "description": "submitted by    /u/kloudmark  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1dgbn9m/combining_functional_programming_with_the_actor/",
+          "publishedOn": "2024-06-15T06:26:43.000Z",
+          "wordCount": null,
+          "title": "Combining Functional Programming with the Actor Model: A Comprehensive Cats-Actors Tutorial",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1dfytvo/scala_or_rust_objective_answers_please/",
           "author": null,
@@ -2128,36 +2088,6 @@
           "wordCount": null,
           "title": "Scala Times Issue #532",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ctzs5e/barely_functional_lets_build_a_lean_scala_app/",
-          "author": null,
-          "description": "Hi folks, \n Just letting you know Scala Open Hours + programming for fun and profit streams are up and today we continue to build a website using a lean Scala stack. We're starting in 5 minutes at 10:00 CEST.\n Links:\n https://www.twitch.tv/averagefpenjoyer\n https://www.youtube.com/@average.fp.enjoyer/streams\n    submitted by    /u/lbialy  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ctzs5e/barely_functional_lets_build_a_lean_scala_app/",
-          "publishedOn": "2024-05-17T07:56:55.000Z",
-          "wordCount": null,
-          "title": "Barely Functional: let's build a lean Scala app",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ctmqh5/apache_software_foundation_announces_new_toplevel/",
-          "author": null,
-          "description": "submitted by    /u/laura_puppato  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ctmqh5/apache_software_foundation_announces_new_toplevel/",
-          "publishedOn": "2024-05-16T20:19:48.000Z",
-          "wordCount": null,
-          "title": "Apache Software Foundation Announces New Top-Level Project Apache Pekko",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ct9jzo/i_cant_find_a_good_way_to_develop_in_this_language/",
-          "author": null,
-          "description": "I have a project to make for university in scala. I am very interested in this language but unfortunately I have not been able to find a proper environment to develop scala projects. I have tried Eclipse and failed because as soon as I install the necessary plugin for scala, the IDE no longer launches, I have tried installing Metals on Vs code, and it just fails to connect with the build server apparently, I can't afford Intellij and I think using the online sites is not an option for my project(too many files parallel programming etc.) and using the command line is out of the question (too much hassle, will definitely have trouble debugging, writing the code). I would like to have a program for development instead. Can anyone please help me out here?\n    submitted by    /u/Tsantakis  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ct9jzo/i_cant_find_a_good_way_to_develop_in_this_language/",
-          "publishedOn": "2024-05-16T10:15:23.000Z",
-          "wordCount": null,
-          "title": "I can't find a good way to develop in this language",
-          "imageUrl": null
         }
       ]
     },
@@ -2516,16 +2446,6 @@
           "wordCount": null,
           "title": "Guide to Org-roam interoperability with Logseq on the go",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1ctbxuc/report_to_terminal/",
-          "author": null,
-          "description": "Hi. I would love to have a report (if possible colorful) output to terminal from an orgfile. Are there already tools available for this ?\n    submitted by    /u/ecocode  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1ctbxuc/report_to_terminal/",
-          "publishedOn": "2024-05-16T12:40:01.000Z",
-          "wordCount": null,
-          "title": "report to terminal",
-          "imageUrl": null
         }
       ]
     },
@@ -2534,6 +2454,136 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/proof-general-20240615.1546.tar",
+          "author": null,
+          "description": "The proof-general package has been updated to version 20240615.1546.",
+          "link": "https://melpa.org/#/proof-general",
+          "publishedOn": "2024-06-15T15:46:00.000Z",
+          "wordCount": 105,
+          "title": "proof-general (20240615.1546) --- A generic Emacs interface for proof assistants",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mono-complete-20240615.1141.tar",
+          "author": null,
+          "description": "The mono-complete package has been updated to version 20240615.1141.",
+          "link": "https://melpa.org/#/mono-complete",
+          "publishedOn": "2024-06-15T11:41:00.000Z",
+          "wordCount": 105,
+          "title": "mono-complete (20240615.1141) --- Completion suggestions with multiple back-ends",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/jit-lock-stealth-progress-20240615.1137.tar",
+          "author": null,
+          "description": "The jit-lock-stealth-progress package has been updated to version 20240615.1137.",
+          "link": "https://melpa.org/#/jit-lock-stealth-progress",
+          "publishedOn": "2024-06-15T11:37:00.000Z",
+          "wordCount": 105,
+          "title": "jit-lock-stealth-progress (20240615.1137) --- JIT lock stealth mode-line progress",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/doc-show-inline-20240615.1135.tar",
+          "author": null,
+          "description": "The doc-show-inline package has been updated to version 20240615.1135.",
+          "link": "https://melpa.org/#/doc-show-inline",
+          "publishedOn": "2024-06-15T11:35:00.000Z",
+          "wordCount": 105,
+          "title": "doc-show-inline (20240615.1135) --- Show doc-strings found in external files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/diff-ansi-20240615.1129.tar",
+          "author": null,
+          "description": "The diff-ansi package has been updated to version 20240615.1129.",
+          "link": "https://melpa.org/#/diff-ansi",
+          "publishedOn": "2024-06-15T11:29:00.000Z",
+          "wordCount": 105,
+          "title": "diff-ansi (20240615.1129) --- Display diff's using alternative diffing tools",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/counsel-at-point-20240615.1124.tar",
+          "author": null,
+          "description": "The counsel-at-point package has been updated to version 20240615.1124.",
+          "link": "https://melpa.org/#/counsel-at-point",
+          "publishedOn": "2024-06-15T11:24:00.000Z",
+          "wordCount": 105,
+          "title": "counsel-at-point (20240615.1124) --- Context sensitive project search",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/recomplete-20240615.1121.tar",
+          "author": null,
+          "description": "The recomplete package has been updated to version 20240615.1121.",
+          "link": "https://melpa.org/#/recomplete",
+          "publishedOn": "2024-06-15T11:21:00.000Z",
+          "wordCount": 105,
+          "title": "recomplete (20240615.1121) --- Immediately (re)complete actions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/spell-fu-20240615.1119.tar",
+          "author": null,
+          "description": "The spell-fu package has been updated to version 20240615.1119.",
+          "link": "https://melpa.org/#/spell-fu",
+          "publishedOn": "2024-06-15T11:19:00.000Z",
+          "wordCount": 105,
+          "title": "spell-fu (20240615.1119) --- Fast & light spelling highlighter",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/undo-fu-20240615.1118.tar",
+          "author": null,
+          "description": "The undo-fu package has been updated to version 20240615.1118.",
+          "link": "https://melpa.org/#/undo-fu",
+          "publishedOn": "2024-06-15T11:18:00.000Z",
+          "wordCount": 105,
+          "title": "undo-fu (20240615.1118) --- Undo helper with redo",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tao-theme-20240615.517.tar",
+          "author": null,
+          "description": "The tao-theme package has been updated to version 20240615.517.",
+          "link": "https://melpa.org/#/tao-theme",
+          "publishedOn": "2024-06-15T05:17:00.000Z",
+          "wordCount": 105,
+          "title": "tao-theme (20240615.517) --- This package provides two parametrized uncoloured color themes for Emacs: tao-yin and tao-yang.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/gruvbox-theme-20240615.432.tar",
+          "author": null,
+          "description": "The gruvbox-theme package has been updated to version 20240615.432.",
+          "link": "https://melpa.org/#/gruvbox-theme",
+          "publishedOn": "2024-06-15T04:32:00.000Z",
+          "wordCount": 105,
+          "title": "gruvbox-theme (20240615.432) --- A retro-groove colour theme for Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dynaring-20240615.129.tar",
+          "author": null,
+          "description": "The dynaring package has been updated to version 20240615.129.",
+          "link": "https://melpa.org/#/dynaring",
+          "publishedOn": "2024-06-15T01:29:00.000Z",
+          "wordCount": 105,
+          "title": "dynaring (20240615.129) --- A dynamically sized ring structure",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ansible-20240615.112.tar",
+          "author": null,
+          "description": "The ansible package has been updated to version 20240615.112.",
+          "link": "https://melpa.org/#/ansible",
+          "publishedOn": "2024-06-15T01:12:00.000Z",
+          "wordCount": 105,
+          "title": "ansible (20240615.112) --- Ansible minor mode",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/chatgpt-shell-20240614.1924.tar",
           "author": null,
@@ -2625,6 +2675,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/digistar-mode-20240613.225.tar",
+          "author": null,
+          "description": "The digistar-mode package has been updated to version 20240613.225.",
+          "link": "https://melpa.org/#/digistar-mode",
+          "publishedOn": "2024-06-13T02:25:00.000Z",
+          "wordCount": 105,
+          "title": "digistar-mode (20240613.225) --- major mode for Digistar scripts",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/zenburn-theme-20240612.1258.tar",
           "author": null,
           "description": "The zenburn-theme package has been updated to version 20240612.1258.",
@@ -2642,6 +2702,16 @@
           "publishedOn": "2024-06-12T12:56:00.000Z",
           "wordCount": 105,
           "title": "racket-mode (20240612.1256) --- Racket editing, REPL, and more",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/psession-20240612.1242.tar",
+          "author": null,
+          "description": "The psession package has been updated to version 20240612.1242.",
+          "link": "https://melpa.org/#/psession",
+          "publishedOn": "2024-06-12T12:42:00.000Z",
+          "wordCount": 105,
+          "title": "psession (20240612.1242) --- Persistent save of elisp objects.",
           "imageUrl": null
         },
         {
@@ -3322,6 +3392,16 @@
           "publishedOn": "2024-06-06T10:26:00.000Z",
           "wordCount": 105,
           "title": "orderless (20240606.1026) --- Completion style for matching regexps in any order",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/jinx-20240606.909.tar",
+          "author": null,
+          "description": "The jinx package has been updated to version 20240606.909.",
+          "link": "https://melpa.org/#/jinx",
+          "publishedOn": "2024-06-06T09:09:00.000Z",
+          "wordCount": 105,
+          "title": "jinx (20240606.909) --- Enchanted Spell Checker",
           "imageUrl": null
         },
         {
@@ -5373,66 +5453,6 @@
           "wordCount": 105,
           "title": "git-cliff (20240517.1042) --- Generate and update changelog using git-cliff",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/symbols-outline-20240517.819.tar",
-          "author": null,
-          "description": "The symbols-outline package has been updated to version 20240517.819.",
-          "link": "https://melpa.org/#/symbols-outline",
-          "publishedOn": "2024-05-17T08:19:00.000Z",
-          "wordCount": 105,
-          "title": "symbols-outline (20240517.819) --- Display symbols (functions, variables, etc) in outline view",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mugur-20240517.504.tar",
-          "author": null,
-          "description": "The mugur package has been updated to version 20240517.504.",
-          "link": "https://melpa.org/#/mugur",
-          "publishedOn": "2024-05-17T05:04:00.000Z",
-          "wordCount": 105,
-          "title": "mugur (20240517.504) --- Configurator for QMK compatible keyboards",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/consult-20240516.2240.tar",
-          "author": null,
-          "description": "The consult package has been updated to version 20240516.2240.",
-          "link": "https://melpa.org/#/consult",
-          "publishedOn": "2024-05-16T22:40:00.000Z",
-          "wordCount": 105,
-          "title": "consult (20240516.2240) --- Consulting completing-read",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/highlight2clipboard-20240516.1942.tar",
-          "author": null,
-          "description": "The highlight2clipboard package has been updated to version 20240516.1942.",
-          "link": "https://melpa.org/#/highlight2clipboard",
-          "publishedOn": "2024-05-16T19:42:00.000Z",
-          "wordCount": 105,
-          "title": "highlight2clipboard (20240516.1942) --- Copy text to clipboard with highlighting.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/orgnote-20240516.1842.tar",
-          "author": null,
-          "description": "The orgnote package has been updated to version 20240516.1842.",
-          "link": "https://melpa.org/#/orgnote",
-          "publishedOn": "2024-05-16T18:42:00.000Z",
-          "wordCount": 105,
-          "title": "orgnote (20240516.1842) --- Sync org-roam notes with OrgNote app",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/scratch-palette-20240516.1817.tar",
-          "author": null,
-          "description": "The scratch-palette package has been updated to version 20240516.1817.",
-          "link": "https://melpa.org/#/scratch-palette",
-          "publishedOn": "2024-05-16T18:17:00.000Z",
-          "wordCount": 105,
-          "title": "scratch-palette (20240516.1817) --- make scratch buffer for each files",
-          "imageUrl": null
         }
       ]
     },
@@ -5441,6 +5461,66 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dgoqku/svelte_lsp_issues/",
+          "author": null,
+          "description": "I'm having issues with the Svelte lsp server, using emacs 29 w/ nativecomp and lsp-mode:\n  \nNo highlighting or echo area information when hovering over stuff\n The autocomplete is weirdly sluggish \n If something is lsp-renamed in a .ts file, the changes are not reflected in .svelte files, and vice versa\n  \nOn the other hand, the typescript server is snappy and seems to work as expected, so now I suspect something may be amiss with the svelte server, and/or the lsp integration.\n The problem persists with the following simple config:\n (setq-default package-archives '((\"melpa\" . \"https://melpa.org/packages/\") (\"elpa\" . \"https://elpa.gnu.org/packages/\") (\"org\" . \"https://orgmode.org/elpa/\")) load-prefer-newer t) (setq-default use-package-always-ensure t) (require 'use-package) (use-package typescript-mode) (use-package web-mode :mode ((\"\\\\.html\\\\'\" . web-mode) (\"\\\\.svelte\\\\'\" . svelte-mode)) :config (define-derived-mode svelte-mode web-mode \"Svelte\") (setq web-mode-engines-alist '((\"svelte\" . \"\\\\.svelte\\\\'\")))) (use-package company :config (global-company-mode)) (use-package lsp-mode :commands (lsp) :hook (((typescript-mode svelte-mode) . lsp))) \n I hope someone can help out, I have no idea how to solve the problem. It seems few people develop svelte using emacs, so it's hard to find information\n    submitted by    /u/Maurn  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dgoqku/svelte_lsp_issues/",
+          "publishedOn": "2024-06-15T18:48:47.000Z",
+          "wordCount": null,
+          "title": "Svelte LSP issues",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dgiu4j/setting_font_weight_dynamically/",
+          "author": null,
+          "description": "Is there a reliable way to set the weight of the default and italic faces dynamically?\n This isn't working:\n  (set-face-attribute 'default nil :weight 'light) \n I tried with various fonts including Iosevka and Fira Code. I can set the font to \"Light\" using the \"Options | Set Default Font\" menu option. I want to do it in elisp though, to auto-toggle between light and regular depending on whether I'm using a dark or a light theme. (A lighter weight can look nicer with dark themes.)\n Curiously setting it to a bold weight does work. In one case the font I tried didn't even have a bold weight, but Emacs synthesized it. Which is cool, but I can't set it to a light weight using elisp.\n I tried using the :fontattribute and building a font spec string manually, but it was inconsistent. Sometimes it would take effect, other times not, and I couldn't set the italicface to light and italic.\n    submitted by    /u/stevemolitor  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dgiu4j/setting_font_weight_dynamically/",
+          "publishedOn": "2024-06-15T14:11:21.000Z",
+          "wordCount": null,
+          "title": "Setting Font Weight Dynamically",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dgf9nn/best_way_edit_core_elisp_source_code/",
+          "author": null,
+          "description": "for example, i want to make some changes to some find-dired functions\n defined in this file dir:\n /usr/share/emacs/29.3/lisp/find-dired.el.gz\n do i just edit it as root or is there a better way?\n edit: by \"core\" i mean \"built-in\"\n    submitted by    /u/dirty-sock-coder-64  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dgf9nn/best_way_edit_core_elisp_source_code/",
+          "publishedOn": "2024-06-15T10:47:51.000Z",
+          "wordCount": null,
+          "title": "Best way edit core elisp source code?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dgb2vh/current_orgmode_clock_inside_dwm_status_bar/",
+          "author": null,
+          "description": "I just added a simple plugin into my new dwm status bar (project page, github) to show the current clocked-in task of org mode. It helps concentrating on the current task and reminds to turn the clock off on time especially if you are doing your work outside of emacs.\n ​\n ​\n https://preview.redd.it/vg6wo4ndco6d1.png?width=1919&format=png&auto=webp&s=5f6d7bd53777d37dec4801e3e696841ed4a7b28f\n    submitted by    /u/larrasket  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dgb2vh/current_orgmode_clock_inside_dwm_status_bar/",
+          "publishedOn": "2024-06-15T05:48:23.000Z",
+          "wordCount": null,
+          "title": "Current Org-mode clock inside dwm status bar",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dgau7e/simplify_your_emacs_workflow_with_this_handy_bash/",
+          "author": null,
+          "description": "Hey fellow Emacs users!\n I’ve been working on a Bash script to simplify running Emacs and Emacsclient, and I wanted to share it with you all. Whether you’re frequently starting and stopping Emacs servers or switching between different profiles, this script can save you time and streamline your workflow.\n Here’s what it does:\n  \nStart an Emacs server with a specified profile or initialization directory.\n Run Emacsclient in terminal or GUI mode based on provided arguments.\n Kill running Emacs servers easily.\n List available Emacs server socket files.\n  \nHow to use it:\n (assuming you added the script to your path)\n Help Message:\n ec -h \n Displays the usage message with all available options.\n Script Version:\n ec -v \n Shows the script version.\n Start Emacs Server with Profile:\n ec -p my-profile \n Starts the Emacs server with the specified profile.\n Start Emacs Server with Init Directory:\n ec -i /path/to/init-directory \n Starts the Emacs server with the specified initialization directory.\n Run Emacsclient in Terminal Mode:\n ec -nw \n Opens Emacsclient in terminal mode.\n Kill Emacs Server:\n ec -k \n Kills the Emacs server processes.\n List Socket Files:\n ec -l \n Lists the available socket files for Emacs servers.\n EmacsClient Options are supported\n All the regular emacsclient options are supported, so you can for example specify a different server to run it, for example:\n Create an emacs server in org mode\n emacs --bg-daemon=demo-server --init-directory ~/init-directory/testing-org-config \n use ec to open emacsclient with daemon named demo-server on line 23 of a file\n ec -s demo-server +23 ~/my-file.org \n    submitted by    /u/napy84  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dgau7e/simplify_your_emacs_workflow_with_this_handy_bash/",
+          "publishedOn": "2024-06-15T05:32:18.000Z",
+          "wordCount": null,
+          "title": "Simplify Your Emacs Workflow with This Handy Bash Script!",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dg5v8h/drawing_libraries_in_emacs_lisp/",
+          "author": null,
+          "description": "The org mode habit tracker is really nice if you've ever used it. It has inspired me to try something similar. However, I don't love the Emacs Lisp source code for it, or for org agenda, it looks somewhat involved and painstaking, I was wondering if there are any more high level libraries for creating images in an emacs buffer, in particular colored images (which presumably would have to implement the coloring through font lock? not sure if there's a better way)\n    submitted by    /u/Massive-Squirrel-255  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dg5v8h/drawing_libraries_in_emacs_lisp/",
+          "publishedOn": "2024-06-15T00:44:39.000Z",
+          "wordCount": null,
+          "title": "Drawing libraries in Emacs lisp",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1dg0941/complex_emacs_org_mode_src_code_workflow/",
           "author": null,
@@ -7939,96 +8019,6 @@
           "publishedOn": "2024-05-17T12:16:37.000Z",
           "wordCount": null,
           "title": "accidental font changes in EMACS",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ctvjjg/org_agenda_fundamentals_volume_2_todos_advanced/",
-          "author": null,
-          "description": "submitted by    /u/unixbhaskar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ctvjjg/org_agenda_fundamentals_volume_2_todos_advanced/",
-          "publishedOn": "2024-05-17T03:21:30.000Z",
-          "wordCount": null,
-          "title": "Org Agenda Fundamentals Volume 2: TODOs (Advanced)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ctt5ow/prompt_for_image_with_previews/",
-          "author": null,
-          "description": "I want a function to pick an image from my photos folder and insert a link to it in my current org mode note. This isn't too hard to do without even needing to write a function; C-c C-l can do it well enough. The problem is, I also want:\n  \nThe list of images to be sorted newest first; and\n Make it possible to see a preview of the image.\n  \nVertico previews don't seem to handle images and completing-read ignores my sort order. I tried spawning a dired buffer and using dired-get-file-for-visit, but this is clumsy and inconvenient; I can't find a way to do it that is as simple as \"press keybinding, select file, link is inserted.\" Googling around gets me nothing. Is there anything else I can try?\n    submitted by    /u/D3nj4l  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ctt5ow/prompt_for_image_with_previews/",
-          "publishedOn": "2024-05-17T01:14:25.000Z",
-          "wordCount": null,
-          "title": "Prompt for image with previews",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ctsqxo/how_to_open_pdf_files_from_citar_in_evince/",
-          "author": null,
-          "description": "I have been a long-time user of helm-bibtex, where I could have a menu of actions on a given bibliographic entry. I keep hearing that citar has many advantages, so I am starting to use it. After configuring citar as:\n (use-package citar\n :straight t\n :custom\n (citar-bibliography my-bibliography)\n (citar-library-paths `(,my-library-path))\n (citar-notes-paths `(,my-notes-directory)))\n (I have previously defined my-bibliography, and the others) and runningM-x citar-open, I can choose to open the pdf file, but it opens in Emacs. How could I add the option of opening the file in Evince? (I use Ubuntu).\n    submitted by    /u/rvf0068  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ctsqxo/how_to_open_pdf_files_from_citar_in_evince/",
-          "publishedOn": "2024-05-17T00:53:17.000Z",
-          "wordCount": null,
-          "title": "How to open pdf files from citar in evince?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ctoaap/how_to_tell_if_theme_is_light_or_dark/",
-          "author": null,
-          "description": "I've been using Emacs for a very long time (back in the vt100 days even), but only starting to think about dark mode. VS Code must be infecting me or something. I see there's lots of work going on with Emacs theming these days.\n I have lots of individually customized :background color specs in my init file; should I just defconst theme-dark-p and use that everywhere to adjust my custom colors, or should I go all in and hook into the theming infrastructure rather than just (set-face-attribute ... nil :background #0d5)?\n    submitted by    /u/simplex5d  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ctoaap/how_to_tell_if_theme_is_light_or_dark/",
-          "publishedOn": "2024-05-16T21:21:07.000Z",
-          "wordCount": null,
-          "title": "How to tell if theme is light or dark?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ctni1g/git_renames_via_wdired/",
-          "author": null,
-          "description": "tl;dr use (setq dired-vc-rename-file t) more at https://lmno.lol/alvaro/emacs-git-rename-courtesy-of-dired\n    submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ctni1g/git_renames_via_wdired/",
-          "publishedOn": "2024-05-16T20:49:41.000Z",
-          "wordCount": null,
-          "title": "Git renames via wdired",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ctcd92/company_mode_show_whitespaces_dots_in_completion/",
-          "author": null,
-          "description": "Good morning everyone, I would like to ask for your help to not let whitespace-mode interfere with company-mode.\n https://preview.redd.it/z68p4zt1gs0d1.png?width=330&format=png&auto=webp&s=056e32e46780efeac8dcae318dd13d48bab733e3\n Company-mode is very slow since I enabled whitespace-mode, I would like to ask for your help to optimize it.\n This is the code for whitespace-mode:\n (use-feature whitespace :defer 2 :diminish (global-whitespace-mode) :custom (whitespace-line-column 80) (whitespace-global-modes '(not shell-mode eshell-mode help-mode magit-mode magit-diff-mode ibuffer-mode dired-mode occur-mode)) (whitespace-action '(cleanup auto-cleanup)) (whitespace-style '(face trailing tabs spaces newline missing-newline-at-eof empty indentation space-after-tab space-before-tab space-mark tab-mark newline-mark)) :config (global-whitespace-mode +1)) \n This is the code for company-mode:\n (use-package company :diminish (company-mode) :defer 2 :preface (setq tab-always-indent 'complete completion-cycle-threshold 3) :custom (company-idle-delay 0.5) (company-show-quick-access t) (company-minimum-prefix-length 2) (company-tooltip-limit 10) (company-tooltip-flip-when-above t) (company-tooltip-align-annotations t) ;; EXP (company-require-match nil) (company-global-modes '(not erc-mode message-mode eshell-mode)) ;; (company-tooltip-annotation-padding 1) ;; (company-format-margin-function 'company-text-icons-margin) ;; (company-text-icons-add-background t) (company-files-exclusions '(\".git/\" \".DS_Store\" \"node_modules/\")) (company-dabbrev-other-buffers 'all) (company-dabbrev-downcase nil) (company-dabbrev-minimum-length 2) ;; (company-transformers '(delete-consecutive-dups ;; company-sort-by-occurrence)) :config (global-company-mode +1)) \n Thanks in advance to everyone.\n    submitted by    /u/Yackro  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ctcd92/company_mode_show_whitespaces_dots_in_completion/",
-          "publishedOn": "2024-05-16T13:01:55.000Z",
-          "wordCount": null,
-          "title": "Company mode show whitespace's dots in completion",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ct9kxn/make_dirvish_a_bit_more_like_ranger/",
-          "author": null,
-          "description": "I generally like dirvish for quick file stuff, but I haven't managed to stick to it for two main reasons. The first one is that if I quit dirvish with q and then call it again, it forgets what folder I was last at. Is it possible to make it stay \"in the background\" in the folder I have it.\n The second issue is I'd like something like ranger's tabs you can switch with <TAB>. This is particularly useful when copying from one folder to another.\n Thanks!\n    submitted by    /u/cat-head  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ct9kxn/make_dirvish_a_bit_more_like_ranger/",
-          "publishedOn": "2024-05-16T10:17:12.000Z",
-          "wordCount": null,
-          "title": "Make dirvish a bit more like ranger",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ct96ne/question_regarding_weird_behavior_of/",
-          "author": null,
-          "description": "Recently I tried to configure <tab> keybinding to have different behavior in different scenarios. In order to do this I wrote my custom function|\n ```lisp (defun vd/tab-indent-or-complete () \"Function to choose correct TAB action.\" (interactive) (cond ((derived-mode-p 'org-mode) (org-cycle)) ((derived-mode-p 'minibuffer-mode) (minibuffer-complete)) (t (progn (when (fboundp 'tempel-complete) (tempel-expand)) (indent-for-tab-command)))))\n (define-key global-map (kbd \"<tab>\") 'vd/tab-indent-or-complete) ```\n In org mode and in regular buffers this works as expected, but in minibuffer it acts very weird. If I type Alt-x, I get minibuffer with vertico interface, but when I type <tab> word Completion appiers instead of M-x and until I press C-g it \"override\" M-x minibuffer. If I press <tab> again it creates more Completion buffers(in picture Completion [2] change to Completion [4]) and I need to close them with C-g.\n Here are images with this behavior https://imgur.com/a/yZQhgzn\n Here is my config https://gist.github.com/Crandel/9b3812fc51e8ab87df258873d56e9778 \n    submitted by    /u/cradlemann  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ct96ne/question_regarding_weird_behavior_of/",
-          "publishedOn": "2024-05-16T09:48:52.000Z",
-          "wordCount": null,
-          "title": "Question regarding weird behavior of (minibuffer-complete) in minibuffer using vertico",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ct8x8l/caseinsensitive_consultline_which_configuration/",
-          "author": null,
-          "description": "Hej fellow 'macsers,\n TL;DR: my CONSULT-LINE is case-sensitive which is why I sometimes don't find stuff because of capitalisation. (How) can I change that?\n I am falling in love with the capacities of CONSULT as of late (especially when combining its results with EMBARK-EXPORT, holy moly!). However, I noticed that I can't find stuff if it is capitalised or in allcaps. This is not good, because I thus overlook stuff I'd want to find in a buffer.\n I tried tweaking ISEARCH-related variables, but to no apparent avail. I also tried delving into the source code, but I did not really understand how CONSULT-LINE produces its results.\n Can you tell me which variables I need to tweak for consult-line to be case-insensitive when searching?\n Have a good day, fellows :)\n    submitted by    /u/olivuser  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ct8x8l/caseinsensitive_consultline_which_configuration/",
-          "publishedOn": "2024-05-16T09:28:37.000Z",
-          "wordCount": null,
-          "title": "Case-insensitive consult-line: which configuration variables to tweak?",
           "imageUrl": null
         }
       ]
