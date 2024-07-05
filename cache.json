@@ -63,6 +63,56 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1dw7ieq/help_with_configuring_latex_support_for_my_blog/",
+          "author": null,
+          "description": "I'm trying to add LaTex support for my blog. I started out with this template which uses slick as opposed to Hakyll since it seemed less daunting. After looking through the codebase, I realised that I needed to modify the mdtoHTML function in app/Main.hs by adding writerExtensions which I found here to render the LaTex in the Markdown. This is the function after I've made my modifications:\n mdToHTML :: T.Text -> Action Value mdToHTML = markdownToHTMLWithOpts markdownOptions htmlOptions where markdownOptions :: ReaderOptions markdownOptions = def { readerExtensions = fold [ extensionsFromList [ Ext_yaml_metadata_block , Ext_fenced_code_attributes , Ext_auto_identifiers , Ext_footnotes , Ext_link_attributes , Ext_pipe_tables ] , githubMarkdownExtensions ] } htmlOptions = def { writerExtensions = fold [ extensionsFromList [ Ext_tex_math_dollars , Ext_tex_math_single_backslash , Ext_latex_macros , Ext_fenced_code_blocks , Ext_backtick_code_blocks , Ext_fenced_code_attributes ] ] } \n However, after building and running the site, I noticed that anything enclosed in $..$, $$...$$ and \\[...\\] still down get rendered at all. I'm not sure what to do. Any suggestions?\n    submitted by    /u/Spasmodic_Ramblings  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1dw7ieq/help_with_configuring_latex_support_for_my_blog/",
+          "publishedOn": "2024-07-05T20:23:01.000Z",
+          "wordCount": null,
+          "title": "Help with configuring LaTex support for my blog",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1dw64go/multi_component_support_in_hls_with_cabalinstall/",
+          "author": null,
+          "description": "submitted by    /u/n00bomb  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1dw64go/multi_component_support_in_hls_with_cabalinstall/",
+          "publishedOn": "2024-07-05T19:22:53.000Z",
+          "wordCount": null,
+          "title": "Multi Component Support in HLS with cabal-install 3.12",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1dvvkms/welltyped_part_6_monads_of_the_free_videobased/",
+          "author": null,
+          "description": "submitted by    /u/kosmikus  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1dvvkms/welltyped_part_6_monads_of_the_free_videobased/",
+          "publishedOn": "2024-07-05T11:18:06.000Z",
+          "wordCount": null,
+          "title": "[Well-Typed] Part 6 (Monads) of the free video-based Haskell introduction course",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1dvsn2c/why_is_the_record_syntax_disallowed_at_the_type/",
+          "author": null,
+          "description": "Let's define a simple record:\n data R = R { r :: Bool } \n Now, with DataKinds and KindSignatures on, we can attempt to use it like this:\n data X (r :: R) = X type XR1 = X ('R True) type XR2 = X ('R { r = True }) \n The definition of XR1 compiles without issues, but XR2 gives an error:\n app/Main.hs:12:22: error: parse error on input ‘=’ | 12 | type XR2 = X ('R { r = True }) | ^ \n Something very similar happens when we try to pattern match at the type level. With TypeFamilies enabled:\n type family F (r :: R) where F ('R True) = () F ('R { r = True }) = () \n The first equation works fine, but the second one results in an identical error message:\n app/Main.hs:16:15: error: parse error on input ‘=’ | 16 | F ('R { r = True }) = () | ^ \n One final example (the error is still the same):\n type R1 = 'R True -- Ok type R2 = 'R { r = True } -- Error \n What is going on here? When using records as values, the two ways to construct and pattern match on records are equivalent (as far as I know). Why are they treated so differently when used at the type level?\n    submitted by    /u/Pure-Advantage2681  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1dvsn2c/why_is_the_record_syntax_disallowed_at_the_type/",
+          "publishedOn": "2024-07-05T07:55:55.000Z",
+          "wordCount": null,
+          "title": "Why is the record syntax disallowed at the type level?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1dvr7k1/problems_parsing_function_application_in_a_lambda/",
+          "author": null,
+          "description": "Hello. I am having issues with my parser combinators in this code: https://play.haskell.org/saved/WQpzwZAM (You can change the input binding to test out the parser) The issue is that I am unable to parse function application: when appP's left is defined like left <- absP, it errors with: hs ghci> parseTest (exprP <* eof) \"let x = \\\\x -> x + 1 in x 1\" 1:26: | 1 | let x = \\x -> x + 1 in x 1 | ^ unexpected '1' expecting end of input, symbol, or white space  I believe the issue here is that left <- absP always expects an abstraction as the LHS of an application, while in this situation, it is a Var. I have tried to replace it with left <- parens absP <|> varP, but it errors in a different place here: hs ghci> parseTest (exprP <* eof) \"let x = \\\\x -> x + 1 in x 1\" 1:17: | 1 | let x = \\x -> x + 1 in x 1 | ^^^^^ unexpected \"+ 1 i\" expecting \"false\", \"let\", \"true\", '\"', '(', '\\', alphanumeric character, integer, or white space  Seemingly because it parses x + 1 as an application, and it doesn't let the exprP do it's job of parsing operators? So I had the thought process of \"maybe, if I make valP do ... <|> try appP <|> ... instead of ... <|> appP <|> ... so that it backtracks, exprP would get to the binary operators before appP,\" and I tried to change the code for that, but I think that's a dead end.\n    submitted by    /u/MonAaraj  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1dvr7k1/problems_parsing_function_application_in_a_lambda/",
+          "publishedOn": "2024-07-05T06:18:18.000Z",
+          "wordCount": null,
+          "title": "Problems parsing function application in a lambda calc + let + lit + binop parser in megaparsec",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1dvfzv7/introduction_to_haskell_for_agda_users/",
           "author": null,
           "description": "Hello. I've looked around but I can't quite find a good guide to haskell for people with a background in agda. Forgive me if I missed something.\n I am very familiar with using agda as a proof assistant, but haven't used it too much as a programming language. I am interested in learning more about using agda as a programming language. A (somewhat distant goal) is being able to solve advent of code problems in agda.\n But, agda doesn't have that many existing libraries. So I'd like to learn haskell to get the feel for how one should write programs in a functional language. I figure learning haskell is useful for other reasons as well. So I want to give it an honest go. I'd like to be able to solve some advent of code problems in haskell.\n Does anybody know a good introduction to haskell for someone fairly familiar with agda, but who has only used agda for formal verification? I am very familiar with the lambda calculus and type systems, algebraic data type, inductive types, and pattern matching, etc. I mostly need a crash course in syntax, important functions, input and output, and whatever else I might be missing from the agda proof assistant side of things.\n Thanks in advance.\n    submitted by    /u/loop-spaced  \n [link]   [comments]",
@@ -80,6 +130,16 @@
           "publishedOn": "2024-07-04T13:38:41.000Z",
           "wordCount": null,
           "title": "Trouble with Applicatives in Parser",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1dv2zzw/hasmtlib_edsl_for_the_smtlib26_standard/",
+          "author": null,
+          "description": "Hello all.\n I have created an eDSL for the SMTLib 2.6 standard.\n It's very much like ekmett/ersatz for QSAT.\n Features a strongly typed and clean API with pure formula construction.\n If you are into SMT, it's worth a look!\n Hackage: hasmtlib\n GitHub: Hasmtlib\n    submitted by    /u/bruderj15  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1dv2zzw/hasmtlib_edsl_for_the_smtlib26_standard/",
+          "publishedOn": "2024-07-04T09:41:23.000Z",
+          "wordCount": null,
+          "title": "Hasmtlib: eDSL for the SMTLib2.6 standard",
           "imageUrl": null
         },
         {
@@ -901,26 +961,6 @@
           "wordCount": null,
           "title": "And-patterns for exhaustive unordered pattern matching",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1d903ig/clc_proposal_alt_as_a_superclass_of_alternative/",
-          "author": null,
-          "description": "submitted by    /u/NorfairKing2  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1d903ig/clc_proposal_alt_as_a_superclass_of_alternative/",
-          "publishedOn": "2024-06-05T20:32:43.000Z",
-          "wordCount": null,
-          "title": "CLC Proposal: Alt as a superclass of Alternative in base",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1d8nkys/purescript_to_haskell_learning_path/",
-          "author": null,
-          "description": "I am considering to give haskell a go (again). I actually wanted to earlier but got discouraged by an (at that time) very clunky tooling experience, and I also found it annoying that I had to use pragma's to for example enable exhaustive type checking (which imo always should be default). At the time I instead decided to dive into Purescript, which I have been enjoying quite a lot ever since. I have probably written somewhere around 10k lines of purescript by now. However, I feel that purescript is quite niche and has some annoying limits due to primarily running on node or in the browser. For example, I don't see myself ever doing proper parallel processing in purescript. I also feel that purescript might be more limited in context of future job opportunities. These are the reasons for which I am considering to give learning Haskell a second try.\n Much learning material seems to be targeted at OOP programmers who are new to FP. I obviously don't need the the whole FP sales pitch with my background. What I need is more something along the lines of \"I am comfortable with FP, monads, type classes and monad transformers, and now I want to learn Haskell without getting bored by the learning material\".\n I have read the excellent purescript book called \"Functional programming made easier\" https://leanpub.com/fp-made-easier. My background before Purescript has been working professionally with F# and Clojure for a few years.\n On the longer run I am considering to do some Haskell certification https://certification.serokell.io/\n    submitted by    /u/Combination-Western  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1d8nkys/purescript_to_haskell_learning_path/",
-          "publishedOn": "2024-06-05T11:26:55.000Z",
-          "wordCount": null,
-          "title": "Purescript to Haskell, learning path recommendations?",
-          "imageUrl": null
         }
       ]
     },
@@ -929,6 +969,46 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1dw4dam/anyone_hiring_scala_engineer_in_us/",
+          "author": null,
+          "description": "submitted by    /u/gcs_reddy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1dw4dam/anyone_hiring_scala_engineer_in_us/",
+          "publishedOn": "2024-07-05T18:07:37.000Z",
+          "wordCount": null,
+          "title": "anyone hiring Scala engineer in US?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1dw0722/maintenance_and_modernisation_of_scala/",
+          "author": null,
+          "description": "Hello!\n We are trying to better understand what things are causing the most pain for long term maintenance of applications built with Scala and to this end I've started a poll on Twitter/X at\n https://x.com/lukasz_bialy/status/1808807669517402398\n It would be awesome if you could vote there but if you have no such possibility, a comment here on reddit would be very helpful too. The purpose of this is for the Scala team at VirtusLab to understand where we should direct our focus and to figure out better ways to help companies that feel \"stuck\" with Scala-based services or data pipelines that pose a problem from maintenance perspective. If you have some horror stories about maintenance of Scala projects, feel free to share them too!\n    submitted by    /u/lbialy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1dw0722/maintenance_and_modernisation_of_scala/",
+          "publishedOn": "2024-07-05T15:08:02.000Z",
+          "wordCount": null,
+          "title": "Maintenance and modernisation of Scala applications: a poll",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1dvur9n/quill_new_dialects_or_a_custom_jdbc_driver/",
+          "author": null,
+          "description": "Hi there, I'm getting to know Quill and while I like its concepts and what it offers in comparison with other JDBC libraries, I'm still trying to assess its limitations. The documentation is very short and to be honest i feel like it doesn't cover even half of questions one can have while learning the library. There are only few examples for the most basic cases, then when it comes to the Contexts section there are almost none. I have no idea when to use \"lazy val ctx = new PostgresJdbcContext(SnakeCase, \"ctx\")\" and when to simply use \"quill: Quill.Postgres[SnakeCase]\" from the Getting Started section.\n There are 6 JDBC dialects provided by the library - H2Dialect, MySQLDialect, PostgresDialect, SqliteDialect, SQLServerDialect, OracleDialect. I wanted to ask if Quill can also be used for other databases maybe for some more generic queries, or is it better to choose a different tool for other RDB?\n    submitted by    /u/Time_Competition_332  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1dvur9n/quill_new_dialects_or_a_custom_jdbc_driver/",
+          "publishedOn": "2024-07-05T10:24:59.000Z",
+          "wordCount": null,
+          "title": "Quill - new dialects or a custom JDBC driver",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1dvrr6c/tapir_tutorial_part_5_multiple_inputs_outputs/",
+          "author": null,
+          "description": "submitted by    /u/smlaccount  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1dvrr6c/tapir_tutorial_part_5_multiple_inputs_outputs/",
+          "publishedOn": "2024-07-05T06:54:29.000Z",
+          "wordCount": null,
+          "title": "Tapir Tutorial - part 5: Multiple inputs & outputs | Adam Warski SoftwareMill",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1dvdnra/new_to_scala_and_functional_programming_in_general/",
           "author": null,
@@ -1808,36 +1888,6 @@
           "wordCount": null,
           "title": "Looking for a Scala job!",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1d8rsht/tapir_tutorial_part_1_hello_world_by_adam_warski/",
-          "author": null,
-          "description": "submitted by    /u/smlaccount  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1d8rsht/tapir_tutorial_part_1_hello_world_by_adam_warski/",
-          "publishedOn": "2024-06-05T14:48:52.000Z",
-          "wordCount": null,
-          "title": "Tapir Tutorial - part 1: Hello, world! by Adam Warski",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1d8pqbq/next_stream_on_lean_scala_exploration/",
-          "author": null,
-          "description": "Hey, I'll stream my work on dev.scala.today app tomorrow at 10 AM CEST. Feel invited to hang out and bother me in the chat. We'll try to get the whole thing to a level where we can deploy it to actual prod for the first time.\n We've got some interesting insights based on practical experience on Saturday that turned into proposals (with PRs) to Ox already:\n https://github.com/softwaremill/ox/issues/147\n https://github.com/softwaremill/ox/issues/149\n https://github.com/softwaremill/ox/issues/150\n If you have any questions, suggestions, complaints regarding Scala, Scala tooling, infra as code tool Besom, VirtusLab's work on Scala and such, fire away in the chat, I'll be happy to answer anything.\n Links:\n https://www.twitch.tv/averagefpenjoyer\n https://www.youtube.com/@average.fp.enjoyer/streams\n    submitted by    /u/lbialy  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1d8pqbq/next_stream_on_lean_scala_exploration/",
-          "publishedOn": "2024-06-05T13:18:27.000Z",
-          "wordCount": null,
-          "title": "Next stream on Lean Scala exploration",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1d8l0fl/paul_matthews_sounds_of_scalajs_scalar_conference/",
-          "author": null,
-          "description": "submitted by    /u/smlaccount  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1d8l0fl/paul_matthews_sounds_of_scalajs_scalar_conference/",
-          "publishedOn": "2024-06-05T08:37:28.000Z",
-          "wordCount": null,
-          "title": "Paul Matthews - Sounds of Scala.js - Scalar Conference 2024",
-          "imageUrl": null
         }
       ]
     },
@@ -1903,16 +1953,6 @@
           "publishedOn": "2024-06-20T00:00:00.000Z",
           "wordCount": 3150,
           "title": "Nickel modules",
-          "imageUrl": "https://tweag.io/logo.png"
-        },
-        {
-          "id": "https://tweag.io/blog/2024-06-06-safer-composable-python/",
-          "author": null,
-          "description": "Writing modular code is a challenge any large project faces,\nand that stands even more true for Python monoliths.\nPython’s versatility is convenient, yet a very big gun to shoot one’s foot with.\nIf there’s one thing I’ve learnt over the years of building software,\nit’s the importance of testing to mitigate risks and allow refactoring in the long run.\nIn my experience however, I’ve seen much less testing in projects than I would’ve liked.\nIf it can be rarely attributed to plain malevolence or stupidity,\nthe most recurrent reason is: it is hard and it takes too much time.\nThe issue is, it’s often true!\nSo how can we lower the barrier to make testing easier?\n\nFunction composition to the rescue\nBehind this seemingly scientific section title rests a very simple principle.\nLet’s look at the foll…",
-          "link": "https://tweag.io/blog/2024-06-06-safer-composable-python/",
-          "publishedOn": "2024-06-06T00:00:00.000Z",
-          "wordCount": 2679,
-          "title": "Safe composable Python",
           "imageUrl": "https://tweag.io/logo.png"
         }
       ]
@@ -2227,36 +2267,6 @@
           "wordCount": null,
           "title": "How do I get replace (and search) commands to correctly handle underscore characters used to underline?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1d95uyn/columns_and_columnviews_are_tricky/",
-          "author": null,
-          "description": "I've had trouble understanding a couple of things around filtering results with a columnview dynamic block:\n  \nI couldn't get the LABEL setting for :id to do what I expected.\n Same thing with the :match setting.\n  \nOne cool trick--add a number of rows with a :noexport: tag and put the columnview dynamic block outside of them--made reporting a bit easier as a way to avoid including headings that aren't necessary except as property containers.\n While the above's mostly a complaint, I do have a constructive question: how can we get a cookbook of working examples that show uncommon usecases (e.g. using column view as a multi-line workaround for tables)?\n    submitted by    /u/fragbot2  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1d95uyn/columns_and_columnviews_are_tricky/",
-          "publishedOn": "2024-06-06T00:55:01.000Z",
-          "wordCount": null,
-          "title": "Columns and columnviews are tricky",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1d94cu5/org_charts_with_org_mode/",
-          "author": null,
-          "description": "I'm looking for a way to generate a traditional \"org chart\" (e.g. for a company) from an Org mode file.\n So far I've tried out org-mind-map† (via graphviz). It works, but the output is more DAG-like than the kind of thing you see with a standard organizational chart††. I know that org-mind-map-engine offers some control over the format, but none of the options match what I'm looking for.\n Does anyone know if I can get what I'm after out of org-mind-map?\n Or, if not, any other Org mode-based suggestions?\n Thanks!\n  \n† I'm using the-ted/org-mind-map via melpa, rather than the unpackaged fork at alphapapa/org-mind-map . That's simply because although it's a fork, the latter appears to be behind the former in commits. The forked code looks to be the unmodified v0.1 of the original, whereas the original is now at v0.4. But if anyone (e.g. u/github-alphapapa himself :-) ) thinks there's more going on there, and that the fork actually is the one to use, let me know.\n †† For example, in the traditional org. chart, a parent node with multiple child nodes would connect to its children using a single line with branches off it to each child (and the parent). Something like this. By contrast, org-mind-map's DAG-style has a separate line from the parent to child for each of the children.\n    submitted by    /u/TeeMcBee  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1d94cu5/org_charts_with_org_mode/",
-          "publishedOn": "2024-06-05T23:40:09.000Z",
-          "wordCount": null,
-          "title": "Org charts with Org mode?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1d8tte0/how_to_skip_a_level_in_clock_tables/",
-          "author": null,
-          "description": "How can I skip certain heading levels in org clock tables? I'd like to skip certain \"boring\" headings from clock table reports.\n I organize my projects GTD style like this:\n * Sell My Home ** Purpose / Expected Outcome - Sell my home for a lot of money ** Project Reference - Asking price :: $100 - [[https://zillow.com][Zillow]] - [[https://realtor.com][Realtor]] ** Actions *** TODO Research Home Values :LOGBOOK: CLOCK: [2024-06-05 Wed 09:00]--[2024-06-05 Wed 10:00] => 0:00 :END: *** TODO Create Listing :LOGBOOK: CLOCK: [2024-06-05 Wed 10:00]--[2024-06-05 Wed 11:00] => 0:00 :END: \n I use clock tables like this:\n #+BEGIN: clocktable :scope file :maxlevel 4 :compact t :block today #+CAPTION: Clock summary at [2024-06-05 Wed 11:06], for Wednesday, June 05, 2024. | Headline | Time | |----------------------------+------| | *Total time* | *2:00* | |----------------------------+------| | Sell My Home | 2:00 | | \\_ Actions | 2:00 | | \\_ Research Home Values | 1:00 | | \\_ Create Listing | 1:00 | #+END: \n I'd like to skip the \"Actions\" row, like this:\n | Headline | Time | |----------------------------+------| | *Total time* | *2:00* | |----------------------------+------| | Sell My Home | 2:00 | | \\_ Research Home Values | 1:00 | | \\_ Create Listing | 1:00 | \n Is it possible to either exclude certain heading levels, or (better) exclude certain headings, but still include their children? For example, exclude \"** Actions\" but still include its children. I see there is a matchoption, but I'm looking for an exclude option, based on the header name.\n    submitted by    /u/stevemolitor  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1d8tte0/how_to_skip_a_level_in_clock_tables/",
-          "publishedOn": "2024-06-05T16:13:41.000Z",
-          "wordCount": null,
-          "title": "How to Skip a Level in Clock Tables",
-          "imageUrl": null
         }
       ]
     },
@@ -2265,6 +2275,66 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/taskpaper-mode-20240705.1750.tar",
+          "author": null,
+          "description": "The taskpaper-mode package has been updated to version 20240705.1750.",
+          "link": "https://melpa.org/#/taskpaper-mode",
+          "publishedOn": "2024-07-05T17:50:00.000Z",
+          "wordCount": 105,
+          "title": "taskpaper-mode (20240705.1750) --- Major mode for working with TaskPaper files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/flycheck-eglot-20240705.1738.tar",
+          "author": null,
+          "description": "The flycheck-eglot package has been updated to version 20240705.1738.",
+          "link": "https://melpa.org/#/flycheck-eglot",
+          "publishedOn": "2024-07-05T17:38:00.000Z",
+          "wordCount": 105,
+          "title": "flycheck-eglot (20240705.1738) --- Flycheck support for eglot",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/vterm-20240705.1533.tar",
+          "author": null,
+          "description": "The vterm package has been updated to version 20240705.1533.",
+          "link": "https://melpa.org/#/vterm",
+          "publishedOn": "2024-07-05T15:33:00.000Z",
+          "wordCount": 105,
+          "title": "vterm (20240705.1533) --- Fully-featured terminal emulator",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/geiser-20240705.1352.tar",
+          "author": null,
+          "description": "The geiser package has been updated to version 20240705.1352.",
+          "link": "https://melpa.org/#/geiser",
+          "publishedOn": "2024-07-05T13:52:00.000Z",
+          "wordCount": 105,
+          "title": "geiser (20240705.1352) --- GNU Emacs and Scheme talk to each other",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/no-clown-fiesta-theme-20240705.936.tar",
+          "author": null,
+          "description": "The no-clown-fiesta-theme package has been updated to version 20240705.936.",
+          "link": "https://melpa.org/#/no-clown-fiesta-theme",
+          "publishedOn": "2024-07-05T09:36:00.000Z",
+          "wordCount": 105,
+          "title": "no-clown-fiesta-theme (20240705.936) --- Not-so-colorful-theme",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/weblorg-20240704.2352.tar",
+          "author": null,
+          "description": "The weblorg package has been updated to version 20240704.2352.",
+          "link": "https://melpa.org/#/weblorg",
+          "publishedOn": "2024-07-04T23:52:00.000Z",
+          "wordCount": 105,
+          "title": "weblorg (20240704.2352) --- Static Site Generator for org-mode",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/sdml-mode-20240704.1944.tar",
           "author": null,
@@ -2436,6 +2506,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/forge-20240702.1601.tar",
+          "author": null,
+          "description": "The forge package has been updated to version 20240702.1601.",
+          "link": "https://melpa.org/#/forge",
+          "publishedOn": "2024-07-02T16:01:00.000Z",
+          "wordCount": 105,
+          "title": "forge (20240702.1601) --- Access Git forges from Magit.",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/flexoki-themes-20240702.1515.tar",
           "author": null,
           "description": "The flexoki-themes package has been updated to version 20240702.1515.",
@@ -2463,6 +2543,16 @@
           "publishedOn": "2024-07-02T02:57:00.000Z",
           "wordCount": 105,
           "title": "vim-tab-bar (20240702.257) --- Vim-like tab bar",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/casual-ibuffer-20240701.2144.tar",
+          "author": null,
+          "description": "The casual-ibuffer package has been updated to version 20240701.2144.",
+          "link": "https://melpa.org/#/casual-ibuffer",
+          "publishedOn": "2024-07-01T21:44:00.000Z",
+          "wordCount": 105,
+          "title": "casual-ibuffer (20240701.2144) --- Transient UI for IBuffer",
           "imageUrl": null
         },
         {
@@ -2976,6 +3066,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/inf-ruby-20240627.2135.tar",
+          "author": null,
+          "description": "The inf-ruby package has been updated to version 20240627.2135.",
+          "link": "https://melpa.org/#/inf-ruby",
+          "publishedOn": "2024-06-27T21:35:00.000Z",
+          "wordCount": 105,
+          "title": "inf-ruby (20240627.2135) --- Run a Ruby process in a buffer",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/projection-20240627.1826.tar",
           "author": null,
           "description": "The projection package has been updated to version 20240627.1826.",
@@ -3033,6 +3133,16 @@
           "publishedOn": "2024-06-27T06:50:00.000Z",
           "wordCount": 105,
           "title": "auto-highlight-symbol (20240627.650) --- Automatic highlighting current symbol minor mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/symex-20240627.419.tar",
+          "author": null,
+          "description": "The symex package has been updated to version 20240627.419.",
+          "link": "https://melpa.org/#/symex",
+          "publishedOn": "2024-06-27T04:19:00.000Z",
+          "wordCount": 105,
+          "title": "symex (20240627.419) --- An evil way to edit Lisp symbolic expressions as trees",
           "imageUrl": null
         },
         {
@@ -3203,6 +3313,16 @@
           "publishedOn": "2024-06-25T03:49:00.000Z",
           "wordCount": 105,
           "title": "helm-core (20240625.349) --- Development files for Helm",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/doom-modeline-20240625.230.tar",
+          "author": null,
+          "description": "The doom-modeline package has been updated to version 20240625.230.",
+          "link": "https://melpa.org/#/doom-modeline",
+          "publishedOn": "2024-06-25T02:30:00.000Z",
+          "wordCount": 105,
+          "title": "doom-modeline (20240625.230) --- A minimal and modern mode-line",
           "imageUrl": null
         },
         {
@@ -5304,126 +5424,6 @@
           "wordCount": 105,
           "title": "jinx (20240606.909) --- Enchanted Spell Checker",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-bookmarks-20240606.758.tar",
-          "author": null,
-          "description": "The org-bookmarks package has been updated to version 20240606.758.",
-          "link": "https://melpa.org/#/org-bookmarks",
-          "publishedOn": "2024-06-06T07:58:00.000Z",
-          "wordCount": 105,
-          "title": "org-bookmarks (20240606.758) --- Manage bookmarks in Org mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lab-20240606.737.tar",
-          "author": null,
-          "description": "The lab package has been updated to version 20240606.737.",
-          "link": "https://melpa.org/#/lab",
-          "publishedOn": "2024-06-06T07:37:00.000Z",
-          "wordCount": 105,
-          "title": "lab (20240606.737) --- An interface for GitLab",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/helm-20240606.700.tar",
-          "author": null,
-          "description": "The helm package has been updated to version 20240606.700.",
-          "link": "https://melpa.org/#/helm",
-          "publishedOn": "2024-06-06T07:00:00.000Z",
-          "wordCount": 105,
-          "title": "helm (20240606.700) --- Helm is an Emacs incremental and narrowing framework",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elfeed-tube-20240606.241.tar",
-          "author": null,
-          "description": "The elfeed-tube package has been updated to version 20240606.241.",
-          "link": "https://melpa.org/#/elfeed-tube",
-          "publishedOn": "2024-06-06T02:41:00.000Z",
-          "wordCount": 105,
-          "title": "elfeed-tube (20240606.241) --- YouTube integration for Elfeed",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/brec-mode-20240606.28.tar",
-          "author": null,
-          "description": "The brec-mode package has been updated to version 20240606.28.",
-          "link": "https://melpa.org/#/brec-mode",
-          "publishedOn": "2024-06-06T00:28:00.000Z",
-          "wordCount": 105,
-          "title": "brec-mode (20240606.28) --- A major mode for editing Breccian text",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/casual-20240606.26.tar",
-          "author": null,
-          "description": "The casual package has been updated to version 20240606.26.",
-          "link": "https://melpa.org/#/casual",
-          "publishedOn": "2024-06-06T00:26:00.000Z",
-          "wordCount": 105,
-          "title": "casual (20240606.26) --- Transient UI for Calc",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/notink-theme-20240605.2018.tar",
-          "author": null,
-          "description": "The notink-theme package has been updated to version 20240605.2018.",
-          "link": "https://melpa.org/#/notink-theme",
-          "publishedOn": "2024-06-05T20:18:00.000Z",
-          "wordCount": 105,
-          "title": "notink-theme (20240605.2018) --- A custom theme inspired by e-ink displays",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/slime-20240605.1810.tar",
-          "author": null,
-          "description": "The slime package has been updated to version 20240605.1810.",
-          "link": "https://melpa.org/#/slime",
-          "publishedOn": "2024-06-05T18:10:00.000Z",
-          "wordCount": 105,
-          "title": "slime (20240605.1810) --- Superior Lisp Interaction Mode for Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-shoplist-20240605.1532.tar",
-          "author": null,
-          "description": "The org-shoplist package has been updated to version 20240605.1532.",
-          "link": "https://melpa.org/#/org-shoplist",
-          "publishedOn": "2024-06-05T15:32:00.000Z",
-          "wordCount": 105,
-          "title": "org-shoplist (20240605.1532) --- Eat the world",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/magit-20240605.1500.tar",
-          "author": null,
-          "description": "The magit package has been updated to version 20240605.1500.",
-          "link": "https://melpa.org/#/magit",
-          "publishedOn": "2024-06-05T15:00:00.000Z",
-          "wordCount": 105,
-          "title": "magit (20240605.1500) --- A Git porcelain inside Emacs.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/bitbake-20240605.1322.tar",
-          "author": null,
-          "description": "The bitbake package has been updated to version 20240605.1322.",
-          "link": "https://melpa.org/#/bitbake",
-          "publishedOn": "2024-06-05T13:22:00.000Z",
-          "wordCount": 105,
-          "title": "bitbake (20240605.1322) --- Running bitbake from emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lingva-20240605.1249.tar",
-          "author": null,
-          "description": "The lingva package has been updated to version 20240605.1249.",
-          "link": "https://melpa.org/#/lingva",
-          "publishedOn": "2024-06-05T12:49:00.000Z",
-          "wordCount": 105,
-          "title": "lingva (20240605.1249) --- Access Google Translate without tracking via lingva.ml",
-          "imageUrl": null
         }
       ]
     },
@@ -5432,6 +5432,116 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dw49of/is_it_possible_to_resize_window_with_cright_click/",
+          "author": null,
+          "description": "In i3, you can set it up so that Super and right click resizes the current window without having to click exactly on the border. Is it possible to do something similar in emacs using C-rightclick drag?\n    submitted by    /u/x9myi9Ks6saTYgkfNEdr  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dw49of/is_it_possible_to_resize_window_with_cright_click/",
+          "publishedOn": "2024-07-05T18:03:38.000Z",
+          "wordCount": null,
+          "title": "Is it possible to resize window with C-right click drag without being click from the border (like i3)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dw2a87/is_there_a_way_to_make_child_frames_transparent/",
+          "author": null,
+          "description": "I wanted to make eldoc-box frames transparent so that the code in main frame shines though it. I tried adding eldoc-box-frame-hook and setting (set-frame-parameter nil 'alpha-background 80) in it. This indeed makes the child frame transparent, but not in a way I intended. Instead of seeing main frame through it, I see my desktop background. I wonder if this is even supported or if I'm doing something wrong. I'm in KDE plasma waylaynd and I have built emacs (couple days ago) from sources without PGTK (because with PGTK was very slow in my setup).\n I don't even know if I actually want it transparent but now it bugs me a lot because I was not able to try it out :)\n    submitted by    /u/nisteeni  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dw2a87/is_there_a_way_to_make_child_frames_transparent/",
+          "publishedOn": "2024-07-05T16:39:23.000Z",
+          "wordCount": null,
+          "title": "Is there a way to make child frames transparent",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dw0s3i/text_inside_a_shape/",
+          "author": null,
+          "description": "https://preview.redd.it/er5yn8ujypad1.png?width=762&format=png&auto=webp&s=cd48bab7ed2afae9b275d6733117842f150d0419\n Details: https://lifeofpenguin.blogspot.com/2024/06/text-along-path-gnu-emacs.html#shape-inside\n    submitted by    /u/atamariya  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dw0s3i/text_inside_a_shape/",
+          "publishedOn": "2024-07-05T15:33:32.000Z",
+          "wordCount": null,
+          "title": "Text inside a shape",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dvxsey/got_cool_bitmap_uses_in_hightlightindentguides/",
+          "author": null,
+          "description": "I've been using highlight-indent-guides.el for years now, and really appreciating it. \n This morning I was doing some config-file cleanup and re-discovered the fact that it supports the use of a \"bitmap\" for your indentation guide.\n Have any of you folks done something cool with that? The example of creating a subtle vertical dotted line is cool, but surely someone's had a \"hold my beer\" moment and done something kind-of outrageous with this. \n If it was you, I totally want to see. \n    submitted by    /u/masukomi  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dvxsey/got_cool_bitmap_uses_in_hightlightindentguides/",
+          "publishedOn": "2024-07-05T13:17:53.000Z",
+          "wordCount": null,
+          "title": "got cool bitmap uses in hightlight-indent-guides?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dvxkyd/how_to_parenmatch_unicode_brackets/",
+          "author": null,
+          "description": "how to do this? I want to modify the default paren-matching (on my Mac emacs) to match unicode ⎨⎬and ⎡⎦\n    submitted by    /u/paultarvydas  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dvxkyd/how_to_parenmatch_unicode_brackets/",
+          "publishedOn": "2024-07-05T13:07:54.000Z",
+          "wordCount": null,
+          "title": "How to paren-match unicode brackets?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dvuop7/dirlocals_override_but_for_functions/",
+          "author": null,
+          "description": "I have been trying to override a function, but only for a project under projectile control.\n So far I've been using (or rather trying to), dir-locals, but it does not play well with function overriding.\n Is this even possible, or am I missing something?\n    submitted by    /u/drmimrod  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dvuop7/dirlocals_override_but_for_functions/",
+          "publishedOn": "2024-07-05T10:20:05.000Z",
+          "wordCount": null,
+          "title": "dir-locals override, but for functions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dvtqf0/remote_emacs_gui_with_waypipe/",
+          "author": null,
+          "description": "Has anyone tried using emacs remotely with waypipe?\n I just tried here and I am impressed on how faster compared to ssh -X.\n I have some problems when running emacs directly waypipe ssh $remote emacs. If I run a terminal waypipe ssh $remote alacritty and then open emacs GUI, it works better (at least, I have not found major problems).\n    submitted by    /u/pathemata  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dvtqf0/remote_emacs_gui_with_waypipe/",
+          "publishedOn": "2024-07-05T09:12:58.000Z",
+          "wordCount": null,
+          "title": "Remote emacs GUI with waypipe",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dvt20v/bloat/",
+          "author": null,
+          "description": "Just installed GNU Emacs an I am working my way through the manual. I thought it was a lightweight text editor, but I just found out that it has: games, lsp support, version control, mail(??), news, and a fucking psychotherapist. I'm starting to reconsider my usage of Emacs. This seems extremely bloated.\n Additionally, the Emacs manual itself is massive. I'm starting to question if this is worth reading.\n    submitted by    /u/Icy-Repair8024  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dvt20v/bloat/",
+          "publishedOn": "2024-07-05T08:24:30.000Z",
+          "wordCount": null,
+          "title": "Bloat",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dvr7ka/how_to_change_a_minibuffers_mode/",
+          "author": null,
+          "description": "I'm trying to create a custom minibuffer, but I can't find a way to change its major or minor modes. How can I do this?\n \"minibuffer-with-setup-hook\" runs the function before the buffer is active so it's not possible to just \"setq major-mode\" inside of it.\n EDIT: I guess just changing the keymap temporarily will do the trick, since I just need the arrow keys to move the cursor in another window.\n    submitted by    /u/Western-Dentist4750  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dvr7ka/how_to_change_a_minibuffers_mode/",
+          "publishedOn": "2024-07-05T06:18:20.000Z",
+          "wordCount": null,
+          "title": "How to change a minibuffer's mode?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dvlika/removing_keyboard_layout_dead_keys_behaviour_when/",
+          "author": null,
+          "description": "I know it sounds cryptic but I just happen to want to type Cyrillic on a spanish layout keyboard. I am able to do so by using this:\n  (require 'quail) ;; Define a custom keyboard layout (setq quail-keyboard-layout-es \"\\ \\ ºª1!2\\\"3·4$5%6&7/8(9)0='?¡¿ \\ qQwWeErRtTyYuUiIoOpP`^+* \\ aAsSdDfFgGhHjJkKlLñÑ´¨çÇ \\ <>zZxXcCvVbBnNmM,;.:-_ \\ \" ) (add-to-list 'quail-keyboard-layout-alist `(\"pc105-es\" . ,quail-keyboard-layout-es)) (quail-set-keyboard-layout \"pc105-es\") (add-hook 'after-change-major-mode-hook (lambda () (unless (or (minibufferp) (member (buffer-name) '(\"*scratch*\" \"*Messages*\" \"*Help*\")) (derived-mode-p 'shell-mode 'eshell-mode 'term-mode 'dired-mode)) (set-input-method \"russian-computer\")))) \n The problem is that characters `^ which should print cyrillic letter х and characters ´¨ which should print cyrillic character э are compound -> which means they are used for vocals like àâ áä through the use of use of dead keys (keys which are used to modify other characters and print not by themselves unless typed twice), however I'm into the problem that despite creating my own keyboard layout emacs still makes me type those dead characters twice and its annoying.\n Do you know how can I deactivate this behaviour?\n    submitted by    /u/bloomingFemme  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dvlika/removing_keyboard_layout_dead_keys_behaviour_when/",
+          "publishedOn": "2024-07-05T00:36:07.000Z",
+          "wordCount": null,
+          "title": "Removing keyboard Layout Dead Keys behaviour when using other inputs. -How can I input russian with a spanish keyboard layout without having to type twice compound for letters mapped to dead keys?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dvhil5/temporarily_flashing_lines_that_are_copied/",
+          "author": null,
+          "description": "Hi all,\n Neovim has this nifty feature by default that when a region/line is copied, it temporarily flashes to notify the user the exact region being copied.\n Is there a way to do this in emacs? Thanks.\n    submitted by    /u/kn0xchad  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dvhil5/temporarily_flashing_lines_that_are_copied/",
+          "publishedOn": "2024-07-04T21:13:56.000Z",
+          "wordCount": null,
+          "title": "Temporarily flashing lines that are copied",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1dvceyn/help_in_starting_up/",
           "author": null,
@@ -5470,6 +5580,16 @@
           "publishedOn": "2024-07-04T13:55:17.000Z",
           "wordCount": null,
           "title": "How to use multiple `list-dir`s with `use-package-vc`?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dv5oaf/global_mode_line/",
+          "author": null,
+          "description": "Two months ago on this subreddit I asked if there is a way to have a global modeline in emacs, I got only one awnser which is this code/repo https://github.com/amno1/global-mode-line . Also I went through similar posts on this subreddit once again, searched for solution on search engines, there a lot of tricks/tweaks and \"solutions\", but I found this https://www.youtube.com/watch?v=OSv5JCIlPZA and this repo of the same author https://github.com/amosbird/emacs/tree/onemodeline . May be it is possible to merge this to the official emacs repo?\n    submitted by    /u/Particular_Bug388  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dv5oaf/global_mode_line/",
+          "publishedOn": "2024-07-04T12:23:54.000Z",
+          "wordCount": null,
+          "title": "Global mode line",
           "imageUrl": null
         },
         {
@@ -8411,86 +8531,6 @@
           "wordCount": null,
           "title": "What Emacs got right, or how I wish modern apps were more like a 50 year old text editor",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1d9d1ob/getting_emacs_terminal_transparent/",
-          "author": null,
-          "description": "Hi,\n I am desperately trying to get doom emacs in terminal mode (emacs -nw) to have a transparent background. I have tried everything that I could think of and find as resources, but I can only get the emacs GUI to have the transparent background by following emacs wiki and setting in my doom emacs config.el:\n (set-frame-parameter nil 'alpha-background 70) (add-to-list 'default-frame-alist '(alpha-background . 70)) \n My emacs version is emacs29-pgtk. I am using the kitty terminal and have already made the terminal itself transparent.\n I would greatly appreciate any tips on how to make this work, as I have tried for a long time and have no idea why this is not working.\n    submitted by    /u/EnvironmentalFox7937  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1d9d1ob/getting_emacs_terminal_transparent/",
-          "publishedOn": "2024-06-06T08:08:19.000Z",
-          "wordCount": null,
-          "title": "Getting Emacs Terminal Transparent",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1d9b42f/vimstyle_repeatable_key_bindings_for_navigating/",
-          "author": null,
-          "description": "submitted by    /u/rajasegarc  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1d9b42f/vimstyle_repeatable_key_bindings_for_navigating/",
-          "publishedOn": "2024-06-06T05:51:58.000Z",
-          "wordCount": null,
-          "title": "Vim-style repeatable key bindings for navigating windows in Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1d95svw/is_there_a_way_to_search_orgroam_nodes_by_tags/",
-          "author": null,
-          "description": "Sometimes I am looking for some note that I might have tagged under \"System\" and \"Bug\" but definitely not under \"Debian\" or \"Void\" , is there a way to find all nodes with tags matching both System and Bug but NOT (Debian or Void)? \n    submitted by    /u/Weak_Education_1778  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1d95svw/is_there_a_way_to_search_orgroam_nodes_by_tags/",
-          "publishedOn": "2024-06-06T00:52:05.000Z",
-          "wordCount": null,
-          "title": "Is there a way to search org-roam nodes by tags?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1d8xq6s/getting_defaultorgnotessearch_to_display_results/",
-          "author": null,
-          "description": "I'm using emacs & org for knowledge management, and I often need to search my notes. One of the ways I do this is with +default/org-notes-search (from search.el, maybe it's a doom thing? It just wraps ripgrep on org-directory), which displays two windows; a list of results on the bottom and a preview of the currently selected result on the top window.\n I don't hard-wrap my text files; I rely on visual-line-mode instead. This makes searching kind of annoying, because I can't get the preview window (the top one) to wrap long lines. The closest I've been able to get is by doing this:\n `(add-hook 'occur-mode-hook 'visual-line-mode)`\n which sort of enables visual-line-mode in the preview window... but only sometimes, and only if I click in that window to focus its buffer. I can then go back down to the results and flip through results in the same file, but when I Get to the next file I have to refocus the results buffer again.\n Anyone have an idea of how I can get this to work seamlessly? Extra bonus points if I can enable visual-fill-column-mode too!\n    submitted by    /u/bradmont  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1d8xq6s/getting_defaultorgnotessearch_to_display_results/",
-          "publishedOn": "2024-06-05T18:55:16.000Z",
-          "wordCount": null,
-          "title": "Getting +default/org-notes-search to display results with word wrap?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1d8xcq3/moving_window_buffers_with_mouse_like_acme_plan9/",
-          "author": null,
-          "description": "I don't like acme, but I like the way it handles moving the window buffers around using the mouse, I am sure its possible to do anything in emacs but is there a plugin or an easy way to do it ? \n    submitted by    /u/FortuneIntrepid6186  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1d8xcq3/moving_window_buffers_with_mouse_like_acme_plan9/",
-          "publishedOn": "2024-06-05T18:39:48.000Z",
-          "wordCount": null,
-          "title": "moving window buffers with mouse like acme plan9 editor",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1d8v4va/is_emacs_suitable_for_java_programming/",
-          "author": null,
-          "description": "I'm starting a new job as java backend developer soon, and since emacs is my daily driver for programming, I was wondering if it's more suitable for Java than Intellij? I've found the latter way too CPU and memory hungry for my taste.\n    submitted by    /u/blureglades  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1d8v4va/is_emacs_suitable_for_java_programming/",
-          "publishedOn": "2024-06-05T17:08:19.000Z",
-          "wordCount": null,
-          "title": "Is emacs suitable for java programming?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1d8sq28/light_theme_for_coding/",
-          "author": null,
-          "description": "Could you advice me a light theme what is enough contrastly to use for coding.\n I tried the modus themes but to modify an sql / C# / ... file is not enough good.\n What I used to use is vs-light theme what is good for coding but I'm very curious what you use for coding.\n    submitted by    /u/zsome  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1d8sq28/light_theme_for_coding/",
-          "publishedOn": "2024-06-05T15:28:02.000Z",
-          "wordCount": null,
-          "title": "light theme for coding",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1d8rlyw/mermaid_preview_using_wxwidget_browser/",
-          "author": null,
-          "description": "submitted by    /u/erickgnavar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1d8rlyw/mermaid_preview_using_wxwidget_browser/",
-          "publishedOn": "2024-06-05T14:41:01.000Z",
-          "wordCount": null,
-          "title": "Mermaid preview using wxwidget browser",
-          "imageUrl": null
         }
       ]
     },
@@ -8499,6 +8539,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2928@/discussions",
+          "author": "Will",
+          "description": "Swimming with Ideas\nThis is yet another opportunity to share with your friends what you are working on. Add to this discussion by telling us about your zettelkasten journey. Share with us what you're learning. Sharing helps me and, hopefully, you, too. It helps us clarify our goals and visualize our thinking. And sometimes, a conversation sparks a magical moment where we can dive into an idea worth exploring. I'd love to hear more from you.   🫵🏼\nHere is a report on why I'm here and this week's ZK work themes/ideas:\nFirst, learning how to discuss an idea has been gratifying through the forum discussion Discourse graph and Zettelkasten. It's been a masterclass on capturing creative ideation. This reminds me of when Mortimer Adler argued that speed reading is flawed; true comprehension requ…",
+          "link": "https://forum.zettelkasten.de/discussion/2928/share-with-us-what-is-happening-in-your-zk-this-week-july-5-2024",
+          "publishedOn": "2024-07-05T13:04:44.000Z",
+          "wordCount": 2242,
+          "title": "Share with us what is happening in your ZK this week. July 5, 2024",
+          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/d0/1naoz1fucfau.png"
+        },
         {
           "id": "2927@/discussions",
           "author": "Sascha",
