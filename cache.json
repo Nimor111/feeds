@@ -53,6 +53,26 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1dzxmxi/how_to_use_haxl_with_servant/",
+          "author": null,
+          "description": "Hi all,\n I'm trying to learn `haxl` library with servant. I'm having a custom reader monad stack which contains `Env`. Right now, I am using `runHaxl` function in the handler function to fetch the data. Something like this:\n  \nfetchUsersH :: (MonadIO m) => AppT m [Int] [User]\n fetchUsersH = do\n (env0 :: Env () [Int]) <- asks haxlEnv\n liftIO $ runHaxl env0 (dataFetch FetchUsers)\n  \nI saw a github code where scotty was being used, where the GenHaxl was added in the monad stack. Link of the scotty-haxl code\n  \naddTimeline :: (HasPSQL u, HasOtherEnv Cache u) => String -> ID -> GenHaxl u w ID\n addTimeline name aid =\n unCacheArticle aid $ unCacheCount (\"timeline:\" ++ name) $ RawAPI.addTimeline name aid\n  \nAnd it was getting converted into IO like this:\n  \nscottyOptsT opts (runIO u state) $ application [logStdout]\n where runIO :: (HasPSQL u, HasOtherEnv C.Cache u) => u -> StateStore -> GenHaxl u w b -> IO b\n runIO env s m = do\n env0 <- initEnv s env\n runHaxl env0 m\n  \nI want to do similar thing with servant, but I didn't find any example.\n Also, I want to know what would be the best practice for handling haxl\n data fetching? getting the env from the reader and calling runHaxl within\n the handler function or runHaxl should be called at the `hoistServer` level?\n    submitted by    /u/Worldly_Dish_48  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1dzxmxi/how_to_use_haxl_with_servant/",
+          "publishedOn": "2024-07-10T14:48:22.000Z",
+          "wordCount": null,
+          "title": "How to use Haxl with servant?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1dze30p/why_did_anduril_decide_to_use_embedded_haskell_in/",
+          "author": null,
+          "description": "submitted by    /u/IcarianComplex  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1dze30p/why_did_anduril_decide_to_use_embedded_haskell_in/",
+          "publishedOn": "2024-07-09T21:28:19.000Z",
+          "wordCount": null,
+          "title": "Why did Anduril decide to use embedded haskell in their stack?",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1dz1gxd/multitype_handler/",
           "author": null,
           "description": "Hi! I need an advise.\n How can I reach that behaviour for my function?\n It is a pseudo haskell code\n  runC :: (f a -> g b) -> f a -> g b runC :: (f a -> f b -> g c) -> f a -> f b -> g c runC :: (f a -> f b -> ... -> g n) -> f a -> f b -> ... -> g n \n So a, b, ..., n are different types I need runC to be polymorphic like this\n    submitted by    /u/homological_owl  \n [link]   [comments]",
@@ -1001,46 +1021,6 @@
           "wordCount": null,
           "title": "[ANN] Fourmolu 0.16.0.0 released!",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dd901c/failing_at_combinatorics_with_haskell/",
-          "author": null,
-          "description": "submitted by    /u/sondr3_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dd901c/failing_at_combinatorics_with_haskell/",
-          "publishedOn": "2024-06-11T08:17:41.000Z",
-          "wordCount": null,
-          "title": "Failing at Combinatorics with Haskell",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dcyy9n/using_parsec_on_string_or_token/",
-          "author": null,
-          "description": "I have a parser for user input in a text adventure game, and I would like it to operate on a list of words instead of a String. What is the easiest way to parse a [String]? I am having trouble figuring out, e.g., how to (1) run the parser, and (2) how to consume an individual String or a [String] from the input.\n More generally, what is the easiest way to use Parsec when the input is a list of a Token type instead of a list of Char?\n    submitted by    /u/bjthinks  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dcyy9n/using_parsec_on_string_or_token/",
-          "publishedOn": "2024-06-10T22:45:38.000Z",
-          "wordCount": null,
-          "title": "Using Parsec on [String] or [Token]",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dcv2lp/so_why_cant_lift_be_implemented_like_this/",
-          "author": null,
-          "description": "I've finished reading Learn You a Haskell and I'm currently following a tutorial on monad transformers I found online. The exercise is implementing MaybeT.\n The author makes MaybeT an instance of MonadTrans as follows:\n instance MonadTrans MaybeT where lift = MaybeT . (liftM Just) \n I'm a little confused initially, so I open my code editor and get the type annotation for lift, which makes it clear instantly: it takes a value in the base monad to produce a value in the transformed monad, with that same base and Maybe as a precursor.\n So I implement it on my own:\n lift :: (Monad m) => m a -> MaybeT m a lift x = MaybeT $ do x' <- x return $ Just x' \n My code editor suggests a refactoring here, which I end up agreeing with:\n lift x = MaybeT $ do Just <$> x \n And then the thought occurs to me that lift could be implemented generally, like so:\n lift x = MonadT $ do return <$> x \n But then the author asks, as an exercise: why is it that the lift function has to be defined separately for each monad, whereas liftM can be defined in a universal way?\n So I know I must've gotten something wrong somewhere here; but where exactly? Is it that using return makes sense in the context of Maybe, but it doesn't in some other monad?\n    submitted by    /u/cateatingpancakes  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dcv2lp/so_why_cant_lift_be_implemented_like_this/",
-          "publishedOn": "2024-06-10T20:03:50.000Z",
-          "wordCount": null,
-          "title": "So why can't lift be implemented like this, universally?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dcsfsb/hand_rolled_applicative_user_validation_code_kata/",
-          "author": null,
-          "description": "https://fpilluminated.com/deck/224\n    submitted by    /u/philip_schwarz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dcsfsb/hand_rolled_applicative_user_validation_code_kata/",
-          "publishedOn": "2024-06-10T18:18:42.000Z",
-          "wordCount": null,
-          "title": "Hand Rolled Applicative User Validation Code Kata",
-          "imageUrl": null
         }
       ]
     },
@@ -1049,6 +1029,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1e01lpj/tapir_tutorial_part_6_error_variants_adam_warski/",
+          "author": null,
+          "description": "submitted by    /u/smlaccount  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1e01lpj/tapir_tutorial_part_6_error_variants_adam_warski/",
+          "publishedOn": "2024-07-10T17:28:50.000Z",
+          "wordCount": null,
+          "title": "Tapir Tutorial - part 6: Error Variants | Adam Warski SoftwareMill",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1e017ma/missing_ml_libraries/",
+          "author": null,
+          "description": "Hi, I am wanting to dive into Scala more and would not mind porting over a library. What are some missing libraries for the AI or ML scala ecosystem?\n    submitted by    /u/perryplatt  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1e017ma/missing_ml_libraries/",
+          "publishedOn": "2024-07-10T17:12:47.000Z",
+          "wordCount": null,
+          "title": "Missing ML Libraries",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1dye842/folding_cheat_sheet_7_the_three_duality_theorems/",
           "author": null,
@@ -1908,26 +1908,6 @@
           "wordCount": null,
           "title": "Helenus v1.6.0",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dcrrgn/hand_rolled_applicative_user_validation_code_kata/",
-          "author": null,
-          "description": "submitted by    /u/philip_schwarz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dcrrgn/hand_rolled_applicative_user_validation_code_kata/",
-          "publishedOn": "2024-06-10T17:51:17.000Z",
-          "wordCount": null,
-          "title": "Hand Rolled Applicative User Validation Code Kata",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dckwxi/scalatra_310_released/",
-          "author": null,
-          "description": "submitted by    /u/takezoe  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dckwxi/scalatra_310_released/",
-          "publishedOn": "2024-06-10T13:00:08.000Z",
-          "wordCount": null,
-          "title": "Scalatra 3.1.0 Released",
-          "imageUrl": null
         }
       ]
     },
@@ -2008,6 +1988,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1dzrndg/contact_management_with_emacs_orgmode_orgcontacts/",
+          "author": null,
+          "description": "There was a thread (https://www.reddit.com/r/emacs/comments/18yb7hp/comment/lasovg5/?context=3), where the OP suggest to explain a little bit more about the way I manage my contacts. So here we are, it is a lengthy post, hopefully not to boring. \n I was in search for a light weight system for contact management and customer relation management. The main purpose for me is to have all address/telephone numbers/emails available at hand and easy to search. Another aspect is, that I would like to use this in conjunction with org-mode of Emacs, where I do all my business administration things. As for the background, I work in a non academic research institute, we do public research in funded projects, but also have to get 40% of our cost covered by contract research by private companies or gover…",
+          "link": "https://www.reddit.com/r/orgmode/comments/1dzrndg/contact_management_with_emacs_orgmode_orgcontacts/",
+          "publishedOn": "2024-07-10T09:40:21.000Z",
+          "wordCount": null,
+          "title": "Contact management with Emacs, org-mode, org-contacts, notmuch and org-roam",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1dy0rju/add_exportable_file_links_to_org_mode_without/",
           "author": null,
@@ -2326,6 +2316,86 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/ellama-20240710.1808.tar",
+          "author": null,
+          "description": "The ellama package has been updated to version 20240710.1808.",
+          "link": "https://melpa.org/#/ellama",
+          "publishedOn": "2024-07-10T18:08:00.000Z",
+          "wordCount": 105,
+          "title": "ellama (20240710.1808) --- Tool for interacting with LLMs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-bookmarks-20240710.1738.tar",
+          "author": null,
+          "description": "The org-bookmarks package has been updated to version 20240710.1738.",
+          "link": "https://melpa.org/#/org-bookmarks",
+          "publishedOn": "2024-07-10T17:38:00.000Z",
+          "wordCount": 105,
+          "title": "org-bookmarks (20240710.1738) --- Manage bookmarks in Org mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ox-pandoc-20240710.1424.tar",
+          "author": null,
+          "description": "The ox-pandoc package has been updated to version 20240710.1424.",
+          "link": "https://melpa.org/#/ox-pandoc",
+          "publishedOn": "2024-07-10T14:24:00.000Z",
+          "wordCount": 105,
+          "title": "ox-pandoc (20240710.1424) --- An Org-mode exporter using pandoc",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/nix-ts-mode-20240710.1039.tar",
+          "author": null,
+          "description": "The nix-ts-mode package has been updated to version 20240710.1039.",
+          "link": "https://melpa.org/#/nix-ts-mode",
+          "publishedOn": "2024-07-10T10:39:00.000Z",
+          "wordCount": 105,
+          "title": "nix-ts-mode (20240710.1039) --- Major mode for Nix expressions, powered by tree-sitter",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/monokai-theme-20240710.1027.tar",
+          "author": null,
+          "description": "The monokai-theme package has been updated to version 20240710.1027.",
+          "link": "https://melpa.org/#/monokai-theme",
+          "publishedOn": "2024-07-10T10:27:00.000Z",
+          "wordCount": 105,
+          "title": "monokai-theme (20240710.1027) --- A fruity color theme for Emacs.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/anki-editor-20240710.536.tar",
+          "author": null,
+          "description": "The anki-editor package has been updated to version 20240710.536.",
+          "link": "https://melpa.org/#/anki-editor",
+          "publishedOn": "2024-07-10T05:36:00.000Z",
+          "wordCount": 105,
+          "title": "anki-editor (20240710.536) --- Minor mode for making Anki cards with Org",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/pomm-20240709.2156.tar",
+          "author": null,
+          "description": "The pomm package has been updated to version 20240709.2156.",
+          "link": "https://melpa.org/#/pomm",
+          "publishedOn": "2024-07-09T21:56:00.000Z",
+          "wordCount": 105,
+          "title": "pomm (20240709.2156) --- Pomodoro and Third Time timers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/citar-denote-20240709.1954.tar",
+          "author": null,
+          "description": "The citar-denote package has been updated to version 20240709.1954.",
+          "link": "https://melpa.org/#/citar-denote",
+          "publishedOn": "2024-07-09T19:54:00.000Z",
+          "wordCount": 105,
+          "title": "citar-denote (20240709.1954) --- Minor mode integrating Citar and Denote",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/selected-window-accent-mode-20240709.1942.tar",
           "author": null,
           "description": "The selected-window-accent-mode package has been updated to version 20240709.1942.",
@@ -2386,6 +2456,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/erlang-20240709.1136.tar",
+          "author": null,
+          "description": "The erlang package has been updated to version 20240709.1136.",
+          "link": "https://melpa.org/#/erlang",
+          "publishedOn": "2024-07-09T11:36:00.000Z",
+          "wordCount": 105,
+          "title": "erlang (20240709.1136) --- Erlang major mode",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/lsp-pyright-20240709.221.tar",
           "author": null,
           "description": "The lsp-pyright package has been updated to version 20240709.221.",
@@ -2403,6 +2483,16 @@
           "publishedOn": "2024-07-09T02:21:00.000Z",
           "wordCount": 105,
           "title": "fountain-mode (20240709.221) --- Major mode for screenwriting in Fountain markup",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/verb-20240708.2311.tar",
+          "author": null,
+          "description": "The verb package has been updated to version 20240708.2311.",
+          "link": "https://melpa.org/#/verb",
+          "publishedOn": "2024-07-08T23:11:00.000Z",
+          "wordCount": 105,
+          "title": "verb (20240708.2311) --- Organize and send HTTP requests",
           "imageUrl": null
         },
         {
@@ -2463,6 +2553,16 @@
           "publishedOn": "2024-07-08T21:19:00.000Z",
           "wordCount": 105,
           "title": "recursion-indicator (20240708.2119) --- Recursion indicator",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/yeetube-20240708.2037.tar",
+          "author": null,
+          "description": "The yeetube package has been updated to version 20240708.2037.",
+          "link": "https://melpa.org/#/yeetube",
+          "publishedOn": "2024-07-08T20:37:00.000Z",
+          "wordCount": 105,
+          "title": "yeetube (20240708.2037) --- Scrape YouTube, Play with mpv & Download with yt-dlp",
           "imageUrl": null
         },
         {
@@ -3513,6 +3613,16 @@
           "publishedOn": "2024-06-28T18:59:00.000Z",
           "wordCount": 105,
           "title": "gnosis (20240628.1859) --- Spaced Repetition System",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/magit-section-20240628.1638.tar",
+          "author": null,
+          "description": "The magit-section package has been updated to version 20240628.1638.",
+          "link": "https://melpa.org/#/magit-section",
+          "publishedOn": "2024-06-28T16:38:00.000Z",
+          "wordCount": 105,
+          "title": "magit-section (20240628.1638) --- Sections for read-only buffers.",
           "imageUrl": null
         },
         {
@@ -5374,126 +5484,6 @@
           "wordCount": 105,
           "title": "flymake-sqlfluff (20240611.1257) --- A flymake plugin for SQL files using sqlfluff",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/cider-20240611.523.tar",
-          "author": null,
-          "description": "The cider package has been updated to version 20240611.523.",
-          "link": "https://melpa.org/#/cider",
-          "publishedOn": "2024-06-11T05:23:00.000Z",
-          "wordCount": 105,
-          "title": "cider (20240611.523) --- Clojure Interactive Development Environment that Rocks",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/treesit-ispell-20240611.117.tar",
-          "author": null,
-          "description": "The treesit-ispell package has been updated to version 20240611.117.",
-          "link": "https://melpa.org/#/treesit-ispell",
-          "publishedOn": "2024-06-11T01:17:00.000Z",
-          "wordCount": 105,
-          "title": "treesit-ispell (20240611.117) --- Run ispell on tree-sitter text nodes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/paren-face-20240611.12.tar",
-          "author": null,
-          "description": "The paren-face package has been updated to version 20240611.12.",
-          "link": "https://melpa.org/#/paren-face",
-          "publishedOn": "2024-06-11T00:12:00.000Z",
-          "wordCount": 105,
-          "title": "paren-face (20240611.12) --- A face for parentheses in lisp modes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/neut-mode-20240610.2326.tar",
-          "author": null,
-          "description": "The neut-mode package has been updated to version 20240610.2326.",
-          "link": "https://melpa.org/#/neut-mode",
-          "publishedOn": "2024-06-10T23:26:00.000Z",
-          "wordCount": 105,
-          "title": "neut-mode (20240610.2326) --- A major mode for Neut",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/tree-sitter-ispell-20240610.2252.tar",
-          "author": null,
-          "description": "The tree-sitter-ispell package has been updated to version 20240610.2252.",
-          "link": "https://melpa.org/#/tree-sitter-ispell",
-          "publishedOn": "2024-06-10T22:52:00.000Z",
-          "wordCount": 105,
-          "title": "tree-sitter-ispell (20240610.2252) --- Run ispell on tree-sitter text nodes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mindre-theme-20240610.2131.tar",
-          "author": null,
-          "description": "The mindre-theme package has been updated to version 20240610.2131.",
-          "link": "https://melpa.org/#/mindre-theme",
-          "publishedOn": "2024-06-10T21:31:00.000Z",
-          "wordCount": 105,
-          "title": "mindre-theme (20240610.2131) --- Minimal, light theme",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/loccur-20240610.1830.tar",
-          "author": null,
-          "description": "The loccur package has been updated to version 20240610.1830.",
-          "link": "https://melpa.org/#/loccur",
-          "publishedOn": "2024-06-10T18:30:00.000Z",
-          "wordCount": 105,
-          "title": "loccur (20240610.1830) --- Perform an occur-like folding in current buffer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/parinfer-rust-mode-20240610.1814.tar",
-          "author": null,
-          "description": "The parinfer-rust-mode package has been updated to version 20240610.1814.",
-          "link": "https://melpa.org/#/parinfer-rust-mode",
-          "publishedOn": "2024-06-10T18:14:00.000Z",
-          "wordCount": 105,
-          "title": "parinfer-rust-mode (20240610.1814) --- An interface for the parinfer-rust library",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/nasm-mode-20240610.1505.tar",
-          "author": null,
-          "description": "The nasm-mode package has been updated to version 20240610.1505.",
-          "link": "https://melpa.org/#/nasm-mode",
-          "publishedOn": "2024-06-10T15:05:00.000Z",
-          "wordCount": 105,
-          "title": "nasm-mode (20240610.1505) --- NASM x86 assembly major mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/thrift-20240610.1436.tar",
-          "author": null,
-          "description": "The thrift package has been updated to version 20240610.1436.",
-          "link": "https://melpa.org/#/thrift",
-          "publishedOn": "2024-06-10T14:36:00.000Z",
-          "wordCount": 105,
-          "title": "thrift (20240610.1436) --- major mode for fbthrift and Apache Thrift files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/inkpot-theme-20240610.1406.tar",
-          "author": null,
-          "description": "The inkpot-theme package has been updated to version 20240610.1406.",
-          "link": "https://melpa.org/#/inkpot-theme",
-          "publishedOn": "2024-06-10T14:06:00.000Z",
-          "wordCount": 105,
-          "title": "inkpot-theme (20240610.1406) --- A port of vim's inkpot theme",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/idris-mode-20240610.906.tar",
-          "author": null,
-          "description": "The idris-mode package has been updated to version 20240610.906.",
-          "link": "https://melpa.org/#/idris-mode",
-          "publishedOn": "2024-06-10T09:06:00.000Z",
-          "wordCount": 105,
-          "title": "idris-mode (20240610.906) --- Major mode for editing Idris code",
-          "imageUrl": null
         }
       ]
     },
@@ -5502,6 +5492,136 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e03roh/orgmode_hide_special_characterslines_for_better/",
+          "author": null,
+          "description": "So, as you know, we can mark a source block with #+begin_src, and we can enclose one-liners with = to highlight them.\n https://preview.redd.it/rs659r62nqbd1.png?width=852&format=png&auto=webp&s=347f07626af24cec82ce3b7025f81ee1b7fa4b45\n But, in the help doc, those symbols seem to be hidden, and you can see highlights and blocks, but without special characters/lines.\n https://preview.redd.it/7cx6cmwnmqbd1.png?width=2358&format=png&auto=webp&s=4e045c9c0f6a8ba9193770dbc3fd5475359f573d\n https://preview.redd.it/69op5coomqbd1.png?width=2886&format=png&auto=webp&s=e1f506687874f9c75988b8a04e5409e35b860a18\n Is it possible to do that in my org docs, so it looks like in the help example?\n    submitted by    /u/andrew-resler  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e03roh/orgmode_hide_special_characterslines_for_better/",
+          "publishedOn": "2024-07-10T18:55:30.000Z",
+          "wordCount": null,
+          "title": "[org-mode] Hide special characters/lines for better presentation?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e03kfc/is_setting_globalautorevertnonfilebuffers_to_t/",
+          "author": null,
+          "description": "Hello\n I have a hook for dired and I changed the auto-revert-interval to 1\n ``` (add-hook 'dired-mode-hook (lambda () (auto-revert-mode)))\n (setq-default auto-revert-interval 1) ```\n Is there any advantage to setting global-auto-revert-non-file-buffers to t, when all I am interested in is keeping my dired buffers up to date? Also is there any significant performance penalty to keeping the auto-revert-internal lower than the default of 5?\n    submitted by    /u/mkerrigan  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e03kfc/is_setting_globalautorevertnonfilebuffers_to_t/",
+          "publishedOn": "2024-07-10T18:47:23.000Z",
+          "wordCount": null,
+          "title": "Is setting global-auto-revert-non-file-buffers to t necessary to keep dired directories updated?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzvth2/consistent_dynamic_access_to_your_current_emacs/",
+          "author": null,
+          "description": "submitted by    /u/nanowillis  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzvth2/consistent_dynamic_access_to_your_current_emacs/",
+          "publishedOn": "2024-07-10T13:29:24.000Z",
+          "wordCount": null,
+          "title": "Consistent, Dynamic Access to Your Current Emacs Theme's Palette",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzu17k/new_to_emacs_how_to_get_fonts_working_in_doom/",
+          "author": null,
+          "description": "submitted by    /u/Focus-Expert  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzu17k/new_to_emacs_how_to_get_fonts_working_in_doom/",
+          "publishedOn": "2024-07-10T12:02:30.000Z",
+          "wordCount": null,
+          "title": "New to emacs. How to get fonts working in Doom emacs?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dztyyw/no_icons_shown_in_dashboard/",
+          "author": null,
+          "description": "When trying to configure my dashboard, I couldn't get any icons to show up. all-the-icons font is installed and I can insert icons. This is the part in my config:\n ``` (use-package dashboard ; :ensure t :config (dashboard-setup-startup-hook) (setq dashboard-display-icons-p t) (setq dashboard-set-file-icons t) (setq dashboard-set-heading-icons t) (setq dashboard-startup-banner \"~/.config/emacs/img/startup-banner.png\") (setq dashboard-items '((recents . 12) (bookmarks . 5) (projects . 5))) (setq dashboard-show-shortcuts t) (setq dashboard-center-content nil) (setq dashboard-banner-logo-title \"Vi, Vi, Vi is the editor of the beast.\"))\n (setq initial-buffer-choice (lambda () (switch-to-buffer \"*dashboard*\"))) \n ```\n    submitted by    /u/famousQanon  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dztyyw/no_icons_shown_in_dashboard/",
+          "publishedOn": "2024-07-10T11:59:33.000Z",
+          "wordCount": null,
+          "title": "No icons shown in dashboard",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzqf8g/weekly_tips_tricks_c_thread/",
+          "author": null,
+          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n See this search for previous \"Weekly Tips, Tricks, &c.\" Threads.\n Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzqf8g/weekly_tips_tricks_c_thread/",
+          "publishedOn": "2024-07-10T08:15:07.000Z",
+          "wordCount": null,
+          "title": "Weekly Tips, Tricks, &c. Thread",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzpse4/consultgrep_on_a_remote_machine_via_tramp_no/",
+          "author": null,
+          "description": "Hej fellows,\n I recently noticed that I don't get a preview of grep matches when I am using CONSULT-GREP on a directory on a remote machine. However, I do get previews when I execute CONSULT-GREP on the locale machine.\n Do you have any idea why this might be the case? Is there anything I can tweak to get it?\n Have a good day, fellows :)\n    submitted by    /u/olivuser  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzpse4/consultgrep_on_a_remote_machine_via_tramp_no/",
+          "publishedOn": "2024-07-10T07:30:48.000Z",
+          "wordCount": null,
+          "title": "CONSULT-GREP on a remote machine via TRAMP: no preview?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzpps9/running_different_themes_on_gui_emacs_and_tty/",
+          "author": null,
+          "description": "I had a problem where I wanted to run one theme in my GUI Emacs, but a totally different theme if I started a TTY emacsclient connected to the GUI process. I figured out a couple different ways to do that, and wrote a blog post about them. Hopefully somebody finds it interesting or useful; I know I learned new things about how faces work! \n    submitted by    /u/genehack  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzpps9/running_different_themes_on_gui_emacs_and_tty/",
+          "publishedOn": "2024-07-10T07:25:52.000Z",
+          "wordCount": null,
+          "title": "Running different themes on GUI Emacs and TTY emacsclient, in the same process",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzoy3u/syntax_highlighting_in_common_lisp_changes_when/",
+          "author": null,
+          "description": "Method docstrings are syntax highlit just like functions when I do not add one of the :around, :before, :after qualifiers, but as soon as I do, the docstring changes color to that of a regular string, why is this?\n    submitted by    /u/Weak_Education_1778  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzoy3u/syntax_highlighting_in_common_lisp_changes_when/",
+          "publishedOn": "2024-07-10T06:34:45.000Z",
+          "wordCount": null,
+          "title": "Syntax highlighting in common lisp changes when adding a method qualifier",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzng0p/pythondjango/",
+          "author": null,
+          "description": "Are there any newer updates on the best way to use Emacs for Django development? It seems that most are 10+ years old or no longer in development?\n    submitted by    /u/LenCole  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzng0p/pythondjango/",
+          "publishedOn": "2024-07-10T04:59:59.000Z",
+          "wordCount": null,
+          "title": "Python/Django",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzjw49/managing_a_bunch_of_terminals/",
+          "author": null,
+          "description": "In my neovim days I was a diehard tmux fan. I haven't found any solutions in emacs to manage a bunch of different terminal windows. What do you use?\n    submitted by    /u/iamn0tthere  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzjw49/managing_a_bunch_of_terminals/",
+          "publishedOn": "2024-07-10T01:49:24.000Z",
+          "wordCount": null,
+          "title": "managing a bunch of terminals?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzfzto/i_am_keeping_an_up_to_date_obhttp_fork/",
+          "author": null,
+          "description": "submitted by    /u/AndreaSomePostfix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzfzto/i_am_keeping_an_up_to_date_obhttp_fork/",
+          "publishedOn": "2024-07-09T22:47:53.000Z",
+          "wordCount": null,
+          "title": "I am keeping an up to date ob-http fork",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1dzdlqt/onetabperproject_aka_otpp_workspace_management/",
+          "author": null,
+          "description": "Hi folks,\n I've been searching for a package that enables the simple \"one tab per project\" workflow, so each project is isolated in its tab.\n I used tabspaces for some time but I faced several issues with it. Then, I switched to the more lightweight project-tab-groups which creates a \"tab group\" per project, but with some limitations. The latter was simple enough to inspire me to create the package I'm looking for, one-tab-per-project (or otpp).\n The idea is simple, install the package and its dependency unique-dir-name (another package of mine, created specifically for otpp), enable otpp-mode and you are good to go. Whenever you switched to a project project-switch-project (C-x p p), otpp will switch to a dedicated tab. And in case of conflicting projects names, otpp will resolve the conflict by renaming the similar tabs.\n  \nhttps://github.com/abougouffa/one-tab-per-project\n https://github.com/abougouffa/unique-dir-name\n  \nLooking for your feedback!\n    submitted by    /u/abougouffa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1dzdlqt/onetabperproject_aka_otpp_workspace_management/",
+          "publishedOn": "2024-07-09T21:08:32.000Z",
+          "wordCount": null,
+          "title": "`one-tab-per-project` (aka. `otpp`), workspace management via a thin layer between built-in `project` and `tab-bar`",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1dz6kdt/mac_key_bindings_hhow_are_yall_doing_it_i_feel/",
           "author": null,
@@ -8440,126 +8560,6 @@
           "publishedOn": "2024-06-11T12:59:22.000Z",
           "wordCount": null,
           "title": "proxy with authentication?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dd6fyf/download_currently_opened_pdf_in_eww/",
-          "author": null,
-          "description": "Sometimes I find a pdf while browsing with eww that I find interesting and want to download. I know I could go back and use `d` to download, but is there some way to just download it directly while I read it to avoid this?\n    submitted by    /u/Weak_Education_1778  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dd6fyf/download_currently_opened_pdf_in_eww/",
-          "publishedOn": "2024-06-11T05:18:53.000Z",
-          "wordCount": null,
-          "title": "Download currently opened pdf in eww",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dd5wg8/how_to_use_ecukes_with_borg/",
-          "author": null,
-          "description": "Hi. I am using borg for package management for my Emacs config. I've been thinking about incorporating some TDD into my Emacs config. I want to try out Ecukes, but it doesn't seem too compatible with Borg. Whenever I try to run 'eask install-deps', it gives the error \"Package not installable 'ecukes'; make sure the package archive (source) is included\". I managed to trace the error to the following function in eask in lisp/_prepare.el:\n (defun eask-package-installable-p (pkg) \"Return non-nil if package (PKG) is installable.\" (assq (eask-intern pkg) package-archive-contents)) \n Since I use Borg, I don't appear to be setting the variable package-archive-contents. What would be the right way to go about solving this issue?\n    submitted by    /u/ElfOfPi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dd5wg8/how_to_use_ecukes_with_borg/",
-          "publishedOn": "2024-06-11T04:45:29.000Z",
-          "wordCount": null,
-          "title": "How to use ecukes with borg?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dd1ewm/consultregisterload_gives_error_running_timer/",
-          "author": null,
-          "description": "Consult has recently stopped displaying the register list when I use my keybinding for consult-register-load. The function still works if I remember the binding I tied to the register but I get this error if I wait for the mini buffer to populate and the preview to start.\n Error running timer: (void-function nil) \n Anybody have any ideas? I looked at the register.el file but I'm not good enough with elisp to do more than guess at what is causing the problem. I've included my consult settings from my init file in case I'm missing a setting. It worked for months without but I've recently begun pulling from the github to stay more up to date on my emacs packages. I don't remember if this started after an update.\n  (advice-add #'register-preview :override #'consult-register-window) (setq xref-show-xrefs-function #'consult-xref xref-show-definitions-function #'consult-xref consult-narrow-key \"<\" consult-line-start-from-top t consult-projectile-use-projectile-switch-project t) (require 'consult) \n    submitted by    /u/Usual_Office_1740  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dd1ewm/consultregisterload_gives_error_running_timer/",
-          "publishedOn": "2024-06-11T00:43:37.000Z",
-          "wordCount": null,
-          "title": "consult-register-load gives Error running timer instead of preview.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dcwns0/how_do_i_disable_spell_suggestionsautocomplete/",
-          "author": null,
-          "description": "I am a complete newbie to emacs/doom emacs. Trying to migrate from vim and build a org mode note taking workflow.\n These auto suggestions/completions are very annoying. I don't understand emacs enough (yet). How would I disable these? In the future, how could I go about looking for help about visual elements like this from within emacs?\n Screenshot: https://imgur.com/a/8V8MOs7\n Edit for more info:\n I did think it was coming from the company package so I have it commented out and still the completions continue to show. Here's my init.el snippet: https://imgur.com/CmKvnD0, and here's the output of M-x describe-mode which shows that company is active: https://imgur.com/a/m1c407M (this is after doom sync, full restart of emacs)\n Apparently M-x company-mode toggles it and then the suggestions go away, but that only seems like a local change. Could you help me understand what is happening?\n    submitted by    /u/GinormousBaguette  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dcwns0/how_do_i_disable_spell_suggestionsautocomplete/",
-          "publishedOn": "2024-06-10T21:08:00.000Z",
-          "wordCount": null,
-          "title": "How do I disable spell suggestions/auto-complete?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dcu324/release_v09_plzel_http_client_library_for_emacs/",
-          "author": null,
-          "description": "submitted by    /u/github-alphapapa  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dcu324/release_v09_plzel_http_client_library_for_emacs/",
-          "publishedOn": "2024-06-10T19:24:22.000Z",
-          "wordCount": null,
-          "title": "Release v0.9 · plz.el (HTTP client library for Emacs)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dctzm7/i_just_installed_it_and_this_happens/",
-          "author": null,
-          "description": "https://preview.redd.it/80mkss7hos5d1.png?width=1919&format=png&auto=webp&s=91dbe016ffc975488517ec2daa81de04242b2621\n Hello, I recently wanted to try emacs, last night it worked great, but today I got the blue screen out of nowhere and when I wanted to open emacs again I got that, should I reinstall it or what is the problem? By the way, I'm super new, beyond reading the documentation they recommend\n    submitted by    /u/No_Process9964  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dctzm7/i_just_installed_it_and_this_happens/",
-          "publishedOn": "2024-06-10T19:20:30.000Z",
-          "wordCount": null,
-          "title": "I just installed it and this happens",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dctob2/utf8_math_symbols_placed_by_orgprettyentities_are/",
-          "author": null,
-          "description": "The math symbols are (way) smaller than the default font.\n Recently, I've been fighting with org-pretty-entities to customize some behaviors. My latest endeavor is \"why the UTF-8 character for math symbol are so small compared to the default font?\". FYI, this happens in org-mode and LaTeX-mode.\n When looking into the characters itself, some clues I've gathered:\n  \nthe faces applied are font-latex-math-face and font-latex-sedate-face. Unfortunately, changing the height in any of those cause other parts to be comically large (math-face is also applied to the rest of the math block, sedate-face is applied to any latex command like \\underbar).\n \nthe font used to display those characters is mac-ct:-*-Apple Symbols-medium-normal-normal-*-12-*-*-*-p-0-iso10646-1 despite my default supporting it (both mono and variable pitch are nerd font).\n \n Right now I am mostly suspecting the issue is the font that is being applied, but I am not sure how to fix it. Even when using (set-face-attribute 'font-latex-math-face nil :family \"NotoSans Nerd Font\"), it keeps using the aforementioned font.\n Actually, the describe-char gives me the following info (some kinda of character composition? Not really that expert in Emacs):\n display: composed to form \"\\alpha\" (see below) Composed with the following character(s) \"alpha\" by the rule: (?α) The component character(s) are displayed by these fonts (glyph codes): α: mac-ct:-*-Apple Symbols-medium-normal-normal-*-12-*-*-*-p-0-iso10646-1 (#xA1E) \n Any help would be appreciated.\n    submitted by    /u/Ieremies  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dctob2/utf8_math_symbols_placed_by_orgprettyentities_are/",
-          "publishedOn": "2024-06-10T19:07:53.000Z",
-          "wordCount": null,
-          "title": "UTF-8 math symbols placed by org-pretty-entities are small",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dcssce/do_i_need_programming_language_modes_and_how/",
-          "author": null,
-          "description": "I see a lot of modes for programming languages. \"rust-mode\" \"python-mode\" \"this-mode\" \"that-mode\" and I don't really understand why I would need them and how I could setup my dev environment without them.\n I like to keep my non built-in package count very, very, lean. I understand that there are probably some practical benefits to using these programming language specific modes but I just don't like the idea of picking a package for every programming language, learning all the complexities of each of them, and using LSP, and using tree-sitter. It just seems like a lot.\n I also don't know how to autmatically enable LSP and tree-sitter when editing certain file types without hooking into these modes.\n I'm very new and just looking for some Emacs wisdom. Thank you.\n    submitted by    /u/benjinerm  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dcssce/do_i_need_programming_language_modes_and_how/",
-          "publishedOn": "2024-06-10T18:33:08.000Z",
-          "wordCount": null,
-          "title": "Do I need programming language modes, and how would I set up my dev environment without them?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dcqyol/git_fixup_is_magic_and_magit_is_too/",
-          "author": null,
-          "description": "A breakdown of the git fixup alias, that lets you amend any commit (not necessarily the very last one) with a couple of videos about what Magit offers for obtaining the same result.\n https://arialdomartini.github.io/git-fixup\n    submitted by    /u/jeenajeena  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dcqyol/git_fixup_is_magic_and_magit_is_too/",
-          "publishedOn": "2024-06-10T17:18:45.000Z",
-          "wordCount": null,
-          "title": "Git fixup is magic (and Magit is too)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dcqdph/emacs_30_is_super_fast/",
-          "author": null,
-          "description": "Some post from a couple of days ago made me try out emacs 30, and there is a very noticeable difference in performance. Everything is much snappier now. And it's not even native-comp; I can feel the difference even without it.\n FWIW I'm using emacs-plus on mac, but this seems to be noticed by others too. E.g. https://mail.gnu.org/archive/html/emacs-devel/2024-06/msg00012.html\n Applause to our devs who support such amazing software on their free time!\n    submitted by    /u/zhyang11  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dcqdph/emacs_30_is_super_fast/",
-          "publishedOn": "2024-06-10T16:55:34.000Z",
-          "wordCount": null,
-          "title": "Emacs 30 is super fast",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dcoml2/please_share_your_emacs_spaced_repetition/",
-          "author": null,
-          "description": "I'm learning a new language. Keen to use spaced repetition as an aid. Emacs/org editing is a requirement, but would also like to complement with an iOS app.\n What are you favorite Emacs spaced repetition packages/flows? Do they also extend to iOS?\n Regardless of whether or not your workflow extends to mobile, what's your favourite Emacs package for spaced repetition?\n Currently playing with org-drill and anki-editor to get a feel for these too. Any other I should consider?\n    submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dcoml2/please_share_your_emacs_spaced_repetition/",
-          "publishedOn": "2024-06-10T15:42:59.000Z",
-          "wordCount": null,
-          "title": "Please share your Emacs spaced repetition workflow/experience. Should I build an iOS app to complement it?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dcj2pi/emacs_and_me/",
-          "author": null,
-          "description": "Please skip this reading, it's just a message about me and Emacs.\n I was ready to write a rant.\n Then I gave up and started to breathe and think.\n I've been an Emacs user for a couple of years and have learned a lot but I'm still pretty dissatisfied.\n But dissatisfied with what? Not about Emacs. Not about the packages I use. The truth is that I'm dissatisfied with myself using Emacs, mostly because I'm lazy, that's the sad truth. Emacs is not for lazy people like me. Emacs is a demanding teacher. It requires you to be focused, focused and disciplined. So I decided to completely change my approach. I stopped compulsively trying any piece of package I found on Reddit. I decided to read and study Lisp, starting from the basics, the commands and the basic architecture.\n My frustration is driven by my ignorance. Above all.\n Emacs isn't for me when I think I can find a baked solution on satckoverflow.\n Emacs is not for me if I expect to have every package well documented in detail.\n Emacs isn't for me when I think one package can solve all my problems.\n Emacs is not for me if I think Emacs can organize chaos in my head.\n But I also found the main problem in Emacs: it causes dependency.\n Once you try it you can't stop using it, you can't stop thinking about it, you can't stop trying to find new solutions. Learning Emacs must be done in an organized and programmatic manner.\n I'm not a developer, nor a programmer, I'm mostly an aspiring programmer (I use R and a little Python), but the way Emacs forces me to stay focused on what I'm doing, to organize my notes, my documents, my GTD is something new and somehow irreplaceable.\n Thank you all. Thanks Emacs. And sorry for the unnecessary message.\n    submitted by    /u/asalerre  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dcj2pi/emacs_and_me/",
-          "publishedOn": "2024-06-10T11:19:26.000Z",
-          "wordCount": null,
-          "title": "Emacs and me",
           "imageUrl": null
         }
       ]
