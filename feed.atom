@@ -2,10 +2,424 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2024-07-10T20:35:15.500Z</updated>
+    <updated>2024-07-11T20:35:29.876Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[Megaparsec question followup (reading n bytes)]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1e0wq8q/megaparsec_question_followup_reading_n_bytes/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1e0wq8q/megaparsec_question_followup_reading_n_bytes/"/>
+        <updated>2024-07-11T19:00:52.000Z</updated>
+        <summary type="html"><![CDATA[In my previous post which was answered and I learned a ton from (thank you all!), I was trying to write a megaparsec parser for the NATS protocol messages.
+ I got my message parser down to something that I like and is somewhat readable:
+ ```haskell pMsgMessage :: Parser ProtocolMessage pMsgMessage = do _ <- string "MSG" <* hspace1 subject <- validSubject <* hspace1 sid <- many alphaNumChar <* hspace1 reply <- try (fmap Just validSubject <* hspace1) <|> return Nothing len <- integer <* crlf
+ return $ MsgMessage {..} ```
+ This covers a message like:  MSG hello.world s1 reply.to.me 50\r\n  What needs to follow on this message type and a bunch of others is the optional payload. This payload is a string of bytes, and the number of bytes is indicated by the len variable.
+ I've tried combinations of takeP and count and some other stuff, but I'm at a loss. Yes, I know I need to learn more (and hitting these walls is how I learn), and I know I lack experience with general purpose combinators.
+ So all I'm looking for is a Nothing when len is 0, and a Just ByteString for when it's not.
+ The psuedocode I was hoping I could write was something like:
+ haskell payload <- try (fmap Just $ take len <* crlf) <|> return Nothing 
+    submitted by    /u/StayFreshChzBag  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Confused implementing programmed completion? A snippet to get you started]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0w6r0/confused_implementing_programmed_completion_a/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0w6r0/confused_implementing_programmed_completion_a/"/>
+        <updated>2024-07-11T18:37:52.000Z</updated>
+        <summary type="html"><![CDATA[So I was recently fiddling with programmed completion and want to document it for posterity. There's no example snippet like this in the manual, and it'd have got me started much more easily.
+ (defvar my-coll '("foo" "fnord" "baz")) (defun my-programmable-coll (str pred flag) (let ((coll my-coll)) (cond ((eq flag nil) (try-completion str coll pred)) ((eq flag t) (all-completions str coll pred)) ((eq flag 'lambda) (test-completion str coll pred)) ((consp flag) (completion-boundaries str coll pred (cdr flag))) ((eq flag 'metadata) (completion-metadata str coll pred))))) ;; These are equivalent! (completing-read "Pick: " my-coll) (completing-read "Pick: " #'my-programmable-coll) 
+ My use-case: now I can hardcode an affixation-function in the metadata, so that I do not need to let-bind completion-extra-properties every time I write a call to completing-read.
+    submitted by    /u/meedstrom  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[12 Reasons Why Haskell is a Terrible Choice for Startups (and why we picked it anyway)]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1e0vmpc/12_reasons_why_haskell_is_a_terrible_choice_for/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1e0vmpc/12_reasons_why_haskell_is_a_terrible_choice_for/"/>
+        <updated>2024-07-11T18:14:03.000Z</updated>
+        <summary type="html"><![CDATA[Choosing Haskell as the primary language for a startup product is not an easy decision, but there are those who do it anyway, like Avi from Scarf. If you haven't read the blog post "12 Reasons Why Haskell is a Terrible Choice for Startups (and why we picked it anyway)," I encourage you to do so. 
+    submitted by    /u/IdaBzo  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[GNU emacs 29.3 on Ubuntu 24.04 LTS]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0v565/gnu_emacs_293_on_ubuntu_2404_lts/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0v565/gnu_emacs_293_on_ubuntu_2404_lts/"/>
+        <updated>2024-07-11T17:53:59.000Z</updated>
+        <summary type="html"><![CDATA[Hello. I recently got a new PC (ASUS NUC 14 box) and Ubuntu 24.04 LTS with Cinnamon interface was installed. Now, when I installed the default version of GNU emacs (v29.3) via sudo apt install emacs, I got a peculiar problem. When I run emacs as the end user, I got the following error shown in the minibuffer:
+ Symbol’s function definition is void: eieio-defclass
+ When I run it with -q option, it works, but clearly my ~/.emacs.d/init.el file is not loaded. So, when I run: emacs -q --load ~/.emacs.d/init.el it works as usual. So, what is wrong here? Does GNU emacs by default first load and check some files before loading my ~/.emacs.d/init.el file? Thanks a lot for your help!!
+    submitted by    /u/BVPs  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Can't find an old comic about emacs productivity]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0t633/cant_find_an_old_comic_about_emacs_productivity/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0t633/cant_find_an_old_comic_about_emacs_productivity/"/>
+        <updated>2024-07-11T16:30:31.000Z</updated>
+        <summary type="html"><![CDATA[Hey internet,
+ I remember once coming across a short 3 panel comic where someone's boss is marveling "How are you so productive? It must be a gift, it must be a superpower" and the person is saying "It's just emacs" over and over.
+ I need this jpeg and I know it's out there somewhere but I can't find it. Do you any of you freaks have this thing in your ~/Downloads? Pls resyndicate for me.
+ TY!
+    submitted by    /u/aradox66  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Critique My Note Refactoring Journey]]></title>
+        <id>2932@/discussions</id>
+        <link href="https://forum.zettelkasten.de/discussion/2932/critique-my-note-refactoring-journey"/>
+        <updated>2024-07-11T16:07:31.000Z</updated>
+        <summary type="html"><![CDATA[This idea has been festering since February when @Andy brought up @Philaquino post1. It's a prime example of refactoring a large collection of notes collected during my reading. 2
+Let's examine the format, process, or content of this note. How does it fit into the ZKM scheme? Is this approach even appropriate?
+First, I owe some shout-outs.
+@Andy — A big thank you for suggesting this book and hinting that IBIS has some use in research and note-taking. Your suggestion started me documenting questions each idea asks or solves.
+@ZettelDistraction — Your thoughts on building the "Zettel Critique GPT" sparked some ideas. Specifically, the concept of a section called SEE ALSO and a footnote link in the body of the note keeps the flow of the text smooth without the distribution of interspersed wik…]]></summary>
+        <author>
+            <name>Will</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Can't set tools in ghcup (grey hook)]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1e0r2nr/cant_set_tools_in_ghcup_grey_hook/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1e0r2nr/cant_set_tools_in_ghcup_grey_hook/"/>
+        <updated>2024-07-11T15:02:26.000Z</updated>
+        <summary type="html"><![CDATA[I have installed Haskell on Ubuntu 22.04 via ghcup (curl command).
+ Everything is installed and seems to work, at least as far as I tested. But in the ghcup tui all tools are marked with a grey check mark (with a little "1"), if I try to set a tool as default. I would expect two green check marks.
+ On my Laptop everything works as expected. I don't know why it in not working on my PC. Any idea?
+ Edit: I completely removed .ghcup and .cabal folders from my home directory and installed everything from scratch. With the same result.
+ I can install everything and get a green check mark, but if I try to set it with "s" I get the single grey check mark with a "1"
+ I think I found the answer. The problem is the font I use in the terminal. The check marks change depending on the font I use. If I use DejaVu Sans Mono I see two green check marks. Some other fonts show two grey check marks. I assume that what I thought was a "1" is actually a cut-off second hook.
+    submitted by    /u/Voxelman  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[A Distributed Remote Code Execution Engine with Pekko]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1e0puvq/a_distributed_remote_code_execution_engine_with/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1e0puvq/a_distributed_remote_code_execution_engine_with/"/>
+        <updated>2024-07-11T14:09:24.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/danielciocirlan  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[cider (20240711.1319) --- Clojure Interactive Development Environment that Rocks]]></title>
+        <id>https://melpa.org/packages/cider-20240711.1319.tar</id>
+        <link href="https://melpa.org/#/cider"/>
+        <updated>2024-07-11T13:19:00.000Z</updated>
+        <summary type="html"><![CDATA[The cider package has been updated to version 20240711.1319.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[evil-collection (20240711.1239) --- A set of keybindings for Evil mode]]></title>
+        <id>https://melpa.org/packages/evil-collection-20240711.1239.tar</id>
+        <link href="https://melpa.org/#/evil-collection"/>
+        <updated>2024-07-11T12:39:00.000Z</updated>
+        <summary type="html"><![CDATA[The evil-collection package has been updated to version 20240711.1239.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Issue 428]]></title>
+        <id>https://haskellweekly.news/issue/428.html</id>
+        <link href="https://haskellweekly.news/issue/428.html"/>
+        <updated>2024-07-11T12:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Welcome to another issue of Haskell Weekly!
+Haskell is a safe, purely functional programming language with a fast, concurrent runtime.
+This is a weekly summary of what’s going on in its community.
+Featured
+Announcing opt-env-conf by Tom Sydney Kerckhove
+This post announces opt-env-conf, a new settings parsing library for Haskell. This library combines the best of optparse-applicative, envparse, and autodocodec, together with the colours from safe-coloured-text to provide all your apps’ runtime settings.
+Building a data compression utility in Haskell using Huffman codes by Marcelo Lazaroni
+In this post we will implement a data compression program in about 150 lines of Haskell. It will use Huffman coding and handle arbitrary binary files using constant memory for encoding and decoding.
+Colla…]]></summary>
+        <author>
+            <name>Haskell Weekly</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The Archive v1.7.15]]></title>
+        <id>2931@/discussions</id>
+        <link href="https://forum.zettelkasten.de/discussion/2931/the-archive-v1-7-15"/>
+        <updated>2024-07-11T09:33:39.000Z</updated>
+        <summary type="html"><![CDATA[Cutting Edge release today; will roll out to the downloads page and as a Stable update release on Monday 15th if nothing bad happens.
+Release Notes
+
+New: More Markdown commands now have entries in the "Format" menu so you can assign custom shortcuts.
+Inline code: Cmd+Ctrl+C
+Code blocks: Cmd+Ctrl+Shift+C
+Link (insert or remove): Cmd+K
+
+
+New: Smart re-emphasis. Existing emphasis in the selection will be removed before wrapping the result in the desired markup.
+
+New: "Reveal in Finder" added to right-click menu on image paths.
+New: Hidden preference to change the pasted image filename pattern via thearchive://preference/pastedImageFilename/. Accepts Unicode Technical Standard #35 format.
+New: Hidden preference ot change the Zettel identifier date format via thearchive://preference/identifierDateFormat/. Accepts Unicode Technical Standard #35 format.
+Changed: Markup shortcuts operate on selected or adjacent words. This should "do what you mean" more often.
+Improved: Typing performance in long documents (especially when typing auto-pairing characters).
+Improved: Search responsiveness in situations of limited resources (e.g. during a video call on relatively slow Intel MacBook Airs).
+Fixed: Moving lines up/down with a shortcut scrolls the new line location into view if Typrwriter Mode is disabled, so you can actually see where you're moving the line.]]></summary>
+        <author>
+            <name>ctietze</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hidden preferences and how to set them]]></title>
+        <id>2930@/discussions</id>
+        <link href="https://forum.zettelkasten.de/discussion/2930/hidden-preferences-and-how-to-set-them"/>
+        <updated>2024-07-11T09:31:08.000Z</updated>
+        <summary type="html"><![CDATA[The Archive has a couple of settings that you cannot change from the graphical user interface.
+https://zettelkasten.de/the-archive/help/#hidden-preferences
+If you want to create a simple settings dashboard, you can use the thearchive:// URL scheme in one of your notes inside of The Archive. There, you can click the links to change settings -- no terminal needed.
+For example, try to paste these into a note:
+Pasted image filename without spaces: thearchive://preference/pastedImageFilename/set/yyyyMMdd'_image'
+Pasted image filename without date: thearchive://preference/pastedImageFilename/set/'pasted-image'
+Pasted image filename reset: thearchive://preference/pastedImageFilename/delete
+
+ID's accurate to seconds: thearchive://preference/identifierDateFormat/set/yyyyMMddHHmmss
+ID's accurate to minutes: thearchive://preference/identifierDateFormat/set/yyyyMMddHHmm  (original)
+ID's accurate to days: thearchive://preference/identifierDateFormat/set/yyyyMMdd
+ID reset: thearchive://preference/identifierDateFormat/delete
+
+
+Then you can play around with different formats.
+Note: Most of these settings don't actually require a relaunch of the app, but if something doesn't work, quit and open the app again if in doubt.]]></summary>
+        <author>
+            <name>ctietze</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to create noncontiguous regions]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0khao/how_to_create_noncontiguous_regions/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0khao/how_to_create_noncontiguous_regions/"/>
+        <updated>2024-07-11T09:09:06.000Z</updated>
+        <summary type="html"><![CDATA[Recently I found out that Emacs can deal with so-called noncontiguous regions. I cannot find very much information about these on the internet, the Emacs manual or the Emacs help system. But I'm curious about these noncontiguous regions and want to see if I can use them for something. As an example, something I want to do is to narrow to a noncontiguous region. But to be clear, narrowing to a noncontiguous region is not the problem I want solved here. I just want to learn how to use noncontiguous regions. 
+ I'll try to define a clear question. If I want to create a noncontiguous region that contains the columns 4 to 7 on rows 1 and 2 then I can do this using a rectangular region(at least interactively, but I imagine I can recreate that in elisp too). But what if I want to create a noncontiguous region containing columns 4 to 7 on lines 1 and 3 but not line 2. Then I cannot use rectangular regions(as far as I know). Is there a way to do this? I'm not necessarily asking for an interactive way to do it. An elisp solution is fine and even prefered. 
+ I've found the variable region-extract-function that perhaps could be useful, but I'm not sure how to use it. In particular, I don't know when the function that this variable is bound to is called. 
+ I also found the library zones.el. But from the documentation it seems like it doesn't actually define noncontiguous regions, just something that looks and feels like noncontiguous regions. So this doesn't really satisfy my curiosity. And I'm mainly interested in learning the builtin functionality, so a third party package like this isn't really what I'm looking for.
+    submitted by    /u/objective_porpoise  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[My config does things, and so do third party packages. How to make them play well together?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0kfb6/my_config_does_things_and_so_do_third_party/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0kfb6/my_config_does_things_and_so_do_third_party/"/>
+        <updated>2024-07-11T09:05:06.000Z</updated>
+        <summary type="html"><![CDATA[I understand the title may be vague or nonsensical. But I had to make one, and that was the best I could come up with. A longer version of my question follows.
+ I am an amateur Emacsist. I've got a solid understanding of all things *nix, lisp, and configuring a text editor (from prior vim experience). I've been eagerly building up a very comfortable .emacs for the past few months, and have been loving the experience in general. However, there is one thing that bothers me which I don't believe bothers others as much, if not at all: When I try to use some package that adds to or modifies the fundamental Emacs experience — something that modifies things like buffer management, text editing or whatnot — it often clashes with my own previous customizations or even default Emacs behavior. 
+ For instance, If I were to use a modal editing package like Evil mode, I'd need to rebind keys to work correctly for every package I added. Think Magit for instance. Another time I faced a similar issue was when I tried popper.el. It's a great package, but It's job is to augment default buffer-handing behavior. I often ran into issues where a buffer created by a function from one package ended up in the wrong place due to popper. This is not a devastating problem as I could always just place the buffer where I want it manually, but that's the point, sort of. 
+ I have a very large config, and adding anything that changes the fundamental experience of Emacs becomes a software project of its own with the involvement of design, and large refactors and whatnot. I wonder if that's the case with you guys.
+ Does anyone else have the same experience? Is this something I just have to settle for and solve bottom-up by solving the problems as they arise? Am I holding it wrong? I'd love to know you guys' thoughts
+    submitted by    /u/nthn-d  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[uiua-mode (20240711.852) --- Uiua integration]]></title>
+        <id>https://melpa.org/packages/uiua-mode-20240711.852.tar</id>
+        <link href="https://melpa.org/#/uiua-mode"/>
+        <updated>2024-07-11T08:52:00.000Z</updated>
+        <summary type="html"><![CDATA[The uiua-mode package has been updated to version 20240711.852.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Github copilot chat in emacs]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0jtdi/github_copilot_chat_in_emacs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0jtdi/github_copilot_chat_in_emacs/"/>
+        <updated>2024-07-11T08:21:51.000Z</updated>
+        <summary type="html"><![CDATA[Hi, I use github copilot every day thanks to https://github.com/copilot-emacs/copilot.el
+ But there is no chat support so I started to write it. After some days of work, here is the result : https://github.com/chep/copilot-chat.el
+ I need help to maintain and improve it. Feel free to submit issues and pull requests.
+ https://preview.redd.it/ynsp76u1oubd1.png?width=2560&format=png&auto=webp&s=c1a20525cf2c58e498b6eb1179bd11a64727a368
+    submitted by    /u/gnaaaapouet  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[fedi (20240711.753) --- Helper functions for fediverse clients]]></title>
+        <id>https://melpa.org/packages/fedi-20240711.753.tar</id>
+        <link href="https://melpa.org/#/fedi"/>
+        <updated>2024-07-11T07:53:00.000Z</updated>
+        <summary type="html"><![CDATA[The fedi package has been updated to version 20240711.753.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[elfeed-score (20240711.433) --- Gnus-style scoring for Elfeed]]></title>
+        <id>https://melpa.org/packages/elfeed-score-20240711.433.tar</id>
+        <link href="https://melpa.org/#/elfeed-score"/>
+        <updated>2024-07-11T04:33:00.000Z</updated>
+        <summary type="html"><![CDATA[The elfeed-score package has been updated to version 20240711.433.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Text in a shape - Broken lines]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0fsoh/text_in_a_shape_broken_lines/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0fsoh/text_in_a_shape_broken_lines/"/>
+        <updated>2024-07-11T04:00:38.000Z</updated>
+        <summary type="html"><![CDATA[https://preview.redd.it/es3i7cqhctbd1.png?width=762&format=png&auto=webp&s=f0d9e1f00accb96aacc472c6b9456fc1daccf031
+ Details: https://lifeofpenguin.blogspot.com/2024/06/text-along-path-gnu-emacs.html#broken-lines
+    submitted by    /u/atamariya  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Whats the purpose of splitting init.el in modules?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0euij/whats_the_purpose_of_splitting_initel_in_modules/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0euij/whats_the_purpose_of_splitting_initel_in_modules/"/>
+        <updated>2024-07-11T03:09:23.000Z</updated>
+        <summary type="html"><![CDATA[I am using org as my configuration for my init.el and using submodules for grouping functionality.... I thought the purpose of dividing in modules was for if a module was failing you could get the exact module failing but when something fails I just get something like "error at line 20" so I don't know which out of the 6 submodules/files which init.el calls is failing and if the module in question is say module 3, all modules after it do not load. 
+    submitted by    /u/bloomingFemme  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[I tried getting Magic to Checkout a specific Directory and it always checked out the entire branch. What am I missing?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0di8e/i_tried_getting_magic_to_checkout_a_specific/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0di8e/i_tried_getting_magic_to_checkout_a_specific/"/>
+        <updated>2024-07-11T02:00:10.000Z</updated>
+        <summary type="html"><![CDATA[Hey everyone,
+ I spent about an hour trying a myriad of things to get this to work. It seems like it should be a fairly straightforward thing for Magit yet I couldn't seem to get it to work. 
+ I tried the -- flag on checkout and no matter what I tried, it would either only check a single file out or the entire branch. 
+ Is it possibly a conflict with Evil, Vertico, etc? I'm grasping at straws here. 
+    submitted by    /u/AnalystOrDeveloper  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Package go-translate update to v3]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0bad4/package_gotranslate_update_to_v3/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0bad4/package_gotranslate_update_to_v3/"/>
+        <updated>2024-07-11T00:11:36.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/Charming_Habit_499  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Slow Haskell Code]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1e0b4v3/slow_haskell_code/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1e0b4v3/slow_haskell_code/"/>
+        <updated>2024-07-11T00:04:34.000Z</updated>
+        <summary type="html"><![CDATA[I'm writing some haskell code and its ending up much slower than I expected. I'm wondering if someone can help me pinpoint why the code is so slow. I hope these types of questions are appropriate and not too annoying.
+ This is from an advent of code problem (2020, day 1). The goal is to take a list of integers and find a pair that sums to 2020. If no such pair exists, return 'Nothing'. If the pair is (x , y), return `Just (x , y)`. Here is the fuction I came up with:
+ ```
+ search_sum_to_2020 :: [Int] -> Maybe (Int , Int)
+ search_sum_to_2020 [] = Nothing
+ search_sum_to_2020 (x : []) = Nothing
+ search_sum_to_2020 (x : y : xs) =
+ if 2020 <= x
+ then search_sum_to_2020 (y : xs)
+ else if x + y = 2020
+ then Just (x , y)
+ else case search_sum_to_2020 (x : xs) of
+ Just z -> Just z
+ Nothing -> searc…]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Braceless syntax is the most satisfying part of scala3]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1e0b34u/braceless_syntax_is_the_most_satisfying_part_of/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1e0b34u/braceless_syntax_is_the_most_satisfying_part_of/"/>
+        <updated>2024-07-11T00:02:17.000Z</updated>
+        <summary type="html"><![CDATA[Not the type system extensions, not 3 new kinds of metaprogramming apis, not givens, but braceless syntax is the most noticeable thing in everyday codewriting and codereading. 
+ It is with great pleasure to realise we won war against begin-end style boilerplate and "you can't use braceless with lambdas" pointless prejudices and now most of }}}}}}} alike eyesores can be purged with single scalafmt setting. 
+ I cannot understand why "reviewing MR with braceless" is "harder" i mean, most of diff visualisers were able to provide unreadable diffs that would make you open both versions and compare them by eye, but aren't you review diff by imaging code which was there and how it changed? To add, diffs show spaces and, its like mostly obvious which indentation level it is. If it isn't, you have indent rainbow, which trivializes tracking.
+ Same story with merge conflicts - sometimes you would be able to get braces mismatch regardless, and its harder to fix than indentation mismatch. 
+ Well, now we have (), that are the second source of unpronouceable clutter, and [] which are, as well, in some places, yet not as common. I hope someday these would be optional as well. 
+    submitted by    /u/IAmTheWoof  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Inconsistent indentation logic in LSP]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e0aysl/inconsistent_indentation_logic_in_lsp/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e0aysl/inconsistent_indentation_logic_in_lsp/"/>
+        <updated>2024-07-10T23:56:58.000Z</updated>
+        <summary type="html"><![CDATA[Is there additional configuration needed when setting up lsp-mode with respect to the tab key for indenting?
+ I've noticed that my indentations are always inconsistent. For example, when editing a React typescript component, if i just hit <TAB>, or create a new line, it indents 4 spaces from the last line. But if I highlight the region and hit <TAB> then it seems to indent based on LSP rules and indents it by 2.
+ The same is true when I'm in C++ mode. While writing, and hitting tab when I'm on the line, I get the following header:
+ #pragma once namespace some_name_space { class SomeClass { public: SomeClass() private: int someMember; } } 
+ But if I highlight the buffer and hit <TAB>, or call lsp-format-region, then I end up with:
+ #pragma once namespace some_name_space { class SomeClass { public: SomeClass(); private: int someMember; } } // namespace some_name_space 
+ Which i assume is different because when I do that, it's calling clang-format (based on the fact that the endspace ending comment get added.)
+ Is there a way to make it so that indentations will use lsp to formatting rules if lsp mode is enabled?
+    submitted by    /u/Faleira  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[At the end of my patience with megaparsec]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1e09k87/at_the_end_of_my_patience_with_megaparsec/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1e09k87/at_the_end_of_my_patience_with_megaparsec/"/>
+        <updated>2024-07-10T22:54:00.000Z</updated>
+        <summary type="html"><![CDATA[I am trying to get better at Haskell by using it more in "anger" ... and Megaparsec is definitely making me angry.
+ I am attempting to parse a NATS protocol message. I have two variants of the "message" one that indicates a reply subject and one that doesn't.
+ With reply:
+ MSG target.subject 1 reply.subject 500\r\n
+ Without reply:
+ MSG target.subject 1 500\r\n
+ And now here are my parser functions. The problem I'm having is that no matter what I do, I can _either_ get it to parse the first form or the second form, but I can't get it to properly "fall back" to one or the other.
+ pMsgMessage :: Parser ProtocolMessage pMsgMessage = do msgMessageWithReply <|> msgMessageWithoutReply msgMessageWithReply :: Parser ProtocolMessage msgMessageWithReply = do _ <- string "MSG" space1 subject <- validSubject space1 sid <- integer space1 reply <- validSubject space1 len <- integer _ <- crlf return $ MsgMessage subject (Just reply) sid len msgMessageWithoutReply :: Parser ProtocolMessage msgMessageWithoutReply = do _ <- string "MSG" space1 subject <- validSubject space1 sid <- integer space1 len <- integer _ <- crlf return $ MsgMessage subject Nothing sid len 
+ If I change the order in which I check for alternatives, then I change which one I can parse and which one produces an error:
+ ghci> parseTest parseMessage "MSG this.subject 1 120\r\n" 2:1: | 2 | <empty line> | ^ unexpected end of input expecting numeric character or white space 
+ I'm sure I've just forgotten something dumb, but I can't for the life of me get these alternatives working and I've re-read "the" megaparsec tutorial over and over until it hurt.
+    submitted by    /u/StayFreshChzBag  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[org-mode] Hide special characters/lines for better presentation?]]></title>
         <id>https://www.reddit.com/r/emacs/comments/1e03roh/orgmode_hide_special_characterslines_for_better/</id>
@@ -1087,6 +1501,16 @@ Looking for your feedback!
  [link]   [comments]]]></summary>
         <author>
             <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[thrift (20240707.1631) --- major mode for fbthrift and Apache Thrift files]]></title>
+        <id>https://melpa.org/packages/thrift-20240707.1631.tar</id>
+        <link href="https://melpa.org/#/thrift"/>
+        <updated>2024-07-07T16:31:00.000Z</updated>
+        <summary type="html"><![CDATA[The thrift package has been updated to version 20240707.1631.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -2216,6 +2640,16 @@ First, learning how to discuss an idea has been gratifying through the forum dis
  [link]   [comments]]]></summary>
         <author>
             <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[idris-mode (20240704.1334) --- Major mode for editing Idris code]]></title>
+        <id>https://melpa.org/packages/idris-mode-20240704.1334.tar</id>
+        <link href="https://melpa.org/#/idris-mode"/>
+        <updated>2024-07-04T13:34:00.000Z</updated>
+        <summary type="html"><![CDATA[The idris-mode package has been updated to version 20240704.1334.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -10809,499 +11243,6 @@ How does my note-taking tie into my writing? More intimately, how do ideas get i
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Weekly Tips, Tricks, &c. Thread]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1de1hkf/weekly_tips_tricks_c_thread/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1de1hkf/weekly_tips_tricks_c_thread/"/>
-        <updated>2024-06-12T08:15:08.000Z</updated>
-        <summary type="html"><![CDATA[This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.
- See this search for previous "Weekly Tips, Tricks, &c." Threads.
- Don't feel constrained in regards to what you post, just keep your post vaguely, generally on the topic of emacs.
-    submitted by    /u/AutoModerator  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[everlasting-scratch (20240612.814) --- The *scratch* that lasts forever]]></title>
-        <id>https://melpa.org/packages/everlasting-scratch-20240612.814.tar</id>
-        <link href="https://melpa.org/#/everlasting-scratch"/>
-        <updated>2024-06-12T08:14:00.000Z</updated>
-        <summary type="html"><![CDATA[The everlasting-scratch package has been updated to version 20240612.814.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Tecosaur org-mode requires (require 'org-latex-preview) to avoid breaking pdf-tools]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1de1bry/tecosaur_orgmode_requires_require_orglatexpreview/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1de1bry/tecosaur_orgmode_requires_require_orglatexpreview/"/>
-        <updated>2024-06-12T08:03:16.000Z</updated>
-        <summary type="html"><![CDATA[Using straight.el I installed the newest version of org-mode from the tecosaur repo and I also installed pdf-tools. Whenever I tried viewing a pdf for the first time, I would get a void variable error for org-format-latex-header. Even though this is declared as an obsolte variable in org-compat.el, its replacement is not defined at the time the pdf is opened. I am not sure what is the canonical way to solve this. Should I just (require 'org-latex-preview) in my init.el or is there a cleaner approach like passing some parameter to use-package?
-    submitted by    /u/Weak_Education_1778  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[orgtbl-join (20240612.717) --- Join columns from another Org Mode table]]></title>
-        <id>https://melpa.org/packages/orgtbl-join-20240612.717.tar</id>
-        <link href="https://melpa.org/#/orgtbl-join"/>
-        <updated>2024-06-12T07:17:00.000Z</updated>
-        <summary type="html"><![CDATA[The orgtbl-join package has been updated to version 20240612.717.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[orgtbl-aggregate (20240612.619) --- Create an aggregated Org table from another one]]></title>
-        <id>https://melpa.org/packages/orgtbl-aggregate-20240612.619.tar</id>
-        <link href="https://melpa.org/#/orgtbl-aggregate"/>
-        <updated>2024-06-12T06:19:00.000Z</updated>
-        <summary type="html"><![CDATA[The orgtbl-aggregate package has been updated to version 20240612.619.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[ANN] Fourmolu 0.16.0.0 released!]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1ddzpos/ann_fourmolu_01600_released/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1ddzpos/ann_fourmolu_01600_released/"/>
-        <updated>2024-06-12T06:11:44.000Z</updated>
-        <summary type="html"><![CDATA[Major change in this release is support for GHC 9.10! But planning has already started for 0.17, with lots of exciting features and improvements on the way! Get a sneak peek here!
- https://github.com/fourmolu/fourmolu/releases/tag/v0.16.0.0
-    submitted by    /u/brandonchinn178  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Emacs mail situation, revised, again, until I find a way]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddz7bq/emacs_mail_situation_revised_again_until_i_find_a/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddz7bq/emacs_mail_situation_revised_again_until_i_find_a/"/>
-        <updated>2024-06-12T05:37:15.000Z</updated>
-        <summary type="html"><![CDATA[Hello Emacs Community!,
- I've going around my head and investigating as for a way to finally implement all my email setup in Emacs, which is:
-  
-3 Gmail accounts that I can implement with .authinfo and application passwords
- 
-2 Gmail account that I can't
- 
-1 Microsoft Exchange account where I can't use app passwords and, when configuring davmail, I needed authorization (actually asking for it)
- 
- My problem is the latter two, where in case I got lucky and manage to fight my case and get my app password in the Exchange one, I would still will be unable to use the 2 Gmail accounts that don't have application passwords activated.
- I could configure Davmail for exchange, now, not sure about the other two gmail accounts... I think davmail only works for Microsoft.
- Is there, perhaps something like davmail that I can use across all of my accounts?, since application passwords aren't considered secure, in the case these are eliminated, I wouldn't want my accounts to stop working...
- How complicated would be to implement this? (elisp developer), is there perhaps a protocol that is not implemented in Emacs?, something like ouath2 which I think has a package. How technically complicated is this and, how much would it take?. Or is there perhaps, a different more updated way that I don't know of?. 
-    submitted by    /u/MinallWch  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-agenda customized week label]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/1ddyqxt/orgagenda_customized_week_label/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/1ddyqxt/orgagenda_customized_week_label/"/>
-        <updated>2024-06-12T05:07:16.000Z</updated>
-        <summary type="html"><![CDATA[Is it possible for org-mode agenda view to display a customized label for the week, in addition to the week number included by default ? I already asked the question some years ago but with no success.
-    submitted by    /u/LorenRiccie  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[cl Package]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddy3j2/cl_package/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddy3j2/cl_package/"/>
-        <updated>2024-06-12T04:28:26.000Z</updated>
-        <summary type="html"><![CDATA[Running EMACS 29.3, I get the messaage package cl is deprecated on start (been going on for a while--it was deprecated in 28 or 27, IIRC). I believe this is associated with the [simplenote2](https://github.com/alpha22jp/simplenote2.el) package. I use one of it's functions (creating a note), I get the message format: Symbol’s function definition is void: math-fixnum. If I create a note on the browser, I can edit it in EMACS to my heart's content. I just can't make a new one. 
- My suspicion, as I said, is it's related to the cl package. I was going to try to dig into the code to see if there is a fix, but I wanted to ask before digging into that: is there some standard fix/best practice/shim that can be applied to fix this? 
-    submitted by    /u/MrGuilt  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Best Resources and Tools for Learning Scala?]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1ddxoi7/best_resources_and_tools_for_learning_scala/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1ddxoi7/best_resources_and_tools_for_learning_scala/"/>
-        <updated>2024-06-12T04:04:18.000Z</updated>
-        <summary type="html"><![CDATA[I'm interested in learning Scala and want to do it in a modern, project-based fashion where I can work on something and submit it to see the results.
- Are there any tools or resources that can help me get really good at it? Specifically, I'm looking for MOOCs or courses similar to the ones from the University of Helsinki. Any recommendations for the best ways to learn and master Scala would be greatly appreciated! Thanks!
-    submitted by    /u/A-n-d-y-R-e-d  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[flymake-margin (20240612.306) --- Sets flymake to work with margin instead of fringes]]></title>
-        <id>https://melpa.org/packages/flymake-margin-20240612.306.tar</id>
-        <link href="https://melpa.org/#/flymake-margin"/>
-        <updated>2024-06-12T03:06:00.000Z</updated>
-        <summary type="html"><![CDATA[The flymake-margin package has been updated to version 20240612.306.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-alert (20240612.137) --- Notify org deadlines via notify-send]]></title>
-        <id>https://melpa.org/packages/org-alert-20240612.137.tar</id>
-        <link href="https://melpa.org/#/org-alert"/>
-        <updated>2024-06-12T01:37:00.000Z</updated>
-        <summary type="html"><![CDATA[The org-alert package has been updated to version 20240612.137.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[diminish-buffer (20240612.52) --- Diminish (hide) buffers from buffer-menu]]></title>
-        <id>https://melpa.org/packages/diminish-buffer-20240612.52.tar</id>
-        <link href="https://melpa.org/#/diminish-buffer"/>
-        <updated>2024-06-12T00:52:00.000Z</updated>
-        <summary type="html"><![CDATA[The diminish-buffer package has been updated to version 20240612.52.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Critique my game design Zettel]]></title>
-        <id>2906@/discussions</id>
-        <link href="https://forum.zettelkasten.de/discussion/2906/critique-my-game-design-zettel"/>
-        <updated>2024-06-11T23:35:44.000Z</updated>
-        <summary type="html"><![CDATA[I don't fully use all parts of a zettelkasten but I am trying to get better at making my notes atomic. This was one of the first notes I ever wrote but the more i learn about zettelkasten the more I think that this is more of a mini-essay. I think many of my notes are more of mini-essays rather than individual zettels. If so, how would I turn this into individual zettels? How do I know how far to break something down and when does it get too much? Sometimes I feel like every sentence could be turned into a zettel.
-Side note: I use links instead of tags for categorization - not sure if I love this method but it's whats been working for a bit.
-"[[+ Game Design]]
-Part of what is fun about adventure games is immersing yourself in the world of the game. Players want to explore every inch, unear…]]></summary>
-        <author>
-            <name>sam453</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[doctor! doctor!]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddsaxb/doctor_doctor/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddsaxb/doctor_doctor/"/>
-        <updated>2024-06-11T23:24:00.000Z</updated>
-        <summary type="html"><![CDATA[Ok, fun question I have to ask. With the availability of far more powerful free and open source NLP models, has any attempt been made to either replace (don't think there are any models that are GPL freindly, yet) or supplement Eliza on emacs (a.k.a M-x doctor)? 
-    submitted by    /u/trhawes  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Making projectile/project treat symlinks as the project dir]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddoerh/making_projectileproject_treat_symlinks_as_the/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddoerh/making_projectileproject_treat_symlinks_as_the/"/>
-        <updated>2024-06-11T20:35:05.000Z</updated>
-        <summary type="html"><![CDATA[I work on a lot of parallel features in the same very large git repo, so I've been making use of git worktrees and treating each worktree as a separate projectile project. Usually the worktree is named ~/reponame/feature_im_working_on. 
- However, because the repo is so big, and because the build cache takes so long to initialize, I don't want to create a new worktree every time I start a new feature. mv'ing the worktree unfortunately breaks the build cache, for reasons of stupid build system that's out of my control. What I'd really like to do is have ~/reponame.real/a ~/reponame.real/b ... and symlink those to ~/reponame/my_feature. But projectile and project.el notice that its a symlink and name the project ~/reponame.real/a. I've been looking for a way to prevent this behavior, and just use the symlink as the project name, and I haven't found it. Has anyone else done something like this with their workflow? Or do I need to hack the project.el source and add this?
-    submitted by    /u/jsadusk  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[outline-minor-faces (20240611.2033) --- Highlight only section headings]]></title>
-        <id>https://melpa.org/packages/outline-minor-faces-20240611.2033.tar</id>
-        <link href="https://melpa.org/#/outline-minor-faces"/>
-        <updated>2024-06-11T20:33:00.000Z</updated>
-        <summary type="html"><![CDATA[The outline-minor-faces package has been updated to version 20240611.2033.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[morlock (20240611.2032) --- More font-lock keywords for elisp]]></title>
-        <id>https://melpa.org/packages/morlock-20240611.2032.tar</id>
-        <link href="https://melpa.org/#/morlock"/>
-        <updated>2024-06-11T20:32:00.000Z</updated>
-        <summary type="html"><![CDATA[The morlock package has been updated to version 20240611.2032.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[emacsql (20240611.2032) --- High-level SQL database front-end]]></title>
-        <id>https://melpa.org/packages/emacsql-20240611.2032.tar</id>
-        <link href="https://melpa.org/#/emacsql"/>
-        <updated>2024-06-11T20:32:00.000Z</updated>
-        <summary type="html"><![CDATA[The emacsql package has been updated to version 20240611.2032.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[dim-autoload (20240611.2031) --- Dim or hide autoload cookie lines]]></title>
-        <id>https://melpa.org/packages/dim-autoload-20240611.2031.tar</id>
-        <link href="https://melpa.org/#/dim-autoload"/>
-        <updated>2024-06-11T20:31:00.000Z</updated>
-        <summary type="html"><![CDATA[The dim-autoload package has been updated to version 20240611.2031.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[orglink (20240611.2030) --- Use Org Mode links in other modes]]></title>
-        <id>https://melpa.org/packages/orglink-20240611.2030.tar</id>
-        <link href="https://melpa.org/#/orglink"/>
-        <updated>2024-06-11T20:30:00.000Z</updated>
-        <summary type="html"><![CDATA[The orglink package has been updated to version 20240611.2030.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[shell-maker (20240611.2019) --- Interaction mode for making comint shells]]></title>
-        <id>https://melpa.org/packages/shell-maker-20240611.2019.tar</id>
-        <link href="https://melpa.org/#/shell-maker"/>
-        <updated>2024-06-11T20:19:00.000Z</updated>
-        <summary type="html"><![CDATA[The shell-maker package has been updated to version 20240611.2019.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How do you configure completions with Eshell?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddkmmx/how_do_you_configure_completions_with_eshell/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddkmmx/how_do_you_configure_completions_with_eshell/"/>
-        <updated>2024-06-11T18:01:51.000Z</updated>
-        <summary type="html"><![CDATA[I started using Eshell a few months ago and by and large I like it. I really like having eat-eshell-mode enabled, which means if the command I run wants to be interactive, I get a terminal emulator right there! So seamless! So nice!
- One area I wish could be smarter is completions. I use corfu and cape; I would love it if Eshell were super smart about completing commands, sub-commands (like with git), control flags, etc. I have some configuration around this, but I'm not happy with it.
- How do you configure Eshell and your completion-at-point mechanisms to be as smart as possible?
-    submitted by    /u/varsderk  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Should I leave the current project for Java Springboot?]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1ddk16k/should_i_leave_the_current_project_for_java/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1ddk16k/should_i_leave_the_current_project_for_java/"/>
-        <updated>2024-06-11T17:37:29.000Z</updated>
-        <summary type="html"><![CDATA[Hi, I have some experience with Java Springboot & wanted to improve on that. But my project got changed which has data pipelines work now. (Azure Databricks pipelines) Should I ask for release in the project? Or side by side prepare for interviews? I am in service based company & fearing of going to bench. Please suggest.
- Thanks in advance.
-    submitted by    /u/GuaranteeAbject9996  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Next stream with Lean Scala app building]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1ddjiq2/next_stream_with_lean_scala_app_building/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1ddjiq2/next_stream_with_lean_scala_app_building/"/>
-        <updated>2024-06-11T17:15:51.000Z</updated>
-        <summary type="html"><![CDATA[Hey, we'll continue exploring Lean Scala tomorrow at 12 AM CEST. There are some interesting challenges in PRs that improve safety in Ox and I'd like to tackle them with you.
- On the previous stream we got paging done in Scala.today and this week we'll try to get the basic set of functionalities complete for prod deployment.
- If you have any questions, suggestions, complaints regarding Scala, Scala tooling, infra as code tool Besom, VirtusLab's work on Scala and such, fire away in the chat, I'll be happy to answer anything.
- Links:
- https://www.twitch.tv/averagefpenjoyer
- https://www.youtube.com/@average.fp.enjoyer/streams
-    submitted by    /u/lbialy  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Why is pdf tools much faster on gnome than sway?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddjdj4/why_is_pdf_tools_much_faster_on_gnome_than_sway/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddjdj4/why_is_pdf_tools_much_faster_on_gnome_than_sway/"/>
-        <updated>2024-06-11T17:10:03.000Z</updated>
-        <summary type="html"><![CDATA[I am running debian trixie, so emacs 29 with pgtk and native comp. When I run a pdf full screen with pdf tools on sway, it stutters heavily, but on gnome, it scrolls smoothly down the whole document. Why is this?
-    submitted by    /u/Weak_Education_1778  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[yaml-pro (20240611.1706) --- Parser-aided YAML editing features]]></title>
-        <id>https://melpa.org/packages/yaml-pro-20240611.1706.tar</id>
-        <link href="https://melpa.org/#/yaml-pro"/>
-        <updated>2024-06-11T17:06:00.000Z</updated>
-        <summary type="html"><![CDATA[The yaml-pro package has been updated to version 20240611.1706.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[app-monochrome-themes (20240611.1623) --- Low contrast monochrome themes]]></title>
-        <id>https://melpa.org/packages/app-monochrome-themes-20240611.1623.tar</id>
-        <link href="https://melpa.org/#/app-monochrome-themes"/>
-        <updated>2024-06-11T16:23:00.000Z</updated>
-        <summary type="html"><![CDATA[The app-monochrome-themes package has been updated to version 20240611.1623.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Webinar on Prototype Object-Orientation Functionally THIS THURSDAY]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1ddgz07/webinar_on_prototype_objectorientation/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1ddgz07/webinar_on_prototype_objectorientation/"/>
-        <updated>2024-06-11T15:30:09.000Z</updated>
-        <summary type="html"><![CDATA[Register here: https://ziverge.zoom.us/webinar/register/WN_FPaOKj2dRWSv2l3WKwSF3g#/registration
- https://reddit.com/link/1ddgz07/video/tpcye7v8oy5d1/player
-    submitted by    /u/cristina_ziverge  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Can’t stop tinkering with Emacs configs. What should I do?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddgrw9/cant_stop_tinkering_with_emacs_configs_what/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddgrw9/cant_stop_tinkering_with_emacs_configs_what/"/>
-        <updated>2024-06-11T15:21:55.000Z</updated>
-        <summary type="html"><![CDATA[It feels kinda fun at first but now it seems like I have gone too far. Most days I bust open a project and then I encounter some sort of quirks that I don’t really like, or want to improve. Then I open up a new tab and start changing .emacs.d. And there goes my afternoon. What should I do??? Help I am trapped aaaaaa 
-    submitted by    /u/42yeah  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Emacs tools for interactive programming languages]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddg4p8/emacs_tools_for_interactive_programming_languages/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddg4p8/emacs_tools_for_interactive_programming_languages/"/>
-        <updated>2024-06-11T14:55:26.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/arthurno1  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[citeproc (20240611.1418) --- A CSL 1.0.2 Citation Processor]]></title>
-        <id>https://melpa.org/packages/citeproc-20240611.1418.tar</id>
-        <link href="https://melpa.org/#/citeproc"/>
-        <updated>2024-06-11T14:18:00.000Z</updated>
-        <summary type="html"><![CDATA[The citeproc package has been updated to version 20240611.1418.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Change the foreground and background colors in vterm different from the default]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddevwl/change_the_foreground_and_background_colors_in/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddevwl/change_the_foreground_and_background_colors_in/"/>
-        <updated>2024-06-11T14:02:38.000Z</updated>
-        <summary type="html"><![CDATA[I use a light theme for emacs, which is fine in most cases. The only exception is terminal. For terminals like vterm and eat, I would lilke them to have dark background and light foreground. For vterm, I tried
-  (add-hook 'vterm-mode-hook (lambda () (set (make-local-variable 'buffer-face-mode-face) '(:foreground "white" :background "black")) (buffer-face-mode t)) ) 
- but it doesn't work. I also tried face-remap-add-relative, but it doesn't work either. Does anyone has a solution for this? Thanks.
-    submitted by    /u/linwaytin  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[sbt plugins update #sbt-pack #scala #sbt #xerial #sbtplugins #coursier #ivy-local]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1ddevuk/sbt_plugins_update_sbtpack_scala_sbt_xerial/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1ddevuk/sbt_plugins_update_sbtpack_scala_sbt_xerial/"/>
-        <updated>2024-06-11T14:02:33.000Z</updated>
-        <summary type="html"><![CDATA[facing issues with xerial.sbt.Pack.packSettings error: object Pack is not a member of package xerial.sbt (import xerail.sbt.Pack.packSettings) error: not found: value packAutoSettings, error: not found: value packSettings packSettings ++Seq(, error: not found: value publishPackArchives ) ++ publishPackArchives I am working on scala sbt upgradation project from (Jdk 1.8, scala 2.11.12, sbt 0.13.16) to (Jdk 1.8, scala 2.12.17 and sbt 1.3.0) and plugins.sbt file updated from addSbtPlugin(“org.xerial.sbt”%“sbt-pack”%“0.7.4”) to addSbtPlugin(“org.xerial.sbt”%“sbt-pack”%“0.20”) One of the suggested solution from stackoverflow is to use plugins.sbt file in Project/project/plugins.sbt instead of Project/plugins.sbt didn’t work. 
-    submitted by    /u/Professional_Pay5767  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[dap-mode (20240611.1356) --- Debug Adapter Protocol mode]]></title>
-        <id>https://melpa.org/packages/dap-mode-20240611.1356.tar</id>
-        <link href="https://melpa.org/#/dap-mode"/>
-        <updated>2024-06-11T13:56:00.000Z</updated>
-        <summary type="html"><![CDATA[The dap-mode package has been updated to version 20240611.1356.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[First timer to emacs, struggling with pdf-tools]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1ddebt7/first_timer_to_emacs_struggling_with_pdftools/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1ddebt7/first_timer_to_emacs_struggling_with_pdftools/"/>
-        <updated>2024-06-11T13:37:30.000Z</updated>
-        <summary type="html"><![CDATA[Hi all,
- I am trying to establish a LaTeX workflow, and ideally would like to use pdf-tools (or something similar) because well, everything works that way all within emacs. However, the rendered pdf doesn't feel quite snappy and fast as a standard pdf viewer like Zathura or even firefox's pdf viewer.
- Is this a known issue with pdf-tools, or is there something that I would have to change in the config to make it work seamlessly with emacs and auctex?
-    submitted by    /u/kn0xchad  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[proxy with authentication?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dddi2g/proxy_with_authentication/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dddi2g/proxy_with_authentication/"/>
-        <updated>2024-06-11T12:59:22.000Z</updated>
-        <summary type="html"><![CDATA[Hi, I've been away from emacs for a while but am helping a user get access to a package archive (melpa) and the only way out is through an authenticating proxy. I found a discussion on stackoverflow suggesting a config like this: (setq url-proxy-services '(("no_proxy" . "\(localhost\|10.*\)") ("http" . "proxy.com:8080") ("https" . "proxy.com:8080")))
- (setq url-http-proxy-basic-auth-storage (list (list "proxy.com:8080" (cons "Input your LDAP UID !" (base64-encode-string "LOGIN:PASSWORD"))))) 
- (I can find similar examples elsewhere also)
- ... the url-proxy-services seems to work, as I can see the request hit the proxy. But the url-http-proxy-basic-auth-storage seems to not work, as the proxy logs include a DENY with "Authentication required", and when I look at the traffic with the request to the proxy, it doesn't include any authentication.
- Has anyone had any success getting this working? It's emacs 27.2 on OpenSuSE.
- Thanks
-    submitted by    /u/kevin_k  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[flymake-sqlfluff (20240611.1257) --- A flymake plugin for SQL files using sqlfluff]]></title>
-        <id>https://melpa.org/packages/flymake-sqlfluff-20240611.1257.tar</id>
-        <link href="https://melpa.org/#/flymake-sqlfluff"/>
-        <updated>2024-06-11T12:57:00.000Z</updated>
-        <summary type="html"><![CDATA[The flymake-sqlfluff package has been updated to version 20240611.1257.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Best practice to handle changing enums across deployments.]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1ddact7/best_practice_to_handle_changing_enums_across/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1ddact7/best_practice_to_handle_changing_enums_across/"/>
-        <updated>2024-06-11T09:56:46.000Z</updated>
-        <summary type="html"><![CDATA[I have a question regarding how to handle enums on a code that is deployed on different situations.
- Think of "region/State" field, they are of course fixed (at least in the short term) but different on each country. I can see two different ways to handle it:
-  
-Manually change the file with the enum, simple
- 
-Keep them on a database and use set to generate the code automatically, cam make people nervous with this self-modifying code thing
- 
- What would be the preferred approach in Scala?
- Thanks
-    submitted by    /u/SeaTrade9705  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Helenus v1.6.0]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dd9gas/helenus_v160/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dd9gas/helenus_v160/"/>
-        <updated>2024-06-11T08:50:45.000Z</updated>
-        <summary type="html"><![CDATA[We're proud to announce Helenus v1.6.0.
- This release includes experimental Apache Flink support, among other improvements and features.
- https://github.com/nMoncho/helenus/releases/tag/v1.6.0
- We'll be updating our examples repository during the week to show how to integrate against Flink.
-    submitted by    /u/nmoncho  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
         </author>
     </entry>
 </feed>
