@@ -63,6 +63,56 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1e1or33/making_a_webserver_in_haskell/",
+          "author": null,
+          "description": "Hi all,\n I've just picked my dissertation topic for my third year of university and will be making a webserver in Haskell.\n Does anyone have any advice, know any good resources or can provide links to any good documents I can retroactively throw in as references?\n Cheers for any help!\n    submitted by    /u/EngineerBug  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1e1or33/making_a_webserver_in_haskell/",
+          "publishedOn": "2024-07-12T18:24:51.000Z",
+          "wordCount": null,
+          "title": "Making a Webserver in Haskell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1e1kkp6/comparing_haskell_objects_by_memory_location_or/",
+          "author": null,
+          "description": "I'm working my way through the excellent Crafting Interpreters book and decided to do the first part in Haskell instead of Java. Everything has been going swimmingly until we got to closures, which introduced a subtle problem involving variable shadowing. To fix this, the book introduces a semantic analysis pass where all the variables get resolved to their proper scope before any actual interpreting happens.\n This analysis pass uses a Map Expression Int, mapping from an expression to a location in the stack of scopes of the program where the variable can be found. In Java, because `Expression` is a separate object with its own object ID, this works out fine. In my Haskell version I have implemented Expression something like the following:\n data Expression = Grouping Expression\n | Unary UnaryOperation Expression\n | Binary BinaryOperation Expression Expression\n | Literal LiteralContents\n | Variable String\n | Assignment String Expression\n -- etc\n deriving (Show,Eq,Ord)\n This has worked very well so far, however it does introduce a problem with regards to the Map Expression Int: Any Variable \"abc\" will be considered equal, even if they come from very different nodes in the AST. The derived functions for Eq will not do here.\n What is the recommended way to solve this? So far I've come up with:\n  \nTry and fake the Java way of object equality by using `StablePtr` and friends, though that may not work too well with the (hash)map.\n Add a unique integer to every node in the AST to disambiguate them.\n Add the original source location to every Expression, so that different references to the same variable would be disambiguated by their source location. This feels a bit dirty though, since it would bleed implementation details from the scanner/parser into the interpreter.\n  \n   submitted by    /u/WJWH  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1e1kkp6/comparing_haskell_objects_by_memory_location_or/",
+          "publishedOn": "2024-07-12T15:32:40.000Z",
+          "wordCount": null,
+          "title": "Comparing haskell objects by memory location or \"object id\"?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1e1k6kb/what_are_type_constants/",
+          "author": null,
+          "description": "I am reading Haskell report 2010 and I am confused. Why are `(->)`, `[]`, and `IO` constants?\n https://preview.redd.it/m45ngsmtt3cd1.png?width=961&format=png&auto=webp&s=b33bb1af0655008a003733d070ad28d675c7c2b4\n    submitted by    /u/Reclusive--Spikewing  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1e1k6kb/what_are_type_constants/",
+          "publishedOn": "2024-07-12T15:16:19.000Z",
+          "wordCount": null,
+          "title": "What are type constants?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1e19y8x/creating_constant_configuration_in_haskell/",
+          "author": null,
+          "description": "Is there a neat way of handling configuration data in Haskell that doesn't involve threading the configuration all the way through the compution?\n What I mean by \"constant\" configuration is stuff that will not change throughout the lifetime of the program, so you could embed it in code as a simple function, but where it would be generally good software engineering practice to keep it in an updatable file, rather than embdedding it in code.\n A few examples of what I mean:\n  \nA collection of units and their conversions, it would be useful to have a file of this data and have it read when the program starts, so that additional units can be added or values corrected without recompiling, plus some functions to get units by name, etc.\n Calendars giving things like the (notoriously difficult) dates of Easter\n Message files\n Locale information, such as Basque days of the week\n  \nThe default, as far as I can see, is to embed the data directly into the program, possibly using template haskell or just as code. For example, I can see how Yesod handles messages and keeps type safety. But not being able to add a new language or reword things without recompilng is more than a bit meh to my eye.\n In my current application, I'm looking at calendar definitions. I'd like to be able to have a file saying \"Pentecost is the 50th day after Easter Sunday. Easter Sunday is supposed to have a definition but it got messed up and it's now effectively an arbitary list of dates. Australia Day is on the 26th of January.\" etc. etc. and then, if I'm reading JSON and there is a named calendar, just get the calendar defintiion. Threading stuff through the compution looks both incredibly awkward and just a bit tacky.\n Does anyone have any pointers to a good technique?\n    submitted by    /u/orlock  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1e19y8x/creating_constant_configuration_in_haskell/",
+          "publishedOn": "2024-07-12T05:40:59.000Z",
+          "wordCount": null,
+          "title": "Creating \"constant\" configuration in Haskell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1e15an6/why_arent_coercible_constraints_in_gadts_free/",
+          "author": null,
+          "description": "Consider the following:\n ``` type role M nominal data M a -- .. a has a nominal role\n type role N representational data N a where N :: (Coercible b a) => M b -> N a ```\n Now if M is a functor, N is a functor, like so:\n  instance Functor N where fmap f (N m) = N (fmap (f . coerce) m) \n But less say I have: \n  class MakeM a where makeM :: M a \n Then I can't say:\n ``` class MakeM a where makeM :: M a\n newtype MyM a = MyM a deriving newtype (MakeM) ```\n Because a has a nominal role in M.\n But I can say: \n ``` class MakeN a where makeN :: N a\n newtype MyN a = MyN a deriving newtype (MakeN) ```\n Because a has a representative role in N.\n But it's my understanding that the Coercible dictionary is still included in the datatype as a field at runtime (see here and here): \n Why?\n Is this just an optimisation GHC could make but it hasn't got around to?\n It seems to me if that any calls to coerce are eliminated at runtime, you should be able to drop the pointer to the Coercible dictionary. You're never going to use it anyway.\n Furthermore, in this particular case, I can't see why we just make N a newtype of M:\n  newtype N a where N :: (Coercible b a) => M b -> N a \n As once we get rid of the dictionary we've just got an indirection, could we just get rid of it (I'm not as sure about this though).\n    submitted by    /u/clinton84  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1e15an6/why_arent_coercible_constraints_in_gadts_free/",
+          "publishedOn": "2024-07-12T01:27:59.000Z",
+          "wordCount": null,
+          "title": "Why aren't coercible constraints in GADTs free?",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1e0wq8q/megaparsec_question_followup_reading_n_bytes/",
           "author": null,
           "description": "In my previous post which was answered and I learned a ton from (thank you all!), I was trying to write a megaparsec parser for the NATS protocol messages.\n I got my message parser down to something that I like and is somewhat readable:\n ```haskell pMsgMessage :: Parser ProtocolMessage pMsgMessage = do _ <- string \"MSG\" <* hspace1 subject <- validSubject <* hspace1 sid <- many alphaNumChar <* hspace1 reply <- try (fmap Just validSubject <* hspace1) <|> return Nothing len <- integer <* crlf\n return $ MsgMessage {..} ```\n This covers a message like:  MSG hello.world s1 reply.to.me 50\\r\\n  What needs to follow on this message type and a bunch of others is the optional payload. This payload is a string of bytes, and the number of bytes is indicated by the len variable.\n I've tried combinations of takeP and count and some other stuff, but I'm at a loss. Yes, I know I need to learn more (and hitting these walls is how I learn), and I know I lack experience with general purpose combinators.\n So all I'm looking for is a Nothing when len is 0, and a Just ByteString for when it's not.\n The psuedocode I was hoping I could write was something like:\n haskell payload <- try (fmap Just $ take len <* crlf) <|> return Nothing \n    submitted by    /u/StayFreshChzBag  \n [link]   [comments]",
@@ -1021,56 +1071,6 @@
           "wordCount": null,
           "title": "[Well-Typed] Choreographing a dance with the GHC specializer: Part 2",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1den3fr/unofficial_community_survey_how_are_your_build/",
-          "author": null,
-          "description": "Please also leave details in the comments if you feel the poll choices don't fully express the intricacies of your setup.\n View Poll\n    submitted by    /u/kwest_ng  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1den3fr/unofficial_community_survey_how_are_your_build/",
-          "publishedOn": "2024-06-13T01:24:08.000Z",
-          "wordCount": null,
-          "title": "Unofficial Community Survey: How are your build tools set up?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dedryp/some_bind_pointfree_sorcery/",
-          "author": null,
-          "description": "I was looking at pointfree.io when i was rewriting this lambda \\x-> abs x * x when it decided to output this perplexing expression: (*) =<< abs\n After testing, it seem that i can chain multiple binary operations, and each time it will use both the output of the chain, and the initial input:\n  (+)=<<(+)=<<(*)=<<(*5) $ 2 == 2*5*2+2+2 == 24 \n What kind of monad is used here? The only types involved are Nums and afaik Num isnt a monad. I suspect that its the ((->) a) monad but i dont know its name so i cant research it, plus no links in Control.Monad for it.\n    submitted by    /u/HermlT  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dedryp/some_bind_pointfree_sorcery/",
-          "publishedOn": "2024-06-12T18:29:14.000Z",
-          "wordCount": null,
-          "title": "Some bind pointfree sorcery",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dea6y8/new_library_shamochu_shuffle_and_merge/",
-          "author": null,
-          "description": "submitted by    /u/Wismill  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dea6y8/new_library_shamochu_shuffle_and_merge/",
-          "publishedOn": "2024-06-12T16:00:27.000Z",
-          "wordCount": null,
-          "title": "New library: shamochu “Shuffle and merge overlapping chunks” lossless compression",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1de991m/the_haskell_unfolder_episode_27_duality/",
-          "author": null,
-          "description": "submitted by    /u/kosmikus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1de991m/the_haskell_unfolder_episode_27_duality/",
-          "publishedOn": "2024-06-12T15:20:05.000Z",
-          "wordCount": null,
-          "title": "The Haskell Unfolder Episode 27: duality",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1de7l8w/my_talk_functional_programming_failed/",
-          "author": null,
-          "description": "Hi folks,\n My talk \"Functional Programming: Failed Successfully\" from LambdaConf 2024 is now published online.\n This is my attempt to understand why functional languages are not popular despite their excellence. The talk's other title is \"Haskell Superiority Paradox.\"\n Beware, the talk is spicy and, I hope, thought-provoking.\n I'll be happy to have a productive discussion on the subject!\n https://youtu.be/018K7z5Of0k?si=3pawkidkY2JDIP1D\n -- Alexander\n    submitted by    /u/graninas  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1de7l8w/my_talk_functional_programming_failed/",
-          "publishedOn": "2024-06-12T14:09:35.000Z",
-          "wordCount": null,
-          "title": "My talk \"Functional Programming: Failed Successfully\" is now available!",
-          "imageUrl": null
         }
       ]
     },
@@ -1079,6 +1079,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1e1il0w/emacs_scala_eglot_treesitter_nix_setup_using_home/",
+          "author": null,
+          "description": "submitted by    /u/kosakgroove  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1e1il0w/emacs_scala_eglot_treesitter_nix_setup_using_home/",
+          "publishedOn": "2024-07-12T14:08:09.000Z",
+          "wordCount": null,
+          "title": "Emacs Scala Eglot TreeSitter Nix setup using Home Manager in 2024 - roast my video",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1e1bw11/scala_space_podcast_the_future_of_scala_ides/",
+          "author": null,
+          "description": "Hello,\n I'd like to invite all of you to the next episode of the Scala Space Podcast in which my guests will be:\n  \nIgal Tabachnik, the author of ZIO for Intellij plugin and a long term Scala engineer\n Jędrzej Rochala, Scala engineer working at VirtusLab, a contributor to both Metals and Scala 3 compiler\n  \nWe are going to discuss new developments happening in the world of IDEs and how they are going to impact the way Scala code is written. The podcast will be happening live on Twitch and Scala Space Youtube channel today at 14:00 CEST so feel free to join the chat and ask questions. Links:\n https://www.youtube.com/watch?v=I32naKlkIPk\n https://www.twitch.tv/averagefpenjoyer/schedule?segmentID=aed0e121-2d47-4723-878e-95d819da4889\n    submitted by    /u/lbialy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1e1bw11/scala_space_podcast_the_future_of_scala_ides/",
+          "publishedOn": "2024-07-12T07:45:07.000Z",
+          "wordCount": null,
+          "title": "Scala Space Podcast: The Future of Scala IDEs",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1e0puvq/a_distributed_remote_code_execution_engine_with/",
           "author": null,
@@ -1888,26 +1908,6 @@
           "wordCount": null,
           "title": "Lean Scala app stream: finishing touches",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1desnf8/tapir_tutorial_part_2_generating_openapi_docs/",
-          "author": null,
-          "description": "submitted by    /u/smlaccount  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1desnf8/tapir_tutorial_part_2_generating_openapi_docs/",
-          "publishedOn": "2024-06-13T06:50:47.000Z",
-          "wordCount": null,
-          "title": "Tapir Tutorial - part 2: Generating OpenAPI docs Adam Warski SoftwareMill",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1debioi/my_talk_functional_programming_failed/",
-          "author": null,
-          "description": "submitted by    /u/graninas  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1debioi/my_talk_functional_programming_failed/",
-          "publishedOn": "2024-06-12T16:55:37.000Z",
-          "wordCount": null,
-          "title": "My talk \"Functional Programming: Failed Successfully\" is now available!",
-          "imageUrl": null
         }
       ]
     },
@@ -1988,6 +1988,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1e0ziov/how_can_i_typeset_this_table_in_org/",
+          "author": null,
+          "description": "So I'm typing up content from an old grammar book into an org file but it contains a number of tables formatted like #47. Any advice on how I can best render it in org-mode syntax (it doesn't have to be exact)? Because I've been scratching my head for a bit. Thanks!\n    submitted by    /u/augustinus-jp  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1e0ziov/how_can_i_typeset_this_table_in_org/",
+          "publishedOn": "2024-07-11T20:57:49.000Z",
+          "wordCount": null,
+          "title": "How can I typeset this table in org?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1dzrndg/contact_management_with_emacs_orgmode_orgcontacts/",
           "author": null,
@@ -2287,16 +2297,6 @@
           "wordCount": null,
           "title": "How many buffers do you typically have opened?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1demgud/toggle_orghabit_moduletoggle_special_view_for/",
-          "author": null,
-          "description": "Habits are displayed separately from other tasks on the TODO list. This is great, I like the consistency tracker, but I can't figure out how to schedule it. Say I want to run every few days, but I also want to schedule my next run for 4pm on Tuesday. Is there a way to switch between two modes, one where habits are displayed in a block with their consistency graphs, the other where habits are displayed as ordinary TODO items with a repeating block?\n    submitted by    /u/Massive-Squirrel-255  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1demgud/toggle_orghabit_moduletoggle_special_view_for/",
-          "publishedOn": "2024-06-13T00:51:02.000Z",
-          "wordCount": null,
-          "title": "Toggle org-habit module/toggle special view for habits",
-          "imageUrl": null
         }
       ]
     },
@@ -2305,6 +2305,96 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/elisa-20240712.1639.tar",
+          "author": null,
+          "description": "The elisa package has been updated to version 20240712.1639.",
+          "link": "https://melpa.org/#/elisa",
+          "publishedOn": "2024-07-12T16:39:00.000Z",
+          "wordCount": 105,
+          "title": "elisa (20240712.1639) --- Emacs Lisp Information System Assistant",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lab-20240712.1534.tar",
+          "author": null,
+          "description": "The lab package has been updated to version 20240712.1534.",
+          "link": "https://melpa.org/#/lab",
+          "publishedOn": "2024-07-12T15:34:00.000Z",
+          "wordCount": 105,
+          "title": "lab (20240712.1534) --- An interface for GitLab",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/color-theme-sanityinc-solarized-20240712.1038.tar",
+          "author": null,
+          "description": "The color-theme-sanityinc-solarized package has been updated to version 20240712.1038.",
+          "link": "https://melpa.org/#/color-theme-sanityinc-solarized",
+          "publishedOn": "2024-07-12T10:38:00.000Z",
+          "wordCount": 105,
+          "title": "color-theme-sanityinc-solarized (20240712.1038) --- A version of Ethan Schoonover's Solarized themes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-tag-beautify-20240712.439.tar",
+          "author": null,
+          "description": "The org-tag-beautify package has been updated to version 20240712.439.",
+          "link": "https://melpa.org/#/org-tag-beautify",
+          "publishedOn": "2024-07-12T04:39:00.000Z",
+          "wordCount": 105,
+          "title": "org-tag-beautify (20240712.439) --- Beautify Org mode tags",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/w3m-20240712.248.tar",
+          "author": null,
+          "description": "The w3m package has been updated to version 20240712.248.",
+          "link": "https://melpa.org/#/w3m",
+          "publishedOn": "2024-07-12T02:48:00.000Z",
+          "wordCount": 105,
+          "title": "w3m (20240712.248) --- an Emacs interface to w3m",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/shimbun-20240712.215.tar",
+          "author": null,
+          "description": "The shimbun package has been updated to version 20240712.215.",
+          "link": "https://melpa.org/#/shimbun",
+          "publishedOn": "2024-07-12T02:15:00.000Z",
+          "wordCount": 105,
+          "title": "shimbun (20240712.215) --- interfacing with web newspapers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/auto-dark-20240711.2247.tar",
+          "author": null,
+          "description": "The auto-dark package has been updated to version 20240711.2247.",
+          "link": "https://melpa.org/#/auto-dark",
+          "publishedOn": "2024-07-11T22:47:00.000Z",
+          "wordCount": 105,
+          "title": "auto-dark (20240711.2247) --- Automatically sets the dark-mode theme based on macOS/Linux/Windows status",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-jira-20240711.2219.tar",
+          "author": null,
+          "description": "The org-jira package has been updated to version 20240711.2219.",
+          "link": "https://melpa.org/#/org-jira",
+          "publishedOn": "2024-07-11T22:19:00.000Z",
+          "wordCount": 105,
+          "title": "org-jira (20240711.2219) --- Syncing between Jira and Org-mode.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/robot-mode-20240711.2007.tar",
+          "author": null,
+          "description": "The robot-mode package has been updated to version 20240711.2007.",
+          "link": "https://melpa.org/#/robot-mode",
+          "publishedOn": "2024-07-11T20:07:00.000Z",
+          "wordCount": 105,
+          "title": "robot-mode (20240711.2007) --- Major-mode for Robot Framework files",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/cider-20240711.1319.tar",
           "author": null,
@@ -3643,6 +3733,16 @@
           "publishedOn": "2024-06-28T20:27:00.000Z",
           "wordCount": 105,
           "title": "auto-compile (20240628.2027) --- Automatically compile Emacs Lisp libraries",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/outline-minor-faces-20240628.2016.tar",
+          "author": null,
+          "description": "The outline-minor-faces package has been updated to version 20240628.2016.",
+          "link": "https://melpa.org/#/outline-minor-faces",
+          "publishedOn": "2024-06-28T20:16:00.000Z",
+          "wordCount": 105,
+          "title": "outline-minor-faces (20240628.2016) --- Highlight only section headings",
           "imageUrl": null
         },
         {
@@ -5264,116 +5364,6 @@
           "wordCount": 105,
           "title": "envrc (20240613.907) --- Support for `direnv' that operates buffer-locally",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-ql-20240613.445.tar",
-          "author": null,
-          "description": "The org-ql package has been updated to version 20240613.445.",
-          "link": "https://melpa.org/#/org-ql",
-          "publishedOn": "2024-06-13T04:45:00.000Z",
-          "wordCount": 105,
-          "title": "org-ql (20240613.445) --- Org Query Language, search command, and agenda-like view",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/helm-org-ql-20240613.355.tar",
-          "author": null,
-          "description": "The helm-org-ql package has been updated to version 20240613.355.",
-          "link": "https://melpa.org/#/helm-org-ql",
-          "publishedOn": "2024-06-13T03:55:00.000Z",
-          "wordCount": 105,
-          "title": "helm-org-ql (20240613.355) --- Helm support for org-ql",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/hyperdrive-20240613.234.tar",
-          "author": null,
-          "description": "The hyperdrive package has been updated to version 20240613.234.",
-          "link": "https://melpa.org/#/hyperdrive",
-          "publishedOn": "2024-06-13T02:34:00.000Z",
-          "wordCount": 105,
-          "title": "hyperdrive (20240613.234) --- P2P filesystem",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/digistar-mode-20240613.225.tar",
-          "author": null,
-          "description": "The digistar-mode package has been updated to version 20240613.225.",
-          "link": "https://melpa.org/#/digistar-mode",
-          "publishedOn": "2024-06-13T02:25:00.000Z",
-          "wordCount": 105,
-          "title": "digistar-mode (20240613.225) --- major mode for Digistar scripts",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/company-20240612.2106.tar",
-          "author": null,
-          "description": "The company package has been updated to version 20240612.2106.",
-          "link": "https://melpa.org/#/company",
-          "publishedOn": "2024-06-12T21:06:00.000Z",
-          "wordCount": 105,
-          "title": "company (20240612.2106) --- Modular text completion framework",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/zenburn-theme-20240612.1258.tar",
-          "author": null,
-          "description": "The zenburn-theme package has been updated to version 20240612.1258.",
-          "link": "https://melpa.org/#/zenburn-theme",
-          "publishedOn": "2024-06-12T12:58:00.000Z",
-          "wordCount": 105,
-          "title": "zenburn-theme (20240612.1258) --- A low contrast color theme for Emacs.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/racket-mode-20240612.1256.tar",
-          "author": null,
-          "description": "The racket-mode package has been updated to version 20240612.1256.",
-          "link": "https://melpa.org/#/racket-mode",
-          "publishedOn": "2024-06-12T12:56:00.000Z",
-          "wordCount": 105,
-          "title": "racket-mode (20240612.1256) --- Racket editing, REPL, and more",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/psession-20240612.1242.tar",
-          "author": null,
-          "description": "The psession package has been updated to version 20240612.1242.",
-          "link": "https://melpa.org/#/psession",
-          "publishedOn": "2024-06-12T12:42:00.000Z",
-          "wordCount": 105,
-          "title": "psession (20240612.1242) --- Persistent save of elisp objects.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/flycheck-buf-lint-20240612.1219.tar",
-          "author": null,
-          "description": "The flycheck-buf-lint package has been updated to version 20240612.1219.",
-          "link": "https://melpa.org/#/flycheck-buf-lint",
-          "publishedOn": "2024-06-12T12:19:00.000Z",
-          "wordCount": 105,
-          "title": "flycheck-buf-lint (20240612.1219) --- Flycheck checker for protobuf with buf.build",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/arduino-cli-mode-20240612.1120.tar",
-          "author": null,
-          "description": "The arduino-cli-mode package has been updated to version 20240612.1120.",
-          "link": "https://melpa.org/#/arduino-cli-mode",
-          "publishedOn": "2024-06-12T11:20:00.000Z",
-          "wordCount": 105,
-          "title": "arduino-cli-mode (20240612.1120) --- Arduino-CLI command wrapper",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-haskell-20240612.916.tar",
-          "author": null,
-          "description": "The lsp-haskell package has been updated to version 20240612.916.",
-          "link": "https://melpa.org/#/lsp-haskell",
-          "publishedOn": "2024-06-12T09:16:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-haskell (20240612.916) --- Haskell support for lsp-mode",
-          "imageUrl": null
         }
       ]
     },
@@ -5382,6 +5372,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1nz44/why_is_it_so_hard_to_get_pyright_to_work_properly/",
+          "author": null,
+          "description": "So I keep reading about how Emacs (Doom Emacs) has great support for LSPs, etc. I can see that pyright is running, but it keeps saying my imports could not be resolved and my code is full of warnings.\n I tried MyPy and it creates a .mypy directory all over the place so I deleted it.\n Is there a Python LSP that actually works with Emacs?\n    submitted by    /u/sunshine-and-sorrow  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1nz44/why_is_it_so_hard_to_get_pyright_to_work_properly/",
+          "publishedOn": "2024-07-12T17:52:44.000Z",
+          "wordCount": null,
+          "title": "Why is it so hard to get Pyright to work properly?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1kvhu/keyboard_macro_terminates_prematurely/",
+          "author": null,
+          "description": "Stumbled over interesting keyboard-macro-terminates-prematurely issue. I love keyboard macros, I love the odd puzzler, this one I’m at a loss, and maybe someone can send me off in an orthogonal direction that’ll get me using some new feature…\n I want to keyboard-macro search in dired buffer for a file name of the form ‘fuu[0-9]’. When playing macro, As long as there is a file name in the dired buffer of the form fuu[0-9]+, I’m good, keyboard macro continues playing after finding the file name. However, if dired buffer only contains file name ‘fuu’, macro terminates prematurely with failed regexp search when ‘]’ char is played, before ‘’ char is played. Any ideas?\n    submitted by    /u/amazingBiscuitman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1kvhu/keyboard_macro_terminates_prematurely/",
+          "publishedOn": "2024-07-12T15:45:15.000Z",
+          "wordCount": null,
+          "title": "Keyboard macro terminates prematurely?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1k8jn/fun_fact_about_calendarel/",
+          "author": null,
+          "description": "Few days ago I happened to stumble upon an interesting read and link on SX, about a calendar library in Common Lisp. I actually ordered a book to the local library (we can distance-borrow in Sweden), and I found an interesting statement in Preface:\n \"Our initial motivation was an effort by one of us (E.M.R.) to create Emacs-Lisp code that would provide calendar and diary features for GNU Emacs ( ... ) A deluge of inquiries from around the globe soon made it clear to us that there was keen interest in an explanation that would go beyond the code itself\"\n Ha! Looking at the calendar.el, indeed, the author is one of the authors of the book in question (Calendrical Calculations).\n Basically, what they say, Emacs and Emacs community inspired them to gather together information and write probably the most authoritative book on the subject yet. How cool is that!\n    submitted by    /u/arthurno1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1k8jn/fun_fact_about_calendarel/",
+          "publishedOn": "2024-07-12T15:18:43.000Z",
+          "wordCount": null,
+          "title": "Fun fact about calendar.el",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1k7d8/is_there_a_way_to_quit_a_repeat_keymap_with_a_noop/",
+          "author": null,
+          "description": "(defvar-keymap my-prefix-map :repeat \"t\" \"<down>\" #'windmove-down \"<left>\" #'windmove-left \"<right>\" #'windmove-right \"<up>\" #'windmove-up \"q\" #'noop ) \n Is there a way to implement something like this? I want the keymap to be repeatable but I want a key to exit the keymap.\n I tried to use \"q\" #'ignore :repeat (:exit (\"ignore\")), but that did not work.\n    submitted by    /u/dwrz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1k7d8/is_there_a_way_to_quit_a_repeat_keymap_with_a_noop/",
+          "publishedOn": "2024-07-12T15:17:17.000Z",
+          "wordCount": null,
+          "title": "Is there a way to quit a :repeat keymap with a noop?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1k67f/conflict_between_orgmode_and_flycheck_but_only_on/",
+          "author": null,
+          "description": "I have the following load/config of Flycheck in my init.el:\n (use-package flycheck ;; Flycheck base package :ensure t :commands global-flycheck-mode :config (setq flycheck-global-modes '(not org-mode)) :init (setq flycheck-emacs-lisp-load-path 'inherit) (add-hook 'after-init-hook #'global-flycheck-mode)) \n Note the sixth line, it tells global-flycheck-mode not to apply in org.\n On my Linux machine, this works. On my MacOS MacBook, it doesn't. Both machines use the same config files (managed in a GitHub repo), and both are running Emacs 29.4 (Linux is custom-built, Mac is a Homebrew cask).\n Yesterday (when I noticed this while doing some heavy editing of an org file on the Mac) I tried a number of different things to get FC to not be on for org, but every time I restarted Emacs the org buffers had FC enabled.\n Does this sound familiar to anyone here?\n    submitted by    /u/rjray  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1k67f/conflict_between_orgmode_and_flycheck_but_only_on/",
+          "publishedOn": "2024-07-12T15:15:55.000Z",
+          "wordCount": null,
+          "title": "Conflict between org-mode and Flycheck, but only on MacOS?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1jt8g/orgbabel_help/",
+          "author": null,
+          "description": "Hi,\n I use the \"src\" block and it is very good but how I can use the tab to indent like a normal file or how I can format the code in the \"src\" block ?\n The <tab> is binding to the org-cycle what is good but how I can bind it to the indentation ?\n thanks in advance!\n    submitted by    /u/zsome  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1jt8g/orgbabel_help/",
+          "publishedOn": "2024-07-12T15:01:02.000Z",
+          "wordCount": null,
+          "title": "org-babel help",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1imxd/some_useful_elisp_for_writing_prose/",
+          "author": null,
+          "description": "submitted by    /u/arthurno1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1imxd/some_useful_elisp_for_writing_prose/",
+          "publishedOn": "2024-07-12T14:10:29.000Z",
+          "wordCount": null,
+          "title": "Some useful Elisp for writing prose",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1iko1/emacs_scala_eglot_treesitter_nix_setup_using_home/",
+          "author": null,
+          "description": "submitted by    /u/kosakgroove  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1iko1/emacs_scala_eglot_treesitter_nix_setup_using_home/",
+          "publishedOn": "2024-07-12T14:07:42.000Z",
+          "wordCount": null,
+          "title": "Emacs Scala Eglot TreeSitter Nix setup using Home Manager in 2024 - roast my video",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1dksm/how_is_emacs_used_in_a_professional_setting/",
+          "author": null,
+          "description": "I am entering my senior year of my BSc. in Data Science (primarily use R and python). I first learned about Emacs my freshman year and was intrigued by the potential -- keyboard-focused, modularity, customization, etc. I started using and configuring vanilla Emacs as my \"daily driver\" about 18mo ago. Within the last 6mo I have used `org-agenda` to organize my schedule, Jupyter notebooks for class assignments, and record most* of my notes using `denote` (*need to spend some time configuring latex for math notes). \n This summer, I completed a Data Science internship at a medium-ish sized tech company. Although most of my classwork is in Jupyter notebooks, the dev team discourages the use of notebooks. Experiments are mostly organized in python files but it does seem that others still use Jupyter notebooks to tinker with code snippets or intermediate plotting. All development is done remotely across a number of servers and docker containers.\n Needless to say, my \"little\" Emacs configuration was not up to the task. The jump from using Emacs for my homework assignments to fleshing out a reliable IDE that I can be used on the job is overwhelming. I struggle to envision how I would make that jump. I am aware of `tramp` and `lsp-bridge`, for example, but have read a lot of complaints about latency or `magit` being slow. Alternatively, one could install Emacs on given server ... but how common is it that companies allow you to do that? \n For those that use Emacs professionally: How do you use Emacs at your company? Do you run Emacs locally but develop over tramp, what is that experience like? If not, does your company allow you to install Emacs on a server? \n    submitted by    /u/Impossible_Win_9059  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1dksm/how_is_emacs_used_in_a_professional_setting/",
+          "publishedOn": "2024-07-12T09:40:20.000Z",
+          "wordCount": null,
+          "title": "How is Emacs used in a professional setting?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e1c6yt/icons_are_not_shown_with_ivy_and_alltheicons/",
+          "author": null,
+          "description": "Hi all, I'm new into emacs and I'm creating my config file. Following some videos and guides, I ended with this config: https://codeberg.org/DevGiu/emacs-config/src/branch/main/config.org\n I have all-the-icons installed, and ivy icons and so on, on my config file All-The-Icons under \"All The Icons\" title, and Ivy under \"Ivy\" title, but when icons must be shown, when trying to open a file for example or M x for a command, icons are not shown and I have no idea why.\n https://preview.redd.it/icjd0g0wo1cd1.png?width=825&format=png&auto=webp&s=f650017ce996687d4ffff294f1c447369211b21d\n Thanks for the help\n EDIT:\n It's solved. I missed the command all-the-icons-install-fonts\n    submitted by    /u/DevGiuDev  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e1c6yt/icons_are_not_shown_with_ivy_and_alltheicons/",
+          "publishedOn": "2024-07-12T08:06:03.000Z",
+          "wordCount": null,
+          "title": "Icons are not shown with ivy and all-the-icons",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e18toz/using_new_emacs_features_to_replicate_other/",
+          "author": null,
+          "description": "Made something recently that I thought other people might like, really illustrates the power of the new emacs built-in packages. I have re-implemented a part of expand-region for the new tree-sitter modes, using only a few lines of elisp and built-in packages. This is probably already in Mickey Peterson's excellent combobulate package.\n To use it, open a treesitter enabled buffer (say with python-ts-mode) and then hit <C-return>. Repeat invocations of <return> will expand the region, - will contract and C-g will reset and exit.\n The code is pretty simple:\n (defvar treesit--region-stack '()) (defun treesit-node-bounds-match-region-p (node beg end) \"Returns `t' if the bounds of the region marked `beg' and `end' match the bounds of `node'.\" (and (= beg (treesit-node-start node)) (= end (trees…",
+          "link": "https://www.reddit.com/r/emacs/comments/1e18toz/using_new_emacs_features_to_replicate_other/",
+          "publishedOn": "2024-07-12T04:34:16.000Z",
+          "wordCount": null,
+          "title": "Using new emacs features to replicate other packages: tree-sitter + transient + repeat-mode = expand-region",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1e17lg9/how_do_debug_emacs_crashes_on_x11_screen_unlock/",
+          "author": null,
+          "description": "I've been having this issue for going on about a year. It's pretty regular. Several times a week, when I unlock my screen (regolith3/X11/i3) Emacs will die immediately or as soon as it gets focus. It doesn't seem to dump a core file anywhere obvious and even if it did I'd have to learn how to debug a core file for Emacs.\n Anybody have any advice on how to debug this?\n  \nEDIT1: This Emacs is 30.x from the Guix emacs-next pacakge. TIL that you can guix install emacs-next --with-debug-info=emacs-next and Guix will recompile the package with debug symbols. Now how long is THAT going to take? ;)\n  \nEDIT2: So I was able to get a backtrace and it looks like I've got something odd going on during garbage collection. I had a backtrace but reddit's editing environment chokes on it.\n    submitted by    /u/siliconpa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1e17lg9/how_do_debug_emacs_crashes_on_x11_screen_unlock/",
+          "publishedOn": "2024-07-12T03:26:54.000Z",
+          "wordCount": null,
+          "title": "How do debug? : Emacs crashes on X11 screen unlock",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1e0w6r0/confused_implementing_programmed_completion_a/",
           "author": null,
@@ -8321,116 +8431,6 @@
           "wordCount": null,
           "title": "LSP Setup for Ansible, Help needed",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1det0s1/emacsclient_doesnt_reuse_existing_frame_in_wayland/",
-          "author": null,
-          "description": "Hello there, I'm trying to setup emacs in daemon mode so it works in like a \"monopoly\" mode so I only have 1 window at a time always. However, in wayland it doesn't seem to work. Here's an example \n ``` ❯ swaymsg -t get_tree | jq -r '.. | select(.app_id? == \"emacs\") | .app_id | ascii_downcase ' emacs\n ❯ la /run/user/1000/emacs/server srwx------ 1 iamkarlson iamkarlson 0 Jun 13 08:59 /run/user/1000/emacs/server\n ❯ swaymsg -t get_tree | jq -r '.. | select(.app_id? == \"emacs\") | .app_id | ascii_downcase ' emacs emacs\n ❯ la /run/user/1000/emacs/server srwx------ 1 iamkarlson iamkarlson 0 Jun 13 08:59 /run/user/1000/emacs/server ```\n As you can see before I ran emacsclient there was already existing emacs frame. According to the help:  -r, --reuse-frame Create a new frame if none exists, otherwise use the current Emacs frame \n What am I doing wrong? Why emacsclient cannot reuse the frame? \n    submitted by    /u/iamkarlson  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1det0s1/emacsclient_doesnt_reuse_existing_frame_in_wayland/",
-          "publishedOn": "2024-06-13T07:16:03.000Z",
-          "wordCount": null,
-          "title": "emacsclient doesn't reuse existing frame in wayland",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1denxba/global_predictable_no_bs_jumper/",
-          "author": null,
-          "description": "To be honest, I don't know why only now, after years of using Emacs, I have realized that I have never attempted to figure this out, in many regards, quite important feature of any text editor.\n I want to find a good, predictable way to jump between places. Not just within a single buffer or same window - between windows, tabs and frames. \n So this is what I want:\n  \nI would be typing something in one buffer (matter of fact I'm typing this very message in an Emacs buffer), let's call it t1/w1/b1, okay?\n \nThen I would move the cursor to the top of the buffer, to fix a mistake.\n \nThen for whatever reason I would switch to another window, right next to my current window&buffer - let's call it t1/w2/b2, and then type some other stuff.\n \nThen, I would switch to another tab (I'm using tab-bar-mode) where it finds t2/w1/b1\n \n Now, is there a way to:\n  \nPressing a key to jump to the previous tab, window, and buffer? So in my case pressing the key would take me first to t1/w2/b2, pressing it again to t1/w1/b1 at the top of b1, and then if I press again - to the end of it.\n \nSeeing and using the jumps history in the minibuffer.\n \n Is there a good package that works this way? Emacs has powerful position system, how is something like this is not a thing? Or maybe I just don't know about it yet? \n Doom Emacs uses better-jumper, but it works within a single window or buffer, it can't take you across different windows, tabs and frames. And because of that, it feels super unpredictable, I never know where better-jumper-jump-backward would take me next.\n There are Evil marks and built-in Emacs markers, but they also don't seem to have cross-window-tab-frame functionality.\n What is you recommendation for this problem?\n    submitted by    /u/ilemming  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1denxba/global_predictable_no_bs_jumper/",
-          "publishedOn": "2024-06-13T02:07:44.000Z",
-          "wordCount": null,
-          "title": "Global, predictable, no bs jumper",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dejyt0/emacs_consultweb_package_get_web_search_results/",
-          "author": null,
-          "description": "submitted by    /u/unixbhaskar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dejyt0/emacs_consultweb_package_get_web_search_results/",
-          "publishedOn": "2024-06-12T22:50:53.000Z",
-          "wordCount": null,
-          "title": "Emacs consult-web package: Get web search results as well as omni searc...",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dei452/appreciation_post/",
-          "author": null,
-          "description": "Just wanted to put it out there, been a neovim user for years, recently started using emacs for orgmode, and bro, I just want to thank whoever worked on the manual and these docs, I've worked with many stacks, tools and technologies but never in my life have I seen docs so clean, so clear, concise and straight to the point yet elaborate, it's just there whatever you're looking for it's right where u expect it to be. This post might seem unnecessary to alot of u and i agree but when u experience the pain of many years of terrible docs for different technologies u truly learn to appreciate this stuff.\n    submitted by    /u/WarmToiletSeat0  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dei452/appreciation_post/",
-          "publishedOn": "2024-06-12T21:29:32.000Z",
-          "wordCount": null,
-          "title": "Appreciation post",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1deg68s/open_external_powershell_on_emacs/",
-          "author": null,
-          "description": "As a beginner in Emacs and Lisp, I'm trying to open a PowerShell window in my current Emacs directory using a keybinding. Is it possible to achieve this by pressing 'C-c C-c'? If so, what Emacs Lisp code should I use to define this functionality?\n    submitted by    /u/Korerr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1deg68s/open_external_powershell_on_emacs/",
-          "publishedOn": "2024-06-12T20:07:44.000Z",
-          "wordCount": null,
-          "title": "Open external powershell on emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1def0ye/easy_way_to_get_org_mode_to_export_text_similar/",
-          "author": null,
-          "description": "TL;DR: any quick and dirty way to say… convert this org buffer with eMacs faces into the html equivalent? (In terms of look). I’m tempted to just share screenshots but would lose links and people would think me mad.\n —-\n I’m exporting to html because I’ve failed at setting up pdf export on my Mac. I use code blocks to get something like a breakout text block… but all white space seems to get eaten and it just gets very “wall of text”. And the text blocks are full screen/scale but the text wraps at my eMacs width. \n Can I get it to just export a look like the eMacs faces? Italics get broken in quote boxes. Newlines without an extra line get wrapped into a wall. Etc etc, I’m sure we’re all familiar with this. \n I eventually want to learn how to format correctly and get it all working… but I don’t want to delay sharing my doc for the week that will probably take me to figure out. ;)\n Any pro tips appreciated. Is html just the wrong way and I need to bite the LaTex bullet? It was crazy how funky it seemed to be to get it going. \n Thanks. \n    submitted by    /u/New-Yogurt-61  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1def0ye/easy_way_to_get_org_mode_to_export_text_similar/",
-          "publishedOn": "2024-06-12T19:19:48.000Z",
-          "wordCount": null,
-          "title": "“Easy” way to get org mode to export text similar to how it looks on eMacs?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1deb0yk/emacs_segfaulting_because_of_corfu/",
-          "author": null,
-          "description": "I am not sure what is happening, I made a thread last week about my Emacs crashing constantly.\n I thought everything somehow fixed itself.. but it started happening again. \n This time however, I was able to get some crash logs and it looks like it is related to corfu?\n user@hostname:~$ emacs --debug-init Fatal error 11: Segmentation fault Backtrace: emacs(emacs_backtrace+0x5a)[0x595c1a] emacs(terminate_due_to_signal+0x9f)[0x467885] emacs[0x468623] emacs[0x70bae4] /lib64/libc.so.6(+0x40710)[0x7ff2474f5710] emacs(parse_modifiers+0x104)[0x57a044] emacs[0x590ad8] emacs(read_char+0x212a)[0x57f7ea] emacs[0x648f3a] /usr/bin/../lib64/emacs/29.3/native-lisp/29.3-028c5110/preloaded/subr-13adf6a6-bfb9f448.eln(F7369742d666f72_sit_for_0+0x19f)[0x7ff2408ff2ff] emacs(Ffuncall+0xfd)[0x62148d] /usr/lib64/e…",
-          "link": "https://www.reddit.com/r/emacs/comments/1deb0yk/emacs_segfaulting_because_of_corfu/",
-          "publishedOn": "2024-06-12T16:34:52.000Z",
-          "wordCount": null,
-          "title": "Emacs segfaulting because of corfu?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dea2y1/how_to_only_set_font_of_buffer_and_not_status_bar/",
-          "author": null,
-          "description": "Right now, I've this:\n ;; Font\n (set-face-attribute 'default nil\n :family \"AudioLink Mono\"\n :height 120\n :weight 'normal\n :width 'normal)\n    submitted by    /u/Specialist-Agent-796  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dea2y1/how_to_only_set_font_of_buffer_and_not_status_bar/",
-          "publishedOn": "2024-06-12T15:55:43.000Z",
-          "wordCount": null,
-          "title": "How to ONLY set font of buffer and not status bar etc ?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1de9lqv/autocompletion_in_emacs_with_devcontainer/",
-          "author": null,
-          "description": "Hey Emacs fellows,\n It is my first post here, and i want to introduce the devcontainer-feature-emacs-lsp-bridge project! This feature brings auto-completion to your Emacs setup within development containers, using the powerful lsp-bridge.\n What is it?\n The devcontainer-feature-emacs-lsp-bridge automates the setup of language servers supported by lsp-bridge inside your devcontainers. By using Nix packages, it ensures a consistent and reproducible environment, making it easier than ever to get started with Emacs and language servers in a containerized development environment.\n Key Features:\n  \nAuto-completion in devcontainer\n Support for multiple languages\n  \nCheck out the repository for more details.\n    submitted by    /u/ftl_afk  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1de9lqv/autocompletion_in_emacs_with_devcontainer/",
-          "publishedOn": "2024-06-12T15:35:18.000Z",
-          "wordCount": null,
-          "title": "Auto-Completion in Emacs with Devcontainer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1de7jye/keyboard_macros/",
-          "author": null,
-          "description": "I keep noticing that some Emacs users seem to not be familiar with keyboard macros, and even those that are familiar with them aren't always familiar with the fact that there's a counter facility associated with them so you can do things like giving every #define in a block of C code a distinct associated value or what have you in a few keystrokes.\n Multiple cursors are sometimes the right tool, but some of the things people do with them are probably better done with keyboard macros. If you don't know about them, you should.\n    submitted by    /u/permetz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1de7jye/keyboard_macros/",
-          "publishedOn": "2024-06-12T14:08:00.000Z",
-          "wordCount": null,
-          "title": "Keyboard Macros",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1de1rs2/an_accidental_lockin_feature_of_the_apple/",
-          "author": null,
-          "description": "submitted by    /u/kickingvegas1  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1de1rs2/an_accidental_lockin_feature_of_the_apple/",
-          "publishedOn": "2024-06-12T08:36:16.000Z",
-          "wordCount": null,
-          "title": "An accidental lock-in feature of the Apple ecosystem",
-          "imageUrl": null
         }
       ]
     },
@@ -8658,16 +8658,6 @@
           "wordCount": 3286,
           "title": "Turning brain dumps into zettels using outlines",
           "imageUrl": "https://forum.zettelkasten.de/resources/emoji/lol.png"
-        },
-        {
-          "id": "2907@/discussions",
-          "author": "Will",
-          "description": "Swimming with Ideas\nThis is yet another opportunity to share with your friends what you are working on. Add to this discussion by telling us about your zettelkasten journey. Share with us what you're learning. Sharing helps me and, hopefully, you, too. It helps us clarify our goals and visualize our thinking. And sometimes, a conversation sparks a magical moment where we can dive into an idea worth exploring. I'd love to hear more from you.   🫵🏼\nHere is a report on the ideas I'm exploring with my ZK and why I'm here:\nThe difference between who I am now and who I was five years ago is largely due to how I've spent my time along the way.\n\nHow does my note-taking tie into my writing? More intimately, how do ideas get into my thinking? They do so in two ways: fast and slow. The adage, \"Nothi…",
-          "link": "https://forum.zettelkasten.de/discussion/2907/share-with-us-what-is-happening-in-your-zk-this-week-june-12-2024",
-          "publishedOn": "2024-06-12T14:01:19.000Z",
-          "wordCount": 2281,
-          "title": "Share with us what is happening in your ZK this week. June 12, 2024",
-          "imageUrl": null
         }
       ]
     }
