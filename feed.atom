@@ -2,10 +2,344 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2024-07-22T20:35:11.674Z</updated>
+    <updated>2024-07-23T20:35:15.469Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[equake (20240723.1915) --- Drop-down console for (e)shell & terminal emulation]]></title>
+        <id>https://melpa.org/packages/equake-20240723.1915.tar</id>
+        <link href="https://melpa.org/#/equake"/>
+        <updated>2024-07-23T19:15:00.000Z</updated>
+        <summary type="html"><![CDATA[The equake package has been updated to version 20240723.1915.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Indentation and wrapping for notes (evil-mode)?]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/1eaexjz/indentation_and_wrapping_for_notes_evilmode/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/1eaexjz/indentation_and_wrapping_for_notes_evilmode/"/>
+        <updated>2024-07-23T18:18:48.000Z</updated>
+        <summary type="html"><![CDATA[Disclaimer: noob. I use org-mode and evil-mode extensively for notes and generally want text to wrapped at say 80 lines (easier readability, better use of screen-real estate when you're using a tiling window manager or a terminal multiplexer). For those who do something similar, looking for some advice:
+  
+For wrapping text, can someone share a binding to toggle using text width of 80 and/off? Also useful to visually select text and set that to wrap at text width of 80 if you don't want the all text wrapped in the file. For the latter, I often visually select the text and use a binding for fill-region-as-paragraph but this joins paragraphs separated by a line. 
+ 
+This:
+  
+This is some notes blah blah blah
+ 
+  
+looks better than this
+ - This is some notes blah blah blah 
+ , right? I find myself needing to manually adjust for the former--how to have it be done automatically?
+  
+Do you have wrap at column 80 for everything? I feel like if you have text at several indents deep, those lines are too short because they still get wrapped at column 80. I'm wondering if perhaps wrapping at 80 characters starting from first non-space character to the last character on the line might be better, but I'm not sure of any editors that allow for this behavior by default and in this case it would be better to stick with consistent behavior vs. some custom solution that might not cover all edge cases.
+  
+Much appreciated.
+    submitted by    /u/immortal192  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[TypeTag alternative in Scala 3 for finding subtypes]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1eae8o3/typetag_alternative_in_scala_3_for_finding/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1eae8o3/typetag_alternative_in_scala_3_for_finding/"/>
+        <updated>2024-07-23T17:50:46.000Z</updated>
+        <summary type="html"><![CDATA[Hello, I'm upgrading a project from Scala 2.13 to Scala 3.
+ In the project we have many enums implemented using traits and case objects such as:
+ sealed trait ClientRole object ClientRole extends EnumExtender[ClientRole] { case object User extends ClientRole case object Device extends ClientRole } 
+ in the base class, EnumExtender, the values method is implemented using TypeTag in the following way:
+ abstract class EnumExtender[ENUM_BASE: TypeTag : ClassTag] { ... private val typesMap = allTypes final def values: List[ENUM_BASE] = typesMap.values.toList private def allTypes = { val tpe = ru.typeOf[ENUM_BASE] val clazz = tpe.typeSymbol.asClass val mirror = runtimeMirror(classTag[ENUM_BASE].runtimeClass.getClassLoader) if (!clazz.isSealed || (!clazz.isTrait && !clazz.isAbstract)) { throw new NoSuchElementException(...) } getSubclasses(clazz).filter(_.isModuleClass).map(t => { val module = mirror.staticModule(t.fullName) val i = mirror.reflectModule(module).instance.asInstanceOf[ENUM_BASE] i.toString -> i }).toMap } private def getSubclasses(symbol: Symbol): Seq[Symbol] = { def children = symbol.asClass.knownDirectSubclasses.flatMap(getSubclasses) symbol match { case s if s.isModuleClass => Seq(s) case s if s.isClass => Seq(s) ++ children } } } 
+ TypeTag is no longer supported, so I'm looking for a way to achieve the same functionality, i.e. implementation for the values method.
+ I can freely make changes to the EnumExtender base class, but I would like to avoid forcing changes on the actual enum subclasses.
+    submitted by    /u/SnooDogs8860  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to migrate notes from org-roam to denote?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1eacub3/how_to_migrate_notes_from_orgroam_to_denote/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1eacub3/how_to_migrate_notes_from_orgroam_to_denote/"/>
+        <updated>2024-07-23T16:54:31.000Z</updated>
+        <summary type="html"><![CDATA[I have about more than 400 notes, and if I use the command that package denote provide, like denote-dired-rename-mode, it just migrate notes one by one. This drive me crayz.
+ And I test the migrate scripts that I can found, but they don't work.
+ At last, I tell AI to write the script, it doesn't work, either. The script is here, what's wrong with it:
+ (defun org-roam-convert-to-denote (files) "Convert org-roam notes to denote format and move them to `denote-directory'." (interactive (list (dired-get-marked-files))) (dolist (file files) (let* ((filename (file-name-base file)) ;; Updated regex to handle more complex filenames (zettelkasten-regex "\$begin:math:text$[0-9_]+\\$end:math:text$_\$begin:math:text$.*\\$end:math:text$") (match (string-match zettelkasten-regex filename))) (if match (let* ((number (match-string 1 filename)) (title (match-string 2 filename)) (new-filename (denote-format-filename title nil nil nil))) (rename-file file (expand-file-name new-filename denote-directory) t) (with-current-buffer (find-file-noselect (expand-file-name new-filename denote-directory)) (goto-char (point-min)) (insert (format "#+title: %s\n#+roam_key: %s\n\n" title number)) (save-buffer))) (message "Skipping file: %s (not matching regex)" filename))))) (defun denote-format-filename (title &optional id keywords extension) "Format a filename for Denote notes." (let* ((id (or id (format-time-string denote--id-format (current-time)))) (keywords (if keywords (concat "__" (mapconcat #'identity keywords "_")) "")) (extension (or extension (denote--file-extension))) (slug (denote--sluggify title))) (concat id "--" slug keywords "." extension))) ;; Add key binding to use in dired-mode (with-eval-after-load 'dired (define-key dired-mode-map (kbd "C-c m") #'org-roam-convert-to-denote)) 
+    submitted by    /u/yibie  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Announcing ghciwatch 1.0: a ghcid successor developed by Mercury]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1eaca5d/announcing_ghciwatch_10_a_ghcid_successor/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1eaca5d/announcing_ghciwatch_10_a_ghcid_successor/"/>
+        <updated>2024-07-23T16:31:50.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/9999years  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[GNU Standard of coding linter?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1eabwg1/gnu_standard_of_coding_linter/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1eabwg1/gnu_standard_of_coding_linter/"/>
+        <updated>2024-07-23T16:16:23.000Z</updated>
+        <summary type="html"><![CDATA[Hello! I was wondering about a linter for the C programming language to ensure code follows the GNU guidelines for formatting. I figured emacs would be the best place to ask as it's proximity to GNU, and also because that's where I would want to use said linter anyways. Any help is greatly appreciated. 
+ PS: Yes i know the format is ugly :)
+    submitted by    /u/lynnlei  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Sharing .emacs files between computers]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1eabrjt/sharing_emacs_files_between_computers/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1eabrjt/sharing_emacs_files_between_computers/"/>
+        <updated>2024-07-23T16:11:05.000Z</updated>
+        <summary type="html"><![CDATA[I have two Linux computers and a Windows computer. I use Emacs on all of them. 
+ I've been looking for at handy way to share the Emacs configuration file between the computers. The basic step consists in letting the .emacs file on each computer load a common configuration file from a shared directory in Dropbox. With this in place, if I make a customization change on one computer, it is automatically available to the others.
+ At least in theory.
+ The challenge is that this sharing of a configuration file causes a lot of problems, because in many cases I want different configurations on the three computers. For example:
+  
+Path names to files will be different on my Linux and Windows computer.
+ Font names are different.
+ I have some project-specific configuration for a project that exists on one computer, but not on the others.
+  
+Also, if I install a new Emacs package on one computer, it will not get automatically installed on the others, and this may cause configuration problems.
+ All of this can be solved by a very strict discipline about what goes where in various configuration files. But what I'd really like to know is this: Has any of you successfully created such a setup that actually works very well? If so, what insight can you share?
+    submitted by    /u/oz1cz  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[samskritam (20240723.1609) --- Show samskrit word definitions and translations]]></title>
+        <id>https://melpa.org/packages/samskritam-20240723.1609.tar</id>
+        <link href="https://melpa.org/#/samskritam"/>
+        <updated>2024-07-23T16:09:00.000Z</updated>
+        <summary type="html"><![CDATA[The samskritam package has been updated to version 20240723.1609.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Looking for internship opportunities]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1eaah6r/looking_for_internship_opportunities/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1eaah6r/looking_for_internship_opportunities/"/>
+        <updated>2024-07-23T15:19:47.000Z</updated>
+        <summary type="html"><![CDATA[any idea of how I can get an internship opportunities with Haskell, honestly it really rare to find a (remote) internship opportunity, i'm a newbie and I find the language very interesting and I will love the feeling of working in a team of other Haskell developer to develop amazing product and learn a lot from them, basically I want to contribute Value to the team (I'm also a quick learner, so if I need to learn a new Technology like pure script it won't be a problem) I'm not really interested in compensation yet until I start contributing value to the product
+    submitted by    /u/jesseAmos123_2005  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[xmind-org (20240723.1455) --- Import XMind mindmaps into Org]]></title>
+        <id>https://melpa.org/packages/xmind-org-20240723.1455.tar</id>
+        <link href="https://melpa.org/#/xmind-org"/>
+        <updated>2024-07-23T14:55:00.000Z</updated>
+        <summary type="html"><![CDATA[The xmind-org package has been updated to version 20240723.1455.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Ideas for Master's thesis]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1ea8rd0/ideas_for_masters_thesis/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1ea8rd0/ideas_for_masters_thesis/"/>
+        <updated>2024-07-23T14:08:30.000Z</updated>
+        <summary type="html"><![CDATA[Hi everyone!
+ I am looking for inspiration/ideas for my master's thesis. I will have a year to do it and I am familiar with Haskell, FP and PL theory (with a little bit of language-based security). I don't mind doing front-end GUI stuff either.
+ I would love to pick your brains' imagination on something that would be interesting and useful to work on (implementation in Haskell of course :)). Or if you could point me to papers that contain ideas that can be explored in a Master's thesis.
+    submitted by    /u/ApprovedAnand  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to set org-export-async-init-file]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/1ea7ye7/how_to_set_orgexportasyncinitfile/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/1ea7ye7/how_to_set_orgexportasyncinitfile/"/>
+        <updated>2024-07-23T13:33:00.000Z</updated>
+        <summary type="html"><![CDATA[Hi all.
+ I'm trying to export org files to pdf using LaTeX's beamer presentation. I'd like to use the async option to export my presentation but I get the error `Initializing asynchronous export process Process 'org-export-process' exited abnormally' I read the [documentation](https://orgmode.org/manual/The-Export-Dispatcher.html) and says I should configure an init file and set the variable `org-export-async-init-file'. I don't have much expirience with lisp-emacs and would appreciate your help.
+ Thanks in advance.
+    submitted by    /u/rvc09  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Never Miss a Task Again - Tagging Org Mode TODOs by Context]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ea7w13/never_miss_a_task_again_tagging_org_mode_todos_by/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ea7w13/never_miss_a_task_again_tagging_org_mode_todos_by/"/>
+        <updated>2024-07-23T13:30:04.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/daviwil  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Emacs: use-package essentials]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ea7vxo/emacs_usepackage_essentials/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ea7vxo/emacs_usepackage_essentials/"/>
+        <updated>2024-07-23T13:29:58.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/geospeck  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[danneskjold-theme (20240723.1000) --- Beautiful high-contrast Emacs theme.]]></title>
+        <id>https://melpa.org/packages/danneskjold-theme-20240723.1000.tar</id>
+        <link href="https://melpa.org/#/danneskjold-theme"/>
+        <updated>2024-07-23T10:00:00.000Z</updated>
+        <summary type="html"><![CDATA[The danneskjold-theme package has been updated to version 20240723.1000.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ignore buffers in buffer list]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ea3wrj/ignore_buffers_in_buffer_list/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ea3wrj/ignore_buffers_in_buffer_list/"/>
+        <updated>2024-07-23T09:54:20.000Z</updated>
+        <summary type="html"><![CDATA[Using the built-in switch-to-buffer function, I would like to specify a list of buffers (e.g. dired bufffers) to never show up in the buffer list. I find a lot of answers related to ibuffer etc. but I would like to have that for the normal buffer functionality please
+    submitted by    /u/RepublicWorried  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Get edit mode and videos working - Xwidgets]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ea3whl/get_edit_mode_and_videos_working_xwidgets/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ea3whl/get_edit_mode_and_videos_working_xwidgets/"/>
+        <updated>2024-07-23T09:53:50.000Z</updated>
+        <summary type="html"><![CDATA[I recently built Emacs from scratch and have been using Xwidgets. However, I can’t get edit mode or videos to work. 
+ I have tried “e” to enable it, as well as M-x xwidget-webkit-edit-mode, as well as (add-hook ‘xwidget-webkit-mode ‘xwidget-webkit-edit-mode). Nothing seems to work; none of my key presses register and they seem to still execute commands. I thought it might be evil-mode, but disabling that doesn’t help (now everything echoes <k> is undefined). Does anyone know what the problem might be?
+ As well, videos infinitely load. I know this is a known bug but it seemed as though it might have gotten fixed; I’m wondering if I’m missing some packages, I’m on alpine so a relatively minimal set of packages out of the box. 
+ Thank you!
+    submitted by    /u/sebnanchaster  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Types as Interfaces]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1ea1yso/types_as_interfaces/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1ea1yso/types_as_interfaces/"/>
+        <updated>2024-07-23T07:42:48.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/kqr  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to get elgot to use local lang server to edit remote files via ssh (tramp)?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ea03x8/how_to_get_elgot_to_use_local_lang_server_to_edit/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ea03x8/how_to_get_elgot_to_use_local_lang_server_to_edit/"/>
+        <updated>2024-07-23T05:41:41.000Z</updated>
+        <summary type="html"><![CDATA[I do not have permissions to add a lang server for remote machine, so I was wondering if there is a way to configure eglot to use the lang server on my local machine for editing remote files. 
+ Thanks for the help!
+    submitted by    /u/victorian_cross  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Help a fella out! difference betwen fold and foldLeft]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1e9xdz2/help_a_fella_out_difference_betwen_fold_and/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1e9xdz2/help_a_fella_out_difference_betwen_fold_and/"/>
+        <updated>2024-07-23T03:04:39.000Z</updated>
+        <summary type="html"><![CDATA[I don't understand, I thought fold is like foldLeft but why does this code snippet not work? Can somebody explain to me how does fold and foldLeft differ? I just want to understand. There seems to be limited answers online. 
+ `val list = List(5,4,3,2,1)` `println(reverseList(list))` `def reverseList(list:List[Int])=` `list match {` `case Nil => println()` `case n:List[Int] => n.foldLeft(List(0))((x,y)=>y::x).init` `}` `//outputs: List(1, 2, 3, 4, 5)` `def reverseList(list:List[Int])=` `list match {` `case Nil => println()` `case n:List[Int] => n.fold(List(0))((x,y)=>y::x).init` `}` `//same but with fold, does not compile.` 
+    submitted by    /u/murarajudnauggugma  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Are you still using auto-fill-mode?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e9tz4q/are_you_still_using_autofillmode/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e9tz4q/are_you_still_using_autofillmode/"/>
+        <updated>2024-07-23T00:19:09.000Z</updated>
+        <summary type="html"><![CDATA[I am still using it. 
+ But nowadays editors have line/word wrapping, including Emacs. My colleagues always use long lines when writing documents but I like using auto-fill-mode to keep lines short.
+ I am thinking of giving up auto-fill-mode, but I can't help pressing M-q time and time again :D
+    submitted by    /u/KDr2  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[llama (20240722.2332) --- Compact syntax for short lambda]]></title>
+        <id>https://melpa.org/packages/llama-20240722.2332.tar</id>
+        <link href="https://melpa.org/#/llama"/>
+        <updated>2024-07-22T23:32:00.000Z</updated>
+        <summary type="html"><![CDATA[The llama package has been updated to version 20240722.2332.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Tangle the same codeblock to multiple files]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/1e9s6iu/tangle_the_same_codeblock_to_multiple_files/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/1e9s6iu/tangle_the_same_codeblock_to_multiple_files/"/>
+        <updated>2024-07-22T22:59:47.000Z</updated>
+        <summary type="html"><![CDATA[Im working on a C project, and it would be pretty redundant to put #include <stdio.h>
+ #include <stdlib.h> .. in multiple codeblocks just so they can tangle to seperate files? is there a way to tangle 1 codeblock into 2 files like#+BEGIN_SRC c :tangle server.c client.c
+ #include <arpa/inet.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h> 
+ #+END_SRC
+ Sorry for bad english
+    submitted by    /u/dude-pog  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Preferred way of configuration validation]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1e9s50w/preferred_way_of_configuration_validation/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1e9s50w/preferred_way_of_configuration_validation/"/>
+        <updated>2024-07-22T22:57:53.000Z</updated>
+        <summary type="html"><![CDATA[Hi
+ I ran into a problem with configuration, caused by a malformed database path for a certain package. This causes a problem in emacsql, because it tries to treat the folder name as a file, but the error message is not descriptive at all.
+ The more generic question is, how exactly should the user configuration be validated, i.e. I can of course add a check at the beginning of a function that uses it and it works fine, but I'm sure I'm not the first one who thinks about it and there is likely a more elegant/standard way of doing it and maybe some guidelines?
+ Current, not very informative error:
+ ⛔ Error (use-package): org-roam/:init: EmacSQL had an unhandled condition: sqlitep, nil
+ A primitive check:
+ (if (file-directory-p org-roam-db-location) (error (format "org-roam-db-location %S should be file, not folder " org-roam-db-location))) 
+    submitted by    /u/pandres123  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[What are the thoughts about the Lean4 language by the haskellers?]]></title>
         <id>https://www.reddit.com/r/haskell/comments/1e9mezr/what_are_the_thoughts_about_the_lean4_language_by/</id>
@@ -391,6 +725,16 @@ Does anyone know if it is actually possible as I've run into a bit of a wall.
  [link]   [comments]]]></summary>
         <author>
             <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[bqn-mode (20240721.2036) --- Emacs mode for BQN]]></title>
+        <id>https://melpa.org/packages/bqn-mode-20240721.2036.tar</id>
+        <link href="https://melpa.org/#/bqn-mode"/>
+        <updated>2024-07-21T20:36:00.000Z</updated>
+        <summary type="html"><![CDATA[The bqn-mode package has been updated to version 20240721.2036.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -1898,6 +2242,16 @@ I'll try and give a specific example. I'm currently working on one chapter of my
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[khoj (20240717.805) --- AI copilot for your Second Brain]]></title>
+        <id>https://melpa.org/packages/khoj-20240717.805.tar</id>
+        <link href="https://melpa.org/#/khoj"/>
+        <updated>2024-07-17T08:05:00.000Z</updated>
+        <summary type="html"><![CDATA[The khoj package has been updated to version 20240717.805.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -10801,514 +11155,6 @@ All other routing is done in the SPA.
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Iron v2.6.0 is out!]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dn8mkp/iron_v260_is_out/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dn8mkp/iron_v260_is_out/"/>
-        <updated>2024-06-24T08:32:23.000Z</updated>
-        <summary type="html"><![CDATA[This version polishes the first-order refinement methods introduced in v2.5.0 and many compile-time messages enhancements.
- What is Iron?
- Iron is a library for refined types in Scala. You can attach predicates (also called "refinements") to types and ensure they pass at compile-time or runtime:
- val x: Int :| Positive = 5 val y: Int :| Positive = -5 //Compile-time error val z: Either[String, Int :| Positive] = -5.refineEither //Left("...") 
- There are many other features including: - Custom constraints - New zero-cost types - Many integrations with other libraries such as Cats, ZIO, Doobie, Decline, Circe...
- Check the README for further information.
- Main changes
- First-order variants for Cats and ZIO
- iron-cats and iron-zio now include "all" variants for ValidatedNec/EitherNec/Nel... an…]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Emacs 29.4 released]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dn7zxp/emacs_294_released/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dn7zxp/emacs_294_released/"/>
-        <updated>2024-06-24T07:46:13.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/geospeck  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[jabber (20240624.528) --- A Jabber client for Emacs.]]></title>
-        <id>https://melpa.org/packages/jabber-20240624.528.tar</id>
-        <link href="https://melpa.org/#/jabber"/>
-        <updated>2024-06-24T05:28:00.000Z</updated>
-        <summary type="html"><![CDATA[The jabber package has been updated to version 20240624.528.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[What are you supposed to do when files get too large?]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/1dn4i2g/what_are_you_supposed_to_do_when_files_get_too/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/1dn4i2g/what_are_you_supposed_to_do_when_files_get_too/"/>
-        <updated>2024-06-24T03:57:31.000Z</updated>
-        <summary type="html"><![CDATA[Is there like a paging functionality so you can scroll more easily or can you make contents tables inside subheaders? 
-    submitted by    /u/bloomingFemme  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[cabal build questions]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1dn3hzw/cabal_build_questions/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1dn3hzw/cabal_build_questions/"/>
-        <updated>2024-06-24T03:02:00.000Z</updated>
-        <summary type="html"><![CDATA[I have a couple questions, if people don't mind me asking.
- 1) Are there any cabal build flags that tell it to maximize runtime efficiency, or is the binary I get from just running cabal build as fast the program is going to get? I'm not looking for removing safety, just wondering if debugging support can be removed for a faster run time.
- 2) Would someone mind telling me the latest guidance for making a static binary? I know this has been asked many times, but searching around online I see a lot of old advice, and I'm not sure what the most current guidance is.
- Thank you!
-    submitted by    /u/mister_drgn  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Do you want magit style two-window agenda & item views?]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/1dn3dkl/do_you_want_magit_style_twowindow_agenda_item/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/1dn3dkl/do_you_want_magit_style_twowindow_agenda_item/"/>
-        <updated>2024-06-24T02:55:29.000Z</updated>
-        <summary type="html"><![CDATA[Think about how you probably use magit, especially the log, where you tend to visit commits alongside the history, with the log in one window and particular log items in another window. Magit has a lot of views and these views often list items that can be in turn viewed in multiple ways. This list & item interaction model has a lot of good karma with respect to both architecture and user interaction.
- I'm mainly picking on `org-agenda-list', but not using the full window width always has bad voodoo in Emacs. When I see complex agenda views with a lot of information to the right of the list of items, I think it's neat, but I also think it should be left & right window for those cases so that the functionality can be remixed and viewed in a mix & match kind of way. This is one of the main reasons I'm not building on top of agenda.
- Another reason this works with magit is because of collapseable sections for showing details of items. Vertical organization can hold arbitrary amounts of detail while left-right organization in a single window, well, this isn't a web browser. Organizing information left-right in sections and controlling reflow are likely to not obtain a good result.
- This is related to casually spiking more work on afterburner, only at the pace that I am getting value out for now.
-    submitted by    /u/Psionikus  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Installing Doom Emacs for Power Noobs livestream by Distrotube on June 25th at 10 AM Central]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dn11zq/installing_doom_emacs_for_power_noobs_livestream/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dn11zq/installing_doom_emacs_for_power_noobs_livestream/"/>
-        <updated>2024-06-24T00:53:31.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/dargscisyhp  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Is 'therefore' a seperate card?]]></title>
-        <id>2917@/discussions</id>
-        <link href="https://forum.zettelkasten.de/discussion/2917/is-therefore-a-seperate-card"/>
-        <updated>2024-06-24T00:19:25.000Z</updated>
-        <summary type="html"><![CDATA[I'm trialling a digitized version of my small physical ZK, and I'm running into a small issue with what constitutes a seperate note.
-Most of my notes are MUCH smaller than other's, sometimes I can fit the entirety of the idea into the title. So I'm wondering if instead of focusing on reducing the idea I should be adding more of the 'therefores' onto the notes?
-For example, I have the following notes, which were titles only in the paper version but I have expanded on slightly in the digital.
-The patient's art is only understood through therapy, (Naimberg 1953)
-Art seeks reaction, (artlust, 2024)
-Art can only truly be understood in relationship
-To me, the third one is the 'therefore' of the first two. This is particulary obvious in the digital version where I expand slightly on 'art seeks reaction', because reaction can only happen in relationship. Initially I thought these are three seperate ideas, but now I'm not so sure.
-Should I combine the second two notes?]]></summary>
-        <author>
-            <name>hiragi</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[Question] I'm new on emacs]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dn0ch2/question_im_new_on_emacs/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dn0ch2/question_im_new_on_emacs/"/>
-        <updated>2024-06-24T00:17:16.000Z</updated>
-        <summary type="html"><![CDATA[Hi everybody, I started exploring this world 3 days ago. I want to manage my notes with org-roam and org-download.
- How can I make images adapt to the width of the window dynamically? Because if the image is too large, it gets cut off halfway (and Emacs crashes many times).
- If this is too hard, How you manage this workflow?
- Sorry for my silly question, but I feel a bit overwhelmed when searching for information with so little learning time. Thank you very much.
-    submitted by    /u/VitoCasla  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[dslide (20240624.17) --- Domain Specific sLIDEs. A presentation framework]]></title>
-        <id>https://melpa.org/packages/dslide-20240624.17.tar</id>
-        <link href="https://melpa.org/#/dslide"/>
-        <updated>2024-06-24T00:17:00.000Z</updated>
-        <summary type="html"><![CDATA[The dslide package has been updated to version 20240624.17.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Share with us what is happening in your ZK this week. June 23, 2024]]></title>
-        <id>2916@/discussions</id>
-        <link href="https://forum.zettelkasten.de/discussion/2916/share-with-us-what-is-happening-in-your-zk-this-week-june-23-2024"/>
-        <updated>2024-06-23T22:52:17.000Z</updated>
-        <summary type="html"><![CDATA[Swimming with Ideas
-This is yet another opportunity to share with your friends what you are working on. Add to this discussion by telling us about your zettelkasten journey. Share with us what you're learning. Sharing helps me and, hopefully, you, too. It helps us clarify our goals and visualize our thinking. And sometimes, a conversation sparks a magical moment where we can dive into an idea worth exploring. I'd love to hear more from you.   🫵🏼
-In homage to @jiwonac's idea.
-"I posit that writing for an audience with a background similar to mine is a valuable exercise. This insight comes from my recent experience of writing short reports to communicate findings for research projects. I found that these reports forced me to clarify my thoughts and became a staple of my research strategy."…]]></summary>
-        <author>
-            <name>Will</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[New web framework]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmy08m/new_web_framework/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmy08m/new_web_framework/"/>
-        <updated>2024-06-23T22:24:21.000Z</updated>
-        <summary type="html"><![CDATA[Hey,
- I just released a new web framework I've been working on: FastScala - it includes some ideas from the LiftWeb framework and allows you to do very quick development, coding both the backend and frontend in Scala.
- If you're curious, you can see more here: http://www.fastscala.com/
- Comments/suggestions appreciated 🙂
-    submitted by    /u/david04  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[What sort of option frameworks exist to financially Sponsor a Scala.js 3 upgrade to a GitHub Open Source Repository]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmxyrk/what_sort_of_option_frameworks_exist_to/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmxyrk/what_sort_of_option_frameworks_exist_to/"/>
-        <updated>2024-06-23T22:22:27.000Z</updated>
-        <summary type="html"><![CDATA[I'm looking for ideas or options on how to go about in some way incentivising through financially sponsoring (as an individual, not corporate), or co-sponsoring, an upgrade to an open source Scala.js 3 repository.
- I don't currently have the time to do the entire upgrade myself (although I'd love to try and contribute some hours), and I want to give the upgrade back to the community (as opposed to just keep a private fork).
- What sort of option frameworks exist for this kind of approach to incrementally improving open source in general, and within the Scala specific subdomain?
- While my exploration is about the more general problem, here's the particular repository upon which I'm currently focused: https://antoine-doeraene.medium.com/make-your-google-spreadsheets-scala-ble-5695d9dd784f
-    submitted by    /u/chaotic3quilibrium  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[spacemacs-theme (20240623.2202) --- Color theme with a dark and light versions]]></title>
-        <id>https://melpa.org/packages/spacemacs-theme-20240623.2202.tar</id>
-        <link href="https://melpa.org/#/spacemacs-theme"/>
-        <updated>2024-06-23T22:02:00.000Z</updated>
-        <summary type="html"><![CDATA[The spacemacs-theme package has been updated to version 20240623.2202.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ExecutionContext.parasitic and Friends]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmxcbn/executioncontextparasitic_and_friends/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmxcbn/executioncontextparasitic_and_friends/"/>
-        <updated>2024-06-23T21:54:05.000Z</updated>
-        <summary type="html"><![CDATA[I noticed there wasn't much documentation about ExecutionContext.parasitic, so I did some experimenting and wrote up a blog post explaining the use cases and where it's unsafe. As a bonus, I also wrote up ExecutionContext.opportunistic and some of the story behind it.
- https://tersesystems.com/blog/2024/06/20/executioncontext.parasitic-and-friends/
-    submitted by    /u/amazedballer  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Anyone know how I can connect with the IntelliJ Scala folks?]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmvvwa/anyone_know_how_i_can_connect_with_the_intellij/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmvvwa/anyone_know_how_i_can_connect_with_the_intellij/"/>
-        <updated>2024-06-23T20:48:52.000Z</updated>
-        <summary type="html"><![CDATA[EDIT: got a response on twitter. Thanks social media!
-    submitted by    /u/lihaoyi  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[timeout (20240623.2023) --- Throttle or debounce elisp functions]]></title>
-        <id>https://melpa.org/packages/timeout-20240623.2023.tar</id>
-        <link href="https://melpa.org/#/timeout"/>
-        <updated>2024-06-23T20:23:00.000Z</updated>
-        <summary type="html"><![CDATA[The timeout package has been updated to version 20240623.2023.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Gmail-like autocomplete?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dmupee/gmaillike_autocomplete/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dmupee/gmaillike_autocomplete/"/>
-        <updated>2024-06-23T19:56:06.000Z</updated>
-        <summary type="html"><![CDATA[Is there an emacs package that allows autocomplete of regular text with the help of an llm like when you write an email in gmail? I imagine for latency it would have to be run locally, but I dont need something super powerful, just complete the sentence kind of stuff
-    submitted by    /u/Weak_Education_1778  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Vim convert part 2]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dmukth/vim_convert_part_2/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dmukth/vim_convert_part_2/"/>
-        <updated>2024-06-23T19:50:30.000Z</updated>
-        <summary type="html"><![CDATA[https://preview.redd.it/shdrk7hsjd8d1.png?width=1366&format=png&auto=webp&s=6dfb0d953d6fb27a6456402a4939ee4f2bf7e3f9
- Hello friends. I recently made a post here about switching to emacs. It's been a few days (probably..? I'm sure you are no strangers to getting sucked into editing your .emacs file) I'm back with some updates!
- Upsides:
- Counsel, Which-key, Ivy, and Avy were all solid recommendations. these are instant benefit-adds that I could notice immediately. 
- Org mode is obviously a win. Org-novelist is also very powerful, but I have to spend a lot of time in that to really get a feel. I still haven't setup magit yet (sorry! I know it's amazing!)
- I opted for meow. I know, I got a lot of evil recommendations. Since I added the "don't recommend evil", and yet still got them, I can tel…]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Any analogs of .projectile file in project.el?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dmujsy/any_analogs_of_projectile_file_in_projectel/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dmujsy/any_analogs_of_projectile_file_in_projectel/"/>
-        <updated>2024-06-23T19:49:16.000Z</updated>
-        <summary type="html"><![CDATA[I have been using projectile for years and it works nicely. However, recently I have noticed that more people recommend project.el because it is lighter and has the backing of the Emacs maintainers. Therefore, I want to give it a try.
- One confusion about project.el is how to specify a project if no version control exists.
- For example, suppose I have the following directory:
- \---myproject | +---subproject1 | \---.git | | Makefile | \---subproject2 \---.git | Makefile 
- How to specify myproject as a project? Note that the myproject itself is under VC. 
- By projectile, I just add a empty .projectile to myproject.
- From Emacs docs:
-  
-Whether a given directory is a root of some project is determined by the project-specific infrastructure, known as project back-end. Emacs currently supports two such back-ends: VC-aware (see Version Control), whereby a VCS repository is considered a project; and EDE (see Emacs Development Environment). This is expected to be extended in the future to support additional types of projects.
-  
-Therefore I have to write a back-end by myself? or use EDE which seems rarely used?
- Thanks.
-    submitted by    /u/chansey97  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Algorithm to group by N keys]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmufc4/algorithm_to_group_by_n_keys/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmufc4/algorithm_to_group_by_n_keys/"/>
-        <updated>2024-06-23T19:43:50.000Z</updated>
-        <summary type="html"><![CDATA[Hey,
- I have a little brain teaser if anyone is interested.
- I have multiple list of properties (house, apartment, …). Each list comes from a different source. The goal is to group properties to avoid duplicates.
- Because every source has their own way of doing things, it isn’t as easy as group by address.
- I need to come up with a way to group by address, or by geo coordinates, or by bedroom + bathroom + size, or by cover picture, or … some sort of group by similarity score.
- Would anyone have a solution to such problem?
-    submitted by    /u/Plippe  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Is there an easy way to do automatic tab alignment for types in c-mode?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dmu4kv/is_there_an_easy_way_to_do_automatic_tab/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dmu4kv/is_there_an_easy_way_to_do_automatic_tab/"/>
-        <updated>2024-06-23T19:30:27.000Z</updated>
-        <summary type="html"><![CDATA[Hello everyone!
- I am looking for a way to customize my C indentation style in Emacs to fit my school style guidelines.
- One of the guidelines I am trying to implement goes like this: "Each variable declaration must be indented on the same column for its scope", see my example below for clarity. 
- Example:
- int main(void) { int a; int b; int c; } int main(void) { int a; char b; float c; } int main(void) { int a; char b; unsigned char c; } 
- As you can see I have to indent the variables on the same column as their longest neighboring type name basically (C89 style).
- So far, I have dealt with it by remapping my TAB key to insert actual tabs with this elisp snippet: (local-set-key (kbd "TAB") 'tab-to-tab-stop) so I can indent everything manually. It does the job for me but I'm curious if there is a way to make full use of c-mode functionality to do that without having to write a super complicated elisp function that checks if the symbol at point is a C type and then indents it to the right column (with potential backtracking also). 
- I think the short answer is probably no but I'm curious how you would deal with this if you were in my situation or/and if you personally had to do any "hacks" to your c-mode config to fit some project's guidelines. 
- I quickly skimmed through manual, it probably has all the answers I need but nothing really stood out to me at first glance.
-    submitted by    /u/ismbks  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Scala as a Postman Alternative]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmt0qq/scala_as_a_postman_alternative/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmt0qq/scala_as_a_postman_alternative/"/>
-        <updated>2024-06-23T18:41:22.000Z</updated>
-        <summary type="html"><![CDATA[I'm a Java/Spring Boot/microservices developer looking to do more Scala at work.* One way I've been thinking of doing this is to use Scala as an alternative to Postman. In the microservices world, we spend a lot of time making ad hoc http requests to debug failing services, do sanity checks, etc. As a GUI, Postman makes it pretty easy for beginners to get started with this sort of work. However, you quickly run into its limitations:
-  
- Leaking passwords to postman.com, or into your exported files, is easy
-  Importing/exporting Environment and Collection files means, in practice, that these files do not end up in version control
-  Working in your preferred editor/IDE requires an impractical amount of copy/pasting
-  Incorrect (e.g. missing) variables, and DRY violations, can cause major hea…]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[all-the-icons (20240623.1800) --- A library for inserting Developer icons]]></title>
-        <id>https://melpa.org/packages/all-the-icons-20240623.1800.tar</id>
-        <link href="https://melpa.org/#/all-the-icons"/>
-        <updated>2024-06-23T18:00:00.000Z</updated>
-        <summary type="html"><![CDATA[The all-the-icons package has been updated to version 20240623.1800.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[agtags (20240623.1710) --- A frontend to GNU Global]]></title>
-        <id>https://melpa.org/packages/agtags-20240623.1710.tar</id>
-        <link href="https://melpa.org/#/agtags"/>
-        <updated>2024-06-23T17:10:00.000Z</updated>
-        <summary type="html"><![CDATA[The agtags package has been updated to version 20240623.1710.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[how do I implement MELPA? debian 12]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dmqoqa/how_do_i_implement_melpa_debian_12/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dmqoqa/how_do_i_implement_melpa_debian_12/"/>
-        <updated>2024-06-23T16:57:31.000Z</updated>
-        <summary type="html"><![CDATA[I'm trying to write rust code, and I'm trying to get syntax highlighting (I'm new to emacs)
- so I'm trying to follow the installation from here and in it it mentions MELPA. So I go to install MELPA from here but it mentions this
-  
-Enable installation of packages from MELPA by adding an entry to package-archives after (require 'package) and before the call to package-initialize in your init.el or .emacs file:
-  
-yet my .emacs file located at the home directory has a single line
-  
-(put 'upcase-region 'disabled nil)
-  
-which I assume is because I enabled this command
- but I add the entry anyway and run M-x package-refresh-contents which tries to contact melpa.org but then it throws a signature error
- Failed to verify signature archive-contents.sig: No public key for 645357D2883A0966 created at 2024-06-23T12:05:12+0300 using EDDSA Command output: gpg: Signature made Sun 23 Jun 2024 12:05:12 PM +03 gpg: using EDDSA key 0327BE68D64D9A1A66859F15645357D2883A0966 gpg: Can't check signature: No public key 
- please help
-    submitted by    /u/noxar_ad  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Ways to promote a PR in the Scala tooling ecosystem]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmpbmd/ways_to_promote_a_pr_in_the_scala_tooling/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmpbmd/ways_to_promote_a_pr_in_the_scala_tooling/"/>
-        <updated>2024-06-23T15:57:21.000Z</updated>
-        <summary type="html"><![CDATA[Hi all! I was wondering what ways to promote a Scala tooling ecosystem PR would you suggest?
- E.g., Scala Steward PR: https://github.com/scala-steward-org/scala-steward/pull/3372
- (I'm aware I'm promoting the PR itself with this post 😂, but I'm way more interested in any answer to the previous question 😊)
- TIA!
-    submitted by    /u/horothesun  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[This week in #Scala (Jun 24, 2024)]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmnbmq/this_week_in_scala_jun_24_2024/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmnbmq/this_week_in_scala_jun_24_2024/"/>
-        <updated>2024-06-23T14:25:56.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/petrzapletal  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Is building cli tools with scala native practical?]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmmxpe/is_building_cli_tools_with_scala_native_practical/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmmxpe/is_building_cli_tools_with_scala_native_practical/"/>
-        <updated>2024-06-23T14:07:01.000Z</updated>
-        <summary type="html"><![CDATA[As a researcher who primarily uses interpreted language, I’ve recently been exploring compiled languages, especially functional languages. Right now I’m looking at Scala, and I really like its features. However, the jvm dependency, while great for some purposes (I do a lot of work in clojure), is a concern for others. One reason I’m looking at compiled languages is for building cli tools as static binaries that can be flexibly copied into docker containers, over ssh, etc.
- I’m curious how practical scala native would be for this purpose, or if I’d be better off using another language for cli tools. What if I wanted to do something that depends on third-party libraries, like image processing?
- Thanks for the help. 
-    submitted by    /u/mister_drgn  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[package-build (20240623.1343) --- Tools for assembling a package archive]]></title>
-        <id>https://melpa.org/packages/package-build-20240623.1343.tar</id>
-        <link href="https://melpa.org/#/package-build"/>
-        <updated>2024-06-23T13:43:00.000Z</updated>
-        <summary type="html"><![CDATA[The package-build package has been updated to version 20240623.1343.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[emacsql-sqlite (20240623.1340) --- EmacSQL back-end for SQLite]]></title>
-        <id>https://melpa.org/packages/emacsql-sqlite-20240623.1340.tar</id>
-        <link href="https://melpa.org/#/emacsql-sqlite"/>
-        <updated>2024-06-23T13:40:00.000Z</updated>
-        <summary type="html"><![CDATA[The emacsql-sqlite package has been updated to version 20240623.1340.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[GHC gets divide-by-constant optimisation, closing my 10 years old ticket about 10x slowdowns]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1dmlefx/ghc_gets_dividebyconstant_optimisation_closing_my/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1dmlefx/ghc_gets_dividebyconstant_optimisation_closing_my/"/>
-        <updated>2024-06-23T12:48:39.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/nh2_  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[New GitHub Theme for Emacs]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1dml583/new_github_theme_for_emacs/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1dml583/new_github_theme_for_emacs/"/>
-        <updated>2024-06-23T12:34:25.000Z</updated>
-        <summary type="html"><![CDATA[Hi everyone,
- I've recently started using Emacs and found it to be an incredibly cool and powerful editor. However, I noticed that there wasn't a GitHub theme similar to what Neovim offers, so I decided to create one myself. I have developed GitHub dark theme, light, and dark dimmed versions. The theme has been tested on WSL2 running on Windows Terminal, but if you encounter any issues, please let me know on GitHub.
- You can find theme on Github.
- Key Features:
-  
-Customizable colors for comments, keywords, strings, numbers, etc.
- Support for various modes including org-mode, term, ivy, swiper, and more.
- Compatibility with Emacs 24 and later.
- Easily modifiable to suit personal preferences based on the provided code.
-  
-Since I'm not familiar with Emacs package managers yet, you can install and use the theme manually as long as autothemer is installed.
- Feel free to customize the theme according to your preferences. If you have any questions or encounter issues, please report them on GitHub :)
- P.S.
- I also tested the themes using the emacs -nw command. Both the dark and light themes work perfectly in the terminal. However, the dark-dimmed theme isn't fully compatible because I couldn't find a suitable color to replicate the greyish tone used in the GUI version.
-    submitted by    /u/ladroid  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Folding Cheat Sheet #6]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmkmvi/folding_cheat_sheet_6/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmkmvi/folding_cheat_sheet_6/"/>
-        <updated>2024-06-23T12:04:01.000Z</updated>
-        <summary type="html"><![CDATA[https://fpilluminated.com/deck/227
-    submitted by    /u/philip_schwarz  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Folding Cheat Sheet #5]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1dmkmb8/folding_cheat_sheet_5/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1dmkmb8/folding_cheat_sheet_5/"/>
-        <updated>2024-06-23T12:03:06.000Z</updated>
-        <summary type="html"><![CDATA[https://fpilluminated.com/deck/226
-    submitted by    /u/philip_schwarz  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[dwim-coder-mode (20240623.1024) --- DWIM keybindings for C, Python, Rust, and more]]></title>
-        <id>https://melpa.org/packages/dwim-coder-mode-20240623.1024.tar</id>
-        <link href="https://melpa.org/#/dwim-coder-mode"/>
-        <updated>2024-06-23T10:24:00.000Z</updated>
-        <summary type="html"><![CDATA[The dwim-coder-mode package has been updated to version 20240623.1024.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[scala-ts-mode (20240623.905) --- Scala Tree-Sitter Mode]]></title>
-        <id>https://melpa.org/packages/scala-ts-mode-20240623.905.tar</id>
-        <link href="https://melpa.org/#/scala-ts-mode"/>
-        <updated>2024-06-23T09:05:00.000Z</updated>
-        <summary type="html"><![CDATA[The scala-ts-mode package has been updated to version 20240623.905.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
         </author>
     </entry>
 </feed>
