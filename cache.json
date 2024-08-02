@@ -63,6 +63,36 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1ei6w8d/cachixhsopentelemetryinstrumentationservant/",
+          "author": null,
+          "description": "submitted by    /u/iElectric  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ei6w8d/cachixhsopentelemetryinstrumentationservant/",
+          "publishedOn": "2024-08-02T10:44:43.000Z",
+          "wordCount": null,
+          "title": "cachix/hs-opentelemetry-instrumentation-servant: OpenTelemetry instrumentation for Servant, compatible with hs-opentelemetry.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ei3fa4/issue_compiling_cabal_project_to_wasm/",
+          "author": null,
+          "description": "Yet another wasm question!\n I'm trying to compile a cabal project using the ghc-wasm-meta 9.8 compiler, but I'm getting the following error:\n wasm-ld: error: unable to find library -lHSrts-1.0.2_thr \n my cabal.project and each name.cabal have the following ghc-options:\n program options/library ghc-options: -no-hs-main -optl-mexec-model=reactor \"-optl-Wl\" \n something I noticed is that if I run build using --verbose , the call to wasm32-wasi-ghc doesn't have any of the ghc-options I've set. Maybe it's got something to do with the `Setup.hs`? but that file just has the usual:\n import Distribution.Simple main = defaultMain \n Anybody got an idea of what might be happening?\n    submitted by    /u/NullPointer-Except  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ei3fa4/issue_compiling_cabal_project_to_wasm/",
+          "publishedOn": "2024-08-02T06:51:05.000Z",
+          "wordCount": null,
+          "title": "Issue compiling cabal project to WASM",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ei33a1/ann_skeletest_a_new_batteriesincluded_opinionated/",
+          "author": null,
+          "description": "submitted by    /u/brandonchinn178  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ei33a1/ann_skeletest_a_new_batteriesincluded_opinionated/",
+          "publishedOn": "2024-08-02T06:28:16.000Z",
+          "wordCount": null,
+          "title": "[ANN] Skeletest - A new batteries-included, opinionated test framework",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1ehmzi8/playing_around_with_using_effectful_instead_of/",
           "author": null,
           "description": "So I've been diving into the world of algebraic effects systems as an alternative to mtl-style classes for granular effect tracking. One thing I haven't quite figured out yet is how to handle errors in the middle of a computation that uses a custom effect type. For example, let's say I have an effect for talking to the database:\n  data DB :: Effect where DBWrite :: Item -> DB m () DBRead :: Key -> DB m (Maybe Item) \n and types for errors and the database environment\n ``` data DBError = DeadLockError | ConnectionError\n data DBEnv = DBEnv Connection ```\n and let's say I have the interpreter:\n  runDBIO :: (IOE :> es, Error DBError :> es) => DBEnv -> Eff (DB : es) a -> Eff es a runDBIO env = interpret \\_ -> \\case ... do handling here ... \n Now the recommended way to instrument all of this is to wire up all of your effect handlers at the start of your program:\n  main = do env <- getDbEnv result <- runEff . runError @DBError . runDBIO env $ program case result of Left -> ... do something ... Right -> ... do something ... \n This all makes sense. But what if I want to handle the error at a deeper level in the program and not at the very top level? The Error DBError effect doesn't manifest in the type list until the runDBIO interpreter is applied. For example,\n  tryWriteDBOrSendEmailPage :: Item -> Eff [Email, DB] () tryWriteDBOrSendEmailPage item = do catchError (dbWrite item) $ \\_ e -> emailPage $ \"Something went wrong: \" ++ (show e) return () \n This doesn't work here because the type signature doesn't contain Error DBError, but the underlying implementation of DB uses it. If I add Error DBError to the effect list, wouldn't that be a totally separate effect from DB, so it wouldn't be able to throw and catch in the same context? Should I manually expose effects for TryDBWrite and TryDBRead that return an Either? Not exactly sure what to do here.\n    submitted by    /u/ryanworldorder  \n [link]   [comments]",
@@ -1141,66 +1171,6 @@
           "wordCount": null,
           "title": "Hasmtlib: eDSL for the SMTLib2.6 standard",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1duhtt9/the_haskell_unfolder_episode_28_type_families_and/",
-          "author": null,
-          "description": "submitted by    /u/kosmikus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1duhtt9/the_haskell_unfolder_episode_28_type_families_and/",
-          "publishedOn": "2024-07-03T15:55:31.000Z",
-          "wordCount": null,
-          "title": "The Haskell Unfolder Episode 28: Type Families and Overlapping Instances",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dudm70/ghci_in_the_browser/",
-          "author": null,
-          "description": "submitted by    /u/vaibhavsagar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dudm70/ghci_in_the_browser/",
-          "publishedOn": "2024-07-03T12:52:50.000Z",
-          "wordCount": null,
-          "title": "GHCi in the Browser",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ducq4i/cant_fix_couldnt_match_expected_type_a_with/",
-          "author": null,
-          "description": "Hi everyone, I am implementing Fingertree from the following paper: https://www.staff.city.ac.uk/~ross/papers/FingerTree.html\n Of course, not an easy data type, but a great way to learn more about inductive data types in practice. I have managed to implement everything up to appending trees, which is what this question is about. \n Source code exists here. Because it was a lot of work trying to figure out exactly how to implement append, I reused the functions in the source code. In my version, however, I do not use a Measured (there is no value, this comes later in the paper). Apart from that, everything is the exact same. However, on every single function (appendDigits1, appendDigits2, appendTree1, etc.) there is the error described in the title whenever I use Node2 or Node3 as an input for any of the functions that expects a as an input. For example: \n addDigits1 m1 (One a) b (One c) m2 = appendTree1 m1 (Node3 a b c) m2 \n causes the error in the title, where \n appendTree1 :: FingerTree (Node a) -> a -> FingerTree (Node a) -> FingerTree (Node a) \n This is of course strange, because in the source code, they use the exact same abstraction where they feed appendTree1 a Node type as second input, without trouble. When I edit all occurrences of a to Node a, the error simply moves to the Node type itself, saying that Node3 constructor cannot take Node a as an input and expects a, even though Node3 (Node2 a b) (Node2 c d) (Node2 e f) is a perfectly valid output. Also, a should be an abstraction from Node a as far as I know. \n What is happening? \n    submitted by    /u/Krebota  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ducq4i/cant_fix_couldnt_match_expected_type_a_with/",
-          "publishedOn": "2024-07-03T12:07:19.000Z",
-          "wordCount": null,
-          "title": "Can't fix \" couldn't match expected type `a' with actual type `Node a' \" error",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1duc64e/building_a_data_compression_utility_in_haskell/",
-          "author": null,
-          "description": "submitted by    /u/lazamar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1duc64e/building_a_data_compression_utility_in_haskell/",
-          "publishedOn": "2024-07-03T11:36:53.000Z",
-          "wordCount": null,
-          "title": "Building a data compression utility in Haskell using Huffman codes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1duc344/gitlab_ci_for_testing_haskell_projects/",
-          "author": null,
-          "description": "Hi everyone,\n Are there recent guides for automating CI testing of Haskell projects on GitLab.com?\n Specifically, setting up .gitlab-ci.yml files to run the tests in Haskell libraries with stack, against different LTS snapshots or different GHC versions?\n A few years ago I created one based on snippets I'd found in existing repositories. It used the fpco/stack-build:latest docker image:\n https://gitlab.com/robstewart57/gitlab-haskell/-/blob/master/.gitlab-ci.yml\n Alas, it no longer works:\n https://gitlab.com/robstewart57/gitlab-haskell/-/jobs/7250651651\n Any suggestions on getting a CI script, which runs this library's tests against multiple versions of LTS (or at least multiple GHC versions), would be much appreciated!\n    submitted by    /u/robstewartUK  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1duc344/gitlab_ci_for_testing_haskell_projects/",
-          "publishedOn": "2024-07-03T11:32:04.000Z",
-          "wordCount": null,
-          "title": "GitLab CI for testing Haskell projects",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1duam7a/the_sad_state_of_propertybased_testing_libraries/",
-          "author": null,
-          "description": "submitted by    /u/stevana  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1duam7a/the_sad_state_of_propertybased_testing_libraries/",
-          "publishedOn": "2024-07-03T10:00:07.000Z",
-          "wordCount": null,
-          "title": "The sad state of property-based testing libraries",
-          "imageUrl": null
         }
       ]
     },
@@ -1209,6 +1179,46 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ei5w4n/how_could_scala3jvm21_maybe_even_17_can_be_so/",
+          "author": null,
+          "description": "For years (I use AoC as way to get familiar with new languages I add to my trophy collection), I've been used to that naive solutions for AoC2015/4 (iterate over numbers, conver to string, concatenate with prefix, hash, convert to hex, check n zero prefix, repeat) take 'too long'.\n The first optimization was to figure out how to pre-hash the prefix (in some languages/libs, copying the state is not as straightforward as calling a method).\n Second was not converting a number to string, but incrementing a byte array (or mutable string) representation of the number.\n The last is to re-use a buffer for the resulting hash, ideally not converted to hex, and to directly check the first few bytes (and perhaps 4 bits) to be zero.\n Usually, all this got me a speed-up of at least 10x.\n What totally shocked me was that the naive implementation finished in less then five seconds (I expected roughly a minute), and that further optimizations got it down only to under three seconds.\n    submitted by    /u/Neat-Description-391  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ei5w4n/how_could_scala3jvm21_maybe_even_17_can_be_so/",
+          "publishedOn": "2024-08-02T09:39:11.000Z",
+          "wordCount": null,
+          "title": "How could Scala3/JVM(21, maybe even 17) can be so fast (AoC 2015, Day4) for the naive solution but then basically say MEH when i try to optimize further ?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ei3qmi/scala_space_podcast_scala_3_migrations/",
+          "author": null,
+          "description": "Hi there,\n I'd like to invite all of you to another episode of the Scala Space Podcast. Today my guests will be:\n  \nMatthieu Baechler, french Scala engineer and freelancer who worked on the migration of rudder.io software\n Łukasz Krenski, polish Scala engineer working at MeWe, responsible for migration of their stack to Scala 3\n  \nOur topics will include the difficult parts of the migration, the ways to deal with them, what to pay attention to when migrating to Scala 3 and finally - whether it's worth it!\n The podcast will be happening, as usual, live on Twitch and Scala Space Youtube channel today at 14:00 CEST so feel free to join the chat and ask questions. Links:\n https://www.youtube.com/watch?v=KOeOmKncna4\n https://www.twitch.tv/averagefpenjoyer/schedule?segmentID=a9275983-b883-450f-8840-e453e54680e1\n    submitted by    /u/lbialy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ei3qmi/scala_space_podcast_scala_3_migrations/",
+          "publishedOn": "2024-08-02T07:11:49.000Z",
+          "wordCount": null,
+          "title": "Scala Space Podcast: Scala 3 Migrations",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ei282d/does_lspmetals_plugin_need_me_to_use_javahome/",
+          "author": null,
+          "description": "title. Just wondering if it okay to downgrade from version 21 to version 8/11 just to use the Metals plugin\n    submitted by    /u/murarajudnauggugma  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ei282d/does_lspmetals_plugin_need_me_to_use_javahome/",
+          "publishedOn": "2024-08-02T05:31:50.000Z",
+          "wordCount": null,
+          "title": "does LSP-Metals plugin need me to use JavaHome version 8 or 11 to work?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ehvuiq/map_with_statically_known_keys/",
+          "author": null,
+          "description": "I'm new to Scala. I'm writing some performance-sensitive code for processing objects on several axes. My actual code is more complicated and handles more axes, but it's structured like this:\n class Processor: xData: Data yData: Data zData: Data def process(axis: Axis) = axis match case X => doStuff(xData) case Y => doStuff(yData) case Z => doStuff(zData) \n But it is a bit repetitive, and it's easy to make a typo and use the wrong data object. Ideally, I'd like to write something like this\n class Processor: data: HashMap[Axis, Data] def process(axis: Axis) = doStuff(data(axis)) \n Unfortunately, this code has different performance and correctness characteristics:\n  \nIt's possible for me to forget to initialize Data for some of the axes. In a language like TypeScript I could type the field as Record<Axis, Data>, which would check at compile time that keys for all axes are initialized. But I'm not sure if it's possible in Scala.\n Accessing the map requires some hashing and dispatching. However fast they may be, my code runs millions of times per second, so I want to avoid this and really get the same performance as accessing the field directly.\n  \nIs it possible to do something like this in Scala?\n Thanks!\n    submitted by    /u/smthamazing  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ehvuiq/map_with_statically_known_keys/",
+          "publishedOn": "2024-08-02T00:01:09.000Z",
+          "wordCount": null,
+          "title": "Map with statically known keys?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1ehh6nz/auto_suggest_support_in_play_slick/",
           "author": null,
@@ -1998,36 +2008,6 @@
           "wordCount": null,
           "title": "Maven Central introduces Rate Limits to prevent Tragedy of the Commons",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1duockg/tyrian_and_complicated_forms/",
-          "author": null,
-          "description": "A question related to https://tyrian.indigoengine.io/ . Just curious, did anyone use tyrian to develop complicated forms? What would qualify as a complicated form? A form where you have fields that require front-end and back-end validation (and maybe back-end validation before the user submits the data), forms with drop-downs where the content of a drop-down depends on the selection in another field, forms with editable tables/grids or multiple read-only tables/grids whose data can be populated independently, forms where sections of a form are hidden or displayed based on other field values.\n I wonder if this pattern is conducive to developing such forms where the data can come from different sources. The examples I came across are simple forms and I am not sure what the code would look like if you have more complicated stuff.\n Thanks\n    submitted by    /u/0110001001101100  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1duockg/tyrian_and_complicated_forms/",
-          "publishedOn": "2024-07-03T20:27:33.000Z",
-          "wordCount": null,
-          "title": "Tyrian and complicated forms",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dudm65/what_exactly_type_classes_mean/",
-          "author": null,
-          "description": "Can you provide references and explain this in relation to OOP concepts for better understanding? \n What use cases do these type classes address?\n    submitted by    /u/Architect_-  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dudm65/what_exactly_type_classes_mean/",
-          "publishedOn": "2024-07-03T12:52:47.000Z",
-          "wordCount": null,
-          "title": "what exactly type classes mean?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1duazam/current_state_of_json_parsers/",
-          "author": null,
-          "description": "I'm starting a new project that needs a highly performant json parser that parses to a generic AST and allows me traversing that AST.\n What are the best libraries for this?\n It looks like jsoniter is fast but doesn't give AST.\n Is json4s with jackson the best option?\n    submitted by    /u/TheCalming  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1duazam/current_state_of_json_parsers/",
-          "publishedOn": "2024-07-03T10:24:06.000Z",
-          "wordCount": null,
-          "title": "Current state of json parsers",
-          "imageUrl": null
         }
       ]
     },
@@ -2053,18 +2033,7 @@
       "title": "Tweag - Engineering blog",
       "feedUrl": "https://www.tweag.io/rss.xml",
       "siteUrl": "https://tweag.io",
-      "articles": [
-        {
-          "id": "https://tweag.io/blog/2024-07-04-image-transition-react-native-skia/",
-          "author": null,
-          "description": "Making great animated graphics on mobile apps has always been challenging. While react-native-svg has served React Native developers well for basic vector graphics, it often falls short when it comes to replicating the more complex effects seen in web applications. We’ll be integrating Skia for rendering sharp, efficient 2D graphics and Reanimated for creating fluid, responsive animations. Step-by-step, we’ll explore the setup, key coding techniques, and best practices to implement a dynamic image slider that is both smooth and visually stunning.\nSkia is an open source multiplatform 2D graphics engine which supports GPU-accelerated rendering on Android, iOS and others, and can be used in the React Native ecosystem. The @shopify/react-native-skia library brings Skia to the React Native ecos…",
-          "link": "https://tweag.io/blog/2024-07-04-image-transition-react-native-skia/",
-          "publishedOn": "2024-07-04T00:00:00.000Z",
-          "wordCount": 3950,
-          "title": "Building an Image Slider in React Native using Skia and Reanimated",
-          "imageUrl": "https://tweag.io/logo.png"
-        }
-      ]
+      "articles": []
     },
     {
       "title": "Alexis King’s Blog",
@@ -2077,6 +2046,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1ei5llf/citations_with_abbreviated_journal_titles/",
+          "author": null,
+          "description": "Hi all,\n Is there a possibility to have abbreviated journal titles in citations?\n Thanks in advance!\n    submitted by    /u/ringprince  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1ei5llf/citations_with_abbreviated_journal_titles/",
+          "publishedOn": "2024-08-02T09:19:31.000Z",
+          "wordCount": null,
+          "title": "Citations with Abbreviated Journal Titles",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1ehpr1z/anyone_knows_how_to_implement_finishtostart_task/",
           "author": null,
@@ -2395,6 +2374,56 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/org-reverse-datetree-20240802.1519.tar",
+          "author": null,
+          "description": "The org-reverse-datetree package has been updated to version 20240802.1519.",
+          "link": "https://melpa.org/#/org-reverse-datetree",
+          "publishedOn": "2024-08-02T15:19:00.000Z",
+          "wordCount": 105,
+          "title": "org-reverse-datetree (20240802.1519) --- Create reverse date trees in org-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-ref-20240802.1213.tar",
+          "author": null,
+          "description": "The org-ref package has been updated to version 20240802.1213.",
+          "link": "https://melpa.org/#/org-ref",
+          "publishedOn": "2024-08-02T12:13:00.000Z",
+          "wordCount": 105,
+          "title": "org-ref (20240802.1213) --- citations, cross-references and bibliographies in org-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/moom-20240802.800.tar",
+          "author": null,
+          "description": "The moom package has been updated to version 20240802.800.",
+          "link": "https://melpa.org/#/moom",
+          "publishedOn": "2024-08-02T08:00:00.000Z",
+          "wordCount": 105,
+          "title": "moom (20240802.800) --- Commands to control frame position and size",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/todotxt-mode-20240802.604.tar",
+          "author": null,
+          "description": "The todotxt-mode package has been updated to version 20240802.604.",
+          "link": "https://melpa.org/#/todotxt-mode",
+          "publishedOn": "2024-08-02T06:04:00.000Z",
+          "wordCount": 105,
+          "title": "todotxt-mode (20240802.604) --- Major mode for editing todo.txt files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/firstly-search-20240801.2011.tar",
+          "author": null,
+          "description": "The firstly-search package has been updated to version 20240801.2011.",
+          "link": "https://melpa.org/#/firstly-search",
+          "publishedOn": "2024-08-01T20:11:00.000Z",
+          "wordCount": 105,
+          "title": "firstly-search (20240801.2011) --- Search with any key: Dired, Package, Buffer menu modes",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/elisp-autofmt-20240801.1325.tar",
           "author": null,
           "description": "The elisp-autofmt package has been updated to version 20240801.1325.",
@@ -2422,6 +2451,16 @@
           "publishedOn": "2024-08-01T05:13:00.000Z",
           "wordCount": 105,
           "title": "math-preview (20240801.513) --- Preview TeX math equations inline",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/apparmor-mode-20240801.505.tar",
+          "author": null,
+          "description": "The apparmor-mode package has been updated to version 20240801.505.",
+          "link": "https://melpa.org/#/apparmor-mode",
+          "publishedOn": "2024-08-01T05:05:00.000Z",
+          "wordCount": 105,
+          "title": "apparmor-mode (20240801.505) --- Major mode for editing AppArmor policy files",
           "imageUrl": null
         },
         {
@@ -2482,6 +2521,16 @@
           "publishedOn": "2024-07-31T16:43:00.000Z",
           "wordCount": 105,
           "title": "digistar-mode (20240731.1643) --- major mode for Digistar scripts",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/forge-20240731.1235.tar",
+          "author": null,
+          "description": "The forge package has been updated to version 20240731.1235.",
+          "link": "https://melpa.org/#/forge",
+          "publishedOn": "2024-07-31T12:35:00.000Z",
+          "wordCount": 105,
+          "title": "forge (20240731.1235) --- Access Git forges from Magit.",
           "imageUrl": null
         },
         {
@@ -2942,6 +2991,16 @@
           "publishedOn": "2024-07-25T16:17:00.000Z",
           "wordCount": 105,
           "title": "solarized-theme (20240725.1617) --- The Solarized color theme",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/with-editor-20240725.1429.tar",
+          "author": null,
+          "description": "The with-editor package has been updated to version 20240725.1429.",
+          "link": "https://melpa.org/#/with-editor",
+          "publishedOn": "2024-07-25T14:29:00.000Z",
+          "wordCount": 105,
+          "title": "with-editor (20240725.1429) --- Use the Emacsclient as $EDITOR",
           "imageUrl": null
         },
         {
@@ -3492,6 +3551,16 @@
           "publishedOn": "2024-07-19T13:46:00.000Z",
           "wordCount": 105,
           "title": "org-re-reveal (20240719.1346) --- Org export to reveal.js presentations",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/diff-hl-20240719.1051.tar",
+          "author": null,
+          "description": "The diff-hl package has been updated to version 20240719.1051.",
+          "link": "https://melpa.org/#/diff-hl",
+          "publishedOn": "2024-07-19T10:51:00.000Z",
+          "wordCount": 105,
+          "title": "diff-hl (20240719.1051) --- Highlight uncommitted changes using VC",
           "imageUrl": null
         },
         {
@@ -5353,76 +5422,6 @@
           "wordCount": 105,
           "title": "zk (20240704.910) --- Functions for working with Zettelkasten-style linked notes",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/persist-state-20240703.2100.tar",
-          "author": null,
-          "description": "The persist-state package has been updated to version 20240703.2100.",
-          "link": "https://melpa.org/#/persist-state",
-          "publishedOn": "2024-07-03T21:00:00.000Z",
-          "wordCount": 105,
-          "title": "persist-state (20240703.2100) --- Regularly persist bookmarks, history, recent files and more",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/casual-avy-20240703.1846.tar",
-          "author": null,
-          "description": "The casual-avy package has been updated to version 20240703.1846.",
-          "link": "https://melpa.org/#/casual-avy",
-          "publishedOn": "2024-07-03T18:46:00.000Z",
-          "wordCount": 105,
-          "title": "casual-avy (20240703.1846) --- Transient UI for Avy",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/claude-shell-20240703.1832.tar",
-          "author": null,
-          "description": "The claude-shell package has been updated to version 20240703.1832.",
-          "link": "https://melpa.org/#/claude-shell",
-          "publishedOn": "2024-07-03T18:32:00.000Z",
-          "wordCount": 105,
-          "title": "claude-shell (20240703.1832) --- Integration with Anthropic's Claude LLM",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/tango-plus-theme-20240703.1443.tar",
-          "author": null,
-          "description": "The tango-plus-theme package has been updated to version 20240703.1443.",
-          "link": "https://melpa.org/#/tango-plus-theme",
-          "publishedOn": "2024-07-03T14:43:00.000Z",
-          "wordCount": 105,
-          "title": "tango-plus-theme (20240703.1443) --- A color theme based on the tango palette",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/helm-20240703.1314.tar",
-          "author": null,
-          "description": "The helm package has been updated to version 20240703.1314.",
-          "link": "https://melpa.org/#/helm",
-          "publishedOn": "2024-07-03T13:14:00.000Z",
-          "wordCount": 105,
-          "title": "helm (20240703.1314) --- Helm is an Emacs incremental and narrowing framework",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/python-coverage-20240703.917.tar",
-          "author": null,
-          "description": "The python-coverage package has been updated to version 20240703.917.",
-          "link": "https://melpa.org/#/python-coverage",
-          "publishedOn": "2024-07-03T09:17:00.000Z",
-          "wordCount": 105,
-          "title": "python-coverage (20240703.917) --- Show Python coverage via overlays or Flycheck",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/simple-call-tree-20240703.910.tar",
-          "author": null,
-          "description": "The simple-call-tree package has been updated to version 20240703.910.",
-          "link": "https://melpa.org/#/simple-call-tree",
-          "publishedOn": "2024-07-03T09:10:00.000Z",
-          "wordCount": 105,
-          "title": "simple-call-tree (20240703.910) --- analyze source code based on font-lock text-properties",
-          "imageUrl": null
         }
       ]
     },
@@ -5431,6 +5430,86 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1eicgoy/tamil_text_rendering_in_emacs_is_messed_up/",
+          "author": null,
+          "description": "correct and pleasant\n incorrect and unpleasant\n Both images are snapshot of the same window, with one difference. The image on top is when I increase the text size where as the bottom one is default font size which is '(font . \"Noto Sans Mono:style=medium:size=20\").why is this happening?\n    submitted by    /u/paarulakan  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1eicgoy/tamil_text_rendering_in_emacs_is_messed_up/",
+          "publishedOn": "2024-08-02T15:08:27.000Z",
+          "wordCount": null,
+          "title": "Tamil text rendering in emacs is messed up",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ei8f5s/im_having_troubles_with_setting_up_lsp_for_haskell/",
+          "author": null,
+          "description": "Hi, so far I have written the following configuration for lsp, but emacs is telling me that lsp-haskell-server-path is a free variable, but when I try to manually install lsp-haskell with (use-package lsp-haskell :ensure t :config lsp-haskell-server-path \"<path to the wrapper>\") if I open a haskell file there's no error (I don't know how I solved a previous error in which lsp would tell me there's no server for the haskell major mode) except for an lsp-ui thing, but lsp doesn't seem to be working (there's no completion even for functions that are in the standard library/modules). Am I missing something?\n ;; use-package set up (defmacro append-to-list (target suffix)Append SUFFIX to TARGET in place.\" `(setq ,target (append ,target ,suffix))) (require 'package) (append-to-list package-archives '((\"melpa\" . \"http://melpa.org/packages/\") (\"gnu\" . \"https://elpa.gnu.org/packages/\"))) (package-initialize) (unless (package-installed-p 'use-package) (package-refresh-contents) (package-install 'use-package)) (eval-and-compile (setq use-package-always-ensure t use-package-expand-minimally t)) (eval-when-compile (require 'use-package)) ;; LSP (use-package haskell-mode :ensure t :hook (haskell-mode . interactive-haskell-mode)) (use-package lsp-mode :ensure t :commands (lsp lsp-deferred) :hook ((c++-mode . lsp-deferred) (haskell-mode . lsp-deferred)) :config (setq lsp-keymap-prefix \"C-c l\") (setq lsp-prefer-flymake nil)) (use-package lsp-haskell :ensure t :config (setq lsp-haskell-server-path \"~/.ghcup/hls/2.7.0.0/bin/haskell-language-server-wrapper\") (setq lsp-haskell-server-args '())) \n    submitted by    /u/Dumb-Ptr  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ei8f5s/im_having_troubles_with_setting_up_lsp_for_haskell/",
+          "publishedOn": "2024-08-02T12:09:42.000Z",
+          "wordCount": null,
+          "title": "I'm having troubles with setting up LSP for haskell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ei5b26/how_to_disable_buffer_groups_in_centaur_tabs/",
+          "author": null,
+          "description": "Most of the time, I have use tab-bar-mode for tabs, but when I find centaur-tabs package, I understand that it is better than standard tab-bar-mode. I like all in centaur-tabs except this logic of buffer groups. Can I disable this and make centaur-tabs working like tab-bar-mode?\n Thank you before, for all helpful answers. \n    submitted by    /u/EmacsDiscussion  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ei5b26/how_to_disable_buffer_groups_in_centaur_tabs/",
+          "publishedOn": "2024-08-02T09:00:03.000Z",
+          "wordCount": null,
+          "title": "How to disable buffer groups in centaur tabs?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ei4hec/eglot_and_tramp_language_server_config_looking/",
+          "author": null,
+          "description": "Trying to start pylsp for both local edits, and via TRAMP. The code below in init.el. Commenting out between each of the 3 options does this:\n  \nSuccessfully starts and connects to a remote pylsp when TRAMP editing a remote file.\n Successfully starts and connects to a local pylsp when editing a local file.\n Successfully starts and connects to a local pylsp when editing a local file - but is unsuccessful in starting a remote pylsp when TRAMPing a remote file. Exits with error: (:message \"Connection state changed\" :change \"exited abnormally with code 127\\n\")\n  \n Local machine is windows running putty - TRAMP connection /plink:server:/temp/test.py\n Remote machine is FreeBSD 13.2 running sshd and samba.\n \n\"Local\" editing (and pylsp) via samba share works, but with pylsp running on the local windows machine and test.py on the remote samba share editing is slow and is not optimal.\n  \nAny suggestions on having option 3. work for both local and remote pylsp?\n Most of the below code comes from https://www.gnu.org/software/emacs/manual/html_node/eglot/Setting-Up-LSP-Servers.html\n (use-package eglot :ensure t :defer t :hook (python-mode . eglot-ensure) :config ;; 1. ;; (add-to-list 'eglot-server-programs ;; '(python-mode . (\"/server/tracker/bin/pylsp\"))) ;; 2. ;; (add-to-list 'eglot-server-programs ;; '(python-mode . (\"~/.emacs.d/env/bin/pylsp\"))) ;; 3. `(python-mode . ,(eglot-alternatives '((\"/server/tracker/bin/pylsp\") (\"~/.emacs.d/env/bin/pylsp\")))) ) \n    submitted by    /u/mosttrash  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ei4hec/eglot_and_tramp_language_server_config_looking/",
+          "publishedOn": "2024-08-02T08:02:50.000Z",
+          "wordCount": null,
+          "title": "eglot and TRAMP language server config - looking for help",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ei0k5g/need_help_defining_a_latex_export_function_that/",
+          "author": null,
+          "description": "I have been messing around with the LaTeX export system and have been able to get my shell blocks to export to latex w/ this formatting, including automatically adding the \\StartConsole command to any first line in a command. It would be nice to have the results and the shell commands joined in the output so that it looks exactly like a command and its output looks like in a terminal. I am not sure how to go about merging them in the latex output though and whether it should be done as pre- or post- processing. Any help figuring this out would be very appreciated. Thank you.\n In case anybody is interested, I did this using the org-9.8pre version with its new export features and used the following relevant code...\n #+begin_src emacs-lisp (cl-defun my/org-latex-src-block--listings (&key src-…",
+          "link": "https://www.reddit.com/r/emacs/comments/1ei0k5g/need_help_defining_a_latex_export_function_that/",
+          "publishedOn": "2024-08-02T03:57:36.000Z",
+          "wordCount": null,
+          "title": "Need help defining a latex export function that puts the results of evaluation inside the code block listing it came from for shell blocks",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ehxpvq/emacswayland_arch_aur/",
+          "author": null,
+          "description": "Hey everyone,\n recently I've had some trouble with Doom Emacs crashing unexpectedly and I've been trying to troubleshoot today with research and chatgpt.\n I found on r/DoomEmacs a similar thread where an Arch user was experiencing the same thing while editing C++ files while mine was mostly happening when editing Rust files. I don't have much to go on but my assumption was that when the rust-analyzer was working or Rust LSP was communicating it was causing it to panic and crash but this was just an assumption and I was having trouble getting much out of --debug-init. This user was able to downgrade to version 29.3 and it solved their problems.\n Recently I've completely uninstalled rust, emacs and doom emacs and found wayland-emacs on the aur which I didn't notice last time. I've reinstalled Rust and now I'm going to attempt to install this AUR package and go from there. Another issue I was having was opening Fish shell in Doom Emacs with Term which wasn't an issue before until installing Rust.\n It's also important to note that I've had this Arch + Hyprland install for about 2 weeks and Doom Emacs hasn't given any issues what so ever until installing rust and rust-analyzer but also I upgraded around the same time and I know there was an upgrade 2 days ago. Thanks for reading, I wanted to try and be thorough so I apologize for the length of this.\n P.S The user on Arch I was talking about with a similar issue was using X11\n EDIT: solved, I use the pacaman package manager to uninstall emacs-wayland and installed emacs instead. So far rust hasn't crashed when editing or coding rs files in doom and rust-analayzer is working. Must install with rustup component add rust-analyzer though, not your package manager. and using vterm this time with no issues.. yet ;)\n    submitted by    /u/HaK_0ryX  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ehxpvq/emacswayland_arch_aur/",
+          "publishedOn": "2024-08-02T01:30:45.000Z",
+          "wordCount": null,
+          "title": "Emacs-Wayland Arch AUR",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ehw4e5/a_simplified_and_improved_version_of/",
+          "author": null,
+          "description": "As is well known, evil automatically copies deleted text to the register. If you want to replace a piece of text without writing the deleted text to the register (in other words, you only want to delete the text, not cut it), so that you can continuously replace a piece of text in multiple places. If you don't want to use any plugins and want to solve this directly through vim commands, the method is to first select the text and then enter the command \"ay, which copies this text to the a register. Then, for the text you want to replace, first select it and then enter \"ap, which replaces the selected text with the text in register a.\n The above operation is obviously cumbersome. Previously, I used the evil-replace-with-register plugin to solve this problem. This plugin provides a command bo…",
+          "link": "https://www.reddit.com/r/emacs/comments/1ehw4e5/a_simplified_and_improved_version_of/",
+          "publishedOn": "2024-08-02T00:13:33.000Z",
+          "wordCount": null,
+          "title": "a simplified and improved version of `evil-replace-with-register`",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ehtgxe/do_you_think_meow_or_boon_is_better_especially_if/",
+          "author": null,
+          "description": "Edit: I tried Meow before creating this post. I didn't realize Boon wasn't visual like Meow and Kakoune, otherwise I wouldn't have created this post. Boon pays attention to ergonomics though, which according to this, isn't something that any of the example Meow layouts do. I guess I'll try to create an ergonomic layout for Meow in the future.\n    submitted by    /u/ann4n  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ehtgxe/do_you_think_meow_or_boon_is_better_especially_if/",
+          "publishedOn": "2024-08-01T22:14:56.000Z",
+          "wordCount": null,
+          "title": "Do you think Meow or Boon is better? Especially if you've used both.",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1ehpzxg/docker_container_name_with_slash/",
           "author": null,
@@ -8080,146 +8159,6 @@
           "wordCount": null,
           "title": "How to specify literal vector indentation ?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dv1nuw/is_it_possible_to_create_a_dynamic_bookmark_for_a/",
-          "author": null,
-          "description": "Hi everyone, I receive tons of logs everyday, and I store them in a separate directory 'tmp' with the hierarchy being based on the day's date %Y-%m-%d. I'd like to have the subdirectory corresponding to the day's date to be added as a bookmark (I am using bookmark-plus), but this must be updated everyday. - the new bookmark must be created and the old one must be removed.\n I am no dev, I tried to have something created with the help of Chatgpt... but it does not work. \n A first bookmark was created, but the day after I received an error message (and the same everyday since then): \"No such bookmark in bookmark list 'tmp-2024-07-04'\"\n here is the code:\n ``` (require 'bookmark) (require 'time-date) \n (defun my-create-date-based-bookmark () \"Create a bookmark for the current date's directory and remove old date-based bookmarks.\" (interactive) (let* ((base-dir \"~/tmp/\") (date-str (format-time-string \"%Y-%m-%d\")) (date-dir (concat base-dir date-str)) (bookmark-name (concat \"tmp-\" date-str))) \n  ;; Ensure the directory exists (unless (file-directory-p date-dir) (make-directory date-dir t)) \n  ;; Add the new bookmark \n  (bookmark-set date-dir bookmark-name) (bookmark-prop-set bookmark-name 'filename date-dir) \n  ;; Remove old bookmarks matching the pattern (dolist (bm bookmark-alist) (let ((bm-name (car bm))) ```\n can someone help me with this function? thanks in advance\n    submitted by    /u/fmou67  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dv1nuw/is_it_possible_to_create_a_dynamic_bookmark_for_a/",
-          "publishedOn": "2024-07-04T08:08:56.000Z",
-          "wordCount": null,
-          "title": "Is it possible to create a 'dynamic' bookmark for a buffer (code included, please help me fix it)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dv1mx0/emacs_from_source_library_locations_and/",
-          "author": null,
-          "description": "For various personal reasons surrounding deployment, cross-platform compatibility, and containerization, I run Emacs from within Docker containers. I've used a precompiled nativecomp binary of Emacs for a while, but am looking to build my own (I want to try v30 since I've heard good things about speed/font rendering, and I want to build Emacs with support for Xwidgets, PGTK, and Native Comp).\n I am using a multi-stage Dockerfile, and have one build stage dedicated to building Emacs. I then want to copy out all essential binaries and libraries critical to running Emacs and into my main running Docker image. I haven't had success in isolating the specific directories where these files are contained. I have been building Emacs in /tmp/emacs, and I am also unsure as to whether I should run mak…",
-          "link": "https://www.reddit.com/r/emacs/comments/1dv1mx0/emacs_from_source_library_locations_and/",
-          "publishedOn": "2024-07-04T08:07:05.000Z",
-          "wordCount": null,
-          "title": "Emacs from source, library locations and configuration options",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dusm4z/why_do_some_reddit_users_especially_on_remacs/",
-          "author": null,
-          "description": "Here is a thread I started one of the most involved parties went ahead and deleted their posts or did something to make them all appear deleted?\n https://www.reddit.com/r/emacs/comments/1dqcrkk/using_emacs_to_monitor_dbus/\n Here is another from the same party - \n https://www.reddit.com/r/emacs/comments/1dtuodf/i_rewrote_my_emacs_configuration_in_lua/\n And another\n https://www.reddit.com/r/cpp/comments/1dnenso/any_good_cli_projects_for_beginners_like_myself/\n This one has been removed, but the party's comment is unavailable although the other replies are still present.\n    submitted by    /u/vfclists  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dusm4z/why_do_some_reddit_users_especially_on_remacs/",
-          "publishedOn": "2024-07-03T23:36:27.000Z",
-          "wordCount": null,
-          "title": "Why do some reddit users especially on r/emacs keep messing up threads their involved by deleting their posts or making them unavailable?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dunc31/orgroam_with_git_branch/",
-          "author": null,
-          "description": "Has anyone tried using org-roam with git branches? I was worried about messing up my main base, but I want to use org-roam-node-find when I'm doing new research, both on old notes, and hot fresh new notes I just wrote down. I did it unprotected(no versioning or backup) sometimes ago and fucked that notebase up pretty bad that I abondanded it shortly after.\n I was thinking about writing a package specifically for this: creating a new org-roam-directory and combine search result of org-roam-node-find of the main one and the new one, but later I find out I would eventually want to merge the new one into the old one, which make it looks teriblly like a git dev branch.\n So my questions is has anyone tried something like this, to develop new node communitiy on a branch, and what are some probably caveats and watchouts for that?\n    submitted by    /u/HermanHel  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dunc31/orgroam_with_git_branch/",
-          "publishedOn": "2024-07-03T19:44:32.000Z",
-          "wordCount": null,
-          "title": "org-roam with git branch",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dun0wb/enabling_previews_after_using_embarkexport_on/",
-          "author": null,
-          "description": "I have difficulties getting previews to work after using embark-export on consult-grep (or consult-ripgrep or consult-gitgrep).\n I believe my minimal init.el only contains the recommended configurations found on the respective github sites of consult and embark, including loading embark-consult:\n (require 'package) (setq package-archives '((\"elpa\" . \"https://elpa.gnu.org/packages/\") (\"melpa\" . \"https://melpa.org/packages/\") (\"org\" . \"https://orgmode.org/elpa/\"))) (package-initialize) (unless package-archive-contents (package-refresh-contents)) (unless (package-installed-p 'use-package) (package-install 'use-package)) (require 'use-package) (setq use-package-always-ensure t) ;; Example configuration for Consult (use-package consult ;; Replace bindings. Lazily loaded due by `use-package'. :b…",
-          "link": "https://www.reddit.com/r/emacs/comments/1dun0wb/enabling_previews_after_using_embarkexport_on/",
-          "publishedOn": "2024-07-03T19:31:15.000Z",
-          "wordCount": null,
-          "title": "Enabling previews after using embark-export on consult-grep",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1duk9pe/ready_player_mode_a_lightweight_media_viewer/",
-          "author": null,
-          "description": "Following from yesterday’s quest for a lightweight major mode for viewing audio/video files, here’s my approach (borrowing from some of my favourite image view mode features) https://lmno.lol/alvaro/ready-player-mode\n    submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1duk9pe/ready_player_mode_a_lightweight_media_viewer/",
-          "publishedOn": "2024-07-03T17:36:17.000Z",
-          "wordCount": null,
-          "title": "Ready Player Mode (a lightweight media viewer)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dujm5s/technicolor_uniformly_access_your_current_themes/",
-          "author": null,
-          "description": "I've been working on technicolor, an abstraction above the APIs that various custom themes and theme packs use to access the colors for the currently loaded theme in emacs (like doom-themes' doom-color and modus-themes' modus-themes-get-color-value).\n The impetus is straightforward: if you are a user of a variety of themes or theme packs and you want to use your current theme's color palette somewhere in elisp, but struggle to homogenize your code across all the possible themes you might have loaded at any given time, technicolor might be worth a look.\n It works by letting you define a \"universal palette\" of colors, which is a list of colors that can sensibly be accessed in a specified collection of themes, e.g. '(red green blue). You can then set rules for each theme (or group of themes) for exactly which color in the theme's palette the universal color accesses. You can set these rules on a per-theme basis within a theme pack as well.\n From there, accessing the current theme's color reduces to (technicolor-get-color 'color), where color is an element of your universal palette. Technicolor will dispatch the appropriate API function, which you might have to write yourself, depending on the theme. \n It also provides some basic color manipulation wrapping the color library, with the same ethos that accessing the colors should be via the universal palette.\n    submitted by    /u/nanowillis  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dujm5s/technicolor_uniformly_access_your_current_themes/",
-          "publishedOn": "2024-07-03T17:09:28.000Z",
-          "wordCount": null,
-          "title": "technicolor: Uniformly access your current theme's color palette",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1duj493/how_to_make_a_bind_a_key_to_act_on_current/",
-          "author": null,
-          "description": "I'm using vertico for mini buffer completion. I'm currently using the flat completion style but ideally the solution should work for anything. How can I bind a custom key to a function that acts on the current vertico match in the mini buffer? E.g. Bind C-o to call my custom function which might open the current completion using the OS file browser? Thanks.\n    submitted by    /u/x9myi9Ks6saTYgkfNEdr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1duj493/how_to_make_a_bind_a_key_to_act_on_current/",
-          "publishedOn": "2024-07-03T16:49:08.000Z",
-          "wordCount": null,
-          "title": "How to make a bind a key to act on current vertico selection?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1duj23r/how_to_solve_the_no_language_registered_for_major/",
-          "author": null,
-          "description": "I'm trying to setup typescript in emacs 29, but I'm getting the following message when enabling treesitter-mode: tree-sitter--setup: No language registered for major mode ‘typescript-ts-mode’. Lsp-mode is attached successfully, but somethings seems off with the syntax highlight. My configuration looks as follows:\n (use-package! lsp-mode :defer t :hook (json-mode . lsp) (typescript-ts-mode . lsp) (tsx-mode . lsp) (js2-mode . lsp) (rjsx-mode . lsp) :commands lsp-deferred :bind (:map lsp-mode-map (\"C-c d\" . lsp-describe-thing-at-point) (\"C-c g\" . lsp-ui-doc-glance)) :config (define-key lsp-mode-map (kbd \"C-c l\") lsp-command-map) (lsp-enable-which-key-integration t) (map! :leader :prefix \"c\" :desc \"Peek references\" \"p\" #'lsp-ui-peek-find-references) (setq lsp-rust-analyzer-cargo-watch-command …",
-          "link": "https://www.reddit.com/r/emacs/comments/1duj23r/how_to_solve_the_no_language_registered_for_major/",
-          "publishedOn": "2024-07-03T16:46:36.000Z",
-          "wordCount": null,
-          "title": "How to solve the \"No language registered for major mode ‘typescript-ts-mode’\" error?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1duh5zm/killthisbuffer_does_not_work_in_emacsgit_instead/",
-          "author": null,
-          "description": "As stated by bug https://lists.gnu.org/archive/html/bug-gnu-emacs/2024-06/msg00180.html, you kill-this-buffer no longer works, and instead is to be called by menu bar. You have to use kill-current-buffer instead.\n Informing you guys as this was making me go crazy for quite some time, silly me for not reading the documentation.\n    submitted by    /u/Opening_Egg_9096  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1duh5zm/killthisbuffer_does_not_work_in_emacsgit_instead/",
-          "publishedOn": "2024-07-03T15:28:05.000Z",
-          "wordCount": null,
-          "title": "kill-this-buffer does not work in emacs-git, instead use kill-current-buffer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1due8fy/where_is_externalcompletiontable/",
-          "author": null,
-          "description": "It's mentioned here:\n https://github.com/emacs-mirror/emacs/blob/master/etc/NEWS.29#L4291 \n But I can't find it in our 29.2 installation.\n    submitted by    /u/bogolisk  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1due8fy/where_is_externalcompletiontable/",
-          "publishedOn": "2024-07-03T13:22:06.000Z",
-          "wordCount": null,
-          "title": "Where is external-completion-table?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dubqnl/emacsjupyter_wrong_type_argument_not_a_valid/",
-          "author": null,
-          "description": "Hello everyone,\n I hope someone can help me. I am trying to work in emacs-jupter with REPL-client. I have set up and installed everything as recommended in emacs-jupyter and at first glance everything seems to work.\n If I run `M-x jupyter-run-repl` I can select one of the installed kernels and a new Ipython buffer opens:\n Launching org_test kernel...\n Starting org_test kernel process...done\n Launching org_test kernel...done\n Requesting kernel info...done\n However, if I then execute `M-x jupyter-interaction-mode` in the original buffer and then try to send code with `C-c C-c` I get: \n \"Wrong type argument: \"Not a valid client\", nil, jupyter-current-client\"\n Interestingly, when I try to establish a connection with `M-x jupyter-rep-associate-buffer`, no client is recognised and a new one is opened into which I cannot write with the same error.\n When I select a connection file with `M-x jupyter-connect-repl` a new ipython buffer opens with Requesting kernel info...done When I try to transfer code, jupyter-current-client is still nil. (same error)\n When I work with org-mode code-blocks and select a kernel, emacs-jupyer works.\n Is there any information that can narrow down the problem?\n    submitted by    /u/majukano  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dubqnl/emacsjupyter_wrong_type_argument_not_a_valid/",
-          "publishedOn": "2024-07-03T11:11:32.000Z",
-          "wordCount": null,
-          "title": "emacs-jupyter - Wrong type argument: \"Not a valid client\", nil, jupyter-current-client",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dub36p/consultripgrep_and_embark_collectexport/",
-          "author": null,
-          "description": "When doing consult-ripgrep if I then do embark-collect the results of my query is nicely grouped by filename in the embark collect buffer. However, when doing the same consult-ripgrep query followed by embark-export (which is more powerfull than emabark-collect since I can use wgrep) the results are not grouped by filename, instead, every line starts with the file and line the result comes from:\n  file1:line: ... file1:line: ... file2:line: ... \n Is it possible to get the same behaviour in embark-export buffers as the one in embark-collect?\n  ---- file1 line: ... line: ... ---- file2 line: ... \n    submitted by    /u/jvillasante  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dub36p/consultripgrep_and_embark_collectexport/",
-          "publishedOn": "2024-07-03T10:31:06.000Z",
-          "wordCount": null,
-          "title": "consult-ripgrep and embark collect/export",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1du9sdw/magit_tagging_tag_vs_release/",
-          "author": null,
-          "description": "What is the difference between creating a tag and creating a release (tag) both under the magit-tag transient? Is creating a release (tag) just a magit concept as I could not find it mentioned in the git docs?\n    submitted by    /u/doolio_  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1du9sdw/magit_tagging_tag_vs_release/",
-          "publishedOn": "2024-07-03T09:00:06.000Z",
-          "wordCount": null,
-          "title": "Magit tagging: tag vs release",
-          "imageUrl": null
         }
       ]
     },
@@ -8228,6 +8167,36 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2955@/discussions",
+          "author": "nigelesque",
+          "description": "And here is the second, about Purity. This is not really a structure note. It has been produced as a flow of ideas, some familiar, some new. The core applies the importance of purity in modernity to historic buildings. The purpose is to explore the topic for a possible journal article. I suppose my question (leaving content aside) is what you would do next.\n20240802-164112 Ü1 Purity in Modernity\ntags: #Modernity #Latour #Purity\nLatour latour-b-1993-we have never been modern - annotated.pdf\nLatour opposes purity and hybridity.\n066: ‘The moderns indeed declare that technology is nothing but pure instrumental mastery, science pure Enframing and pure Stamping [Das Ge-Stell], that econo- mics is pure calculation, capitalism pure reproduction, the subject pure consciousness. Purity everywhere! T…",
+          "link": "https://forum.zettelkasten.de/discussion/2955/zk101-structure-note-example-purity",
+          "publishedOn": "2024-08-02T17:13:49.000Z",
+          "wordCount": 1504,
+          "title": "ZK101 Structure Note example – Purity",
+          "imageUrl": null
+        },
+        {
+          "id": "2954@/discussions",
+          "author": "nigelesque",
+          "description": "Not sure this is the right place in the forum for this, but after the Digital Gardens and Toolboxes session you asked us to share 1–3 structure notes (SNs).\nThis is the first of (likely) two SNs; both are works in progress. This SN relates to processing a particular book chapter which I find an important reference point to return to.\n20240802-151105 Schwandt’s Three Epistemological Stances\ntags: #schwandt-t-2000 #Hermeneutics #SocialConstructionism #Interpretivism #Phronesis #Narrative\nOrientation\nProvides map of Interpretivism, Hermeneutics, and Social Constructionism\nText: [schwandt-t-2000-three epistemological stances]\nRef: Schwandt, Thomas A. ‘Three Epistemological Stances for Qualitative Inquiry: Interpretitivism, Hermeneutics and Social Constructionism’. In Handbook of Qualitative Re…",
+          "link": "https://forum.zettelkasten.de/discussion/2954/zk101-structure-note-example-schwandt",
+          "publishedOn": "2024-08-02T17:12:22.000Z",
+          "wordCount": 1066,
+          "title": "ZK101 Structure Note example – Schwandt",
+          "imageUrl": null
+        },
+        {
+          "id": "2953@/discussions",
+          "author": "fuzzmonkey42",
+          "description": "Anyone heard of this book? Is it worth buying?",
+          "link": "https://forum.zettelkasten.de/discussion/2953/antinet-zettelkasten",
+          "publishedOn": "2024-08-01T23:37:48.000Z",
+          "wordCount": 1119,
+          "title": "Antinet Zettelkasten",
+          "imageUrl": null
+        },
         {
           "id": "2952@/discussions",
           "author": "Edmund",
@@ -8487,26 +8456,6 @@
           "wordCount": 2242,
           "title": "Share with us what is happening in your ZK this week. July 5, 2024",
           "imageUrl": "https://forum.zettelkasten.de/uploads/editor/d0/1naoz1fucfau.png"
-        },
-        {
-          "id": "2927@/discussions",
-          "author": "Sascha",
-          "description": "Hi Zettlers,\nstraight forward:\nWhere should I invite myself to become a podcast guest?\nI'll start to get the word out more pro-actively.\nLive long and prosper\nSascha",
-          "link": "https://forum.zettelkasten.de/discussion/2927/where-should-i-invite-myself-to-become-a-podcast-guest",
-          "publishedOn": "2024-07-04T05:20:51.000Z",
-          "wordCount": 715,
-          "title": "Where should I invite myself to become a podcast guest?",
-          "imageUrl": null
-        },
-        {
-          "id": "2926@/discussions",
-          "author": "ctietze",
-          "description": "https://brettterpstra.com/2024/07/01/marked-giveaway/\nBrett is giving away his own app in this week's app giveaway and mentioned on social media that his own readership (probably all owning a license already) so far hasn't participated a lot.\nSo if you want a very, very solid Markdown previewer and printing tool, this is your chance to get it for free!",
-          "link": "https://forum.zettelkasten.de/discussion/2926/win-a-marked-markdown-previewer-and-printing-tool-license-this-week-ends-july-5th",
-          "publishedOn": "2024-07-03T17:03:20.000Z",
-          "wordCount": 602,
-          "title": "Win a Marked (Markdown previewer and printing tool) license this week (ends July 5th)",
-          "imageUrl": null
         }
       ]
     }
