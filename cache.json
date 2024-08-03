@@ -44,16 +44,6 @@
           "wordCount": 515,
           "title": "Issue 428",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/427.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nAnnouncing Haddock Dingus, a tool for previewing Haddock markup by Taylor Fausak\nI’ve often wanted a web-based tool for previewing what some Haddock will look like. Over the weekend I put one together. I call it the Haddock Dingus, after the original Markdown Dingus. It’s pretty simple: Input some Haddock, click “Submit”, and see what the output HTML looks like. Give it a whirl and let me know what you think!\nCabal-install-3.12.1.0 (and accompanying libraries) released by Artem Pelenitsyn\nThe cabal release team brings you the release of the cabal-install tool, version 3.12.1.0. This is t…",
-          "link": "https://haskellweekly.news/issue/427.html",
-          "publishedOn": "2024-07-04T12:00:00.000Z",
-          "wordCount": 729,
-          "title": "Issue 427",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,36 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ej9itp/primes_list_build_error/",
+          "author": null,
+          "description": "Hello,\n I need to find the nth prime number. This is what I have so far:\n module Prime (nth) where nth :: Int -> Maybe Integer nth n | n < 1 = Nothing | otherwise = Just ([x | x <- [2..n], isPrime x] !! (n-1)) isPrime :: Int -> Bool isPrime 2 = True isPrime n | n < 2 = False |otherwise = all (map (\\x -> n `mod` x /= 0)) [2..root] where root = (floor . sqrt . fromIntegral) n \n Some of the errors I get are (seems that both functions are wrong):\n Couldn't match expected type ‘Integer’ with actual type ‘Int’ • In the expression: x In the first argument of ‘(!!)’, namely ‘[x | x <- [2 .. n], isPrime x]’ In the first argument of ‘Just’, namely ‘([x | x <- [2 .. n], isPrime x] !! (n - 1))’Couldn't match expected type Couldn't match type ‘[Bool]’ with ‘Bool’ Expected: [Int] -> Bool Actual: [Int] -> [Bool] • In the first argument of ‘all’, namely ‘(map (\\ x -> n `mod` x /= 0))’Couldn't match type ‘[Bool]’ with ‘Bool’ Expected: [Int] -> Bool Actual: [Int] -> [Bool] • In the first argument of ‘all’, namely ‘(map (\\ x -> n `mod` x /= 0))’ \n The second error is not really clear for me, I thought that all returns Bool (a -> Bool) -> [a] -> Bool), why would it be [Bool]? Also, any hint for the first function? Thank you.\n EDIT:\n Correct solution:\n module Prime (nth) where nth :: Int -> Maybe Integer nth n | n < 1 = Nothing | otherwise = Just (toInteger ([x | x <- [2..], isPrime x] !! (n-1))) isPrime :: Int -> Bool isPrime n = null [x | x <- [2..n-1], n `mod` x == 0] \n    submitted by    /u/mihaijulien  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ej9itp/primes_list_build_error/",
+          "publishedOn": "2024-08-03T17:52:26.000Z",
+          "wordCount": null,
+          "title": "Primes list, build error",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ej86d7/xmultilinestrings_merged/",
+          "author": null,
+          "description": "submitted by    /u/brandonchinn178  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ej86d7/xmultilinestrings_merged/",
+          "publishedOn": "2024-08-03T16:58:01.000Z",
+          "wordCount": null,
+          "title": "-XMultilineStrings merged!",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ej47zd/ghci_doesnt_show_the_prelude_prompt/",
+          "author": null,
+          "description": "Almost any resource I read recently says that GHCI should show \"Prelude>\" as prompt after start. And the prompt should change e.g. to \"*Main>\" after loading a .hs file.\n In my case GHCi only shows \"ghci>\" as prompt. Has this changed recently or am I doing something wrong here?\n    submitted by    /u/Voxelman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ej47zd/ghci_doesnt_show_the_prelude_prompt/",
+          "publishedOn": "2024-08-03T14:09:01.000Z",
+          "wordCount": null,
+          "title": "GHCi doesn't show the Prelude prompt",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/1ei6w8d/cachixhsopentelemetryinstrumentationservant/",
           "author": null,
@@ -1121,56 +1141,6 @@
           "wordCount": null,
           "title": "[Well-Typed] Part 6 (Monads) of the free video-based Haskell introduction course",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dvsn2c/why_is_the_record_syntax_disallowed_at_the_type/",
-          "author": null,
-          "description": "Let's define a simple record:\n data R = R { r :: Bool } \n Now, with DataKinds and KindSignatures on, we can attempt to use it like this:\n data X (r :: R) = X type XR1 = X ('R True) type XR2 = X ('R { r = True }) \n The definition of XR1 compiles without issues, but XR2 gives an error:\n app/Main.hs:12:22: error: parse error on input ‘=’ | 12 | type XR2 = X ('R { r = True }) | ^ \n Something very similar happens when we try to pattern match at the type level. With TypeFamilies enabled:\n type family F (r :: R) where F ('R True) = () F ('R { r = True }) = () \n The first equation works fine, but the second one results in an identical error message:\n app/Main.hs:16:15: error: parse error on input ‘=’ | 16 | F ('R { r = True }) = () | ^ \n One final example (the error is still the same):\n type R1 = 'R True -- Ok type R2 = 'R { r = True } -- Error \n What is going on here? When using records as values, the two ways to construct and pattern match on records are equivalent (as far as I know). Why are they treated so differently when used at the type level?\n    submitted by    /u/Pure-Advantage2681  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dvsn2c/why_is_the_record_syntax_disallowed_at_the_type/",
-          "publishedOn": "2024-07-05T07:55:55.000Z",
-          "wordCount": null,
-          "title": "Why is the record syntax disallowed at the type level?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dvr7k1/problems_parsing_function_application_in_a_lambda/",
-          "author": null,
-          "description": "Hello. I am having issues with my parser combinators in this code: https://play.haskell.org/saved/WQpzwZAM (You can change the input binding to test out the parser) The issue is that I am unable to parse function application: when appP's left is defined like left <- absP, it errors with: hs ghci> parseTest (exprP <* eof) \"let x = \\\\x -> x + 1 in x 1\" 1:26: | 1 | let x = \\x -> x + 1 in x 1 | ^ unexpected '1' expecting end of input, symbol, or white space  I believe the issue here is that left <- absP always expects an abstraction as the LHS of an application, while in this situation, it is a Var. I have tried to replace it with left <- parens absP <|> varP, but it errors in a different place here: hs ghci> parseTest (exprP <* eof) \"let x = \\\\x -> x + 1 in x 1\" 1:17: | 1 | let x = \\x -> x + 1 in x 1 | ^^^^^ unexpected \"+ 1 i\" expecting \"false\", \"let\", \"true\", '\"', '(', '\\', alphanumeric character, integer, or white space  Seemingly because it parses x + 1 as an application, and it doesn't let the exprP do it's job of parsing operators? So I had the thought process of \"maybe, if I make valP do ... <|> try appP <|> ... instead of ... <|> appP <|> ... so that it backtracks, exprP would get to the binary operators before appP,\" and I tried to change the code for that, but I think that's a dead end.\n    submitted by    /u/MonAaraj  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dvr7k1/problems_parsing_function_application_in_a_lambda/",
-          "publishedOn": "2024-07-05T06:18:18.000Z",
-          "wordCount": null,
-          "title": "Problems parsing function application in a lambda calc + let + lit + binop parser in megaparsec",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dvfzv7/introduction_to_haskell_for_agda_users/",
-          "author": null,
-          "description": "Hello. I've looked around but I can't quite find a good guide to haskell for people with a background in agda. Forgive me if I missed something.\n I am very familiar with using agda as a proof assistant, but haven't used it too much as a programming language. I am interested in learning more about using agda as a programming language. A (somewhat distant goal) is being able to solve advent of code problems in agda.\n But, agda doesn't have that many existing libraries. So I'd like to learn haskell to get the feel for how one should write programs in a functional language. I figure learning haskell is useful for other reasons as well. So I want to give it an honest go. I'd like to be able to solve some advent of code problems in haskell.\n Does anybody know a good introduction to haskell for someone fairly familiar with agda, but who has only used agda for formal verification? I am very familiar with the lambda calculus and type systems, algebraic data type, inductive types, and pattern matching, etc. I mostly need a crash course in syntax, important functions, input and output, and whatever else I might be missing from the agda proof assistant side of things.\n Thanks in advance.\n    submitted by    /u/loop-spaced  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dvfzv7/introduction_to_haskell_for_agda_users/",
-          "publishedOn": "2024-07-04T20:06:02.000Z",
-          "wordCount": null,
-          "title": "Introduction to Haskell for Agda users?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dv75ua/trouble_with_applicatives_in_parser/",
-          "author": null,
-          "description": "Hi Everyone,\n I've been playing around with a parser exercise to try to understand applicatives and how they can be used to compose parsing functions together. I have a basic Parser type like this: (Full code Replit here)\n newtype Parser a = Parser {runParser :: String -> Either (String, Int) (a, String, Int)}\n The left side is a failure with the error message and char position, and the right side is a success with the value, the remaining string, and the char position.\n I made an Applicative instance for my parser type so that it would compose together and keep track of the char position in the original text as it moves along.\n instance Applicative Parser where pure :: a -> Parser a pure a = Parser g where g xs = Right (a, xs, 0) (<*>) :: Parser (a -> b) -> Parser a -> Parser b (Parser rp1) <*> (Parser rp2) = Parser f where f xs = case rp1 xs of Left (err, i) -> Left (err, i) Right (pf, s', i) -> g s' where g xs' = case rp2 xs' of Left (err, pos) -> Left (err, pos + i) Right (val, l, pos) -> Right (pf val, l, pos + i) \n My problem is that the char position seems to work fine with single-level S-expressions:\n https://preview.redd.it/a2nipo5v8iad1.png?width=431&format=png&auto=webp&s=7bf1c9ccdbaa1038455de9a75e281a19da4bb812\n This wordks and it is exactly what I want it to do.\n But it does not work with embedded S-expressions! It just shows the error at the beginning of first embedding of an S-expression.\n https://preview.redd.it/hxoolfw39iad1.png?width=431&format=png&auto=webp&s=5dbabb13debde9ac51d17cdc8c696cc7f440682a\n The rest of the code can be found on this Replit link. Can anyone take a look at this code and help me out on my learning journey? Thanks so much!\n    submitted by    /u/billddev  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dv75ua/trouble_with_applicatives_in_parser/",
-          "publishedOn": "2024-07-04T13:38:41.000Z",
-          "wordCount": null,
-          "title": "Trouble with Applicatives in Parser",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dv2zzw/hasmtlib_edsl_for_the_smtlib26_standard/",
-          "author": null,
-          "description": "Hello all.\n I have created an eDSL for the SMTLib 2.6 standard.\n It's very much like ekmett/ersatz for QSAT.\n Features a strongly typed and clean API with pure formula construction.\n If you are into SMT, it's worth a look!\n Hackage: hasmtlib\n GitHub: Hasmtlib\n    submitted by    /u/bruderj15  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dv2zzw/hasmtlib_edsl_for_the_smtlib26_standard/",
-          "publishedOn": "2024-07-04T09:41:23.000Z",
-          "wordCount": null,
-          "title": "Hasmtlib: eDSL for the SMTLib2.6 standard",
-          "imageUrl": null
         }
       ]
     },
@@ -1179,6 +1149,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ej90io/iterating_over_type_parameters/",
+          "author": null,
+          "description": "I'm just stumbled over a case where I had something like\n val foo1 = bar[TypeA]() val foo2 = bar[TypeB]() val foo3 = bar[TypeC]() def bar[T:AContextBound](): String = ??? \n I wonder - is there way to write it as something like\n val fooList:List[String] = forAllTypes( ???[TypeI] => bar[TypeI]()) \n I have not a clue how the function definition would even look like. It would only save few lines, but it got me fascinated if there is some deeper scala magic I'm not aware of yet.\n    submitted by    /u/Akomis  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ej90io/iterating_over_type_parameters/",
+          "publishedOn": "2024-08-03T17:31:31.000Z",
+          "wordCount": null,
+          "title": "Iterating over type parameters?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ej4wmw/how_to_log_all_cause_in_zio_http/",
+          "author": null,
+          "description": "I want to log exceptions automatically when they happen. Right now, what I do is try to find out what part of the code is running and add the following for it to appear in the logs:\n .catchAllCause(e => ZIO.logError(e.toString) *> ZIO.fail(e.toString)) \n Is there a better way to do this without manually adding this to every line?\n    submitted by    /u/steerflesh  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ej4wmw/how_to_log_all_cause_in_zio_http/",
+          "publishedOn": "2024-08-03T14:40:05.000Z",
+          "wordCount": null,
+          "title": "How to log all cause in zio http?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1ei5w4n/how_could_scala3jvm21_maybe_even_17_can_be_so/",
           "author": null,
@@ -1948,66 +1938,6 @@
           "wordCount": null,
           "title": "Quill - new dialects or a custom JDBC driver",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dvrr6c/tapir_tutorial_part_5_multiple_inputs_outputs/",
-          "author": null,
-          "description": "submitted by    /u/smlaccount  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dvrr6c/tapir_tutorial_part_5_multiple_inputs_outputs/",
-          "publishedOn": "2024-07-05T06:54:29.000Z",
-          "wordCount": null,
-          "title": "Tapir Tutorial - part 5: Multiple inputs & outputs | Adam Warski SoftwareMill",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dvdnra/new_to_scala_and_functional_programming_in_general/",
-          "author": null,
-          "description": "Hey,\n So I come from experience in .NET and I'm trying to learn Scala and functional programming paradigm. I got very interesting because it sounded completely different from OOP and maybe knowing both could enhance my skill set and problem solving.\n Anyway, I started learning, and immediately hit the wall with all 3rd party libraries and understanding what is useful, what is not. What libraries I should learn, which I should not. Seems that Scala without Cats is not pure FP. There is a akka library, which is so big and heavy, that I even consider If I want to touch that.\n In .NET you kinda have everything out of the box, most of the thing you want to achieve, you can by using standart library. And in Scala, seems that standart library is minimal on purpose.\n I would like to ask if anyone could share some tips or steps in understanding what should I learn in Scala. What are you actually using in your work environment. In real life scenarios.\n I feel like choice fatigue is starting to settle in me.\n    submitted by    /u/uwuuwywu  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dvdnra/new_to_scala_and_functional_programming_in_general/",
-          "publishedOn": "2024-07-04T18:22:47.000Z",
-          "wordCount": null,
-          "title": "New to Scala and Functional programming in general",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dvboav/a_senior_software_engineer_story_jorge_vasquez/",
-          "author": null,
-          "description": "Join us in watching this interview about Jorge Vasquez story into the world of programming, his venture into Scala and other languages, and top advice for new programmers:\n https://www.youtube.com/watch?v=lgaQjO2rDTk\n    submitted by    /u/Key-Confusion5226  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dvboav/a_senior_software_engineer_story_jorge_vasquez/",
-          "publishedOn": "2024-07-04T16:57:05.000Z",
-          "wordCount": null,
-          "title": "A Senior Software Engineer Story: Jorge Vasquez",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dv9hdw/contribute_to_metals_like_kasper_kondzielski/",
-          "author": null,
-          "description": "submitted by    /u/kubukoz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dv9hdw/contribute_to_metals_like_kasper_kondzielski/",
-          "publishedOn": "2024-07-04T15:22:29.000Z",
-          "wordCount": null,
-          "title": "Contribute to Metals like Kasper Kondzielski - Scala with Friends",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dv90jw/video_12_years_of_the_comlihaoyi_platform/",
-          "author": null,
-          "description": "submitted by    /u/lihaoyi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dv90jw/video_12_years_of_the_comlihaoyi_platform/",
-          "publishedOn": "2024-07-04T15:02:36.000Z",
-          "wordCount": null,
-          "title": "[Video] 12 Years of the com.lihaoyi Platform",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dv6xqy/maven_central_introduces_rate_limits_to_prevent/",
-          "author": null,
-          "description": "submitted by    /u/CrowSufficient  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dv6xqy/maven_central_introduces_rate_limits_to_prevent/",
-          "publishedOn": "2024-07-04T13:28:09.000Z",
-          "wordCount": null,
-          "title": "Maven Central introduces Rate Limits to prevent Tragedy of the Commons",
-          "imageUrl": null
         }
       ]
     },
@@ -2046,6 +1976,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1ej2hrw/using_the_results_of_orgqlquery_in_an_agenda/",
+          "author": null,
+          "description": "I am trying to create an agenda that lists only todos associated with a particular person or list of people. I am attempting to use org-ql-defpred with org-ql-query, and because I do not quite have a handle on what I am doing yet (I am far from an elisp expert, but don't mind stretching my boundaries), I am trying to stick pretty close to the Org QL Custom Predicates Tutorial for now.\n Something that works exactly as I want, but lacks the flexibility of the predicate-based approach, is the following (with org-super-agenda):\n  (setq org-agenda-custom-commands '((\"A\" . \"Agendas\") (\"Aj\" \"John\" ((org-ql-block '(tags \"#John\") ((org-ql-block-header \"John\"))))) \n To move to the predicate-based method, I define my predicate as follows (identical to the tutorial, save for concatenating \"#\" instead …",
+          "link": "https://www.reddit.com/r/orgmode/comments/1ej2hrw/using_the_results_of_orgqlquery_in_an_agenda/",
+          "publishedOn": "2024-08-03T12:44:31.000Z",
+          "wordCount": null,
+          "title": "Using the results of org-ql-query in an agenda",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1ei5llf/citations_with_abbreviated_journal_titles/",
           "author": null,
@@ -2345,26 +2285,6 @@
           "wordCount": null,
           "title": "Potential new user here. Before I go diving in...will I be able to sync a copy of a todo list on Windows on my Android phone as well as my iPad?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1dvelbm/orgmode_exports_hard_line_wrapping/",
-          "author": null,
-          "description": "Hello, I have recently switched to Emacs (& Org-Mode, probably not an uncommon sentence ya'll have heard :)) specifically for doing writing (non fiction & fiction.) Almost all of my use-cases work perfectly with the export: =C-c C-e l p= and I'm done. However, sometimes I am in need of just raw regular ascii text of the content.\n Here's the problem: I write using semantic line breaks, Headers, annotations with comments, etc. All the good org-mode stuff. So I just export it to ascii instead of trying to copy from the buffer. Unfortunately, in ascii export it breaks off each line at 72 characters.\n Now, I know there is a variable (org-ascii-text-width) but I tried setting it to a very large value and it just breaks. I can't adjust this value per export. Is there any way I can just turn off the hard-line wrapping feature of the ascii export? \n Sorry for the long-winded explanation of a very simple problem, but after awhile searching I haven't found a very satisfactory answer (besides a mailing list response of 'No you can't, just write an elisp macro to undo it.)\n    submitted by    /u/lynnlei  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1dvelbm/orgmode_exports_hard_line_wrapping/",
-          "publishedOn": "2024-07-04T19:03:25.000Z",
-          "wordCount": null,
-          "title": "Org-mode Exports & hard line wrapping",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1dv9aer/citeprocel_and_csl/",
-          "author": null,
-          "description": "Hello All,\n I'm using the csl processor for my LaTeX export, which I think means that I'm using citeproc-el.\n Up until recently, this worked nicely for me. After an update, however, I'm getting some results and functionality that I don't prefer.\n What I'd like is simple and unlinked LaTeX like this:\n \\footnote{Robert W. Snyder, \\textit{The Voice of the City: Vaudeville and Popular Culture in New York} (New York: Oxford University Press, 1989), 12.}\n Instead, I'm now getting a much more complex output, which uses a \"\\cslbibitem\" command defined in the preamble:\n \\footnote{\\cslbibitem{520}{Robert W. Snyder, \\textit{The Voice of the City: Vaudeville and Popular Culture in New York} (New York: Oxford University Press, 1989), 12}.\n How do I get the simpler output?\n Thanks for any help!\n    submitted by    /u/ondrej-p  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1dv9aer/citeprocel_and_csl/",
-          "publishedOn": "2024-07-04T15:14:14.000Z",
-          "wordCount": null,
-          "title": "Citeproc.el and CSL",
-          "imageUrl": null
         }
       ]
     },
@@ -2373,6 +2293,86 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/ess-20240803.1733.tar",
+          "author": null,
+          "description": "The ess package has been updated to version 20240803.1733.",
+          "link": "https://melpa.org/#/ess",
+          "publishedOn": "2024-08-03T17:33:00.000Z",
+          "wordCount": 105,
+          "title": "ess (20240803.1733) --- Emacs Speaks Statistics",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/finito-20240803.1549.tar",
+          "author": null,
+          "description": "The finito package has been updated to version 20240803.1549.",
+          "link": "https://melpa.org/#/finito",
+          "publishedOn": "2024-08-03T15:49:00.000Z",
+          "wordCount": 105,
+          "title": "finito (20240803.1549) --- View and collect books",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/projection-multi-embark-20240803.1509.tar",
+          "author": null,
+          "description": "The projection-multi-embark package has been updated to version 20240803.1509.",
+          "link": "https://melpa.org/#/projection-multi-embark",
+          "publishedOn": "2024-08-03T15:09:00.000Z",
+          "wordCount": 105,
+          "title": "projection-multi-embark (20240803.1509) --- Integration for `projection-multi' and `embark'",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/projection-multi-20240803.1509.tar",
+          "author": null,
+          "description": "The projection-multi package has been updated to version 20240803.1509.",
+          "link": "https://melpa.org/#/projection-multi",
+          "publishedOn": "2024-08-03T15:09:00.000Z",
+          "wordCount": 105,
+          "title": "projection-multi (20240803.1509) --- Projection integration for `compile-multi'",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lsp-latex-20240803.1436.tar",
+          "author": null,
+          "description": "The lsp-latex package has been updated to version 20240803.1436.",
+          "link": "https://melpa.org/#/lsp-latex",
+          "publishedOn": "2024-08-03T14:36:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-latex (20240803.1436) --- LSP-mode client for LaTeX, on texlab",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/link-hint-20240803.1223.tar",
+          "author": null,
+          "description": "The link-hint package has been updated to version 20240803.1223.",
+          "link": "https://melpa.org/#/link-hint",
+          "publishedOn": "2024-08-03T12:23:00.000Z",
+          "wordCount": 105,
+          "title": "link-hint (20240803.1223) --- Use avy to open, copy, etc. visible links",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/python-mode-20240803.1158.tar",
+          "author": null,
+          "description": "The python-mode package has been updated to version 20240803.1158.",
+          "link": "https://melpa.org/#/python-mode",
+          "publishedOn": "2024-08-03T11:58:00.000Z",
+          "wordCount": 105,
+          "title": "python-mode (20240803.1158) --- Python major mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-ai-20240803.15.tar",
+          "author": null,
+          "description": "The org-ai package has been updated to version 20240803.15.",
+          "link": "https://melpa.org/#/org-ai",
+          "publishedOn": "2024-08-03T00:15:00.000Z",
+          "wordCount": 105,
+          "title": "org-ai (20240803.15) --- Use ChatGPT and other LLMs in org-mode and beyond",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/org-reverse-datetree-20240802.1519.tar",
           "author": null,
@@ -2391,6 +2391,16 @@
           "publishedOn": "2024-08-02T12:13:00.000Z",
           "wordCount": 105,
           "title": "org-ref (20240802.1213) --- citations, cross-references and bibliographies in org-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/helm-20240802.1017.tar",
+          "author": null,
+          "description": "The helm package has been updated to version 20240802.1017.",
+          "link": "https://melpa.org/#/helm",
+          "publishedOn": "2024-08-02T10:17:00.000Z",
+          "wordCount": 105,
+          "title": "helm (20240802.1017) --- Helm is an Emacs incremental and narrowing framework",
           "imageUrl": null
         },
         {
@@ -2681,6 +2691,16 @@
           "publishedOn": "2024-07-29T16:56:00.000Z",
           "wordCount": 105,
           "title": "lambdapi-mode (20240729.1656) --- A major mode to edit Lambdapi files.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mozc-20240729.1542.tar",
+          "author": null,
+          "description": "The mozc package has been updated to version 20240729.1542.",
+          "link": "https://melpa.org/#/mozc",
+          "publishedOn": "2024-07-29T15:42:00.000Z",
+          "wordCount": 105,
+          "title": "mozc (20240729.1542) --- minor mode to input Japanese with Mozc",
           "imageUrl": null
         },
         {
@@ -3481,6 +3501,16 @@
           "publishedOn": "2024-07-20T21:48:00.000Z",
           "wordCount": 105,
           "title": "ebib (20240720.2148) --- a BibTeX database manager",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/persist-state-20240720.1725.tar",
+          "author": null,
+          "description": "The persist-state package has been updated to version 20240720.1725.",
+          "link": "https://melpa.org/#/persist-state",
+          "publishedOn": "2024-07-20T17:25:00.000Z",
+          "wordCount": 105,
+          "title": "persist-state (20240720.1725) --- Regularly persist bookmarks, history, recent files and more",
           "imageUrl": null
         },
         {
@@ -5302,126 +5332,6 @@
           "wordCount": 105,
           "title": "no-clown-fiesta-theme (20240705.936) --- Not-so-colorful-theme",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-haskell-20240705.832.tar",
-          "author": null,
-          "description": "The lsp-haskell package has been updated to version 20240705.832.",
-          "link": "https://melpa.org/#/lsp-haskell",
-          "publishedOn": "2024-07-05T08:32:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-haskell (20240705.832) --- Haskell support for lsp-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/weblorg-20240704.2352.tar",
-          "author": null,
-          "description": "The weblorg package has been updated to version 20240704.2352.",
-          "link": "https://melpa.org/#/weblorg",
-          "publishedOn": "2024-07-04T23:52:00.000Z",
-          "wordCount": 105,
-          "title": "weblorg (20240704.2352) --- Static Site Generator for org-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/magit-20240704.2248.tar",
-          "author": null,
-          "description": "The magit package has been updated to version 20240704.2248.",
-          "link": "https://melpa.org/#/magit",
-          "publishedOn": "2024-07-04T22:48:00.000Z",
-          "wordCount": 105,
-          "title": "magit (20240704.2248) --- A Git porcelain inside Emacs.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/debian-el-20240704.2138.tar",
-          "author": null,
-          "description": "The debian-el package has been updated to version 20240704.2138.",
-          "link": "https://melpa.org/#/debian-el",
-          "publishedOn": "2024-07-04T21:38:00.000Z",
-          "wordCount": 105,
-          "title": "debian-el (20240704.2138) --- startup file for the debian-el package",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sdml-mode-20240704.1944.tar",
-          "author": null,
-          "description": "The sdml-mode package has been updated to version 20240704.1944.",
-          "link": "https://melpa.org/#/sdml-mode",
-          "publishedOn": "2024-07-04T19:44:00.000Z",
-          "wordCount": 105,
-          "title": "sdml-mode (20240704.1944) --- Major mode for SDML",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dwim-shell-command-20240704.1533.tar",
-          "author": null,
-          "description": "The dwim-shell-command package has been updated to version 20240704.1533.",
-          "link": "https://melpa.org/#/dwim-shell-command",
-          "publishedOn": "2024-07-04T15:33:00.000Z",
-          "wordCount": 105,
-          "title": "dwim-shell-command (20240704.1533) --- Shell commands with DWIM behaviour",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/corfu-20240704.1510.tar",
-          "author": null,
-          "description": "The corfu package has been updated to version 20240704.1510.",
-          "link": "https://melpa.org/#/corfu",
-          "publishedOn": "2024-07-04T15:10:00.000Z",
-          "wordCount": 105,
-          "title": "corfu (20240704.1510) --- COmpletion in Region FUnction",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/emms-20240704.1359.tar",
-          "author": null,
-          "description": "The emms package has been updated to version 20240704.1359.",
-          "link": "https://melpa.org/#/emms",
-          "publishedOn": "2024-07-04T13:59:00.000Z",
-          "wordCount": 105,
-          "title": "emms (20240704.1359) --- The Emacs Multimedia System",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/idris-mode-20240704.1334.tar",
-          "author": null,
-          "description": "The idris-mode package has been updated to version 20240704.1334.",
-          "link": "https://melpa.org/#/idris-mode",
-          "publishedOn": "2024-07-04T13:34:00.000Z",
-          "wordCount": 105,
-          "title": "idris-mode (20240704.1334) --- Major mode for editing Idris code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/zk-index-20240704.1102.tar",
-          "author": null,
-          "description": "The zk-index package has been updated to version 20240704.1102.",
-          "link": "https://melpa.org/#/zk-index",
-          "publishedOn": "2024-07-04T11:02:00.000Z",
-          "wordCount": 105,
-          "title": "zk-index (20240704.1102) --- Index for zk",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/python-pytest-20240704.1054.tar",
-          "author": null,
-          "description": "The python-pytest package has been updated to version 20240704.1054.",
-          "link": "https://melpa.org/#/python-pytest",
-          "publishedOn": "2024-07-04T10:54:00.000Z",
-          "wordCount": 105,
-          "title": "python-pytest (20240704.1054) --- helpers to run pytest",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/zk-20240704.910.tar",
-          "author": null,
-          "description": "The zk package has been updated to version 20240704.910.",
-          "link": "https://melpa.org/#/zk",
-          "publishedOn": "2024-07-04T09:10:00.000Z",
-          "wordCount": 105,
-          "title": "zk (20240704.910) --- Functions for working with Zettelkasten-style linked notes",
-          "imageUrl": null
         }
       ]
     },
@@ -5430,6 +5340,106 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ejc0uu/trouble_with_consult_and_maybe_projectile_in/",
+          "author": null,
+          "description": "I mostly run Emacs 29.4 (from source) but on some machines I run Emacs 28.2 (Debian 12) and Emacs 27.1 (Debian 11). I've recently started seeing errors on Emacs 27.1 with consult-buffer and consult-ripgrep among others in Git repositories:\n No applicable method: project-roots, (projectile . \"/full/path/to/git/root\") \n and the commands no longer work. I don't see these errors in newer Emacs versions.\n Am I out of luck trying to run modern packages on Emacs 27 or is it possible that I've got something configured incorrectly?\n Thanks.\n projectile 20240212.1100 consult 20240725.508 consult-lsp 20240507.2105 \n    submitted by    /u/quboid42  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ejc0uu/trouble_with_consult_and_maybe_projectile_in/",
+          "publishedOn": "2024-08-03T19:39:53.000Z",
+          "wordCount": null,
+          "title": "Trouble with consult and maybe projectile in Emacs 27.1",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ej96kl/why_do_i_need_a_space_after_title/",
+          "author": null,
+          "description": "I'm using org-roam\n if I have #+title: python:getting command in ubuntu then org-roam-find-node can list it\n if I have #+title:python:getting command in ubuntu then org-roam-find-node cannot list it\n Both ways, the python:getting command in ubuntu are highlighted with org-document-title face, so I think (I could be wrong) that org-mode parses both way alright(or is it font-lock and parser behave differently?). but the space will make that huge difference to org-roam-find-node\n Why?\n    submitted by    /u/HermanHel  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ej96kl/why_do_i_need_a_space_after_title/",
+          "publishedOn": "2024-08-03T17:38:15.000Z",
+          "wordCount": null,
+          "title": "why do I need a space after #+title:",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ej8zxt/efficient_emacs_configuration_and_startup_with/",
+          "author": null,
+          "description": "submitted by    /u/jamescherti  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ej8zxt/efficient_emacs_configuration_and_startup_with/",
+          "publishedOn": "2024-08-03T17:30:52.000Z",
+          "wordCount": null,
+          "title": "Efficient Emacs configuration and startup with minimal-emacs.d",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ej5gaq/which_notify_package_for_orgmode_agenda_you_can/",
+          "author": null,
+          "description": "I want to have system notifications from my org-agenda, which can working without turn on emacs. Which package you can recommend for it?\n    submitted by    /u/EmacsDiscussion  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ej5gaq/which_notify_package_for_orgmode_agenda_you_can/",
+          "publishedOn": "2024-08-03T15:04:11.000Z",
+          "wordCount": null,
+          "title": "Which notify package for org-mode agenda you can recommend",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ej28w9/is_it_time_for_the_remacs_community_to_find/",
+          "author": null,
+          "description": "My main gripe are\n  \nI'm not always logged into reddit, and when I click a reddit link, it produces some fake security error, and tells me I'm not logged in or I should use my developer token. I'm not sure why reddit has started to do this, but does it have something to do a desire to monetize it it more, and may even have something to do with AI. It seems reddit has also signed some exclusive deal with Google allowing only Google to index it.\n \nThe way Reddit know handles blocking by other users. Sometime ago I began to notice that so many responses had some error like deleted and unavailable. Something I remarked on in this thread - Why do some reddit users especially on r/emacs keep messing up threads their involved by deleting their posts or making them unavailable? I don't see why some people should disrupt a technical discussion by blocking some participants who can't see what is going. It is not as though this Twitter or Facebook, this is simply a technical forum and the discussions don't often veer into the political. What kind of mindset does it take to block someone because you don't want them to read your views on technical issues, and it is not as though the person blocked cannot login using another account to see the thread?\n \n These two issues are making this forum less appealing. Perhaps I should use stackexchange more instead.\n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ej28w9/is_it_time_for_the_remacs_community_to_find/",
+          "publishedOn": "2024-08-03T12:31:14.000Z",
+          "wordCount": null,
+          "title": "Is it time for the r/emacs community to find another channel or forum to discuss Emacs? Reddit is becoming pretty annoying.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ej1e33/mouse_events_on_svg_images_in_emacs_2022/",
+          "author": null,
+          "description": "submitted by    /u/dzecniv  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ej1e33/mouse_events_on_svg_images_in_emacs_2022/",
+          "publishedOn": "2024-08-03T11:44:58.000Z",
+          "wordCount": null,
+          "title": "Mouse Events on SVG Images in Emacs [2022]",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1eizr1x/orgmode_notifications_when_emacs_works_and_doesnt/",
+          "author": null,
+          "description": "I use org-agenda mostly for repeating tasks, which is scheduled. I want to have notifications for these tasks, but I don't run emacs always. I don't really sure that mostly of packages, which provides this feature, can working like daemon and sending me notifications, when emacs turn off. What I can do and which extension I must to use?\n    submitted by    /u/EmacsDiscussion  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1eizr1x/orgmode_notifications_when_emacs_works_and_doesnt/",
+          "publishedOn": "2024-08-03T10:04:24.000Z",
+          "wordCount": null,
+          "title": "Org-mode notifications when emacs works and doesn't work",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1eiu5as/are_there_any_films_that_center_foss_lisp_emacs/",
+          "author": null,
+          "description": "submitted by    /u/arylcyclohexylameme  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1eiu5as/are_there_any_films_that_center_foss_lisp_emacs/",
+          "publishedOn": "2024-08-03T04:07:52.000Z",
+          "wordCount": null,
+          "title": "Are there any films that center FOSS, Lisp, emacs, or functional programming?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1einc51/org_roam_daily_reflection_a_new_package_for/",
+          "author": null,
+          "description": "submitted by    /u/emacsomancer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1einc51/org_roam_daily_reflection_a_new_package_for/",
+          "publishedOn": "2024-08-02T22:34:40.000Z",
+          "wordCount": null,
+          "title": "Org Roam Daily Reflection, a new package for viewing daily journal entries",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1eilz20/easily_persist_and_restore_your_emacs_editing/",
+          "author": null,
+          "description": "submitted by    /u/jamescherti  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1eilz20/easily_persist_and_restore_your_emacs_editing/",
+          "publishedOn": "2024-08-02T21:35:44.000Z",
+          "wordCount": null,
+          "title": "Easily persist and restore your Emacs editing sessions with easysession.el",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1eicgoy/tamil_text_rendering_in_emacs_is_messed_up/",
           "author": null,
@@ -8039,126 +8049,6 @@
           "wordCount": null,
           "title": "Remote emacs GUI with waypipe",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dvt20v/bloat/",
-          "author": null,
-          "description": "Just installed GNU Emacs an I am working my way through the manual. I thought it was a lightweight text editor, but I just found out that it has: games, lsp support, version control, mail(??), news, and a fucking psychotherapist. I'm starting to reconsider my usage of Emacs. This seems extremely bloated.\n Additionally, the Emacs manual itself is massive. I'm starting to question if this is worth reading.\n    submitted by    /u/Icy-Repair8024  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dvt20v/bloat/",
-          "publishedOn": "2024-07-05T08:24:30.000Z",
-          "wordCount": null,
-          "title": "Bloat",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dvr7ka/how_to_change_a_minibuffers_mode/",
-          "author": null,
-          "description": "I'm trying to create a custom minibuffer, but I can't find a way to change its major or minor modes. How can I do this?\n \"minibuffer-with-setup-hook\" runs the function before the buffer is active so it's not possible to just \"setq major-mode\" inside of it.\n EDIT: I guess just changing the keymap temporarily will do the trick, since I just need the arrow keys to move the cursor in another window.\n    submitted by    /u/Western-Dentist4750  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dvr7ka/how_to_change_a_minibuffers_mode/",
-          "publishedOn": "2024-07-05T06:18:20.000Z",
-          "wordCount": null,
-          "title": "How to change a minibuffer's mode?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dvlika/removing_keyboard_layout_dead_keys_behaviour_when/",
-          "author": null,
-          "description": "I know it sounds cryptic but I just happen to want to type Cyrillic on a spanish layout keyboard. I am able to do so by using this:\n  (require 'quail) ;; Define a custom keyboard layout (setq quail-keyboard-layout-es \"\\ \\ ºª1!2\\\"3·4$5%6&7/8(9)0='?¡¿ \\ qQwWeErRtTyYuUiIoOpP`^+* \\ aAsSdDfFgGhHjJkKlLñÑ´¨çÇ \\ <>zZxXcCvVbBnNmM,;.:-_ \\ \" ) (add-to-list 'quail-keyboard-layout-alist `(\"pc105-es\" . ,quail-keyboard-layout-es)) (quail-set-keyboard-layout \"pc105-es\") (add-hook 'after-change-major-mode-hook (lambda () (unless (or (minibufferp) (member (buffer-name) '(\"*scratch*\" \"*Messages*\" \"*Help*\")) (derived-mode-p 'shell-mode 'eshell-mode 'term-mode 'dired-mode)) (set-input-method \"russian-computer\")))) \n The problem is that characters `^ which should print cyrillic letter х and characters ´¨ which should print cyrillic character э are compound -> which means they are used for vocals like àâ áä through the use of use of dead keys (keys which are used to modify other characters and print not by themselves unless typed twice), however I'm into the problem that despite creating my own keyboard layout emacs still makes me type those dead characters twice and its annoying.\n Do you know how can I deactivate this behaviour?\n    submitted by    /u/bloomingFemme  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dvlika/removing_keyboard_layout_dead_keys_behaviour_when/",
-          "publishedOn": "2024-07-05T00:36:07.000Z",
-          "wordCount": null,
-          "title": "Removing keyboard Layout Dead Keys behaviour when using other inputs. -How can I input russian with a spanish keyboard layout without having to type twice compound for letters mapped to dead keys?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dvhil5/temporarily_flashing_lines_that_are_copied/",
-          "author": null,
-          "description": "Hi all,\n Neovim has this nifty feature by default that when a region/line is copied, it temporarily flashes to notify the user the exact region being copied.\n Is there a way to do this in emacs? Thanks.\n    submitted by    /u/kn0xchad  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dvhil5/temporarily_flashing_lines_that_are_copied/",
-          "publishedOn": "2024-07-04T21:13:56.000Z",
-          "wordCount": null,
-          "title": "Temporarily flashing lines that are copied",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dvceyn/help_in_starting_up/",
-          "author": null,
-          "description": "I downloaded Emacs (on windows) and just got a folder full of hundreds of dumb irrelevant files, how do I actually go to the text editor and get it started with a particular coding language?\n    submitted by    /u/Antique-Kale3469  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dvceyn/help_in_starting_up/",
-          "publishedOn": "2024-07-04T17:29:08.000Z",
-          "wordCount": null,
-          "title": "help in starting up",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dv91ry/sharing_some_my_thoughts_on_emacs_and_learning/",
-          "author": null,
-          "description": "I've been using Emacs for about half a year now, and my feeling is that Emacs is the most flexible and powerful editor I've ever used. I think I won't need to try any other editors for at least the next 5 years.\n Previously I was using Sublime Text, the shortcut design of it felt very smooth and responsive, I even wrote many plugins for it. But as my customization requirements for editing became more and more personalized, I felt it was time to try other editors. Then, I had to choose between the Vim family and Emacs, and ultimately chose to systematically learn Emacs because I wanted to try Org-Mode.\n Emacs has satisfied my biggest requirements for an editor:\n  \n100% configurable (built-in customization system, Elisp...)\n Visibility. In Emacs, you can even see all the information (UTF-8 e…",
-          "link": "https://www.reddit.com/r/emacs/comments/1dv91ry/sharing_some_my_thoughts_on_emacs_and_learning/",
-          "publishedOn": "2024-07-04T15:03:59.000Z",
-          "wordCount": null,
-          "title": "Sharing some my thoughts on Emacs and Learning Emacs after half year of using/learning it.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dv8c26/what_is_it_about_lisp_that_works_so_well_for_emacs/",
-          "author": null,
-          "description": "I was wondering what emacs would be like if we somehow got e-C or e-Haskell or e-python instead of elisp. What is it about lisp in particular that makes emacs work so well?\n    submitted by    /u/iamn0tthere  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dv8c26/what_is_it_about_lisp_that_works_so_well_for_emacs/",
-          "publishedOn": "2024-07-04T14:32:15.000Z",
-          "wordCount": null,
-          "title": "What is it about lisp that works so well for emacs?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dv7im6/how_to_use_multiple_listdirs_with_usepackagevc/",
-          "author": null,
-          "description": "Pretty much the above question. I am using Emacs 30, mainly to use the built-in which-key-mode and use-package with VC. So far, I have had no problems with them. But I was trying to install doom-themes from GitHub, and now for lisp-dirs, I think I have to include both \"extensions\" and \"themes\", at least that's the impression I got from downloading the tar file from melpa. So far, I have done this:\n (use-package doom-themes ;; :vc (:url \"https://github.com/doomemacs/themes\" ;; :lisp-dir \"themes/\" ;; :lisp-dir \"extensions/\") :config (setq doom-themes-enable-bold t doom-themes-enable-italic t) (load-theme 'doom-solarized-light t)) \n but, it didn't work. How do I include both the directories? (and yes, I am a newbie)\n    submitted by    /u/kyvernetes  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dv7im6/how_to_use_multiple_listdirs_with_usepackagevc/",
-          "publishedOn": "2024-07-04T13:55:17.000Z",
-          "wordCount": null,
-          "title": "How to use multiple `list-dir`s with `use-package-vc`?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dv5oaf/global_mode_line/",
-          "author": null,
-          "description": "Two months ago on this subreddit I asked if there is a way to have a global modeline in emacs, I got only one awnser which is this code/repo https://github.com/amno1/global-mode-line . Also I went through similar posts on this subreddit once again, searched for solution on search engines, there a lot of tricks/tweaks and \"solutions\", but I found this https://www.youtube.com/watch?v=OSv5JCIlPZA and this repo of the same author https://github.com/amosbird/emacs/tree/onemodeline . May be it is possible to merge this to the official emacs repo?\n    submitted by    /u/Particular_Bug388  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dv5oaf/global_mode_line/",
-          "publishedOn": "2024-07-04T12:23:54.000Z",
-          "wordCount": null,
-          "title": "Global mode line",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dv5enj/iconsnerdfonts_on_android/",
-          "author": null,
-          "description": "I've been trying to get an emacs environment up and running on my phone, and overall it went splendidly. I'm using the sourceforge builds of Emacs 30 native Android port. However, I'm struggling to get a nerd font going. Various fancy icons just don't display properly, outside doom-modeline which uses nerd-icons, leaving org-mode, eshell et al without their usual bling. \n    submitted by    /u/Similar_Tart_5498  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dv5enj/iconsnerdfonts_on_android/",
-          "publishedOn": "2024-07-04T12:09:00.000Z",
-          "wordCount": null,
-          "title": "Icons/nerdfonts on Android",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dv48hp/my_aftersavehook_does_not_trigger_why/",
-          "author": null,
-          "description": "I have this in my org file:\n # Local variables: # after-save-hook: org-html-export-to-html # end: #+export_file_name: ./exports/somedoc.html \n But when I save, nothing happens. When I first set this up, it worked. But when I closed emacs and opened it again, it doesn't do anything.\n What am I missing?\n    submitted by    /u/JayVinn21  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dv48hp/my_aftersavehook_does_not_trigger_why/",
-          "publishedOn": "2024-07-04T11:01:54.000Z",
-          "wordCount": null,
-          "title": "My after-save-hook does not trigger --why?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dv40ou/how_to_specify_literal_vector_indentation/",
-          "author": null,
-          "description": "How could I specify the indentation rule for elisp literal vectors ? \n I would like this:\n [a b c d] \n to be indented like this:\n [a b c d] \n    submitted by    /u/pbaille81  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dv40ou/how_to_specify_literal_vector_indentation/",
-          "publishedOn": "2024-07-04T10:48:14.000Z",
-          "wordCount": null,
-          "title": "How to specify literal vector indentation ?",
-          "imageUrl": null
         }
       ]
     },
@@ -8167,6 +8057,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2956@/discussions",
+          "author": "Ray",
+          "description": "Greetings note wizards! I run my own little branding & design agency, and when I decided to start writing blog posts I found myself falling down rabbit holes of psychology, Jung, archetypes, consciousness, and on. I realized that I needed a better way to hold on to and integrate all the new ideas I was finding — which led me to a new rabbit hole of Zettelkasten and trying to understand the philosophies and processes behind it.\nMany of my web searches would lead me to thoughtful discussions on this forum, so I thought I'd tag along and try to absorb your collective knowledge!\nI'd already been using Obsidian, but I recently started a new vault so I could use it more correcter.",
+          "link": "https://forum.zettelkasten.de/discussion/2956/its-rabbit-holes-all-the-way-down",
+          "publishedOn": "2024-08-02T21:51:13.000Z",
+          "wordCount": 671,
+          "title": "It's rabbit holes all the way down",
+          "imageUrl": null
+        },
         {
           "id": "2955@/discussions",
           "author": "nigelesque",
@@ -8196,6 +8096,16 @@
           "wordCount": 1119,
           "title": "Antinet Zettelkasten",
           "imageUrl": null
+        },
+        {
+          "id": "2952@/discussions",
+          "author": "Edmund",
+          "description": "I've had ‘A System for Writing’, the new book by Bob Doto, on my desk since yesterday.\nBefore I read a new book, I'm interested in how it relates to the books I've read so far. To get an initial overview, I simply create a new Reference Note for the book in my Zettelkasten. It consists of a brief description of the book and a few references to existing notes.\nWhen I quickly look through the bibliography, I find these references. They are links to books that I have already read or to books that are on my reading list. These are simply added to link the Reference Note. The graphical overview is generated automatically by the Zettelkasten tool.\n\nFigure: Local Graph for \"A System for Writing - Bob Doto\"\nThe resulting literature map helps to provide an initial overview. By adding a few details, the map becomes somewhat easier to read as a concept map.\n\nFigure: Concept Map created from bibliographic details\nThe concept map will be refined further. Quotations and ideas from the existing 'Reference Notes' make the 'Bibliographic Map' easier to read. It now offers a good overview that facilitates the overall understanding of this bibliographic network.\n\nFigure: Extended Concept Map with time axis created from bibliographic details\nMy learning: The notes in my Zettelkasten benefit from being reduced in size (digital: 500 words or analogue: 5x7\" paper size). One note, one idea. But all the connections of my networked notes remain invisible. They are represented by simple hyperlinks on each note. Understanding context means having visibility of these networks. Using Concept Maps with an infinite canvas size is a great help.\nHere is another example of extending the \"paper size\" to create a visual outline: Victor Margolin's zettelkasten process for note taking and writing\nDownload as PDF: Bibliographic Map · GitHub\nMore about:\nhttps://forum.zettelkasten.de/discussion/1796/litmaps-literature-maps-of-article-citations",
+          "link": "https://forum.zettelkasten.de/discussion/2952/a-system-for-writing-literature-mapping",
+          "publishedOn": "2024-07-31T15:55:26.000Z",
+          "wordCount": 3953,
+          "title": "A System for Writing - Literature Mapping",
+          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/em/xqdyapmekn2w.png"
         },
         {
           "id": "2952@/discussions",
