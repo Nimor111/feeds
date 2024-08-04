@@ -53,6 +53,26 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1ejrg92/abusing_haskell_executable_blog_posts/",
+          "author": null,
+          "description": "submitted by    /u/vehbisinan  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ejrg92/abusing_haskell_executable_blog_posts/",
+          "publishedOn": "2024-08-04T09:40:13.000Z",
+          "wordCount": null,
+          "title": "Abusing Haskell: Executable Blog Posts",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ejpipa/update_how_are_monoidalproductprofunctor_and/",
+          "author": null,
+          "description": "Hey all, this is a follow up post to this post with an amazing title.\n I am writing this so it doesn't just exist on my laptop and is documented somewhere. Maybe this is common knowledge, I did not find it anywhere.\n Basically, update from my end on the direction Monoidal -> Traversing is that there's a way to write\n monoidalToTraversing :: (Choice p, Monoidal p, Traversable f) => p a b -> p (f a) (f b) \n we use a variation of Alexis King's construction\n data Traversal a r b = Done b | Yield a !(Traversal a r (r -> b)) deriving Functor instance Applicative (Traversal a r) where pure = Done Done f <*> a = f <$> a Yield a rToTf <*> ta = Yield a ((\\ f b x -> f x b) <$> rToTf <*> ta) traversal :: Traversable t => t a -> Traversal a b (t b) traversal = traverse (\\ a -> Yield a (Done id)) unTraversal :: (a -> b) -> Traversal a b tb -> tb unTraversal _ (Done tb) = tb unTraversal morph (Yield a fab) = unTraversal morph (fmap ($ morph a) fab) traversalP :: (Choice p, Monoidal p) => p a b -> p (Traversal a b x) (Traversal b b x) traversalP = dimap toEither fromEither . right' . (both <$> id <*> traversalP) where toEither :: Traversal a r b -> Either b (a, Traversal a r (r -> b)) toEither (Done x ) = Left x toEither (Yield a resume) = Right (a, resume) fromEither :: Either b (a, Traversal a r (r -> b)) -> Traversal a r b fromEither (Left x ) = Done x fromEither (Right (a, resume)) = Yield a resume monoidalToTraversing :: (Choice p, Monoidal p, Traversable f) => p a b -> p (f a) (f b) monoidalToTraversing = dimap traversal (unTraversal id) . traversalP \n (I call both :: p a b -> p c d -> p (a,c) (b,d) to Monoidal's idiomatic class function) the other direction (Traversing -> Monoidal) needs some other kind of ideas which I am not having so far.\n Remaining questions:\n  \nWhat about the other direction?\n How to do this for Traversing1? It shouldn't use Choice, because Either a is not a Traversable1\n What are the implications?\n  \n   submitted by    /u/crisoagf  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ejpipa/update_how_are_monoidalproductprofunctor_and/",
+          "publishedOn": "2024-08-04T07:24:01.000Z",
+          "wordCount": null,
+          "title": "Update: How are Monoidal/ProductProfunctor and Traversing related?",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1ej9itp/primes_list_build_error/",
           "author": null,
           "description": "Hello,\n I need to find the nth prime number. This is what I have so far:\n module Prime (nth) where nth :: Int -> Maybe Integer nth n | n < 1 = Nothing | otherwise = Just ([x | x <- [2..n], isPrime x] !! (n-1)) isPrime :: Int -> Bool isPrime 2 = True isPrime n | n < 2 = False |otherwise = all (map (\\x -> n `mod` x /= 0)) [2..root] where root = (floor . sqrt . fromIntegral) n \n Some of the errors I get are (seems that both functions are wrong):\n Couldn't match expected type ‘Integer’ with actual type ‘Int’ • In the expression: x In the first argument of ‘(!!)’, namely ‘[x | x <- [2 .. n], isPrime x]’ In the first argument of ‘Just’, namely ‘([x | x <- [2 .. n], isPrime x] !! (n - 1))’Couldn't match expected type Couldn't match type ‘[Bool]’ with ‘Bool’ Expected: [Int] -> Bool Actual: [Int] -> [Bool] • In the first argument of ‘all’, namely ‘(map (\\ x -> n `mod` x /= 0))’Couldn't match type ‘[Bool]’ with ‘Bool’ Expected: [Int] -> Bool Actual: [Int] -> [Bool] • In the first argument of ‘all’, namely ‘(map (\\ x -> n `mod` x /= 0))’ \n The second error is not really clear for me, I thought that all returns Bool (a -> Bool) -> [a] -> Bool), why would it be [Bool]? Also, any hint for the first function? Thank you.\n EDIT:\n Correct solution:\n module Prime (nth) where nth :: Int -> Maybe Integer nth n | n < 1 = Nothing | otherwise = Just (toInteger ([x | x <- [2..], isPrime x] !! (n-1))) isPrime :: Int -> Bool isPrime n = null [x | x <- [2..n-1], n `mod` x == 0] \n    submitted by    /u/mihaijulien  \n [link]   [comments]",
@@ -1091,56 +1111,6 @@
           "wordCount": null,
           "title": "Haskell in VSCode",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dwd263/efficient_image_loading_and_processing/",
-          "author": null,
-          "description": "Does anyone have advice on the best library for loading images from image files and processing them? The two options I've come across for loading images from files (for example, jpg files) are Juicy Pixels and Friday, more specifically, friday-devil. The issues are:\n 1) Juicy Pixels can load images, but it seems to be quite slow. Loading an image representation from a jpg file runs substantially slower than doing the same thing in other compiled languages, like Go and Nim.\n 2) Friday seems pretty far out-of-date, and I run into dependency conflicts when I try to use friday-devil.\n Can anyone suggest alternate possibilities? Or is there something more I could do with Juicy Pixels, to run it more efficiently? I tried adding ghc-options: -O2 in the executable stanza of my cabal file, but this didn't have any discernible effect.\n To further complicate things, ideally I'd like to find a solution that allows compiling the program as a static binary. I dunno if that will be an option if I use a solution (or develop my own) based on a C library.\n Thanks for any suggestions. \n    submitted by    /u/mister_drgn  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dwd263/efficient_image_loading_and_processing/",
-          "publishedOn": "2024-07-06T00:35:33.000Z",
-          "wordCount": null,
-          "title": "Efficient image loading and processing",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dwaob4/frameworks_mac_os/",
-          "author": null,
-          "description": "Hello!\n I’m making a library and executable and having a tough time!\n In my library I have: ~~~ frameworks: WebKit ~~~ But the final executable that links to the library doesn’t link to WebKit. Is this a bug? Or am I doing something wrong?\n I’ve tried adding the framework to the executable as well, but it still won’t show up in otool.\n Edit: To further explain the situation. I have a c++ library (the source, I’m not linking to it) which presents a c interface which I add using cxx-sources in the cabal file. This uses the WebKit framework on Mac OS. I then have a hsc file which exposes the c functions to Haskell.\n I then use this Haskell library and it crashes because the framework isn’t linked.\n    submitted by    /u/jamhob  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dwaob4/frameworks_mac_os/",
-          "publishedOn": "2024-07-05T22:43:24.000Z",
-          "wordCount": null,
-          "title": "Frameworks Mac OS",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dw7ieq/help_with_configuring_latex_support_for_my_blog/",
-          "author": null,
-          "description": "I'm trying to add LaTex support for my blog. I started out with this template which uses slick as opposed to Hakyll since it seemed less daunting. After looking through the codebase, I realised that I needed to modify the mdtoHTML function in app/Main.hs by adding writerExtensions which I found here to render the LaTex in the Markdown. This is the function after I've made my modifications:\n mdToHTML :: T.Text -> Action Value mdToHTML = markdownToHTMLWithOpts markdownOptions htmlOptions where markdownOptions :: ReaderOptions markdownOptions = def { readerExtensions = fold [ extensionsFromList [ Ext_yaml_metadata_block , Ext_fenced_code_attributes , Ext_auto_identifiers , Ext_footnotes , Ext_link_attributes , Ext_pipe_tables ] , githubMarkdownExtensions ] } htmlOptions = def { writerExtensions = fold [ extensionsFromList [ Ext_tex_math_dollars , Ext_tex_math_single_backslash , Ext_latex_macros , Ext_fenced_code_blocks , Ext_backtick_code_blocks , Ext_fenced_code_attributes ] ] } \n However, after building and running the site, I noticed that anything enclosed in $..$, $$...$$ and \\[...\\] still down get rendered at all. I'm not sure what to do. Any suggestions?\n    submitted by    /u/Spasmodic_Ramblings  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dw7ieq/help_with_configuring_latex_support_for_my_blog/",
-          "publishedOn": "2024-07-05T20:23:01.000Z",
-          "wordCount": null,
-          "title": "Help with configuring LaTex support for my blog",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dw64go/multi_component_support_in_hls_with_cabalinstall/",
-          "author": null,
-          "description": "submitted by    /u/n00bomb  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dw64go/multi_component_support_in_hls_with_cabalinstall/",
-          "publishedOn": "2024-07-05T19:22:53.000Z",
-          "wordCount": null,
-          "title": "Multi Component Support in HLS with cabal-install 3.12",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1dvvkms/welltyped_part_6_monads_of_the_free_videobased/",
-          "author": null,
-          "description": "submitted by    /u/kosmikus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1dvvkms/welltyped_part_6_monads_of_the_free_videobased/",
-          "publishedOn": "2024-07-05T11:18:06.000Z",
-          "wordCount": null,
-          "title": "[Well-Typed] Part 6 (Monads) of the free video-based Haskell introduction course",
-          "imageUrl": null
         }
       ]
     },
@@ -1149,6 +1119,56 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ejwm3w/this_week_in_scala_aug_5_2024/",
+          "author": null,
+          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ejwm3w/this_week_in_scala_aug_5_2024/",
+          "publishedOn": "2024-08-04T14:32:02.000Z",
+          "wordCount": null,
+          "title": "This week in #Scala (Aug 5, 2024)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ejvhmx/would_you_choose_scala_for_a_mission_critical/",
+          "author": null,
+          "description": "This question is mostly to those of you, who love or enjoy Scala (or not, but still visit this sub) but don't get to use it at work, or use it only for Spark.\n Imagine that you're given a task of creating a mission critical component of your company's product. It would have to be a project deployed to the cloud, scalable, reliable, performant (but not extremely performant - jvm performance is fine). It will have to be maintained for years to come - by you, your team and your successors.\n Whatever you choose, you will have to recruit a team or train your coworkers - let's assume that they are mostly java users, good old spring booters, but they are not against the idea of learning a new language and paradigm.\n Would you choose Scala for such a project if given a choice? Do you feel confident that you'd be able to sell this idea to your manager? Do you believe that with Scala it would be cheaper to maintain or more profitable than with other languages? When would it become profitable - the recruitment / trainings would be more expensive surely, so would benefits of Scala become visible after weeks, months, years of maintaining the product, or never at all?\n View Poll\n    submitted by    /u/Time_Competition_332  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ejvhmx/would_you_choose_scala_for_a_mission_critical/",
+          "publishedOn": "2024-08-04T13:39:16.000Z",
+          "wordCount": null,
+          "title": "Would you choose Scala for a mission critical component at work?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ejr5qd/can_cezio_fans_stop_being_so_toxic_here/",
+          "author": null,
+          "description": "I stumbled upon a very toxic comment in this subreddit that somehow racked up 20 upvotes, and honestly, I was appalled by the sheer negativity of it.\n I get that everyone has their own opinions about coding, but flinging insults like that? That’s just not right.\n Can we please cut the negative rhetoric and start being more welcoming to EVERYONE, regardless of their skill level or coding style?\n The /r/scala subreddit should be a safe space for every Scala user. Labeling other people's code as \"trash\" is not okay.\n That comment also fails to meet this community's rules of \"decency\" and \"politeness.\" I'm very surprised that it received 20 upvotes.\n And can we please make full use of all the tools that reddit puts at our disposal? And let’s not turn a blind eye to this kind of behavior, we need to call it out. We can definitely do better. Thanks.\n    submitted by    /u/Previous_Pop6815  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ejr5qd/can_cezio_fans_stop_being_so_toxic_here/",
+          "publishedOn": "2024-08-04T09:18:59.000Z",
+          "wordCount": null,
+          "title": "Can CE/ZIO fans stop being so toxic here?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ejmbt3/sbt/",
+          "author": null,
+          "description": "submitted by    /u/beelpelly  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ejmbt3/sbt/",
+          "publishedOn": "2024-08-04T04:01:47.000Z",
+          "wordCount": null,
+          "title": "SBT",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ejjqa1/not_fully_understanding_type_inference_and/",
+          "author": null,
+          "description": "Two dummy examples, both Scala 2.12. \n First example - sequence of Foo[t <: T], and I want some function to use that t somehow. Pseudocode-ish:\n ``` type A <: T type B <: T\n trait Foo[t <: T]\n object Foo1 extends Foo[A]\n objet Foo2 extends Foo[B]\n def someFunc[t <: T](foo: Foo[t]): Unit = { somethingThatKnowsHowToTakeTypes[t].foobar }\n Seq( Foo1, Foo2 ).map(someFunc) ```\n This leads to type erasure concerns, even though to me it seems obvious that that Sequence is of a type where each object inside is a Foo of some concrete type that fits the constraints. I can get around it by introducing some wrapper case class that I can stick Foo1 and Foo2 into, which retains it's type as an explicit member. And then inside someFunc I have to manually use that type member explicitly. Feels clunky and it feels like something I'm tricking the compiler into doing. Not to mention at some point I did get it to compile, only to fail at runtime if I didn't create the correct implicit typetag in scope.\n Second example:\n Sequence of (Foo[t <: T], Bar[t <: T]), and Bar/Foo have methods that operate on or return t <: T. I store in a 2-tuple because inside a lambda I want to do something like Foo.read(...).map(Bar.transform) where Foo.read returns something typed by t and Bar.transform takes something subtyped by t. I assume since I pair them up in a 2-tuple, the Seq of these such objects could recognize that it's some paired object, but instead the compiler complains about expected vs supplied types.\n    submitted by    /u/kebabmybob  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ejjqa1/not_fully_understanding_type_inference_and/",
+          "publishedOn": "2024-08-04T01:41:01.000Z",
+          "wordCount": null,
+          "title": "Not fully understanding type inference and erasure. What is a more idiomatic pattern for sequences of typed objects?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1ej90io/iterating_over_type_parameters/",
           "author": null,
@@ -1908,36 +1928,6 @@
           "wordCount": null,
           "title": "Derive your config with PureConfig and Scala 3",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dw4dam/anyone_hiring_scala_engineer_in_us/",
-          "author": null,
-          "description": "submitted by    /u/gcs_reddy  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dw4dam/anyone_hiring_scala_engineer_in_us/",
-          "publishedOn": "2024-07-05T18:07:37.000Z",
-          "wordCount": null,
-          "title": "anyone hiring Scala engineer in US?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dw0722/maintenance_and_modernisation_of_scala/",
-          "author": null,
-          "description": "Hello!\n We are trying to better understand what things are causing the most pain for long term maintenance of applications built with Scala and to this end I've started a poll on Twitter/X at\n https://x.com/lukasz_bialy/status/1808807669517402398\n It would be awesome if you could vote there but if you have no such possibility, a comment here on reddit would be very helpful too. The purpose of this is for the Scala team at VirtusLab to understand where we should direct our focus and to figure out better ways to help companies that feel \"stuck\" with Scala-based services or data pipelines that pose a problem from maintenance perspective. If you have some horror stories about maintenance of Scala projects, feel free to share them too!\n    submitted by    /u/lbialy  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dw0722/maintenance_and_modernisation_of_scala/",
-          "publishedOn": "2024-07-05T15:08:02.000Z",
-          "wordCount": null,
-          "title": "Maintenance and modernisation of Scala applications: a poll",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1dvur9n/quill_new_dialects_or_a_custom_jdbc_driver/",
-          "author": null,
-          "description": "Hi there, I'm getting to know Quill and while I like its concepts and what it offers in comparison with other JDBC libraries, I'm still trying to assess its limitations. The documentation is very short and to be honest i feel like it doesn't cover even half of questions one can have while learning the library. There are only few examples for the most basic cases, then when it comes to the Contexts section there are almost none. I have no idea when to use \"lazy val ctx = new PostgresJdbcContext(SnakeCase, \"ctx\")\" and when to simply use \"quill: Quill.Postgres[SnakeCase]\" from the Getting Started section.\n There are 6 JDBC dialects provided by the library - H2Dialect, MySQLDialect, PostgresDialect, SqliteDialect, SQLServerDialect, OracleDialect. I wanted to ask if Quill can also be used for other databases maybe for some more generic queries, or is it better to choose a different tool for other RDB?\n    submitted by    /u/Time_Competition_332  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1dvur9n/quill_new_dialects_or_a_custom_jdbc_driver/",
-          "publishedOn": "2024-07-05T10:24:59.000Z",
-          "wordCount": null,
-          "title": "Quill - new dialects or a custom JDBC driver",
-          "imageUrl": null
         }
       ]
     },
@@ -2275,16 +2265,6 @@
           "wordCount": null,
           "title": "Code blocks",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1dwdxnl/potential_new_user_here_before_i_go_diving_inwill/",
-          "author": null,
-          "description": "Using a todo list as an example, but really the most important file of mine that needs to be synced. \n I would love to use emacs and orgmode (have been hearing about it's capabilities for years) but this whole thing becomes moot for me if I can't sync a todo list on several devices and computers.\n  \nIs it doable in a way that won't make me feel like tearing my hair out?\n Bonus question: is there anyway to put simple password protection or encryption on the synced file? \n  \nThanks!\n    submitted by    /u/recursivedev  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1dwdxnl/potential_new_user_here_before_i_go_diving_inwill/",
-          "publishedOn": "2024-07-06T01:21:46.000Z",
-          "wordCount": null,
-          "title": "Potential new user here. Before I go diving in...will I be able to sync a copy of a todo list on Windows on my Android phone as well as my iPad?",
-          "imageUrl": null
         }
       ]
     },
@@ -2293,6 +2273,116 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/ledger-mode-20240804.1623.tar",
+          "author": null,
+          "description": "The ledger-mode package has been updated to version 20240804.1623.",
+          "link": "https://melpa.org/#/ledger-mode",
+          "publishedOn": "2024-08-04T16:23:00.000Z",
+          "wordCount": 105,
+          "title": "ledger-mode (20240804.1623) --- Helper code for use with the \"ledger\" command-line tool",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/magit-20240804.1520.tar",
+          "author": null,
+          "description": "The magit package has been updated to version 20240804.1520.",
+          "link": "https://melpa.org/#/magit",
+          "publishedOn": "2024-08-04T15:20:00.000Z",
+          "wordCount": 105,
+          "title": "magit (20240804.1520) --- A Git porcelain inside Emacs.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mastodon-20240804.751.tar",
+          "author": null,
+          "description": "The mastodon package has been updated to version 20240804.751.",
+          "link": "https://melpa.org/#/mastodon",
+          "publishedOn": "2024-08-04T07:51:00.000Z",
+          "wordCount": 105,
+          "title": "mastodon (20240804.751) --- Client for fediverse services using the Mastodon API",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/catppuccin-theme-20240803.2336.tar",
+          "author": null,
+          "description": "The catppuccin-theme package has been updated to version 20240803.2336.",
+          "link": "https://melpa.org/#/catppuccin-theme",
+          "publishedOn": "2024-08-03T23:36:00.000Z",
+          "wordCount": 105,
+          "title": "catppuccin-theme (20240803.2336) --- Catppuccin for Emacs - 🍄 Soothing pastel theme for Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/apheleia-20240803.2322.tar",
+          "author": null,
+          "description": "The apheleia package has been updated to version 20240803.2322.",
+          "link": "https://melpa.org/#/apheleia",
+          "publishedOn": "2024-08-03T23:22:00.000Z",
+          "wordCount": 105,
+          "title": "apheleia (20240803.2322) --- Reformat buffer stably",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/vertico-prescient-20240803.2320.tar",
+          "author": null,
+          "description": "The vertico-prescient package has been updated to version 20240803.2320.",
+          "link": "https://melpa.org/#/vertico-prescient",
+          "publishedOn": "2024-08-03T23:20:00.000Z",
+          "wordCount": 105,
+          "title": "vertico-prescient (20240803.2320) --- prescient.el + Vertico",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/selectrum-prescient-20240803.2320.tar",
+          "author": null,
+          "description": "The selectrum-prescient package has been updated to version 20240803.2320.",
+          "link": "https://melpa.org/#/selectrum-prescient",
+          "publishedOn": "2024-08-03T23:20:00.000Z",
+          "wordCount": 105,
+          "title": "selectrum-prescient (20240803.2320) --- prescient.el + Selectrum",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/prescient-20240803.2320.tar",
+          "author": null,
+          "description": "The prescient package has been updated to version 20240803.2320.",
+          "link": "https://melpa.org/#/prescient",
+          "publishedOn": "2024-08-03T23:20:00.000Z",
+          "wordCount": 105,
+          "title": "prescient (20240803.2320) --- Better sorting and filtering",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ivy-prescient-20240803.2320.tar",
+          "author": null,
+          "description": "The ivy-prescient package has been updated to version 20240803.2320.",
+          "link": "https://melpa.org/#/ivy-prescient",
+          "publishedOn": "2024-08-03T23:20:00.000Z",
+          "wordCount": 105,
+          "title": "ivy-prescient (20240803.2320) --- prescient.el + Ivy",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/corfu-prescient-20240803.2320.tar",
+          "author": null,
+          "description": "The corfu-prescient package has been updated to version 20240803.2320.",
+          "link": "https://melpa.org/#/corfu-prescient",
+          "publishedOn": "2024-08-03T23:20:00.000Z",
+          "wordCount": 105,
+          "title": "corfu-prescient (20240803.2320) --- prescient.el + Corfu",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/company-prescient-20240803.2320.tar",
+          "author": null,
+          "description": "The company-prescient package has been updated to version 20240803.2320.",
+          "link": "https://melpa.org/#/company-prescient",
+          "publishedOn": "2024-08-03T23:20:00.000Z",
+          "wordCount": 105,
+          "title": "company-prescient (20240803.2320) --- prescient.el + Company",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/ess-20240803.1733.tar",
           "author": null,
@@ -2431,6 +2521,16 @@
           "publishedOn": "2024-08-01T20:11:00.000Z",
           "wordCount": 105,
           "title": "firstly-search (20240801.2011) --- Search with any key: Dired, Package, Buffer menu modes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/sdml-mode-20240801.1458.tar",
+          "author": null,
+          "description": "The sdml-mode package has been updated to version 20240801.1458.",
+          "link": "https://melpa.org/#/sdml-mode",
+          "publishedOn": "2024-08-01T14:58:00.000Z",
+          "wordCount": 105,
+          "title": "sdml-mode (20240801.1458) --- Major mode for SDML",
           "imageUrl": null
         },
         {
@@ -2574,6 +2674,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/vsh-mode-20240730.2036.tar",
+          "author": null,
+          "description": "The vsh-mode package has been updated to version 20240730.2036.",
+          "link": "https://melpa.org/#/vsh-mode",
+          "publishedOn": "2024-07-30T20:36:00.000Z",
+          "wordCount": 105,
+          "title": "vsh-mode (20240730.2036) --- Alternate PTY interface for complex terminal sessions",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/git-cliff-20240730.1912.tar",
           "author": null,
           "description": "The git-cliff package has been updated to version 20240730.1912.",
@@ -2694,6 +2804,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/lsp-haskell-20240729.1637.tar",
+          "author": null,
+          "description": "The lsp-haskell package has been updated to version 20240729.1637.",
+          "link": "https://melpa.org/#/lsp-haskell",
+          "publishedOn": "2024-07-29T16:37:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-haskell (20240729.1637) --- Haskell support for lsp-mode",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/mozc-20240729.1542.tar",
           "author": null,
           "description": "The mozc package has been updated to version 20240729.1542.",
@@ -2791,6 +2911,16 @@
           "publishedOn": "2024-07-27T23:03:00.000Z",
           "wordCount": 105,
           "title": "dpkg-dev-el (20240727.2303) --- startup file for the elpa-dpkg-dev-el package",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/debian-el-20240727.2230.tar",
+          "author": null,
+          "description": "The debian-el package has been updated to version 20240727.2230.",
+          "link": "https://melpa.org/#/debian-el",
+          "publishedOn": "2024-07-27T22:30:00.000Z",
+          "wordCount": 105,
+          "title": "debian-el (20240727.2230) --- startup file for the debian-el package",
           "imageUrl": null
         },
         {
@@ -2904,6 +3034,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/dwim-shell-command-20240726.2003.tar",
+          "author": null,
+          "description": "The dwim-shell-command package has been updated to version 20240726.2003.",
+          "link": "https://melpa.org/#/dwim-shell-command",
+          "publishedOn": "2024-07-26T20:03:00.000Z",
+          "wordCount": 105,
+          "title": "dwim-shell-command (20240726.2003) --- Shell commands with DWIM behaviour",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/know-your-http-well-20240726.1649.tar",
           "author": null,
           "description": "The know-your-http-well package has been updated to version 20240726.1649.",
@@ -2974,6 +3114,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/corfu-20240726.359.tar",
+          "author": null,
+          "description": "The corfu package has been updated to version 20240726.359.",
+          "link": "https://melpa.org/#/corfu",
+          "publishedOn": "2024-07-26T03:59:00.000Z",
+          "wordCount": 105,
+          "title": "corfu (20240726.359) --- COmpletion in Region FUnction",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/org-d20-20240726.255.tar",
           "author": null,
           "description": "The org-d20 package has been updated to version 20240726.255.",
@@ -2981,6 +3131,16 @@
           "publishedOn": "2024-07-26T02:55:00.000Z",
           "wordCount": 105,
           "title": "org-d20 (20240726.255) --- minor mode for d20 tabletop roleplaying games",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/outline-indent-20240725.2005.tar",
+          "author": null,
+          "description": "The outline-indent package has been updated to version 20240725.2005.",
+          "link": "https://melpa.org/#/outline-indent",
+          "publishedOn": "2024-07-25T20:05:00.000Z",
+          "wordCount": 105,
+          "title": "outline-indent (20240725.2005) --- Outline and fold text using indentation",
           "imageUrl": null
         },
         {
@@ -5252,86 +5412,6 @@
           "wordCount": 105,
           "title": "kanagawa-theme (20240707.59) --- An elegant theme inspired by The Great Wave off Kanagawa",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ekg-20240706.312.tar",
-          "author": null,
-          "description": "The ekg package has been updated to version 20240706.312.",
-          "link": "https://melpa.org/#/ekg",
-          "publishedOn": "2024-07-06T03:12:00.000Z",
-          "wordCount": 105,
-          "title": "ekg (20240706.312) --- A system for recording and linking information",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/slime-20240705.2255.tar",
-          "author": null,
-          "description": "The slime package has been updated to version 20240705.2255.",
-          "link": "https://melpa.org/#/slime",
-          "publishedOn": "2024-07-05T22:55:00.000Z",
-          "wordCount": 105,
-          "title": "slime (20240705.2255) --- Superior Lisp Interaction Mode for Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eff-20240705.2011.tar",
-          "author": null,
-          "description": "The eff package has been updated to version 20240705.2011.",
-          "link": "https://melpa.org/#/eff",
-          "publishedOn": "2024-07-05T20:11:00.000Z",
-          "wordCount": 105,
-          "title": "eff (20240705.2011) --- Show symbols in Executable File Formats",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/taskpaper-mode-20240705.1750.tar",
-          "author": null,
-          "description": "The taskpaper-mode package has been updated to version 20240705.1750.",
-          "link": "https://melpa.org/#/taskpaper-mode",
-          "publishedOn": "2024-07-05T17:50:00.000Z",
-          "wordCount": 105,
-          "title": "taskpaper-mode (20240705.1750) --- Major mode for working with TaskPaper files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/flycheck-eglot-20240705.1738.tar",
-          "author": null,
-          "description": "The flycheck-eglot package has been updated to version 20240705.1738.",
-          "link": "https://melpa.org/#/flycheck-eglot",
-          "publishedOn": "2024-07-05T17:38:00.000Z",
-          "wordCount": 105,
-          "title": "flycheck-eglot (20240705.1738) --- Flycheck support for eglot",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/vterm-20240705.1533.tar",
-          "author": null,
-          "description": "The vterm package has been updated to version 20240705.1533.",
-          "link": "https://melpa.org/#/vterm",
-          "publishedOn": "2024-07-05T15:33:00.000Z",
-          "wordCount": 105,
-          "title": "vterm (20240705.1533) --- Fully-featured terminal emulator",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/geiser-20240705.1352.tar",
-          "author": null,
-          "description": "The geiser package has been updated to version 20240705.1352.",
-          "link": "https://melpa.org/#/geiser",
-          "publishedOn": "2024-07-05T13:52:00.000Z",
-          "wordCount": 105,
-          "title": "geiser (20240705.1352) --- GNU Emacs and Scheme talk to each other",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/no-clown-fiesta-theme-20240705.936.tar",
-          "author": null,
-          "description": "The no-clown-fiesta-theme package has been updated to version 20240705.936.",
-          "link": "https://melpa.org/#/no-clown-fiesta-theme",
-          "publishedOn": "2024-07-05T09:36:00.000Z",
-          "wordCount": 105,
-          "title": "no-clown-fiesta-theme (20240705.936) --- Not-so-colorful-theme",
-          "imageUrl": null
         }
       ]
     },
@@ -5340,6 +5420,76 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ek4mqu/google_programmer_has_a_preference_of_vi_over/",
+          "author": null,
+          "description": "submitted by    /u/maxc01  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ek4mqu/google_programmer_has_a_preference_of_vi_over/",
+          "publishedOn": "2024-08-04T20:11:21.000Z",
+          "wordCount": null,
+          "title": "Google programmer has a preference of vi over emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ek212y/question_about_consult_completion/",
+          "author": null,
+          "description": "Hi everyone, sorry I couldn't find a proper title for what I was looking for. what I want is a way for consult completion candidates to show a certain string when I'm selecting from the minibuffer but when the candidate is selected it should be the original form string.\n for example:\n ;; I have this list of paths that I want to select from (defvar paths '(\"/dir1/dir2/p1\" \"dir1/dir2/p2\" \"/dir1/dir2/p3\")) ;; I want to parse those paths to only show the filename ;; in the minibuffer (consult--read (--map (file-name-nondirectory it) paths)) ;; the completion is supposed to be p1, p2, p3 ;; but when when I select I want the original path to be selected ;; for example /dir1/dir2/p1 \n I would do it using a hashmap or alist to map between the candidates and the selection.\n is there an easier way around this without using annotate function or marginalia ??\n    submitted by    /u/ntrysii  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ek212y/question_about_consult_completion/",
+          "publishedOn": "2024-08-04T18:23:27.000Z",
+          "wordCount": null,
+          "title": "question about consult completion",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ek1ic2/mg/",
+          "author": null,
+          "description": "what are your thoughts about mg https://linux.die.net/man/1/mg ? \n I am tinkering with the github repo to make it a little bit more customized for my needs but other than that I praise its puristic and minimalistic ways. Its written in c and works smoothly over ssh (without tramp or sth.)\n    submitted by    /u/RepublicWorried  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ek1ic2/mg/",
+          "publishedOn": "2024-08-04T18:01:37.000Z",
+          "wordCount": null,
+          "title": "Mg",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ek0m5w/beancounttxnelisp/",
+          "author": null,
+          "description": "submitted by    /u/trs_80  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ek0m5w/beancounttxnelisp/",
+          "publishedOn": "2024-08-04T17:24:14.000Z",
+          "wordCount": null,
+          "title": "beancount-txn-elisp",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ejyhpc/your_configuration_of_yasnippet_and_company_for/",
+          "author": null,
+          "description": "Can you describe, how you make yasnippet working with company-mode in LaTeX buffers or buffers with programming languages?\n    submitted by    /u/EmacsDiscussion  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ejyhpc/your_configuration_of_yasnippet_and_company_for/",
+          "publishedOn": "2024-08-04T15:54:50.000Z",
+          "wordCount": null,
+          "title": "Your configuration of yasnippet and company for LaTeX and more",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ejqrfk/rustic_enhanced_org_babel_integration/",
+          "author": null,
+          "description": "submitted by    /u/sibip  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ejqrfk/rustic_enhanced_org_babel_integration/",
+          "publishedOn": "2024-08-04T08:50:12.000Z",
+          "wordCount": null,
+          "title": "Rustic: Enhanced Org Babel integration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ejjb89/copypaste_into_emacs_buffer_in_terminal_mode_in/",
+          "author": null,
+          "description": "Emacs beginner, started with spacemacs. I want to use spacemacs in terminal mode in my remote machine(Ubuntu) by doing ssh from my Mac. \n How can I enable copy/yank from some text from my Mac browser into emacs buffer on the terminal and also vice versa. \n I tried clipetty and it works when I yank something from emacs buffer and paste on Mac but not the other way around. Also it does not work at all when using tmux. \n Appreciate any suggestions!!\n    submitted by    /u/yash5595  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ejjb89/copypaste_into_emacs_buffer_in_terminal_mode_in/",
+          "publishedOn": "2024-08-04T01:19:18.000Z",
+          "wordCount": null,
+          "title": "Copy/paste into emacs buffer in terminal mode in remote server",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1ejc0uu/trouble_with_consult_and_maybe_projectile_in/",
           "author": null,
@@ -7919,136 +8069,6 @@
           "wordCount": null,
           "title": "Modern Emacs Typescript Web (React) Config with lsp-mode, treesitter, tailwind, TSX & more",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dwkcbf/xref_doesnt_automatically_repopulate_new_tag/",
-          "author": null,
-          "description": "for convenience i have these options set:\n '(tags-add-tables t) '(tags-revert-without-query t) '(imenu-auto-rescan t) \n What's really annoying to me is when i regenerate tags table (for example i edit source code to add new functions and run this command ctags -e --languages=c++,c --c-kinds=+p -R .) \n imenu ui updates itself perfectly well, and gets populated with new tag candidates automatically, meanwhile any xref command doesn't get updated, so i have to M-x visit-tags-table each time i want to update it / get new tag candidates.\n Tested on Emacs 31.0.50, 29.4, and emacs -q with same results.\n Should i report a this as a bug or am i missing some option?\n    submitted by    /u/dirty-sock-coder-64  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dwkcbf/xref_doesnt_automatically_repopulate_new_tag/",
-          "publishedOn": "2024-07-06T07:43:44.000Z",
-          "wordCount": null,
-          "title": "xref doesn't automatically repopulate new tag candidates",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dwjszy/what_happened_to_emacs_elements/",
-          "author": null,
-          "description": "I used to find his short videos rather useful but the URL (https://youtube.com/@emacselements) has gone completely. Hope he's OK. Gonna miss the SA accent and the clacky keyboard!\n    submitted by    /u/StrangeAstronomer  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dwjszy/what_happened_to_emacs_elements/",
-          "publishedOn": "2024-07-06T07:06:10.000Z",
-          "wordCount": null,
-          "title": "what happened to Emacs Elements?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dwgeci/emacs_bug_reporting_question/",
-          "author": null,
-          "description": "I recently moved to emacs 31 and noticed a substantial increase in memory usage. This is the first time I've come across something that I can conclusively say is not a problem with my system. Is this the kind of thing the emacs devs might be interested in as a bug report? 31 is clearly in the beginning stages of development and I didn't expect it to be perfect. I get very little chance to contribute to the community of people that produce one of my favorite programs and was wondering if this feedback would be of use.Apart from the Emacs bug checklist and the emacs wiki memory leaks page, is there anyplace I can look to as a way to gather information to help with development?\n    submitted by    /u/Usual_Office_1740  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dwgeci/emacs_bug_reporting_question/",
-          "publishedOn": "2024-07-06T03:35:59.000Z",
-          "wordCount": null,
-          "title": "Emacs bug reporting question.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dwd543/making_emacs_work_with_projects_local_version_of/",
-          "author": null,
-          "description": "Hello there!\n I just had a problem where updating the global ESLint binary used with my editors caused no more linting, unless my project was on the specific newer version 9.x.x.\n I took inspiration on some old hacks I found (but none of they worked with me) to patch my on way to force flymake-eslint to use the LOCAL project eslint instead of the global one.\n If it is of any help I made this blog post explaining how to achieve this: https://www.rahuljuliato.com/posts/eslint-on-emacs\n    submitted by    /u/LionyxML  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dwd543/making_emacs_work_with_projects_local_version_of/",
-          "publishedOn": "2024-07-06T00:39:52.000Z",
-          "wordCount": null,
-          "title": "Making Emacs work with Project's (local) version of ESLint",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dwb7nn/emacs_not_using_doom_emacs/",
-          "author": null,
-          "description": "Guys, I installed doom emacs today and I noticed that when I try to launch emacs, it starts with the default settings. I can only use doom emacs by going to .config/emacs/bin/doom\n    submitted by    /u/anyaforce  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dwb7nn/emacs_not_using_doom_emacs/",
-          "publishedOn": "2024-07-05T23:07:51.000Z",
-          "wordCount": null,
-          "title": "emacs not using doom emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dw9l1r/nerdiconsarchive_a_new_package_that_integrated/",
-          "author": null,
-          "description": "Hello,\n I would like to share my new package, inspired by nerd-icons-dired, which adds nerd-icons support for archive/compressed files in Emacs (archive-mode and tar-mode).\n https://github.com/abougouffa/nerd-icons-archive\n    submitted by    /u/abougouffa  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dw9l1r/nerdiconsarchive_a_new_package_that_integrated/",
-          "publishedOn": "2024-07-05T21:55:36.000Z",
-          "wordCount": null,
-          "title": "nerd-icons-archive: a new package that integrated nerd-icons in archive-mode and tar-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dw49of/is_it_possible_to_resize_window_with_cright_click/",
-          "author": null,
-          "description": "In i3, you can set it up so that Super and right click resizes the current window without having to click exactly on the border. Is it possible to do something similar in emacs using C-rightclick drag?\n    submitted by    /u/x9myi9Ks6saTYgkfNEdr  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dw49of/is_it_possible_to_resize_window_with_cright_click/",
-          "publishedOn": "2024-07-05T18:03:38.000Z",
-          "wordCount": null,
-          "title": "Is it possible to resize window with C-right click drag without being click from the border (like i3)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dw2a87/is_there_a_way_to_make_child_frames_transparent/",
-          "author": null,
-          "description": "I wanted to make eldoc-box frames transparent so that the code in main frame shines though it. I tried adding eldoc-box-frame-hook and setting (set-frame-parameter nil 'alpha-background 80) in it. This indeed makes the child frame transparent, but not in a way I intended. Instead of seeing main frame through it, I see my desktop background. I wonder if this is even supported or if I'm doing something wrong. I'm in KDE plasma waylaynd and I have built emacs (couple days ago) from sources without PGTK (because with PGTK was very slow in my setup).\n I don't even know if I actually want it transparent but now it bugs me a lot because I was not able to try it out :)\n    submitted by    /u/nisteeni  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dw2a87/is_there_a_way_to_make_child_frames_transparent/",
-          "publishedOn": "2024-07-05T16:39:23.000Z",
-          "wordCount": null,
-          "title": "Is there a way to make child frames transparent",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dw0s3i/text_inside_a_shape/",
-          "author": null,
-          "description": "https://preview.redd.it/er5yn8ujypad1.png?width=762&format=png&auto=webp&s=cd48bab7ed2afae9b275d6733117842f150d0419\n Details: https://lifeofpenguin.blogspot.com/2024/06/text-along-path-gnu-emacs.html#shape-inside\n    submitted by    /u/atamariya  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dw0s3i/text_inside_a_shape/",
-          "publishedOn": "2024-07-05T15:33:32.000Z",
-          "wordCount": null,
-          "title": "Text inside a shape",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dvxsey/got_cool_bitmap_uses_in_hightlightindentguides/",
-          "author": null,
-          "description": "I've been using highlight-indent-guides.el for years now, and really appreciating it. \n This morning I was doing some config-file cleanup and re-discovered the fact that it supports the use of a \"bitmap\" for your indentation guide.\n Have any of you folks done something cool with that? The example of creating a subtle vertical dotted line is cool, but surely someone's had a \"hold my beer\" moment and done something kind-of outrageous with this. \n If it was you, I totally want to see. \n    submitted by    /u/masukomi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dvxsey/got_cool_bitmap_uses_in_hightlightindentguides/",
-          "publishedOn": "2024-07-05T13:17:53.000Z",
-          "wordCount": null,
-          "title": "got cool bitmap uses in hightlight-indent-guides?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dvxkyd/how_to_parenmatch_unicode_brackets/",
-          "author": null,
-          "description": "how to do this? I want to modify the default paren-matching (on my Mac emacs) to match unicode ⎨⎬and ⎡⎦\n    submitted by    /u/paultarvydas  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dvxkyd/how_to_parenmatch_unicode_brackets/",
-          "publishedOn": "2024-07-05T13:07:54.000Z",
-          "wordCount": null,
-          "title": "How to paren-match unicode brackets?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dvuop7/dirlocals_override_but_for_functions/",
-          "author": null,
-          "description": "I have been trying to override a function, but only for a project under projectile control.\n So far I've been using (or rather trying to), dir-locals, but it does not play well with function overriding.\n Is this even possible, or am I missing something?\n    submitted by    /u/drmimrod  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dvuop7/dirlocals_override_but_for_functions/",
-          "publishedOn": "2024-07-05T10:20:05.000Z",
-          "wordCount": null,
-          "title": "dir-locals override, but for functions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1dvtqf0/remote_emacs_gui_with_waypipe/",
-          "author": null,
-          "description": "Has anyone tried using emacs remotely with waypipe?\n I just tried here and I am impressed on how faster compared to ssh -X.\n I have some problems when running emacs directly waypipe ssh $remote emacs. If I run a terminal waypipe ssh $remote alacritty and then open emacs GUI, it works better (at least, I have not found major problems).\n    submitted by    /u/pathemata  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1dvtqf0/remote_emacs_gui_with_waypipe/",
-          "publishedOn": "2024-07-05T09:12:58.000Z",
-          "wordCount": null,
-          "title": "Remote emacs GUI with waypipe",
-          "imageUrl": null
         }
       ]
     },
@@ -8057,6 +8077,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "2958@/discussions",
+          "author": "daviddelven",
+          "description": "Fellow PKM enthusiasts,\nI find myself caught in what seems to be a cyclical dilemma in the world of personal knowledge management, and I'm curious if others are experiencing the same.\nMy journey began with enthusiasm for local-first environments like Obsidian and Logseq. The promise of data ownership and flexibility was alluring. However, as time passed, I found myself gravitating back to cloud-based solutions.\nNow, I'm feeling the pull towards local files and Markdown again. It's as if I'm caught in a perpetual swing between the convenience of the cloud and the freedom of local storage.\nThis pattern has me wondering:\nIs this back-and-forth between local-first and cloud-based systems common in the PKM community?\nFor those who've made multiple switches, what ultimately made you settle on one approach (if you have)?\nAre there solutions that effectively bridge this gap, offering the best of both worlds?\nHow do others manage the trade-offs between sync convenience and data sovereignty?\nI'm starting to think this isn't just a fleeting concern, but a fundamental tension in how we approach PKM. The desire for true ownership of our data and the freedom to use multiple tools seems to persist, even after trying various solutions.\nHas anyone else found themselves in this PKM pendulum? How have you reconciled these competing needs in your own systems?",
+          "link": "https://forum.zettelkasten.de/discussion/2958/seeking-freedom-from-cloud-lock-in-a-pkm-community-discussion",
+          "publishedOn": "2024-08-04T20:17:15.000Z",
+          "wordCount": 744,
+          "title": "Seeking Freedom from Cloud Lock-in: A PKM Community Discussion",
+          "imageUrl": null
+        },
         {
           "id": "2956@/discussions",
           "author": "Ray",
@@ -8356,16 +8386,6 @@
           "wordCount": 613,
           "title": "BUG REPORT: Move Line/Selection Up or Down",
           "imageUrl": null
-        },
-        {
-          "id": "2928@/discussions",
-          "author": "Will",
-          "description": "Swimming with Ideas\nThis is yet another opportunity to share with your friends what you are working on. Add to this discussion by telling us about your zettelkasten journey. Share with us what you're learning. Sharing helps me and, hopefully, you, too. It helps us clarify our goals and visualize our thinking. And sometimes, a conversation sparks a magical moment where we can dive into an idea worth exploring. I'd love to hear more from you.   🫵🏼\nHere is a report on why I'm here and this week's ZK work themes/ideas:\nFirst, learning how to discuss an idea has been gratifying through the forum discussion Discourse graph and Zettelkasten. It's been a masterclass on capturing creative ideation. This reminds me of when Mortimer Adler argued that speed reading is flawed; true comprehension requ…",
-          "link": "https://forum.zettelkasten.de/discussion/2928/share-with-us-what-is-happening-in-your-zk-this-week-july-5-2024",
-          "publishedOn": "2024-07-05T13:04:44.000Z",
-          "wordCount": 2242,
-          "title": "Share with us what is happening in your ZK this week. July 5, 2024",
-          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/d0/1naoz1fucfau.png"
         }
       ]
     }
