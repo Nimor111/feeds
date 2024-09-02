@@ -881,46 +881,6 @@
           "wordCount": null,
           "title": "Abusing Haskell: Executable Blog Posts",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ejpipa/update_how_are_monoidalproductprofunctor_and/",
-          "author": null,
-          "description": "Hey all, this is a follow up post to this post with an amazing title.\n I am writing this so it doesn't just exist on my laptop and is documented somewhere. Maybe this is common knowledge, I did not find it anywhere.\n Basically, update from my end on the direction Monoidal -> Traversing is that there's a way to write\n monoidalToTraversing :: (Choice p, Monoidal p, Traversable f) => p a b -> p (f a) (f b) \n we use a variation of Alexis King's construction\n data Traversal a r b = Done b | Yield a !(Traversal a r (r -> b)) deriving Functor instance Applicative (Traversal a r) where pure = Done Done f <*> a = f <$> a Yield a rToTf <*> ta = Yield a ((\\ f b x -> f x b) <$> rToTf <*> ta) traversal :: Traversable t => t a -> Traversal a b (t b) traversal = traverse (\\ a -> Yield a (Done id)) unTraversal :: (a -> b) -> Traversal a b tb -> tb unTraversal _ (Done tb) = tb unTraversal morph (Yield a fab) = unTraversal morph (fmap ($ morph a) fab) traversalP :: (Choice p, Monoidal p) => p a b -> p (Traversal a b x) (Traversal b b x) traversalP = dimap toEither fromEither . right' . (both <$> id <*> traversalP) where toEither :: Traversal a r b -> Either b (a, Traversal a r (r -> b)) toEither (Done x ) = Left x toEither (Yield a resume) = Right (a, resume) fromEither :: Either b (a, Traversal a r (r -> b)) -> Traversal a r b fromEither (Left x ) = Done x fromEither (Right (a, resume)) = Yield a resume monoidalToTraversing :: (Choice p, Monoidal p, Traversable f) => p a b -> p (f a) (f b) monoidalToTraversing = dimap traversal (unTraversal id) . traversalP \n (I call both :: p a b -> p c d -> p (a,c) (b,d) to Monoidal's idiomatic class function) the other direction (Traversing -> Monoidal) needs some other kind of ideas which I am not having so far.\n Remaining questions:\n  \nWhat about the other direction?\n How to do this for Traversing1? It shouldn't use Choice, because Either a is not a Traversable1\n What are the implications?\n  \n   submitted by    /u/crisoagf  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ejpipa/update_how_are_monoidalproductprofunctor_and/",
-          "publishedOn": "2024-08-04T07:24:01.000Z",
-          "wordCount": null,
-          "title": "Update: How are Monoidal/ProductProfunctor and Traversing related?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ej9itp/primes_list_build_error/",
-          "author": null,
-          "description": "Hello,\n I need to find the nth prime number. This is what I have so far:\n module Prime (nth) where nth :: Int -> Maybe Integer nth n | n < 1 = Nothing | otherwise = Just ([x | x <- [2..n], isPrime x] !! (n-1)) isPrime :: Int -> Bool isPrime 2 = True isPrime n | n < 2 = False |otherwise = all (map (\\x -> n `mod` x /= 0)) [2..root] where root = (floor . sqrt . fromIntegral) n \n Some of the errors I get are (seems that both functions are wrong):\n Couldn't match expected type ‘Integer’ with actual type ‘Int’ • In the expression: x In the first argument of ‘(!!)’, namely ‘[x | x <- [2 .. n], isPrime x]’ In the first argument of ‘Just’, namely ‘([x | x <- [2 .. n], isPrime x] !! (n - 1))’Couldn't match expected type Couldn't match type ‘[Bool]’ with ‘Bool’ Expected: [Int] -> Bool Actual: [Int] -> [Bool] • In the first argument of ‘all’, namely ‘(map (\\ x -> n `mod` x /= 0))’Couldn't match type ‘[Bool]’ with ‘Bool’ Expected: [Int] -> Bool Actual: [Int] -> [Bool] • In the first argument of ‘all’, namely ‘(map (\\ x -> n `mod` x /= 0))’ \n The second error is not really clear for me, I thought that all returns Bool (a -> Bool) -> [a] -> Bool), why would it be [Bool]? Also, any hint for the first function? Thank you.\n EDIT:\n Correct solution:\n module Prime (nth) where nth :: Int -> Maybe Integer nth n | n < 1 = Nothing | otherwise = Just (toInteger ([x | x <- [2..], isPrime x] !! (n-1))) isPrime :: Int -> Bool isPrime n = null [x | x <- [2..n-1], n `mod` x == 0] \n    submitted by    /u/mihaijulien  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ej9itp/primes_list_build_error/",
-          "publishedOn": "2024-08-03T17:52:26.000Z",
-          "wordCount": null,
-          "title": "Primes list, build error",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ej86d7/xmultilinestrings_merged/",
-          "author": null,
-          "description": "submitted by    /u/brandonchinn178  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ej86d7/xmultilinestrings_merged/",
-          "publishedOn": "2024-08-03T16:58:01.000Z",
-          "wordCount": null,
-          "title": "-XMultilineStrings merged!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ej47zd/ghci_doesnt_show_the_prelude_prompt/",
-          "author": null,
-          "description": "Almost any resource I read recently says that GHCI should show \"Prelude>\" as prompt after start. And the prompt should change e.g. to \"*Main>\" after loading a .hs file.\n In my case GHCi only shows \"ghci>\" as prompt. Has this changed recently or am I doing something wrong here?\n    submitted by    /u/Voxelman  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ej47zd/ghci_doesnt_show_the_prelude_prompt/",
-          "publishedOn": "2024-08-03T14:09:01.000Z",
-          "wordCount": null,
-          "title": "GHCi doesn't show the Prelude prompt",
-          "imageUrl": null
         }
       ]
     },
@@ -929,6 +889,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1f79tdm/this_is_the_last_week_to_submit_a_proposal_for/",
+          "author": null,
+          "description": "https://www.papercall.io/scalaio2024paris\n You are welcome to any talks that would interest audience of people interested or working with Scala! \n If you would like to push things like workshops during the conference (90 minutes, 150 minutes, or 2 times 150 minutes), don't hesitate to contact us ( [contact@scala.io](mailto:contact@scala.io) ).\n We are going to announce the first selected speakers tomorrow.\n Keep you updated.\n You can check our YouTube channel for the talks of past editions: https://www.youtube.com/@scalaio/videos\n    submitted by    /u/ahoy_jon  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1f79tdm/this_is_the_last_week_to_submit_a_proposal_for/",
+          "publishedOn": "2024-09-02T15:38:56.000Z",
+          "wordCount": null,
+          "title": "This is the last week to submit a proposal for ScalaIO (November 2024)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1f76dmm/started_learning_scala_today_starting_with/",
+          "author": null,
+          "description": "Hi I have started to learn scala today and i found it very impressive a short video on the same. https://youtube.com/shorts/ZEn_Y-n7vbQ?feature=share\n    submitted by    /u/sarthkum0488  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1f76dmm/started_learning_scala_today_starting_with/",
+          "publishedOn": "2024-09-02T13:12:27.000Z",
+          "wordCount": null,
+          "title": "Started Learning Scala Today starting with Functions Loving it",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1f6juq9/how_to_actually_build_and_run_on_intellij/",
           "author": null,
@@ -1838,46 +1818,6 @@
           "wordCount": null,
           "title": "Can CE/ZIO fans stop being so toxic here?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ejmbt3/sbt/",
-          "author": null,
-          "description": "submitted by    /u/beelpelly  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ejmbt3/sbt/",
-          "publishedOn": "2024-08-04T04:01:47.000Z",
-          "wordCount": null,
-          "title": "SBT",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ejjqa1/not_fully_understanding_type_inference_and/",
-          "author": null,
-          "description": "Two dummy examples, both Scala 2.12. \n First example - sequence of Foo[t <: T], and I want some function to use that t somehow. Pseudocode-ish:\n ``` type A <: T type B <: T\n trait Foo[t <: T]\n object Foo1 extends Foo[A]\n objet Foo2 extends Foo[B]\n def someFunc[t <: T](foo: Foo[t]): Unit = { somethingThatKnowsHowToTakeTypes[t].foobar }\n Seq( Foo1, Foo2 ).map(someFunc) ```\n This leads to type erasure concerns, even though to me it seems obvious that that Sequence is of a type where each object inside is a Foo of some concrete type that fits the constraints. I can get around it by introducing some wrapper case class that I can stick Foo1 and Foo2 into, which retains it's type as an explicit member. And then inside someFunc I have to manually use that type member explicitly. Feels clunky and it feels like something I'm tricking the compiler into doing. Not to mention at some point I did get it to compile, only to fail at runtime if I didn't create the correct implicit typetag in scope.\n Second example:\n Sequence of (Foo[t <: T], Bar[t <: T]), and Bar/Foo have methods that operate on or return t <: T. I store in a 2-tuple because inside a lambda I want to do something like Foo.read(...).map(Bar.transform) where Foo.read returns something typed by t and Bar.transform takes something subtyped by t. I assume since I pair them up in a 2-tuple, the Seq of these such objects could recognize that it's some paired object, but instead the compiler complains about expected vs supplied types.\n    submitted by    /u/kebabmybob  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ejjqa1/not_fully_understanding_type_inference_and/",
-          "publishedOn": "2024-08-04T01:41:01.000Z",
-          "wordCount": null,
-          "title": "Not fully understanding type inference and erasure. What is a more idiomatic pattern for sequences of typed objects?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ej90io/iterating_over_type_parameters/",
-          "author": null,
-          "description": "I'm just stumbled over a case where I had something like\n val foo1 = bar[TypeA]() val foo2 = bar[TypeB]() val foo3 = bar[TypeC]() def bar[T:AContextBound](): String = ??? \n I wonder - is there way to write it as something like\n val fooList:List[String] = forAllTypes( ???[TypeI] => bar[TypeI]()) \n I have not a clue how the function definition would even look like. It would only save few lines, but it got me fascinated if there is some deeper scala magic I'm not aware of yet.\n    submitted by    /u/Akomis  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ej90io/iterating_over_type_parameters/",
-          "publishedOn": "2024-08-03T17:31:31.000Z",
-          "wordCount": null,
-          "title": "Iterating over type parameters?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ej4wmw/how_to_log_all_cause_in_zio_http/",
-          "author": null,
-          "description": "I want to log exceptions automatically when they happen. Right now, what I do is try to find out what part of the code is running and add the following for it to appear in the logs:\n .catchAllCause(e => ZIO.logError(e.toString) *> ZIO.fail(e.toString)) \n Is there a better way to do this without manually adding this to every line?\n    submitted by    /u/steerflesh  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ej4wmw/how_to_log_all_cause_in_zio_http/",
-          "publishedOn": "2024-08-03T14:40:05.000Z",
-          "wordCount": null,
-          "title": "How to log all cause in zio http?",
-          "imageUrl": null
         }
       ]
     },
@@ -2267,16 +2207,6 @@
           "wordCount": null,
           "title": "keep track of list progress and checked item across bullet points?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1ej2hrw/using_the_results_of_orgqlquery_in_an_agenda/",
-          "author": null,
-          "description": "I am trying to create an agenda that lists only todos associated with a particular person or list of people. I am attempting to use org-ql-defpred with org-ql-query, and because I do not quite have a handle on what I am doing yet (I am far from an elisp expert, but don't mind stretching my boundaries), I am trying to stick pretty close to the Org QL Custom Predicates Tutorial for now.\n Something that works exactly as I want, but lacks the flexibility of the predicate-based approach, is the following (with org-super-agenda):\n  (setq org-agenda-custom-commands '((\"A\" . \"Agendas\") (\"Aj\" \"John\" ((org-ql-block '(tags \"#John\") ((org-ql-block-header \"John\"))))) \n To move to the predicate-based method, I define my predicate as follows (identical to the tutorial, save for concatenating \"#\" instead …",
-          "link": "https://www.reddit.com/r/orgmode/comments/1ej2hrw/using_the_results_of_orgqlquery_in_an_agenda/",
-          "publishedOn": "2024-08-03T12:44:31.000Z",
-          "wordCount": null,
-          "title": "Using the results of org-ql-query in an agenda",
-          "imageUrl": null
         }
       ]
     },
@@ -2285,6 +2215,106 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/org-cite-overlay-sidecar-20240902.1609.tar",
+          "author": null,
+          "description": "The org-cite-overlay-sidecar package has been updated to version 20240902.1609.",
+          "link": "https://melpa.org/#/org-cite-overlay-sidecar",
+          "publishedOn": "2024-09-02T16:09:00.000Z",
+          "wordCount": 105,
+          "title": "org-cite-overlay-sidecar (20240902.1609) --- Show Sidecar for overlaid org-cite citations",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-cite-overlay-20240902.1609.tar",
+          "author": null,
+          "description": "The org-cite-overlay package has been updated to version 20240902.1609.",
+          "link": "https://melpa.org/#/org-cite-overlay",
+          "publishedOn": "2024-09-02T16:09:00.000Z",
+          "wordCount": 105,
+          "title": "org-cite-overlay (20240902.1609) --- Overlays for org-cite citations",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/prettier-20240902.1516.tar",
+          "author": null,
+          "description": "The prettier package has been updated to version 20240902.1516.",
+          "link": "https://melpa.org/#/prettier",
+          "publishedOn": "2024-09-02T15:16:00.000Z",
+          "wordCount": 105,
+          "title": "prettier (20240902.1516) --- Code formatting with Prettier",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/projection-20240902.1207.tar",
+          "author": null,
+          "description": "The projection package has been updated to version 20240902.1207.",
+          "link": "https://melpa.org/#/projection",
+          "publishedOn": "2024-09-02T12:07:00.000Z",
+          "wordCount": 105,
+          "title": "projection (20240902.1207) --- Project type support for `project'",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/helm-flymake-20240902.1133.tar",
+          "author": null,
+          "description": "The helm-flymake package has been updated to version 20240902.1133.",
+          "link": "https://melpa.org/#/helm-flymake",
+          "publishedOn": "2024-09-02T11:33:00.000Z",
+          "wordCount": 105,
+          "title": "helm-flymake (20240902.1133) --- helm sources for flymake",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mistty-20240902.959.tar",
+          "author": null,
+          "description": "The mistty package has been updated to version 20240902.959.",
+          "link": "https://melpa.org/#/mistty",
+          "publishedOn": "2024-09-02T09:59:00.000Z",
+          "wordCount": 105,
+          "title": "mistty (20240902.959) --- Shell/Comint alternative based on term.el",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/eglot-tempel-20240902.731.tar",
+          "author": null,
+          "description": "The eglot-tempel package has been updated to version 20240902.731.",
+          "link": "https://melpa.org/#/eglot-tempel",
+          "publishedOn": "2024-09-02T07:31:00.000Z",
+          "wordCount": 105,
+          "title": "eglot-tempel (20240902.731) --- Use tempel to expand snippets from eglot",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/evangelion-theme-20240902.643.tar",
+          "author": null,
+          "description": "The evangelion-theme package has been updated to version 20240902.643.",
+          "link": "https://melpa.org/#/evangelion-theme",
+          "publishedOn": "2024-09-02T06:43:00.000Z",
+          "wordCount": 105,
+          "title": "evangelion-theme (20240902.643) --- A dark colour scheme inspired by Neon Genesis Evangelion",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/flymake-bashate-20240902.103.tar",
+          "author": null,
+          "description": "The flymake-bashate package has been updated to version 20240902.103.",
+          "link": "https://melpa.org/#/flymake-bashate",
+          "publishedOn": "2024-09-02T01:03:00.000Z",
+          "wordCount": 105,
+          "title": "flymake-bashate (20240902.103) --- A Flymake backend for bashate, a Bash scripts style checker",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/geiser-20240901.1954.tar",
+          "author": null,
+          "description": "The geiser package has been updated to version 20240901.1954.",
+          "link": "https://melpa.org/#/geiser",
+          "publishedOn": "2024-09-01T19:54:00.000Z",
+          "wordCount": 105,
+          "title": "geiser (20240901.1954) --- GNU Emacs and Scheme talk to each other",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/navigel-20240901.1624.tar",
           "author": null,
@@ -2326,6 +2356,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/mb-url-20240831.2003.tar",
+          "author": null,
+          "description": "The mb-url package has been updated to version 20240831.2003.",
+          "link": "https://melpa.org/#/mb-url",
+          "publishedOn": "2024-08-31T20:03:00.000Z",
+          "wordCount": 105,
+          "title": "mb-url (20240831.2003) --- Multiple Backends for Emacs URL package",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/ox-rfc-20240831.1912.tar",
           "author": null,
           "description": "The ox-rfc package has been updated to version 20240831.1912.",
@@ -2343,6 +2383,16 @@
           "publishedOn": "2024-08-31T19:09:00.000Z",
           "wordCount": 105,
           "title": "ros (20240831.1909) --- Package to write code for ROS systems",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/flymake-collection-20240831.1515.tar",
+          "author": null,
+          "description": "The flymake-collection package has been updated to version 20240831.1515.",
+          "link": "https://melpa.org/#/flymake-collection",
+          "publishedOn": "2024-08-31T15:15:00.000Z",
+          "wordCount": 105,
+          "title": "flymake-collection (20240831.1515) --- Collection of checkers for flymake, bringing flymake to the level of flycheck",
           "imageUrl": null
         },
         {
@@ -2393,6 +2443,16 @@
           "publishedOn": "2024-08-31T07:15:00.000Z",
           "wordCount": 105,
           "title": "exercism (20240831.715) --- Unofficial https://exercism.org integration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/helm-20240831.501.tar",
+          "author": null,
+          "description": "The helm package has been updated to version 20240831.501.",
+          "link": "https://melpa.org/#/helm",
+          "publishedOn": "2024-08-31T05:01:00.000Z",
+          "wordCount": 105,
+          "title": "helm (20240831.501) --- Helm is an Emacs incremental and narrowing framework",
           "imageUrl": null
         },
         {
@@ -2473,6 +2533,16 @@
           "publishedOn": "2024-08-30T12:25:00.000Z",
           "wordCount": 105,
           "title": "rom-party (20240830.1225) --- Rendition of jklm.fun's \"Bomb Party\" game",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/vim-tab-bar-20240830.340.tar",
+          "author": null,
+          "description": "The vim-tab-bar package has been updated to version 20240830.340.",
+          "link": "https://melpa.org/#/vim-tab-bar",
+          "publishedOn": "2024-08-30T03:40:00.000Z",
+          "wordCount": 105,
+          "title": "vim-tab-bar (20240830.340) --- Vim-like tab bar",
           "imageUrl": null
         },
         {
@@ -2646,6 +2716,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/cider-20240828.1343.tar",
+          "author": null,
+          "description": "The cider package has been updated to version 20240828.1343.",
+          "link": "https://melpa.org/#/cider",
+          "publishedOn": "2024-08-28T13:43:00.000Z",
+          "wordCount": 105,
+          "title": "cider (20240828.1343) --- Clojure Interactive Development Environment that Rocks",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/sly-overlay-20240828.910.tar",
           "author": null,
           "description": "The sly-overlay package has been updated to version 20240828.910.",
@@ -2816,6 +2896,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/casual-agenda-20240826.1836.tar",
+          "author": null,
+          "description": "The casual-agenda package has been updated to version 20240826.1836.",
+          "link": "https://melpa.org/#/casual-agenda",
+          "publishedOn": "2024-08-26T18:36:00.000Z",
+          "wordCount": 105,
+          "title": "casual-agenda (20240826.1836) --- Transient UI for Agenda",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/flymake-actionlint-20240826.1658.tar",
           "author": null,
           "description": "The flymake-actionlint package has been updated to version 20240826.1658.",
@@ -2943,6 +3033,16 @@
           "publishedOn": "2024-08-24T20:19:00.000Z",
           "wordCount": 105,
           "title": "sideline (20240824.2019) --- Show information on the side",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-node-20240824.1956.tar",
+          "author": null,
+          "description": "The org-node package has been updated to version 20240824.1956.",
+          "link": "https://melpa.org/#/org-node",
+          "publishedOn": "2024-08-24T19:56:00.000Z",
+          "wordCount": 105,
+          "title": "org-node (20240824.1956) --- Link org-id entries into a network",
           "imageUrl": null
         },
         {
@@ -5184,196 +5284,6 @@
           "wordCount": 105,
           "title": "rustic (20240804.840) --- Rust development environment",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mastodon-20240804.751.tar",
-          "author": null,
-          "description": "The mastodon package has been updated to version 20240804.751.",
-          "link": "https://melpa.org/#/mastodon",
-          "publishedOn": "2024-08-04T07:51:00.000Z",
-          "wordCount": 105,
-          "title": "mastodon (20240804.751) --- Client for fediverse services using the Mastodon API",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-link-beautify-20240804.320.tar",
-          "author": null,
-          "description": "The org-link-beautify package has been updated to version 20240804.320.",
-          "link": "https://melpa.org/#/org-link-beautify",
-          "publishedOn": "2024-08-04T03:20:00.000Z",
-          "wordCount": 105,
-          "title": "org-link-beautify (20240804.320) --- Beautify Org Links",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/toggle-term-20240804.117.tar",
-          "author": null,
-          "description": "The toggle-term package has been updated to version 20240804.117.",
-          "link": "https://melpa.org/#/toggle-term",
-          "publishedOn": "2024-08-04T01:17:00.000Z",
-          "wordCount": 105,
-          "title": "toggle-term (20240804.117) --- Quickly toggle persistent term and shell buffers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/catppuccin-theme-20240803.2336.tar",
-          "author": null,
-          "description": "The catppuccin-theme package has been updated to version 20240803.2336.",
-          "link": "https://melpa.org/#/catppuccin-theme",
-          "publishedOn": "2024-08-03T23:36:00.000Z",
-          "wordCount": 105,
-          "title": "catppuccin-theme (20240803.2336) --- Catppuccin for Emacs - 🍄 Soothing pastel theme for Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/apheleia-20240803.2322.tar",
-          "author": null,
-          "description": "The apheleia package has been updated to version 20240803.2322.",
-          "link": "https://melpa.org/#/apheleia",
-          "publishedOn": "2024-08-03T23:22:00.000Z",
-          "wordCount": 105,
-          "title": "apheleia (20240803.2322) --- Reformat buffer stably",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/vertico-prescient-20240803.2320.tar",
-          "author": null,
-          "description": "The vertico-prescient package has been updated to version 20240803.2320.",
-          "link": "https://melpa.org/#/vertico-prescient",
-          "publishedOn": "2024-08-03T23:20:00.000Z",
-          "wordCount": 105,
-          "title": "vertico-prescient (20240803.2320) --- prescient.el + Vertico",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/selectrum-prescient-20240803.2320.tar",
-          "author": null,
-          "description": "The selectrum-prescient package has been updated to version 20240803.2320.",
-          "link": "https://melpa.org/#/selectrum-prescient",
-          "publishedOn": "2024-08-03T23:20:00.000Z",
-          "wordCount": 105,
-          "title": "selectrum-prescient (20240803.2320) --- prescient.el + Selectrum",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/prescient-20240803.2320.tar",
-          "author": null,
-          "description": "The prescient package has been updated to version 20240803.2320.",
-          "link": "https://melpa.org/#/prescient",
-          "publishedOn": "2024-08-03T23:20:00.000Z",
-          "wordCount": 105,
-          "title": "prescient (20240803.2320) --- Better sorting and filtering",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ivy-prescient-20240803.2320.tar",
-          "author": null,
-          "description": "The ivy-prescient package has been updated to version 20240803.2320.",
-          "link": "https://melpa.org/#/ivy-prescient",
-          "publishedOn": "2024-08-03T23:20:00.000Z",
-          "wordCount": 105,
-          "title": "ivy-prescient (20240803.2320) --- prescient.el + Ivy",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/corfu-prescient-20240803.2320.tar",
-          "author": null,
-          "description": "The corfu-prescient package has been updated to version 20240803.2320.",
-          "link": "https://melpa.org/#/corfu-prescient",
-          "publishedOn": "2024-08-03T23:20:00.000Z",
-          "wordCount": 105,
-          "title": "corfu-prescient (20240803.2320) --- prescient.el + Corfu",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/company-prescient-20240803.2320.tar",
-          "author": null,
-          "description": "The company-prescient package has been updated to version 20240803.2320.",
-          "link": "https://melpa.org/#/company-prescient",
-          "publishedOn": "2024-08-03T23:20:00.000Z",
-          "wordCount": 105,
-          "title": "company-prescient (20240803.2320) --- prescient.el + Company",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ess-20240803.1733.tar",
-          "author": null,
-          "description": "The ess package has been updated to version 20240803.1733.",
-          "link": "https://melpa.org/#/ess",
-          "publishedOn": "2024-08-03T17:33:00.000Z",
-          "wordCount": 105,
-          "title": "ess (20240803.1733) --- Emacs Speaks Statistics",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/finito-20240803.1549.tar",
-          "author": null,
-          "description": "The finito package has been updated to version 20240803.1549.",
-          "link": "https://melpa.org/#/finito",
-          "publishedOn": "2024-08-03T15:49:00.000Z",
-          "wordCount": 105,
-          "title": "finito (20240803.1549) --- View and collect books",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/projection-multi-embark-20240803.1509.tar",
-          "author": null,
-          "description": "The projection-multi-embark package has been updated to version 20240803.1509.",
-          "link": "https://melpa.org/#/projection-multi-embark",
-          "publishedOn": "2024-08-03T15:09:00.000Z",
-          "wordCount": 105,
-          "title": "projection-multi-embark (20240803.1509) --- Integration for `projection-multi' and `embark'",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/projection-multi-20240803.1509.tar",
-          "author": null,
-          "description": "The projection-multi package has been updated to version 20240803.1509.",
-          "link": "https://melpa.org/#/projection-multi",
-          "publishedOn": "2024-08-03T15:09:00.000Z",
-          "wordCount": 105,
-          "title": "projection-multi (20240803.1509) --- Projection integration for `compile-multi'",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-latex-20240803.1436.tar",
-          "author": null,
-          "description": "The lsp-latex package has been updated to version 20240803.1436.",
-          "link": "https://melpa.org/#/lsp-latex",
-          "publishedOn": "2024-08-03T14:36:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-latex (20240803.1436) --- LSP-mode client for LaTeX, on texlab",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/link-hint-20240803.1223.tar",
-          "author": null,
-          "description": "The link-hint package has been updated to version 20240803.1223.",
-          "link": "https://melpa.org/#/link-hint",
-          "publishedOn": "2024-08-03T12:23:00.000Z",
-          "wordCount": 105,
-          "title": "link-hint (20240803.1223) --- Use avy to open, copy, etc. visible links",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/python-mode-20240803.1158.tar",
-          "author": null,
-          "description": "The python-mode package has been updated to version 20240803.1158.",
-          "link": "https://melpa.org/#/python-mode",
-          "publishedOn": "2024-08-03T11:58:00.000Z",
-          "wordCount": 105,
-          "title": "python-mode (20240803.1158) --- Python major mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/selected-window-accent-mode-20240803.910.tar",
-          "author": null,
-          "description": "The selected-window-accent-mode package has been updated to version 20240803.910.",
-          "link": "https://melpa.org/#/selected-window-accent-mode",
-          "publishedOn": "2024-08-03T09:10:00.000Z",
-          "wordCount": 105,
-          "title": "selected-window-accent-mode (20240803.910) --- Accent Selected Window",
-          "imageUrl": null
         }
       ]
     },
@@ -5382,6 +5292,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f7g734/how_do_i_explore_folder_like_this_guy/",
+          "author": null,
+          "description": "submitted by    /u/Tommy_Shelby777  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f7g734/how_do_i_explore_folder_like_this_guy/",
+          "publishedOn": "2024-09-02T19:54:34.000Z",
+          "wordCount": null,
+          "title": "How do I explore folder like this guy?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f7e4g1/simple_tiny_debug_tool_you_dont_need_to/",
+          "author": null,
+          "description": "I came up with this as a quick way to watch my init.el being executed. You just paste these two lines where ever you want. I started with every 20 lines. I'm still working on this pesky problem 'lambda using cl' that's triggered by a timer during only the first load of my init.el\n (message \"%s\" (line-number-at-pos)) (sit-for 2) \n ]\n    submitted by    /u/Eir1kur  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f7e4g1/simple_tiny_debug_tool_you_dont_need_to/",
+          "publishedOn": "2024-09-02T18:30:50.000Z",
+          "wordCount": null,
+          "title": "Simple, tiny, debug tool. You don't need to understand debuggers.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f7dosu/tough_init_file_debug_because_of_timertriggered/",
+          "author": null,
+          "description": "Debugger entered--Lisp error: \"Package cl is deprecated\" #<subr F616e6f6e796d6f75732d6c616d626461\\_anonymous\\_lambda\\_128>(\"Package cl is deprecated\") apply(#<subr F616e6f6e796d6f75732d6c616d626461\\_anonymous\\_lambda\\_128> \"Package cl is deprecated\") timer-event-handler([t 0 0 0 nil #<subr F616e6f6e796d6f75732d6c616d626461\\_anonymous\\_lambda\\_128> (\"Package cl is deprecated\") idle 0 nil])\n The message says error, but I'm pretty sure it's not because bug-hunter skips over it.\n I could be triggering this via (debug-on-message \"Package cl\").\n I'm not an expert, but I can step through files and use bug-hunter, etc. This has me stumped right now. I want to eliminate or at least identify this last use of CL in my setup. This message will only appear once, during a fresh cold startup. Obviously, the Lisp engine's PC (program counter) knows where this happened, but it doesn't tell me anything useful. Any suggestions from people who debug regularly?\n    submitted by    /u/Eir1kur  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f7dosu/tough_init_file_debug_because_of_timertriggered/",
+          "publishedOn": "2024-09-02T18:14:07.000Z",
+          "wordCount": null,
+          "title": "Tough init file debug because of timer-triggered compiled lamba",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f7cv2w/can_orgnotifications_package_work_with_deadlines/",
+          "author": null,
+          "description": "submitted by    /u/EmacsDiscussion  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f7cv2w/can_orgnotifications_package_work_with_deadlines/",
+          "publishedOn": "2024-09-02T17:41:36.000Z",
+          "wordCount": null,
+          "title": "Can org-notifications package work with deadlines too?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f7axmu/tomorrow_night_deepblue_emacs_theme_release_120/",
+          "author": null,
+          "description": "submitted by    /u/jamescherti  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f7axmu/tomorrow_night_deepblue_emacs_theme_release_120/",
+          "publishedOn": "2024-09-02T16:24:26.000Z",
+          "wordCount": null,
+          "title": "Tomorrow Night Deepblue Emacs theme (Release 1.2.0)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f79pev/problem_with_the_installation_of_doom_on_mac/",
+          "author": null,
+          "description": "x There was an unexpected runtime error\n Message: Package was not properly cloned due to a connection failure, please try again later\n Backtrace:\n (error \"Package was not properly cloned due to a connection failure,...\n (if (car args) nil (error \"Package was not properly cloned due to a ...\n (progn (if (car args) nil (error \"Package was not properly cloned du...\n (shell-quote-argument nil)\n (mapconcat shell-quote-argument (\"git\" \"branch\" \"-m\" nil) \" \")\n (format \"$ cd %s\\n$ %s\\n\\n\" (shell-quote-argument (expand-file-name ...\n (propertize (format \"$ cd %s\\n$ %s\\n\\n\" (shell-quote-argument (expan...\n (concat (propertize (format \"$ cd %s\\n$ %s\\n\\n\" (shell-quote-argumen...\n (let* ((inhibit-read-only t) (entry (concat (propertize (format \"$ c...\n (let* ((result result) (exit (car result)) (invoked (numberp exit)) ...\n (let ((program x55) (args x57) (result x59) (directory x61)) (let* (...\n (progn (ignore (null x62)) (let ((program x55) (args x57) (result x5...\n    submitted by    /u/juarc  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f79pev/problem_with_the_installation_of_doom_on_mac/",
+          "publishedOn": "2024-09-02T15:34:20.000Z",
+          "wordCount": null,
+          "title": "Problem with the installation of doom on mac",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f71aco/help_to_understand_why_my_code_does_not_run_as_i/",
+          "author": null,
+          "description": "I have spent 2 hours trying out different ways to get line numbers shown in the buffer. I do not get errors, but the code does not work as it is intended. This is the part of config.\n (use-package prettier :ensure t :hook (web-mode . prettier-mode) ) (use-package flycheck :ensure t :hook (web-mode . flycheck-mode)) (use-package company :ensure t :hook (web-mode . company-mode)) ;;---------------------------------------------------------- ;; Typescript configs -------------------------------------- ;; (use-package typescript-mode ;; :ensure t ;; :mode \"\\\\.ts\\\\'\" ;; :hook (typescript-mode . (lambda () ;; (lsp-deferred) ;; (display-line-numbers-mode 1))) ;; :custom ;; (typescript-indent-level 2)) (use-package company :hook (prog-mode . company-mode)) (use-package web-mode :ensure t :mode ((\"\\\\.html?\\\\'\" . web-mode) (\"\\\\.css\\\\'\" . web-mode) (\"\\\\.jsx?\\\\'\" . web-mode) (\"\\\\.tsx?\\\\'\" . web-mode) (\"\\\\.json\\\\'\" . web-mode)) :config (let ((web-mode-markup-indent-offset 2) (web-mode-code-indent-offset 2) (web-mode-css-indent-offset 2) (web-mode-content-types-alist '((\"jsx\" . \"\\\\.js[x]?\\\\'\")))) (lsp-deferred)) :hook (web-mode . display-line-numbers-mode)) \n Here are the modes for the buffer.\n Minor modes enabled in this buffer: Auto-Save Company\n Display-Line-Numbers Eldoc Flycheck Font-Lock Lsp-Completion\n Lsp-Diagnostics Lsp-Headerline-Breadcrumb Lsp-Lens Lsp-Managed Lsp\n Lsp-Modeline-Code-Actions Lsp-Modeline-Diagnostics\n Lsp-Modeline-Workspace-Status Prettier\n How can I debug my configuration? Please help.\n    submitted by    /u/OkGroup4261  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f71aco/help_to_understand_why_my_code_does_not_run_as_i/",
+          "publishedOn": "2024-09-02T07:59:12.000Z",
+          "wordCount": null,
+          "title": "Help to understand why my code does not run as I want.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f70jiw/error_when_trying_to_start_a_clojure_repl_in_emacs/",
+          "author": null,
+          "description": "I was following https://www.braveclojure.com/basic-emacs/ , but when the book said to open a clojure REPL in emacs using cider-jacked-in, I got this error: internal-macroexpand-for-load: Eager macro-expansion failure: (wrong-number-of-arguments (3 . 4) 2) . I tried installing it again and updating my packages but it did not work\n    submitted by    /u/FireLuc33  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f70jiw/error_when_trying_to_start_a_clojure_repl_in_emacs/",
+          "publishedOn": "2024-09-02T07:06:10.000Z",
+          "wordCount": null,
+          "title": "Error when trying to start a Clojure REPL in emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f70dg7/symbol_selector_gnu_emacs/",
+          "author": null,
+          "description": "https://preview.redd.it/eqs0piacfcmd1.png?width=682&format=png&auto=webp&s=74a5d9ea2a92484996dbd6fddf94d09cc6220a82\n Select symbols from a Symbol Font.\n Details: https://lifeofpenguin.blogspot.com/2024/04/elisp-snippets.html#symbol-selector\n    submitted by    /u/atamariya  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f70dg7/symbol_selector_gnu_emacs/",
+          "publishedOn": "2024-09-02T06:55:05.000Z",
+          "wordCount": null,
+          "title": "Symbol Selector (GNU Emacs)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f6trc7/summing_non_contigous_regions_in_the_buffer_feat/",
+          "author": null,
+          "description": "Wanted to do a simple and \"quick\" calculation to find how long it takes for a package to be loaded during startup.\n functions used\n embark-select, so embark can later insert the regions in a buffer using embark-collect\n embark-collect,\n mc-mark-all-in-region, to match the string \"ms\" (also has a regexp variation)\n rectangle-mark-mode, to select the region in the buffer created by embark-collect\n calc-grab-rectangle, to send the region to calc v R +, as I understand it flattens the list of lists of numbers and them sum the resulting list\n Video has 45s, highly recommend to mute the audio.\n **How would you solve the same problem?**\n https://youtu.be/m2GdO5tLWkQ?feature=shared\n    submitted by    /u/polyPhaser23  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f6trc7/summing_non_contigous_regions_in_the_buffer_feat/",
+          "publishedOn": "2024-09-02T00:39:35.000Z",
+          "wordCount": null,
+          "title": "Summing non contigous regions in the buffer, feat Embark ,Multiple Cursors and benchmark-init",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f6t7r8/flymakebashateel_a_flymake_backend_for_bashate_a/",
+          "author": null,
+          "description": "submitted by    /u/jamescherti  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f6t7r8/flymakebashateel_a_flymake_backend_for_bashate_a/",
+          "publishedOn": "2024-09-02T00:12:03.000Z",
+          "wordCount": null,
+          "title": "flymake-bashate.el: A Flymake backend for bashate, a Bash style checker",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1f6p9xd/how_to_add_a_property_like_clocksum_t_but_to_get/",
+          "author": null,
+          "description": "I'm trying to get org-columns to show a column without the amount of hours clocked in the current week.\n I saw that org-mode has a function (org-clock-sum-today) that it uses for the CLOCKSUM_T special property:\n https://github.com/bzg/org-mode/blob/9183e3c723b812360d1042196416d521db590e9f/lisp/org-colview.el#L894\n I also saw that there's a (org-clock-sum-custom):\n https://github.com/bzg/org-mode/blob/9183e3c723b812360d1042196416d521db590e9f/lisp/org-clock.el#L1951\n So I tried to overwrite the org-columns function in my init.el, adding a new condition for that function like: \n  (when (assoc \"CLOCKSUM_W\" org-columns-current-fmt-compiled) (org-clock-sum-custom nil 'thisweek)) \n But it does not fill the CLOCKSUM_W column that I added. Any idea on what I could try?\n    submitted by    /u/josior  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1f6p9xd/how_to_add_a_property_like_clocksum_t_but_to_get/",
+          "publishedOn": "2024-09-01T21:10:11.000Z",
+          "wordCount": null,
+          "title": "How to add a property like CLOCKSUM_T, but to get the clocked time in the week?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1f6o321/running_a_major_mode_as_root_ovpnmode/",
           "author": null,
@@ -7860,86 +7890,6 @@
           "publishedOn": "2024-08-04T08:50:12.000Z",
           "wordCount": null,
           "title": "Rustic: Enhanced Org Babel integration",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ejjb89/copypaste_into_emacs_buffer_in_terminal_mode_in/",
-          "author": null,
-          "description": "Emacs beginner, started with spacemacs. I want to use spacemacs in terminal mode in my remote machine(Ubuntu) by doing ssh from my Mac. \n How can I enable copy/yank from some text from my Mac browser into emacs buffer on the terminal and also vice versa. \n I tried clipetty and it works when I yank something from emacs buffer and paste on Mac but not the other way around. Also it does not work at all when using tmux. \n Appreciate any suggestions!!\n    submitted by    /u/yash5595  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ejjb89/copypaste_into_emacs_buffer_in_terminal_mode_in/",
-          "publishedOn": "2024-08-04T01:19:18.000Z",
-          "wordCount": null,
-          "title": "Copy/paste into emacs buffer in terminal mode in remote server",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ejc0uu/trouble_with_consult_and_maybe_projectile_in/",
-          "author": null,
-          "description": "I mostly run Emacs 29.4 (from source) but on some machines I run Emacs 28.2 (Debian 12) and Emacs 27.1 (Debian 11). I've recently started seeing errors on Emacs 27.1 with consult-buffer and consult-ripgrep among others in Git repositories:\n No applicable method: project-roots, (projectile . \"/full/path/to/git/root\") \n and the commands no longer work. I don't see these errors in newer Emacs versions.\n Am I out of luck trying to run modern packages on Emacs 27 or is it possible that I've got something configured incorrectly?\n Thanks.\n projectile 20240212.1100 consult 20240725.508 consult-lsp 20240507.2105 \n    submitted by    /u/quboid42  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ejc0uu/trouble_with_consult_and_maybe_projectile_in/",
-          "publishedOn": "2024-08-03T19:39:53.000Z",
-          "wordCount": null,
-          "title": "Trouble with consult and maybe projectile in Emacs 27.1",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ej96kl/why_do_i_need_a_space_after_title/",
-          "author": null,
-          "description": "I'm using org-roam\n if I have #+title: python:getting command in ubuntu then org-roam-find-node can list it\n if I have #+title:python:getting command in ubuntu then org-roam-find-node cannot list it\n Both ways, the python:getting command in ubuntu are highlighted with org-document-title face, so I think (I could be wrong) that org-mode parses both way alright(or is it font-lock and parser behave differently?). but the space will make that huge difference to org-roam-find-node\n Why?\n    submitted by    /u/HermanHel  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ej96kl/why_do_i_need_a_space_after_title/",
-          "publishedOn": "2024-08-03T17:38:15.000Z",
-          "wordCount": null,
-          "title": "why do I need a space after #+title:",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ej8zxt/efficient_emacs_configuration_and_startup_with/",
-          "author": null,
-          "description": "submitted by    /u/jamescherti  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ej8zxt/efficient_emacs_configuration_and_startup_with/",
-          "publishedOn": "2024-08-03T17:30:52.000Z",
-          "wordCount": null,
-          "title": "Efficient Emacs configuration and startup with minimal-emacs.d",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ej5gaq/which_notify_package_for_orgmode_agenda_you_can/",
-          "author": null,
-          "description": "I want to have system notifications from my org-agenda, which can working without turn on emacs. Which package you can recommend for it?\n    submitted by    /u/EmacsDiscussion  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ej5gaq/which_notify_package_for_orgmode_agenda_you_can/",
-          "publishedOn": "2024-08-03T15:04:11.000Z",
-          "wordCount": null,
-          "title": "Which notify package for org-mode agenda you can recommend",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ej28w9/is_it_time_for_the_remacs_community_to_find/",
-          "author": null,
-          "description": "My main gripe are\n  \nI'm not always logged into reddit, and when I click a reddit link, it produces some fake security error, and tells me I'm not logged in or I should use my developer token. I'm not sure why reddit has started to do this, but does it have something to do a desire to monetize it it more, and may even have something to do with AI. It seems reddit has also signed some exclusive deal with Google allowing only Google to index it.\n \nThe way Reddit know handles blocking by other users. Sometime ago I began to notice that so many responses had some error like deleted and unavailable. Something I remarked on in this thread - Why do some reddit users especially on r/emacs keep messing up threads their involved by deleting their posts or making them unavailable? I don't see why some people should disrupt a technical discussion by blocking some participants who can't see what is going. It is not as though this Twitter or Facebook, this is simply a technical forum and the discussions don't often veer into the political. What kind of mindset does it take to block someone because you don't want them to read your views on technical issues, and it is not as though the person blocked cannot login using another account to see the thread?\n \n These two issues are making this forum less appealing. Perhaps I should use stackexchange more instead.\n    submitted by    /u/vfclists  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ej28w9/is_it_time_for_the_remacs_community_to_find/",
-          "publishedOn": "2024-08-03T12:31:14.000Z",
-          "wordCount": null,
-          "title": "Is it time for the r/emacs community to find another channel or forum to discuss Emacs? Reddit is becoming pretty annoying.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ej1e33/mouse_events_on_svg_images_in_emacs_2022/",
-          "author": null,
-          "description": "submitted by    /u/dzecniv  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ej1e33/mouse_events_on_svg_images_in_emacs_2022/",
-          "publishedOn": "2024-08-03T11:44:58.000Z",
-          "wordCount": null,
-          "title": "Mouse Events on SVG Images in Emacs [2022]",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1eizr1x/orgmode_notifications_when_emacs_works_and_doesnt/",
-          "author": null,
-          "description": "I use org-agenda mostly for repeating tasks, which is scheduled. I want to have notifications for these tasks, but I don't run emacs always. I don't really sure that mostly of packages, which provides this feature, can working like daemon and sending me notifications, when emacs turn off. What I can do and which extension I must to use?\n    submitted by    /u/EmacsDiscussion  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1eizr1x/orgmode_notifications_when_emacs_works_and_doesnt/",
-          "publishedOn": "2024-08-03T10:04:24.000Z",
-          "wordCount": null,
-          "title": "Org-mode notifications when emacs works and doesn't work",
           "imageUrl": null
         }
       ]
