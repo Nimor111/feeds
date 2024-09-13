@@ -2,10 +2,369 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2024-09-12T20:37:04.709Z</updated>
+    <updated>2024-09-13T20:36:47.211Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[Conversion script: Logseq to org roam]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/1fg4459/conversion_script_logseq_to_org_roam/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/1fg4459/conversion_script_logseq_to_org_roam/"/>
+        <updated>2024-09-13T20:05:42.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/ExtremeVegetable12  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Understanding Partial Application of Function Composition]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1fg3n8n/understanding_partial_application_of_function/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1fg3n8n/understanding_partial_application_of_function/"/>
+        <updated>2024-09-13T19:45:45.000Z</updated>
+        <summary type="html"><![CDATA[A recent post on on r/haskell solicited help understanding the expression
+ isAllergicTo :: Allergen -> Int -> Bool isAllergicTo = (. allergies) . elem 
+ where Allergen is a type and allergies :: Int -> [Allergen]. (How does this pointfree expression work?)
+ It’s straightforward to rewrite this function pointfully, but doing so doesn’t help one develope an intuition for thinking about function composition, partially applied, on a higher semantic level. This post is my attempt at helping people develop that high-level intuition.
+ https://www.danielbrice.net/blog/understanding-function-composition/
+    submitted by    /u/friedbrice  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Kyo 0.12.0 released 🚀]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1fg3n1r/kyo_0120_released/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1fg3n1r/kyo_0120_released/"/>
+        <updated>2024-09-13T19:45:30.000Z</updated>
+        <summary type="html"><![CDATA[Initial Scala Native support: The modules kyo-data, kyo-tag, and kyo-prelude are now cross-compiled to Scala Native 0.5.5.
+ Batch: A new effect that provides functionality similar to solutions like Haxl/Stitch/ZIO Query to batch operations. The effect can be safely composed with others without a separate monad!
+ kyo-prelude: The kyo-prelude module contains the new kernel of the library and a collection of IO-free effects. It's a quite complete effect system with mutability only to handle stack safety, tracing, and preemption. Other than that, the entire module is pure without any side effects or IO suspensions, including the effect handling mechanism.
+ System: Provides access to system properties, environment variables, and OS-related information. A convenience Parse type class is provided to parse configurations.
+ Check: A new effect that provides a mechanism similar to assertions but with customizable behavior, allowing the collection of all failures (Check.runChunk), translation to the Abort effect (Check.runAbort), and discarding of any failures (Check.runDiscard).
+ Effect-TS-inspired pipe: The pending type now offers pipe methods that allow chaining multiple transformations into a single pipe call.
+ ScalaDocs: The majority of Kyo's public APIs now offer ScalaDocs.
+ cats-effect integration: The new Cats effect provides integration with cats-effect's IO, allowing conversion of computations between the libraries in both directions.
+ New Clock APIs: New convenience APIs to track deadlines and measure elapsed time.
+ Barrier: An asynchronous primitive similar to Latch to coordinate the rendezvous of multiple fibers.
+ Integration with directories-jvm: The Path companion object now provides methods to obtain common paths based on the directories-jvm library: Path.basePaths, Path.userPaths, Path.projectPaths.
+  
+https://github.com/getkyo/kyo/releases/tag/v0.12.0
+    submitted by    /u/fwbrasil  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[What is the point of `org-attach-id-uuid-folder-format` ? Is it a bug ?]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/1fg33w7/what_is_the_point_of_orgattachiduuidfolderformat/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/1fg33w7/what_is_the_point_of_orgattachiduuidfolderformat/"/>
+        <updated>2024-09-13T19:22:51.000Z</updated>
+        <summary type="html"><![CDATA[I was playing aroung with org-attach features lately, and stumbled upon something that looked weird to me. When using the uuid method to create attachment folders, orgmode uses the first two characters of the uuid to create a first folder, then the rest of the ID to create the actual attachment folder. It fails if using a uuid of less than 2 characters as far as I could test.
+ It is not obvious to the eyes, a bit like a phishing site, I noticed it while deleting all attachments on a node, Emacs yes/no prompted me if I wanted to use recursive deletion. I was surprised because I understood that the 'uuid' method was supposed to store attachments in a flat directory structure named after the node's UUID, under the `org-attach-id-dir` directory.
+ At first, I thought it was a bug (most probably in my config as always), but I could track down the process to this function in charge to generate the folder name:
+ (defun org-attach-id-uuid-folder-format (id) "Translate an UUID ID into a folder-path. Default format for how Org translates ID properties to a path for attachments. Useful if ID is generated with UUID." (and (< 2 (length id)) (format "%s/%s" (substring id 0 2) (substring id 2)))) 
+ Looking at this function, the bug theorydoes not stand as it looks very intentional on the developers part. So I am wondering why it was built like that.
+ It does not impair the attachment functionalities at all, everything I tested works fine, but first I am curious, and second the way I found out about it bothers me. I wonder if multiple nodes were to share the same first two UUID characters, would they all get their attachment folders deleted by a recursive deletion meant for only one of them ? If yes, I think that would qualify as a bug with data loss on top of that.
+ The docstring does not help me understand its purpose any better, so I thought I'd ask.
+    submitted by    /u/fred982  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Paste in terminal-mode has broken]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1fg2xvp/paste_in_terminalmode_has_broken/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1fg2xvp/paste_in_terminalmode_has_broken/"/>
+        <updated>2024-09-13T19:15:39.000Z</updated>
+        <summary type="html"><![CDATA[Running into a weird issue with a recent upgrade. So I upgraded from emacs 26 to emacs 28.1 on Ubuntu. Normally, I operate emacs in terminal mode (emacs --daemon, emacsclient -t) using Terminal.app from MacOSX.
+ Problem I'm having is that as of this upgrade, I can no longer paste text into a terminal buffer in char mode. If I cmd-C "hi" and Cmd-v it in a buffer in `term-mode` in character mode, the console just freezes up (i.e. all further keys aren't doing anything, I can't C-x b to get to another buffer, etc.). I have to Ctrl-G to get back control.
+ My lossage output looks like
+ ESC [ 2 0 0 ~ h i ESC [ 2 0 1 ~
+ Which is what I'd generally expect with terminal shenanigans, and lossage confirms that it invokes `term--xterm-paste`. So I tried manually invoking term--xterm-paste and, yep, that freezes up the console too.
+ Invoking help on term--xterm-paste doesn't give any obvious hints, and it's a compiled C function so now I'm at a bit of a dead-end. Any suggestions for how to debug this further would be much appreciated!
+ ETA: confirmed issue is happening with an `emacs -Q` run and `M-x term` running /bin/bash, so I don't think it's my configuration (at least, not my emacs configuration).
+    submitted by    /u/fixermark  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[package-lint (20240913.1546) --- A linting library for elisp package authors]]></title>
+        <id>https://melpa.org/packages/package-lint-20240913.1546.tar</id>
+        <link href="https://melpa.org/#/package-lint"/>
+        <updated>2024-09-13T15:46:00.000Z</updated>
+        <summary type="html"><![CDATA[The package-lint package has been updated to version 20240913.1546.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[nix-ts-mode (20240913.1539) --- Major mode for Nix expressions, powered by tree-sitter]]></title>
+        <id>https://melpa.org/packages/nix-ts-mode-20240913.1539.tar</id>
+        <link href="https://melpa.org/#/nix-ts-mode"/>
+        <updated>2024-09-13T15:39:00.000Z</updated>
+        <summary type="html"><![CDATA[The nix-ts-mode package has been updated to version 20240913.1539.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[eee.el: Extended Emacs With External Tui application]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ffxkcq/eeeel_extended_emacs_with_external_tui_application/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ffxkcq/eeeel_extended_emacs_with_external_tui_application/"/>
+        <updated>2024-09-13T15:29:08.000Z</updated>
+        <summary type="html"><![CDATA[Hello,
+ I'm developing eee.el to launches excellent terminal user interface tools (such as yazi, fzf, lazy-git, etc.) with Emacs asynchronously.
+ https://github.com/eval-exec/eee.el
+ By combining Emacs with excellent terminal user interface (TUI) applications, I can achieve the following workflow:
+  
+Emacs asynchronously launches a terminal application (such as wezterm).
+ 
+In wezterm, I run TUI applications defined in eee.el, such as yazi, ripgrep, fzf.
+ 
+In yazi, I search/preview files, and upon pressing Enter, yazi informs Emacs which file to open and where to navigate.
+ 
+Emacs executes a callback to open the target file specified in yazi.
+ 
+ You can see a screen recording example in the GitHub repository mentioned above.
+ What TUI applications would you like to see added? What workflows are you interested in? Feel free to raise an issue or submit a pull request, and I will incorporate them when I see them.
+ Can you provide me with some suggestions? What tools do you want to see added? What kind of workflows do you prefer?
+    submitted by    /u/eval-exec  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Is Emacs usable on android based GrapheneOS?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ffx45l/is_emacs_usable_on_android_based_grapheneos/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ffx45l/is_emacs_usable_on_android_based_grapheneos/"/>
+        <updated>2024-09-13T15:10:37.000Z</updated>
+        <summary type="html"><![CDATA[Has anybody tried this?
+    submitted by    /u/TopicWestern9610  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Dead keys (é ê etc) do work in normal emacs but don't with emacs daemon and emacsclient]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ffwxye/dead_keys_%C3%A9_%C3%AA_etc_do_work_in_normal_emacs_but/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ffwxye/dead_keys_%C3%A9_%C3%AA_etc_do_work_in_normal_emacs_but/"/>
+        <updated>2024-09-13T15:03:31.000Z</updated>
+        <summary type="html"><![CDATA[Hej fellows,
+ title basically says it all. I use emacsclient on the regular, with a systemd-Service starting emacs --daemon. I have been wondering why I can't use dead keys when using emacs while it works just as intended in about every other program. 
+ Deciding to test the issue, I started with emacs -Q, gradually adding more configuration to find the culprit -- only that I was unable to find any, because dead keys would work even with my full configuration. On the other hand, I commented out all my configuration and restarted the systemd-service, only to find that even with practically no configuration, dead keys don't work.
+ I am puzzled and have no idea how to search for the solution. If you have pointers where I can look to better understand the issue or might even have a solution, I'd be grateful.
+ Have a good day, fellows :)
+    submitted by    /u/olivuser  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Problems using a java library from Scala]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1ffwqr0/problems_using_a_java_library_from_scala/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1ffwqr0/problems_using_a_java_library_from_scala/"/>
+        <updated>2024-09-13T14:55:09.000Z</updated>
+        <summary type="html"><![CDATA[I know this should be very simple, but for some reason I am stuck.
+ I am trying to use this library https://github.com/gwlucastrig/Tinfour when I go to maven I get this set dependency 
+ libraryDependencies += "org.tinfour" % "Tinfour" % "2.1.7" 
+ I have added it to my sbt, when I check the sbt-tree, I can see it
+ [info] +-org.tinfour:tinfour:2.1.7 
+ My problem happens when I try to import it to use it in Scala, it fails no matter how I try (upper/lowercase, prefixed with org or no). For these one it says it is not part of org:
+ import org.tinfour.* import org.Tinfour.* 
+ For these , it simply says not found:
+ import tinfour.* import Tinfour.* 
+ Any suggestion?
+    submitted by    /u/SeaTrade9705  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linter for Scala 3]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1ffw0fr/linter_for_scala_3/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1ffw0fr/linter_for_scala_3/"/>
+        <updated>2024-09-13T14:24:00.000Z</updated>
+        <summary type="html"><![CDATA[Hi everyone!
+ I've been working on porting Scapegoat rules to Scala 3 using Scalafix and have currently ported 70 of them, with more of them to come (ideally, all of them). This linter is compatible with Scala 2.13 and Scala 3.
+ The linter can detect quite a few bugs and has been tested with unit tests and on a large codebase.
+ If you want to use it in your Scala 3 project / contribute, feel free to check out my repo.
+ I'd be happy to get any feedback (positive or not) and potential improvements I could make.
+    submitted by    /u/t1b000  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[volatile-highlights (20240913.1302) --- Minor mode for visual feedback on some operations.]]></title>
+        <id>https://melpa.org/packages/volatile-highlights-20240913.1302.tar</id>
+        <link href="https://melpa.org/#/volatile-highlights"/>
+        <updated>2024-09-13T13:02:00.000Z</updated>
+        <summary type="html"><![CDATA[The volatile-highlights package has been updated to version 20240913.1302.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Using Isabelle (a non-dependently typed proof assistant) to verify Haskell code]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1fftqt6/using_isabelle_a_nondependently_typed_proof/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1fftqt6/using_isabelle_a_nondependently_typed_proof/"/>
+        <updated>2024-09-13T12:41:24.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/Faucelme  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Eglot with single files/non-project files: How should it work?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1fftlse/eglot_with_single_filesnonproject_files_how/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1fftlse/eglot_with_single_filesnonproject_files_how/"/>
+        <updated>2024-09-13T12:34:08.000Z</updated>
+        <summary type="html"><![CDATA[I want to use LSP with single files. For example, I create a HelloWorld.java file in my home directory (~/), and I should be able to see completion suggestions and Flymake tips. However, I tested three different LSP servers (jdtls, Groovy, and Kotlin), and Eglot either crashes with these servers or Emacs itself crashes. I think it's a common approach to test something without creating a Git repository or using any build tools. But I cannot find a solution.
+    submitted by    /u/5mangod  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Simulate Lambda Terms in Lambda Calculus]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1ffsk2n/simulate_lambda_terms_in_lambda_calculus/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1ffsk2n/simulate_lambda_terms_in_lambda_calculus/"/>
+        <updated>2024-09-13T11:39:25.000Z</updated>
+        <summary type="html"><![CDATA[Lambda calculus is the theoretical basis for functional programming languages like Ocaml, Haskell, etc. Therefore it is an interesting topic for me.
+ Since Church's lambda calculus, Gödel's recursive functions and Turing's automatic machines are equivalent, I was curious to find the analogue of a universal turing machine expressed in lambda calculus. I have found a quite simple universal lambda term which does the job.
+ I have documented the construction of a universal lambda term in this paper.
+ It gives a short introduction to lambda calculus. Then it introduces a programming notation for lambda calculus similar to Haskell/Ocaml in order to make lambda calculus more readable for functional programmers.
+ In this notation some basic functions for booleans, pairs, numbers and optional values are introduced.
+ In order to encode lambda terms the usual Gödel numbering has been avoided. Instead of Gödel numbers the basic idea of algebraic data types has been used.
+ Based on the structure of an encoded lambda term, a lambda term is constructed which reduces an encoded lambda term to normal form or loops infinitely in case no normal form exists.
+    submitted by    /u/hbrandl  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[org-index (20240913.1106) --- Ranked and incremental search among selected org-headlines]]></title>
+        <id>https://melpa.org/packages/org-index-20240913.1106.tar</id>
+        <link href="https://melpa.org/#/org-index"/>
+        <updated>2024-09-13T11:06:00.000Z</updated>
+        <summary type="html"><![CDATA[The org-index package has been updated to version 20240913.1106.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[emacsclient does not respect initial-buffer-choice]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ffruhr/emacsclient_does_not_respect_initialbufferchoice/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ffruhr/emacsclient_does_not_respect_initialbufferchoice/"/>
+        <updated>2024-09-13T10:57:26.000Z</updated>
+        <summary type="html"><![CDATA[I am fairly new to emacs and have managed to customize emacs to my liking, adding support for all the languages I use. I recently switched to the server/client setup and have a problem. emacsclient does not open with the initial-buffer-choice value, which in my case is recentf-open-files
+ The relevant line in my config is:  (setq initial-buffer-choice 'recentf-open-files)  There is no other part of my config that sets this variable
+    submitted by    /u/aldrinmathew  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[challenger-deep-theme (20240913.937) --- challenger-deep Theme]]></title>
+        <id>https://melpa.org/packages/challenger-deep-theme-20240913.937.tar</id>
+        <link href="https://melpa.org/#/challenger-deep-theme"/>
+        <updated>2024-09-13T09:37:00.000Z</updated>
+        <summary type="html"><![CDATA[The challenger-deep-theme package has been updated to version 20240913.937.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Request for help: Making Copilot available on Mac (via Homebrew?)]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1ffosq9/request_for_help_making_copilot_available_on_mac/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1ffosq9/request_for_help_making_copilot_available_on_mac/"/>
+        <updated>2024-09-13T07:16:58.000Z</updated>
+        <summary type="html"><![CDATA[We are trying to make Copilot easily available on Mac. For those unaware, Copilot is a runtime verification framework written in Haskell. There's no Copilot executable or Copilot compiler as such: Copilot is an EDSL available as a Haskell library, so users still use GHC to compile Copilot modules.
+ I assume homebrew is the easiest path, since we cannot add Copilot to Apple's App Store without having to add GHC and Cabal as part of the same package, which would be a sizeable effort.
+ I'm struggling to make that happen due to how GHC and cabal create package envs and package DBs. A lot has changed in Cabal and GHC in the last few versions.
+ Any help would be really appreciated. A lot of people in aerospace and at NASA use Mac, so this would be really helpful to increase adoption of Copilot.
+ If someone more knowledgeable than me can help, you can find a bit more info in this discussion: https://github.com/Copilot-Language/copilot/discussions/537
+ Thanks!
+    submitted by    /u/ivanpd  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How can I track my running activities with Emacs?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ffmfrb/how_can_i_track_my_running_activities_with_emacs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ffmfrb/how_can_i_track_my_running_activities_with_emacs/"/>
+        <updated>2024-09-13T04:37:55.000Z</updated>
+        <summary type="html"><![CDATA[Hi everyone!
+ I'm looking for a way to log and track my running training sessions directly in Emacs. I'd like to be able to input and organize the following data for each session:
+  
+Date
+ Resting heart rate for the day
+ Average / Max heart rate during the session
+ Duration of the session
+ Type of session (endurance, resistance, etc.)
+ etc.
+  
+Do you know of any tools, packages, or specific setups within Emacs that would allow me to do this? Any suggestions are welcome!
+ Thanks in advance!
+    submitted by    /u/runslack  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Eventually, mu4e starts saying my inbox is empty when it's not]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ffkgeb/eventually_mu4e_starts_saying_my_inbox_is_empty/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ffkgeb/eventually_mu4e_starts_saying_my_inbox_is_empty/"/>
+        <updated>2024-09-13T02:47:06.000Z</updated>
+        <summary type="html"><![CDATA[My mu4e setup has been working just fine for a while. But ever since I last updated mu (via homebrew, which I used to install version 1.12.6) I keep encountering this problem: after a while (sometimes a few days, sometimes a few hours), my inbox (in "work/inbox") starts showing up as empty ("No matching messages found") even though the corresponding directory contains plenty of messages. 
+ I can fix this by running mu init and then mu index, but it's getting to be quite annoying to have to do this so often. Is anyone else having a similar issue? Any suggestions on what the culprit could be here?
+    submitted by    /u/graduale  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to standout as an applicant from java?]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1ffkfg3/how_to_standout_as_an_applicant_from_java/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1ffkfg3/how_to_standout_as_an_applicant_from_java/"/>
+        <updated>2024-09-13T02:45:51.000Z</updated>
+        <summary type="html"><![CDATA[What do you think I should do to have a chance to transition to a scala job?
+ I'm a java developer for 2 years now
+    submitted by    /u/steerflesh  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[parinfer-rust-mode (20240912.2130) --- An interface for the parinfer-rust library]]></title>
+        <id>https://melpa.org/packages/parinfer-rust-mode-20240912.2130.tar</id>
+        <link href="https://melpa.org/#/parinfer-rust-mode"/>
+        <updated>2024-09-12T21:30:00.000Z</updated>
+        <summary type="html"><![CDATA[The parinfer-rust-mode package has been updated to version 20240912.2130.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Repeating tasks not being reset after being marked DONE]]></title>
         <id>https://www.reddit.com/r/orgmode/comments/1ffcp8s/repeating_tasks_not_being_reset_after_being/</id>
@@ -351,6 +710,16 @@ At work (Groq) we recently upgraded the version of GHC that we use from 8.10 to 
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[srfi (20240912.514) --- Scheme Requests for Implementation browser]]></title>
+        <id>https://melpa.org/packages/srfi-20240912.514.tar</id>
+        <link href="https://melpa.org/#/srfi"/>
+        <updated>2024-09-12T05:14:00.000Z</updated>
+        <summary type="html"><![CDATA[The srfi package has been updated to version 20240912.514.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[c++ lsp mode runs horribly when writing comments (it's nearly fixed)]]></title>
         <id>https://www.reddit.com/r/emacs/comments/1fetyag/c_lsp_mode_runs_horribly_when_writing_comments/</id>
         <link href="https://www.reddit.com/r/emacs/comments/1fetyag/c_lsp_mode_runs_horribly_when_writing_comments/"/>
@@ -605,6 +974,16 @@ My contributions enhance the reflection mechanism, which…]]></summary>
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[hyperbole (20240911.1430) --- GNU Hyperbole: The Everyday Hypertextual Information Manager]]></title>
+        <id>https://melpa.org/packages/hyperbole-20240911.1430.tar</id>
+        <link href="https://melpa.org/#/hyperbole"/>
+        <updated>2024-09-11T14:30:00.000Z</updated>
+        <summary type="html"><![CDATA[The hyperbole package has been updated to version 20240911.1430.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -1919,6 +2298,16 @@ For an in-depth explanation of how this library works, check out: Higher-Order E
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[racket-mode (20240907.2029) --- Racket editing, REPL, and more]]></title>
+        <id>https://melpa.org/packages/racket-mode-20240907.2029.tar</id>
+        <link href="https://melpa.org/#/racket-mode"/>
+        <updated>2024-09-07T20:29:00.000Z</updated>
+        <summary type="html"><![CDATA[The racket-mode package has been updated to version 20240907.2029.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[MicroHs: A Small Haskell Compiler (Lennart Augustsson, ICFP 2024, day 2)]]></title>
         <id>https://www.reddit.com/r/haskell/comments/1fbg16o/microhs_a_small_haskell_compiler_lennart/</id>
         <link href="https://www.reddit.com/r/haskell/comments/1fbg16o/microhs_a_small_haskell_compiler_lennart/"/>
@@ -3079,6 +3468,16 @@ If you're interested in checking out the tool or contributing, star org-zettel-r
         <link href="https://melpa.org/#/casual-symbol-overlay"/>
         <updated>2024-09-05T01:29:00.000Z</updated>
         <summary type="html"><![CDATA[The casual-symbol-overlay package has been updated to version 20240905.129.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[meyvn (20240905.43) --- Meyvn client]]></title>
+        <id>https://melpa.org/packages/meyvn-20240905.43.tar</id>
+        <link href="https://melpa.org/#/meyvn"/>
+        <updated>2024-09-05T00:43:00.000Z</updated>
+        <summary type="html"><![CDATA[The meyvn package has been updated to version 20240905.43.]]></summary>
         <author>
             <name>MELPA package updates</name>
         </author>
@@ -10791,425 +11190,6 @@ Congratulations and thank you very much for your work.]]></summary>
         <link href="https://melpa.org/#/reverse-im"/>
         <updated>2024-08-15T10:55:00.000Z</updated>
         <summary type="html"><![CDATA[The reverse-im package has been updated to version 20240815.1055.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Best practices on keepung git repo of extensions locally and mame emas use them instead ofintaling them from online.]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1espiad/best_practices_on_keepung_git_repo_of_extensions/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1espiad/best_practices_on_keepung_git_repo_of_extensions/"/>
-        <updated>2024-08-15T07:56:19.000Z</updated>
-        <summary type="html"><![CDATA[How many of you install extwnaions fro local repos and how do you do it. How can i get started.
-    submitted by    /u/GullibleTrust5682  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Debugging Scala Code]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1esohfp/debugging_scala_code/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1esohfp/debugging_scala_code/"/>
-        <updated>2024-08-15T06:45:58.000Z</updated>
-        <summary type="html"><![CDATA[I'm looking for someone to help debug my Scala / FXML code. If anyone could help it would be much appreciated. I will send the code via pm.
-    submitted by    /u/Ok-Philosophy2681  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[klere-theme (20240815.454) --- A dark theme with lambent color highlights and incremental grays]]></title>
-        <id>https://melpa.org/packages/klere-theme-20240815.454.tar</id>
-        <link href="https://melpa.org/#/klere-theme"/>
-        <updated>2024-08-15T04:54:00.000Z</updated>
-        <summary type="html"><![CDATA[The klere-theme package has been updated to version 20240815.454.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hackathon will Scala]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1esinzm/hackathon_will_scala/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1esinzm/hackathon_will_scala/"/>
-        <updated>2024-08-15T01:26:26.000Z</updated>
-        <summary type="html"><![CDATA[Hey Scala community 👋
- Thought about building on blockchain, or just looking to challenge yourself with some cutting-edge tech, you should definitely check out the ongoing Metagraph Hackathon. This event is designed for developers like you to explore and innovate on the Hypergraph Transfer Protocol (HGTP) by Constellation Network.
- 🔗 Event Overview: https://metagraph.devpost.com/
- 📚 Resources and Guides: https://metagraph.devpost.com/resources
- The hackathon offers an excellent opportunity to showcase your Scala skills, collaborate with other talented devs, and potentially win some exciting prizes. 
- Plus, there’s a ton of resources to help you get started, whether you're new to blockchain or a seasoned pro.Whether you’re looking to create a game-changing dApp or contribute to the growing ecosystem, this hackathon is your platform.
- This hackathon isn’t just any event—it's backed by major players like the Department of Defense, Panasonic, IBM, SimbaChain, and the National DigiFoundry, which includes partners like Microsoft, the National Science Foundation, U.S. Department of Treasury, NASA, Space Force, and many more. 
- With these heavy hitters involved, this is your chance to work on projects that could shape the future of blockchain, tokenization, and digital assets, all while potentially catching the eye of enterprise leaders and government agencies.
-    submitted by    /u/Dagnum_PI  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Emacs sometimes freezes on opening a file]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1eshube/emacs_sometimes_freezes_on_opening_a_file/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1eshube/emacs_sometimes_freezes_on_opening_a_file/"/>
-        <updated>2024-08-15T00:48:01.000Z</updated>
-        <summary type="html"><![CDATA[Title. It's not consistent and I can't reproduce it on purpose. It's usually the first file I open in a new session.
- Cancelling with C-g does nothing and I just have to wait for the force close popup from my OS. (kill doesn't even work!)
- It's been an issue since I started using Emacs, but it's been happening more often recently, probably because of more config?
- How on Earth do I even start to debug this?
-    submitted by    /u/NotFromSkane  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[json parsing in aws glue]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1eshkpy/json_parsing_in_aws_glue/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1eshkpy/json_parsing_in_aws_glue/"/>
-        <updated>2024-08-15T00:35:22.000Z</updated>
-        <summary type="html"><![CDATA[Does anybody have experience parsing JSON in a UDF in aws glue? I need a scala json parsing lib.. ideally one that's easy to use in glue.
- I know how to load a json file into a dataframe, but I cannot do this. The file is jsonlines and each row has an entirely different schema.
- So I have this:
- sc.textFile(args("input_path")).flatMap(x => x.split("\n")).map(do_stuff) 
- ..but then no idea what to do inside do_stuff.
-    submitted by    /u/bcsamsquanch  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[elcord (20240815.30) --- Allows you to integrate Rich Presence from Discord]]></title>
-        <id>https://melpa.org/packages/elcord-20240815.30.tar</id>
-        <link href="https://melpa.org/#/elcord"/>
-        <updated>2024-08-15T00:30:00.000Z</updated>
-        <summary type="html"><![CDATA[The elcord package has been updated to version 20240815.30.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Let there be types: observable type sharing for GHC Core]]></title>
-        <id>https://tweag.io/blog/2024-08-15-type-lets/</id>
-        <link href="https://tweag.io/blog/2024-08-15-type-lets/"/>
-        <updated>2024-08-15T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[In the context of my final year internship at Tweag, I’ve had the opportunity to work on the Glasgow Haskell Compiler
-(GHC), in an attempt to speed up compile times.
-GHC is renowned for many things, but compilation speed isn’t one of them.
-One specific problem exposed in issue #20264 is that in Core,
-GHC’s intermediate representation, types are systematically inlined, resulting in large type trees having to be
-traversed and transformed along the pipeline.
-This blog post aims to explain why this is the case, in which situations it can result in slow compile times and large
-memory usage, and what we can do about it.
-
-The problem
-Let’s take the example from the motivating issue #20264.
-If you’ve ever played with Haskell’s more advanced type system features, you might have encountered the foll…]]></summary>
-        <author>
-            <name>Tweag - Engineering blog</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[php-cs-fixer (20240814.2249) --- php-cs-fixer wrapper.]]></title>
-        <id>https://melpa.org/packages/php-cs-fixer-20240814.2249.tar</id>
-        <link href="https://melpa.org/#/php-cs-fixer"/>
-        <updated>2024-08-14T22:49:00.000Z</updated>
-        <summary type="html"><![CDATA[The php-cs-fixer package has been updated to version 20240814.2249.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Building a fast and scalable type-directed search]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1eseb5r/building_a_fast_and_scalable_typedirected_search/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1eseb5r/building_a_fast_and_scalable_typedirected_search/"/>
-        <updated>2024-08-14T22:11:38.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/ChrisPenner  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[gdb-x (20240814.2137) --- Improve GDB-MI user interface]]></title>
-        <id>https://melpa.org/packages/gdb-x-20240814.2137.tar</id>
-        <link href="https://melpa.org/#/gdb-x"/>
-        <updated>2024-08-14T21:37:00.000Z</updated>
-        <summary type="html"><![CDATA[The gdb-x package has been updated to version 20240814.2137.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How can I prevent emacs from replacing the other buffer when using dired?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1esbba3/how_can_i_prevent_emacs_from_replacing_the_other/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1esbba3/how_can_i_prevent_emacs_from_replacing_the_other/"/>
-        <updated>2024-08-14T20:07:28.000Z</updated>
-        <summary type="html"><![CDATA[I want to compare the same file name in 2 different folders, e.g.:
- dira/some.txt dirb/some.txt
- I have dira/some.txt open in one buffer. In the other of 2 buffers, I used dired to load dirb/some.txt. Emacs then replaces the other buffers so both have dirb/some.txt open. How can I prevent that, so I can compare the 2 different files?
-    submitted by    /u/cheyrn  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Can edirs (not ediff) be configured to ignore whitespace differences?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1es9sbh/can_edirs_not_ediff_be_configured_to_ignore/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1es9sbh/can_edirs_not_ediff_be_configured_to_ignore/"/>
-        <updated>2024-08-14T18:57:34.000Z</updated>
-        <summary type="html"><![CDATA[What the title says. I keep encountering every file being flagged as different, only to find they are reported identical by ediff once I compare the 2 (from edirs).
- Is there a way to get edirs to also ignore whitespace differences?
-    submitted by    /u/cheyrn  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[projectile (20240814.1854) --- Manage and navigate projects in Emacs easily]]></title>
-        <id>https://melpa.org/packages/projectile-20240814.1854.tar</id>
-        <link href="https://melpa.org/#/projectile"/>
-        <updated>2024-08-14T18:54:00.000Z</updated>
-        <summary type="html"><![CDATA[The projectile package has been updated to version 20240814.1854.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Major mode that hands off to another?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1es9pa8/major_mode_that_hands_off_to_another/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1es9pa8/major_mode_that_hands_off_to_another/"/>
-        <updated>2024-08-14T18:53:57.000Z</updated>
-        <summary type="html"><![CDATA[I work on a project that has a custom language that can embed C++ code inside functions. I'd like to write a major mode for that language so that I can get highlighting/indentation/etc, but I'd like to be able to hand-off to c++-mode for the C++ bits. Is that possible?
-    submitted by    /u/timwoj  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[eww is slow with port 443 (any https website)]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1es8jgs/eww_is_slow_with_port_443_any_https_website/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1es8jgs/eww_is_slow_with_port_443_any_https_website/"/>
-        <updated>2024-08-14T18:06:26.000Z</updated>
-        <summary type="html"><![CDATA[My eww is slow with port 443 for all websites.
- I found a previous message here from 5 years ago stating this was a tls 1.3 issue.
-  
-I don't know how to disable it and my searching hasn't found any realistic ways
- 
-I don't think it is smart to disable tls 1.3 as that sounds unsecure
- 
- My eww settings are vanilla - nothing changed. I can get to https urls via firefox without any delay.
- Thoughts?
- I am using: GNU Emacs 28.2 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.38, cairo version 1.16.0)
- of 2024-06-25, modified by Debian
-    submitted by    /u/tallmtt  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[cmake-mode (20240814.1725) --- major-mode for editing CMake sources]]></title>
-        <id>https://melpa.org/packages/cmake-mode-20240814.1725.tar</id>
-        <link href="https://melpa.org/#/cmake-mode"/>
-        <updated>2024-08-14T17:25:00.000Z</updated>
-        <summary type="html"><![CDATA[The cmake-mode package has been updated to version 20240814.1725.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Format on save wired behavior]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1es73hv/format_on_save_wired_behavior/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1es73hv/format_on_save_wired_behavior/"/>
-        <updated>2024-08-14T17:08:21.000Z</updated>
-        <summary type="html"><![CDATA[When I do save my buffer I am doing format-on save and I see the error message in `rustic-complication` mode window, which is good, but when I fix all the issue in my code and make it work and save it again, in `rustic-complication` mode window it's opening the same file that I am working on it.
- any solution for this behavior?
-    submitted by    /u/DryZookeepergame1644  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[gptel (20240814.1558) --- Interact with ChatGPT or other LLMs]]></title>
-        <id>https://melpa.org/packages/gptel-20240814.1558.tar</id>
-        <link href="https://melpa.org/#/gptel"/>
-        <updated>2024-08-14T15:58:00.000Z</updated>
-        <summary type="html"><![CDATA[The gptel package has been updated to version 20240814.1558.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[The Haskell Unfolder Episode 31: nothunks]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1es42dp/the_haskell_unfolder_episode_31_nothunks/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1es42dp/the_haskell_unfolder_episode_31_nothunks/"/>
-        <updated>2024-08-14T15:08:44.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/kosmikus  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Disable italics]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1es353x/disable_italics/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1es353x/disable_italics/"/>
-        <updated>2024-08-14T14:32:38.000Z</updated>
-        <summary type="html"><![CDATA[(Vanilla emacs org-mode) what is the configuration to disable italics (here for some reason shown as underlines) for all org files?
- "(set-face-italic 'font-lock-comment-face nil)" does not work.
- Neither does wrapping the specific text in code or verbatim.
-    submitted by    /u/jenkem_boofer  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Best Scala IDE 2024?]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1es20l8/best_scala_ide_2024/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1es20l8/best_scala_ide_2024/"/>
-        <updated>2024-08-14T13:46:21.000Z</updated>
-        <summary type="html"><![CDATA[I've been using Scala for many years. When I first started, Scala IDE (on Eclipse) was the only real IDE available, and it was terrible. Things have gotten a lot better since then with IntelliJ. However, in the past year or two, IntelliJ has become extremely unreliable for Scala. What do you all use for Scala editing these days?
-    submitted by    /u/darkfrog26  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Store a type class instance in a case class]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1es1oxq/store_a_type_class_instance_in_a_case_class/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1es1oxq/store_a_type_class_instance_in_a_case_class/"/>
-        <updated>2024-08-14T13:32:21.000Z</updated>
-        <summary type="html"><![CDATA[Is it possible to translate this contrived Haskell code to Scala 3?
- class Capture a where name :: Text instance Capture Int where name = "int" instance Capture Bool where name = "bool" data Captured = forall a. Capture a => Captured nameOf :: Captured -> Text nameOf = \case Captured @a -> name @a 
- I assume "Captured" has to be a case class, but I struggle with the forall part. I've tried various permutations that contain "using" and/or "[A]", but so far they've all resulted in "polymorphic function types must have a value parameter" errors.
-    submitted by    /u/absence3  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Forge 0.4.0 and 0.4.1 released]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1es1gqk/forge_040_and_041_released/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1es1gqk/forge_040_and_041_released/"/>
-        <updated>2024-08-14T13:22:04.000Z</updated>
-        <summary type="html"><![CDATA[I am excited to finally announce the release of Forge version 0.4.0, consisting of 699 commits since the last release two years ago. It was actually released six days ago, at the same time as Magit and nine other packages, which all had to be released at the same time.
- To avoid getting myself into a similar situation again, I intend to release much more frequently going forward. So it is with delight, that I can report, that today I have already released version 0.4.1.
- More information can be found in the release announcement.
-    submitted by    /u/tarsius_  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Laminar 17.1.0, News & Stickers]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1es0u26/laminar_1710_news_stickers/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1es0u26/laminar_1710_news_stickers/"/>
-        <updated>2024-08-14T12:53:35.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/nikitaga  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Specify color/bold (or face) for a line of text based on text-properties]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1es0jjr/specify_colorbold_or_face_for_a_line_of_text/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1es0jjr/specify_colorbold_or_face_for_a_line_of_text/"/>
-        <updated>2024-08-14T12:39:05.000Z</updated>
-        <summary type="html"><![CDATA[Hello folks,
- So I find output of `xref` a bit unreadable, esp if a symbol is being referred in multiple files. So, I wanted to specify different color/font attributes for lines that contain name of the file where symbols are defined. 
- I noticed that - file name line although doesn't have a different face, it does have a text-property called `xref-group`. Is there a way to colorize and specify some font attributes(such as bold) based on text-property. 
-    submitted by    /u/axiomatic_345  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[helix-theme (20240814.1212) --- Color theme inspired by Helix editor's default colors]]></title>
-        <id>https://melpa.org/packages/helix-theme-20240814.1212.tar</id>
-        <link href="https://melpa.org/#/helix-theme"/>
-        <updated>2024-08-14T12:12:00.000Z</updated>
-        <summary type="html"><![CDATA[The helix-theme package has been updated to version 20240814.1212.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[State of structural typing support in Scala 3.3.0 (Richard-Foy, 2023)]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1erzt4t/state_of_structural_typing_support_in_scala_330/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1erzt4t/state_of_structural_typing_support_in_scala_330/"/>
-        <updated>2024-08-14T12:02:39.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/Ethesen  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Announcing Snapshot4s: Snapshot testing made easy, compatible with Weaver and MUnit]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1erzqy0/announcing_snapshot4s_snapshot_testing_made_easy/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1erzqy0/announcing_snapshot4s_snapshot_testing_made_easy/"/>
-        <updated>2024-08-14T11:59:55.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/majkp  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Cant get gloss to work on Windows 10]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1ery66x/cant_get_gloss_to_work_on_windows_10/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1ery66x/cant_get_gloss_to_work_on_windows_10/"/>
-        <updated>2024-08-14T10:30:01.000Z</updated>
-        <summary type="html"><![CDATA[I'm trying to make Gloss work on Windows 10 using cabal but every time I get this error:
- user error (unknown GLUT entry glutInit) 
- I've tried to put the "glut32.dll" file everywhere (in the .exe dir, in the cabal dir, in the .hs dir etc etc) but I can't get it to work
- What can I do?
-    submitted by    /u/Sleifir  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[sniem (20240814.931) --- Hands-eased united editing method]]></title>
-        <id>https://melpa.org/packages/sniem-20240814.931.tar</id>
-        <link href="https://melpa.org/#/sniem"/>
-        <updated>2024-08-14T09:31:00.000Z</updated>
-        <summary type="html"><![CDATA[The sniem package has been updated to version 20240814.931.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[tangle codeblocks selectively]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/1erx0kn/tangle_codeblocks_selectively/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/1erx0kn/tangle_codeblocks_selectively/"/>
-        <updated>2024-08-14T09:15:11.000Z</updated>
-        <summary type="html"><![CDATA[I have a org-mode file that is tangled to create various userconfigs. Given that the emacs-android package is pretty stable (and works great with e.g. texlive from termux), i want to tangle sourceblocks from the file. I am thinking of maybe adding tags like "android", "notebook", "server" and the like. I then want to call e.g. org-tangle-mobile to create files from all blocks with this respective tag. My brain is telling me i saw something like this before but i cant find the reference again or figure out how to so just by reading the Manual. Any experience?
-    submitted by    /u/Schroedinger50PCT  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[magik-mode (20240814.914) --- Emacs major mode for Smallworld Magik files]]></title>
-        <id>https://melpa.org/packages/magik-mode-20240814.914.tar</id>
-        <link href="https://melpa.org/#/magik-mode"/>
-        <updated>2024-08-14T09:14:00.000Z</updated>
-        <summary type="html"><![CDATA[The magik-mode package has been updated to version 20240814.914.]]></summary>
         <author>
             <name>MELPA package updates</name>
         </author>
