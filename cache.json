@@ -53,6 +53,46 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1fich98/recursion_schemes_can_compiler_plugins_be_used_to/",
+          "author": null,
+          "description": "Continuing a previous objective:\n  \nErgonomic folds: generics-sop recursion schemes, without \"base functor\"\n  \nA previous post reminded me of the idea to improve the ergonomics of recursion schemes.\n  \nWhat exactly is the point of recursion schemes\n  \nI haven't worked with plugins but I wanted to find a way to use recursion schemes by giving algebraic datatypes a virtual base functor. The base functor structure is already latent in recursive datatypes and can be recreated by abstracting out recursive positions:\n type Base :: Type -> Type -> Type data Base as a instance Functor (Base as) \n This is an empty datatype declaration, Base [a] list is the base functor of lists. Then the way to construct values of type Base [a] is to use the constructors of the recursive type: [] and (:), obviously at a different type. This is more natural than dealing with a separate datatype and it helps keep it in sync, but to avoid confusion they can be renamed, Base.[].\n {- -- virtual datatype defined by the plugin type Base :: Type -> Type -> Type data Base [a] list where Base.[] :: Base [a] list (Base.:) :: a -> list -> Base [a] list deriving stock Functor -} -- project = unsafeCoerce project :: [a] -> Base [a] [a] project [] = Base.[] project (a:as) = a Base.: as cata :: (Base [a] res -> res) -> ([a] -> res) cata alg = res where res = alg . fmap res . project len :: [a] -> Int len = cata \\case Base.[] -> 0 _Base.:n -> 1 + n \n Is there any way to make this work?\n    submitted by    /u/Iceland_jack  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1fich98/recursion_schemes_can_compiler_plugins_be_used_to/",
+          "publishedOn": "2024-09-16T18:46:26.000Z",
+          "wordCount": null,
+          "title": "recursion schemes: Can compiler plugins be used to avoid base functors?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1fhyobw/bluefin_streams_finalize_promptly/",
+          "author": null,
+          "description": "Link: https://h2.jaguarpaw.co.uk/posts/bluefin-streams-finalize-promptly/\n Despite the long struggle to make streaming abstractions finalize (release resources) promptly (for example, by implementing special-purpose bracketing operations using ResourceT for conduit and SafeT for pipes), they still fail in this task. At best, they have \"promptish\" finalization.\n Streams implemented in Bluefin, on the other hand, do finalize promptly and can even use general-purpose bracketing!\n My article explains the situation.\n    submitted by    /u/tomejaguar  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1fhyobw/bluefin_streams_finalize_promptly/",
+          "publishedOn": "2024-09-16T07:19:35.000Z",
+          "wordCount": null,
+          "title": "Bluefin streams finalize promptly",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1fhup4s/how_do_you_deal_with_long_filepath_names_in_the/",
+          "author": null,
+          "description": "I made a project with cabal init --non-interactive and I'm using VSCode with the Haskell extension to edit and build it. IntelliSense is highlighting the following problem on my module Main where line:\n Failed to run [\"cabal\",\"v2-repl\",\"app\\\\Main.hs\"] in directory \"c:\\Users\\Abcde\\Documents\\Haskell Study\\validating_credit_card_numbers\". Failed command: cabal --builddir=C:\\Users\\Abcde\\AppData\\Local\\hie-bios\\dist-validating_credit_card_numbers-3cf4d7df6e53ba2e15b2eedc97015d54 v2-repl --with-compiler C:\\Users\\Abcde\\AppData\\Local\\hie-bios\\wrapper-340ffcbd9b6dc8c3bed91eb5c533e4e3.exe --with-hc-pkg C:\\ghcup\\ghc\\9.4.8\\bin\\ghc-pkg-9.4.8.exe app\\Main.hs Build profile: -w ghc-9.4.8 -O1 In order, the following will be built (use -v for more details): - validating-credit-card-numbers-0.1.0.0 (exe:valid…",
+          "link": "https://www.reddit.com/r/haskell/comments/1fhup4s/how_do_you_deal_with_long_filepath_names_in_the/",
+          "publishedOn": "2024-09-16T03:05:04.000Z",
+          "wordCount": null,
+          "title": "How do you deal with long filepath names in the Haskell toolchain?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1fhn6cw/designing_an_infinite_number_of_3d_printed_chess/",
+          "author": null,
+          "description": "submitted by    /u/hungryjoewarren  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1fhn6cw/designing_an_infinite_number_of_3d_printed_chess/",
+          "publishedOn": "2024-09-15T21:04:19.000Z",
+          "wordCount": null,
+          "title": "Designing an Infinite Number of 3D Printed Chess Sets in Haskell",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1fhia96/say_hello_to_bloghaskellorg/",
           "author": null,
           "description": "submitted by    /u/TechnoEmpress  \n [link]   [comments]",
@@ -991,16 +1031,6 @@
           "wordCount": null,
           "title": "Is it possible to make stock-derivable classes?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1eumqzq/haskell_interlude_55_sebastian_ullrich/",
-          "author": null,
-          "description": "submitted by    /u/tritlo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1eumqzq/haskell_interlude_55_sebastian_ullrich/",
-          "publishedOn": "2024-08-17T17:11:21.000Z",
-          "wordCount": null,
-          "title": "Haskell Interlude 55: Sebastian Ullrich",
-          "imageUrl": null
         }
       ]
     },
@@ -1009,6 +1039,66 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fibymq/blog_post_fun_with_types_all_types_of_physics/",
+          "author": null,
+          "description": "I wrote a new blog post about making your compiler type-checks your physics computations.\n If it compiles, it's probably correct :)\n https://antoine-doeraene.medium.com/fun-with-types-all-types-of-physics-computations-fb2967245ff3\n    submitted by    /u/sherpal_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fibymq/blog_post_fun_with_types_all_types_of_physics/",
+          "publishedOn": "2024-09-16T18:25:36.000Z",
+          "wordCount": null,
+          "title": "Blog post: Fun with Types: All Types of Physics Computations",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fi9ggn/i_am_new_to_scala_and_i_am_having_trouble_getting/",
+          "author": null,
+          "description": "I have started learning scala recently, this is my first time learning any Java related language, I have experience with C++ and Python. To get started, I downloaded the jdk-17, scala, and installed them, but when I try to see the version of scalal, it is not recognized, I have also installed metals extension in my vscode, do not know how to proceed.\n    submitted by    /u/Stock_Opposite_483  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fi9ggn/i_am_new_to_scala_and_i_am_having_trouble_getting/",
+          "publishedOn": "2024-09-16T16:44:58.000Z",
+          "wordCount": null,
+          "title": "I am new to scala and I am having trouble getting it setup",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fi2pjp/hkd4s_higher_kinded_data_for_scala_3/",
+          "author": null,
+          "description": "submitted by    /u/null_was_a_mistake  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fi2pjp/hkd4s_higher_kinded_data_for_scala_3/",
+          "publishedOn": "2024-09-16T11:57:51.000Z",
+          "wordCount": null,
+          "title": "hkd4s: Higher Kinded Data for Scala 3",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fi0ciw/scala_akka_how_to_secure_your_code/",
+          "author": null,
+          "description": "In this article, you'll find answers on how to write secure and threat-resistant code in Scala https://scalac.io/blog/scala-akka-how-to-secure-your-code/\n The article explains how Scala's features, such as type safety, immutability, and functional programming, contribute to secure code development.\n    submitted by    /u/ComprehensiveSell578  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fi0ciw/scala_akka_how_to_secure_your_code/",
+          "publishedOn": "2024-09-16T09:31:44.000Z",
+          "wordCount": null,
+          "title": "Scala & Akka: How to secure your code",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fhvq7m/sbt_1102_released/",
+          "author": null,
+          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fhvq7m/sbt_1102_released/",
+          "publishedOn": "2024-09-16T04:01:16.000Z",
+          "wordCount": null,
+          "title": "sbt 1.10.2 released",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fhp8yg/if_building_a_simple_web_crawler_in_scala/",
+          "author": null,
+          "description": "submitted by    /u/Particular-Walrus366  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fhp8yg/if_building_a_simple_web_crawler_in_scala/",
+          "publishedOn": "2024-09-15T22:36:10.000Z",
+          "wordCount": null,
+          "title": "If building a simple web crawler in Scala (domain-specific, hundreds of pages only). Would you use tail recursion or something like BFS and why?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1fhebbj/this_week_in_scala_sep_16_2024/",
           "author": null,
@@ -2069,6 +2159,36 @@
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/orgmode/comments/1fi3z6m/what_is_the_syntax_for_using_tables_row_and/",
+          "author": null,
+          "description": "What is the syntax for org-mode to use a table's values directly into an org-babel function?\n In the code below is the some syntax which allow the SQL command to be applied to each row.\n I have seen some examples which based on Elisp which use some mapxxxx and cl-destructuring-bind functions to obtain the values with Elisp and format them for other languages, but I think there is a syntax where org-mode recognizes the var used for the table and uses the values in the formula.\n  #+name: artistes | FirstName | Surname | |-----------+----------| | James | Brown | | Gladys | Knight | | Bob | James | | Aretha | Franklin | #+header: :engine postgresql #+header: :dbhost 127.0.0.1 #+header: :dbport 5432 #+header: :dbuser user #+header: :dbpassword: :pass #+header: :database popnames #+begin_src sql :var table=table-artistes select table[$1] || ' ' || table[$2]; #+end_src \n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1fi3z6m/what_is_the_syntax_for_using_tables_row_and/",
+          "publishedOn": "2024-09-16T12:59:34.000Z",
+          "wordCount": null,
+          "title": "What is the syntax for using table's row and column values in an org-babel function?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1fhovcg/is_orgreversenoteorder_a_filelocal_variable_the/",
+          "author": null,
+          "description": "submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1fhovcg/is_orgreversenoteorder_a_filelocal_variable_the/",
+          "publishedOn": "2024-09-15T22:18:48.000Z",
+          "wordCount": null,
+          "title": "Is org-reverse-note-order a file-local variable? The help doesn't seem to indicate that it is.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1fhn61h/insert_custom_orgagenda_querry_at_heading/",
+          "author": null,
+          "description": "Hey everyone, my first post in this community - the emacs fever has taken hold. I am currently holding my first weekly review with org-mode and was wondering if it is possible to display all the tasks I have completed in the last 7 days... of course, its emacs probably there is a function for it :D\n I enabled org-log-done and will now have my future DONE tasks logged. I found that by using the \"m\" option on the Agenda I can filter for TODO=\"DONE\"&CLOSED>=\"<-1w>\" and the agenda shows me what I want.\n Now, I know we can run lisp in org-files and I want to add a snippet to my Weekly review template that queries the org-agenda and inserts the output under the current subheading. I have looked trough a few StackOverflow posts and I am quite frankly lost were to even start since I dont understand what Helm calls as a function to query the org-agenda. \n I would love to learn what your process is when you create such a workflow, how can I solve this problem without just copy and pasting a solution? I really want to learn the mindset to get my hands dirty with future problems.\n    submitted by    /u/Syncriix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1fhn61h/insert_custom_orgagenda_querry_at_heading/",
+          "publishedOn": "2024-09-15T21:03:57.000Z",
+          "wordCount": null,
+          "title": "Insert custom org-agenda querry at heading",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/orgmode/comments/1fg4459/conversion_script_logseq_to_org_roam/",
           "author": null,
           "description": "submitted by    /u/ExtremeVegetable12  \n [link]   [comments]",
@@ -2327,26 +2447,6 @@
           "wordCount": null,
           "title": "Implementing headline-local variables",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1euowv4/export_to_html_make_images_expand_to_full_screen/",
-          "author": null,
-          "description": "Is there a way for me (when exporting to html) in org mode to make a local image, i.e. [[./assets/image.jpeg]] expand to full screen when clicked?\n    submitted by    /u/MarkieAurelius  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1euowv4/export_to_html_make_images_expand_to_full_screen/",
-          "publishedOn": "2024-08-17T18:47:08.000Z",
-          "wordCount": null,
-          "title": "export to html, make images expand to full screen when clicked.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1euh1nl/how_do_you_export_orgmode_documents_into_notion/",
-          "author": null,
-          "description": "My team is using notion for shared docs. I tried writing directly on notion but 1. the subpage system is driving me crazy (a page can be a link, or can be a whole line! and if you delete the whole line one, the page will be deleted, and sometimes you don't need whole line one; let alone the subpage being attached to parent so moving things around is another hassle) 2. It looks ugly compared to my emacs theme or website theme. \n The pain plus the bliss of writting in org-mode made me wonder if there's a way to write in org-mode and export it to notion. I guess if I have the bulk of the doc done at some permanent form(don't need to edit much) I don't care where it is on anyway. So what I'm looking for is a solution to 1. write a lot of stuffs in org-mode(possibly from lots of files linked together with org-id or file link) 2. slide them into notion as a cluster of pages. \n I'm currently trying notion's builtin import function https://www.notion.so/help/import-data-into-notion So far html is not working(failed with no error message), and I'm trying others, but I wonder if there's others have done this before?\n Currently my solution is to 1. write my stuff with org-mode and publish to my personal website (e.g. https://hermanhel.codeberg.page/braindump-ui/#f351ae9c-c280-4c71-9b12-1b8ba4a4200d this some doc I wrote about using huggingface) 2. make a page on notion and stick link to my website there. But this way other's cannot edit it.\n    submitted by    /u/HermanHel  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1euh1nl/how_do_you_export_orgmode_documents_into_notion/",
-          "publishedOn": "2024-08-17T12:55:01.000Z",
-          "wordCount": null,
-          "title": "how do you export org-mode documents into notion?",
-          "imageUrl": null
         }
       ]
     },
@@ -2355,6 +2455,56 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/jsdoc-20240916.1846.tar",
+          "author": null,
+          "description": "The jsdoc package has been updated to version 20240916.1846.",
+          "link": "https://melpa.org/#/jsdoc",
+          "publishedOn": "2024-09-16T18:46:00.000Z",
+          "wordCount": 105,
+          "title": "jsdoc (20240916.1846) --- Insert JSDoc comments",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-super-agenda-20240916.1753.tar",
+          "author": null,
+          "description": "The org-super-agenda package has been updated to version 20240916.1753.",
+          "link": "https://melpa.org/#/org-super-agenda",
+          "publishedOn": "2024-09-16T17:53:00.000Z",
+          "wordCount": 105,
+          "title": "org-super-agenda (20240916.1753) --- Supercharge your agenda",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/pkgbuild-mode-20240916.1630.tar",
+          "author": null,
+          "description": "The pkgbuild-mode package has been updated to version 20240916.1630.",
+          "link": "https://melpa.org/#/pkgbuild-mode",
+          "publishedOn": "2024-09-16T16:30:00.000Z",
+          "wordCount": 105,
+          "title": "pkgbuild-mode (20240916.1630) --- Interface to the Arch Linux package manager",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/phpactor-20240916.1427.tar",
+          "author": null,
+          "description": "The phpactor package has been updated to version 20240916.1427.",
+          "link": "https://melpa.org/#/phpactor",
+          "publishedOn": "2024-09-16T14:27:00.000Z",
+          "wordCount": 105,
+          "title": "phpactor (20240916.1427) --- Interface to Phpactor",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/shrface-20240916.440.tar",
+          "author": null,
+          "description": "The shrface package has been updated to version 20240916.440.",
+          "link": "https://melpa.org/#/shrface",
+          "publishedOn": "2024-09-16T04:40:00.000Z",
+          "wordCount": 105,
+          "title": "shrface (20240916.440) --- Extend shr/eww with org features and analysis capability",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/prism-20240915.1804.tar",
           "author": null,
@@ -2436,6 +2586,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/khoj-20240915.1007.tar",
+          "author": null,
+          "description": "The khoj package has been updated to version 20240915.1007.",
+          "link": "https://melpa.org/#/khoj",
+          "publishedOn": "2024-09-15T10:07:00.000Z",
+          "wordCount": 105,
+          "title": "khoj (20240915.1007) --- Your Second Brain",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/evil-20240915.832.tar",
           "author": null,
           "description": "The evil package has been updated to version 20240915.832.",
@@ -2443,6 +2603,16 @@
           "publishedOn": "2024-09-15T08:32:00.000Z",
           "wordCount": 105,
           "title": "evil (20240915.832) --- Extensible vi layer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/cfn-mode-20240915.804.tar",
+          "author": null,
+          "description": "The cfn-mode package has been updated to version 20240915.804.",
+          "link": "https://melpa.org/#/cfn-mode",
+          "publishedOn": "2024-09-15T08:04:00.000Z",
+          "wordCount": 105,
+          "title": "cfn-mode (20240915.804) --- AWS cloudformation mode",
           "imageUrl": null
         },
         {
@@ -2493,6 +2663,16 @@
           "publishedOn": "2024-09-14T12:00:00.000Z",
           "wordCount": 105,
           "title": "smyx-theme (20240914.1200) --- smyx Color Theme",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mini-echo-20240914.712.tar",
+          "author": null,
+          "description": "The mini-echo package has been updated to version 20240914.712.",
+          "link": "https://melpa.org/#/mini-echo",
+          "publishedOn": "2024-09-14T07:12:00.000Z",
+          "wordCount": 105,
+          "title": "mini-echo (20240914.712) --- Echo buffer status in minibuffer window",
           "imageUrl": null
         },
         {
@@ -3473,6 +3653,16 @@
           "publishedOn": "2024-09-03T00:55:00.000Z",
           "wordCount": 105,
           "title": "apheleia (20240903.55) --- Reformat buffer stably",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-autoexport-20240902.2253.tar",
+          "author": null,
+          "description": "The org-autoexport package has been updated to version 20240902.2253.",
+          "link": "https://melpa.org/#/org-autoexport",
+          "publishedOn": "2024-09-02T22:53:00.000Z",
+          "wordCount": 105,
+          "title": "org-autoexport (20240902.2253) --- Auto-export org file on save",
           "imageUrl": null
         },
         {
@@ -5344,76 +5534,6 @@
           "wordCount": 105,
           "title": "decor (20240818.1100) --- Modify visual decorations",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ekg-20240818.437.tar",
-          "author": null,
-          "description": "The ekg package has been updated to version 20240818.437.",
-          "link": "https://melpa.org/#/ekg",
-          "publishedOn": "2024-08-18T04:37:00.000Z",
-          "wordCount": 105,
-          "title": "ekg (20240818.437) --- A system for recording and linking information",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/loopy-dash-20240818.245.tar",
-          "author": null,
-          "description": "The loopy-dash package has been updated to version 20240818.245.",
-          "link": "https://melpa.org/#/loopy-dash",
-          "publishedOn": "2024-08-18T02:45:00.000Z",
-          "wordCount": 105,
-          "title": "loopy-dash (20240818.245) --- Dash destructuring for `loopy'",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-mime-20240818.243.tar",
-          "author": null,
-          "description": "The org-mime package has been updated to version 20240818.243.",
-          "link": "https://melpa.org/#/org-mime",
-          "publishedOn": "2024-08-18T02:43:00.000Z",
-          "wordCount": 105,
-          "title": "org-mime (20240818.243) --- org html export for text/html MIME emails",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/stgit-20240817.2126.tar",
-          "author": null,
-          "description": "The stgit package has been updated to version 20240817.2126.",
-          "link": "https://melpa.org/#/stgit",
-          "publishedOn": "2024-08-17T21:26:00.000Z",
-          "wordCount": 105,
-          "title": "stgit (20240817.2126) --- major mode for StGit interaction",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/outline-indent-20240817.1840.tar",
-          "author": null,
-          "description": "The outline-indent package has been updated to version 20240817.1840.",
-          "link": "https://melpa.org/#/outline-indent",
-          "publishedOn": "2024-08-17T18:40:00.000Z",
-          "wordCount": 105,
-          "title": "outline-indent (20240817.1840) --- Outline and fold text using indentation",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/llama-20240817.1039.tar",
-          "author": null,
-          "description": "The llama package has been updated to version 20240817.1039.",
-          "link": "https://melpa.org/#/llama",
-          "publishedOn": "2024-08-17T10:39:00.000Z",
-          "wordCount": 105,
-          "title": "llama (20240817.1039) --- Compact syntax for short lambda",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/typewriter-roll-mode-20240817.928.tar",
-          "author": null,
-          "description": "The typewriter-roll-mode package has been updated to version 20240817.928.",
-          "link": "https://melpa.org/#/typewriter-roll-mode",
-          "publishedOn": "2024-08-17T09:28:00.000Z",
-          "wordCount": 105,
-          "title": "typewriter-roll-mode (20240817.928) --- Aid for distraction-free writing",
-          "imageUrl": null
         }
       ]
     },
@@ -5422,6 +5542,106 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fif3eg/imenu_or_lspuiimenu_can_i_go_only_to_top_level/",
+          "author": null,
+          "description": "I wanted to start use imenu but I noticed that when I use it in typescript files I get a list of top level declarations in a given file, but I cannot jump to them. When I press <RET> after I select some top level function, instead of jumping to that function, imenu present me a new list with variables names defined in that function, and so on....\n Is there a way to jump to a top level function? \n    submitted by    /u/filipoi  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fif3eg/imenu_or_lspuiimenu_can_i_go_only_to_top_level/",
+          "publishedOn": "2024-09-16T20:31:38.000Z",
+          "wordCount": null,
+          "title": "imenu or lsp-ui-imenu - can I go only to top level declarations?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fi9jev/showing_local_time_zone_in_mu4e_message_view/",
+          "author": null,
+          "description": "Hi,\n I'm trying to get mu4e (latest version, using emacs 29.3) to show an email's date/time in my local time zone. This works in the headers view, but not in the message view, where the time typically is shown in UTC time zone or sometimes in other time zones (it might be using the sender's time zone?).\n While debugging the message view, `mu4e~headers-field-value` seems to return the time in my local time zone (correct behaviour), but something else seems to change it afterwards to a different time zone. I haven't altered the values of `mu4e-headers-time-format` (\"%X\") or `mu4e-headers-long-date-format` (\"%c\"). Also, `current-time-zone` returns the right time zone for my locale.\n Any ideas what is changing the time zone in mu4e's message view, or how to force using my current time zone?\n    submitted by    /u/badmaxton  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fi9jev/showing_local_time_zone_in_mu4e_message_view/",
+          "publishedOn": "2024-09-16T16:48:03.000Z",
+          "wordCount": null,
+          "title": "Showing local time zone in mu4e message view",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fi5lv8/trouble_finding_face_for_consult_section_headers/",
+          "author": null,
+          "description": "Consult minibuffers often have multiple sections that are titled with text. Like consult-buffer separates open buffers and bookmarks, and consult-ripgrep separates sections by files. These section titles are colored black which makes them hard to see with a black background. I can't seem to find which face to change to change the color of these titles. \n https://preview.redd.it/0airlocci6pd1.png?width=419&format=png&auto=webp&s=e7973a60a11b59cc23c151c935fd0656de5d319e\n The word Buffer in the above image, for example\n    submitted by    /u/zarbod  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fi5lv8/trouble_finding_face_for_consult_section_headers/",
+          "publishedOn": "2024-09-16T14:09:57.000Z",
+          "wordCount": null,
+          "title": "Trouble finding face for consult section headers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fi41sg/i_lived_it_spent_half_a_day_writing_a_small_emacs/",
+          "author": null,
+          "description": "Hello everyone,\n I'd started writing some code to integrate the BiomeJS Javascript linter/formatter and having done most of the hard work (arguably a bunch of hacks, but it works) I was now writing here to tell you folks about it.\n I knew about the prior existence of https://github.com/cxa/lsp-biome, which I was going to mention here and explain I don't use LSP hence why I'd written more code instead of using that package.\n But when I did search for lsp-biome, I actually stumbled upon two packages that do exactly what my package do but better:\n  \nhttps://github.com/yadex205/emacs-biomejs-format\n https://github.com/craneduck/flycheck-biomejs\n  \nI don't know how the hell I missed them in my initial search but here they are...\n In the hope that it might prevent someone else from writing a bunch of hacks, I thought I'd keep writing this post anyway and leave the instructions to set them up together:\n ```elisp ;; BiomeJS Flycheck integration (straight-use-package '(flycheck-biomejs :type git :host github :repo \"craneduck/flycheck-biomejs\" :require t))\n ;; BiomeJS format-on-save (straight-use-package '(emacs-biomejs-format :type git :host github :repo \"yadex205/emacs-biomejs-format\" :require t :config ( (add-hook 'js2-mode-hook 'biomejs-format-mode) (add-hook 'web-mode-hook 'biomejs-format-mode)))) ```\n    submitted by    /u/freesteph  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fi41sg/i_lived_it_spent_half_a_day_writing_a_small_emacs/",
+          "publishedOn": "2024-09-16T13:02:29.000Z",
+          "wordCount": null,
+          "title": "I lived it: spent half a day writing a small Emacs package and realised only after it's been done before",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fhz78s/the_oval_editor/",
+          "author": null,
+          "description": "submitted by    /u/atamariya  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fhz78s/the_oval_editor/",
+          "publishedOn": "2024-09-16T08:00:40.000Z",
+          "wordCount": null,
+          "title": "The Oval Editor",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fhu7zp/why_does_researchforward_10_match_a_single_blank/",
+          "author": null,
+          "description": "N/A\n    submitted by    /u/whudwl  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fhu7zp/why_does_researchforward_10_match_a_single_blank/",
+          "publishedOn": "2024-09-16T02:40:20.000Z",
+          "wordCount": null,
+          "title": "why does (re-search-forward \"\\\\(^$\\\\)\\\\{10\\\\}\") match a single blank line?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fhpfog/firefox_in_my_exwm/",
+          "author": null,
+          "description": "submitted by    /u/daehwannam  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fhpfog/firefox_in_my_exwm/",
+          "publishedOn": "2024-09-15T22:44:43.000Z",
+          "wordCount": null,
+          "title": "Firefox in my EXWM",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fhonpw/is_the_width_attribute_of_a_font_set_by_the_font/",
+          "author": null,
+          "description": "I'm trying to make a font narrow by setting the :width attribute to one of the condensed modes but it doesn't make a difference.\n Is it an attribute that the font itself needs to support?\n Does it depend on the particular type of font?\n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fhonpw/is_the_width_attribute_of_a_font_set_by_the_font/",
+          "publishedOn": "2024-09-15T22:09:14.000Z",
+          "wordCount": null,
+          "title": "Is the :width attribute of a font set by the font itself or is it something Emacs has control over?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fhnium/issues_with_dictionary_suggestions_and_hunspell/",
+          "author": null,
+          "description": "On many modes, e.g. text-mode, M-<tab> calls ispell-complete-word. This function suggests word completions from a dictionary.\n In my case, M-<tab> yields an error: ispell-lookup-words: No plain word-list found at systemdefault locations. Customize ‘ispell-alternate-dictionary’ to set yours.\n However, I have Hunspell 1.7.2 installed (on NixOS) and spellchecking (M-$ ispell-word) works fine. But Hunspell dictionaries do not seem to work as plain word lists and I don't really know how to set this up. Any ideas how to fix this?\n There are some related reports, like https://www.reddit.com/r/DoomEmacs/comments/qw8xn7, but I haven't found a solution. In my case this issue happens on GNU Emacs 29.4 with no .emacs or init.el configuration.\n    submitted by    /u/UnlikelyWorker3195  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fhnium/issues_with_dictionary_suggestions_and_hunspell/",
+          "publishedOn": "2024-09-15T21:19:08.000Z",
+          "wordCount": null,
+          "title": "Issues with dictionary suggestions and hunspell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fhnfbm/if_i_set_calendardatedisplayform_as_i_want_diary/",
+          "author": null,
+          "description": "Hello, \n I am trying to use the calendar/diary of emacs in italian, and so I set \n (setq calendar-date-display-form (quote ((if dayname (concat dayname \", \")) day \" \" monthname \" \" year)) \n which correctly shows me Lunedì, 16 Settembre 2024 if I press d on a day of the calendar where there is some data in the diary. This is the format I want on display.\n The problem is that if I set that variable, inserting a new appointment in the diary with i d, the date is inserted with this format:\n 16 Set 2024\n and is not showing in the calendar (No diary entries for Lunedì, 16 Settembre 2024).\n Without that variable setting, instead I get in the diary entry the standard format:\n Set 16, 2024\n which is parsed correclty and shows in the calendar.\n How can I make the whole thing work in italian?\n thanks!\n    submitted by    /u/emilianogrilli  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fhnfbm/if_i_set_calendardatedisplayform_as_i_want_diary/",
+          "publishedOn": "2024-09-15T21:14:54.000Z",
+          "wordCount": null,
+          "title": "If I set calendar-date-display-form as I want, diary entries are not parsed correctly",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1fhm2h1/my_weirdest_emacs_bug_ever_do_you_have_any_idea/",
           "author": null,
@@ -8291,56 +8511,6 @@
           "wordCount": null,
           "title": "haskell-ts-mode: A haskell mode that uses tree-sitter",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ev1mv0/angularreact_development_in_emacs_config_tips_or/",
-          "author": null,
-          "description": "Hi guys, \n If you have any tips or your config for angular/react development, any sharing or help would be appreciated.\n Thank you.\n    submitted by    /u/javatar2  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ev1mv0/angularreact_development_in_emacs_config_tips_or/",
-          "publishedOn": "2024-08-18T05:20:15.000Z",
-          "wordCount": null,
-          "title": "Angular/React development in Emacs config tips or idea or your approach ?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1eut9yd/font_rendering_issue/",
-          "author": null,
-          "description": "I tried to make Emacs use the “Monaspace” font for proportional text. I really love this font, but it does not get rendered properly (refer to the attached screenshot). If you look at the text against the highlight line, you can see that there is lot more space below the baseline than there is above the median. Should I tweak the `line-spacing` or some other size to get rid of this problem? Any pointers are grealy appreciated!\n https://preview.redd.it/dy3ite3drajd1.png?width=914&format=png&auto=webp&s=4cc63d48355122a3b6360b1e4db546301a6ff2be\n    submitted by    /u/g06lin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1eut9yd/font_rendering_issue/",
-          "publishedOn": "2024-08-17T22:01:55.000Z",
-          "wordCount": null,
-          "title": "Font rendering issue",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1eur7mj/bindings_using_local_leader_key_evil_general_not/",
-          "author": null,
-          "description": "I'm an evil user, and I often define local leader bindings with the following definer from general.el:\n lisp (general-create-definer local-leader :states '(normal visual motion) :prefix \",\") \n Using this like (local-leader :keymaps 'org-mode-map \"o\" 'hydra-org/body) works just fine, as long as the keymap in question belongs to a major mode (at least I think that's the issue here). I've created a custom minor mode (the major mode that'll be active is always lisp-mode, if that matters) and defined something in its keymap like so:\n lisp (local-leader :keymaps 'my-mode-map \"l\" 'my-function) \n I can see the bindings for the default evil modes in my-mode-map just fine, enabled my-mode, but they don't work as , still seems to be bound to the default evil/vim motion.\n What can I do to make , work as a prefix in this situation?\n    submitted by    /u/KenranThePanda  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1eur7mj/bindings_using_local_leader_key_evil_general_not/",
-          "publishedOn": "2024-08-17T20:29:59.000Z",
-          "wordCount": null,
-          "title": "Bindings using local leader key (evil + general) not working in minor modes, only major",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1eulegc/the_dirconfigel_package_find_and_load_dirconfigel/",
-          "author": null,
-          "description": "submitted by    /u/jamescherti  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1eulegc/the_dirconfigel_package_find_and_load_dirconfigel/",
-          "publishedOn": "2024-08-17T16:13:11.000Z",
-          "wordCount": null,
-          "title": "The dir-config.el package: Find and load .dir-config.el (Elisp) to configure directory-specific settings",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1euk9te/some_improvement_with_xwidgetwebkit_in_emacs_but/",
-          "author": null,
-          "description": "I posted about the crashing of Emacs by xwidget-webkit-browse-url here.\n Traversing through threads on Emacs bugs, I found this chain that describes how one can avoid a crash. Namely, run\n emacs -q --xrm \"emacs.synchronous: true\" \n (it has to be -q rather than -Q, as the latter ignores all X resources).\n This is fine for one-off uses of the xwidget-webkit browser, but I use Emacs in daemon mode, and\n emacs --init-directory=~/my-init-dir --daemon --xrm \"emacs.synchronous: true\" \n continues to crash (I specify the init-directory as I have it in a different location, the problem arises even without it).\n Has anyone found a way around this yet? FWIW, I'm still using Emacs 29.1, will upgrade soon to 29.4.\n    submitted by    /u/nonreligious2  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1euk9te/some_improvement_with_xwidgetwebkit_in_emacs_but/",
-          "publishedOn": "2024-08-17T15:24:07.000Z",
-          "wordCount": null,
-          "title": "Some improvement with `xwidget-webkit` in Emacs, but not in daemon mode",
-          "imageUrl": null
         }
       ]
     },
@@ -8349,6 +8519,26 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "3012@/discussions",
+          "author": "mintsuku",
+          "description": "I’m very eager to start using zettlelkastan to help with generating new ideas and creating blogs and aiding me in my research. I’ve only watched a few videos of it and have a vague idea how it works but I don’t wanna end up overplanning and never doing it. I want to do a physical and digital zettlekastan system. I have bought post it tabs (not sure if useful but it could be used to tab my dividers) and index cards. How do I store my index cards? Are there places to buy boxes made specifically for storing index cards or will I have to make them?",
+          "link": "https://forum.zettelkasten.de/discussion/3012/how-to-store-my-zettlelkastan-cards",
+          "publishedOn": "2024-09-16T17:38:59.000Z",
+          "wordCount": 636,
+          "title": "How to store my zettlelkastan cards?",
+          "imageUrl": null
+        },
+        {
+          "id": "3011@/discussions",
+          "author": "chrisc64",
+          "description": "I need clarification to the Zettlekaten parts and their function. For example tags, bibliography etc. I am going to create strictly an analog system. I have yet found anyone to fully explain the exact parts and function. I read Scott’s book but it is very confusing and elusive. The language littered with unclarified concrete explanations. I’ve tried to watch and read as much as possible but still very elusive. Thanks",
+          "link": "https://forum.zettelkasten.de/discussion/3011/analog-zettlekasten-parts-and-function",
+          "publishedOn": "2024-09-15T23:42:18.000Z",
+          "wordCount": 837,
+          "title": "Analog Zettlekasten parts and function",
+          "imageUrl": null
+        },
         {
           "id": "3010@/discussions",
           "author": "Will",
