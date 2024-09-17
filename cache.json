@@ -53,6 +53,26 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1fj87cw/australia_melbourne_fp/",
+          "author": null,
+          "description": "Does anybody know any Australian companies who use any FP at all, recent CS grad moving there soon, would appreciate any advice about getting a job out there\n    submitted by    /u/thefreddo69  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1fj87cw/australia_melbourne_fp/",
+          "publishedOn": "2024-09-17T19:22:27.000Z",
+          "wordCount": null,
+          "title": "Australia (Melbourne) FP",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1fiyc62/lets_run_some_nfas_highperformance_haskell/",
+          "author": null,
+          "description": "submitted by    /u/d86leader  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1fiyc62/lets_run_some_nfas_highperformance_haskell/",
+          "publishedOn": "2024-09-17T12:48:26.000Z",
+          "wordCount": null,
+          "title": "Let's run some NFAs (high-performance haskell)",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1fich98/recursion_schemes_can_compiler_plugins_be_used_to/",
           "author": null,
           "description": "Continuing a previous objective:\n  \nErgonomic folds: generics-sop recursion schemes, without \"base functor\"\n  \nA previous post reminded me of the idea to improve the ergonomics of recursion schemes.\n  \nWhat exactly is the point of recursion schemes\n  \nI haven't worked with plugins but I wanted to find a way to use recursion schemes by giving algebraic datatypes a virtual base functor. The base functor structure is already latent in recursive datatypes and can be recreated by abstracting out recursive positions:\n type Base :: Type -> Type -> Type data Base as a instance Functor (Base as) \n This is an empty datatype declaration, Base [a] list is the base functor of lists. Then the way to construct values of type Base [a] is to use the constructors of the recursive type: [] and (:), obviously at a different type. This is more natural than dealing with a separate datatype and it helps keep it in sync, but to avoid confusion they can be renamed, Base.[].\n {- -- virtual datatype defined by the plugin type Base :: Type -> Type -> Type data Base [a] list where Base.[] :: Base [a] list (Base.:) :: a -> list -> Base [a] list deriving stock Functor -} -- project = unsafeCoerce project :: [a] -> Base [a] [a] project [] = Base.[] project (a:as) = a Base.: as cata :: (Base [a] res -> res) -> ([a] -> res) cata alg = res where res = alg . fmap res . project len :: [a] -> Int len = cata \\case Base.[] -> 0 _Base.:n -> 1 + n \n Is there any way to make this work?\n    submitted by    /u/Iceland_jack  \n [link]   [comments]",
@@ -1001,36 +1021,6 @@
           "wordCount": null,
           "title": "Haskell learning resources for spreadsheet users with no programming experience?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1evw5qo/ive_read_through_category_theory_for_programmers/",
-          "author": null,
-          "description": "I got into functional programming a few years back and was then introduced to category theory, specifically Bartosz's book and video series (link). I read it during my spare time for a span of around 2 years and just finished the last page. Despite having little math background other than the few math classes that are typical for a computer science major, and not being able to come up with many relevant examples, I enjoyed reading through the book and tried my best to follow along every part, except coends.\n However, I struggled with the challenges in the book. I had to look up for solutions, or just failed to understand them at all, for more than half of them. I also didn't realize until the last few chapters that I kind of got natural transformations wrong. I thought it's a morphism of F a -> G a, but really it maps any object a to a morphism F a -> G a. I noticed that my retention for the knowledge is low. In other words, I forget the details of concepts in the book pretty fast. I tried to explain to myself verbally the concepts I learned, but I can feel it's wonky sometimes.\n I'd like to ask what are the next steps for me? Should I go through a different text, maybe \"Category Theory for the Working Mathematicians\", or others like \"Category Theory in Contexts\", hoping that maybe they'll solidify and expand my learning from a different aspect? Or should I learn a few other branches of math that I'm interested, and come back to category theory and see how they relate? Or?\n    submitted by    /u/machai_montgomery  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1evw5qo/ive_read_through_category_theory_for_programmers/",
-          "publishedOn": "2024-08-19T07:55:04.000Z",
-          "wordCount": null,
-          "title": "I've read through Category Theory for Programmers by Bartosz Milewski. Now what?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1evkwmr/haskell_on_armbased_win11_surface_pro_11/",
-          "author": null,
-          "description": "Hi there! \n I'm a very inexperienced programmer, and I'm planning on buying a surface pro 11. I have haskell in my upcoming classes, but I've heard people saying it's more complicated since its a windows arm based system. I've programmed a little haskell on my home pc (not ARM based) and the downloading process was fairly straightforward. So I'm wondering whether it's possible to program haskell on a new surface pro without jumping through a lot of hoops, or if it's close to the experience on a PC.\n    submitted by    /u/pappasalami  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1evkwmr/haskell_on_armbased_win11_surface_pro_11/",
-          "publishedOn": "2024-08-18T21:45:45.000Z",
-          "wordCount": null,
-          "title": "Haskell on Arm-Based win11 (Surface pro 11)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1evaffn/is_it_possible_to_make_stockderivable_classes/",
-          "author": null,
-          "description": "A minimal example of what I'm trying to do would go something like this. Say I want to write a class for \"wrapper\" types, like so:\n class Wrapper t where wrap :: a -> t a unwrap :: t a -> a \n Now, of course, I could write:\n newtype Box a = Box a instance Wrapper Box where wrap = Box unwrap (Box x) = x \n But I'm wondering if it's possible to provide a way for Wrapper to become stock-derivable so that I can write the more concise newtype Box a = Box a deriving Wrapper. \n I've tried searching for info on this, but I've only been able to find information about, just, how to use deriving in general.\n    submitted by    /u/cateatingpancakes  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1evaffn/is_it_possible_to_make_stockderivable_classes/",
-          "publishedOn": "2024-08-18T14:22:23.000Z",
-          "wordCount": null,
-          "title": "Is it possible to make stock-derivable classes?",
-          "imageUrl": null
         }
       ]
     },
@@ -1039,6 +1029,46 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fj9g2f/typeclasses_autoderived_instances_uniqueness/",
+          "author": null,
+          "description": "Using the Kittens Typelevel library (https://github.com/typelevel/kittens), which of the available typeclasses can I automatically derive instances for, while having the guarantee the generated implementations are the only correct ones possible?\n From what I understand, if it's possible for Kittens to derive instances of - Eq, - Show, - Functor or - Foldable\n for custom ADTs, those instances are respectively the only mathematically possible ones.\n This might not be true for Traverse, instead.\n TIA! 🙏\n    submitted by    /u/horothesun  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fj9g2f/typeclasses_autoderived_instances_uniqueness/",
+          "publishedOn": "2024-09-17T20:10:34.000Z",
+          "wordCount": null,
+          "title": "Typeclasses auto-derived instances uniqueness (Kittens library)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fiyy1q/devops_for_developers_challenges/",
+          "author": null,
+          "description": "Hi everyone!\n I want to talk about lack of DevOps expertise inside the organizations. Not every company can or should have a full time DevOps Engineer. Let’s say we want to train Developers to handle DevOps tasks. With the disclaimer that DevOps is the approach and not a job position 😉 \n 1/ What are the most common cases that you need DevOps for, but you're handling it?\n 2/ What kind of DevOps challenges do you have in your projects?\n 3/ What DevOps problems are slowing you down?\n Is there any subject you want to know from scratch or upgrade your existing knowledge - with DevOps mindeset/toolset?\n Thanks in advance!\n    submitted by    /u/ComprehensiveSell578  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fiyy1q/devops_for_developers_challenges/",
+          "publishedOn": "2024-09-17T13:14:29.000Z",
+          "wordCount": null,
+          "title": "DevOps for Developers - challenges?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fix2c6/the_redmonk_programming_language_rankings_june/",
+          "author": null,
+          "description": "submitted by    /u/fbertra  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fix2c6/the_redmonk_programming_language_rankings_june/",
+          "publishedOn": "2024-09-17T11:48:48.000Z",
+          "wordCount": null,
+          "title": "The RedMonk Programming Language Rankings: June 2024: Scala jumps two spots",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1fitsik/javafx_and_developing_android_apps_in_scala/",
+          "author": null,
+          "description": "Hey,\n A week ago I was interviewed by Frank Delporte about JavaFX, GraalVM Native Image, and how to make Android app in Scala. Here's the link. I hope you enjoy. If you have questions, let me know, I'll be happy to answer the best I can.\n https://www.jfx-central.com/videos/93OozqMTqJQ\n    submitted by    /u/makingthematrix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1fitsik/javafx_and_developing_android_apps_in_scala/",
+          "publishedOn": "2024-09-17T08:31:26.000Z",
+          "wordCount": null,
+          "title": "JavaFX and developing Android apps in Scala",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1fibymq/blog_post_fun_with_types_all_types_of_physics/",
           "author": null,
@@ -2028,46 +2058,6 @@
           "wordCount": null,
           "title": "Best practice to conditionally run a ZIO test suite?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1evt9kg/how_to_do_this_using_mill/",
-          "author": null,
-          "description": ". ├── build.sc └── foo └── src ├── main │ └── scala │ └── HelloWorld.scala └── test └── scala └── HelloWorldTest.scala \n I've a project that contains several subdirectories, one of which is shown as foo. The build.sc is as follows:\n import mill._, scalalib._, scalafmt._ trait MyModule extends SbtModule with ScalafmtModule { def scalaVersion = \"3.4.2\" def scalacOptions: T[Seq[String]] = Seq( \"-encoding\", \"UTF-8\", \"-feature\", \"-Werror\", \"-explain\", \"-deprecation\", \"-unchecked\", \"-Wunused:all\", \"-rewrite\", \"-indent\", \"-source\", \"future\", ) trait MyTestModule extends SbtTests with TestModule.ScalaTest { def scalatestVersion = \"3.2.19\" def scalacOptions: T[Seq[String]] = Seq(\"-encoding\", \"UTF-8\") def ivyDeps = Agg( ivy\"org.scalactic::scalactic:$scalatestVersion\", ivy\"org.scalatest::scalatest:$scalatestVersion\", ) } } object foo extends MyModule { object test extends MyTestModule } \n Questions:\n  \nI want to apply the scalacOptions to only the main source, not test. Currently I achieve this by overriding the scalacOptions in the MyTestModule, but it'd be nice to be able to specify the target specifically instead of declaring globally and then overriding.\n Instead of having to list each submodule foo, bar, ..., it'd be nice to be able to add them dynamically. For this project, all subdirectories that don't start with a period can be considered as a submodule.\n  \n   submitted by    /u/sarkara1  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1evt9kg/how_to_do_this_using_mill/",
-          "publishedOn": "2024-08-19T04:39:34.000Z",
-          "wordCount": null,
-          "title": "How to do this using mill?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1evlcpf/crafting_types_with_scala_3_macros_part_2_a/",
-          "author": null,
-          "description": "submitted by    /u/null_was_a_mistake  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1evlcpf/crafting_types_with_scala_3_macros_part_2_a/",
-          "publishedOn": "2024-08-18T22:04:36.000Z",
-          "wordCount": null,
-          "title": "Crafting types with Scala 3 macros - Part 2: A Whitebox Macro",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1evj7pu/this_week_in_scala_aug_19_2024/",
-          "author": null,
-          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1evj7pu/this_week_in_scala_aug_19_2024/",
-          "publishedOn": "2024-08-18T20:35:03.000Z",
-          "wordCount": null,
-          "title": "This week in #Scala (Aug 19, 2024)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1evhh7n/do_you_use_tagless_final_in_dao/",
-          "author": null,
-          "description": "I have an enterprise CRUD appliaction, consisting of multiple services such as equipment, tasks, clients, eployees etc. They're not microservices at all, but rather modules within the mononlith Scala app.\n At first every service had its own algebra, e.g.:\n  trait Employees[F[_]]: def addEmployee(person: Person): F[Unit] def vacation(employeeId: UUID): F[Unit] def findByDepartment(departmentId: UUID): F[Option[Employee]] \n Basically a DAO. Sometimes it also does some authorization checks, but mostly its about communicating with the storage. It was cool at first:\n  \nDifferent implementations for different storage targets\n I see dependencies of every function e.g. def findEquipment[F[_]: Equipment: Employees]\n Additional type-safety - it's nice to see that a particular function works with Employees only\n Testing\n  \nHowever, after some time:\n  \nWe've picked a single storage target\n There's no big difference in terms of dependencies with def findEquipment(equipment: Equipment[IO], employees: Employees[IO])\n Type-safety is a win in 10-20% of functions because many have 4+ algebras or even Async\n For testing I just use the same implementations with empty DB - DB is an important aspect of behavior that I need to carefully duplicate for each testing implementation\n  \nTagless Final is advertised for DAO in almost every tutorial, but does it really make any sense? I switched to more concrete services and hardly going to regret. I still have TF, but for much lower-level things: Logging, Tracing, Queing etc. What is your experience? To me it looks like TF make sense in DAO only in educational materials.\n    submitted by    /u/MysteriousGenius  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1evhh7n/do_you_use_tagless_final_in_dao/",
-          "publishedOn": "2024-08-18T19:21:54.000Z",
-          "wordCount": null,
-          "title": "Do you use Tagless Final in DAO?",
-          "imageUrl": null
         }
       ]
     },
@@ -2158,6 +2148,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1fj8cjz/can_i_filter_orgqlblocks_using_effort_while_in/",
+          "author": null,
+          "description": "Hi,\n I have been going over my config lately to simplify my first orgmode setup. The more I learn, the more I can see that I have been trying to reinvent the wheel. Anyway, I have been playing around with the clock, and the 'effort' estimates and I am considering using effort to simplify some of my lists.\n The problem is that I use exclusively `org-ql-blocks` for my agenda views, and I was unsuccessful in my attempts at filtering them using `se` and then selecting some criterias. I tried some other filters too, and I could only restrict the org-ql-blocks within agenda views when using `sc` and `st`, respectively category and tags.\n Since I know from the documentation that 'everything is supposed to work' in agenda views but not guaranteed to, I was wondering if the problem was on my side or if someone else could reproduce the error.\n When trying to restrict an org-ql-block using a regex for example, I do not get an error even if it does not work as I would expect, but when trying to apply an `effort` filter, I get the following error:\n Debugger entered--Lisp error: (args-out-of-range 0 0) get-text-property(0 effort-minutes nil) (let ((effort (get-text-property 0 'effort-minutes (org-get-at-bol 'txt)))) (funcall op (or effort (if org-agenda-sort-noeffort-is-high 32767 -1)) value)) org-agenda-compare-effort(= 30.0) (and (org-agenda-compare-effort '= 30.0)) eval((and (org-agenda-compare-effort '= 30.0)) t) (if (eval org-agenda-filter-form t) nil (org-agenda-filter-hide-line type)) \n Thanks in advance.\n    submitted by    /u/fred982  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1fj8cjz/can_i_filter_orgqlblocks_using_effort_while_in/",
+          "publishedOn": "2024-09-17T19:28:01.000Z",
+          "wordCount": null,
+          "title": "Can I filter org-ql-blocks using 'effort' while in the agenda view ?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1fj12e0/different_bullet_style_in_orglatex_export/",
+          "author": null,
+          "description": "Hi Org-Mode community! Long time lurker, first time poster. I'm using Org-Mode to produce LaTeX files. Basically, I'm looking for a way to export the \"+\" plain list item as \"\\item[$\\square$]\" and the \"-\" plain list item as \"\\item[$\\bullet$]\", but I can't find any way to do it. I tried using the variable org-latex-listing but it seems that this variable is obsolete.\n (defun my-org-latex-customize-lists ()\n \"Customize LaTeX export of Org-mode lists.\"\n (setq org-latex-listings\n '((+ . \"\\\\item[$\\\\bullet$]\")\n (- . \"\\\\item[$\\\\square$]\"))))\n I did make my own latex-class. I suspect I have to change something here...\n ;; > Creating latex-classes and adding them to org-latex-classes :\n (add-to-list 'org-latex-classes\n ( list \"org-report\"\n (concat \"\\\\documentclass[10pt]{article}\" contenu-preambule)\n '(\"\\\\section{%s}\" . \"\\\\section*{%s}\")\n '(\"\\\\subsection{%s}\" . \"\\\\subsection*{%s}\")\n '(\"\\\\subsubsection{%s}\" . \"\\\\subsubsection*{%s}\")\n '(\"\\\\paragraph{%s}\" . \"\\\\paragraph*{%s}\")))\n In any case, I know you can do it, because I already do it in Org-Mode with Org-Superstar...\n (use-package org-superstar\n :ensure t\n :hook (org-mode . org-superstar-mode)\n :config\n (setq org-superstar-item-bullet-alist\n '((?* . \"•\") ;; Puce pour les listes à puces\n (?+ . \"▪\") ;; Puce pour les sous-listes\n (?- . \"•\")))\n So I'm looking for a variable that look likes the superstar one to change the export. Any help would be greatly appreciated. ChatGPT didn't help either.\n Edit : Correcting mistakes.\n    submitted by    /u/Sumerian_Robot  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1fj12e0/different_bullet_style_in_orglatex_export/",
+          "publishedOn": "2024-09-17T14:43:53.000Z",
+          "wordCount": null,
+          "title": "Different bullet style in Org-LaTeX export",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1fi3z6m/what_is_the_syntax_for_using_tables_row_and/",
           "author": null,
@@ -2427,26 +2437,6 @@
           "wordCount": null,
           "title": "Is possible to migrate MD notes to OrgRoam in a way that the [[links]] will work in orgroam ?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1evvv35/how_to_filter_agenda_by_both_file_and_explicit/",
-          "author": null,
-          "description": "Hello Org community,\n I'm looking to create a custom agenda command that filters all entries associated with the categories work and business. I already have separate files named ~/org/work.org and ~/org/business.org, and from what I understand from documentation, entries in these files automatically and implicitly receive the corresponding categories.\n However, while I don't often do this, it's possible that I might explicitly set a :CATEGORY: work property somewhere else in my org files. Given this, I need a command that will capture all entries either from the ~/org/work.org and ~/org/business.org files OR with :CATEGORY: work, OR :CATEGORY: business set explicitly.\n Below I will give examples of records that I would like to filter in this way:\n ~/org/misc.org (by property)\n * Prepare f…",
-          "link": "https://www.reddit.com/r/orgmode/comments/1evvv35/how_to_filter_agenda_by_both_file_and_explicit/",
-          "publishedOn": "2024-08-19T07:33:11.000Z",
-          "wordCount": null,
-          "title": "How to filter agenda by both file and explicit category",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1ev8suh/implementing_headlinelocal_variables/",
-          "author": null,
-          "description": "Hey people, I thought it could be interesting to share my hack to get heading-local variables in org-mode. They are actually buffer-local variables, but since I spend most of my time in narrowed org buffers, I decided to hook the modification of the local variables to the narrowing and widening of the buffer. I'm sure it has a lot of room for improvement, but so far it has worked well for me.\n The function hack-local-variables-property-drawer is the one to run when an org buffer is interactively narrowed or widened. Why interactively: you don't want it to run 50 times in a row when calling org-agenda, for example. If it's not the first time it runs in a buffer, it first restores the original values of the variables it changed last time. Then it reads the new variables from the \"LOCAL_VARIA…",
-          "link": "https://www.reddit.com/r/orgmode/comments/1ev8suh/implementing_headlinelocal_variables/",
-          "publishedOn": "2024-08-18T13:06:20.000Z",
-          "wordCount": null,
-          "title": "Implementing headline-local variables",
-          "imageUrl": null
         }
       ]
     },
@@ -2455,6 +2445,56 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/kotlin-ts-mode-20240917.1401.tar",
+          "author": null,
+          "description": "The kotlin-ts-mode package has been updated to version 20240917.1401.",
+          "link": "https://melpa.org/#/kotlin-ts-mode",
+          "publishedOn": "2024-09-17T14:01:00.000Z",
+          "wordCount": 105,
+          "title": "kotlin-ts-mode (20240917.1401) --- A mode for editing Kotlin files based on tree-sitter",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/docker-20240917.1355.tar",
+          "author": null,
+          "description": "The docker package has been updated to version 20240917.1355.",
+          "link": "https://melpa.org/#/docker",
+          "publishedOn": "2024-09-17T13:55:00.000Z",
+          "wordCount": 105,
+          "title": "docker (20240917.1355) --- Interface to Docker",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/imake-20240917.1327.tar",
+          "author": null,
+          "description": "The imake package has been updated to version 20240917.1327.",
+          "link": "https://melpa.org/#/imake",
+          "publishedOn": "2024-09-17T13:27:00.000Z",
+          "wordCount": 105,
+          "title": "imake (20240917.1327) --- Simple, opinionated make target runner",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/vertica-snippets-20240917.1129.tar",
+          "author": null,
+          "description": "The vertica-snippets package has been updated to version 20240917.1129.",
+          "link": "https://melpa.org/#/vertica-snippets",
+          "publishedOn": "2024-09-17T11:29:00.000Z",
+          "wordCount": 105,
+          "title": "vertica-snippets (20240917.1129) --- Yasnippets for Vertica",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/hammy-20240917.212.tar",
+          "author": null,
+          "description": "The hammy package has been updated to version 20240917.212.",
+          "link": "https://melpa.org/#/hammy",
+          "publishedOn": "2024-09-17T02:12:00.000Z",
+          "wordCount": 105,
+          "title": "hammy (20240917.212) --- Programmable, interactive interval timers",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/jsdoc-20240916.1846.tar",
           "author": null,
@@ -2533,6 +2573,16 @@
           "publishedOn": "2024-09-15T16:57:00.000Z",
           "wordCount": 105,
           "title": "htmlize (20240915.1657) --- Convert buffer text and decorations to HTML.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/llama-20240915.1629.tar",
+          "author": null,
+          "description": "The llama package has been updated to version 20240915.1629.",
+          "link": "https://melpa.org/#/llama",
+          "publishedOn": "2024-09-15T16:29:00.000Z",
+          "wordCount": 105,
+          "title": "llama (20240915.1629) --- Compact syntax for short lambda",
           "imageUrl": null
         },
         {
@@ -3176,6 +3226,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/stgit-20240909.39.tar",
+          "author": null,
+          "description": "The stgit package has been updated to version 20240909.39.",
+          "link": "https://melpa.org/#/stgit",
+          "publishedOn": "2024-09-09T00:39:00.000Z",
+          "wordCount": 105,
+          "title": "stgit (20240909.39) --- Major mode for StGit interaction",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/citar-denote-20240908.2154.tar",
           "author": null,
           "description": "The citar-denote package has been updated to version 20240908.2154.",
@@ -3633,6 +3693,16 @@
           "publishedOn": "2024-09-03T09:48:00.000Z",
           "wordCount": 105,
           "title": "reformatter (20240903.948) --- Define commands which run reformatters on the current buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ekg-20240903.424.tar",
+          "author": null,
+          "description": "The ekg package has been updated to version 20240903.424.",
+          "link": "https://melpa.org/#/ekg",
+          "publishedOn": "2024-09-03T04:24:00.000Z",
+          "wordCount": 105,
+          "title": "ekg (20240903.424) --- A system for recording and linking information",
           "imageUrl": null
         },
         {
@@ -5414,126 +5484,6 @@
           "wordCount": 105,
           "title": "gleam-ts-mode (20240819.1355) --- Major mode for Gleam",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/chordpro-mode-20240819.649.tar",
-          "author": null,
-          "description": "The chordpro-mode package has been updated to version 20240819.649.",
-          "link": "https://melpa.org/#/chordpro-mode",
-          "publishedOn": "2024-08-19T06:49:00.000Z",
-          "wordCount": 105,
-          "title": "chordpro-mode (20240819.649) --- Major mode for ChordPro lead sheet file format",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/base16-theme-20240819.340.tar",
-          "author": null,
-          "description": "The base16-theme package has been updated to version 20240819.340.",
-          "link": "https://melpa.org/#/base16-theme",
-          "publishedOn": "2024-08-19T03:40:00.000Z",
-          "wordCount": 105,
-          "title": "base16-theme (20240819.340) --- Collection of themes built on combinations of 16 base colors",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/shimbun-20240819.38.tar",
-          "author": null,
-          "description": "The shimbun package has been updated to version 20240819.38.",
-          "link": "https://melpa.org/#/shimbun",
-          "publishedOn": "2024-08-19T00:38:00.000Z",
-          "wordCount": 105,
-          "title": "shimbun (20240819.38) --- interfacing with web newspapers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/nimbus-theme-20240819.14.tar",
-          "author": null,
-          "description": "The nimbus-theme package has been updated to version 20240819.14.",
-          "link": "https://melpa.org/#/nimbus-theme",
-          "publishedOn": "2024-08-19T00:14:00.000Z",
-          "wordCount": 105,
-          "title": "nimbus-theme (20240819.14) --- Nimbus dark theme",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/cuda-mode-20240819.11.tar",
-          "author": null,
-          "description": "The cuda-mode package has been updated to version 20240819.11.",
-          "link": "https://melpa.org/#/cuda-mode",
-          "publishedOn": "2024-08-19T00:11:00.000Z",
-          "wordCount": 105,
-          "title": "cuda-mode (20240819.11) --- NVIDIA CUDA Major Mode derived from C++-mode.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/diff-ansi-20240818.2359.tar",
-          "author": null,
-          "description": "The diff-ansi package has been updated to version 20240818.2359.",
-          "link": "https://melpa.org/#/diff-ansi",
-          "publishedOn": "2024-08-18T23:59:00.000Z",
-          "wordCount": 105,
-          "title": "diff-ansi (20240818.2359) --- Display diff's using alternative diffing tools",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/syslog-mode-20240818.2215.tar",
-          "author": null,
-          "description": "The syslog-mode package has been updated to version 20240818.2215.",
-          "link": "https://melpa.org/#/syslog-mode",
-          "publishedOn": "2024-08-18T22:15:00.000Z",
-          "wordCount": 105,
-          "title": "syslog-mode (20240818.2215) --- Major-mode for viewing log files & strace output",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/empv-20240818.1845.tar",
-          "author": null,
-          "description": "The empv package has been updated to version 20240818.1845.",
-          "link": "https://melpa.org/#/empv",
-          "publishedOn": "2024-08-18T18:45:00.000Z",
-          "wordCount": 105,
-          "title": "empv (20240818.1845) --- A multimedia player/manager, YouTube interface",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/cape-20240818.1414.tar",
-          "author": null,
-          "description": "The cape package has been updated to version 20240818.1414.",
-          "link": "https://melpa.org/#/cape",
-          "publishedOn": "2024-08-18T14:14:00.000Z",
-          "wordCount": 105,
-          "title": "cape (20240818.1414) --- Completion At Point Extensions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/asyncloop-20240818.1247.tar",
-          "author": null,
-          "description": "The asyncloop package has been updated to version 20240818.1247.",
-          "link": "https://melpa.org/#/asyncloop",
-          "publishedOn": "2024-08-18T12:47:00.000Z",
-          "wordCount": 105,
-          "title": "asyncloop (20240818.1247) --- Non-blocking series of functions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ready-player-20240818.1104.tar",
-          "author": null,
-          "description": "The ready-player package has been updated to version 20240818.1104.",
-          "link": "https://melpa.org/#/ready-player",
-          "publishedOn": "2024-08-18T11:04:00.000Z",
-          "wordCount": 105,
-          "title": "ready-player (20240818.1104) --- Open media files in ready-player major mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/decor-20240818.1100.tar",
-          "author": null,
-          "description": "The decor package has been updated to version 20240818.1100.",
-          "link": "https://melpa.org/#/decor",
-          "publishedOn": "2024-08-18T11:00:00.000Z",
-          "wordCount": 105,
-          "title": "decor (20240818.1100) --- Modify visual decorations",
-          "imageUrl": null
         }
       ]
     },
@@ -5542,6 +5492,76 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fj9vp5/meow_how_to_input_cc_cspace_in_the_keypad_state/",
+          "author": null,
+          "description": "The agda2 mode binds its most frequent command to C-c C-SPC in the vanilla Emacs. With Meow, how do I invoke this command in the keypad state? I have tried a bunch of key sequences such as SPC c SPC SPC, SPC c C-SPC, but none of them work.\n    submitted by    /u/capfredf  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fj9vp5/meow_how_to_input_cc_cspace_in_the_keypad_state/",
+          "publishedOn": "2024-09-17T20:27:21.000Z",
+          "wordCount": null,
+          "title": "Meow -- how to input C-c C-space in the keypad state",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fj3hjj/going_tabula_rasa_emacs_from_scratch/",
+          "author": null,
+          "description": "Hello.\n I am currently in the process of deciding on my next long term working and development environment and Emacs is a hot contender.\n Due to specific personal interests and requirements, I would like to begin my Emacs adventure with a maybe slightly unconvential approach, that is, starting with nothing but the Emacs runtime and step by step adding all keybinds for commands that I require and desire, sort of a bootstrap process for building my own environment.\n As far as I can tell I would need the following:\n  \nRemoval of all default keybinds\n Discovery of available commands (external is fine, I don't care about \"purity\" in the boostrap)\n  \nCan you point me to any resource that would help me in my plan? Maybe someone with experience going for this approach?\n    submitted by    /u/akthemadman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fj3hjj/going_tabula_rasa_emacs_from_scratch/",
+          "publishedOn": "2024-09-17T16:20:28.000Z",
+          "wordCount": null,
+          "title": "Going Tabula Rasa: Emacs from scratch!?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fj0ooy/emacs_on_sequoia/",
+          "author": null,
+          "description": "I let the Sequoia upgrade through on my M2 Air. I'm a light user (C programming, eglot and ts). The only thing I've spotted is the following in the terminal where I launch Emacs:\n 2024-09-17 09:25:15.751 Emacs[2368:31256] +[IMKClient subclass]: chose IMKClient_Legacy 2024-09-17 09:25:15.751 Emacs[2368:31256] +[IMKInputSession subclass]: chose IMKInputSession_Legacy\n Not concerned, this is just an experience report. Emacs is 30.0.90 from homebrew emacs-plus@30.\n    submitted by    /u/eileendatway  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fj0ooy/emacs_on_sequoia/",
+          "publishedOn": "2024-09-17T14:28:19.000Z",
+          "wordCount": null,
+          "title": "Emacs on Sequoia",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fj01ci/question_about_gnus_threads_and_sorting_in/",
+          "author": null,
+          "description": "Hello,\n I've recently started using Gnus to manage my emails but haven't been able to configure the Summary buffer exactly as I'd like. Specifically, I want all threads to be collapsed into a single article (the most recent one) and have the threads sorted by the latest date, in descending order.\n Here are lines from my config:\n (setopt gnus-thread-sort-functions '(gnus-thread-sort-by-number gnus-thread-sort-by-most-recent-date) gnus-subthread-sort-functions '(gnus-thread-sort-by-number (not gnus-thread-sort-by-date)) gnus-sort-gathered-threads-function 'gnus-thread-sort-by-date gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject gnus-thread-hide-subtree t gnus-thread-ignore-subject t) \n With this setup, all threads are hidden behind their root articles and sorted by the most recent date. However, the issue I’m facing is that the Summary buffer shows the root article instead of the most recent one in each thread.\n I've tried to play with gnus-subthread-sort-functions without success.\n Does anyone know if it’s possible to achieve what I’m aiming for?\n Thank you!\n    submitted by    /u/algor512  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fj01ci/question_about_gnus_threads_and_sorting_in/",
+          "publishedOn": "2024-09-17T14:01:15.000Z",
+          "wordCount": null,
+          "title": "Question about Gnus, threads, and sorting in summary buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fixxns/create_a_clock_entry_by_hand/",
+          "author": null,
+          "description": "Hi there,\n It find myself, very often, in the situation of having to create CLOCK entries in LOGBOOK drawers by hand.\n Either because I forgot to clock in, or most commonly: because I was doing several things AFK and want to log them all when back.\n Right now I do it by hand, I tyope \"CLOCK: \" then the timestamps. Which feels... archaic.\n Does anyone have a nice cool function that will ask me for two timestamps (or an initial timestamp and a duration) and create the CLOCK entry?\n    submitted by    /u/telenieko  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fixxns/create_a_clock_entry_by_hand/",
+          "publishedOn": "2024-09-17T12:30:28.000Z",
+          "wordCount": null,
+          "title": "Create a CLOCK entry by hand",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fiw5gg/buildel_a_transient_menu_for_build_systems_bazel/",
+          "author": null,
+          "description": "submitted by    /u/27justin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fiw5gg/buildel_a_transient_menu_for_build_systems_bazel/",
+          "publishedOn": "2024-09-17T11:00:26.000Z",
+          "wordCount": null,
+          "title": "build.el: A transient menu for build systems (bazel, make, cmake, cargo)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1fiu6hu/vcs_name_getting_truncated_before_in_doom_modeline/",
+          "author": null,
+          "description": "System:\n xmonad 0.18.0.9 (Ubuntu 22.04 underneath)\n GNU Emacs v29.4\n Doom core v3.0.0-pre\n Doom modules v24.10.0-pre \n I'm struggling to get doom modelline to stop truncating my vcs branch name at \"-\", which happens regardless of whether I set vcs-max-length to 1000000. When there is no \"-\" in the name, there is no problems.\n I have tried this whole scratch setup in config.el:\n (setq doom-modeline-vcs-max-length 1000\n doom-modeline-vcs-display-function #'doom-modeline-vcs-name)\n I've also tried to write my own version doom-modeline-vcs-name, but I'm not strong at elisp, and I've never managed to get a \"HelloWorld\" through on the modelline.\n Could somebody please help me? :)\n    submitted by    /u/Tricky_Lecture7629  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1fiu6hu/vcs_name_getting_truncated_before_in_doom_modeline/",
+          "publishedOn": "2024-09-17T08:57:43.000Z",
+          "wordCount": null,
+          "title": "VCS name getting truncated before \"-\" in Doom Modeline",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1fif3eg/imenu_or_lspuiimenu_can_i_go_only_to_top_level/",
           "author": null,
@@ -8431,86 +8451,6 @@
           "wordCount": null,
           "title": "org-dashboard....maybe?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1evvctw/chordpromodeel_v230/",
-          "author": null,
-          "description": "Version 2.3.0 of chordpro-mode.el augments the chordpro-insert-environment-directive command, bound by default to C-c e, for inserting environment directives, like \"bridge\", \"chorus\", \"grid\", \"tab\", or \"verse\". Now, the command respects the active region, wrapping its contents in the chosen directive. It's now easier to go from:\n Halle[C]lujah, Halle[Em]lujah, Halle[C]lujah, Halle[G]lu-[D]u-[G]jah[D] \n to\n {start_of_chorus} Halle[C]lujah, Halle[Em]lujah, Halle[C]lujah, Halle[G]lu-[D]u-[G]jah[D] {end_of_chorus} \n ChordPro: https://www.chordpro.org/chordpro/index.html\n Major mode: https://git.sr.ht/~breatheoutbreathein/chordpro-mode.el/\n    submitted by    /u/breathe-out  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1evvctw/chordpromodeel_v230/",
-          "publishedOn": "2024-08-19T06:57:25.000Z",
-          "wordCount": null,
-          "title": "chordpro-mode.el v2.3.0",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1evps0h/running_on_emacs_29_in_msys2_on_windows_10/",
-          "author": null,
-          "description": "Whenever I have to use Windows, I've been using Emacs v27.2 on MSys2. That works fine but now I feel the need to upgrade it so I can use the latest features such as libgccjit's.\n Then I encountered one little problem; it seems that with Emasc 29, I'm no longer able to run Emacs on MSys2 with:\n # not really working well $ emacs-29 -nw \n whilst with v27.2, I can:\n # working okay $ /usr/bin/emacs -nw \n The problem doesn't disappear in either the one provided by the package manager or the fresh local Emacs that I built from scratch in MSys2.\n Yes, I know that a workaround would be to use something like:\n # possible workaround with poor user experience $ winpty emacs -nw \n This is weird though. How does the older package (v27.2) not require winpty, but does the new one (v29 above) now?\n    submitted by    /u/goodssh  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1evps0h/running_on_emacs_29_in_msys2_on_windows_10/",
-          "publishedOn": "2024-08-19T01:33:18.000Z",
-          "wordCount": null,
-          "title": "Running on Emacs 29 in MSys2 on Windows 10",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1evjrg6/yasexpandsnippet_and_yaslookupsnippet/",
-          "author": null,
-          "description": "Hi all,\n I've two small snippets, where I'm trying to expand one snippet inside another. As the snippet that gets expanded is always the same one, and it's always expanded I've been trying to use yas-expand-snippet and yas-lookup-snippet in a transform on the field...\n My first snippet is something like,\n # key: CMakeVersion # name: CMakeVersion # type: snippet # -- ${1:Major}.${2:Minor}${3:.${4:Patch}${5:.${6:Tweak}}}$0 \n While the second snippet, that I want to expand the first into is,\n # key: cmake_minimum_required # name: cmake_minimum_required # type: snippet # -- cmake_minimum_required(VERSION ${1:Minimum$(yas-expand-snippet (yas-lookup-snippet 'CMakeVersion))}${2:...${3:PolicyMax}}${4: FATAL_ERROR})$0 \n The transform seems to replace the $1 field with just a t (maybe like this?) and I'm not sure I follow why this is happening? I've tried with and without yas-triggers-in-field in the snippets and my config, but I'm unable to get it to play...\n Am I going about this the wrong way? Is there a better approach? Or can someone spot my mistake?!?\n Thanks, IGS.\n    submitted by    /u/ItGoesSquish  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1evjrg6/yasexpandsnippet_and_yaslookupsnippet/",
-          "publishedOn": "2024-08-18T20:57:45.000Z",
-          "wordCount": null,
-          "title": "yas-expand-snippet and yas-lookup-snippet?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1evibcp/what_do_we_all_think_about_zed/",
-          "author": null,
-          "description": "submitted by    /u/Illustrious-Fox6056  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1evibcp/what_do_we_all_think_about_zed/",
-          "publishedOn": "2024-08-18T19:57:17.000Z",
-          "wordCount": null,
-          "title": "What do we all think about Zed?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1evgcdd/macos_reocmmendations/",
-          "author": null,
-          "description": "I may have asked this before when it was hypothetical, but: I have a new M3 mac coming next week; my first non-linux laptop in over 20 years. I know there are a bunch of ways to install emacs on Mac. I'd like to choose something fairly simple if possible. I'd like to run stable releases rather than git dailies (mostly to avoid recompiling all packages on a daily basis). I'll be using elpaca with a pretty extensive config. \n Thanks in advance!\n    submitted by    /u/titaniumbones  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1evgcdd/macos_reocmmendations/",
-          "publishedOn": "2024-08-18T18:34:03.000Z",
-          "wordCount": null,
-          "title": "MacOS reocmmendations",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1evcshu/chromeemacs_is_now_available_for_firefox/",
-          "author": null,
-          "description": "Chrome-Emacs is now available for Firefox! For those unfamiliar, Chrome-Emacs is a browser extension that enhances your live coding experience in online text editors and text areas by enabling bi-directional editing from within Emacs.\n Try It Out:\n  \nFirefox Add-on: Download Chrome-Emacs for Firefox\n Chrome Extension: Chrome Web Store\n Documentation: GitHub Repository \n  \nIf you encounter any issues, feel free to open an issue on the repo.\n    submitted by    /u/elgrekoo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1evcshu/chromeemacs_is_now_available_for_firefox/",
-          "publishedOn": "2024-08-18T16:03:41.000Z",
-          "wordCount": null,
-          "title": "Chrome-Emacs is now available for Firefox",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1evby34/is_this_a_windows_emacs_thing_emacs_on_windows/",
-          "author": null,
-          "description": "submitted by    /u/Focus-Expert  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1evby34/is_this_a_windows_emacs_thing_emacs_on_windows/",
-          "publishedOn": "2024-08-18T15:27:55.000Z",
-          "wordCount": null,
-          "title": "Is this a windows emacs thing? Emacs on windows has been anoyingly hang-y and stuttery.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1evago2/haskelltsmode_a_haskell_mode_that_uses_treesitter/",
-          "author": null,
-          "description": "submitted by    /u/Both_Confidence_4147  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1evago2/haskelltsmode_a_haskell_mode_that_uses_treesitter/",
-          "publishedOn": "2024-08-18T14:23:51.000Z",
-          "wordCount": null,
-          "title": "haskell-ts-mode: A haskell mode that uses tree-sitter",
-          "imageUrl": null
         }
       ]
     },
@@ -8519,6 +8459,26 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "3015@/discussions",
+          "author": "Valdus",
+          "description": "I am surprised that no one has created a literal index card box, digitally. Rendering an actual box, actual drawers, and a search function to pick out a card.\nI will say this, the closest I have seen is a small program on itchio called Decker\nIt is a recreation and expansion of the old index card mac program (back when Apple still looked like the fruit), very versatile, very user- supported.\nI designed a primitive template to use as index cards. Linking cards is not fluid, but maybe someone will make a deck that does that.\nCheck it out.",
+          "link": "https://forum.zettelkasten.de/discussion/3015/a-literal-digital-index-card-box-perhaps-decker",
+          "publishedOn": "2024-09-17T12:24:23.000Z",
+          "wordCount": 635,
+          "title": "A literal digital Index Card Box? Perhaps Decker",
+          "imageUrl": null
+        },
+        {
+          "id": "3014@/discussions",
+          "author": "Valdus",
+          "description": "I am an app addict.\nJust when I get cozy with one app; I need a theme or extension or just a new experience.\nI have gone from real index cards, bullet journals, tiddlywiki, feather wiki, trillium, zettlr, and now on Logseq. Then back and forth between analog and digital.\nThis movement gets in the way of the actual work; and unfortunately it’s worse for straight fiction- writing.\nAnyone else have this problem? Suggestions?\nPS: I tried hypernomicon too; and the only great thing it has is the name- so cool!",
+          "link": "https://forum.zettelkasten.de/discussion/3014/always-distracted-by-the-toys",
+          "publishedOn": "2024-09-16T23:27:48.000Z",
+          "wordCount": 1759,
+          "title": "Always distracted by the “toys”",
+          "imageUrl": null
+        },
         {
           "id": "3012@/discussions",
           "author": "mintsuku",
@@ -8738,16 +8698,6 @@
           "wordCount": 585,
           "title": "I can't type double quotation marks in The Archive.",
           "imageUrl": null
-        },
-        {
-          "id": "2977@/discussions",
-          "author": "Jackhansonc",
-          "description": "Hi, everyone, here is my reference note on a 4x6 index card. I normally only do journal and reference notes on paper and main notes in Obsidian.  My question is do I need to give reference notes an alphanumeric ID? Because I did find it difficult to locate a single source card in the pile of cards from one book, but because my main notes are in Obsidian, I’m not sure how to deal with the IDs at two places without breaking continuity",
-          "link": "https://forum.zettelkasten.de/discussion/2977/folgezettel-for-reference-note",
-          "publishedOn": "2024-08-18T23:41:03.000Z",
-          "wordCount": 650,
-          "title": "Folgezettel for reference note?",
-          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/si/h0mmwlrpzqdm.jpeg"
         }
       ]
     }
