@@ -44,16 +44,6 @@
           "wordCount": 633,
           "title": "Issue 443",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/442.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nDeveloper Nation Survey (ad)\nCalling All Devs! Help shape the future of development by taking the Developer Nation survey. We’ll donate to charity on your behalf and you could win a Samsung Galaxy Watch 7, a Portable Projector, Raspberry Pi 5s, and many more.\nA Dictionary of Single-Letter Variable Names by Jack Kelly\nHaskell’s expressive type system means that type signatures can carry a lot of information. Haskell’s polymorphism means that you sometime write a function that works across an enormous range of types, and are often left wondering “what do I actually call my variables?”. It …",
-          "link": "https://haskellweekly.news/issue/442.html",
-          "publishedOn": "2024-10-17T12:00:00.000Z",
-          "wordCount": 894,
-          "title": "Issue 442",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,46 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1gspdgn/writing_rest_services_with_scotty/",
+          "author": null,
+          "description": "Camunda is a BPMN automation platform that also allows to orchestrate (micro-)services.\n In their resources pages they have a section on writing REST based micro-services in several different programming languages.\n I was quite pleased to find a section with a Haskell example\n (https://camunda.com/resources/microservices/haskell/). The code is based on Scotty.\n I created a repository https://github.com/thma/scotty-service with the source-code (with some minor changes) that can be build with cabal or stack to help people to experiment with the code.\n    submitted by    /u/thma32  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1gspdgn/writing_rest_services_with_scotty/",
+          "publishedOn": "2024-11-16T15:16:03.000Z",
+          "wordCount": null,
+          "title": "Writing REST Services with Scotty",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1gsncf6/abnormal_ghc_memory_increasement_when_compiling/",
+          "author": null,
+          "description": "{-# LANGUAGE DataKinds #-} {-# LANGUAGE TypeFamilies #-} {-# LANGUAGE TypeOperators #-} {-# LANGUAGE UndecidableInstances #-} module Main where import Data.Proxy (Proxy (..)) import GHC.TypeLits type family Fib (n :: Nat) :: Nat where Fib 0 = 1 Fib 1 = 1 Fib n = Fib (n - 2) + Fib (n - 1) -- Fib 30 takes 1.6G -- Fib 31 takes 3.3G -- Fib 32 takes 3.3G -- Fib 33 takes 6.4G main :: IO () main = print $ natVal (Proxy :: Proxy (Fib 30)) \n Compiled with GHC 9.10.1, O2 Enabled.\n It seems that -ffamily-application-cache works as normal:\n https://preview.redd.it/9kxuebbvia1e1.png?width=1565&format=png&auto=webp&s=df006e7537ca229ff6437244fbb492ee4ce4378f\n    submitted by    /u/Lanky_Difference_157  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1gsncf6/abnormal_ghc_memory_increasement_when_compiling/",
+          "publishedOn": "2024-11-16T13:32:50.000Z",
+          "wordCount": null,
+          "title": "Abnormal GHC memory increasement when compiling Fibnacci.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1gsk46a/natval_greatly_accelerates_fibonacci_computation/",
+          "author": null,
+          "description": "Took from this Serokell blog where the author teaches some hacks on evaluating things at compile time. One example is to use type families for fibonacci sequence:\n type Fib :: Nat -> Nat type family Fib n where Fib 0 = 1 Fib 1 = 1 Fib n = Fib (n - 1) + Fib (n - 2) \n Then use natVal to pull the term from the type level. Quite astonishing how fast it is:\n >>> :set +s >>> natVal (Proxy @(Fib 42)) 433494437 (0.01 secs, 78,688 bytes) \n However when you drop natVal and directly evaluate the proxy it would slow down significantly. In my case it takes forever to compile.\n >>> Proxy @(Fib 42) * Hangs forever * \n Interestingly, with (&) the computation hangs as well. It seems only function application or ($) would work:\n >>> (Proxy @(Fib 42)) & natVal * Hangs forever * \n Outside ghci, the same behaviour persists with ghc where modules containing Proxy @(Fib <x>) always takes forever to compile unless preceded with natVal. Feel free to benchmark yourself.\n What accounts for this behaviour? What's special about natVal - is a primitive operator? Is this some compiler hack - a peephole in GHC? Or are rewrite rules involved?\n    submitted by    /u/i-eat-omelettes  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1gsk46a/natval_greatly_accelerates_fibonacci_computation/",
+          "publishedOn": "2024-11-16T09:54:56.000Z",
+          "wordCount": null,
+          "title": "`natVal` greatly accelerates fibonacci computation on type level",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1gs9557/truly_optimal_evaluation_with_unordered/",
+          "author": null,
+          "description": "submitted by    /u/SrPeixinho  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1gs9557/truly_optimal_evaluation_with_unordered/",
+          "publishedOn": "2024-11-15T22:54:37.000Z",
+          "wordCount": null,
+          "title": "Truly Optimal Evaluation with Unordered Superpositions",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/1gro9zp/interesting_haskell_compiler_optimizations/",
           "author": null,
@@ -1181,46 +1211,6 @@
           "wordCount": null,
           "title": "The spread of 'deriving' beyond Haskell?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1g6bpmf/how_do_i_get_started_with_haskell/",
-          "author": null,
-          "description": "I am an low / intermediate Java and Fortran programmer, and I am interested in broadening my knowledge beyond object-oriented programming, and since I have liking for \"Vintage\" stuff, and for high skill curves, I figured why not try Haskell. The issue is that I have been pulling my hair out trying to get VSC to run my Haskell code, and was wondering one of the following:\n Is there an equivalent to Java's BlueJ in the respect that it is an easy all-in-one editor, compiler, and terminal that does not need any dependencies preinstalled,\n or if there is just a simple way to get Haskell running in VSC that I'm not familiar with. \n Honestly, considering how much time I have dumped into trying to get VSC to work I would prefer an equivalent to BlueJ at this point. Considering how refined VSC is, it's definitely just a skill issue that I've failed to get this to work lol. \n    submitted by    /u/theskewb  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1g6bpmf/how_do_i_get_started_with_haskell/",
-          "publishedOn": "2024-10-18T06:28:03.000Z",
-          "wordCount": null,
-          "title": "How do I get started with Haskell?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1g68j48/call_for_proposals_now_open_for_functional_conf/",
-          "author": null,
-          "description": "Hey Haskellers! We're excited to let you know that the Call for Proposals for Functional Conf 2025 is now open. This is your chance to connect with a community of passionate FP enthusiasts and share your unique insights and projects.\n Got a cool story about how you used Haskell to solve a challenging problem? Maybe you've pioneered a novel application, or you have experiences that others could learn from. We want to hear from you!\n We're on the lookout for deep technical content that showcases the power of functional programming. We're also super committed to diversity and transparency, so all proposals will be made public for the community to check out and weigh in on.\n Got something unique, well-thought-out, and ready to present? Then you stand a great chance! Submit your proposal and be a part of making Functional Conf 2025 an amazing event.\n Don't sleep on it—submit today and let's push the boundaries of FP together! \n Submission deadline: 17 November 2024\n Functional Conf is an online event running 24-25 January 2025.\n https://preview.redd.it/44wk0ke0kfvd1.png?width=1920&format=png&auto=webp&s=79d1cf9db86e430921e5f85979b247faa314960b\n    submitted by    /u/yourdigitalvoice  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1g68j48/call_for_proposals_now_open_for_functional_conf/",
-          "publishedOn": "2024-10-18T03:02:55.000Z",
-          "wordCount": null,
-          "title": "Call for Proposals Now Open for Functional Conf 2025 (online)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1g6172a/intensional_functions/",
-          "author": null,
-          "description": "submitted by    /u/Iceland_jack  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1g6172a/intensional_functions/",
-          "publishedOn": "2024-10-17T20:55:37.000Z",
-          "wordCount": null,
-          "title": "Intensional Functions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1g5ob50/is_it_possible_to_model_scheme_environment_using/",
-          "author": null,
-          "description": "So I was writing my Scheme interpreter (like everyone does) but found a problem when implementing closures. Since I use the State monad to manage the symbol environment containing the variables etc. I have to copy it to the closure. This snapshot of the environment is then used any time the function is evaluated. But that means that any changes to the env after the definition are ignored. In scheme later changes can however still affect the closures env:\n (define n 2) (define foo (lambda (a) (define m 10) (+ a n (- m 3)))) ;; everything after here doesnt belong to the lambda env currently (define n 10) (write (foo 4)) ;; should use n = 10, but still uses n = 2 \n I know other people have used the IORef to solve this with actual mutability, but I wanted to know if there is another way of still using the state monad, before having to rewrite my entire program.\n The lambda environment should also affect the actual environment if it mutates an outer variable using set!.\n    submitted by    /u/GeroSchorsch  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1g5ob50/is_it_possible_to_model_scheme_environment_using/",
-          "publishedOn": "2024-10-17T11:05:43.000Z",
-          "wordCount": null,
-          "title": "is it possible to model scheme environment using only State monad",
-          "imageUrl": null
         }
       ]
     },
@@ -1229,6 +1219,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1gsp5l3/migrating_spark_codebases_from_scala_212_to_213/",
+          "author": null,
+          "description": "submitted by    /u/EnergyThen  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1gsp5l3/migrating_spark_codebases_from_scala_212_to_213/",
+          "publishedOn": "2024-11-16T15:05:17.000Z",
+          "wordCount": null,
+          "title": "Migrating Spark codebases from Scala 2.12 to 2.13",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1gs6aty/zio_in_2025_by_john_de_goes_ziverge/",
+          "author": null,
+          "description": "submitted by    /u/sideEffffECt  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1gs6aty/zio_in_2025_by_john_de_goes_ziverge/",
+          "publishedOn": "2024-11-15T20:47:38.000Z",
+          "wordCount": null,
+          "title": "ZIO in 2025, by John De Goes, Ziverge",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1gs31vh/match_types_using_scala_36_namedtuple/",
           "author": null,
@@ -1928,46 +1938,6 @@
           "wordCount": null,
           "title": "Just released version v0.2.0 of Lohika. It now supports First-order Logic",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1g5z54i/discussion_open_source_software_bounties/",
-          "author": null,
-          "description": "What do you think about open source software bounties? I keep seeing them, for instance SoftwareMill offering them in the ScalaTimes letter today, or com-lihaoyi a while ago, or John DeGoes in his new Golem venture.\n They seem to offer developers a chance to contribute to open source code, hone their coding skills, get experience, and they might also be getting paid for that work.\n I considered contributing to one of com-lihaoyi bounties, specifically, implementing support for ms sql. However, I noticed someone else got the torch. And that gets to my point. You have N developers working on the same thing. Sure it works to the advantage of the entity that issued the bounties. But 1 out of the N developers will be successful. What if a developer starts working on it, then drops the ball because it turns out it is too much work and she/he doesn't have enough time? As a matter of fact, com-lihaoyi increased the bounty for ms sql support because there is more work than it was originally anticipated (see the pull request here: https://github.com/com-lihaoyi/scalasql/pull/29 ). Right now, I am not sure where that work is at.\n I feel that these bounties might drag (some) developers in a rat race. You might argue that a monetary retribution is better than nothing, and in the end nobody forces you to do anything if you don't want to, and I agree 🤷‍♂️ . Maybe I am missing something about how the oss bounties work.\n I think the ideal process would be to hire a developer to commit and to do the work in a time frame agreed upon by both parties, and to pay her/him properly. But I understand that might not be always feasible due to lack of funds and time, hence the bounties. I would be interesting to see the real-life experience of a someone that issued bounties and how that turned out.\n    submitted by    /u/0110001001101100  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1g5z54i/discussion_open_source_software_bounties/",
-          "publishedOn": "2024-10-17T19:26:34.000Z",
-          "wordCount": null,
-          "title": "Discussion: open source software bounties",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1g5w7bj/magnum_database_client_130_released/",
-          "author": null,
-          "description": "https://github.com/AugustNagro/magnum\n Magnum is a database client that is focused on high productivity. The 1.3.0 release adds: \n  \nA Transactor class for customizing SQL transactions\n Configurable logging and error messages, as well as logging of slow queries\n Support for arrays of enums in the Postgres module\n Other small bug fixes and improvements\n  \nWe're working on a variety of new features, like JSON & XML codecs, a ZIO module, embedded Frags, and improved Specs. We'd love your feedback.\n Enjoy!\n    submitted by    /u/augustnagro  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1g5w7bj/magnum_database_client_130_released/",
-          "publishedOn": "2024-10-17T17:20:50.000Z",
-          "wordCount": null,
-          "title": "Magnum Database Client 1.3.0 Released",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1g5rclz/codacy_hiring_2_scala_devs/",
-          "author": null,
-          "description": "Hi, hope this is not inappropriate -- I saw the monthly jobs thread but it seems to be outdated.\n We're Codacy, the code quality and security scanning company, and we're looking for 2 Scala developers to join our team of awesome, high-performance, high-ownership developers. You can find all the details on the ad here -- apply directly or feel free to DM me with any questions.\n We're largely looking for candidates in Portugal or the UK but if you're comfortable working as a b2b contractor within London/Lisbon working hours do also get in touch.\n https://qamine-portugal.jobs.personio.com/job/1235840?_pc=2298762#apply\n    submitted by    /u/CodacyKPC  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1g5rclz/codacy_hiring_2_scala_devs/",
-          "publishedOn": "2024-10-17T13:50:48.000Z",
-          "wordCount": null,
-          "title": "Codacy hiring 2 Scala devs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1g5n501/when_chat_gpt_gets_drunk_funniest_thing_i_have/",
-          "author": null,
-          "description": "submitted by    /u/sedhha  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1g5n501/when_chat_gpt_gets_drunk_funniest_thing_i_have/",
-          "publishedOn": "2024-10-17T09:46:35.000Z",
-          "wordCount": null,
-          "title": "When Chat GPT gets drunk - Funniest thing I have seen in a while",
-          "imageUrl": null
         }
       ]
     },
@@ -2028,6 +1998,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1gs7srp/access_org_attachments_from_my_phone/",
+          "author": null,
+          "description": "I sync my Emacs files via Dropbox. I use org-attach to attach files to notes. I've used beorg and Orgro. They're great. But I haven't found an app that will actually access attachments. I attach images, pdfs, and audio files, and I'd love to be able to access them on-the-go on my phone. \n So far, any apps I've used do a pretty good job of accessing the TEXT of files, but it just can't recognize attachments. \n This tempts me to use Evernote or Apple Notes, since all attachments show up there without any hassle. \n Any ideas?\n    submitted by    /u/joegilder  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1gs7srp/access_org_attachments_from_my_phone/",
+          "publishedOn": "2024-11-15T21:53:38.000Z",
+          "wordCount": null,
+          "title": "Access org attachments from my phone?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1gr45pb/org_table_from_org_headings_using_a_babel_block/",
           "author": null,
@@ -2387,26 +2367,6 @@
           "wordCount": null,
           "title": "Is there a way to set margins for Beamer export ?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1g6c8v1/has_any_one_used_an_orgfile_with_code_blocks_for/",
-          "author": null,
-          "description": "Hi all,\n I am wondering if one can use an org-file for cron jobs. \n Benefits would be all the structure/folding/navigation benefit and everything (logging + code) would be in one place.\n On a theoretical level: Is this smart or dumb? Curios what your opinions are!\n And on a practical level: How can I let \"org-babel-load-file\" update the #+RESULTS section?\n I have this MWE:\n #+title: Cronjobs #+begin_src emacs-lisp :results output prepend (princ (concat \"I'm here because someone run the code block at \" (current-time-string) \".\")) #+end_src #+RESULTS: : I'm here because someone run the code block at Fri Oct 18 08:39:30 2024. : I'm here because someone run the code block at Fri Oct 18 08:39:27 2024. \n But the printed results came from C-c C-c-ing the code block. Running org-babel-load-file does print the message but doesn't modify the file...\n Best\n Jonas\n    submitted by    /u/jonas37  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1g6c8v1/has_any_one_used_an_orgfile_with_code_blocks_for/",
-          "publishedOn": "2024-10-18T07:08:41.000Z",
-          "wordCount": null,
-          "title": "Has any one used an org-file with code blocks for cron jobs?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1g5mpsw/orgagendadodatelater_for_repeated_tasks/",
-          "author": null,
-          "description": "Hi guys,\n Let's say I have a recurring task in Agenda like\n * TODO Water the flowers weekly SCHEDULED: <2024-10-17 Thu 09:00 +1w> \n If I this week decide I instead should water the flowers on friday, I just press the S-RIGHT (org-agenda-do-date-later)\n But then it (as is described in manual) moves all instances of \"Water the flowers\" to Fridays.\n Is there an (easy / built in) way of pushing a single instance of a recurring event forward to Friday, while keeping the rest of the instances on Thursday? \n My guess is not, as it would require somehow cloning the instance for this week as a new task and leaving the recurring task alone?\n    submitted by    /u/w0wt1p  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1g5mpsw/orgagendadodatelater_for_repeated_tasks/",
-          "publishedOn": "2024-10-17T09:13:46.000Z",
-          "wordCount": null,
-          "title": "org-agenda-do-date-later for repeated tasks",
-          "imageUrl": null
         }
       ]
     },
@@ -2415,6 +2375,66 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/emacsql-20241116.1523.tar",
+          "author": null,
+          "description": "The emacsql package has been updated to version 20241116.1523.",
+          "link": "https://melpa.org/#/emacsql",
+          "publishedOn": "2024-11-16T15:23:00.000Z",
+          "wordCount": 105,
+          "title": "emacsql (20241116.1523) --- High-level SQL database front-end",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/evangelion-theme-20241116.1036.tar",
+          "author": null,
+          "description": "The evangelion-theme package has been updated to version 20241116.1036.",
+          "link": "https://melpa.org/#/evangelion-theme",
+          "publishedOn": "2024-11-16T10:36:00.000Z",
+          "wordCount": 105,
+          "title": "evangelion-theme (20241116.1036) --- A dark colour scheme inspired by Neon Genesis Evangelion",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/srfi-20241115.2307.tar",
+          "author": null,
+          "description": "The srfi package has been updated to version 20241115.2307.",
+          "link": "https://melpa.org/#/srfi",
+          "publishedOn": "2024-11-15T23:07:00.000Z",
+          "wordCount": 105,
+          "title": "srfi (20241115.2307) --- Scheme Requests for Implementation browser",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/otpp-20241115.2256.tar",
+          "author": null,
+          "description": "The otpp package has been updated to version 20241115.2256.",
+          "link": "https://melpa.org/#/otpp",
+          "publishedOn": "2024-11-15T22:56:00.000Z",
+          "wordCount": 105,
+          "title": "otpp (20241115.2256) --- One tab per project, with unique names",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/use-package-chords-20241115.2228.tar",
+          "author": null,
+          "description": "The use-package-chords package has been updated to version 20241115.2228.",
+          "link": "https://melpa.org/#/use-package-chords",
+          "publishedOn": "2024-11-15T22:28:00.000Z",
+          "wordCount": 105,
+          "title": "use-package-chords (20241115.2228) --- Key-chord keyword for use-package",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/bind-chord-20241115.2228.tar",
+          "author": null,
+          "description": "The bind-chord package has been updated to version 20241115.2228.",
+          "link": "https://melpa.org/#/bind-chord",
+          "publishedOn": "2024-11-15T22:28:00.000Z",
+          "wordCount": 105,
+          "title": "bind-chord (20241115.2228) --- Key-chord binding helper for use-package-chords",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/slurpbarf-20241115.1459.tar",
           "author": null,
@@ -2493,6 +2513,16 @@
           "publishedOn": "2024-11-15T05:27:00.000Z",
           "wordCount": 105,
           "title": "leetcode (20241115.527) --- An leetcode client",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/consult-20241115.517.tar",
+          "author": null,
+          "description": "The consult package has been updated to version 20241115.517.",
+          "link": "https://melpa.org/#/consult",
+          "publishedOn": "2024-11-15T05:17:00.000Z",
+          "wordCount": 105,
+          "title": "consult (20241115.517) --- Consulting completing-read",
           "imageUrl": null
         },
         {
@@ -2663,6 +2693,16 @@
           "publishedOn": "2024-11-12T20:30:00.000Z",
           "wordCount": 105,
           "title": "parsebib (20241112.2030) --- A library for parsing bib files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/shell-maker-20241112.1906.tar",
+          "author": null,
+          "description": "The shell-maker package has been updated to version 20241112.1906.",
+          "link": "https://melpa.org/#/shell-maker",
+          "publishedOn": "2024-11-12T19:06:00.000Z",
+          "wordCount": 105,
+          "title": "shell-maker (20241112.1906) --- Interaction mode for making comint shells",
           "imageUrl": null
         },
         {
@@ -2853,6 +2893,16 @@
           "publishedOn": "2024-11-10T14:56:00.000Z",
           "wordCount": 105,
           "title": "kubel (20241110.1456) --- Control Kubernetes with limited permissions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/emms-20241110.1436.tar",
+          "author": null,
+          "description": "The emms package has been updated to version 20241110.1436.",
+          "link": "https://melpa.org/#/emms",
+          "publishedOn": "2024-11-10T14:36:00.000Z",
+          "wordCount": 105,
+          "title": "emms (20241110.1436) --- The Emacs Multimedia System",
           "imageUrl": null
         },
         {
@@ -5174,106 +5224,6 @@
           "wordCount": 105,
           "title": "flycheck-languagetool (20241018.1225) --- Flycheck support for LanguageTool",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ipe-20241018.749.tar",
-          "author": null,
-          "description": "The ipe package has been updated to version 20241018.749.",
-          "link": "https://melpa.org/#/ipe",
-          "publishedOn": "2024-10-18T07:49:00.000Z",
-          "wordCount": 105,
-          "title": "ipe (20241018.749) --- Insert, Update and Delete PAIRs using overlays",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/leaf-20241018.516.tar",
-          "author": null,
-          "description": "The leaf package has been updated to version 20241018.516.",
-          "link": "https://melpa.org/#/leaf",
-          "publishedOn": "2024-10-18T05:16:00.000Z",
-          "wordCount": 105,
-          "title": "leaf (20241018.516) --- Simplify your init.el configuration, extended use-package",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/apheleia-20241018.35.tar",
-          "author": null,
-          "description": "The apheleia package has been updated to version 20241018.35.",
-          "link": "https://melpa.org/#/apheleia",
-          "publishedOn": "2024-10-18T00:35:00.000Z",
-          "wordCount": 105,
-          "title": "apheleia (20241018.35) --- Reformat buffer stably",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/treemacs-icons-dired-20241017.2046.tar",
-          "author": null,
-          "description": "The treemacs-icons-dired package has been updated to version 20241017.2046.",
-          "link": "https://melpa.org/#/treemacs-icons-dired",
-          "publishedOn": "2024-10-17T20:46:00.000Z",
-          "wordCount": 105,
-          "title": "treemacs-icons-dired (20241017.2046) --- Treemacs icons for dired",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mise-20241017.1826.tar",
-          "author": null,
-          "description": "The mise package has been updated to version 20241017.1826.",
-          "link": "https://melpa.org/#/mise",
-          "publishedOn": "2024-10-17T18:26:00.000Z",
-          "wordCount": 105,
-          "title": "mise (20241017.1826) --- Support for `mise' cli",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-tailwindcss-20241017.1524.tar",
-          "author": null,
-          "description": "The lsp-tailwindcss package has been updated to version 20241017.1524.",
-          "link": "https://melpa.org/#/lsp-tailwindcss",
-          "publishedOn": "2024-10-17T15:24:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-tailwindcss (20241017.1524) --- A lsp-mode client for tailwindcss",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/annotate-20241017.1508.tar",
-          "author": null,
-          "description": "The annotate package has been updated to version 20241017.1508.",
-          "link": "https://melpa.org/#/annotate",
-          "publishedOn": "2024-10-17T15:08:00.000Z",
-          "wordCount": 105,
-          "title": "annotate (20241017.1508) --- Annotate files without changing them",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-web-track-20241017.1353.tar",
-          "author": null,
-          "description": "The org-web-track package has been updated to version 20241017.1353.",
-          "link": "https://melpa.org/#/org-web-track",
-          "publishedOn": "2024-10-17T13:53:00.000Z",
-          "wordCount": 105,
-          "title": "org-web-track (20241017.1353) --- Web data tracking framework in Org Mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/neil-20241017.1337.tar",
-          "author": null,
-          "description": "The neil package has been updated to version 20241017.1337.",
-          "link": "https://melpa.org/#/neil",
-          "publishedOn": "2024-10-17T13:37:00.000Z",
-          "wordCount": 105,
-          "title": "neil (20241017.1337) --- Companion for Babashka Neil",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sqlite-mode-extras-20241017.1030.tar",
-          "author": null,
-          "description": "The sqlite-mode-extras package has been updated to version 20241017.1030.",
-          "link": "https://melpa.org/#/sqlite-mode-extras",
-          "publishedOn": "2024-10-17T10:30:00.000Z",
-          "wordCount": 105,
-          "title": "sqlite-mode-extras (20241017.1030) --- Extensions for sqlite-mode",
-          "imageUrl": null
         }
       ]
     },
@@ -5282,6 +5232,136 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gstsd3/earl_concurrency_library_for_communicating_with/",
+          "author": null,
+          "description": "Earl is an Emacs Lisp concurrency library for interacting with Erlang VM nodes from Emacs. It provides:\n  \nA cooperative process abstraction, for asynchronous programming using message passing.\n E.g.:\n (let ((pid (earl-spawn (iter-make (earl-receive (`(,from . ,i) (! from (1+ i)))))))) (! pid (cons (earl-self) 5)) (earl-receive (i (message \"Received %d!\" i)))) \n (where ! is a shorthand for earl-send.)\n \nSerialization/deserialization of Emacs Lisp terms to the Erlang external term format.\n \nCommunication between Emacs and Erlang VMs.\n For example, if a local Erlang VM was started with erl -sname arnie, you could connect to it and do an RPC using:\n (earl-do (earl-call (earl-rpc (intern (concat \"arnie@\" (system-name))) 'erlang 'node ()))) \n \n For those who remember Distel, earl is a full modern rewrite of the core of Distel.\n Links:\n  \nGitHub repository\n Source file with more detailed documentation\n MELPA package page\n  \n   submitted by    /u/pwnedary  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gstsd3/earl_concurrency_library_for_communicating_with/",
+          "publishedOn": "2024-11-16T18:37:47.000Z",
+          "wordCount": null,
+          "title": "earl: Concurrency library for communicating with Erlang VMs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gsrj1y/what_are_your_favorite_changes_in_emacs_30/",
+          "author": null,
+          "description": "What are you looking forward about emacs 30? I have made a list of my preferred changes: emacs 30 favs\n    submitted by    /u/olikn  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gsrj1y/what_are_your_favorite_changes_in_emacs_30/",
+          "publishedOn": "2024-11-16T16:55:51.000Z",
+          "wordCount": null,
+          "title": "What are your favorite changes in emacs 30?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gsqtio/timeblockel_emacs_library_for_visualizing_time/",
+          "author": null,
+          "description": "Hi. Last year I wrote org-timeblock, a package for displaying orgmode tasks in a timeblock view. This is what most modern calendars provide, but never existed in emacs. The only problem is that it can be used only for Org, so I wrote a separate library so that someone (maybe me) could wrote a calendar package that would allow to view other kinds of timedata.\n With this library you can combine different types of data and display in one interactive view. I often stumble across reddit posts where people ask about Org + iCalendar / Google Calendar workflow. This package might be one of the tools to achieve a better user experience.\n What do you think?\n demo.gif\n  \nhttps://github.com/ichernyshovvv/timeblock.el\n https://github.com/ichernyshovvv/org-timeblock\n  \n   submitted by    /u/ichernyshovvv  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gsqtio/timeblockel_emacs_library_for_visualizing_time/",
+          "publishedOn": "2024-11-16T16:23:05.000Z",
+          "wordCount": null,
+          "title": "timeblock.el - Emacs library for visualizing time data via interactive blocks",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gsopge/python_fstring_formatting_is_very_slow_on/",
+          "author": null,
+          "description": "I know I'm slow, finally updated from emacs27 -> 29.4. I'm on Ubuntu22 on 6 month old Alienware laptop, I don't think CPU speed is the issue, I think it's a regex issue with large files.\n I didn't see this as an obvious option I can disable in the various python- options. I know it's cool feature, and I don't notice issues on smaller files, but I'd prefer speed over going in and out of string formatting with `f'{foo=} {bar=}'`\n Wondering if there's a better option than hacking python.el and using that locally.\n    submitted by    /u/poughdrew  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gsopge/python_fstring_formatting_is_very_slow_on/",
+          "publishedOn": "2024-11-16T14:43:54.000Z",
+          "wordCount": null,
+          "title": "Python f-string formatting is very slow on large-ish files. Any way to disable this?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gso6be/casting_spels_in_lisp/",
+          "author": null,
+          "description": "submitted by    /u/arthurno1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gso6be/casting_spels_in_lisp/",
+          "publishedOn": "2024-11-16T14:16:16.000Z",
+          "wordCount": null,
+          "title": "Casting spELs in Lisp",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gslis4/how_can_i_sync_emacs_org_mode_files/",
+          "author": null,
+          "description": "Recently, i tried syncing my emacs org files from my PC to my phone and using orgzly to read the org files. But since there was no folder arrangement system, it messed up my file which was synced through both devices using syncthing. So, I have exported all those files to markdown format and use obsidian (for now). How can I sync my emacs org files and be able to edit them in an organized way? I also tried installing doom emacs in termux ... it didn't work. \n    submitted by    /u/Maleficent-End2330  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gslis4/how_can_i_sync_emacs_org_mode_files/",
+          "publishedOn": "2024-11-16T11:39:27.000Z",
+          "wordCount": null,
+          "title": "How can i sync emacs org mode files?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gsj8vv/autocomplete_alignment/",
+          "author": null,
+          "description": "Hi,\n Do you know how to make the auto-complete list alignment from the first to the second in Emacs?\n First: no alignment - (Function) is following the suggested function\n No alignment\n Second: has alignment, Function aligned to the right side of the dialog\n https://preview.redd.it/9nh9s68h881e1.png?width=613&format=png&auto=webp&s=d198fbfd9076ea187c5ebf95cf51cef2d6ca7f57\n    submitted by    /u/SubstantialCamera736  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gsj8vv/autocomplete_alignment/",
+          "publishedOn": "2024-11-16T08:47:45.000Z",
+          "wordCount": null,
+          "title": "Auto-complete alignment",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gsh3yn/emacs30_pretest_for_ubuntu/",
+          "author": null,
+          "description": "Do you know any repo where fresh emacs packages are ?\n maybe 30 pretest ? :)\n I use snap --edge but I prefer better the normal deb packages ...\n maybe a dockerfile what is build an emacs deb package ?\n thanks in advance!\n    submitted by    /u/zsome  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gsh3yn/emacs30_pretest_for_ubuntu/",
+          "publishedOn": "2024-11-16T06:16:25.000Z",
+          "wordCount": null,
+          "title": "emacs-30 pretest for ubuntu",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gsguf2/imagemode_performance_improvements/",
+          "author": null,
+          "description": "I find myself using image-mode to display images in Emacs quite often. Anyone who has spent much time using this mode probably knows it's quite a nice feature for small to medium-sized images, but when you get up to those several MB in size and larger, the rendering process chokes and performance when scrolling/zooming/going back and forth between images in a directory just absolutely tanks, to the point of being almost unusable. Like 5+ seconds just to zoom a single step or go to the next image in the directory - that level of slowness. The mode also seems to have pretty low-precision scrolling in general even with pixel-scroll-precision-mode enabled, so I suppose that is using something different under the hood.\n I'm guessing the performance problems are probably because the Emacs buffer isn't really a true \"rendering canvas\", if that is the correct term, but then I'm not really sure how it is displaying the image at all in the first place? Basically I'm wondering if anyone has any info about how this image rendering works in Emacs or can maybe point me to relevant documentation. I tried investigating the source code but got a little overwhelmed as I'm not that skilled at Elisp yet.\n Is there any work in progress that might help address the performance issue as well as the scrolling precision? If not, I'd really appreciate pointers to any info that might help explain how to attempt to do this myself. Seems pretty likely it would involve messing with the C code? I'm slowly getting better at C and Elisp and although I seriously doubt I could submit a satisfactory patch at this point, perhaps I can put together some code for more experienced Emacs developers to critique as a starting point? I use image-mode a ton and I think it would be great if it was more performant and usable for larger files so I'd be willing to put work into this. Thanks!\n    submitted by    /u/Alert-Breadfruit-179  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gsguf2/imagemode_performance_improvements/",
+          "publishedOn": "2024-11-16T06:00:32.000Z",
+          "wordCount": null,
+          "title": "Image-mode performance improvements?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gsgf3m/finding_it_difficult_to_deal_with_multiproject/",
+          "author": null,
+          "description": "I have 2 projects in my Treemacs workspace, one called frontend and one called backend. Then I create a split window such that I have a file from frontend in the left one and a file from backend in the right one.\n Now if I open a new file from either of the projects, the file opens in both windows, and if I close one, the split window disappears.\n Am I missing a configuration? I am not even sure what's the point of having the same same file appear twice as it does currently.\n    submitted by    /u/floofcode  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gsgf3m/finding_it_difficult_to_deal_with_multiproject/",
+          "publishedOn": "2024-11-16T05:34:10.000Z",
+          "wordCount": null,
+          "title": "Finding it difficult to deal with multi-project treemacs workspaces",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gsfzpu/how_to_code_without_lsp_in_doom_emacs/",
+          "author": null,
+          "description": "I'm using Doom Emacs on my work computer (Mac), and lately, Emacs keeps hanging, which I suspect is caused by LSP mode. As a workaround, I’m considering doing away with LSP entirely, but I don’t want to lose essential features like completion that significantly speed up my workflow.\n Do you know of any efficient ways to achieve code completion without relying on LSP? Bonus points if it works well with Doom Emacs.\n Any recommendations, packages, or configuration tips would be super helpful! Thanks in advance!\n    submitted by    /u/iqbal002  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gsfzpu/how_to_code_without_lsp_in_doom_emacs/",
+          "publishedOn": "2024-11-16T05:03:09.000Z",
+          "wordCount": null,
+          "title": "How to Code Without LSP in Doom Emacs?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gscnix/emacs_client_dired_open_files_with_firefox/",
+          "author": null,
+          "description": "Hi guys ! I started to using the emacs client a few of days ago. I noticed that when I try to open an ods file from dired with W, it opens it with Firefox. When I try to open the same file with emacs server or from the terminal, it opens in libreoffice. So, how could I get the emacs client to open my files using xdg-open ?\n    submitted by    /u/rvc09  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gscnix/emacs_client_dired_open_files_with_firefox/",
+          "publishedOn": "2024-11-16T01:50:35.000Z",
+          "wordCount": null,
+          "title": "Emacs client dired open files with Firefox",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1gsaf99/treesit_and_ctsmode/",
+          "author": null,
+          "description": "I'm using treesit-auto. It compiles libtree-sitter-cpp.dylib in ~/.emacs.d/tree-sitter when I open a cpp file. However, when I quit and open the same cpp file again, I get a warning about a missing libtree-sitter-c.dylib file. M-: major-mode confirms that I'm running c++-ts-mode. I believe this error is originating from treesit and not treesit-auto. Why is treesit looking for the c version of the library on a cpp file?\n This is the warning message\n Warning (treesit): Cannot activate tree-sitter, because language grammar for c is unavailable (not-found): dlopen(~/.emacs.d/tree-sitter/libtree-sitter-c.dylib, 0x0009): tried: '~/.emacs.d/tree-sitter/libtree-sitter-c.dylib' (no such file) \n I'm running 30.0.92 on MacOS. A full emacs.el which replicates the warning.\n (require 'package) (add-to-list 'package-archives '(\"melpa-stable\" . \"https://stable.melpa.org/packages/\") t) (require 'use-package-ensure) (setq use-package-always-ensure t) (use-package treesit-auto :config (setq treesit-auto-install 'prompt) (treesit-auto-add-to-auto-mode-alist 'all) (global-treesit-auto-mode)) \n    submitted by    /u/tsengf  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1gsaf99/treesit_and_ctsmode/",
+          "publishedOn": "2024-11-15T23:55:24.000Z",
+          "wordCount": null,
+          "title": "treesit and c++-ts-mode",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1gs5dou/in_what_ways_do_you_use/",
           "author": null,
@@ -8081,146 +8161,6 @@
           "wordCount": null,
           "title": "I've encountered an issue with TAB binding",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g6dauf/that_lightbulb_moment_with_emacs/",
-          "author": null,
-          "description": "Context: Novelist/filmmaker who primarily uses NeoVim for all my prose and screenwriting, and for note-taking via Zettlekasten system since 2020. I also put together a an Integrated Writing Environment (IWE) for NeoVim for other users like me. I even spoke at a couple of NeoVim confs since then. Suffice to say I love NeoVim. \n I also love tinkering with my computers endlessly when I am not working, naturally my brain has always been interested in seeing what emacs can do. \n Tried Emacs for the last 3 years, but kept hitting a wall. Or just plain frustration. \n Until I tried this Emacs kickstarter for NeoVim users.  \n And everything clicked. \n I had a few _oh shit_ moments the last few days. Can't say I am a convert yet - I still think Vim motions is subjectively better for pure text manipulation - but for pure hackable joy, emacs all the way. \n So far: \n  \nMoved from using Org mode in NeoVim to Emacs.\n \nI give myself an hour everyday where I turn off evil mode and just use pure emacs bindings. I still feel like I am playing jazz piano but it is now almost intuitive. \n \nStarted browsing some documentation sites purely through eww\n \nI can control spotify?!\n \n Things that aren't working yet: \n  \nLaTeX live previewing. Can't figure out why because my Tex installation works perfectly on NeoVim using vimtex. I'll figure it out in a couple of days\n  \nCarry on. \n TLDR: I (almost) see the light. \n    submitted by    /u/DevMahasen  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g6dauf/that_lightbulb_moment_with_emacs/",
-          "publishedOn": "2024-10-18T08:32:39.000Z",
-          "wordCount": null,
-          "title": "That Lightbulb Moment with Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g6bsv6/async_witheditor_org_mode_init/",
-          "author": null,
-          "description": "I was reading a lot about the multithreading is not necessary or maybe it is implemented with (heavy) threads in emacs. If I red well we can use the async package and reach the \"async\" functionality with it ...\n So my question is that how I can preload the org mode in the background ?\n use case:\n I open the emacs every morning and I start to read a file or do something ...\n I used to open my daily.org file but I have to wait a lot because to load the org package is very slow (~5-10 sec)...\n I'm using win10 or win11 and I know it is because the windows os but I thought that maybe we can preload the org mode in the background :)\n do you know any solution for this ?\n If I think well the witheditor is working like I open a file with emacsclientw.exe ... so maybe I can use this one to preload the daily.org in the background ...\n I don't know what is the trick in the async package so maybe any guidance is needed if I can solve this issue with this package ...\n I know we should load a package in the ui thread but what is if I open an org file with an emacsclient, will it freeze my every emacs frames for this short (5-10sec) period ?\n    submitted by    /u/zsome  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g6bsv6/async_witheditor_org_mode_init/",
-          "publishedOn": "2024-10-18T06:34:53.000Z",
-          "wordCount": null,
-          "title": "(async || witheditor) + org mode init",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g6b7jk/literal_programming_with_orgmode/",
-          "author": null,
-          "description": "I'm mostly doing python programming with Python using emacs and LSP. Sometimes I switch to Code to prototype some notebooks. Now I thought the last step can also be done in org-mode which suits me better ( No switching to Code). However, I seem to be loosing all LSP functionalities and basically I'm on my own.\n Any idea how I can deal with this inconvenience?\n    submitted by    /u/tengisCC  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g6b7jk/literal_programming_with_orgmode/",
-          "publishedOn": "2024-10-18T05:51:51.000Z",
-          "wordCount": null,
-          "title": "Literal programming with org-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g68ia2/emacs_terminal_setups_discussion/",
-          "author": null,
-          "description": "Been using Emacs in various terminals for the past six years with the following setup:\n Powershell: Windows terminal emulator, running wsl\n iTerm2: macOS terminal emulator\n Terminal: whatever is default installed in Ubuntu/Crostini\n Termux: terminal emulator on Android, with Unexpected Keyboard (available on F-Droid) for full keyboard\n Zsh: cross platform shell with a bunch of plugins for auto completion\n Mosh: ssh client that auto-reconnects without losing session information\n GNU Screen: Outer layer of multiplexing terminal sessions, allows switching between multiple tmux sessions in a single terminal window\n Tmux: Inner layer of multiplexing, hosts various emacs instances for whatever I'm working on\n Emacs: default keybindings, MELPA package repo, magit, various lsps (python, typescript, elixir), flycheck, company\n On system startup my launch procedure is:\n mosh , screen, tmux, emacs -nw\n Haven't had to change any key bindings and can easily switch through panes/sessions without ever touching my mouse on laptop. \n What is your emacs terminal setup? \n I haven't changed mine in years, so I'd like to hear about others' setups and try some new things!\n    submitted by    /u/fallsoftco  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g68ia2/emacs_terminal_setups_discussion/",
-          "publishedOn": "2024-10-18T03:01:37.000Z",
-          "wordCount": null,
-          "title": "Emacs Terminal Setups Discussion",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g677ko/how_to_middlealign_an_element_in_modelineformat/",
-          "author": null,
-          "description": "I found there is an mode-line-format-right-align can let rest element right align, but I want to let one element in mode-line-format align in the middle, is it possible? How?\n    submitted by    /u/eval-exec  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g677ko/how_to_middlealign_an_element_in_modelineformat/",
-          "publishedOn": "2024-10-18T01:51:12.000Z",
-          "wordCount": null,
-          "title": "How to middle-align an element in mode-line-format?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g619jg/supreme_sexp_system_sss_a_lisp_machine_adventure/",
-          "author": null,
-          "description": "submitted by    /u/kosakgroove  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g619jg/supreme_sexp_system_sss_a_lisp_machine_adventure/",
-          "publishedOn": "2024-10-17T20:58:37.000Z",
-          "wordCount": null,
-          "title": "Supreme Sexp System - SSS - a Lisp machine adventure with Emacs, Guix, StumpWM, Nix, and more",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g5ydk3/requestion_tips_for_an_emacs_luddite_in_the_age/",
-          "author": null,
-          "description": "Hello lovely Emacs community,\n I've been coding with emacs since 1984. That's a long time. Over the years I've been forced by work circumstances to use various IDE's, including more recently vscode (like everybody) but despite adding \"emacs modes\" to these IDE's they just were never really just... emacs.\n My young coworker asked me this week why in fact do I use emacs. He's a thirty-something and had never even heard of it. I didn't have a great answer... muscle memory? learned in college? macros? it works the same everywhere? highly portable? All these answers are somewhat... outdated these days. That said, whenever I'm forced to use vscode, and even think about a mouse when coding, I loathe it. That hatred of the IDE slows me down. Vscode is so visually busy with so many flyovers and \"he…",
-          "link": "https://www.reddit.com/r/emacs/comments/1g5ydk3/requestion_tips_for_an_emacs_luddite_in_the_age/",
-          "publishedOn": "2024-10-17T18:54:05.000Z",
-          "wordCount": null,
-          "title": "Requestion tips for an \"Emacs luddite\" in the age of AI",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g5wg60/tramp_reopens_connection_for_every_command/",
-          "author": null,
-          "description": "Is this normal? \n Everytime I use a command in the remote machine such as docker, kubectl, etc. I get a \"Opening connection {cmd_name} for ...\".\n It takes seconds to give me the output of the command; but if I just SSH in and type the same commands it is instant.\n I ran emacs -Q to make sure it isn't my config. Then I ran (setq tramp-verbose 6). Then I ran docker --version as an example. Here's the relevant debug output:\n  /ssh:{ip}/:~ $ docker --version Last login: Thu Oct 17 17:17:57 2024 from 10.102.207.254 -bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8) 18:18:11.122187 tramp-process-actions (3) # Waiting for prompts from remote shell...done 18:18:11.122222 tramp-maybe-open-connection (3) # Opening connection docker for {ip} using ssh...done 18:18:11.122491 tramp-m…",
-          "link": "https://www.reddit.com/r/emacs/comments/1g5wg60/tramp_reopens_connection_for_every_command/",
-          "publishedOn": "2024-10-17T17:31:20.000Z",
-          "wordCount": null,
-          "title": "TRAMP reopens connection for every command",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g5t9h7/why_do_you_think_emacs_is_so_low_in_popularity/",
-          "author": null,
-          "description": "https://survey.stackoverflow.co/2024/technology/#1-integrated-development-environment\n Emacs being lower than nano actually surprised me\n    submitted by    /u/g0atdude  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g5t9h7/why_do_you_think_emacs_is_so_low_in_popularity/",
-          "publishedOn": "2024-10-17T15:15:31.000Z",
-          "wordCount": null,
-          "title": "Why do you think emacs is so low in popularity?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g5stee/show_agenda_with_last_note/",
-          "author": null,
-          "description": "Hi there, do you know of any way to have an Agenda view, or Super Agenda, or org-ql that will show entries with the last note next to it (or under it)? And the date of such note.\n I have TODO items that can be there for years (ie, awaiting court ruling) and the date & content of the last note is the most useful thing during a review of entries.\n    submitted by    /u/telenieko  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g5stee/show_agenda_with_last_note/",
-          "publishedOn": "2024-10-17T14:56:26.000Z",
-          "wordCount": null,
-          "title": "Show agenda with last note",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g5r44a/emacs_users_what_is_your_goto_tool_for_freehand/",
-          "author": null,
-          "description": "inb4 pen and paper\n  \n   submitted by    /u/ismbks  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g5r44a/emacs_users_what_is_your_goto_tool_for_freehand/",
-          "publishedOn": "2024-10-17T13:39:46.000Z",
-          "wordCount": null,
-          "title": "Emacs users, what is your go-to tool for freehand note-taking, doodling, drawing diagrams, flowcharts and all that stuff?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g5oos7/java_ee_develklopment_with_emacs/",
-          "author": null,
-          "description": "Hi all. Some months ago I switched to Emacs, and right now I'm using as WM with EXWM and as clojure editor. I must say my config file is totally based in other config file I followed from System Crafter videos. I'm so happy and want to get more and more from Emacs. I use Intelij IDEA to develop on a Java project with Cuba framework, and I would like to use emacs instead. Mostly I only need autocompletion, Fast Class switching, Go to definition and so on...and launch gradle tasks like build, deploy. The things is I don't have idea how. I followed the config from the video \"From Vanilla Emacs to Java\" but I don't get autocompletion at all. Thanks \n    submitted by    /u/DevGiuDev  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g5oos7/java_ee_develklopment_with_emacs/",
-          "publishedOn": "2024-10-17T11:29:37.000Z",
-          "wordCount": null,
-          "title": "Java EE develklopment with Emacs.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g5nsg5/getting_latex_completions_without_auctex/",
-          "author": null,
-          "description": "I use Corfu, and I'd like to try using the built-in tex-mode/latex-mode instead of Auctex.\n The built-in latex-mode provides the latex-complete-data function for completion-at-point-functions, but it doesn't seem to work, and it contains ;; TODO: Complete commands. in it's source...\n How can I get latex completions? I know there are LaTeX LSPs, is that my only option?\n    submitted by    /u/mn_malavida  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g5nsg5/getting_latex_completions_without_auctex/",
-          "publishedOn": "2024-10-17T10:32:00.000Z",
-          "wordCount": null,
-          "title": "Getting LaTeX completions without Auctex",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1g5maio/why_you_switched_to_emacs/",
-          "author": null,
-          "description": "Hi, everyone!\n I am preparing a meetup for my colleagues titled \"Why Emacs is the Best\". My goal is to increase the number of people using Emacs for development at my workplace.\n So, I’d like to ask:\n Why did you switch to Emacs from another IDE? Why do you think Emacs is the best?\n Can you share your opinion and experience\n    submitted by    /u/mc_shatz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1g5maio/why_you_switched_to_emacs/",
-          "publishedOn": "2024-10-17T08:41:41.000Z",
-          "wordCount": null,
-          "title": "Why you switched to Emacs?",
-          "imageUrl": null
         }
       ]
     },
@@ -8229,6 +8169,36 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "3090@/discussions",
+          "author": "Avatasato",
+          "description": "Hi. My Zettelkasten is based on Obsidian, a software that reads markup files. Like most modern note-taking software, it comes with a search function.\nI want to know how people used to find the right permanent note if they use analog notes. So far, my method has been to use pre-designated \"entry-point notes\" which contain an index for the particular topic in question, and also a brief, 2-sentence overview of the topic. However, as my Zettelkasten grows, it is getting harder and harder to get from the \"entry-point\" to the specific concept that I want to reach. The search function alleviates this issue, but I still want to better structure my Zettelkasten so I can find a particular note I want in a topic with less effort.\nFor example, if I want to search for what a \"characteristic polynomial …",
+          "link": "https://forum.zettelkasten.de/discussion/3090/note-searching-without-the-search-function",
+          "publishedOn": "2024-11-16T15:56:40.000Z",
+          "wordCount": 1140,
+          "title": "Note searching without the \"search\" function",
+          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/sj/3kdyuv9n0ck7.png"
+        },
+        {
+          "id": "3089@/discussions",
+          "author": "APG",
+          "description": "I've uploaded on Github (https://github.com/evopub/APG-colorored-theme) a new theme inspired by Obsidian Minimal Theme with Catppuccin Color Scheme and Colorful Headings activated.\nIt is very colorful:\n\n\n\nMy regrets:\nI was trying to change the font of tables to make them monospaced and eventually found it was not (yet!) possible (alas!)\nI couldn't change the font of the URLs. Actually, I could change all fonts (TEXT + URL) in [TEXT](URL) but not distinguish them (to put only URL in monospaced font), but it didn't change the font in <URL> ... when I could change colors in both. Also, the < and > are not recognized as \"syntax\".\nI couldn't style the tags and only them, they are considered as links\nI couldn't suppress the underline under URLs\nOf course, everybody is invited to download it, change it, destroy it, upload it, etc. (I was trying to find the license named something like \"Do The F*ck You Want With That\" but discovered that Github proposes such a license with a much more polite name: \"Unlicense\").",
+          "link": "https://forum.zettelkasten.de/discussion/3089/new-theme-apg-colored-light",
+          "publishedOn": "2024-11-16T12:06:14.000Z",
+          "wordCount": 804,
+          "title": "New Theme: APG Colored (Light)",
+          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/9r/wx167xutk8cq.png"
+        },
+        {
+          "id": "3088@/discussions",
+          "author": "KillerWhale",
+          "description": "Ever since I discovered the method and I glimpsed how valuable it could be to my use case (writing stories, which relies extremely on emergence), I have been tweaking, experimenting, trying software, finally landing on Obsidian for a long time, importing decades of notes into it, drowned, retreated to Bear in search of a lighter environment, finding myself looking for a more powerful environment again, getting drowned in Obsidian again, rinse and repeat.\nI am now trying an experiment: declaring PKM bankruptcy. Begin an entirely new Obsidian vault, free from the years of \"I want to learn that but never get around to\" plugins (ahem Dataview), half-baked CSS snippets and various layers of sediment that has accrued and made the whole thing unwieldy. And then only add building blocks only if I commit to them and master them to make sure that I grow with the environment and methods.\nMy previous content, which has never been properly processed anyway, will become a giant inbox for the future. In the meantime, I'm still working in Bear, as I prepare – as a strictly hobby project – a proper future Obsidian vault, only adding back functionality that I find myself missing.\nI'm sure people here found themselves starting their Zettelkasten / PKM again from scratch or wanting to. Did you? How did it work for you?",
+          "link": "https://forum.zettelkasten.de/discussion/3088/an-idle-conversation-around-declaring-pkm-bankruptcy-and-starting-over",
+          "publishedOn": "2024-11-15T21:13:28.000Z",
+          "wordCount": 1926,
+          "title": "An idle conversation around declaring PKM bankruptcy and starting over",
+          "imageUrl": null
+        },
         {
           "id": "3087@/discussions",
           "author": "System",
@@ -8338,16 +8308,6 @@
           "wordCount": 871,
           "title": "Which font to use?",
           "imageUrl": null
-        },
-        {
-          "id": "3066@/discussions",
-          "author": "디지털협업가",
-          "description": "Zettelkasten Workflow \nI wrote it in obsidian and shared it using miro.\nIt was easy to understand visually and share freely on the web, so I decided to use the\nI think I will utilize it a lot in the future\nHow do you share your own notes?",
-          "link": "https://forum.zettelkasten.de/discussion/3066/how-do-you-share-your-notes-obsidian-miro",
-          "publishedOn": "2024-10-18T07:53:53.000Z",
-          "wordCount": 1137,
-          "title": "How do you share your notes?   obsidian + miro ?",
-          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/ac/q3qwyngm2o0d.png"
         }
       ]
     }
