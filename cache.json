@@ -53,6 +53,26 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1hpi98l/applicative_syntax_a_b_c_do_not_work_but_monad_is/",
+          "author": null,
+          "description": "I think it is expected because (+) want two arguments, and nothing wrong with that; but want to know why there is no problem in monad case\n ghci> :{ ghci| do ghci| a <- Just 1 ghci| b <- Just 2 ghci| c <- Just 3 ghci| pure (a + b + c) ghci| :} Just 6 ghci> (+) <$> Just 1 <*> Just 2 <*> Just 3 errors ghci> liftM3 (+) (Just 1) (Just 2) (Just 3) also errors but unrelated to the question \n    submitted by    /u/recursion_is_love  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1hpi98l/applicative_syntax_a_b_c_do_not_work_but_monad_is/",
+          "publishedOn": "2024-12-30T07:52:07.000Z",
+          "wordCount": null,
+          "title": "Applicative syntax: (+) <$> a <*> b <*> c do not work but Monad is",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1hp9apr/nesting_creation_of_arrays_with_runstuarray/",
+          "author": null,
+          "description": "Hi all, I'm trying to speed up an algorithm by maintaining some state in temporary Arrays within a forM_ loop using the STUArray, and then return a single array being built within a runSTUArray. Here's my non-working code:\n makeTotals :: forall s . [[Int]] -> [[Int]] -> UArray Int Int makeTotals changeSeqs priceSeqs = runSTUArray $ do totals :: STUArray s Int Int <- newArray (0, maxSeq) 0 forM_ (zip changeSeqs priceSeqs) $ \\(changeSeq, priceSeq) -> do seen :: STUArray s Int Bool <- newArray (0, maxSeq) False forM_ (zip changeSeq priceSeq) $ \\(change, price) -> do alreadySeen <- readArray seen change if alreadySeen then return () else do writeArray seen change True oldVal <- readArray totals change writeArray totals change (oldVal + price) return totals \n As far as I understand, to use the same ST type variable s to create and modify everything within the context of the monad, hence I've tried binding a type variable to use in common for the totals and seen arrays. This doesn't work however:\n • Couldn't match type ‘s1’ with ‘s’ Expected: STUArray s1 Int Int Actual: STUArray s Int Int \n (on the return totals line) so apparently Haskell wants to use a different state type variable!\n But in general I'm very unsure of how one is supposed to set up this forM_ - is it actually possible to use the same ST created by the runSTUArray? I tried creating an inner one after the same pattern but the expected type of the forM_ is an ST something, not an array.\n Any advice, specific or general?\n    submitted by    /u/F0sh  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1hp9apr/nesting_creation_of_arrays_with_runstuarray/",
+          "publishedOn": "2024-12-29T23:40:53.000Z",
+          "wordCount": null,
+          "title": "Nesting creation of arrays with `runSTUArray`",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1hp448p/lapse_in_understanding_about_monads/",
           "author": null,
           "description": "Hello, I am aware of the plethora of monad tutorials and Reddit posts about monads. I have read, and watched videos, trying to understand them. I believe that I understand what is happening behind the scenes, but I haven't made the connection about *how* they are about to capture state. (And obviously, the videos and posts haven't led me to this understanding, hence this post). I'm not sure what I am missing to make the connection.\n So, I understand that the bind function if effectively 'collapsing' an 'inner monad' and merging it with an 'outer monad' of the same type. It is also mediating the pure function interacting with both. I understand that the side effects are caused by the context of the inner monad merging with the context of the outer monad, and this is effectively changing the *contents* of the outer monad, without changing the *reference* to the outer monad. (As far as I have understood, anyways)\n My doubt is about the simulation of state *as it applies to usage via a constant refering to the outer monad*. My logic is this; if 'Monad A' is bound to 'x', then x has a constant reference to 'Monad A'. Now, to modify the *contents* of Monad A, wouldn't that also entail breaking what it's referring to? ... As I see it, this is like taking the stateful changes of what's bound to 'x', and instead moving the same problem to what's bound within 'Monad A' -- its contents are changing, and I don't see how this isn't shuttling the state to its contents. I'm aware that I am wrong here, but I don't see where.\n Please help me fill in the gaps as to how side effects are actually implemented. I have looked at the type declarations and definitions under the Monad typeclass, and it's not clicking.\n Thank you in advance\n    submitted by    /u/laughinglemur1  \n [link]   [comments]",
@@ -1511,26 +1531,6 @@
           "wordCount": null,
           "title": "Why are ReflexFRP/Obelisk and Miso still stuck on GHC 8?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1h3q3gl/monthly_hask_anything_december_2024/",
-          "author": null,
-          "description": "This is your opportunity to ask any questions you feel don't deserve their own threads, no matter how small or simple they might be!\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1h3q3gl/monthly_hask_anything_december_2024/",
-          "publishedOn": "2024-12-01T00:01:54.000Z",
-          "wordCount": null,
-          "title": "Monthly Hask Anything (December 2024)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1h3k00t/how_to_implement_earlyreturn_effect_in_effectul/",
-          "author": null,
-          "description": "Hi all,\n I've been playing around with effectful and trying to implement an EarlyReturn Effect ala bluefin. But to be honest I'm old and slow and I feel like a monkey at a typewriter. I started with the examples from here, no real progress though. Here is what I currently have, not sure it's helpful but I'll post it anyway\n type ExceptA m a = (Monad m) => ExceptT a m a data EarlyReturn :: Effect where Bail :: ExceptA m1 a -> EarlyReturn m2 a type instance DispatchOf EarlyReturn = Dynamic earlyReturn :: (Monad m, HasCallStack, EarlyReturn :> es) => ExceptA m a -> Eff es a earlyReturn action = send (Bail action) runEarlyReturn :: Eff (EarlyReturn : es) a -> Eff es a runEarlyReturn = interpret $ \\_ -> \\case Bail action -> do x <- runExceptT action case x of Left y -> pure y Right z -> pure z \n Thank you for any help anyone can provide!\n    submitted by    /u/df-up  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1h3k00t/how_to_implement_earlyreturn_effect_in_effectul/",
-          "publishedOn": "2024-11-30T19:17:26.000Z",
-          "wordCount": null,
-          "title": "How to implement EarlyReturn Effect in effectul?",
-          "imageUrl": null
         }
       ]
     },
@@ -1539,6 +1539,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1hpncnn/minimal_typedriven_dependency_injection_with/",
+          "author": null,
+          "description": "submitted by    /u/rssh1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1hpncnn/minimal_typedriven_dependency_injection_with/",
+          "publishedOn": "2024-12-30T13:36:09.000Z",
+          "wordCount": null,
+          "title": "Minimal type-driven dependency injection with effect systems",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1hp5u47/two_features_i_wish_scala_would_support/",
+          "author": null,
+          "description": "Or maybe they are already supported in Scala 3.\n The first one is the ability to shadow the local variable with a new value. Rust supports this, and I find it makes the code looks nicer. Consider a simple example below:\n def formatPhoneNumber(phoneNumber: String): String = { val phoneNumber = phoneNumber.trim() // Now format the phone number } \n Now I know I could change the param name (to maybe `rawPhoneNumber`), but then the param name wouldn't be intuitive. I could change the trimmed phone number to something like `trimmedPhoneNumber` but that is prone to a mistake where someone might use `phoneNumber`. I could make a new internal function or wrap it in Option, but that would be more verbose. Generally, I would go with the `trimmedPhoneNumber` approach because it's flat.\n The second one is probably called \"Anonymous case class\".\n Many parts of my code return a tuple and I would love the ability to declare a case class right there at the method signature\n def doSomething(): (Int, String) = { .... } // I wish I could do: def doSomething(): (status: Int, message: String) = { } \n I could make an explicit case class but it would be more verbose, so I generally end up using a tuple which is unideal. Typescripts supports it with declaring a map as a return value, which is nice.\n Edit: I have an extra wish but it might make the Scala community explode. I love non-local return. It makes the code flat and easy to read. It minimizes nesting and doesn't require advanced helper functions. I also love early exit pattern\n    submitted by    /u/tanin47  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1hp5u47/two_features_i_wish_scala_would_support/",
+          "publishedOn": "2024-12-29T21:06:19.000Z",
+          "wordCount": null,
+          "title": "Two features I wish Scala would support",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1hp2s5h/this_week_in_scala_dec_30_2024/",
           "author": null,
@@ -2268,16 +2288,6 @@
           "wordCount": null,
           "title": "This week in #Scala (Dec 2, 2024)",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1h3krbv/failing_to_bend_contravariance_to_my_will/",
-          "author": null,
-          "description": "How do I make yay not invocable if Endpoint doesn't have SSE requirement?\n The `Requirements` must be contravariant, as it's how it's defined in Tapir.\n https://scastie.scala-lang.org/7NycMA4iTUm44CD5L44NGA\n    submitted by    /u/arturaz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1h3krbv/failing_to_bend_contravariance_to_my_will/",
-          "publishedOn": "2024-11-30T19:51:56.000Z",
-          "wordCount": null,
-          "title": "Failing to bend contravariance to my will",
-          "imageUrl": null
         }
       ]
     },
@@ -2304,16 +2314,6 @@
           "publishedOn": "2024-12-02T14:58:06.000Z",
           "wordCount": null,
           "title": "My new book, Pragmatic Type-Level Design, is now completed and released!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/purescript/comments/1h3yrtg/native_code_generation_with_c/",
-          "author": null,
-          "description": "I would like to create a CLI app that reads and processes text files. I also want to outsource the basic functions to a separate lib for reuse in the browser.\n is PureScript a serious option here? Can PureScript be easily translated to C++?\n    submitted by    /u/Harzer-Zwerg  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/purescript/comments/1h3yrtg/native_code_generation_with_c/",
-          "publishedOn": "2024-12-01T08:21:50.000Z",
-          "wordCount": null,
-          "title": "native code generation with C++",
           "imageUrl": null
         }
       ]
@@ -2358,6 +2358,26 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1hpcaq7/does_org_spreadsheets_have_a_way_of_having/",
+          "author": null,
+          "description": "When I check the org documentation, it looks like all the formula for setting the values of cells have to be joined up in a long #+TBLFM formula, with the formula for each cell separated by :: \n eg #+TBLFM: $2='(function1 param1 param2 param3)::$3='(function2 param1 param2 param2)\n Which means that if you are setting the values for multiple columns in large tables you are going to have a very long #+TBLFM: line which doesn't seem to make sense.\n Is the way things really are or have I missed something in the documentation concerning the issue?\n    submitted by    /u/vfclists  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1hpcaq7/does_org_spreadsheets_have_a_way_of_having/",
+          "publishedOn": "2024-12-30T02:06:03.000Z",
+          "wordCount": null,
+          "title": "Does org spreadsheets have a way of having multiple #+TBLFM formulas attached to a table?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1hpc4vt/dslide_061_tagged_for_release/",
+          "author": null,
+          "description": "release notes\n Mostly general bug fixes and also cleanups for the macro feature released experimentally in 0.6.0.\n  \nDemo of how to record kmacros\n Demo of kmacros being used with an eat terminal\n  \nFile issues and buy hamburgers. The execution of the 1.0 feature plan and refinement of moc will lead to Emacs primacy over both social internet and sneaker net through higher quality media and more polished presentations.\n Thanks to all who reported things.\n    submitted by    /u/Psionikus  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1hpc4vt/dslide_061_tagged_for_release/",
+          "publishedOn": "2024-12-30T01:58:10.000Z",
+          "wordCount": null,
+          "title": "Dslide 0.6.1 tagged for release",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1hokpgh/no_orgagenda_but_still_utilize_habit_graph/",
           "author": null,
@@ -2726,6 +2746,86 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/ruff-format-20241230.1856.tar",
+          "author": null,
+          "description": "The ruff-format package has been updated to version 20241230.1856.",
+          "link": "https://melpa.org/#/ruff-format",
+          "publishedOn": "2024-12-30T18:56:00.000Z",
+          "wordCount": 105,
+          "title": "ruff-format (20241230.1856) --- Ruff format Python source",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/portage-modes-20241230.1837.tar",
+          "author": null,
+          "description": "The portage-modes package has been updated to version 20241230.1837.",
+          "link": "https://melpa.org/#/portage-modes",
+          "publishedOn": "2024-12-30T18:37:00.000Z",
+          "wordCount": 105,
+          "title": "portage-modes (20241230.1837) --- Major modes for editing Portage config files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/helm-proc-20241230.1732.tar",
+          "author": null,
+          "description": "The helm-proc package has been updated to version 20241230.1732.",
+          "link": "https://melpa.org/#/helm-proc",
+          "publishedOn": "2024-12-30T17:32:00.000Z",
+          "wordCount": 105,
+          "title": "helm-proc (20241230.1732) --- Helm interface for managing system processes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-link-beautify-20241230.1228.tar",
+          "author": null,
+          "description": "The org-link-beautify package has been updated to version 20241230.1228.",
+          "link": "https://melpa.org/#/org-link-beautify",
+          "publishedOn": "2024-12-30T12:28:00.000Z",
+          "wordCount": 105,
+          "title": "org-link-beautify (20241230.1228) --- Beautify Org Links",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/python-x-20241230.943.tar",
+          "author": null,
+          "description": "The python-x package has been updated to version 20241230.943.",
+          "link": "https://melpa.org/#/python-x",
+          "publishedOn": "2024-12-30T09:43:00.000Z",
+          "wordCount": 105,
+          "title": "python-x (20241230.943) --- Python.el extras for interactive evaluation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/immaterial-theme-20241230.756.tar",
+          "author": null,
+          "description": "The immaterial-theme package has been updated to version 20241230.756.",
+          "link": "https://melpa.org/#/immaterial-theme",
+          "publishedOn": "2024-12-30T07:56:00.000Z",
+          "wordCount": 105,
+          "title": "immaterial-theme (20241230.756) --- A flexible theme based on material design principles",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/le-thesaurus-20241229.1950.tar",
+          "author": null,
+          "description": "The le-thesaurus package has been updated to version 20241229.1950.",
+          "link": "https://melpa.org/#/le-thesaurus",
+          "publishedOn": "2024-12-29T19:50:00.000Z",
+          "wordCount": 105,
+          "title": "le-thesaurus (20241229.1950) --- Query thesaurus.com for synonyms of a given word",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-journal-tags-20241229.1923.tar",
+          "author": null,
+          "description": "The org-journal-tags package has been updated to version 20241229.1923.",
+          "link": "https://melpa.org/#/org-journal-tags",
+          "publishedOn": "2024-12-29T19:23:00.000Z",
+          "wordCount": 105,
+          "title": "org-journal-tags (20241229.1923) --- Tagging and querying system for org-journal",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/filetree-20241229.1923.tar",
           "author": null,
           "description": "The filetree package has been updated to version 20241229.1923.",
@@ -2733,6 +2833,16 @@
           "publishedOn": "2024-12-29T19:23:00.000Z",
           "wordCount": 105,
           "title": "filetree (20241229.1923) --- File tree view/manipulatation package",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/rmsbolt-20241229.1855.tar",
+          "author": null,
+          "description": "The rmsbolt package has been updated to version 20241229.1855.",
+          "link": "https://melpa.org/#/rmsbolt",
+          "publishedOn": "2024-12-29T18:55:00.000Z",
+          "wordCount": 105,
+          "title": "rmsbolt (20241229.1855) --- A compiler output viewer",
           "imageUrl": null
         },
         {
@@ -2816,6 +2926,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/org-shortcut-20241228.1533.tar",
+          "author": null,
+          "description": "The org-shortcut package has been updated to version 20241228.1533.",
+          "link": "https://melpa.org/#/org-shortcut",
+          "publishedOn": "2024-12-28T15:33:00.000Z",
+          "wordCount": 105,
+          "title": "org-shortcut (20241228.1533) --- Bindings for shortcut.com in org-mode",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/lem-20241228.1420.tar",
           "author": null,
           "description": "The lem package has been updated to version 20241228.1420.",
@@ -2873,6 +2993,16 @@
           "publishedOn": "2024-12-27T16:17:00.000Z",
           "wordCount": 105,
           "title": "hyperbole (20241227.1617) --- GNU Hyperbole: The Everyday Hypertextual Information Manager",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/racket-mode-20241227.1326.tar",
+          "author": null,
+          "description": "The racket-mode package has been updated to version 20241227.1326.",
+          "link": "https://melpa.org/#/racket-mode",
+          "publishedOn": "2024-12-27T13:26:00.000Z",
+          "wordCount": 105,
+          "title": "racket-mode (20241227.1326) --- Racket editing, REPL, and more",
           "imageUrl": null
         },
         {
@@ -2993,6 +3123,16 @@
           "publishedOn": "2024-12-26T17:57:00.000Z",
           "wordCount": 105,
           "title": "org2web (20241226.1757) --- Static site generator based on org mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/markdown-toc-20241226.1737.tar",
+          "author": null,
+          "description": "The markdown-toc package has been updated to version 20241226.1737.",
+          "link": "https://melpa.org/#/markdown-toc",
+          "publishedOn": "2024-12-26T17:37:00.000Z",
+          "wordCount": 105,
+          "title": "markdown-toc (20241226.1737) --- A simple TOC generator for markdown file",
           "imageUrl": null
         },
         {
@@ -5904,116 +6044,6 @@
           "wordCount": 105,
           "title": "mu4e-overview (20241201.1012) --- Show overview of maildir",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/popper-20241201.110.tar",
-          "author": null,
-          "description": "The popper package has been updated to version 20241201.110.",
-          "link": "https://melpa.org/#/popper",
-          "publishedOn": "2024-12-01T01:10:00.000Z",
-          "wordCount": 105,
-          "title": "popper (20241201.110) --- Summon and dismiss buffers as popups",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/deadgrep-20241130.2235.tar",
-          "author": null,
-          "description": "The deadgrep package has been updated to version 20241130.2235.",
-          "link": "https://melpa.org/#/deadgrep",
-          "publishedOn": "2024-11-30T22:35:00.000Z",
-          "wordCount": 105,
-          "title": "deadgrep (20241130.2235) --- Fast, friendly searching with ripgrep",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/claude-shell-20241130.2024.tar",
-          "author": null,
-          "description": "The claude-shell package has been updated to version 20241130.2024.",
-          "link": "https://melpa.org/#/claude-shell",
-          "publishedOn": "2024-11-30T20:24:00.000Z",
-          "wordCount": 105,
-          "title": "claude-shell (20241130.2024) --- Integration with Anthropic's Claude LLM",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-autoexport-20241130.1655.tar",
-          "author": null,
-          "description": "The org-autoexport package has been updated to version 20241130.1655.",
-          "link": "https://melpa.org/#/org-autoexport",
-          "publishedOn": "2024-11-30T16:55:00.000Z",
-          "wordCount": 105,
-          "title": "org-autoexport (20241130.1655) --- Auto-export org file on save",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/flycheck-20241130.1502.tar",
-          "author": null,
-          "description": "The flycheck package has been updated to version 20241130.1502.",
-          "link": "https://melpa.org/#/flycheck",
-          "publishedOn": "2024-11-30T15:02:00.000Z",
-          "wordCount": 105,
-          "title": "flycheck (20241130.1502) --- On-the-fly syntax checking",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/neut-mode-20241130.1223.tar",
-          "author": null,
-          "description": "The neut-mode package has been updated to version 20241130.1223.",
-          "link": "https://melpa.org/#/neut-mode",
-          "publishedOn": "2024-11-30T12:23:00.000Z",
-          "wordCount": 105,
-          "title": "neut-mode (20241130.1223) --- A major mode for Neut",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/macports-20241130.1219.tar",
-          "author": null,
-          "description": "The macports package has been updated to version 20241130.1219.",
-          "link": "https://melpa.org/#/macports",
-          "publishedOn": "2024-11-30T12:19:00.000Z",
-          "wordCount": 105,
-          "title": "macports (20241130.1219) --- A porcelain for MacPorts",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sideline-lsp-20241130.1119.tar",
-          "author": null,
-          "description": "The sideline-lsp package has been updated to version 20241130.1119.",
-          "link": "https://melpa.org/#/sideline-lsp",
-          "publishedOn": "2024-11-30T11:19:00.000Z",
-          "wordCount": 105,
-          "title": "sideline-lsp (20241130.1119) --- Show lsp information with sideline",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sideline-flymake-20241130.1119.tar",
-          "author": null,
-          "description": "The sideline-flymake package has been updated to version 20241130.1119.",
-          "link": "https://melpa.org/#/sideline-flymake",
-          "publishedOn": "2024-11-30T11:19:00.000Z",
-          "wordCount": 105,
-          "title": "sideline-flymake (20241130.1119) --- Show flymake errors with sideline",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sideline-flycheck-20241130.1119.tar",
-          "author": null,
-          "description": "The sideline-flycheck package has been updated to version 20241130.1119.",
-          "link": "https://melpa.org/#/sideline-flycheck",
-          "publishedOn": "2024-11-30T11:19:00.000Z",
-          "wordCount": 105,
-          "title": "sideline-flycheck (20241130.1119) --- Show flycheck errors with sideline",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sideline-blame-20241130.1118.tar",
-          "author": null,
-          "description": "The sideline-blame package has been updated to version 20241130.1118.",
-          "link": "https://melpa.org/#/sideline-blame",
-          "publishedOn": "2024-11-30T11:18:00.000Z",
-          "wordCount": 105,
-          "title": "sideline-blame (20241130.1118) --- Show blame messages with sideline",
-          "imageUrl": null
         }
       ]
     },
@@ -6022,6 +6052,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hpv122/should_i_worry_about_using_an_ide/",
+          "author": null,
+          "description": "I've been starting to learn c++, and I write code and make small programs with emacs. I think it works fine and does all everything I need it to do from being a text editor, compiling(gcc), detecting errors and running the program through M-x shell.\n But I also have been reading a bit of stuff online too that as a programmer you also need an IDE.\n My questions are:\n  \nIs emacs an IDE?\n If emacs is not an IDE: a. What IDE should I install? b. Or can I just turn emacs into an IDE instead?\n  \nMy setup is a linux.\n    submitted by    /u/joco617  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hpv122/should_i_worry_about_using_an_ide/",
+          "publishedOn": "2024-12-30T19:19:46.000Z",
+          "wordCount": null,
+          "title": "Should I worry about using an IDE?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hpusj4/dual_header_line/",
+          "author": null,
+          "description": "submitted by    /u/Nicolas-Rougier  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hpusj4/dual_header_line/",
+          "publishedOn": "2024-12-30T19:09:48.000Z",
+          "wordCount": null,
+          "title": "Dual header line",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hptxa1/portagemodes_syntax_highlighting_when_editing/",
+          "author": null,
+          "description": "submitted by    /u/OpenSauce04  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hptxa1/portagemodes_syntax_highlighting_when_editing/",
+          "publishedOn": "2024-12-30T18:33:18.000Z",
+          "wordCount": null,
+          "title": "portage-modes: Syntax highlighting when editing config files for Portage, the Gentoo Linux package manager",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hpsnl0/precise_word_spacing_in_macos_emacs/",
+          "author": null,
+          "description": "submitted by    /u/kickingvegas1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hpsnl0/precise_word_spacing_in_macos_emacs/",
+          "publishedOn": "2024-12-30T17:39:19.000Z",
+          "wordCount": null,
+          "title": "Precise Word Spacing in macOS Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hps9t5/how_to_use_a_different_term_in_inferiorpythonmode/",
+          "author": null,
+          "description": "Hey everyone, \n Starting with python 3.13 (the most recent Python as of this writing); python ships with a better REPL (named pyrepl). The issue is that when launching a Python process with run-python, TERM is set to \"dumb\". As a result, the Python REPL will throw a warning: \n warning: can't use pyrepl: terminal doesn't have the required clear capability; TERM=dumb \n Which is annoying because it then falls back to the old behavior and now you need to tab again inside blocks (like functions or loops) when entering a new line.\n I was hoping to fix this by fiddling with the likes of process-environment or env variables but it seems to set variables globally and I just want TERM to change only for this specific mode.\n So, is there a way to change that locally and what should the variable be instead (I suspect something like vt-100?).\n Thanks\n    submitted by    /u/NonchalantFossa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hps9t5/how_to_use_a_different_term_in_inferiorpythonmode/",
+          "publishedOn": "2024-12-30T17:23:09.000Z",
+          "wordCount": null,
+          "title": "How to use a different TERM in inferior-python-mode?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hprlvy/help_listprocess_processmenudeleteprocess_error/",
+          "author": null,
+          "description": "The list-processes buffer. When I press \"d\" (process-menu-delete-process) in order to kill/delete the process, it's returning that error: url-http-activate-callback: Selecting deleted buffer. I understand, the process is dead already. However, is there a way to clean all these dead process from the list-process buffer list? Yes, that's coming from my eww browsing url's.\n    submitted by    /u/Danrobi1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hprlvy/help_listprocess_processmenudeleteprocess_error/",
+          "publishedOn": "2024-12-30T16:54:50.000Z",
+          "wordCount": null,
+          "title": "[Help List-process: process-menu-delete-process: Error: url-http-activate-callback: Selecting deleted buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hpriek/renaming_files_with_dired_keeping_only_the/",
+          "author": null,
+          "description": "I often want to rename a file while moving or copying it, but keeping the extension intact. Some of those files have long, unwieldy names, like:\n  \n471040170_27852773044367440_1381522828728950055_n.jpg\n Screenshot from 2024-12-30 11-05-38.png\n  \nThis is kind of a hassle because in Dired, after invoking dired-do-copy or dired-do-rename, I have to:\n  \nM-b (backward-word) to skip back over the extension\n C-b (backward-char) to move over the dot\n M-DEL (backward-kill-word) many times until the basename is deleted\n  \nThere are alternatives to that last step, of course. Still, not as effortless as I'd prefer. I set out to streamline the process.\n Poking around in the Dired internals revealed the function dired-dwim-target-defaults, which provides a list of predictions of where the user might wan…",
+          "link": "https://www.reddit.com/r/emacs/comments/1hpriek/renaming_files_with_dired_keeping_only_the/",
+          "publishedOn": "2024-12-30T16:50:45.000Z",
+          "wordCount": null,
+          "title": "Renaming files with Dired, keeping only the extension as an offered default",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hpqyn1/initel_not_working/",
+          "author": null,
+          "description": "I'm trying to configure emacs through init.el but nothing seem to change when I write anything in init.el even after restarting emacs.\n I put this in init.el:\n (menu-bar-mode -1)\n (scroll-bar-mode -1)\n    submitted by    /u/joco617  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hpqyn1/initel_not_working/",
+          "publishedOn": "2024-12-30T16:27:13.000Z",
+          "wordCount": null,
+          "title": "init.el not working",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hpqs6c/elpaca_change_repo_or_branch/",
+          "author": null,
+          "description": "I just tried changing the repo for a package, and doing elpaca-pull on it, but it still uses the old package. Short of deleting the repo and build dir and letting it re-download it (which I can surely do of course), is there an elpaca-approved way to do that? I was expecting it to notice the change and pull from the new repo automatically.  (use-package flymake-posframe :ensure (:host github :repo \"Ladicle/flymake-posframe\") :demand t :hook (flymake-mode . flymake-posframe-mode-if-not-eglot) ) \n    submitted by    /u/simplex5d  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hpqs6c/elpaca_change_repo_or_branch/",
+          "publishedOn": "2024-12-30T16:19:16.000Z",
+          "wordCount": null,
+          "title": "elpaca: change repo or branch",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hpos17/using_holidayfloat_for_the_friday_after/",
+          "author": null,
+          "description": "This is kind of a weird one. As is frequently the case with US holidays and companies, Thanksgiving is combined with the Day After Thanksgiving (a.k.a. Black Friday from a commercial retail perspective, though since I don't participate, it's just a Friday) for time off. I've been trying to get this to show up in general holidays and it's actually kind of tricky.\n Thanksgiving is pretty easy as it's defined as the 4th Thursday in the month of November, so holiday-float works fine:\n (holiday-float 11 4 4 \"Thanksgiving\") \n However the day AFTER is kind of weird. For most of the month starts (SMTWR,S) the Day after Thanksgiving is also the 4th Friday of the month. When November starts on a Friday, the Day after Thanksgiving is the 5th Friday of the month. So doing something like (holiday-float 11 5 4) does not work.\n If you try to work it backwards, for November starting on Thursday or Friday, there are 5 Fridays in November, however for the other days of the week, there are 4 Fridays in November. Ergo similarly (holiday-float 11 5 -1) also doesn't work.\n I guess what I'd have to do is come up with an sexp for the 3rd term for the funciton that is either 4 or 5, but it's certainly a weird one to get on the calendar programmatically.\n Unfornately the Emacs docs do not have good examples for this sort of thing. The closest example is the one for the US Presidential Election listed as:\n (holiday-sexp '(if (zerop (% year 4)) (calendar-gregorian-from-absolute (1+ (calendar-dayname-on-or-before 1 (+ 6 (calendar-absolute-from-gregorian (list 11 1 year))))))) \"US Presidential Election\") \n However trying this in a scratch buffer throws void-variable errors (as far as I can tell year is not a variable or function -- though it might be in the context of a holiday- macro I suppose... very unclear on this point.)\n    submitted by    /u/remillard  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hpos17/using_holidayfloat_for_the_friday_after/",
+          "publishedOn": "2024-12-30T14:49:18.000Z",
+          "wordCount": null,
+          "title": "Using holiday-float for the Friday after Thanksgiving",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hpm3nu/i_need_help_c_configuration/",
+          "author": null,
+          "description": "I'm writing in c++ and whenever I want to compile and run my code I have to go through the process of saving, compiling, M-x shell and then typing the command to run the code. \n How can I make this process easier?\n    submitted by    /u/joco617  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hpm3nu/i_need_help_c_configuration/",
+          "publishedOn": "2024-12-30T12:21:47.000Z",
+          "wordCount": null,
+          "title": "I need help: C++ configuration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1hpjqcv/is_this_a_good_way_to_print_a_welcome_message/",
+          "author": null,
+          "description": "I'm quite new to elisp. Does this code look ok? Anything I can improve on?\n This prints either \"good morning\" or \"good afternoon\" depending on the time of day.\n (message (let* ( (hour_of_day (string-to-number (format-time-string \"%H\"))) (is_afternoon (if (>= hour_of_day 12) t nil)) (time_of_day_to_print (if is_afternoon \"afternoon\" \"morning\")) ) (format \"good %s :)\" time_of_day_to_print) ) ) \n    submitted by    /u/Livid_Relative_1530  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1hpjqcv/is_this_a_good_way_to_print_a_welcome_message/",
+          "publishedOn": "2024-12-30T09:38:30.000Z",
+          "wordCount": null,
+          "title": "Is this a good way to print a welcome message?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1howswn/modern_best_practice_for_customising_major_modes/",
           "author": null,
@@ -8801,46 +8951,6 @@
           "wordCount": null,
           "title": "Can standard input work in Geiser REPL? (chez scheme)",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1h3vkhu/how_to_manage_gtd_setup_alongside_orgroam/",
-          "author": null,
-          "description": "I use GTD for handling my tasks and org-roam for taking notes regarding various projects and articles in my field. For GTD, I have one file (inbox.org) to handle all of the tasks and projects, where I store the state of the tasks for each project. Also, I store the notes regarding project into a separate org-roam directory, with each project having its own file. However, I feel disconnect between a project's notes and its tasks; having to navigate multiple files. I know I can put the tasks into each project's file, but, I tried that earlier but, then, there were many files and agenda building was very slow. \n How do other people handle this?\n    submitted by    /u/sudddddd  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1h3vkhu/how_to_manage_gtd_setup_alongside_orgroam/",
-          "publishedOn": "2024-12-01T04:52:56.000Z",
-          "wordCount": null,
-          "title": "How to manage GTD setup alongside org-roam?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1h3uoiw/mac_os_keeps_asking_for_permission_when_taking/",
-          "author": null,
-          "description": "I have the following code snippet that should allow me to take a screenshot, but my M2 MacBook keeps asking for permission even though it was already given. I am using emacs-plus@30 from d12frosted. It is also not even taking a screenshot of what I selected, it just screenshots the background screen. But if I give my terminal the permissions and then open emacs from terminal, it works as expected:\n https://preview.redd.it/7o89w3f4s54e1.png?width=904&format=png&auto=webp&s=87da06812e9f57c38907e44949050055d6cc22fe\n    submitted by    /u/waterstrider123  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1h3uoiw/mac_os_keeps_asking_for_permission_when_taking/",
-          "publishedOn": "2024-12-01T04:01:49.000Z",
-          "wordCount": null,
-          "title": "Mac OS keeps asking for permission when taking screenshot",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1h3l32e/how_to_update_the_first_timestamp_below_an_org/",
-          "author": null,
-          "description": "For a few weeks I am using org-capture to capture appointments/schedule meetings, using the well known `SCHEDULED:` keyword. Yesterday I stumbled upon this paragraph in the manual of Org Mode.\n  \nImportant: Scheduling an item in Org mode should not be understood in the same way that we understand scheduling a meeting. Setting a date for a meeting is just a simple appointment, you should mark this entry with a simple plain timestamp, to get this item shown on the date where it applies. This is a frequent misunderstanding by Org users. In Org mode, scheduling means setting a date when you want to start working on an action item.\n https://orgmode.org/manual/Deadlines-and-Scheduling.html\n  \nBut after changing the template I experienced a downside: rescheduling became harder. Using the `SCHEDULE:` keyword all I had to do was `C-c C-s (org schedule)` anywhere in an item; for timestamp I can't find such command nor function. With `org-timestamp` the pointer has to be on a timestamp to update it.\n I have written a POC workaround, but keep wondering I might be off the road with it.\n Is there a native solution to update the first timestamp below the heading/title without having the pointer on the timestamp?\n    submitted by    /u/BartOtten  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1h3l32e/how_to_update_the_first_timestamp_below_an_org/",
-          "publishedOn": "2024-11-30T20:06:41.000Z",
-          "wordCount": null,
-          "title": "How to update the first timestamp below an org heading?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1h3ks8s/how_does_one_write_an_emacs_lisp_org_dblock/",
-          "author": null,
-          "description": "I'm trying to do what the question in the title says. This is the code I've tried writing so far:\n (defun org-dblock-write:fetch-content-by-tags (params) \"Gets all org subtrees with a heading that has a tag and writes it to the dynamic block\" (let ((id (plist-get params :id)) (match (plist-get params :match)) view-file view-pos) (pcase id (`global nil) ((or `local `nil) (setq view-pos (point))) ((and (let id-string (format \"%s\" id)) (guard (string-match \"^file:\\\\(.*\\\\)\" id-string))) (setq view-file (match-string-no-properties 1 id-string)) (unless (file-exists-p view-file) (user-error \"No such file: %S\" id-string))) ((and (let idpos (org-find-entry-with-id id)) (guard idpos)) (setq view-pos idpos)) ((let `(,filename . ,position) (org-id-find id)) (setq view-file filename) (setq view-pos po…",
-          "link": "https://www.reddit.com/r/emacs/comments/1h3ks8s/how_does_one_write_an_emacs_lisp_org_dblock/",
-          "publishedOn": "2024-11-30T19:53:09.000Z",
-          "wordCount": null,
-          "title": "How does one write an Emacs lisp org dblock function that takes as parameters an id for a file and inserts all org subtrees with headings that match a certain tag?",
-          "imageUrl": null
         }
       ]
     },
@@ -9167,26 +9277,6 @@
           "publishedOn": "2024-12-01T10:58:01.000Z",
           "wordCount": 703,
           "title": "Extending Deep Work Session / Barbell Reading to Social Browsing",
-          "imageUrl": null
-        },
-        {
-          "id": "3107@/discussions",
-          "author": "Marcus",
-          "description": "Hi ctietze,\nis the new plugin system capable of performing more extensive tasks or, in other words, is it still worthwhile to deal with and learn Keyboard Maestro / Alfred and the existing macros in the forum or will they be replaced by the new plugin system in the future anyway?",
-          "link": "https://forum.zettelkasten.de/discussion/3107/possibilities-of-plugins",
-          "publishedOn": "2024-11-30T20:21:55.000Z",
-          "wordCount": 565,
-          "title": "Possibilities of Plugins",
-          "imageUrl": null
-        },
-        {
-          "id": "3106@/discussions",
-          "author": "Marcus",
-          "description": "Hello dear community,\nI never noticed it so much until today, but is it intentional that The Archive always remembers the last position per note? Today I often had to jump back and forth between several notes and it would have been much more comfortable if the note would start again in line 1 instead of jumping directly to line 60, for example, which forces me to scroll up.\nThank you very much",
-          "link": "https://forum.zettelkasten.de/discussion/3106/last-position-in-zettel",
-          "publishedOn": "2024-11-30T18:00:22.000Z",
-          "wordCount": 594,
-          "title": "Last Position in Zettel",
           "imageUrl": null
         }
       ]
