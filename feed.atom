@@ -2,10 +2,398 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2025-01-19T20:35:12.441Z</updated>
+    <updated>2025-01-20T20:35:23.204Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[How to parse expressions with "invisible" operators?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1i609wg/how_to_parse_expressions_with_invisible_operators/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1i609wg/how_to_parse_expressions_with_invisible_operators/"/>
+        <updated>2025-01-20T20:33:34.000Z</updated>
+        <summary type="html"><![CDATA[I want to parse expressions like this:
+ x+y(xz+z) 
+ with a + operator but also an "invisible" multiplication operator. With an explicit multiplication operator the expression would look like this:
+ x+y*(x*z+z) 
+ Here is my starting point (Haskell Playground) using Megaparsec:
+ import Text.Megaparsec import Text.Megaparsec.Char import Control.Monad.Combinators.Expr import Data.Void (Void) type Parser = Parsec Void String data Expr = Var Char | Add Expr Expr | Mul Expr Expr deriving Show var :: Parser Expr var = Var <$> letterChar parens :: Parser a -> Parser a parens = between (char '(') (char ')') term :: Parser Expr term = choice [ var, parens expr ] expr :: Parser Expr expr = makeExprParser term [ [ InfixN (Mul <$ string "") -- I guess it can't be that easy , InfixN (Add <$ string "+") ] ] main :: IO () main = parseTest (expr <* eof) "x+y(xz+z)" 
+ With that I get the following error message:
+ *** Exception: 1:2: | 1 | x+y(xz+z) | ^ unexpected '+' expecting '(', end of input, or letter 
+ I guess, since there is no symbol to identify the multiplication operation (only the empty string) it always matches. And since multiplication has higher precedence, we check it first. So here we commit to the "multiplication branch" and then get stuck when we see a "+". I guess, I need to backtrack somewhere? But where/how?
+    submitted by    /u/ngruhn  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[org-project-capture : default to the current project TODO.org]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1i5yu6m/orgprojectcapture_default_to_the_current_project/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1i5yu6m/orgprojectcapture_default_to_the_current_project/"/>
+        <updated>2025-01-20T19:36:34.000Z</updated>
+        <summary type="html"><![CDATA[org-project-capture offers the ability to use project specific TODO files. All good. But it's prompting me for which project at capture time. I'm in a file that's correctly tagged as a project by emacs' project.el. When I hit C-x p t, it prompts me for which project file I wish to use - this, while not the end of the world, is a slight inconvenience I'd prefer to skip. Any tweaks or suggestions?
+ (use-package org-project-capture
+ :demand t
+ :config
+ (setq org-project-capture-default-backend (make-instance 'org-project-capture-project-backend))
+ (setq org-project-capture-strategy (make-instance 'org-project-capture-per-project-strategy))
+ :bind (:map project-prefix-map ("t" . org-project-capture-project-todo-completing-read)))
+    submitted by    /u/rileyrgham  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Shell prints first line of PS1 twice, Term doesn't]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1i5ykip/shell_prints_first_line_of_ps1_twice_term_doesnt/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1i5ykip/shell_prints_first_line_of_ps1_twice_term_doesnt/"/>
+        <updated>2025-01-20T19:25:31.000Z</updated>
+        <summary type="html"><![CDATA[When I run M-x term, the prompt prints correctly, but when I use M-x shell, it prints the first line twice. Here is what it should look like and how it renders in term:
+ [ downtime@pop-os:/home/downtime/.emacs.d ] <main branch> (base) :i:> 
+ This is how it renders in shell:
+ [ downtime@pop-os:/home/downtime/.emacs.d ] <main branch> [ downtime@pop-os:/home/downtime/.emacs.d ] <main branch> (base) :i:> 
+ Here is my relevant zsh config:
+ autoload -Uz vcs_info zstyle ':vcs_info:*' enable git svn setopt prompt_subst zstyle ':vcs_info:git:*' formats ' <%b branch>' precmd() { psvar[1]=$(basename $CONDA_DEFAULT_ENV) vcs_info psvar[2]=${vcs_info_msg_0_} } ## Define the dynamic prompt with vim mode integration function zle-line-init zle-keymap-select { local VIM_MODE if [[ $KEYMAP == vicmd ]]; then VIM_MODE="%F{yellow}:n:" # Normal mode else VIM_MODE="%F{cyan}:i:" # Insert mode fi PROMPT=$'\n'"%F{blue}[ %F{green}%n%F{white}@%F{yellow}%m%F{white}:%F{cyan}%d %F{blue}]%2v"$'\n' PROMPT+="%F{cyan}(%1v) $VIM_MODE%F{white}> " zle reset-prompt } zle -N zle-line-init zle -N zle-keymap-select 
+    submitted by    /u/rustbuckett  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Cabal cannot build scotty project on Windows because of zlib]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1i5x7ge/cabal_cannot_build_scotty_project_on_windows/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1i5x7ge/cabal_cannot_build_scotty_project_on_windows/"/>
+        <updated>2025-01-20T18:31:24.000Z</updated>
+        <summary type="html"><![CDATA[I have decided to try scotty web framework and tried to build a simple Hello World application. I was using Windows 10. Unfortunately, it didn't work out, cabal gives the following error:
+ Failed to build zlib-0.7.1.0. The failure occurred during the configure step.
+ Build log (
+ C:\cabal\logs\ghc-9.2.4\zlib-0.7.1.0-2e88e8ebc436e3fd96b742ef16a6d1711643af3c.log
+ ):
+ Configuring library for zlib-0.7.1.0..
+ cabal-3.6.2.0.exe: The pkg-config package 'zlib' is required but it could not
+ be found.
+ Is there any solution to it, except of installing zlib of the corresponding version manually? If not, how can I do that? 
+    submitted by    /u/zoskia94  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Haskell: A Great Procedural Language]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1i5w3c7/haskell_a_great_procedural_language/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1i5w3c7/haskell_a_great_procedural_language/"/>
+        <updated>2025-01-20T17:47:39.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/DreamyRustacean  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[For b::Bool, how is "b" lazier than "if b then True else False" ?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1i5vdqr/for_bbool_how_is_b_lazier_than_if_b_then_true/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1i5vdqr/for_bbool_how_is_b_lazier_than_if_b_then_true/"/>
+        <updated>2025-01-20T17:18:35.000Z</updated>
+        <summary type="html"><![CDATA[I am confused by this paper [1] writing:
+  
+Here is another example that we shall need later:
+ findBool :: J Bool Bool
+ findBool p = p True
+ This is equivalent to
+ findBool p = if p True then True else False
+ but it is silly to check the two possible cases. This is so both conceptually and for the sake of efficiency. In fact, the given definition of findBool doesn’t force the evaluation of the expression p True, but the alternative formulation does (hence the given formulation is lazier, in the technical sense of the word).
+  
+How does findBool p = p True not force the evaluation of p True ?
+ [1] https://martinescardo.github.io/papers/msfp2010/Escardo-Oliva-MSFP2010.pdf
+    submitted by    /u/tromp  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Not able to install Rust grammar]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1i5st3z/not_able_to_install_rust_grammar/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1i5st3z/not_able_to_install_rust_grammar/"/>
+        <updated>2025-01-20T15:33:10.000Z</updated>
+        <summary type="html"><![CDATA[I'm not able to install the Rust language grammar by doing the following steps:
+ M-x treesit-install-language-grammar Language: Rust There is no recipe for Rust, do you want to build it interactively? (y or n) y Enter the URL of the Git repository of the language grammar: https://github.com/tree-sitter/tree-sitter-Rust Enter the tag or branch (default: default branch): Enter the subdirectory in which the parser.c file resides (default: "src"): Enter the C compiler to use (default: auto-detect): Enter the C++ compiler to use (default: auto-detect): 
+ I get the following error:
+ Warning (treesit): The installed language grammar for Rust cannot be located or has problems (not-found): (libtree-sitter-Rust.so libtree-sitter-Rust.so.0 libtree-sitter-Rust.so.0.0 libtree-sitter-Rust.dylib libtree-sitter-Rust.dylib.0 libtree-sitter-Rust.dylib.0.0) No such file or directory 
+ Does anybody know how to fix these warnings? I'm using Emacs 29.4 (from https://emacsformacosx.com/)on MacOS 15.2.
+    submitted by    /u/Ok_Spread_1744  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Title bar in new frames in `emacs-mac`]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1i5rfqa/title_bar_in_new_frames_in_emacsmac/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1i5rfqa/title_bar_in_new_frames_in_emacsmac/"/>
+        <updated>2025-01-20T14:33:10.000Z</updated>
+        <summary type="html"><![CDATA[I have turned off tool bars in my emacs config, but whenever I open a new frame the title bar seems quite large (as if tool bar is active). If I enable the tool bar and disable it again, things go back to normal until I open another new frame.
+ First frame with no tool bar; title bar is narrow.
+ Second frame with broad title bar as if tool bar is active, but it is not.
+ Now, after a open a new frame, if I invoke the following, everything goes back to being normal, i.e., until I open another new frame.
+ (defun toggle-tool-bar-mode ()(tool-bar-mode 1)(tool-bar-mode -1))
+ (toggle-tool-bar-mode)
+    submitted by    /u/g06lin  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dotty-cps-async 1.0.0 with commercial support.]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1i5qt61/dottycpsasync_100_with_commercial_support/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1i5qt61/dottycpsasync_100_with_commercial_support/"/>
+        <updated>2025-01-20T14:02:38.000Z</updated>
+        <summary type="html"><![CDATA[Dotty-cps-async 1.0.0 is out with its organization:
+  “io.github.dotty-cps-async” %% “dotty-cps-async” % “1.0.0” 
+ The version change primarily reflects that some projects have used dotty-cps-async for a few years without issues.
+  Also, we provide optional commercial support, which can be helpful for industrial users.
+ cps-async-connect is also become 1.0:
+  “io.github.dotty-cps-async” %% “cps-async-connect” % “1.0.0” 
+ The most visible change here is from 0.9.23 (but it looks like I completely forgot to announce it). Now, during fiber cancellation, finalizer blocks in try/catch/finalize are executed. [thanks, u/alexelcu]
+ New project URL on GitHub: https://github.com/dotty-cps-async/dotty-cps-async
+ Regards!
+    submitted by    /u/rssh1  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[A tour of Neotype — a friendly newtype library for Scala 3]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1i5pq6c/a_tour_of_neotype_a_friendly_newtype_library_for/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1i5pq6c/a_tour_of_neotype_a_friendly_newtype_library_for/"/>
+        <updated>2025-01-20T13:06:03.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/adam-dabrowski  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[pdf-tools: hide (or remove) pdf annotations timestamps]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1i5ol27/pdftools_hide_or_remove_pdf_annotations_timestamps/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1i5ol27/pdftools_hide_or_remove_pdf_annotations_timestamps/"/>
+        <updated>2025-01-20T11:57:37.000Z</updated>
+        <summary type="html"><![CDATA[Hi,
+ is there a way to not include an actual timestamp with PDF annotations? I am asking this, because I maybe don't want to show to the reader, when I worked on the document and therefore would like to remove the timestamp or to just include a fixed date as a privacy-preserving measure.
+ I couldn't find a variable controlling this.
+    submitted by    /u/Tall_Leadership5749  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[What is haskell??]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1i5oaes/what_is_haskell/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1i5oaes/what_is_haskell/"/>
+        <updated>2025-01-20T11:38:23.000Z</updated>
+        <summary type="html"><![CDATA[I am very new to proper computer programming in the sense that I’m actively trying to learn how to program. (I had done multiple programming courses with different languages, such as HTML and C#, when I was younger but never paid much attention. I have also done multiple Arduino projects where I know how to code a bit, but ChatGPT did most of the work. The main thing is that I can sort of work out what’s happening and understand the code.)
+ In February, I will start university, studying for a double degree in Mechatronics Engineering and computing. To get a head start, I decided to start Harvard’s CS50 course after I finished Year 12 to grasp what computer programming is. The course introduces you to various popular programming languages, such as C, Python, and JavaScript.
+ Recently, while looking at my university courses, I discovered that I would be taking a class on Haskell in my first semester. I had never heard of Haskell before, so I decided to Google it to see what I could find, but I was left very confused and with a lot of questions:
+  
+What is Haskell? I know it is a programming language that can do all the things other languages can. But what are its main benefits?
+ What does it excel at?
+ What industries use Haskell?
+ Will I ever encounter it in the job market?
+ Why is it not more widely adopted?
+ Can it be used in conjunction with other programming languages?
+  
+I know this is a long post, but I’m genuinely curious why my university would teach a programming language that the tech industry does not seem to widely adopt instead of teaching something like Python, which you find everywhere. At the end of the day, I'm very excited to learn Haskell and lambda calculus, both look very interesting.
+    submitted by    /u/Striking-Sherbert-57  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[folding (20250120.1132) --- A folding-editor-like minor mode]]></title>
+        <id>https://melpa.org/packages/folding-20250120.1132.tar</id>
+        <link href="https://melpa.org/#/folding"/>
+        <updated>2025-01-20T11:32:00.000Z</updated>
+        <summary type="html"><![CDATA[The folding package has been updated to version 20250120.1132.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[fancy-compilation (20250120.946) --- Enhanced compilation output]]></title>
+        <id>https://melpa.org/packages/fancy-compilation-20250120.946.tar</id>
+        <link href="https://melpa.org/#/fancy-compilation"/>
+        <updated>2025-01-20T09:46:00.000Z</updated>
+        <summary type="html"><![CDATA[The fancy-compilation package has been updated to version 20250120.946.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How do I get rid of this "furniture" in pdf view.]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1i5m0aw/how_do_i_get_rid_of_this_furniture_in_pdf_view/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1i5m0aw/how_do_i_get_rid_of_this_furniture_in_pdf_view/"/>
+        <updated>2025-01-20T08:53:08.000Z</updated>
+        <summary type="html"><![CDATA[I am editing a book in LaTeX and have the PDF version side by side.
+ How do I get rid of the big 1 and just show the PDF and nothing else, as it eats up real estate I don't want it to..
+ https://preview.redd.it/2rznmbbk44ee1.png?width=1630&format=png&auto=webp&s=db5bd0aef332c378318bc2b68ebd609a91206090
+ Ideally get rid of this gutter line here?
+    submitted by    /u/AcanthopterygiiSad51  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[rect+ (20250120.829) --- Extensions to rect.el]]></title>
+        <id>https://melpa.org/packages/rect+-20250120.829.tar</id>
+        <link href="https://melpa.org/#/rect+"/>
+        <updated>2025-01-20T08:29:00.000Z</updated>
+        <summary type="html"><![CDATA[The rect+ package has been updated to version 20250120.829.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[electric-operator (20250120.734) --- Automatically add spaces around operators]]></title>
+        <id>https://melpa.org/packages/electric-operator-20250120.734.tar</id>
+        <link href="https://melpa.org/#/electric-operator"/>
+        <updated>2025-01-20T07:34:00.000Z</updated>
+        <summary type="html"><![CDATA[The electric-operator package has been updated to version 20250120.734.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Going back to emacs after years not having so]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1i5j2su/going_back_to_emacs_after_years_not_having_so/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1i5j2su/going_back_to_emacs_after_years_not_having_so/"/>
+        <updated>2025-01-20T05:26:40.000Z</updated>
+        <summary type="html"><![CDATA[Hello,
+ Wanted to get back in GNU Emacs since I reckon I am not as efficient as I want with tools like terminals and all that many programs and commands. I remember I had good memory muscles when I was in GNU Emacs. So I want to start over a configuration, limiting myself as much as I can to default internal modes (thus, not going through *elpa packages much). For example, instead of the marvelous Magit, sticking to vc. Etc.
+ Also, I do not want to spend too much time configuring my init.el (at some point I was more doing init stuff than real work ;)).
+ What would be a good starting point to have a sane emacs configuration ? I watched lots of videos (kudos to System Crafters !) but they show how to install some new packages (which I do not want until I hit some limitations with default packaged modes).
+ Any hint ? Oh and where are the ancient mailing lists ?
+    submitted by    /u/runslack  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Question / Confusion: DataKinds Extension, and treating the Constructors as Type Constructor]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1i5h8j5/question_confusion_datakinds_extension_and/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1i5h8j5/question_confusion_datakinds_extension_and/"/>
+        <updated>2025-01-20T03:40:20.000Z</updated>
+        <summary type="html"><![CDATA[EDIT: the title probably didn't make sense. I was referring to the promotion of type constructors to their separate kinds, but somehow using them Kinds in instance declaration while passing parameters should result in a Type, but it says it evaluated to a Kind instead of a type 
+ I have the DataKinds Extension and I want to do something like this
+ data Fruit = Apple String | Orange String instance Show (Apple (s::String)) where show :: Apple -> String show (Apple s) = s 
+ I read somewhere that the DataKinds extension promotes Constructors of Fruit to there own kinds as the following
+ Apple :: String -> Fruit Orange :: String -> Fruit Fruit :: Type 
+ So Apple (s::String) should be a Type, which is Fruit.
+ However, at first code block, it tells me that Apple (s::String) should be a type, but has a kind Fruit.
+ Can anybody please help me understand ?
+ Would this be because, Fruit :: *actually instead of Type? How do I do what I want to do, where I want instanceonly specific type constructors
+    submitted by    /u/Pristine-Staff-5250  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[scopeline (20250120.331) --- Show scope info of blocks in buffer at end of scope]]></title>
+        <id>https://melpa.org/packages/scopeline-20250120.331.tar</id>
+        <link href="https://melpa.org/#/scopeline"/>
+        <updated>2025-01-20T03:31:00.000Z</updated>
+        <summary type="html"><![CDATA[The scopeline package has been updated to version 20250120.331.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Jar Jar Abrams 1.14.1 and sbt-assembly 2.3.1 released]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1i5gsjs/jar_jar_abrams_1141_and_sbtassembly_231_released/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1i5gsjs/jar_jar_abrams_1141_and_sbtassembly_231_released/"/>
+        <updated>2025-01-20T03:15:13.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/eed3si9n  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Deleting absolutely everything from Haskell/Cabal and starting again?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1i5d89j/deleting_absolutely_everything_from_haskellcabal/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1i5d89j/deleting_absolutely_everything_from_haskellcabal/"/>
+        <updated>2025-01-20T00:09:38.000Z</updated>
+        <summary type="html"><![CDATA[Manjaro. I haven't used Haskell in a long time and going back to my installation now, everything is completely broken.
+ I can run GHCi just fine, but running any .hs file says
+  Could not find module ‘Data.List’ There are files missing in the ‘base-4.16.4.0’ package, try running 'ghc-pkg check'. 
+ for every package used.
+ Same thing when trying to install a package with Cabal.
+ Running ghc-pkg check yields 600 lines of
+ Warning: haddock-html: /usr/lib/ghc-9.2.8/lib/../../../share/doc/ghc-9.2.8/html/libraries/ghc doesn't exist or isn't a directory
+ Seems like a whole lot of important files and folders are missing. I think all of the packages listed missing are still marked as installed in Pamac (Manjaro's PM). Would be a nightmare to try and uninstall all of them in this way, especially since I'd have to do it in the right order to not break dependencies.
+ Any kind of nuclear option to destroy everything Haskell-related and restart fresh? Reinstalling the important stuff seems to have done nothing. Thanks.
+    submitted by    /u/xelleseittaneu  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How does one center the buffer name like in Diary Mode?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1i5azv8/how_does_one_center_the_buffer_name_like_in_diary/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1i5azv8/how_does_one_center_the_buffer_name_like_in_diary/"/>
+        <updated>2025-01-19T22:27:22.000Z</updated>
+        <summary type="html"><![CDATA[Hi all! Good afternoon : )
+ How would one go about centering the name of the buffer for my emacs windows. The aesthetic of the diary-mode is exactly what I've been chasing
+ I included a screenshot below comparing diary mode to how my buffers display by default
+ https://imgur.com/a/D2dikbS
+ All help is appreciated. Thanks you!
+ Top-Dot
+    submitted by    /u/Top-Dot60  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Simple Guide To Spreadsheets]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/1i5ar1a/simple_guide_to_spreadsheets/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/1i5ar1a/simple_guide_to_spreadsheets/"/>
+        <updated>2025-01-19T22:16:31.000Z</updated>
+        <summary type="html"><![CDATA[I have a bunch of excel files that could easily be org-mode files if I could just have simple formulas to add values over a column, or do some simple code. 
+ Is there an easy to understand tutorial on using tables in org mode that you can recommend?
+ I tried the manual but it's more of a reference than a tutorial.
+ Does anyone have examples of - Summing all the values of a column except for the header - Making a column for which each cell is a conditional (if cell on the left has value == "x" then value should be true, false otherwise.
+ And things like these?
+    submitted by    /u/daninus14  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Side-trip to Codium. Can I get Emacs keybinding and other Emacs-y behavior?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1i5a92d/sidetrip_to_codium_can_i_get_emacs_keybinding_and/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1i5a92d/sidetrip_to_codium_can_i_get_emacs_keybinding_and/"/>
+        <updated>2025-01-19T21:55:14.000Z</updated>
+        <summary type="html"><![CDATA[I'm in the process of learning Deno 2 and almost all the tutorials I'm using assume usage of VS Code. I refuse to use VS Code (or any other MS products really) due to the ubiquitous and offensive surveillance tech MS embeds everywhere they can. I made a quick attempt at getting a complete dev environment for Deno in Emacs and its clear that's going to take a bit of work and so I'm going to set that aside for later. In the meantime, I'm going to use Codium for these tutorials.
+ Does anyone have any suggestions as to how I might get Emacs keybindings and other Emacs-y niceties in Codium until I get a chance to loop back and set up a full Emacs + Deno dev loop? A bit of searching around didn't yield anything useful.
+ thx!
+    submitted by    /u/jovial_mirzakhani  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[org-latex-preview with newcommand and other packages]]></title>
         <id>https://www.reddit.com/r/emacs/comments/1i574h1/orglatexpreview_with_newcommand_and_other_packages/</id>
@@ -2639,6 +3027,16 @@ m365 cli tools (https://pnp.github.io/cli-microsoft365/cmd/outlook/mail/mail-sen
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[trope-mode (20250113.107) --- Major mode to edit TV Tropes format ".trp" files]]></title>
+        <id>https://melpa.org/packages/trope-mode-20250113.107.tar</id>
+        <link href="https://melpa.org/#/trope-mode"/>
+        <updated>2025-01-13T01:07:00.000Z</updated>
+        <summary type="html"><![CDATA[The trope-mode package has been updated to version 20250113.107.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[comint-histories.el: multiple comint histories]]></title>
         <id>https://www.reddit.com/r/emacs/comments/1i01tv4/cominthistoriesel_multiple_comint_histories/</id>
         <link href="https://www.reddit.com/r/emacs/comments/1i01tv4/cominthistoriesel_multiple_comint_histories/"/>
@@ -2652,6 +3050,16 @@ m365 cli tools (https://pnp.github.io/cli-microsoft365/cmd/outlook/mail/mail-sen
  [link]   [comments]]]></summary>
         <author>
             <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[motion-selection-mode (20250113.19) --- A minor mode to add a text editing grammar]]></title>
+        <id>https://melpa.org/packages/motion-selection-mode-20250113.19.tar</id>
+        <link href="https://melpa.org/#/motion-selection-mode"/>
+        <updated>2025-01-13T00:19:00.000Z</updated>
+        <summary type="html"><![CDATA[The motion-selection-mode package has been updated to version 20250113.19.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -11421,361 +11829,6 @@ Thank you very much, and best regards from life in a box!]]></summary>
  [link]   [comments]]]></summary>
         <author>
             <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Run RFC 9535 compliant JSONPath queries on Data.Aeson]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1hju61a/run_rfc_9535_compliant_jsonpath_queries_on/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1hju61a/run_rfc_9535_compliant_jsonpath_queries_on/"/>
-        <updated>2024-12-22T08:01:47.000Z</updated>
-        <summary type="html"><![CDATA[I have created my very first haskell package. aeson-jsonpath is designed to be for haskell what serde_json_path is in Rust. It also gives you a nice interface to run JSONPath queries (one function call that parses and runs the query). It is currently only on Cabal, but I will be releasing it on Stack and Nix soon. Please suggest any improvements. I have taken full responsibility for maintaining this package. I don't want this to be an abandoned package unlike a lot of packages on GHC. So your contributions are also welcome. Thank you.
-    submitted by    /u/taimoorza  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Breadth first search question]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1hjrbeo/breadth_first_search_question/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1hjrbeo/breadth_first_search_question/"/>
-        <updated>2024-12-22T04:37:32.000Z</updated>
-        <summary type="html"><![CDATA[Long time ago, I came across a post on stack overflow, where a reply showed how to do breadth first search for a binary tree. Now I can't find that post any more. So I attempt to reconstruct the code, but I find I have a problem to make the code work correctly.
- I appreciate any advice. I particularly have problems about the code block in inner() where to extract the nextLayer. Thanks.
- final case class Node(value: Int, left: Option[Node] = None, right: Option[Node] = None){ def map(f: Int => Int): Node = Node(f(value), left.map{ n => Node(f(n.value)) }, right.map{ n => Node(f(n.value))}) def flatten: List[Node] = List(left, right).flatten } def bfs(node: Node): List[Int] = { def inner(collector: List[Int], nextLayer: List[Node]): List[Int] = nextLayer match { case Nil => collector.reverse case head :: tail => _bfs(head.value::collector, { val children1 = head.flatten val children2 = tail.flatMap(_.flatten) val newNextLayer = head.flatten ++ tail.flatMap{ n => n.flatten} newNextLayer }) } inner(List(node.value), node.flatten) } val root = Node( value = 1, left = Option(Node(value = 2, left = Option(Node(4)), right = Option(Node(5)))), right = Option(Node(value = 3, left = Option(Node(6)), right = Option(Node(7)))) ) val result = bfs(root) println(result) // expect result like List(1, 2, 3, 4, 5, 6) 
-    submitted by    /u/scalausr  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[orderless (20241222.317) --- Completion style for matching regexps in any order]]></title>
-        <id>https://melpa.org/packages/orderless-20241222.317.tar</id>
-        <link href="https://melpa.org/#/orderless"/>
-        <updated>2024-12-22T03:17:00.000Z</updated>
-        <summary type="html"><![CDATA[The orderless package has been updated to version 20241222.317.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[marginalia (20241222.316) --- Enrich existing commands with completion annotations]]></title>
-        <id>https://melpa.org/packages/marginalia-20241222.316.tar</id>
-        <link href="https://melpa.org/#/marginalia"/>
-        <updated>2024-12-22T03:16:00.000Z</updated>
-        <summary type="html"><![CDATA[The marginalia package has been updated to version 20241222.316.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-modern (20241222.313) --- Modern looks for Org]]></title>
-        <id>https://melpa.org/packages/org-modern-20241222.313.tar</id>
-        <link href="https://melpa.org/#/org-modern"/>
-        <updated>2024-12-22T03:13:00.000Z</updated>
-        <summary type="html"><![CDATA[The org-modern package has been updated to version 20241222.313.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[web-beautify-html, web-beautify-xml, web-beautify-sgml]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hjnvom/webbeautifyhtml_webbeautifyxml_webbeautifysgml/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hjnvom/webbeautifyhtml_webbeautifyxml_webbeautifysgml/"/>
-        <updated>2024-12-22T01:08:55.000Z</updated>
-        <summary type="html"><![CDATA[hi all; ther used to be a package in melpa or elpa which enabled the M-x web-beautify-html, M-x web-beautify-xml, and M-x web-beautify-sgml IIRC. I can't find it, whatever I do. Any help is welcome
-    submitted by    /u/Antique_Society8708  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[No LSP: Find references and definitions without using xref nor etags]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hjnd1m/no_lsp_find_references_and_definitions_without/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hjnd1m/no_lsp_find_references_and_definitions_without/"/>
-        <updated>2024-12-22T00:40:28.000Z</updated>
-        <summary type="html"><![CDATA[Hi, I think LSP is too heavy and etags need constant care to keep them updated. The main functionality I need from lsp is just finding references and definitions along with some symbol tree. I would like someone to share with me any strategies to achieve searching references and definitions with built-in emacs tools or with obviquitous tools such as grep or maybe ripgrep. Thnx
-    submitted by    /u/bloomingFemme  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[hydra 0.2: A fun code counter!]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1hjmu2x/hydra_02_a_fun_code_counter/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1hjmu2x/hydra_02_a_fun_code_counter/"/>
-        <updated>2024-12-22T00:12:21.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/haquire0  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[macos emacs daemon]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hjmn65/macos_emacs_daemon/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hjmn65/macos_emacs_daemon/"/>
-        <updated>2024-12-22T00:02:09.000Z</updated>
-        <summary type="html"><![CDATA[Hi all,
- After long last I bought a mac airr and I must say, coming from linux, it was a smooth transition. Well not fully, I still use linux, but the mac air is just so convenient.
- Anywho, I use the standard emacs off homebrew and my emacs setup is based off emacs-groundup but I moved from org based to a modular file based setup. Like the one I started out with 15 yrs ago, full circle!
- Any-anywhoo, I want to leverage emacs daemon like I do on Linux, but there are quirks. Like I run emacs --daemon and emacsclient -c -n always opens in terminal mode... Running (server-mode) from a running gui emacs gives me an emacsclient in gui mode but the top border is twice as fat now and the border margins are too thin, the minibuffer text touches the window border. No breaking error, just annoying.
- My preferred way of working would be that I can run emacs --daemon with a gui client as I please. Why does that create an issue on mac?
- Any tips/tricks/pointers are greatly appreciated!
- thx S
-    submitted by    /u/Sndr666  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Aztecs: A type-safe and friendly ECS for Haskell]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1hjltks/aztecs_a_typesafe_and_friendly_ecs_for_haskell/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1hjltks/aztecs_a_typesafe_and_friendly_ecs_for_haskell/"/>
-        <updated>2024-12-21T23:18:12.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/matthunz  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[What is desireable in an Org to HTML framework?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hjj09d/what_is_desireable_in_an_org_to_html_framework/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hjj09d/what_is_desireable_in_an_org_to_html_framework/"/>
-        <updated>2024-12-21T20:57:44.000Z</updated>
-        <summary type="html"><![CDATA[I am working on nice-org-html and have started to add site-level "templating" via configuration variables. E.g. you can specify a site header and footer as a list (see it with e.g. spacemacs themes here). I'm now considering adding page-level templating. The idea is to use special Org blocks, similar to how shortcodes are handled in ox-hugo, but without Hugo as middle-man.
- For those who use Hugo, or ox-hugo, or something similar, what page-level templates (shortcodes) do you find most useful? I'm trying to identify a "core" set that would be desirable in an Org-based framework for building websites.
-    submitted by    /u/ewan-town  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[visual-replace (20241221.2030) --- A prompt for replace-string and query-replace]]></title>
-        <id>https://melpa.org/packages/visual-replace-20241221.2030.tar</id>
-        <link href="https://melpa.org/#/visual-replace"/>
-        <updated>2024-12-21T20:30:00.000Z</updated>
-        <summary type="html"><![CDATA[The visual-replace package has been updated to version 20241221.2030.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Override part of a function?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hji8qc/override_part_of_a_function/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hji8qc/override_part_of_a_function/"/>
-        <updated>2024-12-21T20:20:04.000Z</updated>
-        <summary type="html"><![CDATA[If I want to override a function, I can use advice-add. For example, I can write my own my/eglot-completion-at-point() and then do (advice-add 'eglot-completion-at-point :override #'my/eglot-completion-at-point) so that it's using my version of capf.
- However, sometimes the function is super long or complicated, or it contains variables we don't have access to. For example, if I just want to modify a few things in eglot-completion-at-point, it would be very hard. In this case, I'm trying to change the :annotation-function in it (basically add something to the details).
- Also, is cape.el related to this? I never understand what exactly cape.el does. 
-    submitted by    /u/DiamondSlug  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Is it worth doing leetcode in Haskell?]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1hjhz3m/is_it_worth_doing_leetcode_in_haskell/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1hjhz3m/is_it_worth_doing_leetcode_in_haskell/"/>
-        <updated>2024-12-21T20:07:01.000Z</updated>
-        <summary type="html"><![CDATA[Is it beneficial to solve LeetCode-style (DSA) problems in Haskell or other functional languages?
- Many of these problems are typically approached using algorithmic techniques that are common in imperative languages, such as sliding window or monotonic stack methods. Given that Haskell and similar functional languages emphasize immutability and functional paradigms, would there be any advantage to solving these problems in such languages? How do functional programming concepts interact with the types of problems commonly found in competitive programming, and is there any added benefit in solving them using Haskell?
-    submitted by    /u/Worldly_Dish_48  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Serializing file-query register]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hjhos6/serializing_filequery_register/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hjhos6/serializing_filequery_register/"/>
-        <updated>2024-12-21T19:53:28.000Z</updated>
-        <summary type="html"><![CDATA[Is it possible to dump a register when it contains a file-query object?
- These objects arise after using C-x r SPC inside a file buffer, then unloading the file with C-x k.
- Ideally, it would be nice to convert the file query to *compilation*-style link.
- As an aside, I wonder if this type of opaque object can only be accessed from inside the Emacs C core.
-    submitted by    /u/swb0z0  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[verb (20241221.1905) --- Organize and send HTTP requests]]></title>
-        <id>https://melpa.org/packages/verb-20241221.1905.tar</id>
-        <link href="https://melpa.org/#/verb"/>
-        <updated>2024-12-21T19:05:00.000Z</updated>
-        <summary type="html"><![CDATA[The verb package has been updated to version 20241221.1905.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[New Package: org-ranker.el - sort org headlines by custom rules]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/1hjgobm/new_package_orgrankerel_sort_org_headlines_by/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/1hjgobm/new_package_orgrankerel_sort_org_headlines_by/"/>
-        <updated>2024-12-21T19:04:41.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/shipley7701  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Is there a Plug-In to Automatically Reorder Numbered Lists?]]></title>
-        <id>3132@/discussions</id>
-        <link href="https://forum.zettelkasten.de/discussion/3132/is-there-a-plug-in-to-automatically-reorder-numbered-lists"/>
-        <updated>2024-12-21T18:47:16.000Z</updated>
-        <summary type="html"><![CDATA[Hello,
-I'm intrigued by the new plugin system. Are the plugins shown in the other forum the only ones available or are there others as well? Specifically, I'd love a plugin that would automatically reorder numbered lists if I remove or insert an item.
-Thanks!]]></summary>
-        <author>
-            <name>TrekFan</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[nerd-icons-completion (20241221.1846) --- Add icons to completion candidates]]></title>
-        <id>https://melpa.org/packages/nerd-icons-completion-20241221.1846.tar</id>
-        <link href="https://melpa.org/#/nerd-icons-completion"/>
-        <updated>2024-12-21T18:46:00.000Z</updated>
-        <summary type="html"><![CDATA[The nerd-icons-completion package has been updated to version 20241221.1846.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Automatically setting line number width based on number of newlines in file?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hjfpu2/automatically_setting_line_number_width_based_on/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hjfpu2/automatically_setting_line_number_width_based_on/"/>
-        <updated>2024-12-21T18:20:09.000Z</updated>
-        <summary type="html"><![CDATA[In emacs, by default, the line number gutter automatically changes size back and forth when you go from 2 digits to 3 digits and so on. I find this behavior really annoying. The two main solutions are to set the width to only grow, so that it never goes back when going back to the earlier lines, and to set the width to 3 by default so that for most files, the width doesn't change. Is there a convenient way to set the width based on the number of newlines found in the file without requiring writing a lot of elisp?
-    submitted by    /u/zarbod  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[List comprehension]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1hjf6cq/list_comprehension/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1hjf6cq/list_comprehension/"/>
-        <updated>2024-12-21T17:55:26.000Z</updated>
-        <summary type="html"><![CDATA[Hi! New haskell programmer here
- Is there any good sites to learn list comprehension? And is there anything specific I have to think about when coding with list comprehension?
-    submitted by    /u/GrouchyBoss3774  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[rg (20241221.1420) --- A search tool based on ripgrep]]></title>
-        <id>https://melpa.org/packages/rg-20241221.1420.tar</id>
-        <link href="https://melpa.org/#/rg"/>
-        <updated>2024-12-21T14:20:00.000Z</updated>
-        <summary type="html"><![CDATA[The rg package has been updated to version 20241221.1420.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Project structure for advent of code]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1hja6oy/project_structure_for_advent_of_code/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1hja6oy/project_structure_for_advent_of_code/"/>
-        <updated>2024-12-21T13:48:40.000Z</updated>
-        <summary type="html"><![CDATA[I started advent of code this year saying that I'll finally figure out Haskell packages and cabal and all that. Well, I didn't, and I'm looking for suggestions for what the "right way" to do this is.
- I currently have a directory with a local environment (.ghc.environment.aarch64-darwin-9.4.8), then individual directories like day01/ with day01/day01.hs, day01/day01_input.txt, day01/day01_test_input.txt. In VSCode, I can just fire up internal terminal, run ghci, have it pick up the local environment, and do :l day01/day01 and be on my way.
- That's fine, until I want to pull some code out into a library module, like reading 2D arrays of Chars. Then, I could make a lib/CharGrid.hs file with the module, and invoke ghci with ghci -ilib, but that's annoying to remember, and VSCode can't find the module to type-check the main code.
- So, what should I do? I've looked into defining a cabal file, but it seems very much tuned to building big static libraries or single executables, not the kind of REPL-driven development I'd like to do here. There's probably a way, I'm not familiar enough to see it.
- I found this template from last year: https://github.com/Martinsos/aoc-2023-haskell-template. That seems OK, but again very static build-an-executable rather than active experimentation in the repl. But is that the best way to include library code?
-    submitted by    /u/oddthink  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[New Package: org-ranker.el - sort org headlines by custom rules]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hj9iz2/new_package_orgrankerel_sort_org_headlines_by/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hj9iz2/new_package_orgrankerel_sort_org_headlines_by/"/>
-        <updated>2024-12-21T13:09:39.000Z</updated>
-        <summary type="html"><![CDATA[I recently wrote my first Emacs package, org-ranker.el, to address a personal workflow need, and I’m curious if anyone else might find it useful or has suggestions for improvement. It was a fun learning experience, and I’d love some feedback!
- What it does:
- org-ranker.el allows you to rank and sort headlines in an Org buffer based on customizable rules defined in the buffer. Specifically:
-  
-You define "rule" keywords at the top of the buffer.
- The package evaluates these rules against each headline's properties and assigns a score.
- Headlines are then sorted by their scores.
-  
-Additional features include:
-  
-Highlighting headlines based on specific rules.
- Refiling headlines to an "EXCLUDE" section if they meet certain criteria.
-  
-Why I made it:
- I needed a way to rank-order a list of …]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Understanding Beacon Mode in Meow]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hj9bot/understanding_beacon_mode_in_meow/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hj9bot/understanding_beacon_mode_in_meow/"/>
-        <updated>2024-12-21T12:57:19.000Z</updated>
-        <summary type="html"><![CDATA[I've tried using Meow in the past, but Beacon mode never really sunk in for me.
- Meow-tutor has a section that says the following:
- Ex. A. How to achieve this?
- 1 2 3
- =>
- [| "1" |] [| "2" |] [| "3" |]
- 1. Move the cursor to the line below marked -->
- 2. Select the "1 2 3"
- 3. Press G to grab the selection
- 4. Press b to create fake cursors at the beginning of each word
- in the backwards direction.
- 5. Enter Insert Mode then edit.
- 6. Press M-x meow-normal-mode to stop macro recording and apply
- your edits to all fake cursors.
- 7. Press G to cancel grab.
- --> 1 2 3
- [| "1" |] [| "2" |] [| "3" |]
- I get lost at #4. I understand that when I press G to "grab" a selection, it gets a visual background which is different from the mark, but I'm confused. Why does `b` create cursors at the beginning of each word here? How does that work? What are the rules?
-    submitted by    /u/mumbo1134  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[cc-cedict (20241221.1256) --- Interface to CC-CEDICT (a Chinese-English dictionary)]]></title>
-        <id>https://melpa.org/packages/cc-cedict-20241221.1256.tar</id>
-        <link href="https://melpa.org/#/cc-cedict"/>
-        <updated>2024-12-21T12:56:00.000Z</updated>
-        <summary type="html"><![CDATA[The cc-cedict package has been updated to version 20241221.1256.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Notmuch - syncing tags to specific folders on the mail server?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1hj5x85/notmuch_syncing_tags_to_specific_folders_on_the/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1hj5x85/notmuch_syncing_tags_to_specific_folders_on_the/"/>
-        <updated>2024-12-21T08:49:36.000Z</updated>
-        <summary type="html"><![CDATA[Hey! 
- I'm trying to find some examples of how people sync tags back to the mail server. I don't need all of them to be synced, but I'd love for mail without the inbox tag to be moved to archive, and then mail with the tag flight to be moved to my flight directory so I can access them on my phone. I use both gmail for work and fastmail for my personal mail.
-    submitted by    /u/XzwordfeudzX  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
         </author>
     </entry>
 </feed>
