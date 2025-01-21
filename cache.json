@@ -53,6 +53,56 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1i6r5wx/ann_hyperbole_04_released_improved_interface_more/",
+          "author": null,
+          "description": "Hyperbole — the interactive serverside web framework inspired by HTMX, Elm, and Phoenix LiveView — has a new major release with many improvements:\n https://hackage.haskell.org/package/hyperbole\n Safer and Cleaner HyperViews\n HyperViews have a cleaner interface via the class instance (Christian Georgii). Pages automatically handle any HyperViews. From https://docs.hyperbole.live/simple:\n page :: (Hyperbole :> es) => Eff es (Page '[Message]) page = do pure $ col id $ do hyper Message1 $ messageView \"Hello\" hyper Message2 $ messageView \"World!\" data Message = Message1 | Message2 deriving (Show, Read, ViewId) instance HyperView Message es where data Action Message = Louder Text deriving (Show, Read, ViewAction) update (Louder msg) = do let new = msg <> \"!\" pure $ messageView new messageView :: Text -> View Message () messageView msg = do row id $ do button (Louder msg) id \"Louder\" el_ $ text msg \n Live Examples and Documentation\n Hackage documentation is greatly improved, with a step-by-step introduction explaining basics and best practices.\n https://docs.hyperbole.live is now available with live examples, including links to source code. Notable additions include:\n  \nTodoMVC\n Sortable Data Table\n Search - Filters\n Search - Autocomplete\n  \nOther Improvements\n  \nHigher Kinded Record-based Forms \n textarea (Tushar Adhatrao)\n \n Easily persist data to sessions and query params\n Events: onLoad, onClick onInput, onSubmit, onDblClick, onKeyDown, onKeyUp\n Major Refactoring\n Nix build and CI (Pfalzgraf Martin)\n  \nMany thanks to the new contributors, and to everyone who submitted issues!\n    submitted by    /u/embwbam  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1i6r5wx/ann_hyperbole_04_released_improved_interface_more/",
+          "publishedOn": "2025-01-21T19:38:14.000Z",
+          "wordCount": null,
+          "title": "[ANN] Hyperbole 0.4 released: improved interface, more type safety, new features, examples and documentation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1i6n36x/making_my_life_harder_with_gadts/",
+          "author": null,
+          "description": "submitted by    /u/ephrion  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1i6n36x/making_my_life_harder_with_gadts/",
+          "publishedOn": "2025-01-21T16:52:33.000Z",
+          "wordCount": null,
+          "title": "Making My Life Harder with GADTs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1i6f48k/making_my_life_easier_with_gadts/",
+          "author": null,
+          "description": "submitted by    /u/sbbls  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1i6f48k/making_my_life_easier_with_gadts/",
+          "publishedOn": "2025-01-21T09:46:40.000Z",
+          "wordCount": null,
+          "title": "Making my life easier with GADTs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1i6cumq/ghc_string_interpolation_survey_open/",
+          "author": null,
+          "description": "submitted by    /u/brandonchinn178  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1i6cumq/ghc_string_interpolation_survey_open/",
+          "publishedOn": "2025-01-21T06:53:00.000Z",
+          "wordCount": null,
+          "title": "GHC String Interpolation Survey Open!",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1i63bl9/supgen_is_program_synthesizer_that_outperforms/",
+          "author": null,
+          "description": "submitted by    /u/SrPeixinho  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1i63bl9/supgen_is_program_synthesizer_that_outperforms/",
+          "publishedOn": "2025-01-20T22:38:26.000Z",
+          "wordCount": null,
+          "title": "SupGen is program synthesizer that outperforms SOTA alternatives using the HVM (which is now in Haskell!)",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1i609wg/how_to_parse_expressions_with_invisible_operators/",
           "author": null,
           "description": "I want to parse expressions like this:\n x+y(xz+z) \n with a + operator but also an \"invisible\" multiplication operator. With an explicit multiplication operator the expression would look like this:\n x+y*(x*z+z) \n Here is my starting point (Haskell Playground) using Megaparsec:\n import Text.Megaparsec import Text.Megaparsec.Char import Control.Monad.Combinators.Expr import Data.Void (Void) type Parser = Parsec Void String data Expr = Var Char | Add Expr Expr | Mul Expr Expr deriving Show var :: Parser Expr var = Var <$> letterChar parens :: Parser a -> Parser a parens = between (char '(') (char ')') term :: Parser Expr term = choice [ var, parens expr ] expr :: Parser Expr expr = makeExprParser term [ [ InfixN (Mul <$ string \"\") -- I guess it can't be that easy , InfixN (Add <$ string \"+\") ] ] main :: IO () main = parseTest (expr <* eof) \"x+y(xz+z)\" \n With that I get the following error message:\n *** Exception: 1:2: | 1 | x+y(xz+z) | ^ unexpected '+' expecting '(', end of input, or letter \n I guess, since there is no symbol to identify the multiplication operation (only the empty string) it always matches. And since multiplication has higher precedence, we check it first. So here we commit to the \"multiplication branch\" and then get stuck when we see a \"+\". I guess, I need to backtrack somewhere? But where/how?\n    submitted by    /u/ngruhn  \n [link]   [comments]",
@@ -1071,76 +1121,6 @@
           "wordCount": null,
           "title": "How to collect performance statistics with Cabal",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1hk4wpn/haskell_interlude_60_tom_ellis/",
-          "author": null,
-          "description": "submitted by    /u/tritlo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1hk4wpn/haskell_interlude_60_tom_ellis/",
-          "publishedOn": "2024-12-22T18:51:07.000Z",
-          "wordCount": null,
-          "title": "Haskell Interlude 60: Tom Ellis",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1hk3ib8/help_understanding_instance_definitions/",
-          "author": null,
-          "description": "Hello, I'm a beginner to Haskell, studying the language for a university course. I ran into a problem which asked to define a new data type which can either be a pair of values or three values with two of them being of the same type.\n I'm having difficulties understaing why when defining Fpair to be an instance of Functor we use (Fpair s) rather than just Fpair, since for all other data structures we used we just wrote the name of the type constructor. Can somebody help me?\n Here's the code:\n data Fpair s a = Fpair a a s | Pair a a instance Functor (Fpair s) where fmap f (Fpair x y t) = (Fpair (f x) (f y) t) fmap f (Pair x y) = (Pair (f x) (f y)) \n    submitted by    /u/lthunderfoxl  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1hk3ib8/help_understanding_instance_definitions/",
-          "publishedOn": "2024-12-22T17:44:33.000Z",
-          "wordCount": null,
-          "title": "Help understanding instance definitions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1hk2ler/advent_of_code_2024_day_22/",
-          "author": null,
-          "description": "https://adventofcode.com/2024/day/22\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1hk2ler/advent_of_code_2024_day_22/",
-          "publishedOn": "2024-12-22T17:01:34.000Z",
-          "wordCount": null,
-          "title": "Advent of code 2024 - day 22",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1hjznwz/generalized_dijkstra_in_haskell/",
-          "author": null,
-          "description": "submitted by    /u/sbbls  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1hjznwz/generalized_dijkstra_in_haskell/",
-          "publishedOn": "2024-12-22T14:36:40.000Z",
-          "wordCount": null,
-          "title": "Generalized Dijkstra in Haskell",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1hjzk75/no_aoc_for_today/",
-          "author": null,
-          "description": "There is no auto thread for Day 22 created by u/AutoModerator\n My code is simpler than I expect. Sorry for bad variable names, I am too lazy to refactor for now.\n import Data.Bits import Data.HashMap qualified as M main :: IO () main = do putStrLn \"AOC 24.22\" i <- map read . lines <$> getContents :: IO [Int] print $ p1 i print $ p2 i mix ::Int -> Int -> Int mix = xor prn ::Int -> Int prn = flip mod 16777216 nxt ::Int -> Int nxt = c . b . a where a n = prn $ mix n (n * 64) b n = prn $ mix n (n `div` 32) c n = prn $ mix n (n * 2048) tkn ::Int -> Int tkn s = iterate nxt s !! 2000 -- p1 [1,10,100,2024] == 37327623 p1 :: [Int] -> Int p1 xs = sum $ tkn <$> xs prc ::Int -> [(Int,Int)] prc s = zip ps $ 0:zipWith (-) (tail ps) ps where ns = iterate nxt s ps = map (`mod` 10) ns sqm ::Int -> M.Map [Int] [Int] sqm s = M.unions $ take 2000 $ go $ prc s where go xs@(a:b:c:d:_) = M.singleton [snd a,snd b,snd c,snd d] [fst d]:go (tail xs) go _ = undefined sqms :: [Int] -> M.Map [Int] [Int] sqms xs = foldr1 (M.unionWith (++)) ms where ms = sqm <$> xs -- p2 [1,2,3,2024] == 23 p2 :: [Int] -> Int p2 xs = M.foldWithKey (\\_ a b -> max b (sum a)) 0 $ sqms xs \n    submitted by    /u/recursion_is_love  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1hjzk75/no_aoc_for_today/",
-          "publishedOn": "2024-12-22T14:30:48.000Z",
-          "wordCount": null,
-          "title": "No AOC for today?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1hjyzfv/can_clashhaskellsupport_for_asynchronous_circuit/",
-          "author": null,
-          "description": "Clash is a functional hardware description language. As I know, it supports synchronous circuit design. \n Does Clash be able to support for asynchronous design such as synchronous design with clock domain crossing? If yes, could you please provide some examples or references？ Thank you \n    submitted by    /u/netj_nsh  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1hjyzfv/can_clashhaskellsupport_for_asynchronous_circuit/",
-          "publishedOn": "2024-12-22T13:58:25.000Z",
-          "wordCount": null,
-          "title": "Can Clash(Haskell)support for asynchronous circuit design?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1hjv7g7/migrated_my_reacttypescript_project_to_haskells/",
-          "author": null,
-          "description": "I recently migrated the UI of my personal project from React-TypeScript to Haskell's Hyperbole, and I couldn't be happier with the results. Writing React code had become more of a chore for me, so I was actively searching for a better alternative. That's when I stumbled upon Hyperbole. \n Unlike GHCJS—which is stuck on GHC-8 and doesn’t seem to have much ongoing development—Hyperbole caught my attention because of its approach. It uses WebSockets and works similarly to HTMX or Elixir’s LiveView, making it both intriguing and modern.\n Migrating wasn’t without challenges. Hyperbole is still in early development, and I noticed that the Hackage package seems a bit outdated. But with some patience and exploration, I managed to overcome these hurdles.\n If you’re curious, you can check out Hyperbole’s GitHub repository here and my project here. I’d love to hear your thoughts if you’ve tried Hyperbole—or if you’re considering it!\n    submitted by    /u/Worldly_Dish_48  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1hjv7g7/migrated_my_reacttypescript_project_to_haskells/",
-          "publishedOn": "2024-12-22T09:26:03.000Z",
-          "wordCount": null,
-          "title": "Migrated My React-TypeScript Project to Haskell's Hyperbole – What an Amazing Experience!",
-          "imageUrl": null
         }
       ]
     },
@@ -1918,46 +1898,6 @@
           "wordCount": null,
           "title": "Helenus v1.8.1 Released! Now with ZIO integration",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1hkh2fc/is_intellij_support_for_scala_not_good_or_am_i/",
-          "author": null,
-          "description": "Hi there. First time asking questions here. I am working on a personal project and decided to use scala. I am using scala 3 and IntelliJ ultimate, it may be my machine is slow but sometimes, IntelliJ can’t even get suggestions to import classes like it does for Java. I nearly have to wait for a few minutes to get IntelliJ back to its senses. I must say this, none of this is an issue while I am doing anything in Java, it gives suggestions as I type. I thought I was losing hours and now contemplating to use Java instead but I will be honest, I love case classes and pattern matching. While Java is catching up, it is still not there. \n I have not tried it with scala 2 however. Am I missing something in my set up ? I do have scala plugin installed. \n    submitted by    /u/misledlegend  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1hkh2fc/is_intellij_support_for_scala_not_good_or_am_i/",
-          "publishedOn": "2024-12-23T05:34:22.000Z",
-          "wordCount": null,
-          "title": "Is IntelliJ support for scala not good or am I missing something ?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1hkgz9a/scala_is_cool_and_works_well_with_java_21/",
-          "author": null,
-          "description": "I recently posted it on Scala users, but I think Reddit is a nice place too.\n I just want to share how Scala is been used at taobao.\n We are recently launching Taobao English, to accelerate the progress, we set up a translation layer to translate Chinese → i18n as a proxy.\n Where Scala is been used as :\n  \na JSONPath implementation based on the new RFC, full implemented with all tests passed.\n pekko stream for ordering and concurrency, thanks akka team too here.\n Networking is handled by Netty.\n  \nhttps://preview.redd.it/mgm1p7ezkc8e1.png?width=1380&format=png&auto=webp&s=29ce478ae64fc609fcafdc567b647347e5dcfb67\n We are using fastparse to parse the rules and execute the rules which will eventually update the parts of the response JSON, then you see an English version Taobao App.\n There is another traffic routing system, where we decide where our traffic from clients needs to go, are using Scala 3.3.4 too.\n We are using Java 21 , thank you for the excellent Java interoperation.\n It works very well, thank you all.\n    submitted by    /u/Aggravating_Number63  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1hkgz9a/scala_is_cool_and_works_well_with_java_21/",
-          "publishedOn": "2024-12-23T05:28:34.000Z",
-          "wordCount": null,
-          "title": "Scala is Cool and works well with Java 21",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1hkfh8c/sbt_1107_released/",
-          "author": null,
-          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1hkfh8c/sbt_1107_released/",
-          "publishedOn": "2024-12-23T03:55:19.000Z",
-          "wordCount": null,
-          "title": "sbt 1.10.7 released",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1hkbdoc/this_week_in_scala_dec_23_2024/",
-          "author": null,
-          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1hkbdoc/this_week_in_scala_dec_23_2024/",
-          "publishedOn": "2024-12-23T00:06:42.000Z",
-          "wordCount": null,
-          "title": "This week in #Scala (Dec 23, 2024)",
-          "imageUrl": null
         }
       ]
     },
@@ -1996,6 +1936,36 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1i6knt8/help_with_customizing_orgagenda/",
+          "author": null,
+          "description": "I have a simple question regarding customizing org-agenda. I am trying to create a custom agenda command using org-agenda-custom-commands that shows tasks with deadlines (past due or upcoming), except for tasks that have been scheduled in the future. This is done by using\n (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline)) \n as part of the custom command to show only tasks with deadlines. To hide tasks scheduled in the future, I thought setting the variable org-agenda-todo-ignore-scheduled to future would work, but it does not seem to do that. \n Example: say I have the following TODO items and today's date is January 20, 2025.\n * TODO Task scheduled in the past and overdue DEADLINE: <2025-01-15 Wed> SCHEDULED: <2025-01-13 Mon> * TODO Task scheduled in the past with due date in the future DEADLINE: <2025-01-24 Fri> SCHEDULED: <2024-01-13 Mon> * TODO Upcoming scheduled task with due date in future DEADLINE: <2025-01-31 Fri> SCHEDULED: <2025-01-27 Mon> * TODO Task with due date in future DEADLINE: <2025-01-30 Thu> \n If I invoke the custom agenda command, the agenda shows all these items:\n  gtd-agenda-test: 6 d. ago: TODO Task scheduled in the past and overdue gtd-agenda-test:In 3 d.: TODO Task scheduled in the past with due date in the future gtd-agenda-test:In 9 d.: TODO Task with due date in future gtd-agenda-test:In 10 d.: TODO Upcoming scheduled task with due date in future \n The last item should not be there, since it has been scheduled in the future.\n Any ideas on how to resolve this? It would seem difficult to add additional conditions to `org-agenda-skip-entry-if` because according to the documentation, it does a boolean-OR of the conditions, so even if I could construct a condition for future scheduled tasks, this function does not seem to be the one to add that condition.\n    submitted by    /u/joviance  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1i6knt8/help_with_customizing_orgagenda/",
+          "publishedOn": "2025-01-21T15:08:45.000Z",
+          "wordCount": null,
+          "title": "Help with customizing org-agenda",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1i6feqd/happy_to_release_orgluhmann_implements_luhmanns/",
+          "author": null,
+          "description": "Checkout: https://github.com/yibie/org-luhmann\n Overview\n org-luhmann provides a systematic way to organize your notes using Luhmann's numbering system in Org mode. This system enables:\n  \nHierarchical numbering (e.g., 1, 1.1, 1.2)\n Branch sequences with letters (e.g., 1a, 1b, 1c)\n Infinite insertion between existing notes\n Automatic number generation based on context\n  \nhttps://i.redd.it/32frxp72nbee1.gif\n How It Works\n org-luhmann is designed to work incrementally, helping you build your note structure one node at a time. Unlike automatic outline numbering, it:\n  \nDoes not automatically number all headings at once\n Generates numbers based on existing context (siblings and parents)\n Lets you choose the relationship of new nodes to existing ones\n Preserves the semantic meaning of your note structure\n  \nWhen you add a new number, org-luhmann analyzes:\n  \nCurrent heading's level\n Previous sibling's number (if any)\n Parent's number (if any)\n Existing branch sequences\n  \nThen offers appropriate numbering options like:\n  \nNext main sequence number (1, 2, 3, ...)\n Next branch letter (1a, 1b, 1c, ...)\n Next sub-number (1.1, 1.2, ...)\n Next parent branch (2.1, 2.2, ...)\n  \nThis approach ensures that your note structure grows organically and maintains meaningful relationships between notes.\n Installation\n With use-package and straight.el\n (use-package org-luhmann :straight (:host github :repo \"yibie/org-luhmann\") :after org :config (org-luhmann-setup)) \n    submitted by    /u/yibie  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1i6feqd/happy_to_release_orgluhmann_implements_luhmanns/",
+          "publishedOn": "2025-01-21T10:08:37.000Z",
+          "wordCount": null,
+          "title": "Happy to release: org-luhmann, implements Luhmann's numbering system for Org-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1i61s55/is_there_a_way_to_make_column_view_columns/",
+          "author": null,
+          "description": "submitted by    /u/timmymayes  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1i61s55/is_there_a_way_to_make_column_view_columns/",
+          "publishedOn": "2025-01-20T21:34:35.000Z",
+          "wordCount": null,
+          "title": "Is there a way to make column view columns actually line up?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1i5ar1a/simple_guide_to_spreadsheets/",
           "author": null,
@@ -2295,16 +2265,6 @@
           "wordCount": null,
           "title": "A habits-only agenda, but with consistency graphs?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1hjzxcm/can_org_have_multiple_kinds_of_bullets_like_this/",
-          "author": null,
-          "description": "submitted by    /u/EarBeneficial3551  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1hjzxcm/can_org_have_multiple_kinds_of_bullets_like_this/",
-          "publishedOn": "2024-12-22T14:50:46.000Z",
-          "wordCount": null,
-          "title": "Can org have multiple kinds of bullets like this?",
-          "imageUrl": null
         }
       ]
     },
@@ -2313,6 +2273,116 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/inhibit-mouse-20250121.2019.tar",
+          "author": null,
+          "description": "The inhibit-mouse package has been updated to version 20250121.2019.",
+          "link": "https://melpa.org/#/inhibit-mouse",
+          "publishedOn": "2025-01-21T20:19:00.000Z",
+          "wordCount": 105,
+          "title": "inhibit-mouse (20250121.2019) --- Deactivate mouse input during editing",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lab-20250121.1920.tar",
+          "author": null,
+          "description": "The lab package has been updated to version 20250121.1920.",
+          "link": "https://melpa.org/#/lab",
+          "publishedOn": "2025-01-21T19:20:00.000Z",
+          "wordCount": 105,
+          "title": "lab (20250121.1920) --- An interface for GitLab",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/py-vterm-interaction-20250121.1734.tar",
+          "author": null,
+          "description": "The py-vterm-interaction package has been updated to version 20250121.1734.",
+          "link": "https://melpa.org/#/py-vterm-interaction",
+          "publishedOn": "2025-01-21T17:34:00.000Z",
+          "wordCount": 105,
+          "title": "py-vterm-interaction (20250121.1734) --- A mode for Python REPL using vterm",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/embark-vc-20250121.1558.tar",
+          "author": null,
+          "description": "The embark-vc package has been updated to version 20250121.1558.",
+          "link": "https://melpa.org/#/embark-vc",
+          "publishedOn": "2025-01-21T15:58:00.000Z",
+          "wordCount": 105,
+          "title": "embark-vc (20250121.1558) --- Embark actions for various version control integrations",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/shrface-20250121.1122.tar",
+          "author": null,
+          "description": "The shrface package has been updated to version 20250121.1122.",
+          "link": "https://melpa.org/#/shrface",
+          "publishedOn": "2025-01-21T11:22:00.000Z",
+          "wordCount": 105,
+          "title": "shrface (20250121.1122) --- Extend shr/eww with org features and analysis capability",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/consult-lsp-20250121.707.tar",
+          "author": null,
+          "description": "The consult-lsp package has been updated to version 20250121.707.",
+          "link": "https://melpa.org/#/consult-lsp",
+          "publishedOn": "2025-01-21T07:07:00.000Z",
+          "wordCount": 105,
+          "title": "consult-lsp (20250121.707) --- LSP-mode Consult integration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/slideview-20250121.324.tar",
+          "author": null,
+          "description": "The slideview package has been updated to version 20250121.324.",
+          "link": "https://melpa.org/#/slideview",
+          "publishedOn": "2025-01-21T03:24:00.000Z",
+          "wordCount": 105,
+          "title": "slideview (20250121.324) --- File slideshow",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/e2ansi-20250120.2241.tar",
+          "author": null,
+          "description": "The e2ansi package has been updated to version 20250120.2241.",
+          "link": "https://melpa.org/#/e2ansi",
+          "publishedOn": "2025-01-20T22:41:00.000Z",
+          "wordCount": 105,
+          "title": "e2ansi (20250120.2241) --- Syntax highlighting for `less', powered by Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/recall-20250120.2131.tar",
+          "author": null,
+          "description": "The recall package has been updated to version 20250120.2131.",
+          "link": "https://melpa.org/#/recall",
+          "publishedOn": "2025-01-20T21:31:00.000Z",
+          "wordCount": 105,
+          "title": "recall (20250120.2131) --- Recall Emacs subprocess",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/verb-20250120.1743.tar",
+          "author": null,
+          "description": "The verb package has been updated to version 20250120.1743.",
+          "link": "https://melpa.org/#/verb",
+          "publishedOn": "2025-01-20T17:43:00.000Z",
+          "wordCount": 105,
+          "title": "verb (20250120.1743) --- Organize and send HTTP requests",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/metrics-tracker-20250120.1606.tar",
+          "author": null,
+          "description": "The metrics-tracker package has been updated to version 20250120.1606.",
+          "link": "https://melpa.org/#/metrics-tracker",
+          "publishedOn": "2025-01-20T16:06:00.000Z",
+          "wordCount": 105,
+          "title": "metrics-tracker (20250120.1606) --- Generate reports of personal metrics from diary entries",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/folding-20250120.1132.tar",
           "author": null,
@@ -6252,146 +6322,6 @@
           "wordCount": 105,
           "title": "citar-denote (20241223.844) --- Minor mode integrating Citar and Denote",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/moc-20241223.800.tar",
-          "author": null,
-          "description": "The moc package has been updated to version 20241223.800.",
-          "link": "https://melpa.org/#/moc",
-          "publishedOn": "2024-12-23T08:00:00.000Z",
-          "wordCount": 105,
-          "title": "moc (20241223.800) --- Master of Ceremonies",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/thrift-20241223.749.tar",
-          "author": null,
-          "description": "The thrift package has been updated to version 20241223.749.",
-          "link": "https://melpa.org/#/thrift",
-          "publishedOn": "2024-12-23T07:49:00.000Z",
-          "wordCount": 105,
-          "title": "thrift (20241223.749) --- Major mode for fbthrift and Apache Thrift files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/magit-20241223.650.tar",
-          "author": null,
-          "description": "The magit package has been updated to version 20241223.650.",
-          "link": "https://melpa.org/#/magit",
-          "publishedOn": "2024-12-23T06:50:00.000Z",
-          "wordCount": 105,
-          "title": "magit (20241223.650) --- A Git porcelain inside Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/srfi-20241223.16.tar",
-          "author": null,
-          "description": "The srfi package has been updated to version 20241223.16.",
-          "link": "https://melpa.org/#/srfi",
-          "publishedOn": "2024-12-23T00:16:00.000Z",
-          "wordCount": 105,
-          "title": "srfi (20241223.16) --- Scheme Requests for Implementation browser",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/copilot-20241222.2359.tar",
-          "author": null,
-          "description": "The copilot package has been updated to version 20241222.2359.",
-          "link": "https://melpa.org/#/copilot",
-          "publishedOn": "2024-12-22T23:59:00.000Z",
-          "wordCount": 105,
-          "title": "copilot (20241222.2359) --- An unofficial Copilot plugin",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/jtsx-20241222.2209.tar",
-          "author": null,
-          "description": "The jtsx package has been updated to version 20241222.2209.",
-          "link": "https://melpa.org/#/jtsx",
-          "publishedOn": "2024-12-22T22:09:00.000Z",
-          "wordCount": 105,
-          "title": "jtsx (20241222.2209) --- Extends JSX/TSX built-in support",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eshell-syntax-highlighting-20241222.2030.tar",
-          "author": null,
-          "description": "The eshell-syntax-highlighting package has been updated to version 20241222.2030.",
-          "link": "https://melpa.org/#/eshell-syntax-highlighting",
-          "publishedOn": "2024-12-22T20:30:00.000Z",
-          "wordCount": 105,
-          "title": "eshell-syntax-highlighting (20241222.2030) --- Highlight eshell commands",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/russian-techwriter-20241222.1903.tar",
-          "author": null,
-          "description": "The russian-techwriter package has been updated to version 20241222.1903.",
-          "link": "https://melpa.org/#/russian-techwriter",
-          "publishedOn": "2024-12-22T19:03:00.000Z",
-          "wordCount": 105,
-          "title": "russian-techwriter (20241222.1903) --- Input methods for Russian technical writers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lyrics-fetcher-20241222.1620.tar",
-          "author": null,
-          "description": "The lyrics-fetcher package has been updated to version 20241222.1620.",
-          "link": "https://melpa.org/#/lyrics-fetcher",
-          "publishedOn": "2024-12-22T16:20:00.000Z",
-          "wordCount": 105,
-          "title": "lyrics-fetcher (20241222.1620) --- Fetch song lyrics and album covers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/howm-20241222.1456.tar",
-          "author": null,
-          "description": "The howm package has been updated to version 20241222.1456.",
-          "link": "https://melpa.org/#/howm",
-          "publishedOn": "2024-12-22T14:56:00.000Z",
-          "wordCount": 105,
-          "title": "howm (20241222.1456) --- Wiki-like note-taking tool",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-special-block-extras-20241222.1447.tar",
-          "author": null,
-          "description": "The org-special-block-extras package has been updated to version 20241222.1447.",
-          "link": "https://melpa.org/#/org-special-block-extras",
-          "publishedOn": "2024-12-22T14:47:00.000Z",
-          "wordCount": 105,
-          "title": "org-special-block-extras (20241222.1447) --- 30 new custom blocks & 34 link types for Org-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/treemacs-20241222.1337.tar",
-          "author": null,
-          "description": "The treemacs package has been updated to version 20241222.1337.",
-          "link": "https://melpa.org/#/treemacs",
-          "publishedOn": "2024-12-22T13:37:00.000Z",
-          "wordCount": 105,
-          "title": "treemacs (20241222.1337) --- A tree style file explorer package",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/treemacs-evil-20241222.1336.tar",
-          "author": null,
-          "description": "The treemacs-evil package has been updated to version 20241222.1336.",
-          "link": "https://melpa.org/#/treemacs-evil",
-          "publishedOn": "2024-12-22T13:36:00.000Z",
-          "wordCount": 105,
-          "title": "treemacs-evil (20241222.1336) --- Evil mode integration for treemacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/npm-20241222.1207.tar",
-          "author": null,
-          "description": "The npm package has been updated to version 20241222.1207.",
-          "link": "https://melpa.org/#/npm",
-          "publishedOn": "2024-12-22T12:07:00.000Z",
-          "wordCount": 105,
-          "title": "npm (20241222.1207) --- Run your npm workflows",
-          "imageUrl": null
         }
       ]
     },
@@ -6400,6 +6330,46 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1i6psle/issue_with_permanently_allowing_local_values_in/",
+          "author": null,
+          "description": "I have an org document that I have auto-load org-columns via local variables at the bottom of the document. This works totally fine except every time I start emacs and load my org stuff I am prompted do you trust this? \n It has an option \"!\" which says to allow and always allow, which I have selected. Yet it continually prompts me. \n Any insight on how to make this actually allow/ok the local variables in this file?\n    submitted by    /u/timmymayes  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1i6psle/issue_with_permanently_allowing_local_values_in/",
+          "publishedOn": "2025-01-21T18:42:27.000Z",
+          "wordCount": null,
+          "title": "Issue with permanently allowing local values in org document",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1i6fewq/happy_to_release_orgluhmann_implements_luhmanns/",
+          "author": null,
+          "description": "submitted by    /u/yibie  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1i6fewq/happy_to_release_orgluhmann_implements_luhmanns/",
+          "publishedOn": "2025-01-21T10:08:59.000Z",
+          "wordCount": null,
+          "title": "Happy to release: org-luhmann, implements Luhmann's numbering system for Org-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1i6e2r8/meta_a_nonabusive_emacs_community/",
+          "author": null,
+          "description": "This post is inspired by the discussion here, where /u/armindarvish shared his correspondence with a moderator of this subreddit. The response he received was, to put it mildly, completely inappropriate. I've personally found several of /u/armindarvish's videos incredibly helpful in the past, and it's disappointing to see him subjected to such treatment. \n In light of this, I propose that we collectively refrain from posting here until the moderation team issues a public apology. In the meantime, an excellent alternative is the System Crafters forum. To be clear, I have no affiliation with Daviwil or System Crafters beyond being an admirer of the welcoming and constructive community he has built. The forum embodies the qualities I value in an online space—it's friendly to newcomers, fosters open discussion without unnecessary censorship, and is led by individuals who engage respectfully with the community. This subreddit would go along way by emulating some of those qualities. \n I fully expect this post may result in a ban, so if that happens—I'll see you all at System Crafters.\n EDIT: I was unaware of the r/freemacs community until today. While I enthusiastically endorse the Systemcrafters community, an alternative might be moving to r/freemacs for the time being. It might offer a simpler and more seamless transition for the community.\n    submitted by    /u/dargscisyhp  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1i6e2r8/meta_a_nonabusive_emacs_community/",
+          "publishedOn": "2025-01-21T08:25:01.000Z",
+          "wordCount": null,
+          "title": "[Meta] A nonabusive Emacs community",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1i6bux1/no_binary_error_with_emacsql_using_org_roam2_on/",
+          "author": null,
+          "description": "I am fairly new to emacs and doom so don't roast me LOL\n While trying to run any org-roam command on doom emacs, I encounter the error: \n emacsql-sqlite-ensure-binary: No EmacSQL SQLite binary available: (Opening input file No such file or directory /home/yuba/.emacs.d/.local/straight/build-27.1/emacsql/sqlite/Makefile)\n I have tried numerous solutions including using Clang, re-compiling both the repo and build files, making the missing directory and much more.\n I am not sure what to do-I know that the straight/repos/emacsql has the Makefile and the sqlite folder, but the build directory doesn't.\n Has anyone else ran into this problem or know the solution? I am suspicous that this may be a WSL2 problem but I am not sure.\n Thank you :)\n    submitted by    /u/yubapiper332  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1i6bux1/no_binary_error_with_emacsql_using_org_roam2_on/",
+          "publishedOn": "2025-01-21T05:47:33.000Z",
+          "wordCount": null,
+          "title": "No binary Error with emacsql using Org Roam2 on Doom emacs (WSL2, Ubuntu 18.04, emacs 27.1)",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1i5yu6m/orgprojectcapture_default_to_the_current_project/",
           "author": null,
@@ -8979,46 +8949,6 @@
           "wordCount": null,
           "title": "[ANN] MoC. Buffer Text to Video & Presentation Content, Elisp Replay, and Related Gizmos",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hkgjsn/newbie_needs_help_after_i_installed_tools_for/",
-          "author": null,
-          "description": "submitted by    /u/thetimujin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hkgjsn/newbie_needs_help_after_i_installed_tools_for/",
-          "publishedOn": "2024-12-23T05:01:00.000Z",
-          "wordCount": null,
-          "title": "Newbie needs help. After I installed tools for Closure development, I have flymake mode enabled by default everywhere, including .org files. How to disable it globally? I don't want it, and I don't want to disable it manually every time",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hkex1q/llm_version_020_released_with_structured_json/",
-          "author": null,
-          "description": "The llm package has released version 0.20.0, which, aside from adding some of the latest models, adds an interesting new feature: the ability to get structured JSON output without needing to use tool use. Here's one of the examples from the readme file:\n ```emacs-lisp (llm-chat ash/llm-openai-small (llm-make-chat-prompt\n  \"Which editor is hard to quit? Return the result as JSON.\" :response-format '(:type object :properties (:editor (:enum (\"emacs\" \"vi\" \"vscode\")) :authors (:type array :items (:type string))) :required (editor authors)))) \n ```\n Response:\n  \n{\"editor\":\"vi\",\"authors\":[\"Bram Moolenaar\",\"Bill Joy\"]}\n  \nThe llm package is part of GNU ELPA, and for use as a library. It does not offer end-user functionality, but exists so that other package writers don't have to worry about re-implementing these types of functionality for various different services and models. I think JSON mode should be pretty useful for getting more reliable structured data out of LLMs, and I'm looking forward to seeing what people do with it!\n    submitted by    /u/ahyatt  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hkex1q/llm_version_020_released_with_structured_json/",
-          "publishedOn": "2024-12-23T03:21:31.000Z",
-          "wordCount": null,
-          "title": "llm version 0.20 released, with structured JSON output",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hk15d9/embedded_html_syntax_highlighting_in_typescript/",
-          "author": null,
-          "description": "Hi all,\n Learning Emacs. Using Doom. \n I noticed when I am working with Javascript code, that syntax highlighting for embedded HTML does not work. \n Edit: code sample below\n @Component({ selector: \"app-home\", imports: [CommonModule, HousingLocationComponent], template: ` <section> <form> <input type=\"text\" placeholder=\"Filter by city\" /> <button class=\"primary\" type=\"button\">Search</button> </form> </section> <section class=\"results\"> <app-housing-location *ngFor=\"let housingLocation of housingLocationList\" [housingLocation]=\"housingLocation\" ></app-housing-location> </section> `, styleUrls: [\"./home.component.css\"], }) \n Is there a package or way to configure emacs to support this? It seems like a common scenario to want to see syntax highlighting for HTML when writing JS (as with react or angular) so I am surprised it is not supported out of the box.\n    submitted by    /u/jibberjabber37  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hk15d9/embedded_html_syntax_highlighting_in_typescript/",
-          "publishedOn": "2024-12-22T15:52:07.000Z",
-          "wordCount": null,
-          "title": "Embedded HTML Syntax Highlighting in Typescript Mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hjwlgm/how_to_display_todays_scheduled_items_in_org/",
-          "author": null,
-          "description": "Hi, I want to display a section in org agenda for tasks which have a scheduled date set for today. I have tried this-\n  (setq org-agenda-custom-commands '((\"n\" \"Agenda and all TODOs for work\" ((agenda \"\" nil) (todo \"\" ((org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled)) (org-agenda-overriding-header \"Today's scheduled items:\"))) (todo \"PROG\" ((org-agenda-overriding-header \"Items in progress:\"))) nil)))) \n However, it is only scheduling the tasks, which are before the current time. I want all the scheduled tasks for the current day. \n    submitted by    /u/sudddddd  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hjwlgm/how_to_display_todays_scheduled_items_in_org/",
-          "publishedOn": "2024-12-22T11:17:02.000Z",
-          "wordCount": null,
-          "title": "How to display today's scheduled items in org agenda?",
-          "imageUrl": null
         }
       ]
     },
@@ -9305,36 +9235,6 @@
           "publishedOn": "2024-12-24T13:57:23.000Z",
           "wordCount": 704,
           "title": "Merry Christmas",
-          "imageUrl": null
-        },
-        {
-          "id": "3139@/discussions",
-          "author": "Kamil",
-          "description": "My name is Kamil\nThis is my first post, but I've been reading zettelkasten.de and following the forum for several years. I must say, the content here has significantly influenced how I think about intellectual work and writing.\nI'm deeply grateful for all the opinions and advice shared here. However, I can’t say I’ve always made the best use of them.\nI’ve had a few attempts at building a Zettelkasten system. I started with Zettlr, then switched to Obsidian, only to abandon it for a paper-based approach. Now, I’ve returned to Zettlr again.\nDespite these shifts, I’ve managed to write and publish a few articles—some on Substack, some on opinion portals, and even one in a print magazine. However, these efforts felt more like bursts of temporary enthusiasm rather than the consistent, systematic…",
-          "link": "https://forum.zettelkasten.de/discussion/3139/hello-from-poland",
-          "publishedOn": "2024-12-22T19:08:29.000Z",
-          "wordCount": 952,
-          "title": "Hello from Poland",
-          "imageUrl": null
-        },
-        {
-          "id": "3134@/discussions",
-          "author": "Mauro",
-          "description": "Hi, I am currently pursuing an undergraduate in computer engineering. I have mixed experiences applying the Zettelkasten method to my study, and I wanted to get some suggestions.\nI noticed that I punctually gain a deeper understanding of any topic when I process it in my Zettelkasten, but I tend to get drifted away by details. This would not be a problem if I didn’t have a time constraint.\nMy current method for studying technical subjects (physics in this case) is to solve countless exercises until solving them becomes automatic.\nGiven that, I am wondering if it makes sense, and whether or not is time effective, to add some hard exercises with an explanation in my Zettelkasten.",
-          "link": "https://forum.zettelkasten.de/discussion/3134/integrating-zettelkasten-with-university",
-          "publishedOn": "2024-12-22T15:42:52.000Z",
-          "wordCount": 1238,
-          "title": "Integrating Zettelkasten with University",
-          "imageUrl": null
-        },
-        {
-          "id": "3133@/discussions",
-          "author": "John_P",
-          "description": "I often see notes with much longer text passages.\nI see my notes, which I call blocks, as parts of a larger system.\nMy approach is as follows:\nFor communication outside my system, I use documents in A5 size.\nI am currently working on a system that manages my blocks both analog and digitally.\nIs anyone else working with a similar principle?\nI have been thinking about this system intensively for some time.\nIs anyone working on a similar topic?\nI would love to exchange ideas. I don’t want to stay in my own tunnel.\nDoes anyone have the interest and motivation to help move this project forward?\nIt won’t be hard to notice that the English language is currently a personal barrier for me.\nThank you very much, and best regards from life in a box!",
-          "link": "https://forum.zettelkasten.de/discussion/3133/notes-as-building-blocks-my-project-for-a-connected-life",
-          "publishedOn": "2024-12-22T11:46:27.000Z",
-          "wordCount": 1097,
-          "title": "Notes as Building Blocks: My Project for a Connected Life",
           "imageUrl": null
         }
       ]
