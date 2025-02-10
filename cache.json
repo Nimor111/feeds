@@ -53,6 +53,46 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1im3etf/%D1%8F_natural_transformations_as_a_basis_of_control/",
+          "author": null,
+          "description": "submitted by    /u/iokasimovm  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1im3etf/%D1%8F_natural_transformations_as_a_basis_of_control/",
+          "publishedOn": "2025-02-10T10:50:41.000Z",
+          "wordCount": null,
+          "title": "Я ☞ Natural transformations as a basis of control flow",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1im366u/efficient_map_and_queue/",
+          "author": null,
+          "description": "I am solving a problem involving a Map and a Queue, but my code does not pass all test cases. Could you suggest approaches to make it more efficient? Thanks.\n Here is the problem statement: https://www.hackerrank.com/contests/cp1-fall-2020-topic-4/challenges/buffet/problem\n Here is my code:\n ```haskell {-# LANGUAGE LambdaCase #-} {-# LANGUAGE RankNTypes #-} {-# LANGUAGE OverloadedStrings #-}\n import qualified Data.ByteString.Lazy.Char8 as B import Control.Monad import Control.Monad.State import Data.Foldable import Data.Maybe import qualified Data.IntMap.Strict as Map import Data.IntMap (IntMap) import qualified Data.Sequence as Seq import Data.Sequence (Seq(..), (|>))\n type Dish = Int type Queue = (Seq Dish, IntMap Dish)\n enqueue :: Queue -> Dish -> Queue enqueue (xs, freq) x = (xs |> x, Map.insertWith (+) x 1 freq)\n dequeue :: Queue -> Queue dequeue (x :<| xs, freq) = (xs, Map.update decreaseFreq x freq) where decreaseFreq 1 = Nothing decreaseFreq c = Just (c - 1)\n sizeQ :: Queue -> Int sizeQ (_, freq) = Map.size freq {-# INLINE sizeQ #-}\n windows :: (Int, [Dish]) -> [Int] windows (w, xs) = slide startQ rest where (start, rest) = splitAt w xs startQ = foldl' enqueue (Seq.empty, Map.empty) start\n  slide q xs = sizeQ q : case xs of [] -> [] (x:xs') -> slide (enqueue (dequeue q) x) xs' \n input :: Scanner (Int, [Int]) input = do n <- int w <- int xs <- replicateM n int pure (w, xs)\n main :: IO () main = B.interact $ B.unwords . map showB . windows . runScanner input\n readInt :: B.ByteString -> Int readInt = fst . fromJust . B.readInt\n type Scanner a = State [B.ByteString] a\n runScanner :: forall a. Scanner a -> B.ByteString -> a runScanner s = evalState s . B.words\n str :: Scanner B.ByteString str = get >>= \\case s:ss -> put ss *> pure s\n int :: Scanner Int int = readInt <$> str\n showB :: forall a. (Show a) => a -> B.ByteString showB = B.pack . show ```\n    submitted by    /u/Reclusive--Spikewing  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1im366u/efficient_map_and_queue/",
+          "publishedOn": "2025-02-10T10:34:05.000Z",
+          "wordCount": null,
+          "title": "Efficient Map and Queue?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ilvjke/is_there_a_reason_why_must_be_a_data_constructor/",
+          "author": null,
+          "description": "data Dual a = Dual a a deriving (Show) infixl 6 :+ (:+) :: Num a => a -> a -> Dual a a :+ b = Dual a b \n Generates the compile error:\n app/Dual.hs:49:1: error: [GHC-94426] Invalid data constructor ‘(:+)’ in type signature: You can only define data constructors in data type declarations. | 49 | (:+) :: Num a => a -> a -> Dual a \n I know how to make it a data constructor, but I really want it to be a function. It is defined as a data constructor in Data.Complex, but should it not also function as a function as well? I am using GHC2021.\n Any suggestions are welcome. Thanks in advance.\n    submitted by    /u/el_toro_2022  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ilvjke/is_there_a_reason_why_must_be_a_data_constructor/",
+          "publishedOn": "2025-02-10T02:19:54.000Z",
+          "wordCount": null,
+          "title": "Is there a reason why (:+) must be a data constructor and not a function?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1ilqq12/2025_call_for_nominations_for_the_haskell/",
+          "author": null,
+          "description": "Hello! everyone\n The Haskell Foundation’s directors are pleased to announce the nomination process for seats on the Foundation’s board of directors.\n The board is the ultimate decision-making body of the Foundation and provides its strategic leadership. It ensures that the Foundation is working toward achieving its mission, and it appoints and supervises senior members of the Foundation’s staff.\n Following the board membership lifecycle rules, we are announcing five open seats. Directors that have their terms expiring are able to re-apply once for a second term.\n The Foundation Board\n Membership\n  \nBeing a director of the Foundation gives you the opportunity to contribute directly to its strategic direction, to help build the Haskell community, and to help promote the broader adoption of f…",
+          "link": "https://www.reddit.com/r/haskell/comments/1ilqq12/2025_call_for_nominations_for_the_haskell/",
+          "publishedOn": "2025-02-09T22:10:59.000Z",
+          "wordCount": null,
+          "title": "2025 Call for nominations for the Haskell Foundation",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1iljslr/aztecs_v04_first_steps_towards_a_game_engine_with/",
           "author": null,
           "description": "submitted by    /u/matthunz  \n [link]   [comments]",
@@ -961,26 +1001,6 @@
           "wordCount": null,
           "title": "Would eliminating empty class dictionary references be unsound?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1hzcohr/is_servant_the_goto_for_quick_simple_web_projects/",
-          "author": null,
-          "description": "I'm not a very advanced haskell user, but I would like to build a simple web project with haskell (partly for learning and partly to automate some day-to-day stuff with a nicer interface, so it needs to actuall y be useful and maintainable and quick-to-build).\n i was wondering what the simplest library/framework would be for this. i started with servant but the types stuff was a bit advanced, so while looking around i found [mig](https://anton-k.github.io/mig/) which seemed simple enough. however, it doesn't seem to be active and the project doesn't even build on cabal. so now im just wondering if i should just stick with servant.\n    submitted by    /u/Far_Contribution4347  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1hzcohr/is_servant_the_goto_for_quick_simple_web_projects/",
-          "publishedOn": "2025-01-12T02:32:29.000Z",
-          "wordCount": null,
-          "title": "Is servant the go-to for quick, simple web projects (for beginners)?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1hyxung/should_i_use_effecful_as_a_beginner/",
-          "author": null,
-          "description": "After having used haskell only for advent of code problems so far, I now want to build a small web app for some home automation stuff.\n One approach that I have in mind is using scotty, lucid and htmx. Scotty seems pretty basic and would allow me to approach other problems like saving and loading state, logging etc. one by one in an independent fashion.\n The other approach is to use hyperbole, which was mentioned here recently. It seems pretty much perfect for my use case, but also very new and a little more complex. It is based on Effectful and I have no experience with effect systems so far.\n Coming from OOP, Effectful kinda looks like dependency injection to me, not only controlling the effects that a function has access to, but also delivering them as an alternative to passing functions as arguments I guess. Is this accurate? It looks very neat, but I'm wondering if I should refrain from using it for now and focus on basic monads and transformer stacks for now? I don't really understand them, yet.\n    submitted by    /u/Panda_966  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1hyxung/should_i_use_effecful_as_a_beginner/",
-          "publishedOn": "2025-01-11T15:09:29.000Z",
-          "wordCount": null,
-          "title": "Should I use Effecful as a beginner?",
-          "imageUrl": null
         }
       ]
     },
@@ -989,6 +1009,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1imaw23/ide_with_cross_scala_version_support/",
+          "author": null,
+          "description": "How do you develop code for both scala 2 and scala 3 with an ide like vscode or intellij? Is there a way to select which scala version to select? Otherwise I get the editor full of syntax errors. For context, I've the code in src/scala-2 and other code in src/scala-3, so when I edit files in those folders I just get ide errors\n    submitted by    /u/Asperico  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1imaw23/ide_with_cross_scala_version_support/",
+          "publishedOn": "2025-02-10T16:59:12.000Z",
+          "wordCount": null,
+          "title": "IDE with cross scala version support",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1imarft/this_week_in_scala_feb_10_2025/",
+          "author": null,
+          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1imarft/this_week_in_scala_feb_10_2025/",
+          "publishedOn": "2025-02-10T16:53:57.000Z",
+          "wordCount": null,
+          "title": "This week in #Scala (Feb 10, 2025)",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1ilmvy8/rust_from_a_scala_perspective_advent_of_code_2024/",
           "author": null,
@@ -1798,16 +1838,6 @@
           "wordCount": null,
           "title": "This week in #Scala (Jan 13, 2024)",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1hyxmxy/would_you_say_play_actions_are_referentially/",
-          "author": null,
-          "description": "Background docs: https://www.playframework.com/documentation/2.8.x/ScalaActions\n I like the convention that functions with no parameters that are not RT should have a () parameter list to attempt to express this; however most of the Play examples omit that.\n And in later versions of Scala there is stricter enforcement of call site versus declaration site usage, so you have to be consistent. Views? \n    submitted by    /u/Storini  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1hyxmxy/would_you_say_play_actions_are_referentially/",
-          "publishedOn": "2025-01-11T14:59:24.000Z",
-          "wordCount": null,
-          "title": "Would you say Play Actions are referentially transparent?",
-          "imageUrl": null
         }
       ]
     },
@@ -2276,16 +2306,6 @@
           "wordCount": null,
           "title": "org-loaddefs.el.gz being recompiled on every startup.",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1hz7we1/orgmunge_v030_released/",
-          "author": null,
-          "description": "Orgmunge (Github, PyPi) is a Python package for parsing Org files into Python objects. It lets you modify the Org structure and optionally write it back to file.\n I'm happy to announce I released version 0.3.0. The biggest change is support for org-roam nodes with a properties drawer at the very top before the title.\n    submitted by    /u/DurableOne  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1hz7we1/orgmunge_v030_released/",
-          "publishedOn": "2025-01-11T22:37:22.000Z",
-          "wordCount": null,
-          "title": "Orgmunge v0.30 released",
-          "imageUrl": null
         }
       ]
     },
@@ -2294,6 +2314,126 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/multiple-cursors-20250210.1813.tar",
+          "author": null,
+          "description": "The multiple-cursors package has been updated to version 20250210.1813.",
+          "link": "https://melpa.org/#/multiple-cursors",
+          "publishedOn": "2025-02-10T18:13:00.000Z",
+          "wordCount": 105,
+          "title": "multiple-cursors (20250210.1813) --- Multiple cursors for emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/js2-refactor-20250210.1811.tar",
+          "author": null,
+          "description": "The js2-refactor package has been updated to version 20250210.1811.",
+          "link": "https://melpa.org/#/js2-refactor",
+          "publishedOn": "2025-02-10T18:11:00.000Z",
+          "wordCount": 105,
+          "title": "js2-refactor (20250210.1811) --- The beginnings of a JavaScript refactoring library in emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ivy-erlang-complete-20250210.1738.tar",
+          "author": null,
+          "description": "The ivy-erlang-complete package has been updated to version 20250210.1738.",
+          "link": "https://melpa.org/#/ivy-erlang-complete",
+          "publishedOn": "2025-02-10T17:38:00.000Z",
+          "wordCount": 105,
+          "title": "ivy-erlang-complete (20250210.1738) --- Erlang completion at point using ivy",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/php-cs-fixer-20250210.1723.tar",
+          "author": null,
+          "description": "The php-cs-fixer package has been updated to version 20250210.1723.",
+          "link": "https://melpa.org/#/php-cs-fixer",
+          "publishedOn": "2025-02-10T17:23:00.000Z",
+          "wordCount": 105,
+          "title": "php-cs-fixer (20250210.1723) --- The php-cs-fixer wrapper",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orgtbl-fit-20250210.1535.tar",
+          "author": null,
+          "description": "The orgtbl-fit package has been updated to version 20250210.1535.",
+          "link": "https://melpa.org/#/orgtbl-fit",
+          "publishedOn": "2025-02-10T15:35:00.000Z",
+          "wordCount": 105,
+          "title": "orgtbl-fit (20250210.1535) --- Fit an Org Mode column using Calc regression methods",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orgtbl-join-20250210.1523.tar",
+          "author": null,
+          "description": "The orgtbl-join package has been updated to version 20250210.1523.",
+          "link": "https://melpa.org/#/orgtbl-join",
+          "publishedOn": "2025-02-10T15:23:00.000Z",
+          "wordCount": 105,
+          "title": "orgtbl-join (20250210.1523) --- Join columns from other Org Mode tables",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/calibredb-20250210.1435.tar",
+          "author": null,
+          "description": "The calibredb package has been updated to version 20250210.1435.",
+          "link": "https://melpa.org/#/calibredb",
+          "publishedOn": "2025-02-10T14:35:00.000Z",
+          "wordCount": 105,
+          "title": "calibredb (20250210.1435) --- Yet another calibre client",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/magit-svn-20250210.1141.tar",
+          "author": null,
+          "description": "The magit-svn package has been updated to version 20250210.1141.",
+          "link": "https://melpa.org/#/magit-svn",
+          "publishedOn": "2025-02-10T11:41:00.000Z",
+          "wordCount": 105,
+          "title": "magit-svn (20250210.1141) --- Git-Svn extension for Magit",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/accent-20250210.906.tar",
+          "author": null,
+          "description": "The accent package has been updated to version 20250210.906.",
+          "link": "https://melpa.org/#/accent",
+          "publishedOn": "2025-02-10T09:06:00.000Z",
+          "wordCount": 105,
+          "title": "accent (20250210.906) --- Popup for accented characters (diacritics)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-pdftools-20250210.118.tar",
+          "author": null,
+          "description": "The org-pdftools package has been updated to version 20250210.118.",
+          "link": "https://melpa.org/#/org-pdftools",
+          "publishedOn": "2025-02-10T01:18:00.000Z",
+          "wordCount": 105,
+          "title": "org-pdftools (20250210.118) --- Support for links to documents in pdfview mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/cff-20250209.2316.tar",
+          "author": null,
+          "description": "The cff package has been updated to version 20250209.2316.",
+          "link": "https://melpa.org/#/cff",
+          "publishedOn": "2025-02-09T23:16:00.000Z",
+          "wordCount": 105,
+          "title": "cff (20250209.2316) --- Search of the C/C++ file header by the source and vice versa",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/orgtbl-aggregate-20250209.2226.tar",
+          "author": null,
+          "description": "The orgtbl-aggregate package has been updated to version 20250209.2226.",
+          "link": "https://melpa.org/#/orgtbl-aggregate",
+          "publishedOn": "2025-02-09T22:26:00.000Z",
+          "wordCount": 105,
+          "title": "orgtbl-aggregate (20250209.2226) --- Create an Org Mode aggregated table from another table",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/finito-20250209.1956.tar",
           "author": null,
@@ -2392,6 +2532,16 @@
           "publishedOn": "2025-02-08T21:26:00.000Z",
           "wordCount": 105,
           "title": "test-cockpit (20250208.2126) --- A command center to run tests of a software project",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/kixtart-mode-20250208.1949.tar",
+          "author": null,
+          "description": "The kixtart-mode package has been updated to version 20250208.1949.",
+          "link": "https://melpa.org/#/kixtart-mode",
+          "publishedOn": "2025-02-08T19:49:00.000Z",
+          "wordCount": 105,
+          "title": "kixtart-mode (20250208.1949) --- Major mode for editing KiXtart scripts",
           "imageUrl": null
         },
         {
@@ -2895,6 +3045,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/erlang-ts-20250202.1841.tar",
+          "author": null,
+          "description": "The erlang-ts package has been updated to version 20250202.1841.",
+          "link": "https://melpa.org/#/erlang-ts",
+          "publishedOn": "2025-02-02T18:41:00.000Z",
+          "wordCount": 105,
+          "title": "erlang-ts (20250202.1841) --- Major modes for editing Erlang",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/elisa-20250202.1808.tar",
           "author": null,
           "description": "The elisa package has been updated to version 20250202.1808.",
@@ -2962,6 +3122,16 @@
           "publishedOn": "2025-02-02T09:04:00.000Z",
           "wordCount": 105,
           "title": "cfn-mode (20250202.904) --- AWS cloudformation mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/citar-denote-20250202.854.tar",
+          "author": null,
+          "description": "The citar-denote package has been updated to version 20250202.854.",
+          "link": "https://melpa.org/#/citar-denote",
+          "publishedOn": "2025-02-02T08:54:00.000Z",
+          "wordCount": 105,
+          "title": "citar-denote (20250202.854) --- Minor mode integrating Citar and Denote",
           "imageUrl": null
         },
         {
@@ -5143,66 +5313,6 @@
           "wordCount": 105,
           "title": "mono-complete (20250112.918) --- Completion suggestions with multiple back-ends",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/gerrit-20250112.802.tar",
-          "author": null,
-          "description": "The gerrit package has been updated to version 20250112.802.",
-          "link": "https://melpa.org/#/gerrit",
-          "publishedOn": "2025-01-12T08:02:00.000Z",
-          "wordCount": 105,
-          "title": "gerrit (20250112.802) --- Gerrit client",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/phpactor-20250112.201.tar",
-          "author": null,
-          "description": "The phpactor package has been updated to version 20250112.201.",
-          "link": "https://melpa.org/#/phpactor",
-          "publishedOn": "2025-01-12T02:01:00.000Z",
-          "wordCount": 105,
-          "title": "phpactor (20250112.201) --- Interface to Phpactor",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/osm-20250111.2135.tar",
-          "author": null,
-          "description": "The osm package has been updated to version 20250111.2135.",
-          "link": "https://melpa.org/#/osm",
-          "publishedOn": "2025-01-11T21:35:00.000Z",
-          "wordCount": 105,
-          "title": "osm (20250111.2135) --- OpenStreetMap viewer",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ada-ts-mode-20250111.1616.tar",
-          "author": null,
-          "description": "The ada-ts-mode package has been updated to version 20250111.1616.",
-          "link": "https://melpa.org/#/ada-ts-mode",
-          "publishedOn": "2025-01-11T16:16:00.000Z",
-          "wordCount": 105,
-          "title": "ada-ts-mode (20250111.1616) --- Major mode for Ada using Tree-sitter",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/gpr-ts-mode-20250111.1503.tar",
-          "author": null,
-          "description": "The gpr-ts-mode package has been updated to version 20250111.1503.",
-          "link": "https://melpa.org/#/gpr-ts-mode",
-          "publishedOn": "2025-01-11T15:03:00.000Z",
-          "wordCount": 105,
-          "title": "gpr-ts-mode (20250111.1503) --- Major mode for GNAT project files using Tree-Sitter",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/evil-20250111.941.tar",
-          "author": null,
-          "description": "The evil package has been updated to version 20250111.941.",
-          "link": "https://melpa.org/#/evil",
-          "publishedOn": "2025-01-11T09:41:00.000Z",
-          "wordCount": 105,
-          "title": "evil (20250111.941) --- Extensible vi layer",
-          "imageUrl": null
         }
       ]
     },
@@ -5211,6 +5321,126 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1imfhwi/magit_now_natively_supports_adding_icons_in_the/",
+          "author": null,
+          "description": "Recently, u/tarsius_ recently added support for enabling icons in the status and diff buffers:\n So now, you can do:\n ```\n (setopt magit-format-file-function #'magit-format-file-all-the-icons)\n ;; or\n (setopt magit-format-file-function #'magit-format-file-nerd-icons)\n ```\n And get an experience similar to https://github.com/gekoke/magit-file-icons\n    submitted by    /u/emoarmy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1imfhwi/magit_now_natively_supports_adding_icons_in_the/",
+          "publishedOn": "2025-02-10T20:01:18.000Z",
+          "wordCount": null,
+          "title": "Magit now natively supports adding icons in the status buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1imeaeb/how_to_simplifyrender_eww_browsers_output/",
+          "author": null,
+          "description": "Hi everyone,\n I tried using eww browser today and was pleasantly surprised by it.\n However as we know in the real world almost all websites have atrocious HTML code that is difficult for eww to display correctly. For most websites that I have tried, lot of unnecessary elements were displayed on the screen.\n If possible I would like to *only* display the text of any article website that I'm reading without any other unnecessary elements.\n Is there any plugin / configuration to do this?\n Right now what I'm thinking is if nothing else exists, I will write some python code to scrape the HTML text of the website I'm trying to visit, and then only extract the HTML data that I'm interested in, and either write it to a text buffer, or somehow integrate it with eww browse itself.\n Things such as following links may not work very well, but I think I can setup a rudimentary \"LSP\" like server that will allow me to jump through different links on the website.\n This method will take some work but is expected to be efficient.\n    submitted by    /u/oxcrowx  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1imeaeb/how_to_simplifyrender_eww_browsers_output/",
+          "publishedOn": "2025-02-10T19:13:29.000Z",
+          "wordCount": null,
+          "title": "How to simplify/render eww browser's output?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1imbime/where_to_start_writing_an_emacs_mode_forking_the/",
+          "author": null,
+          "description": "I wrote my own language based on a C11 runtime for an Elixir-like functional language. The programming language is named KC3 and there is a small documentation and release webpage on https://kc3-lang.org/ \n The syntax and grammar are close enough to Elixir to use the elixir-mode from melpa but I would like to create my own mode to accomodate for small changes like function definition and arguments indentation which is quite broken sometimes.\n Thanks for any advice or pointers.\n    submitted by    /u/thoxdg  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1imbime/where_to_start_writing_an_emacs_mode_forking_the/",
+          "publishedOn": "2025-02-10T17:23:41.000Z",
+          "wordCount": null,
+          "title": "Where to start writing an Emacs mode forking the existing Elixir mode to accomodate small syntaxic changes ?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1im8etu/set_fill_column_to_longest_line_in_buffer/",
+          "author": null,
+          "description": "This works nicely for me: I want fill-column to match the longest line in a buffer; the text files I edit vary widely in their formatting. Curiously, I had trouble finding this exact thing posted elsewhere, but it wasn't hard to code.\n Not sure if others would want something similar; here's my code, add it to your preferred place for init. I can see it bogging down with very large buffers; maybe there's a more efficient way?\n (defun my-set-fill-column () (let (my-tmp-fill-column) (save-excursion (goto-char (point-min)) (while (not (eobp)) (setq my-tmp-fill-column (+ 1 (- (line-end-position) (line-beginning-position)))) (if (> my-tmp-fill-column fill-column) (setq fill-column my-tmp-fill-column)) (forward-line))))) (setq text-mode-hook '(lambda () (auto-fill-mode 1) (setq fill-column 72) ;; optional, this is my preferred default (my-set-fill-column) )) \n    submitted by    /u/trueger  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1im8etu/set_fill_column_to_longest_line_in_buffer/",
+          "publishedOn": "2025-02-10T15:16:20.000Z",
+          "wordCount": null,
+          "title": "set fill column to longest line in buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1im6hqo/changing_the_code_background_of_the_company/",
+          "author": null,
+          "description": "Bit of a newbie to Emacs FYI.\n How do I change the code background in company tooltips, using company-box if it makes a difference I tried setting the company-tooltip background and it does work on most of the tooltip EXCEPT the code part. Attaching an image for reference, I want to change/remove the lighter highlight and no matter what I try I can only change the darker part.\n https://preview.redd.it/8wm0p9ucgbie1.png?width=848&format=png&auto=webp&s=ea58cd34027c7593ab6dbd6e702a4e6051bb7651\n    submitted by    /u/Busy-Ad-3237  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1im6hqo/changing_the_code_background_of_the_company/",
+          "publishedOn": "2025-02-10T13:48:46.000Z",
+          "wordCount": null,
+          "title": "Changing the code background of the company completion box (lsp, company-lsp, company)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1im5zcl/wslubuntu_emacs_package_ui/",
+          "author": null,
+          "description": "This is probably not so much an Emacs question as it is a WSL and Gnome question but maybe folks here know the answer to it. I am not as familiar with things Linux as I might have been in the past.\n I have built Emacs from source on WSL before and it worked out okay though there's a great deal of trying to figure out which additional libraries are needed for full features, frankly, kind of a drag. But it works, and I've gotten it to work. I usually keep Windows in a dark mode, and after some fiddling with WSL (as it doesn't really standardly come with a GUI) got it to do Yaru-dark. So far so good.\n I was working on a different machine the other day and realized that the Emacs version was 26.x. I considered doing the build process again but then thought that SURELY someone had done a build …",
+          "link": "https://www.reddit.com/r/emacs/comments/1im5zcl/wslubuntu_emacs_package_ui/",
+          "publishedOn": "2025-02-10T13:23:17.000Z",
+          "wordCount": null,
+          "title": "WSL/Ubuntu Emacs package & UI",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1im58nw/looking_for_testers_nix_flakes_integration_for/",
+          "author": null,
+          "description": "Hi, I'm extending nix-mode with an eshell-aware nix command that allows you to launch nix develop or nix shell that extend your existing eshell session instead of throwing you to Bash -- and I'm looking for testers:\n https://github.com/NixOS/nix-mode/pull/202\n If you have a minute and that's something you'd find useful, consider cloning the repository and playing with code.\n Cheers, Patryk\n    submitted by    /u/Patryk27  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1im58nw/looking_for_testers_nix_flakes_integration_for/",
+          "publishedOn": "2025-02-10T12:43:08.000Z",
+          "wordCount": null,
+          "title": "Looking for testers: Nix (Flakes) integration for Eshell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1im4uf3/autoreverttailtruncate_now_available_on_elpa/",
+          "author": null,
+          "description": "https://elpa.gnu.org/packages/autorevert-tail-truncate.html https://github.com/shipmints/autorevert-tail-truncate.el\n auto-revert-tail-truncate-mode is a veneer over auto-revert-tail-mode to automate truncating the tailed buffer to a user-specified number of lines. This allows you, for example, to tail log files in an auto-reverting buffer forever without running out of memory. By default, a newly tailed buffer is immediately truncated for the same reason. Also, by default, the buffer's undo log is disabled along with font-lock to both preserve memory and optimize CPU consumption.\n Use the command auto-revert-tail-truncate-file to open a file in a new buffer with auto-revert-tail-truncate-mode enabled.\n Add a function to `auto-revert-tail-truncate-mode-hook' to control additional features in your tailed buffers; e.g., truncate-lines, controlling so-long-mode threshold, disabling spell checking, or enabling other minor modes for specific log-file formats (the visual features of which may require you to enable font-lock for those buffers).\n    submitted by    /u/shipmints  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1im4uf3/autoreverttailtruncate_now_available_on_elpa/",
+          "publishedOn": "2025-02-10T12:19:55.000Z",
+          "wordCount": null,
+          "title": "autorevert-tail-truncate now available on ELPA",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1im3xjv/elisps_abstraction_is_very_intuitive_and_semantic/",
+          "author": null,
+          "description": "I find the dolist in Elisp isvery semantic and intuitive. It focus on the object which is a list here.feels very natural.\n (dolist (item '(1 2 3 4)) (print item)) \n In contrast, the for loop in languages like Python emphasizes the control flow or the \"method\" of processing.\n for item in ['a', 'b', 'c', 'd']: print(item) \n it's like eating a meal. One approach focuses on the delicious dishes on the table, while the other focuses on the knife and fork used to eat.\n    submitted by    /u/AbstProcDo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1im3xjv/elisps_abstraction_is_very_intuitive_and_semantic/",
+          "publishedOn": "2025-02-10T11:25:01.000Z",
+          "wordCount": null,
+          "title": "elisp's abstraction is very intuitive and semantic",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1im1o8h/emacs_and_couchdb/",
+          "author": null,
+          "description": "Hello - how do you use emacs to access couchdb databases? I only found this (also available via elpa) : https://github.com/DamienCassou/elcouch but I could not get it to work and did not find any further information. Maybe there are alternatives? Please share your experience. \n    submitted by    /u/scfrank11  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1im1o8h/emacs_and_couchdb/",
+          "publishedOn": "2025-02-10T08:43:57.000Z",
+          "wordCount": null,
+          "title": "emacs and couchdb",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ilu3km/orgcaldav_repeating_events_not_stopping/",
+          "author": null,
+          "description": "I've been trying to set up org-caldav with fastmail (which is pulling calendars from Google).\n My setup syncs but calendar items that repeat and have an ending date on Google don't have an ending date in the downloaded file.\n Here's an example of what's downloaded:\n * take meds :PROPERTIES: :ID: 3724327i-cdhmcopp36co3ap9k70@google.com :END: <2024-12-17 Tue 19:00-20:00 +1d> \n When I check the entry on Google Calendar, it also has the end date.\n The result is that all these calender events repeat over and over even though in the online calendar they stop after the specified date.\n Anyone have any ideas how I can get the ending date to sync?\n    submitted by    /u/zamansky  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ilu3km/orgcaldav_repeating_events_not_stopping/",
+          "publishedOn": "2025-02-10T00:55:40.000Z",
+          "wordCount": null,
+          "title": "org-caldav - repeating events not stopping",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ils3l1/how_is_tsoding_so_efficient_with_text_editing_in/",
+          "author": null,
+          "description": "For example here https://www.youtube.com/watch?v=PuE98lipGU8\n    submitted by    /u/rofrol  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ils3l1/how_is_tsoding_so_efficient_with_text_editing_in/",
+          "publishedOn": "2025-02-09T23:13:15.000Z",
+          "wordCount": null,
+          "title": "How is tsoding so efficient with text editing in emacs",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1ilo0gk/tramp_vs_mounting/",
           "author": null,
@@ -8270,66 +8500,6 @@
           "wordCount": null,
           "title": "Hacky way to launch a new Emacs client frame as a virtual terminal, using a DE/WM shortcut",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hzfwoo/i_want_to_check_the_execution_performance_of_a/",
-          "author": null,
-          "description": "I want to check the execution performance of a command, how should I handle it? I am not very familiar with the use of profiler (why can't I see the CPU and Mem resource usage when I execute the corresponding command)\n    submitted by    /u/yibie  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hzfwoo/i_want_to_check_the_execution_performance_of_a/",
-          "publishedOn": "2025-01-12T05:38:11.000Z",
-          "wordCount": null,
-          "title": "I want to check the execution performance of a command, how should I handle it?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hz9ofj/ediff_control_panel_when_setupwindowsplain/",
-          "author": null,
-          "description": "I have ediff-window-setup-function as ediff-setup-windows-plain and ediff-split-window-function as split-window-horizontally.\n The layout I want my ediff to have, ALWAYS, is side-by-side (note I much prefer \"side-by-side\" or \"top-and-bottom\" to the confusing way ediff calls these \"split-horizontally\" and \"split-vertically\"), with the control panel in a single line window at the bottom. When I invoke ediff, I sometimes get what I want; I sometimes get three windows side-by-side, with the control panel on the left and the two things being diff'd in the middle and right, and I sometimes get one frame-wide control panel at the top and then the two things being diff'd side-by-side below.\n What do I need to do to get what I want ALWAYS? Is this controlled by split-height-threshold and/or split-width-threshold, or by those plus other things? I've tried and tried and can't figure out what needs to be done to get what I want always.\n    submitted by    /u/Any_Catch_3307  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hz9ofj/ediff_control_panel_when_setupwindowsplain/",
-          "publishedOn": "2025-01-12T00:00:41.000Z",
-          "wordCount": null,
-          "title": "Ediff Control Panel when setup-windows-plain",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hz7wkv/orgmunge_v030_released/",
-          "author": null,
-          "description": "submitted by    /u/DurableOne  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hz7wkv/orgmunge_v030_released/",
-          "publishedOn": "2025-01-11T22:37:37.000Z",
-          "wordCount": null,
-          "title": "Orgmunge v0.30 released",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hz5zsa/how_to_swap_keys_within_emacs/",
-          "author": null,
-          "description": "Hello, new user here. The default GNU Emacs keybindings are extremely uncomfortable and everywhere I see recommendations to map Caps Lock to Ctrl. I would do that, but I already swap ESC and Caps Lock for Vim, and I don't plan on stopping using Vim for editing in terminals anytime soon, even if I do switch to Emacs for most of my editing. This means that swapping caps lock and ctrl would make my Vim experience significantly worse. I wish I could, within Emacs, map: left alt to ctrl, ctrl to caps lock and esc to left alt. Is there any way to do this? \n And, yes, I've heard of Evil Mode, but I want to learn something new.\n    submitted by    /u/Plus-Front4445  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hz5zsa/how_to_swap_keys_within_emacs/",
-          "publishedOn": "2025-01-11T21:11:54.000Z",
-          "wordCount": null,
-          "title": "How to swap keys *within* Emacs?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hz1t0x/ways_to_make_markdown_latex_from_gptel_look/",
-          "author": null,
-          "description": "Howdy! I've been using gptel for a while now as my primary interface to LLM systems, and it's been fantastic. The one thing that's a little ugly is that the markdown and especially the LaTeX that get spat back at me are of course the raw markup, not formatted. Normally I don't care much about this but I'm doing a lot of math heavy stuff, and I was wondering if anyone had a hack to make the LaTeX saturated markdown look nicer.\n    submitted by    /u/permetz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hz1t0x/ways_to_make_markdown_latex_from_gptel_look/",
-          "publishedOn": "2025-01-11T18:06:15.000Z",
-          "wordCount": null,
-          "title": "Ways to make markdown / LaTeX from gptel look prettier?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1hz0h63/mkdevenv_how_i_manageuse_isolated_development/",
-          "author": null,
-          "description": "submitted by    /u/sedboyz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1hz0h63/mkdevenv_how_i_manageuse_isolated_development/",
-          "publishedOn": "2025-01-11T17:08:28.000Z",
-          "wordCount": null,
-          "title": "mkdevenv: how I manage/use isolated development environments with TRAMP, GNU Make, and Containerfiles",
-          "imageUrl": null
         }
       ]
     },
@@ -8338,6 +8508,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "3174@/discussions",
+          "author": "Will",
+          "description": "Swimming with Ideas\nThis is yet another opportunity to share what you are working on with your friends here on the forum. Add to this discussion by telling us about your zettelkasten journey. Share with us what you're learning. Sharing helps us clarify our goals and visualize our thinking. And sometimes, a conversation sparks a magical moment where we can dive into an idea worth exploring. I'd love to hear more from you.   🫵🏼\nDo you want to do a live one-on-one video chat with me about our adventures in Zettelkasting? Ping me at @Will, and we can schedule a time.\nHere is my report on why I'm here and my current ZK work themes and ideas:\nThis past period found me reviewing five and six-year-old notes. Their relevance to my current ideas and project is surprising. Links were created.\nThank…",
+          "link": "https://forum.zettelkasten.de/discussion/3174/what-is-happening-in-your-zk-journey-this-week-february-10-2025",
+          "publishedOn": "2025-02-10T18:57:00.000Z",
+          "wordCount": 1010,
+          "title": "What is happening in your ZK journey this week? February 10, 2025",
+          "imageUrl": null
+        },
         {
           "id": "3173@/discussions",
           "author": "Edmund",
@@ -8486,16 +8666,6 @@
           "publishedOn": "2025-01-13T21:21:54.000Z",
           "wordCount": 1631,
           "title": "Zettelkasten's Hidden Problem: When Finding Notes Becomes a Treasure Hunt",
-          "imageUrl": null
-        },
-        {
-          "id": "3158@/discussions",
-          "author": "buhtz",
-          "description": "Hi,\nhttps://github.com/RedddFoxxyy/Rhyolite\nOK, \"is\" is to much today. But it tends to become one.",
-          "link": "https://forum.zettelkasten.de/discussion/3158/rhyolite-seems-to-become-an-alternative-to-obsidian",
-          "publishedOn": "2025-01-11T09:22:00.000Z",
-          "wordCount": 527,
-          "title": "Rhyolite seems to become an alternative to Obsidian",
           "imageUrl": null
         }
       ]
