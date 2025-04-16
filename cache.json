@@ -53,6 +53,56 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1k0ptp8/map_over_the_argument_of_a_function/",
+          "author": null,
+          "description": "When I first learned about the Reader monad, I learned that I could map over the result of a function. Specifically:\n type F a b = (a -> b) mapf :: forall a b c. (b -> c) -> F a b -> F a c mapf f g = f . g \n Now, I'm using the co-log library to log to a file, using the function withLogTextFile:\n type Logger = (LogAction IO Text -> IO ()) -> IO () data Env = Env { envLogger :: Logger } instance HasLogger Env where getLogger = envLogger newtype App a = App { unApp :: ReaderT Env IO a } deriving newtype (Functor, Applicative, Monad, MonadIO, MonadReader Env) \n A Logger here is the result of applying withLogTextFile to a FilePath, and I store it in the environment of my App monad.\n Now, I'd like to only log entries above a certain severity level. To do this, I believe I can use the function:\n filterBySeverity :: Applicative m => Severity -> (a -> Severity) -> LogAction m a -> LogAction m a \n So instead of mapping over the result (as in the Reader example), I now need to transform the input to a function — that is, to map over its argument. How can I do this?\n For now, a workaround I’m considering is to store the severity threshold in the environment and check it at the logging call site.\n    submitted by    /u/fethut1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1k0ptp8/map_over_the_argument_of_a_function/",
+          "publishedOn": "2025-04-16T17:15:20.000Z",
+          "wordCount": null,
+          "title": "map over the argument of a function?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1k0p15h/the_haskell_unfolder_episode_42_logic_programming/",
+          "author": null,
+          "description": "Will be streamed tonight, 2025-04-16, at 1830 UTC, live on YouTube.\n Abstract:\n Functional programming is programming with mathematical functions, mapping inputs to outputs. By contrast, logic programming---perhaps best known from the language Prolog---is programming with mathematical relations between values, without making a distinction between inputs and outputs. In this two-year anniversary episode of the Haskell Unfolder we take a look at typedKanren, an embedding of the logic programming language miniKanren in Haskell. We will see how we can use it to write a type checker for a simple functional language in a few lines of code.\n    submitted by    /u/kosmikus  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1k0p15h/the_haskell_unfolder_episode_42_logic_programming/",
+          "publishedOn": "2025-04-16T16:43:58.000Z",
+          "wordCount": null,
+          "title": "The Haskell Unfolder Episode 42: logic programming with typedKanren",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1k0hdw1/automating_vgaplanets_using_free_monad/",
+          "author": null,
+          "description": "My side project over the last weekend - a couple of my old school friends setup a game of VGAPlanets (using planets.nu) and I thought it might be fun to try to automate some of the repetitive mechanical tasks on each turn (the API is a total PITA - but I've wrapped it now fairly comprehensively I think).\n The scripting turns out to be a dream use-case for `Free` :)\n Let me know what you think and open to suggestions!\n    submitted by    /u/tomwells80  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1k0hdw1/automating_vgaplanets_using_free_monad/",
+          "publishedOn": "2025-04-16T10:46:46.000Z",
+          "wordCount": null,
+          "title": "Automating VGAPlanets using Free Monad",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1k0dvkm/how_do_i_disable_the_explicit_typing_that_seems/",
+          "author": null,
+          "description": "submitted by    /u/FatWeed69  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1k0dvkm/how_do_i_disable_the_explicit_typing_that_seems/",
+          "publishedOn": "2025-04-16T06:34:52.000Z",
+          "wordCount": null,
+          "title": "How do i disable the explicit typing that seems to appear on top of each of my lines of code in vscode? I downloaded the haskell extension for vscode and i am getting this which i find annoying",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1k0bwrl/llmpowered_typedholes/",
+          "author": null,
+          "description": "submitted by    /u/tritlo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1k0bwrl/llmpowered_typedholes/",
+          "publishedOn": "2025-04-16T04:25:36.000Z",
+          "wordCount": null,
+          "title": "LLM-powered Typed-Holes",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1jzzoi0/what_companies_are_using_haskell_in_prod/",
           "author": null,
           "description": "submitted by    /u/_menneck  \n [link]   [comments]",
@@ -1011,36 +1061,6 @@
           "wordCount": null,
           "title": "Vienna Haskell Meetup on the 27th of March 2025",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jdfbqv/ann_copilot_43/",
-          "author": null,
-          "description": "Hi everyone!!\n We are really excited to announce Copilot 4.3. Copilot is a stream-based EDSL in Haskell for writing and monitoring embedded C programs, with an emphasis on correctness and hard realtime requirements. Copilot is typically used as a high-level runtime verification framework, and supports temporal logic (LTL, PTLTL and MTL), clocks and voting algorithms. Compilation to Bluespec, to target FPGAs, is also supported.\n Copilot is NASA Class D open-source software, and is being used at NASA in drone test flights. Through the NASA tool Ogma (also written in Haskell), Copilot also serves as a runtime monitoring backend for NASA's Core Flight System, Robot Operating System (ROS2), FPrime (the software framework used in the Mars Helicopter).\n This release introduces several updates, bu…",
-          "link": "https://www.reddit.com/r/haskell/comments/1jdfbqv/ann_copilot_43/",
-          "publishedOn": "2025-03-17T15:26:56.000Z",
-          "wordCount": null,
-          "title": "[ANN] Copilot 4.3",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jde8fc/haskell_interlude_63_farhad_mehta/",
-          "author": null,
-          "description": "submitted by    /u/tritlo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1jde8fc/haskell_interlude_63_farhad_mehta/",
-          "publishedOn": "2025-03-17T14:41:07.000Z",
-          "wordCount": null,
-          "title": "Haskell Interlude 63: Farhad Mehta",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jd8uie/volunteers_for_icfp_2025_artifact_evaluation/",
-          "author": null,
-          "description": "Dear all,\n We are looking for motivated people to be members of the ICFP 2025 Artifact Evaluation Committee (AEC). Students, researchers and people from the industry or the free software community are all welcome. The artifact evaluation process aims to improve the quality and reproducibility of research artifacts for ICFP papers. In case you want to nominate someone else (students, colleagues, etc.), please send them the nomination form.\n Important note: If you are a student, you will need to provide a letter from your advisor supporting your nomination (one or two short paragraphs should be enough). We ask for this mainly to ensure that students and advisors are on the same page regarding the allocation of a sufficient amount of your time to review the assigned artifacts.\n Nomination form: https://forms.gle/RthfLTeJ3fo6iMH16\n Deadline for nominations: Fri April 11th 2025\n For more information, see the AEC webpage: https://icfp25.sigplan.org/track/icfp-2025-artifact-evaluation\n The primary responsibility of committee members is to review the artifacts submitted corresponding to the already conditionally accepted papers in the main research track. In particular, run the associated tool or benchmark, check whether the results in the paper can be reproduced, and inspect the tool and the data.\n We expect the evaluation of one artifact to take about a full day. Each committee member will receive 2 to 3 artifacts to review.\n All of the AEC work will be done remotely/online. The AEC will work in June, with the review work happening between June 16th and July 18th.\n Come join us in improving the quality of research in our field!\n Best,\n — The Artifact Evaluation chairs: Benoît Montagu and Lionel Parreaux\n    submitted by    /u/LPTK  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1jd8uie/volunteers_for_icfp_2025_artifact_evaluation/",
-          "publishedOn": "2025-03-17T09:45:49.000Z",
-          "wordCount": null,
-          "title": "Volunteers for ICFP 2025 Artifact Evaluation Committee (AEC)",
-          "imageUrl": null
         }
       ]
     },
@@ -1049,6 +1069,46 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1k0ulzy/is_scalate_still_a_thing/",
+          "author": null,
+          "description": "On the one hand, the site is still up, there are occasional commits to the github repo, and there was a release less than a year ago.\n On the other hand, no one has said anything in their gitter room for years, no one has posted a github issue in years either, and their own page doesn't even mention anything newer than 2.12. (But they have commits to support 3...)\n I know templating is unfashionable, but I don't care, I want a templating engine and scuery looks like the thing. And scuery seems even less active than the rest of Scalate, they barely even mention it on their documentation page.\n    submitted by    /u/fluffysheap  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1k0ulzy/is_scalate_still_a_thing/",
+          "publishedOn": "2025-04-16T20:30:27.000Z",
+          "wordCount": null,
+          "title": "Is Scalate still a thing?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1k0r1c7/upcoming_scala_india_talk_on_topic_lets_teach/",
+          "author": null,
+          "description": "We are excited to announce our upcoming Scala India Talk on 20th April 2025 at 8:30PM IST on the topic - \"Let's Teach LLMs to Write Great Scala!\" by Kannupriya Kalra.\n In this talk, we'll demystify how LLMs work, from zero-shot prompting to agentic loops, and explore why typed languages like Scala offer a stronger foundation for reliable, maintainable AI applications. We'll learn from Python tools like LangChain and PydanticAI, then introduce LLM4S - a type-safe, Scala-native toolkit for structured LLM workflows, tool calling, and agentic programming.\n Come see how LLMs can write great Scala and why that changes the game for AI development. Kannupriya Kalra is the org admin for GSoC 2024–25 with the Scala Center. She has delivered talks across four countries and co-created LLM4S, a Scala-first AI toolkit. With over a decade in functional programming, she’s built scalable systems at Sky (London) and contributed to data engineering projects in India, with deep expertise in Scala, Akka, and big data tech.\n All the sessions happening at Scala India are in English, so feel free to join even if you are not from India but wish to join. This talk has been thoughtfully scheduled to accommodate multiple time zones: April 20, 2025 at 8:30 PM IST | 4:00 PM GMT (London time) | 11:00 AM EST (New York time) | 8:00 AM PST (Bay Area time).\n Join us on Discord (Where the community is): https://lnkd.in/dSd57jWx\n    submitted by    /u/Distinct-Crab6379  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1k0r1c7/upcoming_scala_india_talk_on_topic_lets_teach/",
+          "publishedOn": "2025-04-16T18:03:08.000Z",
+          "wordCount": null,
+          "title": "Upcoming Scala India Talk on topic \"Let's Teach LLMs to Write Great Scala!\"",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1k0oqy5/apifirst_development_in_scala/",
+          "author": null,
+          "description": "submitted by    /u/ZuploAdrian  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1k0oqy5/apifirst_development_in_scala/",
+          "publishedOn": "2025-04-16T16:32:07.000Z",
+          "wordCount": null,
+          "title": "API-First Development in Scala",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1k0k76y/intellij_scala_plugin_20251_is_out/",
+          "author": null,
+          "description": "Scala Plugin 2025.1 is out! The update brings:\n - Support for the new syntax of context bounds and givens\n - Improved handling of named tuples\n - The new \"Generate sbt managed sources\" action\n - X-Ray hints for apply methods and all parameter names\n and more\n    submitted by    /u/makingthematrix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1k0k76y/intellij_scala_plugin_20251_is_out/",
+          "publishedOn": "2025-04-16T13:17:41.000Z",
+          "wordCount": null,
+          "title": "IntelliJ Scala Plugin 2025.1 Is Out!",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1jzrumj/better_scala_builds_with_the_mill_build_tool/",
           "author": null,
@@ -1728,46 +1788,6 @@
           "wordCount": null,
           "title": "Integration Pipeline - blog post",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1jdlhry/tiny_tuple_transformation_library_for_scala_3/",
-          "author": null,
-          "description": "Released first version of my tiny library for tuples manipulation - flattening, elements swapping. Any suggestions and notes appreciated.\n    submitted by    /u/GroundbreakingWeb170  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1jdlhry/tiny_tuple_transformation_library_for_scala_3/",
-          "publishedOn": "2025-03-17T19:32:19.000Z",
-          "wordCount": null,
-          "title": "tiny tuple transformation library for scala 3",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1jdf86r/etl4s_101_pretty_whiteboardstyle_pipelines/",
-          "author": null,
-          "description": "Hello all - etl4s 1.0.1 is out, and battle-tested in prod @ Instacart. Your feedback last time was very helpful 🙇\n The \"etl4\" grammar has crystallized. It's meant to feel intuitive to newcomers, and like your favourite old slippers to you CE/ZIO vets.\n  \nEspecially curious about input/thoughts from:\n  \nLibrary maintainers who've created little \"gateway drug\" functional effect systems for organizations that aren't traditionally Scala-enthusiastic or Spark shops.\n Folks with thoughts on the zero-dep \"drop-in like a header file\" approach - etl4s is designed to be added to any Scala project (2.12, 2.13, or 3.x) as a single file import\n  \n   submitted by    /u/mattlianje  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1jdf86r/etl4s_101_pretty_whiteboardstyle_pipelines/",
-          "publishedOn": "2025-03-17T15:22:55.000Z",
-          "wordCount": null,
-          "title": "etl4s 1.0.1 - Pretty, whiteboard-style pipelines. Looking for feedback!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1jdcgf4/strategies_for_efficiently_parallelizing_jvm_test/",
-          "author": null,
-          "description": "submitted by    /u/lihaoyi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1jdcgf4/strategies_for_efficiently_parallelizing_jvm_test/",
-          "publishedOn": "2025-03-17T13:20:04.000Z",
-          "wordCount": null,
-          "title": "Strategies for Efficiently Parallelizing JVM Test Suites",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1jd9bf1/hiring_scala_engineer_in_spain_valbcn_vienna_and/",
-          "author": null,
-          "description": "Hey we are looking for a scala engineer working in a data-science team. This is the job ad:\n https://new-work.se/en/career/jobs/job/data-engineer-f-m-d-2203105\n    submitted by    /u/martinxtm  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1jd9bf1/hiring_scala_engineer_in_spain_valbcn_vienna_and/",
-          "publishedOn": "2025-03-17T10:18:40.000Z",
-          "wordCount": null,
-          "title": "hiring scala engineer in Spain (VAL/BCN), Vienna and Hamburg",
-          "imageUrl": null
         }
       ]
     },
@@ -2156,26 +2176,6 @@
           "wordCount": null,
           "title": "Adjusting table width to adjust to page in PDF latex export",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1jdt86n/startup_options_not_working/",
-          "author": null,
-          "description": "Org noob here. I'm going through the manual but for the life of me I can't figure out how to get the startup options to do anything.\n org-startup-folded is set to 'showeverything' and org-agenda-inhibit-startup is set to 'nil' but my understanding is that these settings should be irrelevant when I use #+STARTUP: to specify a particular option. I also see in the org manual about a \"VISIBILITY\" property but I haven't set that value in the buffer and I as far as I know its value shouldn't matter if I'm setting a particular setting in the file.\n The option I want is #+STARTUP: content but no matter what option I set nothing changes and the file stays unfolded.\n    submitted by    /u/bigdummy51  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1jdt86n/startup_options_not_working/",
-          "publishedOn": "2025-03-18T01:07:54.000Z",
-          "wordCount": null,
-          "title": "#+:Startup options not working?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1jdsmsf/cant_export_euro_to_pdf_from_within_a_math/",
-          "author": null,
-          "description": "I'm having difficulty exporting to PDF (via LaTeX) a Euro currency symbol from inside a math environment. So this is fine:\n  \n...a value of S_{init}=\\euro 75,000. \n  \nBut this is not:\n  \n...a value of $S_{init}=\\euro 75,000$. \n  \nIn the final PDF, \\euro produces nothing at all, and using \\EUR or \\texteuro makes no difference. Nor does using a display math environment instead of inline. \n But \\pounds works fine.\n Any ideas?\n    submitted by    /u/TeeMcBee  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1jdsmsf/cant_export_euro_to_pdf_from_within_a_math/",
-          "publishedOn": "2025-03-18T00:38:40.000Z",
-          "wordCount": null,
-          "title": "Can't export \\euro to PDF from within a math environment.",
-          "imageUrl": null
         }
       ]
     },
@@ -2184,6 +2184,76 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/sculpture-themes-20250416.1506.tar",
+          "author": null,
+          "description": "The sculpture-themes package has been updated to version 20250416.1506.",
+          "link": "https://melpa.org/#/sculpture-themes",
+          "publishedOn": "2025-04-16T15:06:00.000Z",
+          "wordCount": 105,
+          "title": "sculpture-themes (20250416.1506) --- Themes with vivid colors",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/faff-theme-20250416.1410.tar",
+          "author": null,
+          "description": "The faff-theme package has been updated to version 20250416.1410.",
+          "link": "https://melpa.org/#/faff-theme",
+          "publishedOn": "2025-04-16T14:10:00.000Z",
+          "wordCount": 105,
+          "title": "faff-theme (20250416.1410) --- Light Emacs color theme on cornsilk3 background",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/difftastic-20250416.1119.tar",
+          "author": null,
+          "description": "The difftastic package has been updated to version 20250416.1119.",
+          "link": "https://melpa.org/#/difftastic",
+          "publishedOn": "2025-04-16T11:19:00.000Z",
+          "wordCount": 105,
+          "title": "difftastic (20250416.1119) --- Wrapper for difftastic",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/highlight-thing-20250416.1107.tar",
+          "author": null,
+          "description": "The highlight-thing package has been updated to version 20250416.1107.",
+          "link": "https://melpa.org/#/highlight-thing",
+          "publishedOn": "2025-04-16T11:07:00.000Z",
+          "wordCount": 105,
+          "title": "highlight-thing (20250416.1107) --- Minimalistic minor mode to highlight current thing under point",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tangonov-theme-20250416.340.tar",
+          "author": null,
+          "description": "The tangonov-theme package has been updated to version 20250416.340.",
+          "link": "https://melpa.org/#/tangonov-theme",
+          "publishedOn": "2025-04-16T03:40:00.000Z",
+          "wordCount": 105,
+          "title": "tangonov-theme (20250416.340) --- A 256 color dark theme featuring bright pastels",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/uwu-theme-20250416.117.tar",
+          "author": null,
+          "description": "The uwu-theme package has been updated to version 20250416.117.",
+          "link": "https://melpa.org/#/uwu-theme",
+          "publishedOn": "2025-04-16T01:17:00.000Z",
+          "wordCount": 105,
+          "title": "uwu-theme (20250416.117) --- An awesome dark color scheme",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/kubel-20250415.1929.tar",
+          "author": null,
+          "description": "The kubel package has been updated to version 20250415.1929.",
+          "link": "https://melpa.org/#/kubel",
+          "publishedOn": "2025-04-15T19:29:00.000Z",
+          "wordCount": 105,
+          "title": "kubel (20250415.1929) --- Control Kubernetes with limited permissions",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/org-review-20250415.1451.tar",
           "author": null,
@@ -2732,6 +2802,16 @@
           "publishedOn": "2025-04-08T08:44:00.000Z",
           "wordCount": 105,
           "title": "k8s-mode (20250408.844) --- Major mode for Kubernetes configuration file",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/fedi-20250408.738.tar",
+          "author": null,
+          "description": "The fedi package has been updated to version 20250408.738.",
+          "link": "https://melpa.org/#/fedi",
+          "publishedOn": "2025-04-08T07:38:00.000Z",
+          "wordCount": 105,
+          "title": "fedi (20250408.738) --- Helper functions for fediverse clients",
           "imageUrl": null
         },
         {
@@ -5293,136 +5373,6 @@
           "wordCount": 105,
           "title": "go-translate (20250318.907) --- Translation framework, configurable and scalable",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/txl-20250318.726.tar",
-          "author": null,
-          "description": "The txl package has been updated to version 20250318.726.",
-          "link": "https://melpa.org/#/txl",
-          "publishedOn": "2025-03-18T07:26:00.000Z",
-          "wordCount": 105,
-          "title": "txl (20250318.726) --- Provides machine translation via DeepL's REST API",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/fuzzy-finder-20250318.632.tar",
-          "author": null,
-          "description": "The fuzzy-finder package has been updated to version 20250318.632.",
-          "link": "https://melpa.org/#/fuzzy-finder",
-          "publishedOn": "2025-03-18T06:32:00.000Z",
-          "wordCount": 105,
-          "title": "fuzzy-finder (20250318.632) --- Fuzzy Finder App Integration",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/gptel-aibo-20250318.546.tar",
-          "author": null,
-          "description": "The gptel-aibo package has been updated to version 20250318.546.",
-          "link": "https://melpa.org/#/gptel-aibo",
-          "publishedOn": "2025-03-18T05:46:00.000Z",
-          "wordCount": 105,
-          "title": "gptel-aibo (20250318.546) --- An AI Writing Assistant",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/kele-20250318.226.tar",
-          "author": null,
-          "description": "The kele package has been updated to version 20250318.226.",
-          "link": "https://melpa.org/#/kele",
-          "publishedOn": "2025-03-18T02:26:00.000Z",
-          "wordCount": 105,
-          "title": "kele (20250318.226) --- Spritzy Kubernetes cluster management",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ercn-20250317.2338.tar",
-          "author": null,
-          "description": "The ercn package has been updated to version 20250317.2338.",
-          "link": "https://melpa.org/#/ercn",
-          "publishedOn": "2025-03-17T23:38:00.000Z",
-          "wordCount": 105,
-          "title": "ercn (20250317.2338) --- Flexible ERC notifications",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lithium-20250317.2030.tar",
-          "author": null,
-          "description": "The lithium package has been updated to version 20250317.2030.",
-          "link": "https://melpa.org/#/lithium",
-          "publishedOn": "2025-03-17T20:30:00.000Z",
-          "wordCount": 105,
-          "title": "lithium (20250317.2030) --- Lightweight modal interfaces",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ox-typst-20250317.1854.tar",
-          "author": null,
-          "description": "The ox-typst package has been updated to version 20250317.1854.",
-          "link": "https://melpa.org/#/ox-typst",
-          "publishedOn": "2025-03-17T18:54:00.000Z",
-          "wordCount": 105,
-          "title": "ox-typst (20250317.1854) --- Typst Back-End for Org Export Engine",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/jira-20250317.1818.tar",
-          "author": null,
-          "description": "The jira package has been updated to version 20250317.1818.",
-          "link": "https://melpa.org/#/jira",
-          "publishedOn": "2025-03-17T18:18:00.000Z",
-          "wordCount": 105,
-          "title": "jira (20250317.1818) --- Emacs Interface to Jira",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/gptel-fn-complete-20250317.1805.tar",
-          "author": null,
-          "description": "The gptel-fn-complete package has been updated to version 20250317.1805.",
-          "link": "https://melpa.org/#/gptel-fn-complete",
-          "publishedOn": "2025-03-17T18:05:00.000Z",
-          "wordCount": 105,
-          "title": "gptel-fn-complete (20250317.1805) --- Complete the function at point using gptel",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/indexed-20250317.1801.tar",
-          "author": null,
-          "description": "The indexed package has been updated to version 20250317.1801.",
-          "link": "https://melpa.org/#/indexed",
-          "publishedOn": "2025-03-17T18:01:00.000Z",
-          "wordCount": 105,
-          "title": "indexed (20250317.1801) --- Cache metadata on all Org files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/darkokai-theme-20250317.1704.tar",
-          "author": null,
-          "description": "The darkokai-theme package has been updated to version 20250317.1704.",
-          "link": "https://melpa.org/#/darkokai-theme",
-          "publishedOn": "2025-03-17T17:04:00.000Z",
-          "wordCount": 105,
-          "title": "darkokai-theme (20250317.1704) --- A darker variant on Monokai",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/marginalia-20250317.1632.tar",
-          "author": null,
-          "description": "The marginalia package has been updated to version 20250317.1632.",
-          "link": "https://melpa.org/#/marginalia",
-          "publishedOn": "2025-03-17T16:32:00.000Z",
-          "wordCount": 105,
-          "title": "marginalia (20250317.1632) --- Enrich existing commands with completion annotations",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/x509-mode-20250317.1016.tar",
-          "author": null,
-          "description": "The x509-mode package has been updated to version 20250317.1016.",
-          "link": "https://melpa.org/#/x509-mode",
-          "publishedOn": "2025-03-17T10:16:00.000Z",
-          "wordCount": 105,
-          "title": "x509-mode (20250317.1016) --- View certificates, CRLs and keys using OpenSSL",
-          "imageUrl": null
         }
       ]
     },
@@ -5431,6 +5381,36 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k0sp3c/exporting_orgmode_to_both_pdf_and_html_can_video/",
+          "author": null,
+          "description": "If I have the usual [[LINK]] in my org file, when exporting to PDF, I get a clickable URL like https://www.youtube.com/watch?v=urcL86UpqZc , which is fine and expected for a PDF. When exporting to HTML, from the same source org file, is there a way for that to be rendered as an embedded player? \n    submitted by    /u/mC_mC_mC_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k0sp3c/exporting_orgmode_to_both_pdf_and_html_can_video/",
+          "publishedOn": "2025-04-16T19:11:06.000Z",
+          "wordCount": null,
+          "title": "Exporting org-mode to both PDF and HTML: can video links become embedded players?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k09i63/how_can_i_indent_the_preprocessor_statements_like/",
+          "author": null,
+          "description": "submitted by    /u/Salaadas  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k09i63/how_can_i_indent_the_preprocessor_statements_like/",
+          "publishedOn": "2025-04-16T02:12:52.000Z",
+          "wordCount": null,
+          "title": "How can I indent the preprocessor statements like this:",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k02z5p/evilcollectionwantfindusagesbindings_is_not/",
+          "author": null,
+          "description": "This is part of my emacs config:\n (use-package evil\n :init ;; Execute code Before a package is loaded\n (evil-mode)\n :config ;; Execute code After a package is loaded\n (evil-set-initial-state 'eat-mode 'insert) ;; Set initial state in eat terminal to insert mode\n :custom ;; Customization of package custom variables\n (evil-want-keybinding nil) ;; Disable evil bindings in other modes (It's not consistent and not good)\n (evil-want-C-u-scroll t) ;; Set C-u to scroll up\n (evil-want-C-i-jump nil) ;; Disables C-i jump\n (evil-undo-system 'undo-redo) ;; C-r to redo\n (org-return-follows-link t) ;; Sets RETURN key in org-mode to follow links\n ;; Unmap keys in 'evil-maps. If not done, org-return-follows-link will not work\n :bind (:map evil-motion-state-map\n (\"SPC\" . nil)\n (\"RET\" . nil)\n (\"TAB\" . nil)))\n (use-package evil-collection\n :after evil\n :config\n ;; Setting where to use evil-collection\n (setq evil-collection-mode-list '(dired ibuffer magit corfu vertico consult))\n (setq evil-collection-want-find-usages-bindings t)\n (evil-collection-init))\n The problem is that, although I set `evil-collection-want-find-usages-bindings` to `t`, `g r` keybinding doesn't work. `xref-find-references` works fine when called with `M-x`.\n Here is a link to the README of `evil-collection` about `goto-reference`\n    submitted by    /u/Ok_Lengthiness_4916  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k02z5p/evilcollectionwantfindusagesbindings_is_not/",
+          "publishedOn": "2025-04-15T21:00:56.000Z",
+          "wordCount": null,
+          "title": "`evil-collection-want-find-usages-bindings' is not working",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1k020mg/fyi_denote_version_4_released/",
           "author": null,
@@ -8060,86 +8040,6 @@
           "wordCount": null,
           "title": "How obsolete are \"obsolete aliases?\"",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jdsfya/trouble_with_orgtodokeywordfaces/",
-          "author": null,
-          "description": "At the begining of my org file with the movies I have seen I have the declarations for todo and tags.\n At the end I have the following:\n ```\n Local Variables:\n line-number-mode: nil\n org-todo-keyword-faces: ((\"WANT\" . \"orange\") (\"SEEN\" . \"blue\") (\"HAVE.TO.SEE\" . \"orange\") (\"WRITE.REVIEW\" . \"red\"))\n org-tag-faces: ((\"crap\" . \"red\") (\"okay\" . \"orange\") (\"great\" . \"green\"))\n End:\n ```\n The Todo faces are colored as indicated. The tags are all salmon-pink.\n What am I doing wrong?\n    submitted by    /u/MosaicIncaSleds  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jdsfya/trouble_with_orgtodokeywordfaces/",
-          "publishedOn": "2025-03-18T00:29:34.000Z",
-          "wordCount": null,
-          "title": "trouble with `org-todo-keyword-faces`",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jdr8j6/treesitter_usage_or_alternatives/",
-          "author": null,
-          "description": "Hello everyone, hope this message receives you well.\n I'm having a hard time setting up Tree-Sitter. From what I looked online it says to build Emacs with Tree-Sitter enabled. I'm really reluctant to rebuilding Emacs because it feels like to much of a hassle for something that was a package.\n I'm coming from Vim so, maybe, this is just another point of view on Tree-Sitter.\n With that said, I've tried to install the package but it isn't listed on M-x list-packages RET\n Which them made me wonder about the sources of packages which currently are elpa and melpa \n But then, I found a communicate on their website that says it was merged into Emacs for the releasing of Emacs 29.\n My version is 29.1 and I'm running on MacOS Intel.\n Do you have any tips on how do I setup the Tree-Sitter for a list of languages?\n Thank you in advance!\n P.S.: If Tree-Sitter is still with bugs or not full featured into Emacs I'm happy to use alternatives in any case, feel free to list some :)\n    submitted by    /u/Savings-Shallot1771  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jdr8j6/treesitter_usage_or_alternatives/",
-          "publishedOn": "2025-03-17T23:33:14.000Z",
-          "wordCount": null,
-          "title": "Tree-Sitter usage or alternatives",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jdpib6/flapping_fish_on_your_modeline/",
-          "author": null,
-          "description": "Flapping fish 𓆝 𓆟 𓆞 on your modeline for funsies. Only flaps on the active buffer.\n You can set it to either \"static\" or to \"swimming\" mode. In swimming mode the fish will track how far along you are the file:\n \"~~~~~~~~~~~~~~~~~𓆞~~~~~~\"\n https://github.com/mattmonja/flappy-fish\n static flapping fishy\n    submitted by    /u/Coalbin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jdpib6/flapping_fish_on_your_modeline/",
-          "publishedOn": "2025-03-17T22:17:03.000Z",
-          "wordCount": null,
-          "title": "Flapping fish on your mode-line",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jdjlv8/distilled_the_performant_parts_of_orgnode_into_a/",
-          "author": null,
-          "description": "submitted by    /u/meedstrom  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jdjlv8/distilled_the_performant_parts_of_orgnode_into_a/",
-          "publishedOn": "2025-03-17T18:17:30.000Z",
-          "wordCount": null,
-          "title": "Distilled the performant parts of org-node into a library, hope someone finds it useful <3",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jdhuxc/jirael_emacs_integration_for_atlassians_jira/",
-          "author": null,
-          "description": "Hi! My Jira integration for Emacs is already available in MELPA.\n https://github.com/unmonoqueteclea/jira.el\n Unlike other similar packages focused on integrating Jira with org-mode, in this integration I have tried to mimic the user experience of Magit or docker.el for viewing or modifying Jira tickets.\n Showing JIRA tickets in tabulated list\n Transient menu to filter tickets\n    submitted by    /u/unmonoqueteclea  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jdhuxc/jirael_emacs_integration_for_atlassians_jira/",
-          "publishedOn": "2025-03-17T17:08:30.000Z",
-          "wordCount": null,
-          "title": "jira.el: Emacs integration for Atlassian's Jira",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jdg1lu/disallow_copying_of_passwords/",
-          "author": null,
-          "description": "I was filling password for my SSH key, and thought just for fun:\n What if I copy the password from minibuffer? Will it copy? (Let's say I put mypassword there).\n I copied it and pasted to eshell. It displayed as **********. Then I hit enter, and eshell has replied that there is no such command as mypassword.\n So, Emacs copied the password I had in minibuffer.\n Why Emacs allows this? Can it be turned off? Or maybe this is not a problem, but a feature?\n    submitted by    /u/Outrageous_Pizza_988  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jdg1lu/disallow_copying_of_passwords/",
-          "publishedOn": "2025-03-17T15:56:00.000Z",
-          "wordCount": null,
-          "title": "Disallow copying of passwords?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jdax23/uniquify_buffer_name_refresh/",
-          "author": null,
-          "description": "Anyone out there have a way to force all file buffers to be renamed when one changes uniquify style or settings? Uniquify defcustoms have no setters, making this a manual effort.\n    submitted by    /u/shipmints  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jdax23/uniquify_buffer_name_refresh/",
-          "publishedOn": "2025-03-17T11:59:16.000Z",
-          "wordCount": null,
-          "title": "uniquify buffer name refresh",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jdanr1/elpy_or_lsp_pythonel/",
-          "author": null,
-          "description": "What features offered by elpy that lsp do not! I have been using elpy but what will I miss if I switch to plain python-mode and lsp?\n    submitted by    /u/paarulakan  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jdanr1/elpy_or_lsp_pythonel/",
-          "publishedOn": "2025-03-17T11:43:59.000Z",
-          "wordCount": null,
-          "title": "Elpy or lsp + python.el",
-          "imageUrl": null
         }
       ]
     },
@@ -8148,6 +8048,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "3225@/discussions",
+          "author": "Sherpa",
+          "description": "I am starting my journey into the ZK method and ran across a post from 2021 about using a ReMarkable to manage ZK cards.\nMany of the comments seem to have been addressed as the ReMarkable Team has improved the software. For example:\ntags\nthe ability to add pages in notebooks\nThese two topics seemed to be the biggest concern at the time.\nSo, I’m wondering if anyone is currently using a ReMarkable to manage their ZK?",
+          "link": "https://forum.zettelkasten.de/discussion/3225/zk-and-remarkable-integration",
+          "publishedOn": "2025-04-16T14:29:46.000Z",
+          "wordCount": 603,
+          "title": "ZK and ReMarkable Integration",
+          "imageUrl": null
+        },
         {
           "id": "3224@/discussions",
           "author": "annatrov",
@@ -8306,26 +8216,6 @@
           "publishedOn": "2025-03-18T17:10:04.000Z",
           "wordCount": 612,
           "title": "Beachballing app, version 1.8.2 (266) + other problems",
-          "imageUrl": null
-        },
-        {
-          "id": "3207@/discussions",
-          "author": "AvidReader",
-          "description": "I apologize if this idea is too obvious or already discussed in the Forum. But as my collection of Zettels and keywords have grown, I felt I needed further organization. Structural notes would be one solution. But, I produced a \"mind-map\" of my keyword collection and was able to refine it down to 6 \"hubs\" which could also be referred to as \"major keywords\". All other keywords can be placed as sub-categories under one of those hubs. Now I am going back through all notes and adding as a keyword #_HubTitle. The underscore was needed since the editor is not case sensitive. Using the hub title of \"Language\" as an example, when I used #Language in the editor, all notes with a previously placed keyword of #language appeared in the list. But with #_Language, only those notes were listed for which I had added the new major keyword of #_Language. For me, it was very possible that a given note with the previously placed keyword #language might fit better under one of the other \"hub\" categories. One can use links to connect notes that lie in different hub categories. The editor can be used in a variety of ways to carry out searches.  By putting the name of an idea or topic in the editor, all notes containing that specific name anywhere in the text will appear. Alternately, by putting #name, then all notes with that keyword will appear, regardless of hub category. I hope this is helpful as I have found the editor to be a very powerful tool for organization, searches and reducing (but not eliminating) the need for structural notes.",
-          "link": "https://forum.zettelkasten.de/discussion/3207/using-the-editor-in-the-archive-as-surrogate-for-hub-notes",
-          "publishedOn": "2025-03-17T22:44:26.000Z",
-          "wordCount": 812,
-          "title": "Using the editor in The Archive as surrogate for Hub notes",
-          "imageUrl": null
-        },
-        {
-          "id": "3206@/discussions",
-          "author": "daviddelven",
-          "description": "If you had to store something for 100 years, how would you do it? https://lil.law.harvard.edu/century-scale-storage/",
-          "link": "https://forum.zettelkasten.de/discussion/3206/if-you-had-to-store-something-for-100-years-how-would-you-do-it",
-          "publishedOn": "2025-03-17T14:16:26.000Z",
-          "wordCount": 532,
-          "title": "If you had to store something for 100 years, how would you do it?",
           "imageUrl": null
         }
       ]
