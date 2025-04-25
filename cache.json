@@ -63,6 +63,36 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1k7rkvl/can_alex_and_happy_be_used_for_protocols_like_http/",
+          "author": null,
+          "description": "I don't plan on implementing http, but I've made something up that I want to use and I'm wondering if they can handle a continuous stream of data without turning it into one big data structure at the end like the aeson library does.\n Aeson only lets you get the data once it's done parsing the whole thing and I need something continuous. \n Also my protocol idea would be plain text that can contain arbitrary binary data in it like http can.\n    submitted by    /u/theInfiniteHammer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1k7rkvl/can_alex_and_happy_be_used_for_protocols_like_http/",
+          "publishedOn": "2025-04-25T18:04:29.000Z",
+          "wordCount": null,
+          "title": "Can alex and happy be used for protocols like http?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1k7fzb0/implementing_unsure_calculator_in_100_lines_of/",
+          "author": null,
+          "description": "submitted by    /u/romesrf  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1k7fzb0/implementing_unsure_calculator_in_100_lines_of/",
+          "publishedOn": "2025-04-25T08:34:48.000Z",
+          "wordCount": null,
+          "title": "Implementing Unsure Calculator in 100 lines of Haskell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1k73buz/weird_typechecking_behavior_with_data_family/",
+          "author": null,
+          "description": "I am staring and editing the following code for hours now, but cannot understand its type-checking behavior:\n -- Some type classes class Kinded x where type Kind x :: Type class Kinded x => Singlify x where data Singleton x :: Kind x -> Type -- Now some instances for above data X data MyKind = A instance Kinded X where type Kind X = MyKind instance Singlify X where data Singleton X s where SingA :: Singleton X 'A \n However, the code above does not type check:\n Expected kind ‘Kind X’, but ‘'A’ has kind ‘MyKind’ \n which I don't quite understand, since I obviously defined type Kind X = MyKind.\n But the interesting part comes now: if I add a seemingly irrelevant Type parameter to Singleton and give it some concrete type (see changes in comments below), this suddenly type-checks:\n -- Some type classes class Kinded x where type Kind x :: Type class Kinded x => Singlify x where data Singleton x :: Kind x -> Type -> Type -- CHANGE: added one Type here -- Now some instances for above data X data MyKind = A data Bla -- CHANGE: defined this here instance Kinded X where type Kind X = MyKind instance Singlify X where data Singleton X s t where -- CHANGE: added t SingA :: Singleton X 'A Bla -- CHANGE: added Bla \n This doesn't make any sense to me. Fun fact: the following alternatives for SingA do NOT work, despite the additional parameter (the last one is interesting, which in my opinion should also work if Bla works, but it does not):\n  SingA :: Singleton X 'A Int SingA :: Singleton X 'A String SingA :: Singleton X 'A Bool SingA :: Singleton X 'A X \n I am completely lost here, can anyone help me out? You can play around with the snippets directly in the browser here:\n  \nNon-working version\n Working version\n  \n   submitted by    /u/typedbyte  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1k73buz/weird_typechecking_behavior_with_data_family/",
+          "publishedOn": "2025-04-24T21:01:53.000Z",
+          "wordCount": null,
+          "title": "Weird type-checking behavior with data family",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1k6qa59/accidentally_quadratic_revisiting_haskell/",
           "author": null,
           "description": "submitted by    /u/_0-__-0_  \n [link]   [comments]",
@@ -961,86 +991,6 @@
           "wordCount": null,
           "title": "Interviewing at Standard Chartered for a Quantitative Developer (Haskell) Role – Any Tips?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jkyv2n/basic_snake_game/",
-          "author": null,
-          "description": "Hi all! I'm excited to share my small project, which was done as a recreational activity.\n It might be helpful as a beginner-friendly project for people learning the language. It's written in \"boring\" Haskell without fancy types and magic. I was also using TDD. It was a pleasure to craft this little game.\n Any feedback is welcome.\n    submitted by    /u/imihnevich  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1jkyv2n/basic_snake_game/",
-          "publishedOn": "2025-03-27T08:00:35.000Z",
-          "wordCount": null,
-          "title": "Basic snake game",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jkypxs/resources_for_learning_how_to_do_low_level_ffi/",
-          "author": null,
-          "description": "Hey guys, I'm trying to learn how to do FFI in Haskell and while I see people say its so good and there seems to be lots of different helper tools like c2hs, I want to practice writing FFI bindings as low level as possible before using more abstractions. I tried to write a simple binding for the Color type in Raylib's C library:\n ```\n // Color, 4 components, R8G8B8A8 (32bit)\n typedef struct Color {\n unsigned char r; // Color red value\n unsigned char g; // Color green value\n unsigned char b; // Color blue value\n unsigned char a; // Color alpha value\n } Color;\n ```\n Haskell:\n data CColor = CColor { r :: Word8 , g :: Word8 , b :: Word8 , a :: Word8 } deriving (Show, Eq) instance Storable CColor where sizeOf _ = 4 alignment _ = 1 peek ptr = do r <- peekByteOff ptr 0 g <- peekByteOff ptr 1 b <- peekByteOff ptr 2 a <- peekByteOff ptr 3 return $ CColor r g b a poke ptr (CColor r g b a) = do pokeByteOff ptr 0 r pokeByteOff ptr 1 g pokeByteOff ptr 2 b pokeByteOff ptr 3 a foreign import capi unsafe \"raylib.h ClearBackground\" c_ClearBackground :: CColor -> IO () \n Compiler: \n  Unacceptable argument type in foreign declaration: ‘CColor’ cannot be marshalled in a foreign call • When checking declaration: foreign import capi unsafe \"raylib.h ClearBackground\" c_ClearBackground :: CColor -> IO () | 42 | foreign import capi unsafe \"raylib.h ClearBackground\" \n But this proved harder than it looks, the foreign import ccall rejected my Storable instance I wrote for this type \"cannot marshall CColor\". I don't see the compiler or lsp complaining about the instance declaration in and of itself but while passing it to foreign C function, looks like I'm doing something wrong. It looks like I'm missing some more pieces and it would be helpful if y'all can point me in the right direction. Thank you.\n    submitted by    /u/Complex-Bug7353  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1jkypxs/resources_for_learning_how_to_do_low_level_ffi/",
-          "publishedOn": "2025-03-27T07:49:10.000Z",
-          "wordCount": null,
-          "title": "Resources for learning how to do low level FFI without tools like c2hs?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jkm3nn/announce_gitlabhaskellorg_outage_this_weekend/",
-          "author": null,
-          "description": "submitted by    /u/bgamari  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1jkm3nn/announce_gitlabhaskellorg_outage_this_weekend/",
-          "publishedOn": "2025-03-26T20:40:25.000Z",
-          "wordCount": null,
-          "title": "[ANNOUNCE] gitlab.haskell.org outage this weekend",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jkh5x3/the_haskell_unfolder_episode_41_generic_monoids/",
-          "author": null,
-          "description": "submitted by    /u/kosmikus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1jkh5x3/the_haskell_unfolder_episode_41_generic_monoids/",
-          "publishedOn": "2025-03-26T17:19:29.000Z",
-          "wordCount": null,
-          "title": "The Haskell Unfolder Episode 41: generic monoids",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jke401/url_building_libraries/",
-          "author": null,
-          "description": "I'm currently studying OAuth2, and one of the things I need to do is redirect the client with a number of query parameters. I thought I could build the URL with req, but I'm not sure how to combine the query parameters and the URL without making a request. After some cursory searching I'm not satisfied with the packages I've seen such as url and uri-bytestring. What libraries or approaches would you recommend?\n    submitted by    /u/colonelflounders  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1jke401/url_building_libraries/",
-          "publishedOn": "2025-03-26T15:12:52.000Z",
-          "wordCount": null,
-          "title": "URL Building Libraries?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jkdp66/horizon_haskell_road_to_ghc_914_introduction/",
-          "author": null,
-          "description": "submitted by    /u/locallycompact  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1jkdp66/horizon_haskell_road_to_ghc_914_introduction/",
-          "publishedOn": "2025-03-26T14:55:18.000Z",
-          "wordCount": null,
-          "title": "Horizon Haskell: Road To GHC 9.14: Introduction",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jkc2xh/applicative_vs_simple_function_composition/",
-          "author": null,
-          "description": "Hi!\n I'm doing some AOC while heaving free time at work, and i just noticed that the same function has significance performace improvement when i use applicative style. With standard function composition it take about 1 second to run on data, but with applicative it gives me result immediately. Why is this happening?\n Here is both functions:\n sum . map (\\el -> maybe 0 (* el) . flip M.lookup (dict r) $ el) $ l sum . map (maybe 0 . (*) <*> flip M.lookup (dict r)) $ l \n    submitted by    /u/Tempus_Nemini  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1jkc2xh/applicative_vs_simple_function_composition/",
-          "publishedOn": "2025-03-26T13:43:20.000Z",
-          "wordCount": null,
-          "title": "Applicative VS simple function composition performance",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1jkbd0g/mechanism_for_abstracting_over_functions_with/",
-          "author": null,
-          "description": "I'm working in some code that uses a lot of typeclasses to represent different aspects of a 'god' type in different functions. There's a good reason for there to be lots of different implementations but this pattern has led to a lot surrounding code that duplicates things around the generic code because the concrete types are unrelated (apart from their instances). Eg they aren't part of a sum type, again I think there are good reasons for that as they enable some shared functionality across parts of the system that have totally different underlying representations and otherwise behave differently but have similar UI requirements in some places.\n For instance we have a lot of code that deals with a sort of related concept of sandboxes - part of the system can be in a sandbox or not whilst …",
-          "link": "https://www.reddit.com/r/haskell/comments/1jkbd0g/mechanism_for_abstracting_over_functions_with/",
-          "publishedOn": "2025-03-26T13:08:05.000Z",
-          "wordCount": null,
-          "title": "Mechanism for abstracting over functions with different constraints?",
-          "imageUrl": null
         }
       ]
     },
@@ -1049,6 +999,46 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1k7jwb3/scala_stockholm_meetup_truecaller_on_may_15_2025/",
+          "author": null,
+          "description": "Hello everyone! Scala Stockholm is back with another meetup, this time at Truecaller! \n As per usual there will be food, drinks and a few talks. We will try to record the talks so you can watch them on the Scala Stockholm Youtube channel afterwards.\n Please see the Meetup link for more details and to RSVP!\n    submitted by    /u/JohnyTex  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1k7jwb3/scala_stockholm_meetup_truecaller_on_may_15_2025/",
+          "publishedOn": "2025-04-25T12:38:46.000Z",
+          "wordCount": null,
+          "title": "Scala Stockholm Meetup @ Truecaller on May 15, 2025",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1k7hynp/programming_a_language_by_nicolas_rinaudo/",
+          "author": null,
+          "description": "submitted by    /u/smlaccount  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1k7hynp/programming_a_language_by_nicolas_rinaudo/",
+          "publishedOn": "2025-04-25T10:51:16.000Z",
+          "wordCount": null,
+          "title": "Programming a Language by Nicolas Rinaudo",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1k7e7t3/announcing_next_scala_meetup_in_hamburg_germany/",
+          "author": null,
+          "description": "I'm pleased to announce the next meetup of the Scala Hamburg user group taking place on June 2nd. We have one talk from local Markus Klink about recursion schemes and have u/lihaoyi as a guest speaking about his build tool mill.\n    submitted by    /u/bendixsaeltz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1k7e7t3/announcing_next_scala_meetup_in_hamburg_germany/",
+          "publishedOn": "2025-04-25T06:27:15.000Z",
+          "wordCount": null,
+          "title": "Announcing next Scala Meetup in Hamburg (Germany) on June 2nd",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1k7boh2/recommendations_for_building_crossplatform_apps/",
+          "author": null,
+          "description": "Hello everyone,\n I have experience with Scala and Typescript/React. I used React Native with Typescript to build a cross platform mobile app. Is there a way to ditch Typescript altogether? Are there any templates that use React Native with ScalaJS that I can refer to for project setup? I need the app to work across iOS and android. Appreciate your pointers!\n    submitted by    /u/Hyperspace-Bureau  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1k7boh2/recommendations_for_building_crossplatform_apps/",
+          "publishedOn": "2025-04-25T03:50:58.000Z",
+          "wordCount": null,
+          "title": "Recommendations for building cross-platform apps using Scala",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1k6yc1c/very_long_compilation_times_with_scala/",
           "author": null,
@@ -1758,26 +1748,6 @@
           "wordCount": null,
           "title": "Streaming commoncrawl processing with scala and Spark",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1jku09j/scala_meetup_san_francisco_in_person_solving/",
-          "author": null,
-          "description": "We have two great talks by two great speakers in person at the next Bay Area Scala Meetup in San Francisco on April 22nd, 2025.\n Full details and to RSVP here: https://lu.ma/dccyo635\n This will not be streamed online. Hope to see everyone there.\n Do subscribe to our luma group to be informed of future events, announcements and links to any talks we record here: https://lu.ma/scala - we do organize both in person and online events so worth joining!\n    submitted by    /u/softiniodotcom  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1jku09j/scala_meetup_san_francisco_in_person_solving/",
-          "publishedOn": "2025-03-27T02:44:39.000Z",
-          "wordCount": null,
-          "title": "[Scala Meetup - San Francisco - In Person] - Solving Scala's Build Problem with the Mill Build Tool By Li Haoyi & More ....",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1jkdm95/new_metals_version_152_has_been_released/",
-          "author": null,
-          "description": "New Metals has been released!\n  \ndeduplicate compile requests\n add exact location for the test failure\n convert sbt style deps on paste for scala-cli\n test discovery for TestNG\n improved automatic imports\n removed support for Ammonite scripts\n  \n   submitted by    /u/tgodzik  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1jkdm95/new_metals_version_152_has_been_released/",
-          "publishedOn": "2025-03-26T14:51:45.000Z",
-          "wordCount": null,
-          "title": "New Metals version 1.5.2 has been released!",
-          "imageUrl": null
         }
       ]
     },
@@ -1804,6 +1774,16 @@
       "feedUrl": "https://www.tweag.io/rss.xml",
       "siteUrl": "https://tweag.io",
       "articles": [
+        {
+          "id": "https://tweag.io/blog/2025-04-24-minimal-megaparsec-tutorial/",
+          "author": null,
+          "description": "In my functional programming course to Master Students of\nTelecom Nancy,\nI like to use parsing as an example of monadic programming, relying on the\nmegaparsec library.\nMy only concern with megaparsec is that its official tutorial\nis long: at the time I’m writing, it’s 15000 words long.\nUnlike the official megaparsec tutorial, this blog post is intended to be smaller,\nand is aimed at an audience with only a basic understanding of Haskell and monadic programming.\nAll the Haskell material from this blogpost is available on our GitHub: https://github.com/tweag/minimal-megaparsec-tutorial.\nYou can fork this repository to get a full-fledged setup\n(including CI and Haskell Language Server support)\nfor experimenting with a megaparsec parser 🚀\n\nRunning example\nMy running example is a parser for a …",
+          "link": "https://tweag.io/blog/2025-04-24-minimal-megaparsec-tutorial/",
+          "publishedOn": "2025-04-24T00:00:00.000Z",
+          "wordCount": 2786,
+          "title": "The minimal megaparsec tutorial",
+          "imageUrl": "https://tweag.io/logo.png"
+        },
         {
           "id": "https://tweag.io/blog/2025-04-17-wasm-ghci-browser/",
           "author": null,
@@ -1837,6 +1817,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1k738db/workflow_suggestion_notes_on_tablet_later_on/",
+          "author": null,
+          "description": "Hi, I was wondering if the following workflow is possible, and if so, what is the easiest way to achieve this:\n  \nI want to take notes from websites and PDFs on a tablet. Tablet can be either Android or iPad. I don't have one yet, and would like to buy one that best fits this workflow.\n Ideally i can take screenshots of some images as well\n These notes are somehow synced to my laptop, where with some amount of effort, I can copy them over into org-mode and organize them.\n  \n   submitted by    /u/KaladinInSkyrim  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1k738db/workflow_suggestion_notes_on_tablet_later_on/",
+          "publishedOn": "2025-04-24T20:57:55.000Z",
+          "wordCount": null,
+          "title": "Workflow suggestion: Notes on tablet => later on laptop, move to org-mode",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1k6vve3/can_orgmode_handle_my_ideal_workflow_orgmode_as_a/",
           "author": null,
@@ -2154,6 +2144,76 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/ollama-buddy-20250425.1953.tar",
+          "author": null,
+          "description": "The ollama-buddy package has been updated to version 20250425.1953.",
+          "link": "https://melpa.org/#/ollama-buddy",
+          "publishedOn": "2025-04-25T19:53:00.000Z",
+          "wordCount": 105,
+          "title": "ollama-buddy (20250425.1953) --- Ollama LLM AI Assistant with ChatGPT, Claude, Gemini and Grok Support",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/bash-completion-20250425.1830.tar",
+          "author": null,
+          "description": "The bash-completion package has been updated to version 20250425.1830.",
+          "link": "https://melpa.org/#/bash-completion",
+          "publishedOn": "2025-04-25T18:30:00.000Z",
+          "wordCount": 105,
+          "title": "bash-completion (20250425.1830) --- Bash completion for the shell buffer",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/grip-mode-20250425.1734.tar",
+          "author": null,
+          "description": "The grip-mode package has been updated to version 20250425.1734.",
+          "link": "https://melpa.org/#/grip-mode",
+          "publishedOn": "2025-04-25T17:34:00.000Z",
+          "wordCount": 105,
+          "title": "grip-mode (20250425.1734) --- Instant GitHub-flavored Markdown/Org preview using grip",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/lsp-scheme-20250425.1731.tar",
+          "author": null,
+          "description": "The lsp-scheme package has been updated to version 20250425.1731.",
+          "link": "https://melpa.org/#/lsp-scheme",
+          "publishedOn": "2025-04-25T17:31:00.000Z",
+          "wordCount": 105,
+          "title": "lsp-scheme (20250425.1731) --- Scheme support for lsp-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/perl-ts-mode-20250425.953.tar",
+          "author": null,
+          "description": "The perl-ts-mode package has been updated to version 20250425.953.",
+          "link": "https://melpa.org/#/perl-ts-mode",
+          "publishedOn": "2025-04-25T09:53:00.000Z",
+          "wordCount": 105,
+          "title": "perl-ts-mode (20250425.953) --- Another Major mode for Perl",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-journal-20250425.936.tar",
+          "author": null,
+          "description": "The org-journal package has been updated to version 20250425.936.",
+          "link": "https://melpa.org/#/org-journal",
+          "publishedOn": "2025-04-25T09:36:00.000Z",
+          "wordCount": 105,
+          "title": "org-journal (20250425.936) --- A simple org-mode based journaling mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/flymake-ruff-20250424.2305.tar",
+          "author": null,
+          "description": "The flymake-ruff package has been updated to version 20250424.2305.",
+          "link": "https://melpa.org/#/flymake-ruff",
+          "publishedOn": "2025-04-24T23:05:00.000Z",
+          "wordCount": 105,
+          "title": "flymake-ruff (20250424.2305) --- A flymake plugin for python files using ruff",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/borg-20250424.1940.tar",
           "author": null,
@@ -3102,6 +3162,16 @@
           "publishedOn": "2025-04-12T10:06:00.000Z",
           "wordCount": 105,
           "title": "julia-vterm (20250412.1006) --- A mode for Julia REPL using vterm",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/el-job-20250412.926.tar",
+          "author": null,
+          "description": "The el-job package has been updated to version 20250412.926.",
+          "link": "https://melpa.org/#/el-job",
+          "publishedOn": "2025-04-12T09:26:00.000Z",
+          "wordCount": 105,
+          "title": "el-job (20250412.926) --- Contrived way to call a function using all CPU cores",
           "imageUrl": null
         },
         {
@@ -5143,106 +5213,6 @@
           "wordCount": 105,
           "title": "modus-themes (20250327.843) --- Elegant, highly legible and customizable themes",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/moom-20250327.141.tar",
-          "author": null,
-          "description": "The moom package has been updated to version 20250327.141.",
-          "link": "https://melpa.org/#/moom",
-          "publishedOn": "2025-03-27T01:41:00.000Z",
-          "wordCount": 105,
-          "title": "moom (20250327.141) --- Commands to control frame position and size",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/fb2-reader-20250326.2240.tar",
-          "author": null,
-          "description": "The fb2-reader package has been updated to version 20250326.2240.",
-          "link": "https://melpa.org/#/fb2-reader",
-          "publishedOn": "2025-03-26T22:40:00.000Z",
-          "wordCount": 105,
-          "title": "fb2-reader (20250326.2240) --- Read FB2 and FB2.ZIP documents",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/srfi-20250326.2022.tar",
-          "author": null,
-          "description": "The srfi package has been updated to version 20250326.2022.",
-          "link": "https://melpa.org/#/srfi",
-          "publishedOn": "2025-03-26T20:22:00.000Z",
-          "wordCount": 105,
-          "title": "srfi (20250326.2022) --- Scheme Requests for Implementation browser",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lambdapi-mode-20250326.1855.tar",
-          "author": null,
-          "description": "The lambdapi-mode package has been updated to version 20250326.1855.",
-          "link": "https://melpa.org/#/lambdapi-mode",
-          "publishedOn": "2025-03-26T18:55:00.000Z",
-          "wordCount": 105,
-          "title": "lambdapi-mode (20250326.1855) --- A major mode for editing Lambdapi source code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/gptel-20250326.1825.tar",
-          "author": null,
-          "description": "The gptel package has been updated to version 20250326.1825.",
-          "link": "https://melpa.org/#/gptel",
-          "publishedOn": "2025-03-26T18:25:00.000Z",
-          "wordCount": 105,
-          "title": "gptel (20250326.1825) --- Interact with ChatGPT or other LLMs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/feature-mode-20250326.1725.tar",
-          "author": null,
-          "description": "The feature-mode package has been updated to version 20250326.1725.",
-          "link": "https://melpa.org/#/feature-mode",
-          "publishedOn": "2025-03-26T17:25:00.000Z",
-          "wordCount": 105,
-          "title": "feature-mode (20250326.1725) --- Major mode for editing Gherkin (i.e. Cucumber) user stories",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-modern-20250326.1539.tar",
-          "author": null,
-          "description": "The org-modern package has been updated to version 20250326.1539.",
-          "link": "https://melpa.org/#/org-modern",
-          "publishedOn": "2025-03-26T15:39:00.000Z",
-          "wordCount": 105,
-          "title": "org-modern (20250326.1539) --- Modern looks for Org",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-node-20250326.1504.tar",
-          "author": null,
-          "description": "The org-node package has been updated to version 20250326.1504.",
-          "link": "https://melpa.org/#/org-node",
-          "publishedOn": "2025-03-26T15:04:00.000Z",
-          "wordCount": 105,
-          "title": "org-node (20250326.1504) --- Fast org-roam replacement",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mistty-20250326.1457.tar",
-          "author": null,
-          "description": "The mistty package has been updated to version 20250326.1457.",
-          "link": "https://melpa.org/#/mistty",
-          "publishedOn": "2025-03-26T14:57:00.000Z",
-          "wordCount": 105,
-          "title": "mistty (20250326.1457) --- Shell/Comint alternative based on term.el",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/presentation-20250326.1120.tar",
-          "author": null,
-          "description": "The presentation package has been updated to version 20250326.1120.",
-          "link": "https://melpa.org/#/presentation",
-          "publishedOn": "2025-03-26T11:20:00.000Z",
-          "wordCount": 105,
-          "title": "presentation (20250326.1120) --- Display large character for presentation",
-          "imageUrl": null
         }
       ]
     },
@@ -5251,6 +5221,136 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k7tcsf/emacs_crash_course_5_part_series_from_vanilla_to/",
+          "author": null,
+          "description": "Emacs hacking 00 - Avoid RSI and \"emacs pinky\" once and for all.\n Emacs hacking 01 - Vanilla Emacs Crash Course Emacs basics: PATH, ENV, moving the cursor, killing lines, copy, cut, paste, undo, redo, creating files, dired, buffers, windows, splits, open file, close file, temp files and lock files, customization via init.el, emacs notation, discoverability, package managers, melpa and evil mode.\n Emacs hacking 02 - Vanilla Emacs Crash Course PT. 2 [un]comment a line, find & replace, --debug-init, write a emacs lisp function, bind a function to a key, the messages & scratch buffers, macros, terminals, keybinding conventions, Emacs vs. Vim workflows, use gpg to encrypt and decrypt files, irc, gnus (email), eww (browser), exwm, init'ing linux with Emacs\n Emacs hacking 03 - Crash Course PT. 3, org-mode, ediff, Magit, Projectile and more. A Devops Engineer in his native habitat\n Emacs hacking 04 - Emacs TRAMP Crash Course PT. 4 Remote file editing via Emacs tramp. GUI vs. Emacs terminal mode.\n Emacs hacking 05 - More CRUX goodies - Emacs Crash Course PT. 5\n    submitted by    /u/adam-schaefers  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k7tcsf/emacs_crash_course_5_part_series_from_vanilla_to/",
+          "publishedOn": "2025-04-25T19:18:12.000Z",
+          "wordCount": null,
+          "title": "Emacs Crash Course - 5 part series - From Vanilla to Custom",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k7t7rc/mouse_configurations/",
+          "author": null,
+          "description": "I’m getting hand problems using key chords commands on emacs and looking to make the interface more mouse friendly. I’d rather not switch to vscode if possible. Any suggestions on configurations I should look at ? \n    submitted by    /u/964racer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k7t7rc/mouse_configurations/",
+          "publishedOn": "2025-04-25T19:12:10.000Z",
+          "wordCount": null,
+          "title": "Mouse configurations",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k7ruj6/i_want_tab_to_do_completion_with_corfu_and_cmi_to/",
+          "author": null,
+          "description": "https://github.com/minad/vertico?tab=readme-ov-file#completion-at-point-and-completion-in-region\n Vertico explains how to do a completion-at-point using vertico. It's pretty nice, but not quite as nice as corfu. There's still times when it would be nice to open vertico for a completion at point though, and since I rarely use the default C-M-i binding, I want to repurpose it to doing vertico completion in the minibuffer.\n Any idea how I can do this?\n I've been able to do TAB completion in the minibuffer with vertico, but I can't find a way to use both corfu and vertico for regular completions in source files.\n The problem is that whether corfu or vertico is used depends on a single variable. I guess I could write some Elisp functions that change that variable back and forth, but maybe there's an easier way?\n    submitted by    /u/Buttons840  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k7ruj6/i_want_tab_to_do_completion_with_corfu_and_cmi_to/",
+          "publishedOn": "2025-04-25T18:15:28.000Z",
+          "wordCount": null,
+          "title": "I want TAB to do completion with corfu, and C-M-i to do completion with vertico in the minibuffer. How?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k7or05/vs_code_inspired_emacs/",
+          "author": null,
+          "description": "Hi,\n Is there any VS Code-inspired Emacs configuration focused on mouse usability?\n I’m asking because when I’m on my laptop, I’m totally fine with a keyboard-centric workflow. But when I’m docked at work, I often find myself wanting to fall back on some mouse-driven interactions—things like copy-pasting code, slow navigation when I’m not exactly sure what I’m looking for, and similar tasks.\n Just wondering if anyone has customized Emacs to better support that kind of hybrid workflow.\n Not really sure what I’m looking for to mimic vs codes mouse UX, but any tips and tricks to improve the experience is appreciated. Thanks in advance!\n    submitted by    /u/bungieqdf  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k7or05/vs_code_inspired_emacs/",
+          "publishedOn": "2025-04-25T16:09:13.000Z",
+          "wordCount": null,
+          "title": "VS Code inspired emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k7nu28/minimal_emacs/",
+          "author": null,
+          "description": "I was wondering if any other Emacs users tend to use some of the builtin Emacs modes as opposed to installing tons of packages? I know Emacs is know for being extensible but is anyone able to appreciate that without installing too many packages?\n    submitted by    /u/uncommonlisper  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k7nu28/minimal_emacs/",
+          "publishedOn": "2025-04-25T15:30:57.000Z",
+          "wordCount": null,
+          "title": "Minimal Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k7kg77/gauging_interest_in_developing_a_typst_tablegrid/",
+          "author": null,
+          "description": "I've started using Typst (an up-and-coming competitor to LaTeX) recently, with typst-ts-mode. The editing support is basic, but generally seems sufficient for Typst's relatively simple and clean syntax. This is in contrast to packages like AUCTeX, which do a lot of heavy lifting just to make editing LaTeX a tolerable experience.\n One of my favourite LaTeX editing packages is latex-table-wizard, which provides a powerful transient UI for editing tabular environments. It's great because complex tabular environments can otherwise be some of the most annoying things to edit in LaTeX, and get used for many things besides tables, especially in equations. Tabular environments (AKA grids in Typst terminology) also seem to be one of the few cases where LaTeX's syntax is arguably better than Typst's, IMO.\n I've been hacking around with some tree sitter queries that analyse the structure of Typst tables, with the idea of possibly making a new package like latex-table-wizard for Typst (probably called typst-table-wizard), but I won't have the time for it for a while.\n Would anyone on here be interested in a package like this? What kind of features would you want to see in it? Has someone thought of/attempted making something like this already? (No results come up from a quick google search.)\n    submitted by    /u/Argletrough  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k7kg77/gauging_interest_in_developing_a_typst_tablegrid/",
+          "publishedOn": "2025-04-25T13:05:17.000Z",
+          "wordCount": null,
+          "title": "Gauging interest in (developing) a Typst table/grid editing package",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k7ij6k/auctex_texview_to_okular_is_not_working_out_of_box/",
+          "author": null,
+          "description": "I don't know that this topic is fit to here. Maybe problem of linux or Okular.\n Anyway\n Just simply choose okular fails.\n If I choose evince to synctex texfile and pdf file. It is perfect.\n So If I change \"Evince\" to \"Okular\", it is not working.\n I just slightly guess that it might be a problem of file name or directory name (Is there such phenomenon for KDE app?)\n Where should I start with? \n    submitted by    /u/cremtty  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k7ij6k/auctex_texview_to_okular_is_not_working_out_of_box/",
+          "publishedOn": "2025-04-25T11:25:11.000Z",
+          "wordCount": null,
+          "title": "(Auctex) Tex-View to Okular is not working out of box",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k7dic1/github_clementjeancodetabsel_horizontally_tabbed/",
+          "author": null,
+          "description": "This is my first \"package\" in Elisp. Any feedback or contribution is welcomed!\n    submitted by    /u/clementjean  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k7dic1/github_clementjeancodetabsel_horizontally_tabbed/",
+          "publishedOn": "2025-04-25T05:40:41.000Z",
+          "wordCount": null,
+          "title": "GitHub - Clement-Jean/codetabs.el: Horizontally tabbed code blocks for org mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k7afi0/how_to_convince_a_friend_to_use_emacs/",
+          "author": null,
+          "description": "é grave\n    submitted by    /u/davidd_dd  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k7afi0/how_to_convince_a_friend_to_use_emacs/",
+          "publishedOn": "2025-04-25T02:42:44.000Z",
+          "wordCount": null,
+          "title": "How to convince a friend to use Emacs?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k79v6w/verticoquick_problem_with_mapping/",
+          "author": null,
+          "description": "My configuration is the following:\n (use-package vertico-quick :ensure `(:repo ,(concat elf-emacs-package-directory \"vertico\")) :after vertico :init ;; https://kristofferbalintona.me/posts/202202211546/ (defun kb/vertico-quick-embark (&optional arg) \"Embark on candidate using quick keys.\" (interactive) (when (vertico-quick-jump) (embark-act arg))) :config (keymap-set vertico-map \"M-o\" #'kb/vertico-quick-embark) (keymap-set vertico-map \"C-:\" #'vertico-quick-exit) ;; RET is vertico exit (keymap-set vertico-map \"C-i\" #'vertico-quick-insert) ;; TAB by default is vertico insert ;; (keymap-set vertico-map \"M-j\" #') ) \n After I envoke vertico-quck (C-: for example), the key bindings behave strange.\n The TAB during find-file triggers the quick keys instead of the usual TAB behavior.\n Also I can't post any issues in repos created by https://github.com/minad. This is extremely frustrating and it limits the user experience and growth of the packages.\n    submitted by    /u/Confident_Ice_2965  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k79v6w/verticoquick_problem_with_mapping/",
+          "publishedOn": "2025-04-25T02:13:20.000Z",
+          "wordCount": null,
+          "title": "vertico-quick problem with mapping",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k79okp/what_is_the_key_differentiator_between_emacs_and/",
+          "author": null,
+          "description": "Okay, so we already know Emacs customization is done using Elisp and that there is a huge library of packages. Both editors seem to be capable of doing the same things, so is there something about Emacs that makes it fundamentally different from Neovim? What are your thoughts about ELisp vs Lua?\n Is there something Emacs can do or does better than Neovim?\n    submitted by    /u/surveypoodle  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k79okp/what_is_the_key_differentiator_between_emacs_and/",
+          "publishedOn": "2025-04-25T02:04:01.000Z",
+          "wordCount": null,
+          "title": "What is the key differentiator between Emacs and Neovim?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k77m38/anyone_else_only_use_emacs_for_org_mode/",
+          "author": null,
+          "description": "At this point I almost exclusively use emacs for org mode, when I started originally using Emacs I used it for development but over time I've gotten sick of dealing with Emacs lack of features compared to IDEs and just how difficult it can be to use. But org mode is org mode and I really enjoy it so I haven't replaced it.\n    submitted by    /u/derangedtranssexual  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k77m38/anyone_else_only_use_emacs_for_org_mode/",
+          "publishedOn": "2025-04-25T00:18:06.000Z",
+          "wordCount": null,
+          "title": "Anyone else only use Emacs for org mode?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1k76dgt/what_do_you_use_emacs_server_for/",
+          "author": null,
+          "description": "This was asked here before, 5 years ago... time to ask again?\n I have a general understanding of what Emacs server is. Ideally, you start it with your computer, and it runs in the background (headless, though, you can start it with a frame). From that moment, you launch Emacs client(s) when you need Emacs.\n This means Emacs launches faster (the server is loaded, you're just loading a client) and there are some services (the only one I recall is org-protocol) that work with the server. \n On my M2 MacBook Pro, Emacs starts within 2.55 seconds, with the agenda open (which is how I configured it), so I don't really care about the speed; it's slower to launch Outlook (which I need for work) or WhatsApp (which I need for communications). I also don't know or use any other services that utilize Emacs as a server (besides org protocol, which I gave up on). \n So my question is... what's the point? I know we can use Emacs anyway we want, sure, but maybe I'm missing something, which is why I'm asking. \n What do you use Emacs server for? Where is it useful for you? \n    submitted by    /u/jtr3322  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1k76dgt/what_do_you_use_emacs_server_for/",
+          "publishedOn": "2025-04-24T23:17:56.000Z",
+          "wordCount": null,
+          "title": "What do you use Emacs server for?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1k6v8e2/i_am_using_doom_emacs_with_typescript_lanaguge/",
           "author": null,
@@ -7710,66 +7810,6 @@
           "wordCount": null,
           "title": "Setting up and using pyvenv",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jkyku3/is_it_possible_to_make_evils_complete_use_vertico/",
-          "author": null,
-          "description": "I've been searching for instructions/examples for making evil's evil-complete-next (typically bound to C-n) a bit more like the other completions I have configured with vertico (and cape + corfu), i.e. make the list of completions pop up and give me a bit more overview of what the available completions are.\n I'm assuming it's possible and that it's just my ignorance and poor search skills preventing me from working it out myself. Any and all help is most welcome.\n    submitted by    /u/magthe0  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jkyku3/is_it_possible_to_make_evils_complete_use_vertico/",
-          "publishedOn": "2025-03-27T07:37:55.000Z",
-          "wordCount": null,
-          "title": "Is it possible to make evil's complete use vertico?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jktpul/what_do_helm_and_ivy_actually_do/",
-          "author": null,
-          "description": "I’ve seen these two plugins recommended a lot- but I’m kind of confused on what they actually do. It seems like it’s something to do with completion, but I’ve already got a company/vertico/orderless setup, so would Helm or Ivy even be worth adding?\n Any help is appreciated :]\n    submitted by    /u/ever-ella77  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jktpul/what_do_helm_and_ivy_actually_do/",
-          "publishedOn": "2025-03-27T02:29:21.000Z",
-          "wordCount": null,
-          "title": "What do Helm and Ivy actually do?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jkqvz2/installing_and_testing_out_emacs_for_the_first/",
-          "author": null,
-          "description": "https://preview.redd.it/0i4z7xk8j4re1.png?width=1280&format=png&auto=webp&s=d35cd6f9bfc07ac048c4824c0c16aaefff5b11dd\n I've been wanting to try Emacs for quite some time now, to see what it's all about and how it compares to Neovim. But doing something like this requires you to invest time to learn and understand how to set it up and how it works.\n So in this video my good friend Joshua Blais walks me through the process of installing and setting up Emacs on macOS, we also talk about the Emacs philosophy and the differences it has with Neovim\n Link to the video is here:\n https://youtu.be/cLa96bUPR_I \n    submitted by    /u/linkarzu  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jkqvz2/installing_and_testing_out_emacs_for_the_first/",
-          "publishedOn": "2025-03-27T00:08:49.000Z",
-          "wordCount": null,
-          "title": "Installing and testing out Emacs for the first time, as a Neovim user With Joshua Blais (1 hour video)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jkmrrs/treesitter_grammars_not_found_on_macos/",
-          "author": null,
-          "description": "hi folks, after a move to macos 4 months ago & an upgrade to emacs30 last week, I am finding that tree-sitter modes don't seem to work because grammars can't be found.\n  ⛔ Warning (treesit): Cannot activate tree-sitter, because language grammar for yaml is unavailable (not-found): dlopen(/Users/pricemat/.emacs.d/tree-sitter/libtree-sitter-yaml.so, 0x0009): tried: '/Users/pricemat/.emacs.d/tree-sitter/libtree-sitter-yaml.so' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/pricemat/.emacs.d/tree-sitter/libtree-sitter-yaml.so' (no such file), '/Users/pricemat/.emacs.d/tree-sitter/libtree-sitter-yaml.so' (no such file), '/Users/pricemat/.config/emacs/tree-sitter/libtree-sitter-yaml.so' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/Users/pricemat/.config/emacs/tree-sitter/libtree-sitter-yaml.so' (no such file), ........ \n It goes on to search a whole bunch of other locations, but always looks for files of the form libtree-s-tter-[mode].[so|dylib] and sometimes with a suffix. But the grammars installed by tree-sitter-langs are all named [mode].dylib. Copying those language grammars to ~/.config/emacs/tree-sitter and then executing ln -s works ok, but honestly it's not a fantastic solution. Is there a beter one? \n    submitted by    /u/titaniumbones  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jkmrrs/treesitter_grammars_not_found_on_macos/",
-          "publishedOn": "2025-03-26T21:08:55.000Z",
-          "wordCount": null,
-          "title": "tree-sitter grammars not found on macos",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jkjgbo/why_is_my_profiler_report_empty/",
-          "author": null,
-          "description": "I'm trying do some elisp profiling, and my first attempt is to profile dumb-jump-go (dumb-jump.el), but when I do \n M-x profiler-start\n M-x dumb-jump-go\n M-x profiler-report\n my report that's coming up is just empty:\n 0 - ...\n 0 Automatic GC\n profiler-stop (before or after the report) doesn't change anything. I'm running 29.1 on Windows.\n    submitted by    /u/steve_b  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jkjgbo/why_is_my_profiler_report_empty/",
-          "publishedOn": "2025-03-26T18:52:24.000Z",
-          "wordCount": null,
-          "title": "Why is my profiler report empty?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1jkgjy4/brag_about_your_literate_programming_config/",
-          "author": null,
-          "description": "I'm currently trying to create a config to work with Clojure LP-style (with <<noweb references>>), using org-mode and poly-org (polymode). \n But things just keep breaking/annoying me - font locking, tangling, buffer names, etc. There's so much problems that polymode seems unworkable. Maybe I'm doing something wrong, since some people report using it successfully. \n Would like to see how smoothly working configs look like, and plagiarize.\n    submitted by    /u/Dead_Earnest  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1jkgjy4/brag_about_your_literate_programming_config/",
-          "publishedOn": "2025-03-26T16:54:47.000Z",
-          "wordCount": null,
-          "title": "Brag about your Literate Programming config!",
-          "imageUrl": null
         }
       ]
     },
@@ -7917,16 +7957,6 @@
           "wordCount": 1745,
           "title": "Why a Zettlekasten Has No Hierarchy",
           "imageUrl": null
-        },
-        {
-          "id": "3214@/discussions",
-          "author": "Will",
-          "description": "Swimming with Ideas\nThis is yet another opportunity to share what you are working on with your friends here on the forum. Add to this discussion by telling us about your zettelkasten journey. Share with us what you're learning. Sharing helps us clarify our goals and visualize our thinking. And sometimes, a conversation sparks a magical moment where we can dive into an idea worth exploring. I'd love to hear more from you.   🫵🏼\nDo you want a live one-on-one video chat with me about our adventures in Zettelkasting? Ping me at @Will, and we can schedule a time.\nHere is my report on why I'm here and my current ZK work themes and ideas:\nThis period has been quiet regarding zettelkasting because of health issues and my \"Sketching Sprint.\" I've been too absorbed in sketching and have not capture…",
-          "link": "https://forum.zettelkasten.de/discussion/3214/what-is-happening-in-your-zk-journey-this-week-march-26-2025",
-          "publishedOn": "2025-03-26T16:38:24.000Z",
-          "wordCount": 1252,
-          "title": "What is happening in your ZK journey this week? March 26, 2025",
-          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/6i/rdjpvm9rhmj7.png"
         }
       ]
     }
