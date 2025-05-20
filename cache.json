@@ -53,6 +53,16 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1kr8psv/recursion_vs_iteration_performance_reverse_list/",
+          "author": null,
+          "description": "Hi All,\n I implemented a function that reverses a list using both recursion and iteration (tail call recursion actually). Following are the implementations:\n -- Reverse list, Recursive procedure, recursive process revre :: [a] -> [a] revre [] = [] revre x = (last x):(revre(init x)) -- Reverse list, Recursive procedure, iterative process (tail recursion) -- Extra argument accumulates result revit :: [a] -> [a] revit lx = _revit lx [] where _revit :: [a] -> [a] -> [a] _revit [] lax = lax _revit (xh:lxt) lax = _revit lxt (xh:lax) \n When I ran these, there was a significant difference in their performance, and as expected, the iterative implementation performed much better.\n ghci> revre [1..10000] : (2.80 secs, 2,835,147,776 bytes) ghci> revit [1..10000] : (0.57 secs, 34,387,864 bytes) \n The inbuilt prelude version performed similar to the iterative version:\n ghci> reverse [1..10000] : (0.59 secs, 33,267,728 bytes) \n I also built a \"zipwith\" function that applies a function over two lists, both recursively and iteratively:\n -- Zip Recursive zipwre :: (a->b->c) -> [a] -> [b] -> [c] zipwre _ [] _ = [] zipwre _ _ [] = [] zipwre f (x:xs) (y:ys) = (f x y):(zipwre f xs ys) -- Zip Iterative zipwit :: (a->b->c) -> [a] -> [b] -> [c] zipwit f lx ly = _zipwit f lx ly [] where _zipwit :: (a->b->c) -> [a] -> [b] -> [c] -> [c] _zipwit _ [] _ lax = revit lax _zipwit _ _ [] lax = revit lax _zipwit f (xh:lxt) (yh:lyt) lax = _zipwit f lxt lyt ((f xh yh):lax) \n When I look at the relative performance of these zip functions however, I don't see such a big difference between the recursive and iterative versions:\n ghci> zipwre (\\x y->x+y) [1..10000] [10001..20000] : (0.70 secs, 43,184,648 bytes) ghci> zipwit (\\x y->x+y) [1..10000] [10001..20000] : (0.67 secs, 44,784,896 bytes) \n Why is it that the reverse list implementations show such a big difference in performance while the zip implementations do not?\n Thank you!\n    submitted by    /u/msravi  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1kr8psv/recursion_vs_iteration_performance_reverse_list/",
+          "publishedOn": "2025-05-20T16:07:30.000Z",
+          "wordCount": null,
+          "title": "Recursion vs iteration performance (reverse list vs zip)",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1kqf26q/need_help_for_oriantation/",
           "author": null,
           "description": "Hi! I'm new to Haskell and wantent to ask if someone can recomm me an online documentation for the latest Haskell version? Thx already. (Btw: sry for my terrible English)\n    submitted by    /u/lce-2011  \n [link]   [comments]",
@@ -741,16 +751,6 @@
           "wordCount": null,
           "title": "Released: webdriver-precore",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1k4713y/sse_server_sent_events_client/",
-          "author": null,
-          "description": "A lot of the HTTP libs handle streaming endpoints, but not the SSE protocol. \n Am I missing something or this just doesn't exist?\n I'd like to consume OpenAI-type streaming endpoints, and while some libs exist, they don't appear to support streaming.\n I've got a proof-of-concept that works, but I'd rather not reinvent the SSE protocol if this currently exists, (and also handling reconnections etc):\n import Network.HTTP.Simple ( parseRequest, getResponseBody, httpSource ) import Conduit ( mapMC, mapM_C, (.|), runConduitRes ) import Data.ByteString.Char8 (unpack) import qualified Data.Conduit.Combinators as CC import Data.Attoparsec.ByteString.Char8 ( takeTill, parseOnly, string, Parser ) import Control.Monad.IO.Class (liftIO) newtype SSEEvent where SSEEvent :: {eventData :: String} -> SSEEvent deriving Show parseSSE :: Parser SSEEvent parseSSE = do -- string \"data: \" -- d <- takeTill (== '\\n') -- string \"\\n\\n\" d <- takeTill (== '\\n') return $ SSEEvent (unpack d) main :: IO () main = do req <- parseRequest \"GET http://localhost:8080\" runConduitRes $ httpSource req getResponseBody .| CC.linesUnboundedAscii -- .| CC.filter (not . null) .| mapMC (liftIO . parseSSEEvent) .| mapM_C (liftIO . print) where parseSSEEvent bs = case parseOnly parseSSE bs of Right evt -> return evt Left err -> fail $ \"Parse error: \" ++ err \n    submitted by    /u/BayesMind  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1k4713y/sse_server_sent_events_client/",
-          "publishedOn": "2025-04-21T06:40:02.000Z",
-          "wordCount": null,
-          "title": "SSE (Server Sent Events) Client?",
-          "imageUrl": null
         }
       ]
     },
@@ -759,6 +759,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1kr2ffr/ldbc_v030_is_out/",
+          "author": null,
+          "description": "We are pleased to announce the release of the ldbc v0.3.0 version with Scala's own MySQL connector.\n The ldbc connector allows database operations using MySQL to be performed not only in the JVM, but also in Scala.js and Scala Native.\n ldbc can also be used with existing jdbc drivers, so you can develop according to your preference.\n https://github.com/takapi327/ldbc/releases/tag/v0.3.0\n Scala 3.7.0, which was not in the RC version, is now supported and NamedTuple can be used. \n for (user, order) <- sql\"SELECT u.*, o.* FROM `user` AS u JOIN `order` AS o ON u.id = o.user_id\".query[(user: User, order: Order)].unsafe users <- sql\"SELECT id, name, email FROM `user`\".query[(id: Long, name: String, email: String)].to[List] yield println(s\"Result User: $user\") println(s\"Result Order: $order\") users.foreach { user => println(s\"User ID: ${user.id}, Name: ${user.name}, Email: ${user.email}\") } // Result User: User(1,Alice,alice@example.com,2025-05-20T03:22:09,2025-05-20T03:22:09) // Result Order: Order(1,1,1,2025-05-20T03:22:09,1,2025-05-20T03:22:09,2025-05-20T03:22:09) // User ID: 1, Name: Alice, Email: alice@example.com // User ID: 2, Name: Bob, Email: bob@example.com // User ID: 3, Name: Charlie, Email: charlie@example.com \n Links\n Please refer to the documentation for various functions.\n  \nGithub: https://github.com/takapi327/ldbc\n Website & documentation: https://takapi327.github.io/ldbc/\n Scaladex: https://index.scala-lang.org/takapi327/ldbc\n  \n   submitted by    /u/takapi327  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1kr2ffr/ldbc_v030_is_out/",
+          "publishedOn": "2025-05-20T11:24:19.000Z",
+          "wordCount": null,
+          "title": "ldbc v0.3.0 is out 🎉",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1kr1ejd/are_you_really_writing_so_much_parallel_code/",
+          "author": null,
+          "description": "Simply the title. Scala is advertised as a great language for async and parallel code, but do you really write much of it? In my experience it usually goes into libraries or, obviously, servers. But application code? Sometimes, in a limited fashion, but I never find myself writing big pieces of it. Is your experience difference or the possibilities opened by scala encourage you to write more parallel code? \n    submitted by    /u/Ppysta  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1kr1ejd/are_you_really_writing_so_much_parallel_code/",
+          "publishedOn": "2025-05-20T10:22:10.000Z",
+          "wordCount": null,
+          "title": "Are you really writing so much parallel code?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1kqi4j9/is_there_a_standard_library_method_that_would/",
           "author": null,
@@ -1428,56 +1448,6 @@
           "wordCount": null,
           "title": "Grokking Recursion Through SQL's Recursive CTEs",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1k3spdi/this_week_in_scala_apr_21_2025/",
-          "author": null,
-          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1k3spdi/this_week_in_scala_apr_21_2025/",
-          "publishedOn": "2025-04-20T18:09:41.000Z",
-          "wordCount": null,
-          "title": "This week in #Scala (Apr 21, 2025)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1k3sp5d/gen%C3%A9ricos_en_scala_covarianza_y_contravarianza/",
-          "author": null,
-          "description": "submitted by    /u/emanuelpeg  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1k3sp5d/gen%C3%A9ricos_en_scala_covarianza_y_contravarianza/",
-          "publishedOn": "2025-04-20T18:09:25.000Z",
-          "wordCount": null,
-          "title": "Genéricos en Scala: Covarianza y Contravarianza",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1k3osfq/different_sbt_scalanativeplugin_nativeconfig/",
-          "author": null,
-          "description": "I have the following setup in the build.sbt,\n ```scala lazy val foo = project .in(file(\"foo\")) .enablePlugins(ScalaNativePlugin) .settings( commonSettings, name := \"foo\", Compile / mainClass := Some(\"org.acme.Foo\"), nativeConfig ~= { _.withLTO(LTO.none) // thin .withMode(Mode.debug) // debug .withGC(GC.immix) // commix } )\n lazy val bar = project .in(file(\"foo\")) .enablePlugins(ScalaNativePlugin) .settings( commonSettings, name := \"foo\", Compile / mainClass := Some(\"org.acme.Foo\"), nativeConfig ~= { _.withLTO(LTO.none) // thin .withMode(Mode.releaseFast) // release .withGC(GC.immix) // commix } ) ```\n foo and bar have the same configurations except for the Mode.debug and Mode.releaseFast in the nativeConfig. sbt cannot load this configuration. The key is not getting this configuration to work. My focus is to generate a binary from the same source using different nativeConfig settings. How do I do that? Thanks\n    submitted by    /u/teckhooi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1k3osfq/different_sbt_scalanativeplugin_nativeconfig/",
-          "publishedOn": "2025-04-20T15:15:38.000Z",
-          "wordCount": null,
-          "title": "Different SBT ScalaNativePlugin nativeConfig Configuration for The Same Project",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1k3odxm/new_project/",
-          "author": null,
-          "description": "I'm in charge of our data ingestion (scraping to some sort of ML). The language I've used mainly is Go, which is doing all of the scraping. I have an intern coming in and think it would be good experience to polish the scraper and get all of the code organized.\n They'll feed me raw data then I have a choice of what do I want to write this internal piece in. I could stick with Go but my idea is, \"how can I restore a database if someone does something dumb?\". I'm not mistrusting my teammates but we've already had some hiccups and I want to make sure we're covered in the night.\n My thought is Redis with a Scala system that ingests and sparks the data to a pytorch script, but can also take the Redis cache (and other data sources) and do kind of an OLTP thing to \"restore from zero\". I'm with a …",
-          "link": "https://www.reddit.com/r/scala/comments/1k3odxm/new_project/",
-          "publishedOn": "2025-04-20T14:57:44.000Z",
-          "wordCount": null,
-          "title": "New Project",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1k3iquz/scala_native_code_in_project_folder/",
-          "author": null,
-          "description": "I move my Scala Native project into the folder myapp under the base project folder, ./myapp/src/main/scala instead of using the base project folder, ./src/main/scala. My project is configured as lazy val myapp = project.in(file(\"myapp\").settings(...). Next, I execute run. Usually, it kicks off the native compilation, after the Scala compilation and create a Windows executable. However, with this project folder setup, sbt compiles the Scala code and stops. No executable file is found anywhere in the project folders. Is this supported or I missed some crucial project settings? Thanks\n    submitted by    /u/teckhooi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1k3iquz/scala_native_code_in_project_folder/",
-          "publishedOn": "2025-04-20T09:22:31.000Z",
-          "wordCount": null,
-          "title": "Scala Native Code in Project Folder",
-          "imageUrl": null
         }
       ]
     },
@@ -1786,6 +1756,56 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/ox-typst-20250520.1803.tar",
+          "author": null,
+          "description": "The ox-typst package has been updated to version 20250520.1803.",
+          "link": "https://melpa.org/#/ox-typst",
+          "publishedOn": "2025-05-20T18:03:00.000Z",
+          "wordCount": 105,
+          "title": "ox-typst (20250520.1803) --- Typst Back-End for Org Export Engine",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/package-build-20250520.1504.tar",
+          "author": null,
+          "description": "The package-build package has been updated to version 20250520.1504.",
+          "link": "https://melpa.org/#/package-build",
+          "publishedOn": "2025-05-20T15:04:00.000Z",
+          "wordCount": 105,
+          "title": "package-build (20250520.1504) --- Tools for assembling a package archive",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/sculpture-themes-20250520.1358.tar",
+          "author": null,
+          "description": "The sculpture-themes package has been updated to version 20250520.1358.",
+          "link": "https://melpa.org/#/sculpture-themes",
+          "publishedOn": "2025-05-20T13:58:00.000Z",
+          "wordCount": 105,
+          "title": "sculpture-themes (20250520.1358) --- Themes with vivid colors",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/yasnippet-capf-20250520.1105.tar",
+          "author": null,
+          "description": "The yasnippet-capf package has been updated to version 20250520.1105.",
+          "link": "https://melpa.org/#/yasnippet-capf",
+          "publishedOn": "2025-05-20T11:05:00.000Z",
+          "wordCount": 105,
+          "title": "yasnippet-capf (20250520.1105) --- Yasnippet Completion At Point Function",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/slime-20250520.44.tar",
+          "author": null,
+          "description": "The slime package has been updated to version 20250520.44.",
+          "link": "https://melpa.org/#/slime",
+          "publishedOn": "2025-05-20T00:44:00.000Z",
+          "wordCount": 105,
+          "title": "slime (20250520.44) --- Superior Lisp Interaction Mode for Emacs",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/semi-20250519.1830.tar",
           "author": null,
           "description": "The semi package has been updated to version 20250519.1830.",
@@ -1873,6 +1893,16 @@
           "publishedOn": "2025-05-18T13:25:00.000Z",
           "wordCount": 105,
           "title": "speed-type (20250518.1325) --- Practice touch and speed typing",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/fennel-mode-20250518.1250.tar",
+          "author": null,
+          "description": "The fennel-mode package has been updated to version 20250518.1250.",
+          "link": "https://melpa.org/#/fennel-mode",
+          "publishedOn": "2025-05-18T12:50:00.000Z",
+          "wordCount": 105,
+          "title": "fennel-mode (20250518.1250) --- A major-mode for editing Fennel code",
           "imageUrl": null
         },
         {
@@ -1993,6 +2023,16 @@
           "publishedOn": "2025-05-16T10:32:00.000Z",
           "wordCount": 105,
           "title": "dumb-jump (20250516.1032) --- Jump to definition for 50+ languages without configuration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/proof-general-20250516.913.tar",
+          "author": null,
+          "description": "The proof-general package has been updated to version 20250516.913.",
+          "link": "https://melpa.org/#/proof-general",
+          "publishedOn": "2025-05-16T09:13:00.000Z",
+          "wordCount": 105,
+          "title": "proof-general (20250516.913) --- A generic Emacs interface for proof assistants",
           "imageUrl": null
         },
         {
@@ -2126,6 +2166,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/python-mode-20250514.727.tar",
+          "author": null,
+          "description": "The python-mode package has been updated to version 20250514.727.",
+          "link": "https://melpa.org/#/python-mode",
+          "publishedOn": "2025-05-14T07:27:00.000Z",
+          "wordCount": 105,
+          "title": "python-mode (20250514.727) --- Python major mode",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/rustic-20250514.156.tar",
           "author": null,
           "description": "The rustic package has been updated to version 20250514.156.",
@@ -2233,6 +2283,16 @@
           "publishedOn": "2025-05-12T14:03:00.000Z",
           "wordCount": 105,
           "title": "org-mem (20250512.1403) --- Fast info from a large number of Org file contents",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/howm-20250512.1135.tar",
+          "author": null,
+          "description": "The howm package has been updated to version 20250512.1135.",
+          "link": "https://melpa.org/#/howm",
+          "publishedOn": "2025-05-12T11:35:00.000Z",
+          "wordCount": 105,
+          "title": "howm (20250512.1135) --- Wiki-like note-taking tool",
           "imageUrl": null
         },
         {
@@ -2736,6 +2796,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/jsonian-20250507.1231.tar",
+          "author": null,
+          "description": "The jsonian package has been updated to version 20250507.1231.",
+          "link": "https://melpa.org/#/jsonian",
+          "publishedOn": "2025-05-07T12:31:00.000Z",
+          "wordCount": 105,
+          "title": "jsonian (20250507.1231) --- A major mode for editing JSON files",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/annotate-20250507.1212.tar",
           "author": null,
           "description": "The annotate package has been updated to version 20250507.1212.",
@@ -2986,6 +3056,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/cfn-mode-20250504.804.tar",
+          "author": null,
+          "description": "The cfn-mode package has been updated to version 20250504.804.",
+          "link": "https://melpa.org/#/cfn-mode",
+          "publishedOn": "2025-05-04T08:04:00.000Z",
+          "wordCount": 105,
+          "title": "cfn-mode (20250504.804) --- AWS cloudformation mode",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/inhibit-mouse-20250504.336.tar",
           "author": null,
           "description": "The inhibit-mouse package has been updated to version 20250504.336.",
@@ -3013,6 +3093,16 @@
           "publishedOn": "2025-05-03T16:25:00.000Z",
           "wordCount": 105,
           "title": "puppet-ts-mode (20250503.1625) --- Major mode for Puppet using Tree-sitter",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/pg-20250503.834.tar",
+          "author": null,
+          "description": "The pg package has been updated to version 20250503.834.",
+          "link": "https://melpa.org/#/pg",
+          "publishedOn": "2025-05-03T08:34:00.000Z",
+          "wordCount": 105,
+          "title": "pg (20250503.834) --- Socket-level interface to the PostgreSQL database",
           "imageUrl": null
         },
         {
@@ -4184,126 +4274,6 @@
           "wordCount": 105,
           "title": "crux (20250421.936) --- A Collection of Ridiculously Useful eXtensions",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/xkb-mode-20250421.840.tar",
-          "author": null,
-          "description": "The xkb-mode package has been updated to version 20250421.840.",
-          "link": "https://melpa.org/#/xkb-mode",
-          "publishedOn": "2025-04-21T08:40:00.000Z",
-          "wordCount": 105,
-          "title": "xkb-mode (20250421.840) --- Major mode for editing X Keyboard Extension (XKB) files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ekg-20250421.432.tar",
-          "author": null,
-          "description": "The ekg package has been updated to version 20250421.432.",
-          "link": "https://melpa.org/#/ekg",
-          "publishedOn": "2025-04-21T04:32:00.000Z",
-          "wordCount": 105,
-          "title": "ekg (20250421.432) --- A system for recording and linking information",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ddp-20250421.353.tar",
-          "author": null,
-          "description": "The ddp package has been updated to version 20250421.353.",
-          "link": "https://melpa.org/#/ddp",
-          "publishedOn": "2025-04-21T03:53:00.000Z",
-          "wordCount": 105,
-          "title": "ddp (20250421.353) --- Dynamic Data Processor with cmd tools",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/company-20250421.152.tar",
-          "author": null,
-          "description": "The company package has been updated to version 20250421.152.",
-          "link": "https://melpa.org/#/company",
-          "publishedOn": "2025-04-21T01:52:00.000Z",
-          "wordCount": 105,
-          "title": "company (20250421.152) --- Modular text completion framework",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-ql-20250421.133.tar",
-          "author": null,
-          "description": "The org-ql package has been updated to version 20250421.133.",
-          "link": "https://melpa.org/#/org-ql",
-          "publishedOn": "2025-04-21T01:33:00.000Z",
-          "wordCount": 105,
-          "title": "org-ql (20250421.133) --- Org Query Language, search command, and agenda-like view",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-super-agenda-20250421.130.tar",
-          "author": null,
-          "description": "The org-super-agenda package has been updated to version 20250421.130.",
-          "link": "https://melpa.org/#/org-super-agenda",
-          "publishedOn": "2025-04-21T01:30:00.000Z",
-          "wordCount": 105,
-          "title": "org-super-agenda (20250421.130) --- Supercharge your agenda",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/avy-act-20250420.1805.tar",
-          "author": null,
-          "description": "The avy-act package has been updated to version 20250420.1805.",
-          "link": "https://melpa.org/#/avy-act",
-          "publishedOn": "2025-04-20T18:05:00.000Z",
-          "wordCount": 105,
-          "title": "avy-act (20250420.1805) --- Commands that let avy act from a distance",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/thrift-20250420.1638.tar",
-          "author": null,
-          "description": "The thrift package has been updated to version 20250420.1638.",
-          "link": "https://melpa.org/#/thrift",
-          "publishedOn": "2025-04-20T16:38:00.000Z",
-          "wordCount": 105,
-          "title": "thrift (20250420.1638) --- Major mode for fbthrift and Apache Thrift files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/aws-athena-babel-20250420.1632.tar",
-          "author": null,
-          "description": "The aws-athena-babel package has been updated to version 20250420.1632.",
-          "link": "https://melpa.org/#/aws-athena-babel",
-          "publishedOn": "2025-04-20T16:32:00.000Z",
-          "wordCount": 105,
-          "title": "aws-athena-babel (20250420.1632) --- Run AWS Athena queries from Org Babel",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/persist-text-scale-20250420.1613.tar",
-          "author": null,
-          "description": "The persist-text-scale package has been updated to version 20250420.1613.",
-          "link": "https://melpa.org/#/persist-text-scale",
-          "publishedOn": "2025-04-20T16:13:00.000Z",
-          "wordCount": 105,
-          "title": "persist-text-scale (20250420.1613) --- Persist and restore text scale",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/gdscript-mode-20250420.1418.tar",
-          "author": null,
-          "description": "The gdscript-mode package has been updated to version 20250420.1418.",
-          "link": "https://melpa.org/#/gdscript-mode",
-          "publishedOn": "2025-04-20T14:18:00.000Z",
-          "wordCount": 105,
-          "title": "gdscript-mode (20250420.1418) --- Major mode for Godot's GDScript language",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/bank-buddy-20250420.1028.tar",
-          "author": null,
-          "description": "The bank-buddy package has been updated to version 20250420.1028.",
-          "link": "https://melpa.org/#/bank-buddy",
-          "publishedOn": "2025-04-20T10:28:00.000Z",
-          "wordCount": 105,
-          "title": "bank-buddy (20250420.1028) --- Financial analysis and reporting",
-          "imageUrl": null
         }
       ]
     },
@@ -4312,6 +4282,76 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1kr94v4/automagic_dark_mode_automatically_create_a_dark/",
+          "author": null,
+          "description": "Link: https://github.com/sstraust/automagic-dark-mode\n This takes your currently active theme, intelligently inverts all the colors, and turns it into a dark theme.\n A while ago I posted asking for essentially this package, and I didn't find anything that exactly matched my use case, so... I decided to be the change! For me it helps a lot when I switch from a normal monitor to my e-ink.\n    submitted by    /u/eeemax  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1kr94v4/automagic_dark_mode_automatically_create_a_dark/",
+          "publishedOn": "2025-05-20T16:24:07.000Z",
+          "wordCount": null,
+          "title": "Automagic Dark Mode -- Automatically create a dark (or light mode) for your existing emacs theme.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1kr5hx8/mcp_servers_in_emacs/",
+          "author": null,
+          "description": "I have been using Claude Code for LLM-assisted development and got interested if I could run some MCP servers in Emacs.\n So I wrote (heavily using Claude Code, but not vibe-coded, I did go through its output) a package for MCP infrastructure in Emacs: https://github.com/laurynas-biveinis/mcp.el/. At the moment, it only has enough implemented to support tool calls that may take a single string argument.\n As an example how it could be used, I wrote another package, that serves as an Elisp development-specific MCP server that can lookup function docstrings and definitions: https://github.com/laurynas-biveinis/elisp-mcp-dev.\n It went well so far, and Claude Code could dogfood the elisp package while writing it, so, time permitting, I am planning to write a server that accesses org-mode, to serve as a task manager for the agent.\n    submitted by    /u/kastauyra  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1kr5hx8/mcp_servers_in_emacs/",
+          "publishedOn": "2025-05-20T13:56:22.000Z",
+          "wordCount": null,
+          "title": "MCP servers in Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1kr555j/usererror_cannot_complete_at_point_when_trying_to/",
+          "author": null,
+          "description": "Hi,\n Since recently, unfortunately I can't determine the exact moment, very often when trying to open a new file (C-x C-f), I get the message \"user-error: Cannot complete at point\". I tried to find a solution online, but most of them are somehow related to autocomplete, but how does this relate to opening a new file?\n What is worse, I cannot bypass it in any way, the only thing I came up with is to switch to some other buffer, e.g. \"messages\" and try there, except that then I have a completely different path and not the one where I have the current project I am working on. Super annoying.\n What is it about and how to locate the source of the problem?\n P.S. I use Emacs 29.4 + Doom (almost basic, orgmode + go/python lsp) on MacOS\n    submitted by    /u/parasit  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1kr555j/usererror_cannot_complete_at_point_when_trying_to/",
+          "publishedOn": "2025-05-20T13:40:30.000Z",
+          "wordCount": null,
+          "title": "\"user-error: Cannot complete at point\" when trying to open a file.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1kqy4b4/orgpublish_working_with_submodules/",
+          "author": null,
+          "description": "so i have my website that's built with org-publish and wanted to include my literate emacs config as is from it's own repository. so I added the repo as a submodule and symlinked the org file to the path I want it at in the website repo. everything runs fine but the build fails with a weird error https://paste.sr.ht/~peregrinator/d6c41be44f32f8549a79343ad7adb2b467269b76 \n my git repo is at https://git.sr.ht/peregrinator.srht.site and my emacs is in https://git.sr.ht/~peregrinator/.emacs.d\n is there something else I can do to fix this?\n    submitted by    /u/brihadeesh  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1kqy4b4/orgpublish_working_with_submodules/",
+          "publishedOn": "2025-05-20T06:29:35.000Z",
+          "wordCount": null,
+          "title": "org-publish: working with submodules",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1kqup1n/fortnightly_tips_tricks_and_questions_20250520/",
+          "author": null,
+          "description": "This is a thread for smaller, miscellaneous items that might not warrant a full post on their own.\n The default sort is new to ensure that new items get attention.\n If something gets upvoted and discussed a lot, consider following up with a post!\n Search for previous \"Tips, Tricks\" Threads.\n Fortnightly means once every two weeks. We will continue to monitor the mass of confusion resulting from dark corners of English.\n    submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1kqup1n/fortnightly_tips_tricks_and_questions_20250520/",
+          "publishedOn": "2025-05-20T03:01:06.000Z",
+          "wordCount": null,
+          "title": "Fortnightly Tips, Tricks, and Questions — 2025-05-20 / week 20",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1kqt636/diredmulticopyel_v1216_with_new_diredrsync/",
+          "author": null,
+          "description": "Hi r/emacs,\n I’m excited to share an update to dired-multi-copy, an Emacs package for bulk file and buffer operations. The latest version (1.2.16) adds integration with dired-rsync, enabling efficient asynchronous file copying across multiple directories, especially for large or remote files. The package now lives in its own repository: https://codeberg.org/danrobi/dired-multi-copy.\n New Feature: dired-rsync Support\n  \nPress C-c r in Dired to copy files from the global my-dired-collected-files list (or marked files) using rsync.\n Displays a *Dired Operation List* buffer to preview files, prompts for a target directory, and confirms before copying.\n Runs rsync asynchronously, preventing Emacs from locking up during large transfers.\n Requires dired-rsync (0.6+) and rsync installed on your system.\n  \nOther Features\n  \nCollect files across multiple Dired buffers for copy (C), move (R), or delete (D) with preview lists.\n Copy file paths to the kill ring (C-c w) for use in other buffers or apps.\n Clear collected files and unmark all files (C-c c).\n Enhanced Ibuffer deletion with preview for marked buffers (D).\n  \nGet Started\n  \nClone or download from Codeberg.\n Add (require 'dired-multi-copy) to your Emacs config.\n Ensure dependencies: Emacs 24.3+, cl-lib 0.5+, dired-rsync 0.6+ (optional for rsync).\n See the README for details.\n  \nI’d love feedback from the community! If you try the rsync feature or have ideas (especially for Ibuffer), please share via issues. Thanks for checking it out!\n Note: Developed with Grok 3 (xAI) assistance, provided \"as is\" under GNU GPL v3.0. See LICENSE.\n    submitted by    /u/Danrobi1  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1kqt636/diredmulticopyel_v1216_with_new_diredrsync/",
+          "publishedOn": "2025-05-20T01:42:30.000Z",
+          "wordCount": null,
+          "title": "dired-multi-copy.el v1.2.16 with New dired-rsync Integration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1kqo1p4/ryan_fleury_inspired_theme_ported_on_emacs/",
+          "author": null,
+          "description": "Link: https://github.com/ShamsParvezArka/fleury-theme.el\n    submitted by    /u/helloarka  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1kqo1p4/ryan_fleury_inspired_theme_ported_on_emacs/",
+          "publishedOn": "2025-05-19T21:39:32.000Z",
+          "wordCount": null,
+          "title": "Ryan Fleury inspired theme ported on Emacs.",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1kqi2wp/vdiff_vs_ediff_for_magit_ediffs/",
           "author": null,
@@ -6531,46 +6571,6 @@
           "wordCount": null,
           "title": "rg.el TRAMP connection sharing problem",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k468dq/tool_bar_with_nerd_icons/",
-          "author": null,
-          "description": "Hi all, is it possible in any way to have nerd icons instead of theme-based SVG ones in the tool-bar? I'm not a big fan of the ones in my theme rn and I'd rather not scour around for another set of icons that just fit this one use-case. Conversely, I'm a huge fan of the nerd icons, and would like the uniform look across Emacs since I use them regularly for icons in text and modeline.\n A way to create a faux-tool-bar setup with nerd icons while having the actual toolbar disabled would also be fine. Although this would need to be as flexible as the toolbar since I plan on having it on the left and ideally having separate major-mode-specific toolbars.\n Please do let me know if I've missed something helpful or I'm asking for too much :)\n    submitted by    /u/insert_username_0  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k468dq/tool_bar_with_nerd_icons/",
-          "publishedOn": "2025-04-21T05:43:37.000Z",
-          "wordCount": null,
-          "title": "Tool bar with nerd icons",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k3vg6b/to_switch_or_not_to_switch_that_is_the_question/",
-          "author": null,
-          "description": "I've been using emacs my entire professional career as a C++ and python dev, the only significant mode I use that alters default key bindings is helm. \n While I spent a long time setting up my python environment to do linting and autocomplete at one point, I've never successfully set up emacs to do the same with C++/clangd for various reasons despite several attempts. It didn't really matter as I just compiled in another window and carried on with life. \n However now with all the new AI models available, I'm wondering whether a switch to vscode is on the cards to more easily get access to the various AI tools available. I do feel like it's going to make me a lot slower before it makes me faster though. But the ease and support for vscode plugins is much more widespread than any of the emacs packages available.\n Have any of you switched? Would you recommend it? (I realise this goes against what this sub is for)\n    submitted by    /u/roflson85  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k3vg6b/to_switch_or_not_to_switch_that_is_the_question/",
-          "publishedOn": "2025-04-20T20:15:34.000Z",
-          "wordCount": null,
-          "title": "To switch or not to switch, that is the question.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k3tbx9/knowledge_gives_strength_to_the_hands/",
-          "author": null,
-          "description": "Help I accidentally built a shelf! And didn’t even close the ATX case before starting to sand. That wasn’t in the manual; now looking for misery to love his company, we see distant power tools from iconic Japanese brands in the background 🇯🇵 M-x erase-and-rewind RET\n    submitted by    /u/Timely-Degree7739  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k3tbx9/knowledge_gives_strength_to_the_hands/",
-          "publishedOn": "2025-04-20T18:37:16.000Z",
-          "wordCount": null,
-          "title": "knowledge gives strength to the hands",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k3k0du/new_theme_to_reduce_eye_strain_woodtheme/",
-          "author": null,
-          "description": "I have open sourced a new theme to reduce eye strain* - wood-theme\n *: probably\n At work, staring at the computer for many hours is causing me eye strains.\n I have tried using other dark themes like monokai, catpuccin, and more but their blue glow is still quite annoying. Then I tried other warm theme too but their colouring is still not quite right.\n So I finally decided to make my own one.\n I have been dog-fooding it for a few years now, haven't make much design changes lately so I think it is a good time to share it. It will be great to get any feedbacks.\n Currently implemented for Emacs and `spotify-player` only but feel free to take the palette for your favourite application.\n The repo has the full palette rendered, preview in Emacs:\n https://preview.redd.it/xw4pgk3g0zve1.png?width=3360&format=png&auto=webp&s=9a40c04cdf7ca27fd36439bb5db9414f6cacfb9b\n    submitted by    /u/WelkinSL  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k3k0du/new_theme_to_reduce_eye_strain_woodtheme/",
-          "publishedOn": "2025-04-20T10:56:50.000Z",
-          "wordCount": null,
-          "title": "New theme to reduce eye strain - `wood-theme`",
-          "imageUrl": null
         }
       ]
     },
@@ -6580,6 +6580,16 @@
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
         {
+          "id": "3248@/discussions",
+          "author": "ctietze",
+          "description": "https://github.com/mattgemmell/pandoc-novel/tree/main\nInternet friend Matt Gemmell published a pandoc export configuration that gets you from a folder of Markdown files to a PDF/ePUB publication in novel format.\nThe example PDF looks like, well, it looks like a novel with a lot of text and nothing but page numbers as adornments. Mass-market 5x8 book export he writes, and it looks like he delivered just that \nNote that for non-fiction writing with illustrations and graphs and formulae etc. this may not suffice, because you need larger pages and tweak how figures are embedded.\nBut for novels, aka text-only content, this looks cool!",
+          "link": "https://forum.zettelkasten.de/discussion/3248/pandoc-novel-export-print-ready-novel-from-markdown-files",
+          "publishedOn": "2025-05-20T07:31:16.000Z",
+          "wordCount": 638,
+          "title": "pandoc-novel: Export print-ready novel from Markdown files",
+          "imageUrl": "https://forum.zettelkasten.de/resources/emoji/smile.png"
+        },
+        {
           "id": "3247@/discussions",
           "author": "Will",
           "description": "Swimming with Ideas\nThis is yet another opportunity to share what you are working on with your friends here on the forum. Add to this discussion by telling us about your zettelkasten journey. Share with us what you're learning. Sharing helps us clarify our goals and visualize our thinking. And sometimes, a conversation sparks a magical moment where we can dive into an idea worth exploring. I'd love to hear more from you.   🫵🏼\nHere is my report on why I'm here and my current ZK work themes and ideas:\nI'm studying the philosophy of kindness. It's less about the impediments and more about the nuts and bolts of the practical implementation of kindness.\nI'm studying gastropods. I wrote an article featuring the world premiere of a science movie titled \"The Snail Hunters,\" about a research team…",
@@ -6588,6 +6598,16 @@
           "wordCount": 918,
           "title": "What is happening in your ZK journey this week? May 18, 2025",
           "imageUrl": "https://forum.zettelkasten.de/uploads/editor/w2/ax3wdbu8sdht.png"
+        },
+        {
+          "id": "3246@/discussions",
+          "author": "guxianbang",
+          "description": "In The Archive, Chinese typing requires pressing the space key, and there will be an underline before pressing the space key. However, the automatic completion starts before pressing the space key, which leads to the inability to use Chinese in automatic completion.\nThe auto-completion feature should exclude text with underscores. because when entering Chinese, it is all some underscored letters before confirmation.\n\nAs shown, The auto-complete feature swallowed the first letter \"n\".",
+          "link": "https://forum.zettelkasten.de/discussion/3246/bug-hashtag-auto-completion-interferes-with-e-g-chinese-input-method",
+          "publishedOn": "2025-05-18T11:26:25.000Z",
+          "wordCount": 981,
+          "title": "[BUG] Hashtag auto-completion interferes with e.g. Chinese input method",
+          "imageUrl": "https://forum.zettelkasten.de/uploads/editor/nw/vj88ytahpddk.png"
         },
         {
           "id": "3246@/discussions",
@@ -6767,26 +6787,6 @@
           "publishedOn": "2025-04-21T14:21:21.000Z",
           "wordCount": 1425,
           "title": "What is happening in your ZK journey this week? April 21, 2025",
-          "imageUrl": null
-        },
-        {
-          "id": "3228@/discussions",
-          "author": "iylock",
-          "description": "Isn't a zettel actually a module?\nI thought about structure notes.\n@Sascha said that structure notes are notes that describe the relationships between zettels. here. So he said that it can be described in various ways other than TOC format. here.\nHowever, for me who only uses plain text for Zettelkasten (and doesn't use markdown), the format of structure notes can only be TOC and tables.\nThe biggest problem when expressing structure notes as TOC or tables is that the relationships between zettels are not clearly revealed. In other words, a hierarchy is created, but the context is only implicitly revealed.\nTo solve this, I wrote the link context by expressing the structure note in the form of text, but the readability was poor. Also, when using the link context, it was difficult to check what the original meaning of the original zettel was when it was taken out of context.\nThen I thought of modules in programming.\nIf structure notes are notes that describe the relationship between zettels, then they are in fact modules.\nAlso, if you think about modules in programming, content notes themselves are modules. This is because even a single zettel divided according to the atomicity principle can function and can be called from another zettel.\nFrom a modular perspective, both content notes and structure notes seem to ultimately have the same goal.\nMany people think of zettels as Lego blocks, but this is different from modules. Modules are parts that have independent functions. On the other hand, Lego blocks are not functional units. They are simply highly modular parts.\nSo I thought that zettels were in fact modules. (zettel is a general term for content notes and structure notes.)\nIf you look at it that way, I think it would be helpful to write structure notes from the perspective of actually creating modules. So, a structure note that is organized only in TOC for easy finding may not be a module.\nWhat do you think?",
-          "link": "https://forum.zettelkasten.de/discussion/3228/isnt-a-zettel-actually-a-module-and-about-structure-notes",
-          "publishedOn": "2025-04-21T07:34:23.000Z",
-          "wordCount": 1833,
-          "title": "Isn't a zettel actually a module? And about structure notes.",
-          "imageUrl": null
-        },
-        {
-          "id": "3227@/discussions",
-          "author": "Martin",
-          "description": "Honouring effort or recognising achievement?\nIn modern educational practice - and increasingly also in administrative contexts - a change can be observed: The focus on results and verifiable qualities is being replaced by a rhetoric of endeavour. It is not the actual achievement that is honoured, but the mere attempt; it is not the substance that counts, but the subjective perception of effort.\nFrom an epistemological perspective, this is an expression of subject-centred, therapeutic thinking that promises protection but undermines the ability to judge. After all, truth, the power of judgement and the ability to think independently are not created through consolation, but through confrontation with difference - between right and wrong, between good enough and better.\n‘Those who only ever reward effort prevent the maturation of the power of judgement.’\nThe Zettelkasten - both as a method and as a mindset - represents a counter-figure here: It does not ask whether someone has thought, but what comes out of it. It allows mistakes, but only as a productive disruption in the service of greater clarity. In it, depth is not confused with labour, but with methodical repetition, connection and verification.\n‘Education is not about the cosy feeling of being on the side of the good - but the art of forming, examining and taking responsibility for the right thoughts and actions.’\nIn practice, this means likewise for science, teaching and personnel decisions:\nIt is not effort alone that is relevant, but the transformation of effort into form, quality and responsibility. This seems to be the way to achieve justice - towards the learners, the participants and the tasks themselves.",
-          "link": "https://forum.zettelkasten.de/discussion/3227/between-consolation-and-clarity-zettelkasten-and-the-return-to-rigorous-thinking",
-          "publishedOn": "2025-04-21T06:36:15.000Z",
-          "wordCount": 872,
-          "title": "Between Consolation and Clarity: Zettelkasten and the Return to Rigorous Thinking",
           "imageUrl": null
         }
       ]
