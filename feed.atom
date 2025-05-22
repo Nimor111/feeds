@@ -2,10 +2,447 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2025-05-21T20:40:53.610Z</updated>
+    <updated>2025-05-22T20:41:24.160Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[org mode syntax parsing question: interleaved markup]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1kszog8/org_mode_syntax_parsing_question_interleaved/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1kszog8/org_mode_syntax_parsing_question_interleaved/"/>
+        <updated>2025-05-22T19:32:24.000Z</updated>
+        <summary type="html"><![CDATA[Context: I'm trying to implement a very basic org-mode parser in another language for fun and my own use. I've been looking at how Emacs fontifies org markup. But it seems to me the fontification does not conform to the Org Syntax document. For example, Emacs will fontify this perfectly fine:
+  Some normal text /start italicize *start bold end italicize/ end bold* normal text 
+ Even though the italicize syntax object and the bold syntax object are interleaved. Additionally, if I export this line HTML, only the <b> tags are there. So it looks like there's some inconsistencies between fontification and the org internal AST.
+ So my questions are: 
+  
+Does the org elisp code follow a completely different code path when fontifying? 
+ If my goal is to implement a largely org-mode-compatible parser, should I look at exported HTML as a source of truth and not eyeball the fontification result?
+  
+   submitted by    /u/trustyhardware  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Why I do still love emacs over my new fancy company provided AI editor]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksyxd7/why_i_do_still_love_emacs_over_my_new_fancy/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksyxd7/why_i_do_still_love_emacs_over_my_new_fancy/"/>
+        <updated>2025-05-22T19:02:12.000Z</updated>
+        <summary type="html"><![CDATA[I want to start asking sorry for this long thought, but I would be curious about yours opinion for those who have time and the will to read.
+ Recently, I was reading some articles about Voyager 1 software, and I found myself amazed by it. Literally, a few kb of space, and so many features, and still after 50 years still works, somehow I get a mental connection between this and emacs, probably because the same generation of “hackers” wrote it. 
+ I work in a company with many developers , and daily I face times where I hear things like “it’s technically impossible” for something that actually is. Now there’s some new policy about adopting AI tools for improving productivity. I am concerned that one day they will remove my emacs from the approved software, in favour of something else which me…]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Copy/Paste on kubuntu 25.04]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksyjmg/copypaste_on_kubuntu_2504/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksyjmg/copypaste_on_kubuntu_2504/"/>
+        <updated>2025-05-22T18:46:46.000Z</updated>
+        <summary type="html"><![CDATA[Copy/Paste using the mouse to highlight a block and then using the mouse-button-1 to paste no longer works for me running KDE on X11 (this is using the gfx mode for emacs). Using the identical log in, etc. under Wayland works just fine. I can also paste a block using ctrl-y works fine as does using the <paste> button in the toolbar.
+ The copy part using the mouse seems to work. It appears in the X clipboard and it is available to yank via the ctl-y and the toolbar <paste> button. But when I try use the mouse I get a message "no selection is available".
+ I really would love to get this working in X11 ... Wayland just looks like shit on my system with bad font rendering, etc. :)
+ Emacs version 30.1 Ubuntu 25.04 KDE 6.3.4
+    submitted by    /u/bvdp  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How to work with atomic data?]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1ksxtos/how_to_work_with_atomic_data/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1ksxtos/how_to_work_with_atomic_data/"/>
+        <updated>2025-05-22T18:17:17.000Z</updated>
+        <summary type="html"><![CDATA[I'm new to Haskell but have experience in a variety of languages. For instance, I've written simple app in Rust and Clojure that refer to a "global" data store implemented as atomic data. For my purposes, this is a great way to avoid having to pass a reference to the data all over the place.
+ How can I do this in Haskell?
+ Below I show 1) how I do it Clojure, 2) how I do it in Rust, and 3) how I've expanded the code for the Control.Monad.State example for a Counter to use a more complex data definition and how it seems I will still have to pass the binding to the state as an argument to function to work on it outside of Main.
+ In Clojure, I do this:
+ (def db (atom nil)) ; define the central datastore
+ (let db (:data @db) (dosomething with db)) ; access the datastore with @db
+ In Rust, I do this:
+ // define the central datastore
+ static DB: LazyLock<Mutex<Database>> = LazyLock::new(|| Mutex::new(Database::default()));
+ // Function to access a "reference" to Database
+ // THIS IS NOT MEANT TO BE USED FOR MORE THAN ONE ACCESS AT A TIME.
+ // THE Database will panic otherwise!
+ pub(crate) fn db_ref() -> MutexGuard<'static, Database> {
+ match DB.try_lock() {
+ Err(_) => panic!("Database is locked. Cannot access. Concurrent access it not supported."),
+ Ok(database) => database,
+ }
+ }
+ let mut db = database::db_ref(); // access the database to mutate it
+ -- State example with custom data type for more than one value
+ import Control.Monad.State data Database = Database { name :: String, counter :: Int } deriving (Show) type DbState = State Database getDb :: DbState Database getDb = get getNameFromDb :: Database -> String getNameFromDb db = name db main :: IO () main = do let initialState = Database { name="Marty", counter=2 } (finalCount, finalState) = runState getDb initialState putStrLn $ "Final count: " ++ show finalCount putStrLn $ "Final state: " ++ show finalState putStrLn $ getNameFromDb finalState 
+    submitted by    /u/Stunning_Fruit9731  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Any thoughts on this tool I'm making?]]></title>
+        <id>3253@/discussions</id>
+        <link href="https://forum.zettelkasten.de/discussion/3253/any-thoughts-on-this-tool-im-making"/>
+        <updated>2025-05-22T17:47:08.000Z</updated>
+        <summary type="html"><![CDATA[Hi all,
+I’ve been experimenting with a small tool called Quickpoint — it’s designed to let you get thoughts down quickly and share or save them with minimal friction.
+https://quickpoint.me/
+It offers a blank, keyboard-first space for thinking — intentionally minimal, with no formatting distractions. I see it as something between a fleeting notes tool and a lightweight way to give shape to early ideas.
+That said, I’m still figuring out what kind of thinking it really supports — and that’s where I’d love your input.
+If you give it a try, I’m curious:
+What kind of use does it invite or suggest to you?
+Could you see yourself coming back to it — and if not, what’s missing?
+Any thoughts are welcome — especially from folks who think deeply about writing, note-making, and the early stages of ideas. Thanks so much.]]></summary>
+        <author>
+            <name>Itsmekevinthewriter</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Building a keyboard-first tool for thinking, creating, and sharing]]></title>
+        <id>3252@/discussions</id>
+        <link href="https://forum.zettelkasten.de/discussion/3252/building-a-keyboard-first-tool-for-thinking-creating-and-sharing"/>
+        <updated>2025-05-22T17:43:57.000Z</updated>
+        <summary type="html"><![CDATA[Hi all,
+I’ve been exploring a small tool called Quickpoint- it’s meant for typing out ideas quickly, then sharing or saving them with as little friction as possible.
+https://quickpoint.me/
+It's a blank space to think into. Keyboard-first, intentionally minimal. I imagine it might sit somewhere between a fleeting notes tool and a way to shape early structure.
+That said, I’m still not sure what kind of thinking this actually supports best. I’d love to hear how it lands for others.
+If you give it a quick try, I’m especially curious:
+What kind of use does it suggest to you?
+Would you find yourself returning to it — and if not, what’s missing?
+Appreciate any feedback, especially from people who care about writing as a process of thought. Thanks in advance.]]></summary>
+        <author>
+            <name>Itsmekevinthewriter</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Org-mode Priority Cookies]]></title>
+        <id>https://www.reddit.com/r/orgmode/comments/1kswtij/orgmode_priority_cookies/</id>
+        <link href="https://www.reddit.com/r/orgmode/comments/1kswtij/orgmode_priority_cookies/"/>
+        <updated>2025-05-22T17:37:13.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/jeffbradberry  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Org-mode</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Org-mode Timestamped Notes]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1kswmft/orgmode_timestamped_notes/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1kswmft/orgmode_timestamped_notes/"/>
+        <updated>2025-05-22T17:29:23.000Z</updated>
+        <summary type="html"><![CDATA[I'm on a roll! I've just pushed my 7th post in the "Building an Org-mode Workflow" series: Timestamped Notes.
+ https://jeffbradberry.com/posts/2025/05/orgmode-timestamped-notes/
+    submitted by    /u/jeffbradberry  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[*Angry fruit salad noises*]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksw71g/angry_fruit_salad_noises/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksw71g/angry_fruit_salad_noises/"/>
+        <updated>2025-05-22T17:12:34.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/varsderk  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Is there something like SpacetimeDB in Scala?]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1ksv9wa/is_there_something_like_spacetimedb_in_scala/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1ksv9wa/is_there_something_like_spacetimedb_in_scala/"/>
+        <updated>2025-05-22T16:35:58.000Z</updated>
+        <summary type="html"><![CDATA[This looks promising, and it's still early days. Scala would be ideal to implement something like that!
+ The closest I know of would be CloudState, but that project is long dead.
+ If not having a similar platform at least some Scala bindings for SpacetimeDB would be nice to have. (But this would depend on WASM support.)
+ SpacetimeDB (GitHub) as such is mostly Rust, with some C#. It's not OpenSource, it's under BSL (with a 4 year timeout until it becomes free).
+ Maybe someone finds it as interesting as me.
+ Need to find out how they client-server communication works. I'm quite sure it's not some HTTP-JSON BS, but instead something efficient, as this needs to handle real time updates in massive-multimplayer online games.
+ Rust starts to eat the server space, with innovative high performance solutions…
+    submitted by    /u/RiceBroad4552  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Reminder in case if you get stuck with emacs]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksuv2k/reminder_in_case_if_you_get_stuck_with_emacs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksuv2k/reminder_in_case_if_you_get_stuck_with_emacs/"/>
+        <updated>2025-05-22T16:19:27.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/bruchieOP  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Getting Eglot to ignore a derived mode]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksumde/getting_eglot_to_ignore_a_derived_mode/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksumde/getting_eglot_to_ignore_a_derived_mode/"/>
+        <updated>2025-05-22T16:09:53.000Z</updated>
+        <summary type="html"><![CDATA[I'm using Eglot, in a project that has both Python and Snakemake files present. I use a wrapper around `eglot-ensure` to prevent it from activating in snakemake-mode, which works fine when opening a snakefile …until I also open a Python file, in the same project. At that point, Eglot fires up the LSP configured for Python, and also activates eglot-mode in any snakemake-mode buffers that are open, because snakemake-mode is derived from python-mode.
+ How can I keep Eglot out of my Snakemake buffers while continuing to have it active for Python buffers? 
+    submitted by    /u/genehack  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[ANN] lr-acts : left and right actions of semigroups, monoids and groups]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1ksroby/ann_lracts_left_and_right_actions_of_semigroups/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1ksroby/ann_lracts_left_and_right_actions_of_semigroups/"/>
+        <updated>2025-05-22T14:09:54.000Z</updated>
+        <summary type="html"><![CDATA[I'm happy to release the lr-acts library, which implements
+  
+Left and right actions
+ Semidirect product (the Semigroup and Monoid instances check that the action satisfies the morphism properties)
+ Torsors
+ Cyclic and generated actions
+  
+You can find out more in the Readme or in the Hackage documentation
+ Here are the main reasons I have written yet another action library (you can find a comparison with existing libraries in the Readme) are to tackle the two following problems :
+  
+Overlapping issues that often occur with other libraries (e.g. acts) . There is an interesting discussion about this problem on Reddit. This problem is solved by never writing any instance of the form LAct _ s or RAct _ s
+ 
+Semidirect products need additionnal properties to be semigroups and monoids, i.e. the action must be by semigroup (resp. monoid) morphism. This property is not checked in monoid-extra's implementation, which means the Semigroup and Monoid instances of this library might break associativity and neutrality. To solve this problem, I use a fine-grained class hierarchy that allow to specify several action properties. The downside of this is that the number of instances can become quite overwhelming and it does come with some boiler plate. This library could therefore highly benefit of a hypthetical extension such as Intrinsic Superclasses, see also this collection of class proposals
+ 
+ This is my first Haskell library so any constructive criticism is welcome, don't hesitate to tell me what you think ! 
+    submitted by    /u/AliceRixte  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vim-tab-bar (20250522.1315) --- Vim-like tab bar]]></title>
+        <id>https://melpa.org/packages/vim-tab-bar-20250522.1315.tar</id>
+        <link href="https://melpa.org/#/vim-tab-bar"/>
+        <updated>2025-05-22T13:15:00.000Z</updated>
+        <summary type="html"><![CDATA[The vim-tab-bar package has been updated to version 20250522.1315.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Org-mode Priority Cookies]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksqchs/orgmode_priority_cookies/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksqchs/orgmode_priority_cookies/"/>
+        <updated>2025-05-22T13:12:16.000Z</updated>
+        <summary type="html"><![CDATA[I've published the 6th blog post in my "Building an Org-mode Workflow" series, about prioritization of todo items:
+ https://jeffbradberry.com/posts/2025/05/orgmode-priority-cookies/
+    submitted by    /u/jeffbradberry  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Why this 'wrongId' doesn't work]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1ksp6ls/why_this_wrongid_doesnt_work/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1ksp6ls/why_this_wrongid_doesnt_work/"/>
+        <updated>2025-05-22T12:15:34.000Z</updated>
+        <summary type="html"><![CDATA[I suppose that answer is pretty sort of obvious and this is just me being stupid, but why this doesn't type check? a and b could be of every possible type, so it could be the same as well.
+ wrongId :: a -> b wrongId x = x 
+ Or in this implementation i do not provide scenario when output could have different type than input?
+    submitted by    /u/Tempus_Nemini  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Issue 473]]></title>
+        <id>https://haskellweekly.news/issue/473.html</id>
+        <link href="https://haskellweekly.news/issue/473.html"/>
+        <updated>2025-05-22T12:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Welcome to another issue of Haskell Weekly!
+Haskell is a safe, purely functional programming language with a fast, concurrent runtime.
+This is a weekly summary of what’s going on in its community.
+Featured
+Heftia: The Next Generation of Haskell Effects Management - Part 1.1 by Riyo
+heftia is the first-ever effect system, not just among Haskell libraries but historically across all effect system implementations and languages, to completely implement both algebraic effects and higher-order effects.
+Learning Physics with Functional Programming and Haskell by EstebanMarin
+Last year I learned that functional programming is a great tool to learn Physics, because it’s a great way to write math. You see, Physics is expressed in the language of Math. The relation of Math and code is now more presen…]]></summary>
+        <author>
+            <name>Haskell Weekly</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[sq (20250522.1012) --- Bindings for Sequoia PGP's cli]]></title>
+        <id>https://melpa.org/packages/sq-20250522.1012.tar</id>
+        <link href="https://melpa.org/#/sq"/>
+        <updated>2025-05-22T10:12:00.000Z</updated>
+        <summary type="html"><![CDATA[The sq package has been updated to version 20250522.1012.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[org-incoming (20250522.752) --- Sort incoming PDFs into your org files]]></title>
+        <id>https://melpa.org/packages/org-incoming-20250522.752.tar</id>
+        <link href="https://melpa.org/#/org-incoming"/>
+        <updated>2025-05-22T07:52:00.000Z</updated>
+        <summary type="html"><![CDATA[The org-incoming package has been updated to version 20250522.752.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Scaling emacs down, for quick command line use, while also scaling it up?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksktrm/scaling_emacs_down_for_quick_command_line_use/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksktrm/scaling_emacs_down_for_quick_command_line_use/"/>
+        <updated>2025-05-22T07:31:02.000Z</updated>
+        <summary type="html"><![CDATA[I've been using emacs on and off for 20+ years but one of the questions I have is, as my init.el gets bigger and fancier and takes longer to load etc. is there an good easy way to also provide a "quick emacs" in a shell?
+ I tend to fire up vi for editing a quick config file in situ etc but it always grates (been using vi since 1980's and we still don't get on).
+ And I'm quite a fan of perl (over, say python) in the way that knowing a bit of perl conveniently scales down (perl one liners and implicit use of $_ etc) as well scaling up.
+ So what I'm envisioning is launching a fresh emacs with -nw (so no window, runs in the console including over ssh etc), turning off backup files, turning off desktop-save mode etc and quite possibly turning off a few other modes and packages, but keeping my o…]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[To anybody using the flatpak version of Emacs: how do you deal with external tools?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1kskr9t/to_anybody_using_the_flatpak_version_of_emacs_how/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1kskr9t/to_anybody_using_the_flatpak_version_of_emacs_how/"/>
+        <updated>2025-05-22T07:25:59.000Z</updated>
+        <summary type="html"><![CDATA[In immutable distros Flatpaks appear to be the sanest way to install software. Emacs can be installed as a Flatpak but I wonder what's the ideal way to use it when other cli tools can't be installed or accessed on the host system. One such example can be jdtls (The Java LSP server). 
+ I'm aware of rpm-ostree as another way to install Emacs, but let's ignore that for the sake of this question. 
+    submitted by    /u/cidra_  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ITIL® 4 Foundation Information Technology Infrastructure Library Dumps]]></title>
+        <id>3250@/discussions</id>
+        <link href="https://forum.zettelkasten.de/discussion/3250/itil-4-foundation-information-technology-infrastructure-library-dumps"/>
+        <updated>2025-05-22T07:08:25.000Z</updated>
+        <summary type="html"><![CDATA[In today’s highly competitive IT industry, certifications play a crucial role in advancing one's career. Among the most recognized and widely accepted IT service management certifications is the ITIL® 4 Foundation. Whether you are just beginning your journey into IT service management or are looking to validate your skills, the ITIL® 4 Foundation certification is a vital credential. ITIL® 4 Foundation Information Technology Infrastructure Library Dumps One proven way to succeed in this exam is to Boost Your Score with Study4Pass ITIL® 4 Dumps.
+Why Choose ITIL® 4 Foundation Certification?
+Earning this certification shows employers that you have a clear understanding of IT service management principles, aligning IT services with the needs of business, thereby increasing your employability and career growth. However, passing the exam requires not just theoretical knowledge but also a strong understanding of the exam structure and questions. That’s where Study4Pass becomes your ultimate learning partner.
+Exam Preparation Now - https://study4pass.com/study-material/itil/itil-4-foundation
+What Makes Study4Pass Stand Out?
+At Study4Pass, we prioritize success. Our ITIL® 4 dumps are curated by industry professionals and ITIL-certified experts who understand not only the structure of the exam but also the types of questions most commonly asked. This ensures you are well-prepared and confident on exam day.]]></summary>
+        <author>
+            <name>ITIL_4_Foundation</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[consult-gh-with-pr-review (20250522.523) --- "pr-review" Integration for consult-gh]]></title>
+        <id>https://melpa.org/packages/consult-gh-with-pr-review-20250522.523.tar</id>
+        <link href="https://melpa.org/#/consult-gh-with-pr-review"/>
+        <updated>2025-05-22T05:23:00.000Z</updated>
+        <summary type="html"><![CDATA[The consult-gh-with-pr-review package has been updated to version 20250522.523.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[consult-gh-forge (20250522.523) --- Magit/Forge Integration for consult-gh]]></title>
+        <id>https://melpa.org/packages/consult-gh-forge-20250522.523.tar</id>
+        <link href="https://melpa.org/#/consult-gh-forge"/>
+        <updated>2025-05-22T05:23:00.000Z</updated>
+        <summary type="html"><![CDATA[The consult-gh-forge package has been updated to version 20250522.523.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[consult-gh-embark (20250522.523) --- Embark Actions for consult-gh]]></title>
+        <id>https://melpa.org/packages/consult-gh-embark-20250522.523.tar</id>
+        <link href="https://melpa.org/#/consult-gh-embark"/>
+        <updated>2025-05-22T05:23:00.000Z</updated>
+        <summary type="html"><![CDATA[The consult-gh-embark package has been updated to version 20250522.523.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[consult-gh (20250522.523) --- Consulting GitHub Client]]></title>
+        <id>https://melpa.org/packages/consult-gh-20250522.523.tar</id>
+        <link href="https://melpa.org/#/consult-gh"/>
+        <updated>2025-05-22T05:23:00.000Z</updated>
+        <summary type="html"><![CDATA[The consult-gh package has been updated to version 20250522.523.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[disproject (20250522.522) --- Dispatch project commands with Transient]]></title>
+        <id>https://melpa.org/packages/disproject-20250522.522.tar</id>
+        <link href="https://melpa.org/#/disproject"/>
+        <updated>2025-05-22T05:22:00.000Z</updated>
+        <summary type="html"><![CDATA[The disproject package has been updated to version 20250522.522.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How I enter a timestamp in the minibuf with vertico active?]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksgs5c/how_i_enter_a_timestamp_in_the_minibuf_with/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksgs5c/how_i_enter_a_timestamp_in_the_minibuf_with/"/>
+        <updated>2025-05-22T03:15:02.000Z</updated>
+        <summary type="html"><![CDATA[Vertico, Consult, Marginalia, Orderless, and Embark
+ i have just installed the pack. and it is quite a boost in productivity. and i am completely lost
+ when i generate a property to my subtree (C-c C-x p) and want to inject the timestamp (C-u C-u C-c !) it says /C-c ! is undefined/ and lists a vertical list of previous values to other subtrees. how do i enter a new value, ignoring the previous ones? actually, precisely for properties i do not want to recycle any of the old values.
+ pasting seems to work, it is the timestamp that has stopped working.
+    submitted by    /u/MosaicIncaSleds  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Need help configuring Emacs 23.1, finding source code for old packages.]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksepkp/need_help_configuring_emacs_231_finding_source/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksepkp/need_help_configuring_emacs_231_finding_source/"/>
+        <updated>2025-05-22T01:25:39.000Z</updated>
+        <summary type="html"><![CDATA[My daily driver has been Emacs 29, but now I need to use emacs 23, released in 2009.
+  
+I know that magit has been around since 2008, but I'm struggling to find the source code from back then. The oldest version I found on github was 1.20 https://github.com/magit/magit/releases/tag/1.2.0 from 2013, so I'm not sure if it will work. I also noticed it has a Makefile and I'm not sure what that's about - I'm trying to use it on Windows and I don't think I can do make on windows. But maybe I can make it work without the makefile.
+ Ideally, I would like have a replacement for Vertico - a completion framework - that works with Emacs 23. I looked at Helm. Is there anything else I should consider? Likewise, I'm not sure how to find the source code from the versions of Helm early enough to support emacs 23.
+ I'm used to C-x C-;'ing a region to toggle comments on or off, which apparently invokes comment-line. And it does not appear to be a thing in emacs 23, but I would very much like to recreate it.
+ If the long-time emacs users have any other advice I'd gladly take it.
+  
+Thanks in advance!
+ UPDATE: Just realized I can probably clone the repos and go through the commit history to find the oldest versions of the code. Will try tomorrow.
+    submitted by    /u/lispy-hacker  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Neovim user trying to switch to Emacs]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1ksd67v/neovim_user_trying_to_switch_to_emacs/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1ksd67v/neovim_user_trying_to_switch_to_emacs/"/>
+        <updated>2025-05-22T00:07:10.000Z</updated>
+        <summary type="html"><![CDATA[I'm a 25+ year vim/neovim user, but have recently become quite enamored with the power of Lisp and Emacs, although I'm still fumbling around, slowing increasing my knowledge. I have most things working quite well, but am trying to fix a couple of pain points in my workflow:
+  
+Is there a way to configure consult-fd to immediately show the files in the project, similar to how project-find-file does?
+ Is there a way to get a live preview of the files as I cycle between them? (Either with consult-fd, or project-find-file), similar to how consult-ripgrep works?
+ Is there a way to get font locking or treesitter highlighting on consult-ripgrep and consult-project-buffer live previews?
+ Can I force the live preview to my right-side window?
+  
+I've been trying to find configuration variables for these things but haven't been successful so far. Thanks for any tips!
+ Edit: For context, I have been using telescope in neovim and am trying to get similar functionality, but within an emacs temp buffer: https://camo.githubusercontent.com/5eb234defa4dcc0145ba0d8e327a03869f83af8ac0def9007828e4835dfecd32/68747470733a2f2f692e696d6775722e636f6d2f5454546a6136742e676966
+    submitted by    /u/rustvscpp  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Databricks Runtime with Scala 2.13 support released]]></title>
         <id>https://www.reddit.com/r/scala/comments/1ks7s2t/databricks_runtime_with_scala_213_support_released/</id>
@@ -244,6 +681,16 @@ I would love to here you comments and criticism on my writing and code. It would
  [link]   [comments]]]></summary>
         <author>
             <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[racket-mode (20250521.1303) --- Racket editing, REPL, and more]]></title>
+        <id>https://melpa.org/packages/racket-mode-20250521.1303.tar</id>
+        <link href="https://melpa.org/#/racket-mode"/>
+        <updated>2025-05-21T13:03:00.000Z</updated>
+        <summary type="html"><![CDATA[The racket-mode package has been updated to version 20250521.1303.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
         </author>
     </entry>
     <entry>
@@ -1420,6 +1867,16 @@ As shown, The auto-complete feature swallowed the first letter "n".]]></summary>
         <link href="https://melpa.org/#/vertico"/>
         <updated>2025-05-16T18:42:00.000Z</updated>
         <summary type="html"><![CDATA[The vertico package has been updated to version 20250516.1842.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[corfu (20250516.1841) --- COmpletion in Region FUnction]]></title>
+        <id>https://melpa.org/packages/corfu-20250516.1841.tar</id>
+        <link href="https://melpa.org/#/corfu"/>
+        <updated>2025-05-16T18:41:00.000Z</updated>
+        <summary type="html"><![CDATA[The corfu package has been updated to version 20250516.1841.]]></summary>
         <author>
             <name>MELPA package updates</name>
         </author>
@@ -8376,297 +8833,6 @@ My running example is a parser for a …]]></summary>
         <link href="https://melpa.org/#/hyperbole"/>
         <updated>2025-04-23T10:10:00.000Z</updated>
         <summary type="html"><![CDATA[The hyperbole package has been updated to version 20250423.1010.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[selected-window-accent-mode (20250423.700) --- Accent Selected Window]]></title>
-        <id>https://melpa.org/packages/selected-window-accent-mode-20250423.700.tar</id>
-        <link href="https://melpa.org/#/selected-window-accent-mode"/>
-        <updated>2025-04-23T07:00:00.000Z</updated>
-        <summary type="html"><![CDATA[The selected-window-accent-mode package has been updated to version 20250423.700.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Durable Event-sourced Workflow Monad... Seriously!]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1k5stw9/durable_eventsourced_workflow_monad_seriously/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1k5stw9/durable_eventsourced_workflow_monad_seriously/"/>
-        <updated>2025-04-23T06:55:59.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/Krever  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[mhc (20250423.342) --- Message Harmonized Calendaring system]]></title>
-        <id>https://melpa.org/packages/mhc-20250423.342.tar</id>
-        <link href="https://melpa.org/#/mhc"/>
-        <updated>2025-04-23T03:42:00.000Z</updated>
-        <summary type="html"><![CDATA[The mhc package has been updated to version 20250423.342.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Tipos Genéricos Anónimos en Scala: Wildcards y Subtipado]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1k5nrie/tipos_gen%C3%A9ricos_an%C3%B3nimos_en_scala_wildcards_y/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1k5nrie/tipos_gen%C3%A9ricos_an%C3%B3nimos_en_scala_wildcards_y/"/>
-        <updated>2025-04-23T01:55:36.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/emanuelpeg  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Broad search for any Traversable]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1k5n4r5/broad_search_for_any_traversable/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1k5n4r5/broad_search_for_any_traversable/"/>
-        <updated>2025-04-23T01:23:17.000Z</updated>
-        <summary type="html"><![CDATA[This challenge turned out really well.
-    submitted by    /u/effectfully  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[repeat-fu (20250423.56) --- Minor mode to repeat typing or commands]]></title>
-        <id>https://melpa.org/packages/repeat-fu-20250423.56.tar</id>
-        <link href="https://melpa.org/#/repeat-fu"/>
-        <updated>2025-04-23T00:56:00.000Z</updated>
-        <summary type="html"><![CDATA[The repeat-fu package has been updated to version 20250423.56.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[rust-mode (20250423.15) --- A major-mode for editing Rust source code]]></title>
-        <id>https://melpa.org/packages/rust-mode-20250423.15.tar</id>
-        <link href="https://melpa.org/#/rust-mode"/>
-        <updated>2025-04-23T00:15:00.000Z</updated>
-        <summary type="html"><![CDATA[The rust-mode package has been updated to version 20250423.15.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Re-use text chunk in both export body and tangled source]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/1k5kual/reuse_text_chunk_in_both_export_body_and_tangled/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/1k5kual/reuse_text_chunk_in_both_export_body_and_tangled/"/>
-        <updated>2025-04-22T23:29:51.000Z</updated>
-        <summary type="html"><![CDATA[Hi all,
- I'm considering using org-mode as a literate programming system to write a library. I want to have the HTML export from the org-mode be usable as documentation, but also want to include doc comments in the generated source for IDE display. I would like to use a macro or the like so I don't have to duplicate text. Something like:
- * My Function #+MACRO: MY_FUNCTION_BRIEF My function does useful stuff! ** Brief {{{MY_FUNCTION_BRIEF}}}} ** Signature #+BEGIN_SRC cpp :noweb-ref my_header.hpp /// u/brief {{{MY_FUNCTION_BRIEF}}} void my_function(); #+END_SRC 
- Is there a way to accomplish this? I don't care spesifically about using macros, just anything that help my documentation be a little more DRY.
- Thanks in advance!
-    submitted by    /u/boscillator  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[org-modern (20250422.2151) --- Modern looks for Org]]></title>
-        <id>https://melpa.org/packages/org-modern-20250422.2151.tar</id>
-        <link href="https://melpa.org/#/org-modern"/>
-        <updated>2025-04-22T21:51:00.000Z</updated>
-        <summary type="html"><![CDATA[The org-modern package has been updated to version 20250422.2151.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Project-M36: Relational Algebra Engine (DB) written in Haskell]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1k5i0sk/projectm36_relational_algebra_engine_db_written/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1k5i0sk/projectm36_relational_algebra_engine_db_written/"/>
-        <updated>2025-04-22T21:24:39.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/Scholablade  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[wanderlust (20250422.1943) --- Yet Another Message Interface on Emacsen]]></title>
-        <id>https://melpa.org/packages/wanderlust-20250422.1943.tar</id>
-        <link href="https://melpa.org/#/wanderlust"/>
-        <updated>2025-04-22T19:43:00.000Z</updated>
-        <summary type="html"><![CDATA[The wanderlust package has been updated to version 20250422.1943.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[magit (20250422.1848) --- A Git porcelain inside Emacs]]></title>
-        <id>https://melpa.org/packages/magit-20250422.1848.tar</id>
-        <link href="https://melpa.org/#/magit"/>
-        <updated>2025-04-22T18:48:00.000Z</updated>
-        <summary type="html"><![CDATA[The magit package has been updated to version 20250422.1848.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[A new book on Haskell, Type Theory and AI from gentle first principles is out!]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1k5bbll/a_new_book_on_haskell_type_theory_and_ai_from/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1k5bbll/a_new_book_on_haskell_type_theory_and_ai_from/"/>
-        <updated>2025-04-22T16:55:49.000Z</updated>
-        <summary type="html"><![CDATA[Hi everyone!
- I am very excited to share news - my book on learning Haskell from scratch based on mathematical first principles is out and available on all major platforms. I've worked on it for several years with big breaks and tried to convey the beauty and power of the language from the first mathematical principles, but introduced very gently and not requiring a PhD. 
- We look at basics of Type Theory, constructing beautiful typeclass hierarchy naturally, from simple typeclasses to Functor-Applicative-Monad as well as some supporting typeclasses, look at monad transformer stacks in-depth, and hopefully even the chapter on Arrows is very accessible.
- Not just that - the whole 2nd part of the book is about building AI Agents using Haskell!
- I am very excited about this and hope this book will help some of you too - you can get it with 20% discount (see image) at Springer: https://link.springer.com/book/10.1007/979-8-8688-1282-8 or on Amazon: https://www.amazon.com/Magical.../dp/B0DQGF9SL7/ref=sr_1_1
- PS Since it's fresh off the press - if you are willing to write a public Amazon review for the book, I will reimburse your Kindle purchase for the first 30 (thirty) reviewers and Hard-Copy purchase for the first 15 (fifteen) reviewers via Amazon gift cards!
- Best wishes,
- Anton Antich
-    submitted by    /u/Bulky_Koala_5901  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[The Nature of Complexity in John Ousterhout’s Philosophy of Software Design]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1k5adsg/the_nature_of_complexity_in_john_ousterhouts/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1k5adsg/the_nature_of_complexity_in_john_ousterhouts/"/>
-        <updated>2025-04-22T16:17:59.000Z</updated>
-        <summary type="html"><![CDATA[https://fpilluminated.org/deck/261
-    submitted by    /u/philip_schwarz  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How can I show a variable on the left of the right side of the modeline?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1k588u8/how_can_i_show_a_variable_on_the_left_of_the/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1k588u8/how_can_i_show_a_variable_on_the_left_of_the/"/>
-        <updated>2025-04-22T14:52:04.000Z</updated>
-        <summary type="html"><![CDATA[I tried it like this:
- (setq-local mode-line-format (cons (propertize my-var 'my-identifier t))) 
- But this goes to the left side of the modeline.
- If I do it with mode-line-misc-info then it goes to the correct position, but this has issues when I switch to another window, so I'm looking to do it with mode-line-format or something better.
-    submitted by    /u/dehaticoder  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Learn how to build a fully functional Emacs package from scratch [course]]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1k57dc9/learn_how_to_build_a_fully_functional_emacs/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1k57dc9/learn_how_to_build_a_fully_functional_emacs/"/>
-        <updated>2025-04-22T14:14:50.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/tonyaldon  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Android nerd fonts?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1k56qtr/android_nerd_fonts/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1k56qtr/android_nerd_fonts/"/>
-        <updated>2025-04-22T13:48:06.000Z</updated>
-        <summary type="html"><![CDATA[When you have run nerd-icons-install-fonts a ttf file is downloaded.
- On android, what are you meant to do with it to make it available for (Doom) Emacs?
- Device isn't rooted, if that matters. 
-    submitted by    /u/radian_  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ChatGPT Emacs Course Taught by Amalgam of Ali G, Borat, and Bruno!]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1k562s5/chatgpt_emacs_course_taught_by_amalgam_of_ali_g/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1k562s5/chatgpt_emacs_course_taught_by_amalgam_of_ali_g/"/>
-        <updated>2025-04-22T13:17:46.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/New_Gain_5669  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Example from Haskell docs doesn't work, $> not in scope?]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1k55p1n/example_from_haskell_docs_doesnt_work_not_in_scope/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1k55p1n/example_from_haskell_docs_doesnt_work_not_in_scope/"/>
-        <updated>2025-04-22T13:00:09.000Z</updated>
-        <summary type="html"><![CDATA[I'm jumping back into the UPenn Haskell course (self learning, not for credit) after a 2 months break and am refreshing my knowledge on Functors and Applicable. I was fuzzy on some of the operators so I decided to paste in examples I found via searching Hoogle and this happened:
- ghci> Just 90210 ($>) "foo"
- <interactive>:2:12: error: [GHC-88464] Variable not in scope: $>
- Suggested fix:
- Perhaps use one of these:
- ‘$’ (imported from Prelude), ‘>’ (imported from Prelude), 
- ‘$!’ (imported from Prelude)
- This is a fresh install from 3 days ago. I'm not sure what I am doing wrong, <$ worked just fine.
-    submitted by    /u/thetraintomars  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[A newcomer question: AucTeX and Tectonic]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1k54lfz/a_newcomer_question_auctex_and_tectonic/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1k54lfz/a_newcomer_question_auctex_and_tectonic/"/>
-        <updated>2025-04-22T12:03:47.000Z</updated>
-        <summary type="html"><![CDATA[Hello to all.
- I always wanted to try Emacs -although I am a bit afraid of its various "peculiarities" (due to dyslexia -cf. key-bindings- and wrist problems -cf. ditto).
- Anyway... My use case regards:
- a) an environment for Scheme (Chicken scheme)
- b) an environment for LaTeX -using the Tectonic tool/distro.
- Regarding point b), I followed the instructions found here but in vain. More specific, the
- compilation C-c C-a does not produce a .pdf file, and (of course) C-c c-l has nothing to show! Any ideas?
- Thank you!
- p.s. Is there any neat site/webpage/manual/video on how to set up emacs? I tried DT and System Crafters but, after some point they do not stay along with the newbie. 
-  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[How can I make functions and commands available only a minor mode is set?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1k54k05/how_can_i_make_functions_and_commands_available/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1k54k05/how_can_i_make_functions_and_commands_available/"/>
-        <updated>2025-04-22T12:01:51.000Z</updated>
-        <summary type="html"><![CDATA[I'm very new to Emacs and Elisp, and I'm writing my first package to get the feel for customizing it. I want the commands and functions to work only if my minor mode is activated. At present, when I press M-x, these commands are available even when the mode is off.
- Am I supposed to add a guard clause on every single command and function? If the commands cannot be disabled, then at least I need it to show a message if the mode is not active, like "This command is only available in xyz mode." and not do anything else. How do I go about this? 
-    submitted by    /u/surveypoodle  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Issue with typeclasses.com subscription]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1k52cqk/issue_with_typeclassescom_subscription/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1k52cqk/issue_with_typeclassescom_subscription/"/>
-        <updated>2025-04-22T09:46:08.000Z</updated>
-        <summary type="html"><![CDATA[I paid for 1 month typeclasses.com subscription. But it's not activated. Payment doesn't show in invoice section and I can't access any content. 
- I tried emailing hello@typeclasses.com since that's the info in the contact section but seems no one is responding. The twitter links point to nothing.
- I had last subscribed to this site in 2020 for a month.
- Is the site working for anyone? Or they just abandoned it? Not sure who to reach out to.
- I was hoping to get back into Haskell since I've only done the basics. So trying out Exercism and code-crafters but was hoping to do some of the courses on typeclasses.com since they were good the last time I used.
-    submitted by    /u/hriszzzzz  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[leuven-theme (20250422.932) --- Elegant Emacs color theme for a white background]]></title>
-        <id>https://melpa.org/packages/leuven-theme-20250422.932.tar</id>
-        <link href="https://melpa.org/#/leuven-theme"/>
-        <updated>2025-04-22T09:32:00.000Z</updated>
-        <summary type="html"><![CDATA[The leuven-theme package has been updated to version 20250422.932.]]></summary>
         <author>
             <name>MELPA package updates</name>
         </author>
