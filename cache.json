@@ -63,6 +63,16 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1ktc56v/does_this_code_lazily_build_a_segment_tree/",
+          "author": null,
+          "description": "import qualified Data.Vector as V import Control.Monad (replicateM) -- Lazy Segment Tree for Range Minimum data SegmentTree = Leaf Int Int | Node Int Int Int SegmentTree SegmentTree deriving Show -- Build lazily: only constructs needed parts buildLazyTree :: V.Vector Int -> Int -> Int -> SegmentTree buildLazyTree vec l r | l == r = Leaf l (vec V.! l) | otherwise = let mid = (l + r) `div` 2 left = buildLazyTree vec l mid right = buildLazyTree vec (mid + 1) r minVal = min (getValue left) (getValue right) in Node l r minVal left right -- Get the stored min value at a node getValue :: SegmentTree -> Int getValue (Leaf _ v) = v getValue (Node _ _ v _ _) = v -- Perform RMQ in [ql, qr] rangeMinQuery :: SegmentTree -> Int -> Int -> Int rangeMinQuery (Leaf i v) ql qr | ql <= i && i <= qr = v | otherwise = maxBound rangeMinQuery (Node l r val left right) ql qr | qr < l || r < ql = maxBound -- no overlap | ql <= l && r <= qr = val -- total overlap | otherwise = min (rangeMinQuery left ql qr) (rangeMinQuery right ql qr) -- Main main :: IO () main = do [n, m] <- fmap (map read . words) getLine arr <- fmap (V.fromList . map read . words) getLine queries <- replicateM m $ do [l, r] <- fmap (map read . words) getLine return (l, r) let tree = buildLazyTree arr 0 (n - 1) mapM_ (\\(l, r) -> print $ rangeMinQuery tree l r) queries \n So this a ChatGPT generated code for finding a minimum value in a range of an Array using segment tree. It claims that the segtree will be lazily built and only build parts which are required by a particular range query.\n But wouldn't the first case of rangeMinQuery (i.e (Leaf i v) ) cause the segtree to be completely evaluated? How would you go about implementing a true lazy segtree?\n    submitted by    /u/Patzer26  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1ktc56v/does_this_code_lazily_build_a_segment_tree/",
+          "publishedOn": "2025-05-23T05:49:46.000Z",
+          "wordCount": null,
+          "title": "Does this code lazily build a segment tree?",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1ksxtos/how_to_work_with_atomic_data/",
           "author": null,
           "description": "I'm new to Haskell but have experience in a variety of languages. For instance, I've written simple app in Rust and Clojure that refer to a \"global\" data store implemented as atomic data. For my purposes, this is a great way to avoid having to pass a reference to the data all over the place.\n How can I do this in Haskell?\n Below I show 1) how I do it Clojure, 2) how I do it in Rust, and 3) how I've expanded the code for the Control.Monad.State example for a Counter to use a more complex data definition and how it seems I will still have to pass the binding to the state as an argument to function to work on it outside of Main.\n In Clojure, I do this:\n (def db (atom nil)) ; define the central datastore\n (let db (:data @db) (dosomething with db)) ; access the datastore with @db\n In Rust, I do this:\n // define the central datastore\n static DB: LazyLock<Mutex<Database>> = LazyLock::new(|| Mutex::new(Database::default()));\n // Function to access a \"reference\" to Database\n // THIS IS NOT MEANT TO BE USED FOR MORE THAN ONE ACCESS AT A TIME.\n // THE Database will panic otherwise!\n pub(crate) fn db_ref() -> MutexGuard<'static, Database> {\n match DB.try_lock() {\n Err(_) => panic!(\"Database is locked. Cannot access. Concurrent access it not supported.\"),\n Ok(database) => database,\n }\n }\n let mut db = database::db_ref(); // access the database to mutate it\n -- State example with custom data type for more than one value\n import Control.Monad.State data Database = Database { name :: String, counter :: Int } deriving (Show) type DbState = State Database getDb :: DbState Database getDb = get getNameFromDb :: Database -> String getNameFromDb db = name db main :: IO () main = do let initialState = Database { name=\"Marty\", counter=2 } (finalCount, finalState) = runState getDb initialState putStrLn $ \"Final count: \" ++ show finalCount putStrLn $ \"Final state: \" ++ show finalState putStrLn $ getNameFromDb finalState \n    submitted by    /u/Stunning_Fruit9731  \n [link]   [comments]",
@@ -721,36 +731,6 @@
           "wordCount": null,
           "title": "Accidentally Quadratic — Revisiting Haskell Network.HTTP (2015)",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1k6c32k/haskell_interlude_64_sandy_maguire/",
-          "author": null,
-          "description": "submitted by    /u/tritlo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1k6c32k/haskell_interlude_64_sandy_maguire/",
-          "publishedOn": "2025-04-23T22:16:32.000Z",
-          "wordCount": null,
-          "title": "Haskell Interlude 64: Sandy Maguire",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1k5xcq3/creating_an_interpreter_while_first_time_learning/",
-          "author": null,
-          "description": "It is my first time learning haskell and i thought to learn while creating an interpreter in haskell using the book crafting interpreters and learning online from Graham Hutton playlist . \n Is there any other resources for learning both an interpreter and haskell ?\n    submitted by    /u/poseidon3103  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1k5xcq3/creating_an_interpreter_while_first_time_learning/",
-          "publishedOn": "2025-04-23T12:00:30.000Z",
-          "wordCount": null,
-          "title": "Creating an interpreter while first time learning the language",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1k5vxvf/active_automata_learning_in_haskell/",
-          "author": null,
-          "description": "Hey all — just wanted to share a project I've been working on!\n I've started building a Haskell library for Active Automata Learning, inspired by LearnLib (Java) and AALpy (Python). The goal is to support algorithms like L* and L⁺ for learning DFAs, Mealy machines, Moore Machines and possibly more in the future.\n The project is still early-stage, but functional — it can already learn Mealy machines via L*. I'd love any feedback, ideas, or collaborators who are into learning theory, formal methods, or just enjoy building clean Haskell abstractions.\n Thanks!\n    submitted by    /u/steve_anunknown  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1k5vxvf/active_automata_learning_in_haskell/",
-          "publishedOn": "2025-04-23T10:37:35.000Z",
-          "wordCount": null,
-          "title": "Active Automata Learning in Haskell",
-          "imageUrl": null
         }
       ]
     },
@@ -759,6 +739,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ktol0t/whats_the_current_thinking_on_iron_vs_refined_and/",
+          "author": null,
+          "description": "Are both still relevant? When to use one, when the other? What advantages, disadvantages do they have over each other.\n Bonus question: What patterns to use them with? Does an Opaque type packaged into an object with methods such as apply, unsafApply, etc. make sense? With one or the other? Or both?\n Bonus question 2: What alternative would you choose over refined types for making sure that a model class can only exist in correct state?\n    submitted by    /u/InternationalPick669  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ktol0t/whats_the_current_thinking_on_iron_vs_refined_and/",
+          "publishedOn": "2025-05-23T16:56:49.000Z",
+          "wordCount": null,
+          "title": "What's the current thinking on iron vs refined (and how to use them)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1ktmfry/annotation_based_checks_for_dto/",
+          "author": null,
+          "description": "This works fine:\n import annotation.StaticAnnotation class Check[A](check: A => Boolean, error: String = \"\") extends StaticAnnotation @Check[CreateUser](_.age > 18, error = \"Not old enought!\") case class CreateUser(val name: String, val age: Int) \n Is there a method to remove the generic parameter when using the annotation. Make the compiler to capture the Class type into the A generic parameter automatically?\n For anyone suggesting using Iron. My point here is to be more straight forward and possibly make the annotation info part of the API spec/docs.\n    submitted by    /u/mikaball  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1ktmfry/annotation_based_checks_for_dto/",
+          "publishedOn": "2025-05-23T15:29:11.000Z",
+          "wordCount": null,
+          "title": "Annotation based checks for DTO.",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1ksv9wa/is_there_something_like_spacetimedb_in_scala/",
           "author": null,
@@ -1514,16 +1514,6 @@
           "wordCount": 3164,
           "title": "Why we blog",
           "imageUrl": "https://tweag.io/logo.png"
-        },
-        {
-          "id": "https://tweag.io/blog/2025-04-24-minimal-megaparsec-tutorial/",
-          "author": null,
-          "description": "In my functional programming course to Master Students of\nTelecom Nancy,\nI like to use parsing as an example of monadic programming, relying on the\nmegaparsec library.\nMy only concern with megaparsec is that its official tutorial\nis long: at the time I’m writing, it’s 15000 words long.\nUnlike the official megaparsec tutorial, this blog post is intended to be smaller,\nand is aimed at an audience with only a basic understanding of Haskell and monadic programming.\nAll the Haskell material from this blogpost is available on our GitHub: https://github.com/tweag/minimal-megaparsec-tutorial.\nYou can fork this repository to get a full-fledged setup\n(including CI and Haskell Language Server support)\nfor experimenting with a megaparsec parser 🚀\n\nRunning example\nMy running example is a parser for a …",
-          "link": "https://tweag.io/blog/2025-04-24-minimal-megaparsec-tutorial/",
-          "publishedOn": "2025-04-24T00:00:00.000Z",
-          "wordCount": 2786,
-          "title": "The minimal megaparsec tutorial",
-          "imageUrl": "https://tweag.io/logo.png"
         }
       ]
     },
@@ -1776,6 +1766,86 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/psc-ide-20250523.1854.tar",
+          "author": null,
+          "description": "The psc-ide package has been updated to version 20250523.1854.",
+          "link": "https://melpa.org/#/psc-ide",
+          "publishedOn": "2025-05-23T18:54:00.000Z",
+          "wordCount": 105,
+          "title": "psc-ide (20250523.1854) --- Minor mode for PureScript's IDE server",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/hide-lines-20250523.1851.tar",
+          "author": null,
+          "description": "The hide-lines package has been updated to version 20250523.1851.",
+          "link": "https://melpa.org/#/hide-lines",
+          "publishedOn": "2025-05-23T18:51:00.000Z",
+          "wordCount": 105,
+          "title": "hide-lines (20250523.1851) --- Commands for hiding lines based on a regexp",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/agtags-20250523.1654.tar",
+          "author": null,
+          "description": "The agtags package has been updated to version 20250523.1654.",
+          "link": "https://melpa.org/#/agtags",
+          "publishedOn": "2025-05-23T16:54:00.000Z",
+          "wordCount": 105,
+          "title": "agtags (20250523.1654) --- A frontend to GNU Global",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/perspective-20250523.1316.tar",
+          "author": null,
+          "description": "The perspective package has been updated to version 20250523.1316.",
+          "link": "https://melpa.org/#/perspective",
+          "publishedOn": "2025-05-23T13:16:00.000Z",
+          "wordCount": 105,
+          "title": "perspective (20250523.1316) --- Switch between named \"perspectives\" of the editor",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/srcery-theme-20250523.1304.tar",
+          "author": null,
+          "description": "The srcery-theme package has been updated to version 20250523.1304.",
+          "link": "https://melpa.org/#/srcery-theme",
+          "publishedOn": "2025-05-23T13:04:00.000Z",
+          "wordCount": 105,
+          "title": "srcery-theme (20250523.1304) --- Dark color theme",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/naga-theme-20250523.1259.tar",
+          "author": null,
+          "description": "The naga-theme package has been updated to version 20250523.1259.",
+          "link": "https://melpa.org/#/naga-theme",
+          "publishedOn": "2025-05-23T12:59:00.000Z",
+          "wordCount": 105,
+          "title": "naga-theme (20250523.1259) --- Dark color theme with green foreground color",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/yafolding-20250523.1216.tar",
+          "author": null,
+          "description": "The yafolding package has been updated to version 20250523.1216.",
+          "link": "https://melpa.org/#/yafolding",
+          "publishedOn": "2025-05-23T12:16:00.000Z",
+          "wordCount": 105,
+          "title": "yafolding (20250523.1216) --- Folding code blocks based on indentation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mpvi-20250523.947.tar",
+          "author": null,
+          "description": "The mpvi package has been updated to version 20250523.947.",
+          "link": "https://melpa.org/#/mpvi",
+          "publishedOn": "2025-05-23T09:47:00.000Z",
+          "wordCount": 105,
+          "title": "mpvi (20250523.947) --- Media tool based on EMMS and MPV",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/vim-tab-bar-20250522.1315.tar",
           "author": null,
           "description": "The vim-tab-bar package has been updated to version 20250522.1315.",
@@ -2006,6 +2076,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/wanderlust-20250519.1830.tar",
+          "author": null,
+          "description": "The wanderlust package has been updated to version 20250519.1830.",
+          "link": "https://melpa.org/#/wanderlust",
+          "publishedOn": "2025-05-19T18:30:00.000Z",
+          "wordCount": 105,
+          "title": "wanderlust (20250519.1830) --- Yet Another Message Interface on Emacsen",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/semi-20250519.1830.tar",
           "author": null,
           "description": "The semi package has been updated to version 20250519.1830.",
@@ -2033,6 +2113,16 @@
           "publishedOn": "2025-05-19T17:29:00.000Z",
           "wordCount": 105,
           "title": "flim (20250519.1729) --- Basic message representation and encoding features",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/magit-20250519.1537.tar",
+          "author": null,
+          "description": "The magit package has been updated to version 20250519.1537.",
+          "link": "https://melpa.org/#/magit",
+          "publishedOn": "2025-05-19T15:37:00.000Z",
+          "wordCount": 105,
+          "title": "magit (20250519.1537) --- A Git porcelain inside Emacs",
           "imageUrl": null
         },
         {
@@ -4154,116 +4244,6 @@
           "wordCount": 105,
           "title": "idris-mode (20250424.908) --- Major mode for editing Idris code",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/gptel-20250424.42.tar",
-          "author": null,
-          "description": "The gptel package has been updated to version 20250424.42.",
-          "link": "https://melpa.org/#/gptel",
-          "publishedOn": "2025-04-24T00:42:00.000Z",
-          "wordCount": 105,
-          "title": "gptel (20250424.42) --- Interact with ChatGPT or other LLMs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-jira-20250424.41.tar",
-          "author": null,
-          "description": "The org-jira package has been updated to version 20250424.41.",
-          "link": "https://melpa.org/#/org-jira",
-          "publishedOn": "2025-04-24T00:41:00.000Z",
-          "wordCount": 105,
-          "title": "org-jira (20250424.41) --- Syncing between Jira and Org-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/jjdescription-20250423.2333.tar",
-          "author": null,
-          "description": "The jjdescription package has been updated to version 20250423.2333.",
-          "link": "https://melpa.org/#/jjdescription",
-          "publishedOn": "2025-04-23T23:33:00.000Z",
-          "wordCount": 105,
-          "title": "jjdescription (20250423.2333) --- Major mode for editing Jujutsu description files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/treemacs-20250423.2024.tar",
-          "author": null,
-          "description": "The treemacs package has been updated to version 20250423.2024.",
-          "link": "https://melpa.org/#/treemacs",
-          "publishedOn": "2025-04-23T20:24:00.000Z",
-          "wordCount": 105,
-          "title": "treemacs (20250423.2024) --- A tree style file explorer package",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/renpy-20250423.1807.tar",
-          "author": null,
-          "description": "The renpy package has been updated to version 20250423.1807.",
-          "link": "https://melpa.org/#/renpy",
-          "publishedOn": "2025-04-23T18:07:00.000Z",
-          "wordCount": 105,
-          "title": "renpy (20250423.1807) --- Major mode for editing Ren'Py files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/helm-core-20250423.1718.tar",
-          "author": null,
-          "description": "The helm-core package has been updated to version 20250423.1718.",
-          "link": "https://melpa.org/#/helm-core",
-          "publishedOn": "2025-04-23T17:18:00.000Z",
-          "wordCount": 105,
-          "title": "helm-core (20250423.1718) --- Development files for Helm",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/embark-20250423.1650.tar",
-          "author": null,
-          "description": "The embark package has been updated to version 20250423.1650.",
-          "link": "https://melpa.org/#/embark",
-          "publishedOn": "2025-04-23T16:50:00.000Z",
-          "wordCount": 105,
-          "title": "embark (20250423.1650) --- Conveniently act on minibuffer completions",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/doom-modeline-20250423.1614.tar",
-          "author": null,
-          "description": "The doom-modeline package has been updated to version 20250423.1614.",
-          "link": "https://melpa.org/#/doom-modeline",
-          "publishedOn": "2025-04-23T16:14:00.000Z",
-          "wordCount": 105,
-          "title": "doom-modeline (20250423.1614) --- A minimal and modern mode-line",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/khoj-20250423.1331.tar",
-          "author": null,
-          "description": "The khoj package has been updated to version 20250423.1331.",
-          "link": "https://melpa.org/#/khoj",
-          "publishedOn": "2025-04-23T13:31:00.000Z",
-          "wordCount": 105,
-          "title": "khoj (20250423.1331) --- Your Second Brain",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/flycheck-20250423.1305.tar",
-          "author": null,
-          "description": "The flycheck package has been updated to version 20250423.1305.",
-          "link": "https://melpa.org/#/flycheck",
-          "publishedOn": "2025-04-23T13:05:00.000Z",
-          "wordCount": 105,
-          "title": "flycheck (20250423.1305) --- On-the-fly syntax checking",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/hyperbole-20250423.1010.tar",
-          "author": null,
-          "description": "The hyperbole package has been updated to version 20250423.1010.",
-          "link": "https://melpa.org/#/hyperbole",
-          "publishedOn": "2025-04-23T10:10:00.000Z",
-          "wordCount": 105,
-          "title": "hyperbole (20250423.1010) --- GNU Hyperbole: The Everyday Hypertextual Information Manager",
-          "imageUrl": null
         }
       ]
     },
@@ -4272,6 +4252,46 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ktttb8/cookbook_of_rx_notation_expressions/",
+          "author": null,
+          "description": "I had cause to be tinkering with regexp for an imenu matching case, and while I accomplished it with the string engine well enough, I was intrigued and started seeing what I could do with the Lisp style constructions.\n I'm rapidly finding out that it's somewhat challenging to get certain things to work the way I like because basic things don't work the way I expect. So I was wondering if there were more examples out there somewhere than on the Emacs Elisp pages. \n For example, I have a file that has the word function in it many places. So (rx \"function\") works fine and RE-Builder will highlight those words. \n Then I started a construction that needs to begin at the beginning of a line. I backspaced one of those function lines to the beginning and tried (rx line-start \"function\") and... nothing.\n This is where I'm realizing that while I have all the tools from the Elisp pages, some of this just isn't working the way I expect it to, so would like to see a lot more useful examples.\n    submitted by    /u/remillard  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ktttb8/cookbook_of_rx_notation_expressions/",
+          "publishedOn": "2025-05-23T20:32:58.000Z",
+          "wordCount": null,
+          "title": "Cookbook of Rx notation expressions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1ktfl8b/what_is_the_undotree_sucessor/",
+          "author": null,
+          "description": "What do you use instead of undo-tree?\n    submitted by    /u/zsome  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1ktfl8b/what_is_the_undotree_sucessor/",
+          "publishedOn": "2025-05-23T09:52:04.000Z",
+          "wordCount": null,
+          "title": "What is the undo-tree sucessor ?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1kt9uex/help_identifying_theme/",
+          "author": null,
+          "description": "Anybody know what this theme on codeberg.org might be called? If so, any idea if it's been ported to Emacs? Link to the original page\n    submitted by    /u/EverybodyLovesRayman  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1kt9uex/help_identifying_theme/",
+          "publishedOn": "2025-05-23T03:31:26.000Z",
+          "wordCount": null,
+          "title": "Help identifying theme",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1kt9qio/emacsclient_as_default_editor_in_windows_10/",
+          "author": null,
+          "description": "Hi, all. I've been trying to set Emacsclient as my default Editor in Windows 10. I've read the Info documentation and come up with the following script, saved in emacs-29.4\\bin, along with emacsclientw.exe and runemacs.exe:\n shell cd %~dp0 set HOME=%~dp0..\\ emacsclientw.exe ^ --reuse-frame ^ --no-wait ^ --alternate-editor=runemacs.exe ^ %* \n I have (server-start) in my config file. The script works fine from command line. E.g., while in the bin directory, runemacs_clientw.cmd somefile.org: if Emacs isn't already running, it runs Emacs with my config file, then visits the document; if Emacs is running, the document pops up Emacs.\n Next, I've gone in to Explorer, right-clicked on somefile.org, and directed it to open the file with the batch file. No luck there. I have a similar script that opens runemacs.exe directly, and that works when associated with Org files in Explorer. What am I missing? Any help would be much appreciated! Thanks in advance!\n    submitted by    /u/granti128  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1kt9qio/emacsclient_as_default_editor_in_windows_10/",
+          "publishedOn": "2025-05-23T03:25:25.000Z",
+          "wordCount": null,
+          "title": "Emacsclient as default editor in Windows 10",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1kszog8/org_mode_syntax_parsing_question_interleaved/",
           "author": null,
@@ -6491,76 +6511,6 @@
           "wordCount": null,
           "title": "Playing with AI assisted coding, wrote this in elisp",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k6er8z/org_mode_horizontal_code_tabs_for_source_blocks/",
-          "author": null,
-          "description": "I'm trying to switch to org mode for blogging. The main problem I have is that I need horizontal code tabs (see: https://jdvp.me/articles/Testing-Code-Tabs). Basically, If I have 2 or more consecutive src blocks, I want to turn them into these widgets.\n I'm pretty sure I can figure out the JS part of it but I would like some advice on the implementation on the Org side. I see few possibilities:\n - adding a pre-process step before exporting (org-export-before-parsing-hook) turning users input into a custom Org babel format.\n - adding a post-process step (didn't find yet) where I basically read the DOM and merge the pre tags.\n The most important thing is: I don't want the writer to have to change their org file. Maybe they can add a bit of config but that's it.\n Is this possible? Do you have any other ideas?\n    submitted by    /u/clementjean  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k6er8z/org_mode_horizontal_code_tabs_for_source_blocks/",
-          "publishedOn": "2025-04-24T00:20:04.000Z",
-          "wordCount": null,
-          "title": "Org mode: Horizontal code tabs for source blocks",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k6corx/small_bashrc_and_elisp_tricks_to_auto_activate/",
-          "author": null,
-          "description": "I'd like to share some small .bashrc and Emacs configuration tricks to 'auto activate' virtual environments (per directory/project) without using any external packages.\n The .bashrc trick might be nice for Emacs users using external packages for managing virtual environments.\n To open the python repl in the right environment, set the python-shell-virtualenv-root variable to your virtual environment root via .dir-locals.el (in your 'project' root directory) as follows:  ((nil (python-shell-virtualenv-root . \"/path/to/venv/root\"))) \n If you use vterm only then also add your VIRTUAL_ENV to the process-environment via .dir-locals.el as follows:  ((nil (python-shell-virtualenv-root . \"/path/to/venv/root\") (vterm-environment . (\"VIRTUAL_ENV=/path/to/venv/root\"))))  Finally, add the following to your .bashrc  if [ -n \"$VIRTUAL_ENV\" ]; then source \"$VIRTUAL_ENV/bin/activate\" fi  Happy coding!\n Although with some clever .dir-locals.el tricks it is possible to create a buffer local process-environment and add the VIRTUAL_ENV, such configuration does not work because all terminals seem to always inherit the global process-environment. Therefore, if you'd like to use another terminal than vterm, then just create some command where you first let bind process-environment and set the VIRTUAL_ENV environment variable before you 'open' the terminal e.g.:  (defun my-term () (interactive) (let ((process-environment (if-let (venv-root python-shell-virtualenv-root) (cons (concat \"VIRTUAL_ENV=\" venv-root) process-environment) process-environment))) (ansi-term \"/bin/bash\")))  This does not configure your language server, and it probably does not work for org files. More information about configuring those can be found in this old (series of) blog post(s) (I don't remember well what I wrote there, but for sure, some information there will be still relevant :)\n Of course, any suggestions for improvements are welcome. Thanks!\n    submitted by    /u/dalanicolai  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k6corx/small_bashrc_and_elisp_tricks_to_auto_activate/",
-          "publishedOn": "2025-04-23T22:43:31.000Z",
-          "wordCount": null,
-          "title": "Small .bashrc (and elisp) tricks to 'auto activate' python virtual environments",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k68w1i/devcontainermode_a_global_minor_mode_to_develop/",
-          "author": null,
-          "description": "I started development on a new package devcontainer-mode. It is for you if you work in an environment where your team-mates all use vscode and devcontainers.\n It provides commands to build, launch and rebuild your devcontainers. The killer feature is that it forwards all you compile commands into the devcontainer. That way, you can simply edit your project's files, make git commits and all the rest. Build, test and run commands are executed inside the devcontainer.\n The status of the package is still somewhat experimental, but I have been using it now for like two months for my daily work and it has been of big help.\n If your interested in such a package, please try it out and post on the discussion page about your experiences and whiches.\n    submitted by    /u/johmue  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k68w1i/devcontainermode_a_global_minor_mode_to_develop/",
-          "publishedOn": "2025-04-23T20:03:56.000Z",
-          "wordCount": null,
-          "title": "devcontainer-mode – a global minor mode to develop with devcontainers",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k6178c/emacs_is_slow_on_macos_seuqoia_1541/",
-          "author": null,
-          "description": "macOS Sequoia received an update a couple of weeks ago, 15.4.1. Since this update I think Emacs is a lot slower when accessing the file system; opening files in buffers, doing git operations in Magit etc. After an internet search, I added Emacs to System Settings/Privacy & Security/Developer Tools, since there's a theory that security policies could be a problem. I do not think this helped much, however.\n Has anybody else experienced slow file system access in Emacs on recent versions of macOS Sequoia?\n I use emacs-plus@30, installed using homebrew.\n (When I say slow, it's not sluggish to the point of being unusable. It just takes a bit longer to open a file or commiting in Magit.)\n    submitted by    /u/mickesp  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k6178c/emacs_is_slow_on_macos_seuqoia_1541/",
-          "publishedOn": "2025-04-23T14:55:27.000Z",
-          "wordCount": null,
-          "title": "Emacs is slow on macOS Seuqoia 15.4.1",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k60j6x/consultripgrep_or_rgel/",
-          "author": null,
-          "description": "Hi all,\n I was wondering if there is a stark difference between consult-ripgrep and rg.el. To me, both seem to be doing the same thing.\n    submitted by    /u/kn0xchad  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k60j6x/consultripgrep_or_rgel/",
-          "publishedOn": "2025-04-23T14:27:20.000Z",
-          "wordCount": null,
-          "title": "consult-ripgrep or rg.el?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k5znwd/exwm_user_migrating_to_mac_os_advice_needed/",
-          "author": null,
-          "description": "As the title says I am currently running Emacs EXWM (with Guix) for work but due to work policies I will have to migrate to MacOS.\n Does anyone have any advice, tips or recommendation to make this as painful as posible?\n    submitted by    /u/Moises95  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k5znwd/exwm_user_migrating_to_mac_os_advice_needed/",
-          "publishedOn": "2025-04-23T13:50:16.000Z",
-          "wordCount": null,
-          "title": "EXWM user migrating to Mac OS. Advice needed",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1k5xu0d/flycheck_35_is_out/",
-          "author": null,
-          "description": "submitted by    /u/bozhidarb  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1k5xu0d/flycheck_35_is_out/",
-          "publishedOn": "2025-04-23T12:24:30.000Z",
-          "wordCount": null,
-          "title": "Flycheck 35 is out!",
-          "imageUrl": null
         }
       ]
     },
@@ -6569,6 +6519,26 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "3255@/discussions",
+          "author": "oryal",
+          "description": "Hello,\nThis is my third iteration at creating a digital zettelkasten (I abandoned either because my system was too complicated or by lack of time).\nI am working with Zettlr on PC. I want a clear, simple, and efficient set up. I am not an expert at programming, but I am curious and learning \nI have a question with regard to YAML frontmatter:\nwhat is the advantage of having one in my notes?\nFor the moment, I use for my filenames a few keywords and the UID at the end.\nWhat is the advantage of repeating the title in my YAML frontmatter?\nSorry, if this is not very clear, I try to understand the importance of a YAML frontmatter and what use it could have in the future, or for the immediat management of my zettelkasten.\nMany thanks for your thoughts and clarifications,\nCheers!",
+          "link": "https://forum.zettelkasten.de/discussion/3255/on-the-use-of-yaml-and-its-possible-relation-to-wikilinks-with-zettlr",
+          "publishedOn": "2025-05-23T11:37:09.000Z",
+          "wordCount": 1635,
+          "title": "on the use of YAML and its (possible) relation to wikilinks (with Zettlr)",
+          "imageUrl": "https://forum.zettelkasten.de/resources/emoji/smile.png"
+        },
+        {
+          "id": "3254@/discussions",
+          "author": "ctietze",
+          "description": "This week I've ran into an annoyance more often than before:\nApple changed some of their programming libraries for user interfaces (SwiftUI & Observation framework) so that you'd wire things slightly different, but with a 30% overlap in terms. My notes from the time prior to that change sound like they still apply, but there's a chance that the minute details are outdated, or even so wrong that applying the tips would produce worse, not better apps.\nEssentially, every note up to and including 2023 on the topic is at the risk of being outdated.\nUsually, when tech I have used and researched is outdated, it merely becomes irrelevant. The notes perused less and less often. That's a normal process in the ways of language, library, and system evolution.\nBut this time, it's still the very same, relevant topic, but the meaning has shifted slightly. In some cases.\nI can search for (2023 OR 2022 OR 2021 OR 2020) AND (swiftui OR observation) in The Archive and mark all 198 matches as ##stale or something like that, then when I encounter these later, I know I need to be careful and update or ignore the notes. That's a shotgun approach that will mark more notes stale than needed, because some tips are still relevant. I don't see myself going through all of these\nOr I copy links to all these matches into a buffer note that's a to-do list to update these notes. Then I don't need to touch all the existing notes. And I have an overview that I can work in, like: group some of these old notes into clusters, essentially create \"piles\", so I can research updates in bulk and make the task more manageable. This will not mark notes stale that don't have any stale information, and it's an easier working surface. It will not warn me about a note being stale when I look at it, though.\nMaybe I need to combine both.\nHave you encountered a situation like this before? Anything you regret doing that I should definitely avoid?",
+          "link": "https://forum.zettelkasten.de/discussion/3254/updating-a-whole-department-of-notes-because-apple-slightly-changed-the-meaning-of-things",
+          "publishedOn": "2025-05-23T06:36:54.000Z",
+          "wordCount": 1304,
+          "title": "Updating a whole department of notes because Apple slightly changed the meaning of things",
+          "imageUrl": "https://forum.zettelkasten.de/resources/emoji/smile.png"
+        },
         {
           "id": "3253@/discussions",
           "author": "Itsmekevinthewriter",
