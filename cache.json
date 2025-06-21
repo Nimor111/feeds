@@ -44,16 +44,6 @@
           "wordCount": 647,
           "title": "Issue 474",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/473.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nHeftia: The Next Generation of Haskell Effects Management - Part 1.1 by Riyo\nheftia is the first-ever effect system, not just among Haskell libraries but historically across all effect system implementations and languages, to completely implement both algebraic effects and higher-order effects.\nLearning Physics with Functional Programming and Haskell by EstebanMarin\nLast year I learned that functional programming is a great tool to learn Physics, because it’s a great way to write math. You see, Physics is expressed in the language of Math. The relation of Math and code is now more presen…",
-          "link": "https://haskellweekly.news/issue/473.html",
-          "publishedOn": "2025-05-22T12:00:00.000Z",
-          "wordCount": 472,
-          "title": "Issue 473",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,16 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1lgfzde/finding_a_type_for_redis_commands/",
+          "author": null,
+          "description": "submitted by    /u/magthe0  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1lgfzde/finding_a_type_for_redis_commands/",
+          "publishedOn": "2025-06-20T21:44:49.000Z",
+          "wordCount": null,
+          "title": "Finding a type for Redis commands",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/1lfxqj4/welltyped_ghc_activities_report_marchmay_2025/",
           "author": null,
@@ -820,46 +820,6 @@
           "publishedOn": "2025-05-25T18:30:50.000Z",
           "wordCount": null,
           "title": "[ANN] Copilot 4.4",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ktc56v/does_this_code_lazily_build_a_segment_tree/",
-          "author": null,
-          "description": "import qualified Data.Vector as V import Control.Monad (replicateM) -- Lazy Segment Tree for Range Minimum data SegmentTree = Leaf Int Int | Node Int Int Int SegmentTree SegmentTree deriving Show -- Build lazily: only constructs needed parts buildLazyTree :: V.Vector Int -> Int -> Int -> SegmentTree buildLazyTree vec l r | l == r = Leaf l (vec V.! l) | otherwise = let mid = (l + r) `div` 2 left = buildLazyTree vec l mid right = buildLazyTree vec (mid + 1) r minVal = min (getValue left) (getValue right) in Node l r minVal left right -- Get the stored min value at a node getValue :: SegmentTree -> Int getValue (Leaf _ v) = v getValue (Node _ _ v _ _) = v -- Perform RMQ in [ql, qr] rangeMinQuery :: SegmentTree -> Int -> Int -> Int rangeMinQuery (Leaf i v) ql qr | ql <= i && i <= qr = v | otherwise = maxBound rangeMinQuery (Node l r val left right) ql qr | qr < l || r < ql = maxBound -- no overlap | ql <= l && r <= qr = val -- total overlap | otherwise = min (rangeMinQuery left ql qr) (rangeMinQuery right ql qr) -- Main main :: IO () main = do [n, m] <- fmap (map read . words) getLine arr <- fmap (V.fromList . map read . words) getLine queries <- replicateM m $ do [l, r] <- fmap (map read . words) getLine return (l, r) let tree = buildLazyTree arr 0 (n - 1) mapM_ (\\(l, r) -> print $ rangeMinQuery tree l r) queries \n So this a ChatGPT generated code for finding a minimum value in a range of an Array using segment tree. It claims that the segtree will be lazily built and only build parts which are required by a particular range query.\n But wouldn't the first case of rangeMinQuery (i.e (Leaf i v) ) cause the segtree to be completely evaluated? How would you go about implementing a true lazy segtree?\n    submitted by    /u/Patzer26  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ktc56v/does_this_code_lazily_build_a_segment_tree/",
-          "publishedOn": "2025-05-23T05:49:46.000Z",
-          "wordCount": null,
-          "title": "Does this code lazily build a segment tree?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ksxtos/how_to_work_with_atomic_data/",
-          "author": null,
-          "description": "I'm new to Haskell but have experience in a variety of languages. For instance, I've written simple app in Rust and Clojure that refer to a \"global\" data store implemented as atomic data. For my purposes, this is a great way to avoid having to pass a reference to the data all over the place.\n How can I do this in Haskell?\n Below I show 1) how I do it Clojure, 2) how I do it in Rust, and 3) how I've expanded the code for the Control.Monad.State example for a Counter to use a more complex data definition and how it seems I will still have to pass the binding to the state as an argument to function to work on it outside of Main.\n In Clojure, I do this:\n (def db (atom nil)) ; define the central datastore\n (let db (:data @db) (dosomething with db)) ; access the datastore with @db\n In Rust, I do this:\n // define the central datastore\n static DB: LazyLock<Mutex<Database>> = LazyLock::new(|| Mutex::new(Database::default()));\n // Function to access a \"reference\" to Database\n // THIS IS NOT MEANT TO BE USED FOR MORE THAN ONE ACCESS AT A TIME.\n // THE Database will panic otherwise!\n pub(crate) fn db_ref() -> MutexGuard<'static, Database> {\n match DB.try_lock() {\n Err(_) => panic!(\"Database is locked. Cannot access. Concurrent access it not supported.\"),\n Ok(database) => database,\n }\n }\n let mut db = database::db_ref(); // access the database to mutate it\n -- State example with custom data type for more than one value\n import Control.Monad.State data Database = Database { name :: String, counter :: Int } deriving (Show) type DbState = State Database getDb :: DbState Database getDb = get getNameFromDb :: Database -> String getNameFromDb db = name db main :: IO () main = do let initialState = Database { name=\"Marty\", counter=2 } (finalCount, finalState) = runState getDb initialState putStrLn $ \"Final count: \" ++ show finalCount putStrLn $ \"Final state: \" ++ show finalState putStrLn $ getNameFromDb finalState \n    submitted by    /u/Stunning_Fruit9731  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ksxtos/how_to_work_with_atomic_data/",
-          "publishedOn": "2025-05-22T18:17:17.000Z",
-          "wordCount": null,
-          "title": "How to work with atomic data?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ksroby/ann_lracts_left_and_right_actions_of_semigroups/",
-          "author": null,
-          "description": "I'm happy to release the lr-acts library, which implements\n  \nLeft and right actions\n Semidirect product (the Semigroup and Monoid instances check that the action satisfies the morphism properties)\n Torsors\n Cyclic and generated actions\n  \nYou can find out more in the Readme or in the Hackage documentation\n Here are the main reasons I have written yet another action library (you can find a comparison with existing libraries in the Readme) are to tackle the two following problems :\n  \nOverlapping issues that often occur with other libraries (e.g. acts) . There is an interesting discussion about this problem on Reddit. This problem is solved by never writing any instance of the form LAct _ s or RAct _ s\n \nSemidirect products need additionnal properties to be semigroups and monoids, i.e. the action must be by semigroup (resp. monoid) morphism. This property is not checked in monoid-extra's implementation, which means the Semigroup and Monoid instances of this library might break associativity and neutrality. To solve this problem, I use a fine-grained class hierarchy that allow to specify several action properties. The downside of this is that the number of instances can become quite overwhelming and it does come with some boiler plate. This library could therefore highly benefit of a hypthetical extension such as Intrinsic Superclasses, see also this collection of class proposals\n \n This is my first Haskell library so any constructive criticism is welcome, don't hesitate to tell me what you think ! \n    submitted by    /u/AliceRixte  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ksroby/ann_lracts_left_and_right_actions_of_semigroups/",
-          "publishedOn": "2025-05-22T14:09:54.000Z",
-          "wordCount": null,
-          "title": "[ANN] lr-acts : left and right actions of semigroups, monoids and groups",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ksp6ls/why_this_wrongid_doesnt_work/",
-          "author": null,
-          "description": "I suppose that answer is pretty sort of obvious and this is just me being stupid, but why this doesn't type check? a and b could be of every possible type, so it could be the same as well.\n wrongId :: a -> b wrongId x = x \n Or in this implementation i do not provide scenario when output could have different type than input?\n    submitted by    /u/Tempus_Nemini  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ksp6ls/why_this_wrongid_doesnt_work/",
-          "publishedOn": "2025-05-22T12:15:34.000Z",
-          "wordCount": null,
-          "title": "Why this 'wrongId' doesn't work",
           "imageUrl": null
         }
       ]
@@ -1648,16 +1608,6 @@
           "wordCount": null,
           "title": "Annotation based checks for DTO.",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ksv9wa/is_there_something_like_spacetimedb_in_scala/",
-          "author": null,
-          "description": "This looks promising, and it's still early days. Scala would be ideal to implement something like that!\n The closest I know of would be CloudState, but that project is long dead.\n If not having a similar platform at least some Scala bindings for SpacetimeDB would be nice to have. (But this would depend on WASM support.)\n SpacetimeDB (GitHub) as such is mostly Rust, with some C#. It's not OpenSource, it's under BSL (with a 4 year timeout until it becomes free).\n Maybe someone finds it as interesting as me.\n Need to find out how they client-server communication works. I'm quite sure it's not some HTTP-JSON BS, but instead something efficient, as this needs to handle real time updates in massive-multimplayer online games.\n Rust starts to eat the server space, with innovative high performance solutions…\n    submitted by    /u/RiceBroad4552  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ksv9wa/is_there_something_like_spacetimedb_in_scala/",
-          "publishedOn": "2025-05-22T16:35:58.000Z",
-          "wordCount": null,
-          "title": "Is there something like SpacetimeDB in Scala?",
-          "imageUrl": null
         }
       ]
     },
@@ -1877,16 +1827,6 @@
           "wordCount": null,
           "title": "Tip: Automatically set org-agenda-files to those files with relevant content",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1kswtij/orgmode_priority_cookies/",
-          "author": null,
-          "description": "submitted by    /u/jeffbradberry  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1kswtij/orgmode_priority_cookies/",
-          "publishedOn": "2025-05-22T17:37:13.000Z",
-          "wordCount": null,
-          "title": "Org-mode Priority Cookies",
-          "imageUrl": null
         }
       ]
     },
@@ -1896,6 +1836,66 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/ob-mermaid-20250621.1655.tar",
+          "author": null,
+          "description": "The ob-mermaid package has been updated to version 20250621.1655.",
+          "link": "https://melpa.org/#/ob-mermaid",
+          "publishedOn": "2025-06-21T16:55:00.000Z",
+          "wordCount": 105,
+          "title": "ob-mermaid (20250621.1655) --- Org-babel support for mermaid evaluation",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tokei-20250621.1500.tar",
+          "author": null,
+          "description": "The tokei package has been updated to version 20250621.1500.",
+          "link": "https://melpa.org/#/tokei",
+          "publishedOn": "2025-06-21T15:00:00.000Z",
+          "wordCount": 105,
+          "title": "tokei (20250621.1500) --- Display codebase statistics",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mu4easy-20250621.1238.tar",
+          "author": null,
+          "description": "The mu4easy package has been updated to version 20250621.1238.",
+          "link": "https://melpa.org/#/mu4easy",
+          "publishedOn": "2025-06-21T12:38:00.000Z",
+          "wordCount": 105,
+          "title": "mu4easy (20250621.1238) --- Packages + configs for using mu4e with multiple accounts",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/julia-vterm-20250621.854.tar",
+          "author": null,
+          "description": "The julia-vterm package has been updated to version 20250621.854.",
+          "link": "https://melpa.org/#/julia-vterm",
+          "publishedOn": "2025-06-21T08:54:00.000Z",
+          "wordCount": 105,
+          "title": "julia-vterm (20250621.854) --- A mode for Julia REPL using vterm",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/pyim-smzmdict-20250621.828.tar",
+          "author": null,
+          "description": "The pyim-smzmdict package has been updated to version 20250621.828.",
+          "link": "https://melpa.org/#/pyim-smzmdict",
+          "publishedOn": "2025-06-21T08:28:00.000Z",
+          "wordCount": 105,
+          "title": "pyim-smzmdict (20250621.828) --- Strange scheMas of ZhengMa dict for pyim",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/disproject-20250621.516.tar",
+          "author": null,
+          "description": "The disproject package has been updated to version 20250621.516.",
+          "link": "https://melpa.org/#/disproject",
+          "publishedOn": "2025-06-21T05:16:00.000Z",
+          "wordCount": 105,
+          "title": "disproject (20250621.516) --- Dispatch project commands with Transient",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/moom-20250620.1635.tar",
           "author": null,
           "description": "The moom package has been updated to version 20250620.1635.",
@@ -1903,6 +1903,16 @@
           "publishedOn": "2025-06-20T16:35:00.000Z",
           "wordCount": 105,
           "title": "moom (20250620.1635) --- Commands to control frame position and size",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/notmuch-20250620.1557.tar",
+          "author": null,
+          "description": "The notmuch package has been updated to version 20250620.1557.",
+          "link": "https://melpa.org/#/notmuch",
+          "publishedOn": "2025-06-20T15:57:00.000Z",
+          "wordCount": 105,
+          "title": "notmuch (20250620.1557) --- Run notmuch within emacs",
           "imageUrl": null
         },
         {
@@ -2053,6 +2063,16 @@
           "publishedOn": "2025-06-18T09:51:00.000Z",
           "wordCount": 105,
           "title": "password-store (20250618.951) --- Password store (pass) support",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/projectile-20250618.911.tar",
+          "author": null,
+          "description": "The projectile package has been updated to version 20250618.911.",
+          "link": "https://melpa.org/#/projectile",
+          "publishedOn": "2025-06-18T09:11:00.000Z",
+          "wordCount": 105,
+          "title": "projectile (20250618.911) --- Manage and navigate projects in Emacs easily",
           "imageUrl": null
         },
         {
@@ -2333,6 +2353,16 @@
           "publishedOn": "2025-06-14T15:29:00.000Z",
           "wordCount": 105,
           "title": "powershell (20250614.1529) --- Mode for editing PowerShell scripts",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/doom-themes-20250614.958.tar",
+          "author": null,
+          "description": "The doom-themes package has been updated to version 20250614.958.",
+          "link": "https://melpa.org/#/doom-themes",
+          "publishedOn": "2025-06-14T09:58:00.000Z",
+          "wordCount": 105,
+          "title": "doom-themes (20250614.958) --- An opinionated pack of modern color-themes",
           "imageUrl": null
         },
         {
@@ -2646,6 +2676,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/company-forge-20250611.1343.tar",
+          "author": null,
+          "description": "The company-forge package has been updated to version 20250611.1343.",
+          "link": "https://melpa.org/#/company-forge",
+          "publishedOn": "2025-06-11T13:43:00.000Z",
+          "wordCount": 105,
+          "title": "company-forge (20250611.1343) --- Company backend for assignees and topics from forge",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/magik-company-20250611.737.tar",
           "author": null,
           "description": "The magik-company package has been updated to version 20250611.737.",
@@ -2913,6 +2953,16 @@
           "publishedOn": "2025-06-09T16:16:00.000Z",
           "wordCount": 105,
           "title": "consult (20250609.1616) --- Consulting completing-read",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/racket-mode-20250609.1522.tar",
+          "author": null,
+          "description": "The racket-mode package has been updated to version 20250609.1522.",
+          "link": "https://melpa.org/#/racket-mode",
+          "publishedOn": "2025-06-09T15:22:00.000Z",
+          "wordCount": 105,
+          "title": "racket-mode (20250609.1522) --- Racket editing, REPL, and more",
           "imageUrl": null
         },
         {
@@ -4884,66 +4934,6 @@
           "wordCount": 105,
           "title": "mpvi (20250523.947) --- Media tool based on EMMS and MPV",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sly-20250522.2241.tar",
-          "author": null,
-          "description": "The sly package has been updated to version 20250522.2241.",
-          "link": "https://melpa.org/#/sly",
-          "publishedOn": "2025-05-22T22:41:00.000Z",
-          "wordCount": 105,
-          "title": "sly (20250522.2241) --- Sylvester the Cat's Common Lisp IDE",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/evil-god-toggle-20250522.2134.tar",
-          "author": null,
-          "description": "The evil-god-toggle package has been updated to version 20250522.2134.",
-          "link": "https://melpa.org/#/evil-god-toggle",
-          "publishedOn": "2025-05-22T21:34:00.000Z",
-          "wordCount": 105,
-          "title": "evil-god-toggle (20250522.2134) --- Toggle Evil and God Mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/rasi-mode-20250522.1354.tar",
-          "author": null,
-          "description": "The rasi-mode package has been updated to version 20250522.1354.",
-          "link": "https://melpa.org/#/rasi-mode",
-          "publishedOn": "2025-05-22T13:54:00.000Z",
-          "wordCount": 105,
-          "title": "rasi-mode (20250522.1354) --- Major mode for editing RASI configuration files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/kdl-mode-20250522.1339.tar",
-          "author": null,
-          "description": "The kdl-mode package has been updated to version 20250522.1339.",
-          "link": "https://melpa.org/#/kdl-mode",
-          "publishedOn": "2025-05-22T13:39:00.000Z",
-          "wordCount": 105,
-          "title": "kdl-mode (20250522.1339) --- Major mode for editing KDL files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/vim-tab-bar-20250522.1315.tar",
-          "author": null,
-          "description": "The vim-tab-bar package has been updated to version 20250522.1315.",
-          "link": "https://melpa.org/#/vim-tab-bar",
-          "publishedOn": "2025-05-22T13:15:00.000Z",
-          "wordCount": 105,
-          "title": "vim-tab-bar (20250522.1315) --- Vim-like tab bar",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sq-20250522.1012.tar",
-          "author": null,
-          "description": "The sq package has been updated to version 20250522.1012.",
-          "link": "https://melpa.org/#/sq",
-          "publishedOn": "2025-05-22T10:12:00.000Z",
-          "wordCount": 105,
-          "title": "sq (20250522.1012) --- Bindings for Sequoia PGP's cli",
-          "imageUrl": null
         }
       ]
     },
@@ -4952,6 +4942,106 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lh68aa/rotating_ascii_cube_in_emacs_buffer/",
+          "author": null,
+          "description": "Source Code: https://github.com/bchatterjee99/emacs-ascii-cube\n Demo: https://www.youtube.com/watch?v=KTEc1ZExRTU\n    submitted by    /u/caveman-99  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1lh68aa/rotating_ascii_cube_in_emacs_buffer/",
+          "publishedOn": "2025-06-21T20:38:06.000Z",
+          "wordCount": null,
+          "title": "Rotating ASCII cube in Emacs Buffer.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lh4biy/leveraging_denote_and_denotejournal_signatures/",
+          "author": null,
+          "description": "I am trying out denote as my file-naming convention, and I am thinking about using the signature to represent types of files, particularly in my org files. So a journal file would have a specific signature, a project file would have another, a signature specific to each domain (following the PARA philosophy), a PKM file another, and so on. That way, I can also combine the signatures, so if I have a project journal going on, it would have both the project signature and the journal signature. Is there a way, or can a way be made, to easily set a default signature for denote-journal (and maybe even denote when I create different types of notes?)\n I almost made this a github issue, but I'm not sure if it belongs there (I am new to all of this and delving into waters strange to me, so forgive me for my ignorance), so I chose to ask this sub first.\n    submitted by    /u/modspyder  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1lh4biy/leveraging_denote_and_denotejournal_signatures/",
+          "publishedOn": "2025-06-21T19:11:23.000Z",
+          "wordCount": null,
+          "title": "Leveraging Denote and Denote-Journal Signatures?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lh05xk/do_you_load_or_skip_the_elisp_files_added_by_your/",
+          "author": null,
+          "description": "On Fedora for example, there are a bunch of elisp files that get loaded automatically:\n  /usr/share/emacs/site-lisp ├── autoconf │ ├── autoconf-mode.el │ ├── autoconf-mode.elc │ ├── autotest-mode.el │ └── autotest-mode.elc ├── cmake │ ├── cmake-mode.el │ └── cmake-mode.elc ├── default.el ├── desktop-file-utils │ └── desktop-entry-mode.el ├── mercurial │ ├── mercurial.el │ ├── mercurial.elc │ ├── mq.el │ └── mq.elc ├── ninja-mode.el ├── psvn.el ├── psvn-init.el ├── pypytrace-mode.el ├── pypytrace-mode.elc ├── sdcc │ ├── sdcdb.el │ └── sdcdbsrc.el ├── site-start.d │ ├── clang-format.el │ ├── clang-include-fixer.el │ └── gn-mode.el ├── site-start.d.bak │ ├── autoconf-init.el │ ├── clang-format.el │ ├── clang-include-fixer.el │ ├── cmake-init.el │ ├── desktop-entry-mode-init.el │ ├── gn-mode.el │ ├── mercurial-site-start.el │ ├── rpmdev-init.el -> /usr/share/rpmdevtools/rpmdev-init.el │ └── systemtap-init.el ├── site-start.el ├── subdirs.el └── systemtap-mode.el  It doesn't seem like I need any of these. Is there some way to disable these instead of using --no-site-lisp every time?\n    submitted by    /u/birdsintheskies  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1lh05xk/do_you_load_or_skip_the_elisp_files_added_by_your/",
+          "publishedOn": "2025-06-21T16:11:17.000Z",
+          "wordCount": null,
+          "title": "Do you load or skip the elisp files added by your Linux distribution?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lgxgy5/doom_like_evil_mode_integration/",
+          "author": null,
+          "description": "hi everyone, to keep it short, how can i configre doom like evil mode integration in normal emacs\n    submitted by    /u/Level_Fennel8071  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1lgxgy5/doom_like_evil_mode_integration/",
+          "publishedOn": "2025-06-21T14:10:53.000Z",
+          "wordCount": null,
+          "title": "doom like evil mode integration",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lgvmsr/does_eat_have_issues_running_in_a_tramp_shell/",
+          "author": null,
+          "description": "I installed eat today and I use it eat-eshell-mode. Everything works fine, except when I open a TRAMP shell and try to run a TUI application like rTorrent, and it says \"Error opening terminal: eat-truecolor.\"\n The same application works perfectly fine on the local eshell that it makes me wonder whether something needs to be configured specifically for TRAMP. Other times I see /ssh:root@192.168.1.101:/usr/bin/htop: No such file or directory.\n UPDATE: Solved by installing eshell-vterm package.\n    submitted by    /u/floofcode  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1lgvmsr/does_eat_have_issues_running_in_a_tramp_shell/",
+          "publishedOn": "2025-06-21T12:40:51.000Z",
+          "wordCount": null,
+          "title": "Does 'eat' have issues running in a TRAMP shell?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lgvgot/what_are_some_alternate_behaviors_to_implement/",
+          "author": null,
+          "description": "One thing I found a little counterintuitive was when I created a new split-window, it makes an identical copy of the current buffer. I was told that this has some usecases like having 2 parts of the file open in separate windows, but having this behavior as the default feels very strange.\n I'm thinking what are some alternate split-window behaviors to implement. I mean I think it makes more sense for the user to create a split-window and then have a have default dummy buffer show up there before putting something inside.\n Even in the popular beginner-friendly distributions retain the the default behavior so it makes me wonder whether my thinking is flawed or I'm missing some information or context.\n    submitted by    /u/signalclown  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1lgvgot/what_are_some_alternate_behaviors_to_implement/",
+          "publishedOn": "2025-06-21T12:31:45.000Z",
+          "wordCount": null,
+          "title": "What are some alternate behaviors to implement for newly created split-windows?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lgsnwj/is_there_a_package_for_search_and_autoimport_of/",
+          "author": null,
+          "description": "Hello Emacs folks!\n I hate intellisense/autocomplete as it is distrubing my flow and make me not learn a project I am working on.\n That said ocasionally it is helpful to find symbol and auto import it in a current module. Currently I enable/disable corfu which is not optional.\n Is there any package/solution that would offer a minibuffer where I could search among all avilable symbols (local or to be imported) on demand?\n    submitted by    /u/najorts  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1lgsnwj/is_there_a_package_for_search_and_autoimport_of/",
+          "publishedOn": "2025-06-21T09:36:52.000Z",
+          "wordCount": null,
+          "title": "Is there a package for search and autoimport of symbols in a project?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lgpigu/new_package_orgtablehighlighthighlight_org_table/",
+          "author": null,
+          "description": "Hey fellow Emacsers 👋\n I just released a small package: `org-table-highlight` to highlight org-table columns and rows.\n Let me know if you find it useful or have suggestions. PRs, issues are all appreciated!\n 🔗 GitHub: https://github.com/llcc/org-table-highlight\n    submitted by    /u/llcc_reddit  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1lgpigu/new_package_orgtablehighlighthighlight_org_table/",
+          "publishedOn": "2025-06-21T06:02:57.000Z",
+          "wordCount": null,
+          "title": "New Package: org-table-highlight—Highlight Org Table Rows and Columns with Ease!",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lgn0lm/odd_formatting_in_org_files/",
+          "author": null,
+          "description": "I am new to emacs and am setting it up to use as a PKM/GTD/journaling system. I am currently running into an issue that I can't solve. When I type out a paragraph, and then go back to add more information, it causes the initial line I type on to extend past all the other lines, and then when it wraps back around, it creates a new line rather than blending back in to the lines below it, as highlighted in the image. (I hope that made sense) How can I fix this? I have added lines from my init.el file that may be relevant:\n (set-language-environment \"UTF-8\") (prefer-coding-system 'utf-8) (use-package flatland-theme :config (load-theme 'flatland t)) (setq-default tab-width 4 fill-column 79 auto-fill-function 'do-auto-fill) (add-hook 'org-mode-hook 'variable-pitch-mode) (custom-theme-set-faces '…",
+          "link": "https://www.reddit.com/r/emacs/comments/1lgn0lm/odd_formatting_in_org_files/",
+          "publishedOn": "2025-06-21T03:34:27.000Z",
+          "wordCount": null,
+          "title": "Odd Formatting in Org Files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1lggsp9/fun_with_gptel_gptellitellm_for_tracking_sessions/",
+          "author": null,
+          "description": "The gptel-litellm module, which depends on the uuidgen library, adds tracking of \"sessions\" for users with a LiteLLM proxy backend — where each GPTel Chat buffer constitutes its own session.\n What this means is that all requests from the same buffer are grouped under the same session-id in LiteLLM's interface, for accounting and cost tracking purposes. An example of what this looks like can be seen in the documentation.\n I also recommend setting a tag for GPTel, so LiteLLM can see all requests that orginated from GPTel no matter which buffer was used:\n (gptel-make-openai \"LiteLLM\" :key gptel-api-key :host ... :models ... :header (lambda () (when-let* ((key (gptel--get-api-key))) `((\"x-api-key\" . ,key) (\"x-litellm-tags\" . \"gptel\"))))) \n    submitted by    /u/jwiegley  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1lggsp9/fun_with_gptel_gptellitellm_for_tracking_sessions/",
+          "publishedOn": "2025-06-20T22:20:56.000Z",
+          "wordCount": null,
+          "title": "Fun with GPTel: gptel-litellm for tracking sessions with LiteLLM",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1lgbkh4/interacting_with_the_shell_in_emacs/",
           "author": null,
@@ -7181,106 +7271,6 @@
           "wordCount": null,
           "title": "What is the undo-tree sucessor ?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1kt9uex/help_identifying_theme/",
-          "author": null,
-          "description": "Anybody know what this theme on codeberg.org might be called? If so, any idea if it's been ported to Emacs? Link to the original page\n    submitted by    /u/EverybodyLovesRayman  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1kt9uex/help_identifying_theme/",
-          "publishedOn": "2025-05-23T03:31:26.000Z",
-          "wordCount": null,
-          "title": "Help identifying theme",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1kt9qio/emacsclient_as_default_editor_in_windows_10/",
-          "author": null,
-          "description": "Hi, all. I've been trying to set Emacsclient as my default Editor in Windows 10. I've read the Info documentation and come up with the following script, saved in emacs-29.4\\bin, along with emacsclientw.exe and runemacs.exe:\n shell cd %~dp0 set HOME=%~dp0..\\ emacsclientw.exe ^ --reuse-frame ^ --no-wait ^ --alternate-editor=runemacs.exe ^ %* \n I have (server-start) in my config file. The script works fine from command line. E.g., while in the bin directory, runemacs_clientw.cmd somefile.org: if Emacs isn't already running, it runs Emacs with my config file, then visits the document; if Emacs is running, the document pops up Emacs.\n Next, I've gone in to Explorer, right-clicked on somefile.org, and directed it to open the file with the batch file. No luck there. I have a similar script that opens runemacs.exe directly, and that works when associated with Org files in Explorer. What am I missing? Any help would be much appreciated! Thanks in advance!\n    submitted by    /u/granti128  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1kt9qio/emacsclient_as_default_editor_in_windows_10/",
-          "publishedOn": "2025-05-23T03:25:25.000Z",
-          "wordCount": null,
-          "title": "Emacsclient as default editor in Windows 10",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1kszog8/org_mode_syntax_parsing_question_interleaved/",
-          "author": null,
-          "description": "Context: I'm trying to implement a very basic org-mode parser in another language for fun and my own use. I've been looking at how Emacs fontifies org markup. But it seems to me the fontification does not conform to the Org Syntax document. For example, Emacs will fontify this perfectly fine:\n  Some normal text /start italicize *start bold end italicize/ end bold* normal text \n Even though the italicize syntax object and the bold syntax object are interleaved. Additionally, if I export this line HTML, only the <b> tags are there. So it looks like there's some inconsistencies between fontification and the org internal AST.\n So my questions are: \n  \nDoes the org elisp code follow a completely different code path when fontifying? \n If my goal is to implement a largely org-mode-compatible parser, should I look at exported HTML as a source of truth and not eyeball the fontification result?\n  \n   submitted by    /u/trustyhardware  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1kszog8/org_mode_syntax_parsing_question_interleaved/",
-          "publishedOn": "2025-05-22T19:32:24.000Z",
-          "wordCount": null,
-          "title": "org mode syntax parsing question: interleaved markup",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ksyxd7/why_i_do_still_love_emacs_over_my_new_fancy/",
-          "author": null,
-          "description": "I want to start asking sorry for this long thought, but I would be curious about yours opinion for those who have time and the will to read.\n Recently, I was reading some articles about Voyager 1 software, and I found myself amazed by it. Literally, a few kb of space, and so many features, and still after 50 years still works, somehow I get a mental connection between this and emacs, probably because the same generation of “hackers” wrote it. \n I work in a company with many developers , and daily I face times where I hear things like “it’s technically impossible” for something that actually is. Now there’s some new policy about adopting AI tools for improving productivity. I am concerned that one day they will remove my emacs from the approved software, in favour of something else which me…",
-          "link": "https://www.reddit.com/r/emacs/comments/1ksyxd7/why_i_do_still_love_emacs_over_my_new_fancy/",
-          "publishedOn": "2025-05-22T19:02:12.000Z",
-          "wordCount": null,
-          "title": "Why I do still love emacs over my new fancy company provided AI editor",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ksyjmg/copypaste_on_kubuntu_2504/",
-          "author": null,
-          "description": "Copy/Paste using the mouse to highlight a block and then using the mouse-button-1 to paste no longer works for me running KDE on X11 (this is using the gfx mode for emacs). Using the identical log in, etc. under Wayland works just fine. I can also paste a block using ctrl-y works fine as does using the <paste> button in the toolbar.\n The copy part using the mouse seems to work. It appears in the X clipboard and it is available to yank via the ctl-y and the toolbar <paste> button. But when I try use the mouse I get a message \"no selection is available\".\n I really would love to get this working in X11 ... Wayland just looks like shit on my system with bad font rendering, etc. :)\n Emacs version 30.1 Ubuntu 25.04 KDE 6.3.4\n    submitted by    /u/bvdp  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ksyjmg/copypaste_on_kubuntu_2504/",
-          "publishedOn": "2025-05-22T18:46:46.000Z",
-          "wordCount": null,
-          "title": "Copy/Paste on kubuntu 25.04",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1kswmft/orgmode_timestamped_notes/",
-          "author": null,
-          "description": "I'm on a roll! I've just pushed my 7th post in the \"Building an Org-mode Workflow\" series: Timestamped Notes.\n https://jeffbradberry.com/posts/2025/05/orgmode-timestamped-notes/\n    submitted by    /u/jeffbradberry  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1kswmft/orgmode_timestamped_notes/",
-          "publishedOn": "2025-05-22T17:29:23.000Z",
-          "wordCount": null,
-          "title": "Org-mode Timestamped Notes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ksw71g/angry_fruit_salad_noises/",
-          "author": null,
-          "description": "submitted by    /u/varsderk  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ksw71g/angry_fruit_salad_noises/",
-          "publishedOn": "2025-05-22T17:12:34.000Z",
-          "wordCount": null,
-          "title": "*Angry fruit salad noises*",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ksuv2k/reminder_in_case_if_you_get_stuck_with_emacs/",
-          "author": null,
-          "description": "submitted by    /u/bruchieOP  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ksuv2k/reminder_in_case_if_you_get_stuck_with_emacs/",
-          "publishedOn": "2025-05-22T16:19:27.000Z",
-          "wordCount": null,
-          "title": "Reminder in case if you get stuck with emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ksumde/getting_eglot_to_ignore_a_derived_mode/",
-          "author": null,
-          "description": "I'm using Eglot, in a project that has both Python and Snakemake files present. I use a wrapper around `eglot-ensure` to prevent it from activating in snakemake-mode, which works fine when opening a snakefile …until I also open a Python file, in the same project. At that point, Eglot fires up the LSP configured for Python, and also activates eglot-mode in any snakemake-mode buffers that are open, because snakemake-mode is derived from python-mode.\n How can I keep Eglot out of my Snakemake buffers while continuing to have it active for Python buffers? \n    submitted by    /u/genehack  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ksumde/getting_eglot_to_ignore_a_derived_mode/",
-          "publishedOn": "2025-05-22T16:09:53.000Z",
-          "wordCount": null,
-          "title": "Getting Eglot to ignore a derived mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ksqchs/orgmode_priority_cookies/",
-          "author": null,
-          "description": "I've published the 6th blog post in my \"Building an Org-mode Workflow\" series, about prioritization of todo items:\n https://jeffbradberry.com/posts/2025/05/orgmode-priority-cookies/\n    submitted by    /u/jeffbradberry  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ksqchs/orgmode_priority_cookies/",
-          "publishedOn": "2025-05-22T13:12:16.000Z",
-          "wordCount": null,
-          "title": "Org-mode Priority Cookies",
-          "imageUrl": null
         }
       ]
     },
@@ -7448,36 +7438,6 @@
           "wordCount": 1635,
           "title": "on the use of YAML and its (possible) relation to wikilinks (with Zettlr)",
           "imageUrl": "https://forum.zettelkasten.de/resources/emoji/smile.png"
-        },
-        {
-          "id": "3254@/discussions",
-          "author": "ctietze",
-          "description": "This week I've ran into an annoyance more often than before:\nApple changed some of their programming libraries for user interfaces (SwiftUI & Observation framework) so that you'd wire things slightly different, but with a 30% overlap in terms. My notes from the time prior to that change sound like they still apply, but there's a chance that the minute details are outdated, or even so wrong that applying the tips would produce worse, not better apps.\nEssentially, every note up to and including 2023 on the topic is at the risk of being outdated.\nUsually, when tech I have used and researched is outdated, it merely becomes irrelevant. The notes perused less and less often. That's a normal process in the ways of language, library, and system evolution.\nBut this time, it's still the very same, relevant topic, but the meaning has shifted slightly. In some cases.\nI can search for (2023 OR 2022 OR 2021 OR 2020) AND (swiftui OR observation) in The Archive and mark all 198 matches as ##stale or something like that, then when I encounter these later, I know I need to be careful and update or ignore the notes. That's a shotgun approach that will mark more notes stale than needed, because some tips are still relevant. I don't see myself going through all of these\nOr I copy links to all these matches into a buffer note that's a to-do list to update these notes. Then I don't need to touch all the existing notes. And I have an overview that I can work in, like: group some of these old notes into clusters, essentially create \"piles\", so I can research updates in bulk and make the task more manageable. This will not mark notes stale that don't have any stale information, and it's an easier working surface. It will not warn me about a note being stale when I look at it, though.\nMaybe I need to combine both.\nHave you encountered a situation like this before? Anything you regret doing that I should definitely avoid?",
-          "link": "https://forum.zettelkasten.de/discussion/3254/updating-a-whole-department-of-notes-because-apple-slightly-changed-the-meaning-of-things",
-          "publishedOn": "2025-05-23T06:36:54.000Z",
-          "wordCount": 1304,
-          "title": "Updating a whole department of notes because Apple slightly changed the meaning of things",
-          "imageUrl": "https://forum.zettelkasten.de/resources/emoji/smile.png"
-        },
-        {
-          "id": "3253@/discussions",
-          "author": "Itsmekevinthewriter",
-          "description": "Hi all,\nI’ve been experimenting with a small tool called Quickpoint — it’s designed to let you get thoughts down quickly and share or save them with minimal friction.\nhttps://quickpoint.me/\nIt offers a blank, keyboard-first space for thinking — intentionally minimal, with no formatting distractions. I see it as something between a fleeting notes tool and a lightweight way to give shape to early ideas.\nThat said, I’m still figuring out what kind of thinking it really supports — and that’s where I’d love your input.\nIf you give it a try, I’m curious:\nWhat kind of use does it invite or suggest to you?\nCould you see yourself coming back to it — and if not, what’s missing?\nAny thoughts are welcome — especially from folks who think deeply about writing, note-making, and the early stages of ideas. Thanks so much.",
-          "link": "https://forum.zettelkasten.de/discussion/3253/any-thoughts-on-this-tool-im-making",
-          "publishedOn": "2025-05-22T17:47:08.000Z",
-          "wordCount": 666,
-          "title": "Any thoughts on this tool I'm making?",
-          "imageUrl": null
-        },
-        {
-          "id": "3252@/discussions",
-          "author": "Itsmekevinthewriter",
-          "description": "Hi all,\nI’ve been exploring a small tool called Quickpoint- it’s meant for typing out ideas quickly, then sharing or saving them with as little friction as possible.\nhttps://quickpoint.me/\nIt's a blank space to think into. Keyboard-first, intentionally minimal. I imagine it might sit somewhere between a fleeting notes tool and a way to shape early structure.\nThat said, I’m still not sure what kind of thinking this actually supports best. I’d love to hear how it lands for others.\nIf you give it a quick try, I’m especially curious:\nWhat kind of use does it suggest to you?\nWould you find yourself returning to it — and if not, what’s missing?\nAppreciate any feedback, especially from people who care about writing as a process of thought. Thanks in advance.",
-          "link": "https://forum.zettelkasten.de/discussion/3252/building-a-keyboard-first-tool-for-thinking-creating-and-sharing",
-          "publishedOn": "2025-05-22T17:43:57.000Z",
-          "wordCount": 660,
-          "title": "Building a keyboard-first tool for thinking, creating, and sharing",
-          "imageUrl": null
         }
       ]
     }
