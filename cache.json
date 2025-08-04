@@ -53,6 +53,46 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1mhlzmz/my_nix_setup_for_a_haskell_lean_monorepo_with/",
+          "author": null,
+          "description": "Hi! Someone asked me to share my setup for Lean & Haskell with Nix and Emacs. I'm working on a project that uses a Lean and Haskell monorepo (Lean for formal stuff, Haskell for the actual implementation). It was a little tricky setting up my editor to play nicely with both, particularly for the LSP. I'm using NixOS as my operating system, but you don't need that for the devshell stuff. I have my dotfiles linked here and my project I'm currently working on linked here which uses the setup I'm talking about. Note that all the snippets below are abbreviated with stuff omitted. You can check out my dotfiles or the project repo for more, or just ask questions here.\n Overall setup\n I don't have my Haskell stuff installed system-wide. Instead, I have a flake.nix per-project that uses developPacka…",
+          "link": "https://www.reddit.com/r/haskell/comments/1mhlzmz/my_nix_setup_for_a_haskell_lean_monorepo_with/",
+          "publishedOn": "2025-08-04T18:45:26.000Z",
+          "wordCount": null,
+          "title": "My Nix Setup for a Haskell + Lean Monorepo with Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1mhi1c9/how_to_use_monad_transformers_ergonomically/",
+          "author": null,
+          "description": "Whenever I write monadic code I end up with some obscene transformer stack like:\n InputT (ExceptT Error (StateT ExecState IO)) ()\n And then I end up with a ton of hilarious lifting methods:\n haskell liftStateStack :: ExceptT ExecError (State s) out -> InputT (ExceptT Error (StateT s IO)) out liftStateStack = lift . ExceptT . runExceptT . mapExceptT liftState . withExceptT ExecutionError where liftState :: State s (Either Error out) -> StateT s IO (Either Error out) liftState = mapStateT $ pure . runIdentity \n How do I consolidate this stuff? What's the general best practice here? And does anyone have any books or resources they recommend for writing ergonomic Haskell? I'm coming from a Lean background and I only got back into learning Haskell recently. I will say, Lean has a much nicer Monad lifting system. It doesn't feel quite as terse and verbose. I don't want to teach myself antipatterns.\n Also PS: using Nix with Haskell is actually not that bad. Props, guys!\n    submitted by    /u/PotentialScheme9112  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1mhi1c9/how_to_use_monad_transformers_ergonomically/",
+          "publishedOn": "2025-08-04T16:22:58.000Z",
+          "wordCount": null,
+          "title": "How to use Monad transformers ergonomically?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1mh89i0/haskell_realworld_example_with_effectful/",
+          "author": null,
+          "description": "Previously, I introduced Arota(https://arota.ai), a schedule management service built with Haskell for people with ADHD. While we’re unable to share the actual source code of the service, we’re releasing the source code of an example application built with the same structure.\n https://github.com/eunmin/realworld-haskell\n It uses Servant and has SwaggerUI integration. We originally used mtl, but have since migrated to effectful. We also aimed to follow Clean Architecture principles.\n There are many Haskell backend examples out there, but we hope this project will be helpful to those looking for a real, working example, especially one that uses effectful.\n Feedback on the code is very welcome! :)\n    submitted by    /u/Necessary-Nose-9295  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1mh89i0/haskell_realworld_example_with_effectful/",
+          "publishedOn": "2025-08-04T08:53:36.000Z",
+          "wordCount": null,
+          "title": "Haskell RealWorld example with effectful",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1mh5oha/2025_haskell_implementors_workshop_videos/",
+          "author": null,
+          "description": "submitted by    /u/ysangkok  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1mh5oha/2025_haskell_implementors_workshop_videos/",
+          "publishedOn": "2025-08-04T06:06:16.000Z",
+          "wordCount": null,
+          "title": "2025 Haskell Implementors’ Workshop videos",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1mgpbo1/i_made_my_submission_for_the_2025_gmtk_game_jam/",
           "author": null,
           "description": "to my knowledge this is one of the most fully fleshed out games made with haskell, so i'm really proud of it\n    submitted by    /u/M1n3c4rt  \n [link]   [comments]",
@@ -611,16 +651,6 @@
           "wordCount": null,
           "title": "[ANN] A user guide to ghci4luatex",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1lshuyj/how_do_you_make_a_parser_with_megaparsec_that_is/",
-          "author": null,
-          "description": "I want to write a parser library using megaparsec that can help people parse IP addresses.\n Here's what I've come up with so far:\n {-# LANGUAGE FlexibleContexts #-} module Text.Megaparsec.IP.IPv6 where import Control.Monad import Text.Megaparsec as TM import Text.Megaparsec.Char import qualified Text.Megaparsec.Char.Lexer as L import Data.Text as T import Data.Void hextet :: (Stream s, MonadParsec Void s m) => m s hextet = TM.count 4 (L.hexadecimal) hextetColon :: (Stream s, MonadParsec Void s m) => m s hextetColon = do ht <- hextet void $ single ':' return ht basicIPv6 :: (Stream s, MonadParsec Void s m) => m s basicIPv6 = do ht1 <- TM.count 7 (hextetColon) ht2 <- hextet return (ht1 `mappend` ht2) \n It keeps giving me an error over the use of the \"single\" function and I don't know how to get it to translate that into an element that could be from any Stream type. Also I'd like to know how to append one stream type to another if that's at all possible. This is modified code from ChatGPT so I don't even actually fully understand MonadParsec types tbh. \n I'd say I'm at a medium level of understanding Haskell, so I don't fully get some of the fancy stuff I see in type signatures (like they keyword \"forall\" that sometimes shows up before the \"=>\"), so I'm not really sure how to do this.\n    submitted by    /u/theInfiniteHammer  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1lshuyj/how_do_you_make_a_parser_with_megaparsec_that_is/",
-          "publishedOn": "2025-07-05T19:24:16.000Z",
-          "wordCount": null,
-          "title": "How do you make a parser with megaparsec that is polymorphic?",
-          "imageUrl": null
         }
       ]
     },
@@ -629,6 +659,26 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1mhgp6q/intellij_scala_plugin_20252_is_out/",
+          "author": null,
+          "description": "What’s New:\n  \nOpaque types, named tuples, and new tuples operations are fully supported\n The new layout for sbt modules is enabled by default\n sbt-managed sources are regenerated on project reload\n New file handling has been improved in ScalaCLI\n  \nWhat’s Fixed:\n  \nMultiple “good code is red” issues in Compiler-based Highlighting have been eliminated\n No more performance regression in implicit resolution in Scala 3\n The auto-import quick-fix now works in Scala 3 with compiler-based highlighting\n  \n   submitted by    /u/makingthematrix  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1mhgp6q/intellij_scala_plugin_20252_is_out/",
+          "publishedOn": "2025-08-04T15:33:33.000Z",
+          "wordCount": null,
+          "title": "IntelliJ Scala Plugin 2025.2 Is Out!",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1mhc34m/ducktape_0210_now_with_named_tuple_support/",
+          "author": null,
+          "description": "The highlight of this release is named tuple support - you can transform between any combination of named tuples, positional tuples and case classes (with all of the bells and whistles that the library provides). \n All of that while not bumping the Scala version of the library, which I feel like is pretty cool and speaks volumes about building features on top of existing language infrastructure as opposed to coming up with ad-hoc solutions to each and every new thing in the language.\n    submitted by    /u/_arain  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1mhc34m/ducktape_0210_now_with_named_tuple_support/",
+          "publishedOn": "2025-08-04T12:29:29.000Z",
+          "wordCount": null,
+          "title": "ducktape 0.2.10 - now with named tuple support",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1mgovky/this_week_in_scala_aug_4_2025/",
           "author": null,
@@ -1098,26 +1148,6 @@
           "wordCount": null,
           "title": "This week in #Scala (Jul 7, 2025)",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1lsmfzh/sbt_1113_released/",
-          "author": null,
-          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1lsmfzh/sbt_1113_released/",
-          "publishedOn": "2025-07-05T22:54:41.000Z",
-          "wordCount": null,
-          "title": "sbt 1.11.3 released",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ls8x8p/log_http_request_and_response_via_pekko/",
-          "author": null,
-          "description": "https://timzaak.github.io/blog/blog/mitm-http-log-viewer\n It's very useful for the test team debuging http when the PC client could not give the log.\n    submitted by    /u/Human-Pitch6826  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ls8x8p/log_http_request_and_response_via_pekko/",
-          "publishedOn": "2025-07-05T12:37:31.000Z",
-          "wordCount": null,
-          "title": "Log Http Request And Response Via Pekko",
-          "imageUrl": null
         }
       ]
     },
@@ -1218,6 +1248,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1mh801l/if_a_book_about_orgmode_came_out_what_topics/",
+          "author": null,
+          "description": "I've been toying with the idea doing in-depth writing about org-mode. Org-mode has such a huge ecosystem and so much could be written about it. Some ideas that came to mind are:\n  \nfeatures of org-mode in light of their application\n compilation and distillation of various workflows\n highlighting lesser-known parts of the ecosystem\n Elisp programming with the org-mode API\n  \nI'm curious what others think.\n    submitted by    /u/Beginning_Occasion  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1mh801l/if_a_book_about_orgmode_came_out_what_topics/",
+          "publishedOn": "2025-08-04T08:36:07.000Z",
+          "wordCount": null,
+          "title": "If a book about org-mode came out, what topics would you want it to cover?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1mfgxme/released_orgwrokbench_a_thinking_exploration/",
           "author": null,
@@ -1456,6 +1496,46 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/broadcast-20250804.1815.tar",
+          "author": null,
+          "description": "The broadcast package has been updated to version 20250804.1815.",
+          "link": "https://melpa.org/#/broadcast",
+          "publishedOn": "2025-08-04T18:15:00.000Z",
+          "wordCount": 105,
+          "title": "broadcast (20250804.1815) --- Links buffers together for simultaneous editing",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/python-switch-quotes-20250804.904.tar",
+          "author": null,
+          "description": "The python-switch-quotes package has been updated to version 20250804.904.",
+          "link": "https://melpa.org/#/python-switch-quotes",
+          "publishedOn": "2025-08-04T09:04:00.000Z",
+          "wordCount": 105,
+          "title": "python-switch-quotes (20250804.904) --- Cycle between single and double quotes in python strings",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/restclient-jq-20250803.2119.tar",
+          "author": null,
+          "description": "The restclient-jq package has been updated to version 20250803.2119.",
+          "link": "https://melpa.org/#/restclient-jq",
+          "publishedOn": "2025-08-03T21:19:00.000Z",
+          "wordCount": 105,
+          "title": "restclient-jq (20250803.2119) --- Support for setting restclient vars from jq expressions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/wordel-20250803.2033.tar",
+          "author": null,
+          "description": "The wordel package has been updated to version 20250803.2033.",
+          "link": "https://melpa.org/#/wordel",
+          "publishedOn": "2025-08-03T20:33:00.000Z",
+          "wordCount": 105,
+          "title": "wordel (20250803.2033) --- An Elisp implementation of \"Wordle\" (aka \"Lingo\")",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/magit-prime-20250803.1914.tar",
           "author": null,
           "description": "The magit-prime package has been updated to version 20250803.1914.",
@@ -1673,6 +1753,16 @@
           "publishedOn": "2025-08-01T04:32:00.000Z",
           "wordCount": 105,
           "title": "ekg (20250801.432) --- A system for recording and linking information",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/compile-angel-20250801.115.tar",
+          "author": null,
+          "description": "The compile-angel package has been updated to version 20250801.115.",
+          "link": "https://melpa.org/#/compile-angel",
+          "publishedOn": "2025-08-01T01:15:00.000Z",
+          "wordCount": 105,
+          "title": "compile-angel (20250801.115) --- Automatically Compile Elisp files (auto-compile alternative)",
           "imageUrl": null
         },
         {
@@ -2273,6 +2363,16 @@
           "publishedOn": "2025-07-24T18:57:00.000Z",
           "wordCount": 105,
           "title": "org-arbeitszeit (20250724.1857) --- Calculate your worktime",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/htmlize-20250724.1703.tar",
+          "author": null,
+          "description": "The htmlize package has been updated to version 20250724.1703.",
+          "link": "https://melpa.org/#/htmlize",
+          "publishedOn": "2025-07-24T17:03:00.000Z",
+          "wordCount": 105,
+          "title": "htmlize (20250724.1703) --- Convert buffer text and decorations to HTML",
           "imageUrl": null
         },
         {
@@ -4154,106 +4254,6 @@
           "wordCount": 105,
           "title": "scroll-on-jump (20250706.1124) --- Scroll when jumping to a new point",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ob-elixir-20250706.556.tar",
-          "author": null,
-          "description": "The ob-elixir package has been updated to version 20250706.556.",
-          "link": "https://melpa.org/#/ob-elixir",
-          "publishedOn": "2025-07-06T05:56:00.000Z",
-          "wordCount": 105,
-          "title": "ob-elixir (20250706.556) --- Org-babel functions for elixir evaluation",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/mise-20250706.357.tar",
-          "author": null,
-          "description": "The mise package has been updated to version 20250706.357.",
-          "link": "https://melpa.org/#/mise",
-          "publishedOn": "2025-07-06T03:57:00.000Z",
-          "wordCount": 105,
-          "title": "mise (20250706.357) --- Support for `mise' cli",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/loopy-20250706.117.tar",
-          "author": null,
-          "description": "The loopy package has been updated to version 20250706.117.",
-          "link": "https://melpa.org/#/loopy",
-          "publishedOn": "2025-07-06T01:17:00.000Z",
-          "wordCount": 105,
-          "title": "loopy (20250706.117) --- A looping macro",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/micromamba-20250705.2025.tar",
-          "author": null,
-          "description": "The micromamba package has been updated to version 20250705.2025.",
-          "link": "https://melpa.org/#/micromamba",
-          "publishedOn": "2025-07-05T20:25:00.000Z",
-          "wordCount": 105,
-          "title": "micromamba (20250705.2025) --- A library for working with micromamba environments",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/orderless-20250705.1752.tar",
-          "author": null,
-          "description": "The orderless package has been updated to version 20250705.1752.",
-          "link": "https://melpa.org/#/orderless",
-          "publishedOn": "2025-07-05T17:52:00.000Z",
-          "wordCount": 105,
-          "title": "orderless (20250705.1752) --- Completion style for matching regexps in any order",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/rust-mode-20250705.1444.tar",
-          "author": null,
-          "description": "The rust-mode package has been updated to version 20250705.1444.",
-          "link": "https://melpa.org/#/rust-mode",
-          "publishedOn": "2025-07-05T14:44:00.000Z",
-          "wordCount": 105,
-          "title": "rust-mode (20250705.1444) --- A major-mode for editing Rust source code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/clojure-ts-mode-20250705.1307.tar",
-          "author": null,
-          "description": "The clojure-ts-mode package has been updated to version 20250705.1307.",
-          "link": "https://melpa.org/#/clojure-ts-mode",
-          "publishedOn": "2025-07-05T13:07:00.000Z",
-          "wordCount": 105,
-          "title": "clojure-ts-mode (20250705.1307) --- Major mode for Clojure code",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/bqn-mode-20250705.1223.tar",
-          "author": null,
-          "description": "The bqn-mode package has been updated to version 20250705.1223.",
-          "link": "https://melpa.org/#/bqn-mode",
-          "publishedOn": "2025-07-05T12:23:00.000Z",
-          "wordCount": 105,
-          "title": "bqn-mode (20250705.1223) --- Emacs mode for BQN",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/plantuml-mode-20250705.1148.tar",
-          "author": null,
-          "description": "The plantuml-mode package has been updated to version 20250705.1148.",
-          "link": "https://melpa.org/#/plantuml-mode",
-          "publishedOn": "2025-07-05T11:48:00.000Z",
-          "wordCount": 105,
-          "title": "plantuml-mode (20250705.1148) --- Major mode for PlantUML",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/helm-descbinds-20250705.942.tar",
-          "author": null,
-          "description": "The helm-descbinds package has been updated to version 20250705.942.",
-          "link": "https://melpa.org/#/helm-descbinds",
-          "publishedOn": "2025-07-05T09:42:00.000Z",
-          "wordCount": 105,
-          "title": "helm-descbinds (20250705.942) --- A convenient `describe-bindings' with `helm'",
-          "imageUrl": null
         }
       ]
     },
@@ -4262,6 +4262,106 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mho85x/cursor_trails_in_emacs/",
+          "author": null,
+          "description": "submitted by    /u/Reenigav  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mho85x/cursor_trails_in_emacs/",
+          "publishedOn": "2025-08-04T20:08:02.000Z",
+          "wordCount": null,
+          "title": "Cursor trails in Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mhnoes/yet_another_hydra_and_transient_tutorialw/",
+          "author": null,
+          "description": "Hi everyone! I recently created two new blog posts exploring Hydra and Transient—two powerful packages for building menus in Emacs.\n  \nHydra: https://cocode.se/emacs/transient.html\n \nTransient: https://cocode.se/emacs/transient_cont.html\n \n These posts were part of my learning journey to understand how to create effective menu systems in Emacs. They’re by no means perfect, and there are other tutorials and documentation that are far more detailed, but maybe these serve as a clear and approachable introduction. I hope they’ll be helpful to others looking to get started with these awesome tools. Feedback and suggestions are very welcome!\n    submitted by    /u/Darth_calle2  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mhnoes/yet_another_hydra_and_transient_tutorialw/",
+          "publishedOn": "2025-08-04T19:47:19.000Z",
+          "wordCount": null,
+          "title": "Yet Another Hydra and Transient Tutorial...w",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mhmhhu/emacs_provided_version_of_termux_crashing_at/",
+          "author": null,
+          "description": "But the \"normal\" Google play one works ok. Any one already solved this and care to share how?\n ( The play store version can't access emacs' files so it's pretty useless. ) \n    submitted by    /u/radian_  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mhmhhu/emacs_provided_version_of_termux_crashing_at/",
+          "publishedOn": "2025-08-04T19:03:22.000Z",
+          "wordCount": null,
+          "title": "Emacs provided version of Termux crashing at launch",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mhh9eh/whats_your_workflow_going_back_to_a_previous/",
+          "author": null,
+          "description": "Hello!\n Like the title says, I've been wanting to find a good way to undo to a previous motion that I've accidentally done. What I mean by that is something like vim's jumplist where you can get back to the previous point position by inputting C-i/C-o.\n I know most motions have an opposite direction that you can input, but some of them are asymmetrical, meaning you won't always get back to exactly where the point originally was. Also, I'm sometimes inputting accidental key presses which I'm not always sure what the corresponding motion was (I'm still working my way to touch typing). There's winner mode which I enjoy very much for windows, it would be nice if there was a way to have that for point positions.\n I'm also aware that I can set up a mark (C-Space C-Space) to go back to it later (C-x C-Space), but that's when I know in advance that I'll go back to that spot, not because I mistyped.\n There's better-jumper that I've found that seems to do the trick most of the time, but not always.\n I'm also not using evil-mode, I'm looking for something as close as possible to \"vanilla\" emacs.\n    submitted by    /u/Callinthebin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mhh9eh/whats_your_workflow_going_back_to_a_previous/",
+          "publishedOn": "2025-08-04T15:54:32.000Z",
+          "wordCount": null,
+          "title": "What's your workflow going back to a previous point position after accidental key presses?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mhge9w/using_emacs_vcdiff_with_tools_such_as_gitcrypt_or/",
+          "author": null,
+          "description": "submitted by    /u/jamescherti  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mhge9w/using_emacs_vcdiff_with_tools_such_as_gitcrypt_or/",
+          "publishedOn": "2025-08-04T15:22:23.000Z",
+          "wordCount": null,
+          "title": "Using Emacs vc-diff with tools such as git-crypt or rails credentials: Handling Binary Diff Issues",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mheywl/trying_vscode_after_20y_in_emacs_and_i_just_cant/",
+          "author": null,
+          "description": "In emacs I have `iedit` and vanilla `occur`. I want to change all \"%d\" occurrences to \"{}\" in my buffer. But I want to see first all the places I'm about to edit, in case I mess up anything. In VSCode, I mark the \"%d\" and I place cursors at all occurrences with Ctrl+SHIFT+L. But there is no easy way to see them all. I have to scroll through the buffer with the mouse. There is no way to fit them all in one screen, like in occur or when you use iedit and press `C-'`. \n So... back to emacs, again. It's just too good. If any VSCode aficionado is here, help me out please.\n    submitted by    /u/spartanOrk  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mheywl/trying_vscode_after_20y_in_emacs_and_i_just_cant/",
+          "publishedOn": "2025-08-04T14:28:26.000Z",
+          "wordCount": null,
+          "title": "Trying VSCode (after 20y in emacs) and I just can't. Help. Emacs is too good.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mh6osr/automating_git_log_cleanups/",
+          "author": null,
+          "description": "Lately I frequently throw 1k lines into git history because... startup things. A lot of these edits can be trivially broken into behavioral structural or noise changes. For a human (me) to do it, it is a complete waste of time, but an LLM could add that value without the cost. Since we know point A and point B perfectly, there is no harm in errors that happen between point A and B. We just want to get to point B and have a better prepared log when we get there.\n I figure aider or something could be trivially good at this already. Just wanted to bring up an example problem where an LLM can't really screw it up and it's all pure gain as long as the git log isn't allowed to be hosed by Skynet. Seems like the domain of Tarsius ;)\n    submitted by    /u/Psionikus  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mh6osr/automating_git_log_cleanups/",
+          "publishedOn": "2025-08-04T07:09:25.000Z",
+          "wordCount": null,
+          "title": "Automating Git Log Cleanups",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mgzwiz/emacs_31_typescript_deno_2/",
+          "author": null,
+          "description": "Hello, folks.\n I'm in the process of learning Typescript + Deno 2 and not precisely sure how to get the best results out of Emacs. It seems like typescript-mode may be deprecated/not maintained and there's a suggestion to instead use typescript-ts-mode. So I installed that package and tree-sitter, made sure I have at least a `(require treesit)`, and though I see \"Typescript\" in the mode line it doesn't appear as though I'm getting anything special re coloring, completion, hints, etc. I see some other folks referencing eglot but then we are back to typescript-mode, yes?\n Anyone out there working with Typescript + Deno and a bleeding edge Emacs version have any advice? Or some use-package I can reference?\n    submitted by    /u/siliconpa  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mgzwiz/emacs_31_typescript_deno_2/",
+          "publishedOn": "2025-08-04T01:02:59.000Z",
+          "wordCount": null,
+          "title": "Emacs 31, Typescript + Deno (2)?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mgywjn/vecdb_a_package_for_vector_search/",
+          "author": null,
+          "description": "Last week vecdb was released as part of GNU ELPA. It's a package for other package authors to use to add vector storage and search - it gives Emacs the ability to do semantic search over a collection of items, finding items by semantic similar to a query, or to another item, or any text, really. I've released a video demonstrating the functionality.\n So far, vecdb works with the qdrant, chroma, and postgres backends. The idea, like in the llm package, is that package authors integrate with vecdb, and the end user can choose the vector database that makes sense for them (the one they have installed on their system).\n This needs to be used with a provider of embeddings (vecdb only stores and searches them), so using llm would work, but there's probably other ways to get embeddings into Emacs as well.\n I'm hoping the community finds an interesting way to use this powerful functionality!\n    submitted by    /u/ahyatt  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mgywjn/vecdb_a_package_for_vector_search/",
+          "publishedOn": "2025-08-04T00:14:48.000Z",
+          "wordCount": null,
+          "title": "vecdb: A package for vector search",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mgwmvh/emacs_is_a_commandline_replacement/",
+          "author": null,
+          "description": "I was thinking of a way to describe emacs to my friends (who haven't yet seen the light of emacs) and while thinking of how, I kinda noticed something, usually emacs gets compared to (neo)vi(m), and while emacs definitly is an amazing text editor, I feel like it kinda does more then that, for example for me emacs has replaced several programs I use, like for example\n - rss reader\n - email client\n - amfora (gemini protocol client)\n - pandoc\n - etc...\n and it kinda made me realise that, functionally speaking, emacs kinda replaced the commandline interface for me,, I rarely use a terminal outside of running code for projects I'm working on, and even then I do that in vterm inside of emacs, so I was wondering if calling emacs a replacement for the CLI/terminal is a comparrison that holds up, what are your thoughts?\n    submitted by    /u/Lunibunni  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mgwmvh/emacs_is_a_commandline_replacement/",
+          "publishedOn": "2025-08-03T22:32:04.000Z",
+          "wordCount": null,
+          "title": "\"emacs is a commandline replacement\"",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1mgquo7/exporting_orgroam_directory_for_knowledgebase/",
           "author": null,
@@ -6880,46 +6980,6 @@
           "publishedOn": "2025-07-06T10:06:37.000Z",
           "wordCount": null,
           "title": "Build flags to properly display unicode/emoji glyphs?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1lsi910/at_a_minimum_how_much_of_gnulinux_is_really/",
-          "author": null,
-          "description": "I know that part of a running joke is that Emacs is a great operating system with a bad default text editor, which only evil mode can fix.\n But that got me thinking, how much of GNU/Linux does emacs actually need to run properly? Could it technically just run on top of the Linux kernel with nothing else installed?\n    submitted by    /u/Brospeh-Stalin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1lsi910/at_a_minimum_how_much_of_gnulinux_is_really/",
-          "publishedOn": "2025-07-05T19:42:00.000Z",
-          "wordCount": null,
-          "title": "At a minimum, how much of gnu/linux is really needed to run emacs?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1lsawjs/how_often_do_you_write_macros/",
-          "author": null,
-          "description": "I'm just starting to understand what is possible to do with macros, and a few times it did feel like the macro usage looked a lot more simpler and readable than what it would've looked like without it.\n I also read somewhere else that it shouldn't be overused. So I'm just trying to understand how much is too much and also what some of you might be doing with macros.\n Some examples would be really awesome to see.\n    submitted by    /u/birdsintheskies  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1lsawjs/how_often_do_you_write_macros/",
-          "publishedOn": "2025-07-05T14:17:22.000Z",
-          "wordCount": null,
-          "title": "How often do you write macros?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1lsa9jz/how_do_i_set_up_melpa/",
-          "author": null,
-          "description": "I know that I need to have a package.el but where can I find one for Emacs 30? Where do I add it? In my .emacs folder?\n    submitted by    /u/Brospeh-Stalin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1lsa9jz/how_do_i_set_up_melpa/",
-          "publishedOn": "2025-07-05T13:46:40.000Z",
-          "wordCount": null,
-          "title": "How do I set up Melpa?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1lsa7xr/whats_your_favorite_emacs_game/",
-          "author": null,
-          "description": "I personally like doctor, snake, and tetris. What about you?\n    submitted by    /u/Brospeh-Stalin  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1lsa7xr/whats_your_favorite_emacs_game/",
-          "publishedOn": "2025-07-05T13:44:28.000Z",
-          "wordCount": null,
-          "title": "What's your favorite emacs game?",
           "imageUrl": null
         }
       ]
