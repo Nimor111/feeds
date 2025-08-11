@@ -53,6 +53,46 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1mnlmh9/using_traversals_to_batch_up_db_calls_for_huge/",
+          "author": null,
+          "description": "Here's a technique I use to mechanically refactor nested linear code into code that works on batches, which got me up to a 300x speedup on some workflows.\n    submitted by    /u/ChrisPenner  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1mnlmh9/using_traversals_to_batch_up_db_calls_for_huge/",
+          "publishedOn": "2025-08-11T18:51:17.000Z",
+          "wordCount": null,
+          "title": "Using traversals to batch up db calls for HUGE speedups",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1mn574z/ann_hsstaticbin_get_haskell_static_binaries/",
+          "author": null,
+          "description": "submitted by    /u/mboucey  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1mn574z/ann_hsstaticbin_get_haskell_static_binaries/",
+          "publishedOn": "2025-08-11T06:03:02.000Z",
+          "wordCount": null,
+          "title": "[ANN] hs-static-bin : Get Haskell static binaries easily (through adhoc Docker containers)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1mn1rjl/should_i_read_the_translated_learn_you_a_haskell/",
+          "author": null,
+          "description": "Main\n I'm going to study Haskell using the translated version of Learn You a Haskell for Great Good!.\n However, it's been more than 10 years since the original was published, and I know there's also a \"community edition\" updated in 2022.\n My question\n Should I read the translated version, which is much easier for me to understand, or should I go with the updated community edition to avoid misunderstandings caused by outdated information in the original?\n Background, context\n  \nI’m completely new to Haskell.\n \nI just started studying Kotlin, and it’s been about four months.\n \nI think I understand basic concepts such as variables, functions, iteration, conditions, and some fundamentals of functional programming.\n \nI program as a hobby, and my goal is to gain a solid understanding of functional programming out of personal interest.\n  \n I’ve been fascinated by Haskell for a long time but never quite took the step to learn it. Now that I’m learning Kotlin, I’m more motivated to finally try Haskell.\n In Kotlin, I mainly learn from Kotlin: An Illustrated Guide, which uses illustrations to clarify abstract ideas.\n I feel that Learn You a Haskell was written in a similar way — illustration-heavy and concept-focused.\n  \nAlso, if you know of other beginner-friendly Haskell resources with clear explanations, I’d love to hear your recommendations.\n    submitted by    /u/mowgyw  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1mn1rjl/should_i_read_the_translated_learn_you_a_haskell/",
+          "publishedOn": "2025-08-11T02:53:26.000Z",
+          "wordCount": null,
+          "title": "Should I read the translated Learn You a Haskell or the updated 2022 community edition?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1mmzo9n/cmm_gsoc_project_update/",
+          "author": null,
+          "description": "https://discourse.haskell.org/t/the-differences-between-cmm-parser-and-pretty-printer/12673\n    submitted by    /u/GunpowderGuy  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1mmzo9n/cmm_gsoc_project_update/",
+          "publishedOn": "2025-08-11T01:12:07.000Z",
+          "wordCount": null,
+          "title": "cmm GSoC project update",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1mmje34/recursion_scheme_with_ancestor_nodes/",
           "author": null,
           "description": "Hey, r/haskell!\n I have been teaching myself recursion schemes going through old AoC tasks. There's a task in AoC '19 day 6 part 1 that asks to in essence calculate the sum of all depths of all nodes. While it is possible to construct a normal cata-fold - doing this it is quite unnatural. So I came up with the following recursion scheme of my own I call ancestorFold. In essence, it gives you a list of your ancestor nodes as an argument. With this the sum of all depths looks like:\n sumDepth :: Struct -> Int sumDepth = ancestorFold alg where alg par (StructF chld) = length par + sum chld \n while the scheme itself looks like this:\n ancestorFold :: (F.Recursive t) => ([t] -> F.Base t a -> a) -> t -> a ancestorFold alg = go [] where go ancestors node = let layer = F.project node -- unwrap one layer: t -> Base t t childrenResults = fmap (go (node : ancestors)) layer -- recurse with updated ancestors in alg ancestors childrenResults \n Obviously, I'm proud of myself for finally starting to grok the concept on a deeper level, but I was wondering if somebody has already come up with this and maybe it already has a name? Obviously this is a useful tool not just for calculating the depth but anywhere where you want the ability to evaluate a node in the context of it's parent(s).\n    submitted by    /u/AmbiDxtR  \n [link]   [comments]",
@@ -601,36 +641,6 @@
           "wordCount": null,
           "title": "Baking package version and Git commit hash in the Haskell executable",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1lyn1a7/dataframe_0202/",
-          "author": null,
-          "description": "Been steadily working on this. The rough roadmap for the next few months is to prototype a number of useful features then iterate on them till v1.\n What's new?\n Expression syntax\n This work started at ZuriHac. Similar to PySpark and Polars you can write expressions to define new columns derived from other columns:\n haskell D.derive \"bmi\" ((D.col @Double \"weight\") / (D.col \"height\" ** D.lit 2)) df \n What still needs to be done\n  \nExtend the expression language to aggregations\n  \nLazy/deferred computaton\n A limited API for deferred computation (supports select, filter and derive).\n haskell ghci> import qualified DataFrame.Lazy as DL ghci> import qualified DataFrame as D ghci> let ldf = DL.scanCsv \"./some_large_file.csv\" ghci> df <- DL.runDataFrame $ DL.filter (D.col @Int \"column\" `D.eq` 5) l…",
-          "link": "https://www.reddit.com/r/haskell/comments/1lyn1a7/dataframe_0202/",
-          "publishedOn": "2025-07-13T07:37:22.000Z",
-          "wordCount": null,
-          "title": "dataframe 0.2.0.2",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ly6x46/built_an_ai_chatbot_chatgpt_clone_in_haskell/",
-          "author": null,
-          "description": "I wanted to share a project I've been hacking on — a simple AI chatbot (a ChatGPT-style clone) written entirely in Haskell.\n The main goal was to build a slightly non-trivial, full-stack example using langchain-hs, and along the way, I also explored building a UI using hyperbole.\n Features:\n  \nStores multiple conversations with full chat history (sqlite)\n Lets you select different models from different providers (e.g. Ollama, OpenRouter)\n Allows users to upload documents (text files only, for now)\n Supports tool calling — like web search and Wikipedia queries\n Clean UI with Markdown rendering for messages\n  \nChallenges & Learnings\n  \nFile upload in Hyperbole turned out to be... not quite supported. I ended up handling uploads via plain JavaScript, then sending the file path as a hidden field in the form.\n State management was surprisingly nice — by combining Hyperbole’s effects system with an MVar, I was able to build something similar to a Redux-style central store, which helped with coordination across views.\n Model switching was smooth with langchain-hs\n  \nWhy I Built It\n Initially, I just wanted a real-world showcase for langchain-hs, but the project evolved into a fairly usable prototype. If you're working with LLMs in Haskell, curious about Hyperbole, or just want to see how a full-stack app can look in Haskell — check it out!\n 👉 GitHub: https://github.com/tusharad/ai-chatbot-hs\n Would love your feedback — and if you have experience hacking on Hyperbole, let’s talk!\n    submitted by    /u/Worldly_Dish_48  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ly6x46/built_an_ai_chatbot_chatgpt_clone_in_haskell/",
-          "publishedOn": "2025-07-12T18:05:31.000Z",
-          "wordCount": null,
-          "title": "Built an AI Chatbot (ChatGPT clone) in Haskell using Hyperbole and langchain-hs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1lxvyko/what_after_basics_of_mondads/",
-          "author": null,
-          "description": "Hi guys I completed the CIS 194, 2013 course of Haskell and we ended at Mondads. But I have seen many other topics like MVar, Concurrency, Monad Transformers, Lens, Higher Kind types, GADTS, effects, FFIz Parallelism, and some crazy cool names I don't even remember How can I learn about them ?! I used LYAH book as a reference but it doesn't cover all this advance stuff. I am still very under confident about the understanding of IO as cvalues and why are we doing this. How shall I proceed ?! I made a toy JSON Parser project to hone my skills. I would like to learn more about the above topics.\n I guess all this falls into \"intermediate fp\" ?!\n Thanks for your time.\n    submitted by    /u/kichiDsimp  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1lxvyko/what_after_basics_of_mondads/",
-          "publishedOn": "2025-07-12T09:01:45.000Z",
-          "wordCount": null,
-          "title": "What after basics of Mondads ?",
-          "imageUrl": null
         }
       ]
     },
@@ -639,6 +649,16 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1mmzpiu/sbt_200rc2_released/",
+          "author": null,
+          "description": "Hi everyone. On behalf of the sbt project, I am happy to announce sbt 2.0.0-RC2, a beta version of sbt 2.x. sbt 2.0 is a new version of sbt, based on Scala 3 constructs and Bazel-compatible cache system.\n  \nPlugins published against sbt 2.0.0-RC2 will be bincompat with 2.x series\n \nAll tasks are cached by default\n \ndependencyTree task is changed to an input task that can generate DOT etc\n  \n   submitted by    /u/eed3si9n  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1mmzpiu/sbt_200rc2_released/",
+          "publishedOn": "2025-08-11T01:13:45.000Z",
+          "wordCount": null,
+          "title": "sbt 2.0.0-RC2 released",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1mmnjye/scala_is_1_in_functional_languages/",
           "author": null,
@@ -1108,36 +1128,6 @@
           "wordCount": null,
           "title": "PencilMail (fork of Pencil)",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1lyct17/kyo_10rc1_a_new_era_of_simplicity_and_stability/",
-          "author": null,
-          "description": "following the last 0.19 release 2 month ago, time for 1.0-RC1:\n  \nKyo v1.0-RC1\n  \nWe're excited to announce that Kyo is finally entering a period of API stabilization! 🚀 Over the past three years, we've quickly iterated on the abstractions of the library to ensure they're reliable and provide a good user experience, but adopting Kyo was challenging due to the constant breaking changes. The project has now reached a level of maturity where we're comfortable making a commitment regarding stability. The 1.0-RC1 release is the first in a series of releases meant as a final validation of the APIs before reaching the 1.0.0 release.\n During the RC cycle, the project will maintain source compatibility and, for cases where an incompatible change proves important, we'll provide Scalafix rewrite rul…",
-          "link": "https://www.reddit.com/r/scala/comments/1lyct17/kyo_10rc1_a_new_era_of_simplicity_and_stability/",
-          "publishedOn": "2025-07-12T22:22:51.000Z",
-          "wordCount": null,
-          "title": "Kyo 1.0-RC1 - A New Era of Simplicity and Stability!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1lyb8og/i_made_directoryspecific_aliasing_tool_in_scala/",
-          "author": null,
-          "description": "Many folks using `Makefile` for task runner. But all you need is aliasing per directory. There's no directory-level aliasing tool, so I made it. Use with `direnv`. It provides `$PATH` and path to configuration, simlink directory, etc.\n It uses `$0` trick, like busybox.\n See link to detailed mechanism.\n _HELPME_: I don't know how to cross-architecture-build / release Scala Native Binary.\n    submitted by    /u/windymelt  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1lyb8og/i_made_directoryspecific_aliasing_tool_in_scala/",
-          "publishedOn": "2025-07-12T21:10:58.000Z",
-          "wordCount": null,
-          "title": "I made directory-specific aliasing tool in Scala Native",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ly1fyc/akka_26_user_seeking_other_perspectives/",
-          "author": null,
-          "description": "ETA: I tried to reproduce my JSON issue and cannot. You can ignore this post for now unless you're very curious.\n Hello,\n I have a personal project in Akka 2.6's Behaviors DSL. The main points of friction I'm hitting are - a logging issue I expect I could fix with macros - (I have my own light wrapper around the DSL, and I have to constantly write context.actorContext.log.info() because def log = actorContext.log in the wrapper results in the log calls missing information) - JSON backwards compatibility issues\n I decided to ignore the first issue until after migrating to Scala 3. I looked into that yesterday, and it seems that akka-http's Scala 3 support requires Akka 2.7 or later, but I'm not open-minded about giving up FOSS. I have not yet looked deeply into Pekko or Zio as alternatives.\n I'm using spray-json for serialization and the big pain point is that (as far as I can tell) there's no way to just add an optional field and have things just work - if you need to add an optional field, you nee to write a custom JsonFormat object. Again, I figured macros could help and was waiting to upgrade to Scala 3 to get rid of a bunch of boilerplate.\n So, I'm curious what folks would recommend. The logging issue I could live with forever if I had to, but the serialization needs to be solved one way or another, even if the solution is something like sticking with Scala 2 for now and using templates.\n    submitted by    /u/micseydel  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ly1fyc/akka_26_user_seeking_other_perspectives/",
-          "publishedOn": "2025-07-12T14:13:13.000Z",
-          "wordCount": null,
-          "title": "Akka 2.6 user seeking other perspectives",
-          "imageUrl": null
         }
       ]
     },
@@ -1228,6 +1218,16 @@
       "feedUrl": "https://reddit.com/r/orgmode/.rss",
       "siteUrl": "https://www.reddit.com/r/orgmode/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/orgmode/comments/1mmucpa/what_is_the_difference_between_org_mode/",
+          "author": null,
+          "description": "Hello. I have been working on a sql representation of org mode and am looking around to try to find a good explantation on the difference between org mode headline properties and keywords. My abstraction for keywords has been to treat them essentially like a property of whatever headline they are under, but I'm starting to think that is wrong.\n i.e. what is the semantic difference between ``` org\n  \nfirst headline ** second headline #+property_one: 123 #+property_two: 456\n  \n```\n org * first headline ** second headline :PROPERTIES: :property_one: 123 :property_two: 456 :END: \n They both seem like they are indicating properties of some kind. But when there are keywords under a headline, what is the implication of that? Are they associated with the headline itself? I see in the org syntax tree that they are syntax elements underneath the headline, but they are not associated as properties with the headline itself. are they just a special syntax for only the file / top level headline properties? if that is the case, is having them exist underneath a headline equivalent to if they were at the top of a file?\n    submitted by    /u/Fun-Programmer102  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/orgmode/comments/1mmucpa/what_is_the_difference_between_org_mode/",
+          "publishedOn": "2025-08-10T21:14:30.000Z",
+          "wordCount": null,
+          "title": "What is the difference between org mode properties and keywords?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/orgmode/comments/1mmmrkx/orgreschedulebyrule_cronbased_rescheduling_for/",
           "author": null,
@@ -1457,16 +1457,6 @@
           "wordCount": null,
           "title": "Configuring org-file-apps to use system defaults seems impossible!",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1ly9g7w/orgagenda_folding_with_outlineindent/",
-          "author": null,
-          "description": "Has anybody got `org-agenda` or `org-super-agenda` folding working?\n The org-super-agenda README lists an example of folding setup using origami.el which doesn't work for me and in general should not be used as origami is outdated and isn't even available on MELPA.\n The alternative seems to be `outline-indent`, but my Emacs expertise doesn't lend to getting it coded properly.\n Could you please point me to right directions as to:\n  \nConfigure `outline-indent` to recognize `org-agenda` format\n Bind TAB key to toggle folding\n (extra) Make auto-fold and/or auto-show configuration work like it is shown for origami\n  \n   submitted by    /u/More_Abroad  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1ly9g7w/orgagenda_folding_with_outlineindent/",
-          "publishedOn": "2025-07-12T19:53:19.000Z",
-          "wordCount": null,
-          "title": "org-agenda folding with outline-indent",
-          "imageUrl": null
         }
       ]
     },
@@ -1475,6 +1465,56 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/copilot-chat-20250811.1935.tar",
+          "author": null,
+          "description": "The copilot-chat package has been updated to version 20250811.1935.",
+          "link": "https://melpa.org/#/copilot-chat",
+          "publishedOn": "2025-08-11T19:35:00.000Z",
+          "wordCount": 105,
+          "title": "copilot-chat (20250811.1935) --- Copilot chat interface",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/plaster-20250811.1925.tar",
+          "author": null,
+          "description": "The plaster package has been updated to version 20250811.1925.",
+          "link": "https://melpa.org/#/plaster",
+          "publishedOn": "2025-08-11T19:25:00.000Z",
+          "wordCount": 105,
+          "title": "plaster (20250811.1925) --- Pasting to a plaster host with buffers",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/markless-20250811.1924.tar",
+          "author": null,
+          "description": "The markless package has been updated to version 20250811.1924.",
+          "link": "https://melpa.org/#/markless",
+          "publishedOn": "2025-08-11T19:24:00.000Z",
+          "wordCount": 105,
+          "title": "markless (20250811.1924) --- Major mode for Markless documents",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/stgit-20250811.357.tar",
+          "author": null,
+          "description": "The stgit package has been updated to version 20250811.357.",
+          "link": "https://melpa.org/#/stgit",
+          "publishedOn": "2025-08-11T03:57:00.000Z",
+          "wordCount": 105,
+          "title": "stgit (20250811.357) --- Major mode for StGit interaction",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/pine-script-mode-20250810.2158.tar",
+          "author": null,
+          "description": "The pine-script-mode package has been updated to version 20250810.2158.",
+          "link": "https://melpa.org/#/pine-script-mode",
+          "publishedOn": "2025-08-10T21:58:00.000Z",
+          "wordCount": 105,
+          "title": "pine-script-mode (20250810.2158) --- Major mode for TradingView Pine Script v6",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/geiser-20250810.1346.tar",
           "author": null,
@@ -1503,6 +1543,16 @@
           "publishedOn": "2025-08-09T12:27:00.000Z",
           "wordCount": 105,
           "title": "literate-calc-mode (20250809.1227) --- Inline results from calc",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/helm-core-20250809.814.tar",
+          "author": null,
+          "description": "The helm-core package has been updated to version 20250809.814.",
+          "link": "https://melpa.org/#/helm-core",
+          "publishedOn": "2025-08-09T08:14:00.000Z",
+          "wordCount": 105,
+          "title": "helm-core (20250809.814) --- Development files for Helm",
           "imageUrl": null
         },
         {
@@ -2866,6 +2916,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/org-link-beautify-20250726.941.tar",
+          "author": null,
+          "description": "The org-link-beautify package has been updated to version 20250726.941.",
+          "link": "https://melpa.org/#/org-link-beautify",
+          "publishedOn": "2025-07-26T09:41:00.000Z",
+          "wordCount": 105,
+          "title": "org-link-beautify (20250726.941) --- Beautify Org Links",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/srfi-20250726.420.tar",
           "author": null,
           "description": "The srfi package has been updated to version 20250726.420.",
@@ -4164,146 +4224,6 @@
           "wordCount": 105,
           "title": "otpp (20250713.1434) --- One tab per project, with unique names",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/json-par-20250713.755.tar",
-          "author": null,
-          "description": "The json-par package has been updated to version 20250713.755.",
-          "link": "https://melpa.org/#/json-par",
-          "publishedOn": "2025-07-13T07:55:00.000Z",
-          "wordCount": 105,
-          "title": "json-par (20250713.755) --- Minor mode for structural editing of JSON",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/minitest-20250713.401.tar",
-          "author": null,
-          "description": "The minitest package has been updated to version 20250713.401.",
-          "link": "https://melpa.org/#/minitest",
-          "publishedOn": "2025-07-13T04:01:00.000Z",
-          "wordCount": 105,
-          "title": "minitest (20250713.401) --- An minor mode for ruby minitest files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/emms-20250712.2142.tar",
-          "author": null,
-          "description": "The emms package has been updated to version 20250712.2142.",
-          "link": "https://melpa.org/#/emms",
-          "publishedOn": "2025-07-12T21:42:00.000Z",
-          "wordCount": 105,
-          "title": "emms (20250712.2142) --- The Emacs Multimedia System",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-java-20250712.2133.tar",
-          "author": null,
-          "description": "The lsp-java package has been updated to version 20250712.2133.",
-          "link": "https://melpa.org/#/lsp-java",
-          "publishedOn": "2025-07-12T21:33:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-java (20250712.2133) --- Java support for lsp-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/consult-gh-with-pr-review-20250712.1947.tar",
-          "author": null,
-          "description": "The consult-gh-with-pr-review package has been updated to version 20250712.1947.",
-          "link": "https://melpa.org/#/consult-gh-with-pr-review",
-          "publishedOn": "2025-07-12T19:47:00.000Z",
-          "wordCount": 105,
-          "title": "consult-gh-with-pr-review (20250712.1947) --- \"pr-review\" Integration for consult-gh",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/consult-gh-forge-20250712.1947.tar",
-          "author": null,
-          "description": "The consult-gh-forge package has been updated to version 20250712.1947.",
-          "link": "https://melpa.org/#/consult-gh-forge",
-          "publishedOn": "2025-07-12T19:47:00.000Z",
-          "wordCount": 105,
-          "title": "consult-gh-forge (20250712.1947) --- Magit/Forge Integration for consult-gh",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/consult-gh-embark-20250712.1947.tar",
-          "author": null,
-          "description": "The consult-gh-embark package has been updated to version 20250712.1947.",
-          "link": "https://melpa.org/#/consult-gh-embark",
-          "publishedOn": "2025-07-12T19:47:00.000Z",
-          "wordCount": 105,
-          "title": "consult-gh-embark (20250712.1947) --- Embark Actions for consult-gh",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/consult-gh-20250712.1947.tar",
-          "author": null,
-          "description": "The consult-gh package has been updated to version 20250712.1947.",
-          "link": "https://melpa.org/#/consult-gh",
-          "publishedOn": "2025-07-12T19:47:00.000Z",
-          "wordCount": 105,
-          "title": "consult-gh (20250712.1947) --- Consulting GitHub Client",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/flycheck-inline-20250712.1835.tar",
-          "author": null,
-          "description": "The flycheck-inline package has been updated to version 20250712.1835.",
-          "link": "https://melpa.org/#/flycheck-inline",
-          "publishedOn": "2025-07-12T18:35:00.000Z",
-          "wordCount": 105,
-          "title": "flycheck-inline (20250712.1835) --- Display Flycheck errors inline",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/renpy-20250712.1708.tar",
-          "author": null,
-          "description": "The renpy package has been updated to version 20250712.1708.",
-          "link": "https://melpa.org/#/renpy",
-          "publishedOn": "2025-07-12T17:08:00.000Z",
-          "wordCount": 105,
-          "title": "renpy (20250712.1708) --- Major mode for editing Ren'Py files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lem-20250712.1630.tar",
-          "author": null,
-          "description": "The lem package has been updated to version 20250712.1630.",
-          "link": "https://melpa.org/#/lem",
-          "publishedOn": "2025-07-12T16:30:00.000Z",
-          "wordCount": 105,
-          "title": "lem (20250712.1630) --- A lemmy client",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/git-link-20250712.1433.tar",
-          "author": null,
-          "description": "The git-link package has been updated to version 20250712.1433.",
-          "link": "https://melpa.org/#/git-link",
-          "publishedOn": "2025-07-12T14:33:00.000Z",
-          "wordCount": 105,
-          "title": "git-link (20250712.1433) --- Get the GitHub/Bitbucket/GitLab URL for a buffer location",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/spell-fu-20250712.1319.tar",
-          "author": null,
-          "description": "The spell-fu package has been updated to version 20250712.1319.",
-          "link": "https://melpa.org/#/spell-fu",
-          "publishedOn": "2025-07-12T13:19:00.000Z",
-          "wordCount": 105,
-          "title": "spell-fu (20250712.1319) --- Fast & light spelling highlighter",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-mem-20250712.845.tar",
-          "author": null,
-          "description": "The org-mem package has been updated to version 20250712.845.",
-          "link": "https://melpa.org/#/org-mem",
-          "publishedOn": "2025-07-12T08:45:00.000Z",
-          "wordCount": 105,
-          "title": "org-mem (20250712.845) --- Fast info from a large number of Org file contents",
-          "imageUrl": null
         }
       ]
     },
@@ -4312,6 +4232,56 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mnniya/chip8_emulator_running_in_emacs/",
+          "author": null,
+          "description": "https://github.com/dankeyy/el-chipo\n    submitted by    /u/dankey26  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mnniya/chip8_emulator_running_in_emacs/",
+          "publishedOn": "2025-08-11T20:03:08.000Z",
+          "wordCount": null,
+          "title": "chip-8 emulator running in emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mnh5di/companymode_shows_least_relevant_suggestions/",
+          "author": null,
+          "description": "https://preview.redd.it/2g29gz30zeif1.png?width=353&format=png&auto=webp&s=80d98dffc9c41c7f003d672ce6d94cac81dcd177\n I’d like the most frequently used and most relevant completions to appear at the top of the list. It seems to put unrelated or less useful suggestions first. What can i do?\n ---------------\n Here is my config:\n (use-package company :ensure t :delight :bind ((\"C-c .\" . company-complete) (\"C-c C-.\" . company-complete) (\"C-c s s\" . company-yasnippet) :map company-active-map (\"C-n\" . company-select-next) (\"C-p\" . company-select-previous) (\"C-d\" . company-show-doc-buffer) (\"M-.\" . company-show-location)) :init (add-hook 'c-mode-common-hook 'company-mode) (add-hook 'sgml-mode-hook 'company-mode) (add-hook 'emacs-lisp-mode-hook 'company-mode) (add-hook 'text-mode-hook 'company-mode…",
+          "link": "https://www.reddit.com/r/emacs/comments/1mnh5di/companymode_shows_least_relevant_suggestions/",
+          "publishedOn": "2025-08-11T16:08:21.000Z",
+          "wordCount": null,
+          "title": "company-mode shows least relevant suggestions first. How to prioritize frequently used ones?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mn7tsc/does_anyone_know_what_package_is_being_used_in/",
+          "author": null,
+          "description": "Hi,\n I was watching this emacsconf video from 2021 on using elfeed for fetching research preprints from arxiv. I was wondering what package the author is using to implement the margins and nice formatting in the elfeed buffer?\n https://emacsconf.org/2021/talks/research\n Thanks.\n    submitted by    /u/kn0xchad  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mn7tsc/does_anyone_know_what_package_is_being_used_in/",
+          "publishedOn": "2025-08-11T08:54:22.000Z",
+          "wordCount": null,
+          "title": "Does anyone know what package is being used in this emacsconf video?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mmvq4p/looking_for_feedback_on_my_config/",
+          "author": null,
+          "description": "Heyo! I am extremely new to emacs, I started to look into emacs because I found that neovims default keybindnings aren't very suited for non-US keyboard layouts. So I installed emacs and went through the newbie guide included, I find that the emacs keybindings work better for my hands and keyboard, so I started to research and write my own config for installing the packages i would like to have.\n I know absolutely nothing about lisp and have now for like 8 hours stumbled around and managed to make a init.el that works for my setup, but I have no idea whether its fine enough as it is, or if I'm doing stupid things that will cost performance.\n Can some of you experts please take a look and tell me if this is alright or if I should change stuff at this point?\n ;; App settings (menu-bar-mode 0…",
+          "link": "https://www.reddit.com/r/emacs/comments/1mmvq4p/looking_for_feedback_on_my_config/",
+          "publishedOn": "2025-08-10T22:11:39.000Z",
+          "wordCount": null,
+          "title": "Looking for feedback on my config.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1mmtuzf/how_popular_is_markdownmode_compared_to_orgmode/",
+          "author": null,
+          "description": "I recently decided to switch to Markdown-mode to take notes in Emacs Denote package. It makes more sense to me to use Markdown, given how popular it is now, especially as I study social sciences and most of my notes are just basic texts.\n It also helps me sync with popular note-taking apps like Obsidian that has great mobile support, which Org-mode truly lacks.\n I wondered what I would miss by switching to Markdown-mode? Is it a well-maintained package? What about the userbase, does it have an active userbase?\n It looks like, until now, for my purpose, it is just as useful as Org-mode.\n Though, if I could have had Obsidian able to read denote links, it would have been perfect, as I explained in this post.\n    submitted by    /u/Hezha98  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1mmtuzf/how_popular_is_markdownmode_compared_to_orgmode/",
+          "publishedOn": "2025-08-10T20:54:58.000Z",
+          "wordCount": null,
+          "title": "How popular is markdown-mode compared to org-mode?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1mmo88g/how_to_find_a_word/",
           "author": null,
@@ -6920,76 +6890,6 @@
           "publishedOn": "2025-07-13T10:19:46.000Z",
           "wordCount": null,
           "title": "'Prot Asks' public video calls about Emacs and life in general",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1lyi5r0/macher_020_integration_with_gptel_presets/",
-          "author": null,
-          "description": "macher pong implementation via gptel presets\n Pretty hyped about this update. macher now supports usage via gptel presets: you can use '@macher' in any gptel request to let the LLM propose changes to files in the current project. Like with other macher commands, a patch buffer will be shown when finished (which you can apply or deal with however you like).\n Interactive commands like macher-implement and macher-revise still behave like before, but under the hood they're now also applying the macher preset. Personally, I mostly still use macher-implement/ macher-revise as it's a useful workflow within code buffers, but there are definitely times when the direct preset comes in handy.\n The UI for macher-implement/ macher-revise has also been improved, with (by default) nicer prompt formatting and better integration with org mode.\n See a full description of the changes here: https://github.com/kmontag/macher/releases/tag/v0.2.0\n    submitted by    /u/pshyouare  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1lyi5r0/macher_020_integration_with_gptel_presets/",
-          "publishedOn": "2025-07-13T02:49:29.000Z",
-          "wordCount": null,
-          "title": "macher 0.2.0: integration with gptel presets",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1lyh4ap/dvorak_bindings/",
-          "author": null,
-          "description": "Any Dvorak users have their go to rebindings for Doom emacs? I personally like have htns as the movement keys in neovim and was wondering if there was a way to do that for emacs?\n    submitted by    /u/TheRealGamer516  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1lyh4ap/dvorak_bindings/",
-          "publishedOn": "2025-07-13T01:54:15.000Z",
-          "wordCount": null,
-          "title": "Dvorak Bindings",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1lybmqe/best_way_for_searching_files_like_git_grep/",
-          "author": null,
-          "description": "I use tide for editing TypeScript code and it works great. But only use file buffer and mini buffer without any extensions.\n I'm searching for something that will allow searching through the content of the files inside Emacs mini buffer and open them.\n Right, I use terminal and git grep for this purpose.\n What would you recommend? I'm not sure what to search to find what I want.\n I need this to work on macOS and Linux.\n    submitted by    /u/jcubic  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1lybmqe/best_way_for_searching_files_like_git_grep/",
-          "publishedOn": "2025-07-12T21:28:28.000Z",
-          "wordCount": null,
-          "title": "Best way for searching files like git grep",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1lybfa4/how_do_i_enable_lexical_binding_cookies_on_buffer/",
-          "author": null,
-          "description": "GNU Emacs 31.0.50 (build 1, aarch64-apple-darwin24.5.0, NS appkit-2575.60 Version 15.5 (Build 24F74)) of 2025-07-12\n ⛔ Warning (files): Missing ‘lexical-binding’ cookie in #<buffer \\*temp\\*>.\n You can add one with ‘M-x elisp-enable-lexical-binding RET’.\n See ‘(elisp)Selecting Lisp Dialect’ and ‘(elisp)Converting to Lexical Binding’\n for more information.\n I've seen ways around this warning by enabling lexical-binding cookies in specific files. Can't figure out how to do so for a *temp* buffer. \n Since I know this is just a warning, is there a way to disable this warning when emacs starts?\n    submitted by    /u/jayjoethecocoa  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1lybfa4/how_do_i_enable_lexical_binding_cookies_on_buffer/",
-          "publishedOn": "2025-07-12T21:19:12.000Z",
-          "wordCount": null,
-          "title": "How do I enable lexical binding cookies on #<buffer *temp*>?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ly84z4/what_do_people_use_for_window_navigation/",
-          "author": null,
-          "description": "Ages ago, I bound C-n and C-p to (other-window 1) and (other-window -1) because it didn't make much sense to me to have an operation as frequent as switching windows be behind two keystrokes and I never needed next-line since I had arrow keys.\n I'm curious if this is a common rebinding or if other people do something else? And does anyone out there just use the default C-x o?\n    submitted by    /u/fixermark  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ly84z4/what_do_people_use_for_window_navigation/",
-          "publishedOn": "2025-07-12T18:56:56.000Z",
-          "wordCount": null,
-          "title": "What do people use for window navigation?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ly54qs/is_emacs_used_to_code_actually/",
-          "author": null,
-          "description": "Hi to the community! Here a Neovim user, pretty interested by giving a try to emacs! Guys is it me or here, YouTube and other blog/websites, I see barely people coding with Emacs. I saw dozens of shorts/real about org-mode, or org-mode to talk about how to code with emacs( pro/cons etc) but almost never just a cpp file open, or js file open with a guy just showing the workflow with a camera on his hands. Maybe it’s a question, or an input to the community. Thanks to everyone and I wish you a great weekend \n    submitted by    /u/Otherwise_Basis_5753  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ly54qs/is_emacs_used_to_code_actually/",
-          "publishedOn": "2025-07-12T16:51:04.000Z",
-          "wordCount": null,
-          "title": "Is emacs used to code actually ?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ly04zw/is_it_possible_to_turn_off_emacslispcheckdoc_for/",
-          "author": null,
-          "description": "I'm currently developing an Emacs configuration framework, although I don't have too much experience so this is kind of experimental. I'm using FlyCheck for checking syntax.\n It has a few modules that provide a package for other modules to require, and then there are some configuration files like package recipes, etc. I need to disable disable (emacs-lisp-checkdoc) on a few files and I tried .dir-locals.el but it didn't seem to work. Not sure if I'm doing this right but I basically want to disable the warning about the header and footer comments only for 2-3 files.\n    submitted by    /u/birdsintheskies  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ly04zw/is_it_possible_to_turn_off_emacslispcheckdoc_for/",
-          "publishedOn": "2025-07-12T13:12:03.000Z",
-          "wordCount": null,
-          "title": "Is it possible to turn off emacs-lisp-checkdoc for specific files?",
           "imageUrl": null
         }
       ]
