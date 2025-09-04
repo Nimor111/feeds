@@ -2,10 +2,291 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nimor111.github.io/feeds/index.html</id>
     <title>osmos::feed</title>
-    <updated>2025-09-03T20:38:31.508Z</updated>
+    <updated>2025-09-04T20:38:25.129Z</updated>
     <generator>osmosfeed 1.15.1</generator>
     <link rel="alternate" href="https://nimor111.github.io/feeds/index.html"/>
     <link rel="self" href="https://nimor111.github.io/feeds/feed.atom"/>
+    <entry>
+        <title type="html"><![CDATA[Y'all might think I'm nuts. But I'm tired of doing this manually for decades: Filtering out multibyte characters on a save hook, table based:]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1n8kixj/yall_might_think_im_nuts_but_im_tired_of_doing/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1n8kixj/yall_might_think_im_nuts_but_im_tired_of_doing/"/>
+        <updated>2025-09-04T20:00:48.000Z</updated>
+        <summary type="html"><![CDATA[(follow up to several month old post here: https://old.reddit.com/r/emacs/comments/1l2ita3/major_mode_hook_to_replace_individual_characters/ )
+ This way, if anything's not in the table the normal warning will yell at me. I use this when pasting blocks of text into my own "huge text file" type files and generally only hook it on a file by file basis. It's too dangerous to be let out in the wild. But I can't count the number of hours I've wasted doing this manually.
+ ;;; ascii-save-filter.el --- Toggleable ASCII translation on save -*- lexical-binding: t; -*- (defconst ascii-save-filter-map '((#x00BD . "1/2") ;; ½ (#x2033 . "\"\"") ;; ″ (#x2014 . "--") ;; — (#x2011 . "-") ;; ‑ (#x2026 . "...")) ;; … "Alist mapping Unicode codepoints to ASCII replacement strings.") (defun ascii-save-filter () "Replace known wide chars with ASCII equivalents, possibly multi-char." (save-excursion (goto-char (point-min)) (while (not (eobp)) (let* ((ch (char-after)) (entry (assoc ch ascii-save-filter-map))) (if entry (progn (delete-char 1) (insert (cdr entry))) (forward-char 1)))))) (defun ascii-save-filter-maybe () "Run `ascii-save-filter` only if current buffer matches criteria." (when ascii-save-filter-mode (ascii-save-filter))) ;;;###autoload (define-minor-mode ascii-save-filter-mode "Toggle automatic ASCII translation on save for this buffer." :lighter " ASCII-F" (if ascii-save-filter-mode (add-hook 'before-save-hook #'ascii-save-filter-maybe nil t) (remove-hook 'before-save-hook #'ascii-save-filter-maybe t))) (provide 'ascii-save-filter) ;;; ascii-save-filter.el ends here 
+    submitted by    /u/frobnosticus  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dynalens 1.1.0 released]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1n8hwqt/dynalens_110_released/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1n8hwqt/dynalens_110_released/"/>
+        <updated>2025-09-04T18:20:41.000Z</updated>
+        <summary type="html"><![CDATA[DynaLens (dynamic lens) is a library to allow dynamic editing of a static object. Imagine you have some workflow, processing events. You read an event, for example from JSON, and materialize it as a Scala class. Now imagine you work with a number of partners, each with partner-specific modifications to the data required. In your organization, the people with the partner knowledge are "semi-technical", and wouldn't know Scala, and certainly wouldn't want to go through an entire release process.
+ Enter DynaLens. This library allows you to write simple scripts that are executed at runtime upon your class. The script language is extensible if you want to expose new function to your script authors.
+ v1.1.0 refactors both the script parser and runtime, and adds many new functions
+ Github repo is available here
+    submitted by    /u/LargeDietCokeNoIce  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[zk (20250904.1623) --- Functions for working with Zettelkasten-style linked notes]]></title>
+        <id>https://melpa.org/packages/zk-20250904.1623.tar</id>
+        <link href="https://melpa.org/#/zk"/>
+        <updated>2025-09-04T16:23:00.000Z</updated>
+        <summary type="html"><![CDATA[The zk package has been updated to version 20250904.1623.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[meow (20250904.1606) --- Yet Another modal editing]]></title>
+        <id>https://melpa.org/packages/meow-20250904.1606.tar</id>
+        <link href="https://melpa.org/#/meow"/>
+        <updated>2025-09-04T16:06:00.000Z</updated>
+        <summary type="html"><![CDATA[The meow package has been updated to version 20250904.1606.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Lib search: polymorphic dispatch for URLs]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1n8dhmu/lib_search_polymorphic_dispatch_for_urls/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1n8dhmu/lib_search_polymorphic_dispatch_for_urls/"/>
+        <updated>2025-09-04T15:34:59.000Z</updated>
+        <summary type="html"><![CDATA[Does anyone know of an Elisp package for dealing with various kinds of URLs? The number of different URLs I encounter daily is raising and I'm looking for a good way to deal with them.
+ Here's a practical scenario - I get a link in the kill-ring, let's say it's a youtube URL. There are multiple things I can possibly do with it - open with mpv, open in the browser, extract transcript, etc.
+ I can of course, just write a function e.g., (defun process-url (url)...) where I would use pattern matching and delegate things to their respective processors, but I wonder if there already exists something with better ergonomics.
+ I can also use Embark and create different kind of embark-target-finders for each type of URL, but that's tedious and is similar to the previous approach - requires writing some boilerplate and having to deal with a dilemma of multiple choices, where you can't let Emacs intuitively process any URL without manually picking a processor (like in the case above), which involves writing more Elisp - that doesn't sound too complicated to write, but again, maybe there's a good solution already out there?
+    submitted by    /u/ilemming_banned  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[eglot + vscode-json-languageserver json schema diagnostics]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1n89n4u/eglot_vscodejsonlanguageserver_json_schema/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1n89n4u/eglot_vscodejsonlanguageserver_json_schema/"/>
+        <updated>2025-09-04T13:07:13.000Z</updated>
+        <summary type="html"><![CDATA[Hey!
+ I installed vscode-json-languageserver yesterday, enabled eglot for JSON files and started using json-ts-mode. This gave me a lot of nice features like syntax errors getting listed with flymake and I even get auto completion if the document has a JSON Schema defined.
+ One thing that would be neat though is if fields that doesn't match the schema would turn up as errors in flymake. According to the docs validation should be turned on by default.
+ So is there some compatibility issue going on here between vscode-json-languageserver and eglot perhaps? Or some setting I've missed?
+ TL;DR: Has anyone gotten this to work? That is to get schema errors reported in flymake?
+ Thanks!
+    submitted by    /u/mattias_jcb  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Issue 488]]></title>
+        <id>https://haskellweekly.news/issue/488.html</id>
+        <link href="https://haskellweekly.news/issue/488.html"/>
+        <updated>2025-09-04T12:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Welcome to another issue of Haskell Weekly!
+Haskell is a safe, purely functional programming language with a fast, concurrent runtime.
+This is a weekly summary of what’s going on in its community.
+Featured
+Alpha-beta pruning is just minimax in a lattice of clamping functions by Li-yao Xia
+A lazy take on a classic game theory algorithm.
+An Unofficial Guide to What’s New in GHC 9.14 by Arata Mizuki
+I’ve been writing posts in Japanese over the past few years introducing new features in GHC. I thought such posts might also be useful for readers in the English-speaking community, so with some help from tools like ChatGPT, I’ve translated the latest one into English. I hope this will be helpful when you try out the new GHC.
+Distributors by Eitan Chatav
+Unifying Parsers, Printers & Grammars.
+Embe…]]></summary>
+        <author>
+            <name>Haskell Weekly</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[calibredb (20250904.1143) --- Yet another calibre client]]></title>
+        <id>https://melpa.org/packages/calibredb-20250904.1143.tar</id>
+        <link href="https://melpa.org/#/calibredb"/>
+        <updated>2025-09-04T11:43:00.000Z</updated>
+        <summary type="html"><![CDATA[The calibredb package has been updated to version 20250904.1143.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How I Use the Archive]]></title>
+        <id>3321@/discussions</id>
+        <link href="https://forum.zettelkasten.de/discussion/3321/how-i-use-the-archive"/>
+        <updated>2025-09-04T10:16:03.000Z</updated>
+        <summary type="html"><![CDATA[Big fan of this app, I recorded a video for my channel
+
+I also interviewed Sascha a while ago, I'll see if I can dig that up.]]></summary>
+        <author>
+            <name>BryanCollins</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[mhc (20250904.940) --- Message Harmonized Calendaring system]]></title>
+        <id>https://melpa.org/packages/mhc-20250904.940.tar</id>
+        <link href="https://melpa.org/#/mhc"/>
+        <updated>2025-09-04T09:40:00.000Z</updated>
+        <summary type="html"><![CDATA[The mhc package has been updated to version 20250904.940.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[otpp (20250904.911) --- One tab per project, with unique names]]></title>
+        <id>https://melpa.org/packages/otpp-20250904.911.tar</id>
+        <link href="https://melpa.org/#/otpp"/>
+        <updated>2025-09-04T09:11:00.000Z</updated>
+        <summary type="html"><![CDATA[The otpp package has been updated to version 20250904.911.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[Well-Typed] Better Haskell stack traces via user annotations]]></title>
+        <id>https://www.reddit.com/r/haskell/comments/1n854g1/welltyped_better_haskell_stack_traces_via_user/</id>
+        <link href="https://www.reddit.com/r/haskell/comments/1n854g1/welltyped_better_haskell_stack_traces_via_user/"/>
+        <updated>2025-09-04T09:06:12.000Z</updated>
+        <summary type="html"><![CDATA[submitted by    /u/adamgundry  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Haskell :: Reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[It's time to put your cards on the table -- let's see your Emacs Tetris high scores.]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1n80ype/its_time_to_put_your_cards_on_the_table_lets_see/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1n80ype/its_time_to_put_your_cards_on_the_table_lets_see/"/>
+        <updated>2025-09-04T04:43:17.000Z</updated>
+        <summary type="html"><![CDATA[I had an usually productive week (in terms of Tetris) and my scores have hit the low 2000s a few times over the past couple days. Let's see how my game stacks up. 
+    submitted by    /u/AlreadyDeadTownes  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Eglot inlay hints only show after editing the buffer]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1n7y3jp/eglot_inlay_hints_only_show_after_editing_the/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1n7y3jp/eglot_inlay_hints_only_show_after_editing_the/"/>
+        <updated>2025-09-04T02:17:31.000Z</updated>
+        <summary type="html"><![CDATA[My Emacs config for rust-mode and eglot: ```lisp (use-package rust-mode :mode "\.rs\'")
+ ;; Eglot: LSP client (use-package eglot :hook (rust-mode . eglot-ensure) :config (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))  Now, whenever I restart my Emacs and open a file in `rust-mode` everything works except inlay hints. I'm always greeted with this: rs let hello = "Hello"; let reddit = "Reddit"; ``` https://imgur.com/a/Wz5FLwX
+ After I edit the buffer, inlay hints show starting at the edited line onwards. E.g. renaming hello to hi: lisp let hi: &'static str = "Hello"; let reddit: &'static str = "Reddit";  https://imgur.com/s2rVY3p
+ I've added two images because inlay hints are difficult to visualize.
+ I'm in rust-mode major mode. Is this some sort of weird caching problem?
+    submitted by    /u/riscbee  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Authentication solution for Http4s]]></title>
+        <id>https://www.reddit.com/r/scala/comments/1n7vwfp/authentication_solution_for_http4s/</id>
+        <link href="https://www.reddit.com/r/scala/comments/1n7vwfp/authentication_solution_for_http4s/"/>
+        <updated>2025-09-04T00:33:58.000Z</updated>
+        <summary type="html"><![CDATA[Someone’s finally doing authentication for Scala 👀
+    submitted by    /u/sent1nel  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>Scala</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Agent Client Protocol (ACP)]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1n7vuut/agent_client_protocol_acp/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1n7vuut/agent_client_protocol_acp/"/>
+        <updated>2025-09-04T00:31:53.000Z</updated>
+        <summary type="html"><![CDATA[Has anyone started working on or seen an Emacs package integrating ACP (https://agentclientprotocol.com/overview/introduction)?
+    submitted by    /u/zshev  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Quickly switching between git status files buffers in Emacs]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1n7vl8j/quickly_switching_between_git_status_files/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1n7vl8j/quickly_switching_between_git_status_files/"/>
+        <updated>2025-09-04T00:19:27.000Z</updated>
+        <summary type="html"><![CDATA[If you’re deep into a feature and want to jump straight to the files you’ve modified, untracked, or renamed, this Emacs function I wrote does exactly that, no extra packages required. Works with whatever completion frontend you already use.
+ Check it out!
+    submitted by    /u/LionyxML  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Introduction to the dependency graph]]></title>
+        <id>https://tweag.io/blog/2025-09-04-introduction-to-dependency-graph/</id>
+        <link href="https://tweag.io/blog/2025-09-04-introduction-to-dependency-graph/"/>
+        <updated>2025-09-04T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[A dependency graph is a representation of how different parts of a software project rely on each other.
+Understanding the dependency graph helps a software engineer see the bigger picture of how their component fits into the whole project
+and why certain changes might affect other areas.
+It’s a useful tool for organizing, debugging, and improving the source code.
+Engineers responsible for managing the development and build environments also benefit greatly
+from understanding dependency graph concepts and how they are used by the build system.
+This knowledge is crucial for optimizing build times since it allows engineers to identify opportunities
+to parallelize and improve the incrementality of builds.
+Understanding the dependency graph also helps in troubleshooting build failures, managing…]]></summary>
+        <author>
+            <name>Tweag - Engineering blog</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ox-beamer-lecture (20250903.2318) --- Beamer Lecture Back-End for Org Export Engine]]></title>
+        <id>https://melpa.org/packages/ox-beamer-lecture-20250903.2318.tar</id>
+        <link href="https://melpa.org/#/ox-beamer-lecture"/>
+        <updated>2025-09-03T23:18:00.000Z</updated>
+        <summary type="html"><![CDATA[The ox-beamer-lecture package has been updated to version 20250903.2318.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[jinx (20250903.2138) --- Enchanted Spell Checker]]></title>
+        <id>https://melpa.org/packages/jinx-20250903.2138.tar</id>
+        <link href="https://melpa.org/#/jinx"/>
+        <updated>2025-09-03T21:38:00.000Z</updated>
+        <summary type="html"><![CDATA[The jinx package has been updated to version 20250903.2138.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[unicode box drawing characters]]></title>
+        <id>https://www.reddit.com/r/emacs/comments/1n7r7tx/unicode_box_drawing_characters/</id>
+        <link href="https://www.reddit.com/r/emacs/comments/1n7r7tx/unicode_box_drawing_characters/"/>
+        <updated>2025-09-03T21:14:54.000Z</updated>
+        <summary type="html"><![CDATA[I know at least some people can get their emacs to display connected boxes with the unicode characters., but not me. I know that there are issues with different fonts, line spacing, font substitution, etc.
+ Barring the existence of some setting/package that is "make my box characters connect with no fuss", I'm willing to just live with it.
+ I wonder - have the emacs developers ever considered doing what I see in some other programs (like terminals) ? For the basic unicode box drawing characters, they just draw lines instead of counting on the font, ensuring perfect alignment and joining.
+    submitted by    /u/ChristopherHGreen  
+ [link]   [comments]]]></summary>
+        <author>
+            <name>M-x emacs-reddit</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[plumber (20250903.2031) --- Run different commands depending on the text format]]></title>
+        <id>https://melpa.org/packages/plumber-20250903.2031.tar</id>
+        <link href="https://melpa.org/#/plumber"/>
+        <updated>2025-09-03T20:31:00.000Z</updated>
+        <summary type="html"><![CDATA[The plumber package has been updated to version 20250903.2031.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[doom now supports Emacs' built-in treesit]]></title>
         <id>https://www.reddit.com/r/emacs/comments/1n7of1f/doom_now_supports_emacs_builtin_treesit/</id>
@@ -1710,6 +1991,16 @@ The next version should be 0.25.0.0, I have set-up a milestone, it is pretty amb
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[zk-index (20250829.1502) --- Index for zk]]></title>
+        <id>https://melpa.org/packages/zk-index-20250829.1502.tar</id>
+        <link href="https://melpa.org/#/zk-index"/>
+        <updated>2025-08-29T15:02:00.000Z</updated>
+        <summary type="html"><![CDATA[The zk-index package has been updated to version 20250829.1502.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[emacsql (20250829.1449) --- High-level SQL database front-end]]></title>
         <id>https://melpa.org/packages/emacsql-20250829.1449.tar</id>
         <link href="https://melpa.org/#/emacsql"/>
@@ -1959,6 +2250,16 @@ This Emacs content has shown lots of improvement compared to that last one.
         <link href="https://melpa.org/#/disaster"/>
         <updated>2025-08-28T22:24:00.000Z</updated>
         <summary type="html"><![CDATA[The disaster package has been updated to version 20250828.2224.]]></summary>
+        <author>
+            <name>MELPA package updates</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[diredc (20250828.2213) --- Midnight Commander features (plus) for dired]]></title>
+        <id>https://melpa.org/packages/diredc-20250828.2213.tar</id>
+        <link href="https://melpa.org/#/diredc"/>
+        <updated>2025-08-28T22:13:00.000Z</updated>
+        <summary type="html"><![CDATA[The diredc package has been updated to version 20250828.2213.]]></summary>
         <author>
             <name>MELPA package updates</name>
         </author>
@@ -8643,351 +8944,6 @@ Perhaps someone knows of an elisp package to integrate Emacs with paperless-ngx?
         <summary type="html"><![CDATA[The lem package has been updated to version 20250806.924.]]></summary>
         <author>
             <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[year-1984-theme (20250806.655) --- A retro-futuristic theme]]></title>
-        <id>https://melpa.org/packages/year-1984-theme-20250806.655.tar</id>
-        <link href="https://melpa.org/#/year-1984-theme"/>
-        <updated>2025-08-06T06:55:00.000Z</updated>
-        <summary type="html"><![CDATA[The year-1984-theme package has been updated to version 20250806.655.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[vertico (20250806.523) --- VERTical Interactive COmpletion]]></title>
-        <id>https://melpa.org/packages/vertico-20250806.523.tar</id>
-        <link href="https://melpa.org/#/vertico"/>
-        <updated>2025-08-06T05:23:00.000Z</updated>
-        <summary type="html"><![CDATA[The vertico package has been updated to version 20250806.523.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Make down-list work for quoted text]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1mivn4n/make_downlist_work_for_quoted_text/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1mivn4n/make_downlist_work_for_quoted_text/"/>
-        <updated>2025-08-06T04:53:55.000Z</updated>
-        <summary type="html"><![CDATA[I have the following situation, where the asterisk indicates where the point is. This could be in json, python, or any similar mode where quotes semantically encapsulate strings.
- * "hello there"
- Now I run down-list, whose documentation says
-  
-This command will also work on other parentheses-like expressions defined by the current language mode.
-  
-Intuitively, I would want the mark to end up here.
- "*hello there"
- But the command reports "At bottom level"
- Is there a way to make emacs understand that quotes are parentheses-like?
-    submitted by    /u/Able_Armadillo491  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[shimbun (20250806.224) --- Interfacing with web newspapers]]></title>
-        <id>https://melpa.org/packages/shimbun-20250806.224.tar</id>
-        <link href="https://melpa.org/#/shimbun"/>
-        <updated>2025-08-06T02:24:00.000Z</updated>
-        <summary type="html"><![CDATA[The shimbun package has been updated to version 20250806.224.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Claude Code IDE v0.2.5: Now with tree-sitter MCP, eat and flymake support, and other goodies]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1miovop/claude_code_ide_v025_now_with_treesitter_mcp_eat/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1miovop/claude_code_ide_v025_now_with_treesitter_mcp_eat/"/>
-        <updated>2025-08-05T23:28:07.000Z</updated>
-        <summary type="html"><![CDATA[Claude Code IDE (https://github.com/manzaltu/claude-code-ide.el) is a package that provides tight integration between Claude Code and Emacs, similar to the official VS Code and IntelliJ extensions by Anthropic. It can show suggested edits using ediff, pull diagnostics straight from your LSP or other linters via flymake or flycheck, and is aware of the currently selected text and buffer.
- On top of the standard IDE capabilities, Claude Code IDE provides extended Emacs MCP tool integration—through this MCP, Claude Code can access symbol references and definitions exported by your LSP or other plugins (using xref) and can also access project.el and imenu for better understanding of your project and buffer structure.
- In v0.2.5, I have implemented an MCP tree-sitter query functionality. This allows Claude Code to access AST token information, allowing it to better understand code structure and minimize reading and editing mistakes. For example, you can now ask Claude to explain what a specific code token means (this also uses Claude Code IDE’s automatic selection sharing). See the screenshot as an example.
- Other improvements include: - eat terminal support - flymake integration for diagnostics sharing - In-terminal key bindings (Ctrl+Esc for sending Esc, Shift+Enter for sending a newline) - A quick echo-area prompt input - Custom system prompt support - Bug fixes and optimizations
-    submitted by    /u/manzaltu  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[helm-taskswitch (20250805.2318) --- Use helm to switch windows and buffers]]></title>
-        <id>https://melpa.org/packages/helm-taskswitch-20250805.2318.tar</id>
-        <link href="https://melpa.org/#/helm-taskswitch"/>
-        <updated>2025-08-05T23:18:00.000Z</updated>
-        <summary type="html"><![CDATA[The helm-taskswitch package has been updated to version 20250805.2318.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[twimini-bot: Connecting Twilio and Gemini with Scala]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1minut5/twiminibot_connecting_twilio_and_gemini_with_scala/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1minut5/twiminibot_connecting_twilio_and_gemini_with_scala/"/>
-        <updated>2025-08-05T22:45:03.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/AlexITC  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[(update) org-supertag: Table View now support multi-line text and image in cell]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1mimanc/update_orgsupertag_table_view_now_support/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1mimanc/update_orgsupertag_table_view_now_support/"/>
-        <updated>2025-08-05T21:41:34.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/yibie  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[(update) org-supertag: Table View now support multi-line text and image in cell]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/1mim7oe/update_orgsupertag_table_view_now_support/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/1mim7oe/update_orgsupertag_table_view_now_support/"/>
-        <updated>2025-08-05T21:38:15.000Z</updated>
-        <summary type="html"><![CDATA[Table View is quite useful. It's comparable to Obsidian's newest built-in Bases plugin, primarily designed for users to overview and manipulate note attributes. This is one of the features I use most often. Recently, I've added 3 powerful and practical features to it:
- - Multi-line text display within cells
- - Image display in cells: Just enter an absolute path to a local image in the property bar, and it will automatically parse and display the image in the cell
- - Support for extremely wide tables: Even when the table width exceeds the Buffer's width, it displays normally
-    submitted by    /u/yibie  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Dictionary of Archives Terminology]]></title>
-        <id>3299@/discussions</id>
-        <link href="https://forum.zettelkasten.de/discussion/3299/dictionary-of-archives-terminology"/>
-        <updated>2025-08-05T21:23:54.000Z</updated>
-        <summary type="html"><![CDATA[I was reading the recent discussion "Switching from Zettelkasten ID to Timestamp ID", and I was reminded of the similarity between:
-@ZettelDistraction's zettel UIDs (unique identifiers), which include a subject keyword, and
-@mlbrandt's zettel UIDs, which include a subject numeric code. See also "Numerology in the UID...?" (January 2024).
-I wanted to mention this UID similarity in the discussion, so I consulted Google to see if there are standard terms for each. And Google pointed me to a delightful resource:
-The Dictionary of Archives Terminology of the Society of American Archivists (SAA): dictionary.archivists.org
-This is a dictionary for institutional archives, not for zettelkästen, so there is no dictionary entry for folgezettel filing, for example. (There is a form to suggest a term, …]]></summary>
-        <author>
-            <name>Andy</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[outline-indent.el (Release 1.1.2): Indentation-Based Code Folding for Emacs, a Modern Replacement for origami.el and yafolding.el]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1milswl/outlineindentel_release_112_indentationbased_code/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1milswl/outlineindentel_release_112_indentationbased_code/"/>
-        <updated>2025-08-05T21:22:03.000Z</updated>
-        <summary type="html"><![CDATA[submitted by    /u/jamescherti  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[outline-indent (20250805.2117) --- Folding text based on indentation (origami alternative)]]></title>
-        <id>https://melpa.org/packages/outline-indent-20250805.2117.tar</id>
-        <link href="https://melpa.org/#/outline-indent"/>
-        <updated>2025-08-05T21:17:00.000Z</updated>
-        <summary type="html"><![CDATA[The outline-indent package has been updated to version 20250805.2117.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[sol-mode (20250805.2103) --- Major mode for editing Solidity code]]></title>
-        <id>https://melpa.org/packages/sol-mode-20250805.2103.tar</id>
-        <link href="https://melpa.org/#/sol-mode"/>
-        <updated>2025-08-05T21:03:00.000Z</updated>
-        <summary type="html"><![CDATA[The sol-mode package has been updated to version 20250805.2103.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[embark (20250805.2031) --- Conveniently act on minibuffer completions]]></title>
-        <id>https://melpa.org/packages/embark-20250805.2031.tar</id>
-        <link href="https://melpa.org/#/embark"/>
-        <updated>2025-08-05T20:31:00.000Z</updated>
-        <summary type="html"><![CDATA[The embark package has been updated to version 20250805.2031.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[tomorrow-night-deepblue-theme (20250805.2016) --- The Tomorrow Night Deepblue color theme]]></title>
-        <id>https://melpa.org/packages/tomorrow-night-deepblue-theme-20250805.2016.tar</id>
-        <link href="https://melpa.org/#/tomorrow-night-deepblue-theme"/>
-        <updated>2025-08-05T20:16:00.000Z</updated>
-        <summary type="html"><![CDATA[The tomorrow-night-deepblue-theme package has been updated to version 20250805.2016.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Emacs and hibernation - does anyone work this way?]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1mijgjj/emacs_and_hibernation_does_anyone_work_this_way/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1mijgjj/emacs_and_hibernation_does_anyone_work_this_way/"/>
-        <updated>2025-08-05T19:53:08.000Z</updated>
-        <summary type="html"><![CDATA[Does anyone use hibernation in their daily work with Emacs? Not to be confused with suspend or sleep.
- The concept of hibernation involves dumping the entire RAM to the hard drive, allowing the system to be completely powered off (no battery, no power supply) and still be restored later. From what I know, this requires a swap space approximately 2x the size of the RAM—for example, if I have 32 GB of RAM, I’d need to configure about 48-64 GB of swap. Additional kernel configuration is also required—more details can be found on the famous wiki: https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation
- In the context of Emacs, I was wondering if restoring Emacs via hibernation would allow me to recover it with all open buffers intact. There could be around 100 buffers - and I wouldn’t have to close them or start Emacs from scratch (without buffers).
- Does anyone work this way? Thanks for your opinions!
-    submitted by    /u/rdbeni0  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Pure helplessness]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1mij5p9/pure_helplessness/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1mij5p9/pure_helplessness/"/>
-        <updated>2025-08-05T19:41:54.000Z</updated>
-        <summary type="html"><![CDATA[Just installed Emacs on a new device and tested it without the Evil bindings. 
- Rarely felt so helpless XD 
- Is anyone else just relying on Evil bindings? 
- PS: I do know some default bindings, but I can't really differentiate between what is Evil and what is default, so it is like I know none. 
- PPS: I will learn the default bindings, just not yet ;)
-    submitted by    /u/Jojos_BA  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[update of Gries and Schneider]]></title>
-        <id>https://www.reddit.com/r/haskell/comments/1mierqi/update_of_gries_and_schneider/</id>
-        <link href="https://www.reddit.com/r/haskell/comments/1mierqi/update_of_gries_and_schneider/"/>
-        <updated>2025-08-05T17:01:53.000Z</updated>
-        <summary type="html"><![CDATA[I'm turning to the Haskell community as most likely to have read A Logical Approach to Discrete Math by Gries and Schneider. Is there a more recent book that covers the same ground (discrete math for CS) in a similar (axiomatic) fashion?
-    submitted by    /u/Econ0  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Haskell :: Reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[bufferfile (20250805.1623) --- Rename/Delete/Copy Files and Associated Buffers]]></title>
-        <id>https://melpa.org/packages/bufferfile-20250805.1623.tar</id>
-        <link href="https://melpa.org/#/bufferfile"/>
-        <updated>2025-08-05T16:23:00.000Z</updated>
-        <summary type="html"><![CDATA[The bufferfile package has been updated to version 20250805.1623.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[company (20250805.1525) --- Modular text completion framework]]></title>
-        <id>https://melpa.org/packages/company-20250805.1525.tar</id>
-        <link href="https://melpa.org/#/company"/>
-        <updated>2025-08-05T15:25:00.000Z</updated>
-        <summary type="html"><![CDATA[The company package has been updated to version 20250805.1525.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[company-statistics (20250805.1524) --- Sort candidates using completion history]]></title>
-        <id>https://melpa.org/packages/company-statistics-20250805.1524.tar</id>
-        <link href="https://melpa.org/#/company-statistics"/>
-        <updated>2025-08-05T15:24:00.000Z</updated>
-        <summary type="html"><![CDATA[The company-statistics package has been updated to version 20250805.1524.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[cmake-mode (20250805.1455) --- Major-mode for editing CMake sources]]></title>
-        <id>https://melpa.org/packages/cmake-mode-20250805.1455.tar</id>
-        <link href="https://melpa.org/#/cmake-mode"/>
-        <updated>2025-08-05T14:55:00.000Z</updated>
-        <summary type="html"><![CDATA[The cmake-mode package has been updated to version 20250805.1455.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[geist-font.el]]></title>
-        <id>https://www.reddit.com/r/emacs/comments/1mi88ia/geistfontel/</id>
-        <link href="https://www.reddit.com/r/emacs/comments/1mi88ia/geistfontel/"/>
-        <updated>2025-08-05T12:46:53.000Z</updated>
-        <summary type="html"><![CDATA[For anyone who's a fan of the Geist fonts from Vercel here's an emacs package to install it for your config https://github.com/shaneikennedy/geist-font.el 
- More about Geist from Vercel https://vercel.com/font 
- Here's how it looks Geist Mono Regular looks in emacs
- geist mono regular
-    submitted by    /u/shaneikennedy  
- [link]   [comments]]]></summary>
-        <author>
-            <name>M-x emacs-reddit</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[howm (20250805.1210) --- Wiki-like note-taking tool]]></title>
-        <id>https://melpa.org/packages/howm-20250805.1210.tar</id>
-        <link href="https://melpa.org/#/howm"/>
-        <updated>2025-08-05T12:10:00.000Z</updated>
-        <summary type="html"><![CDATA[The howm package has been updated to version 20250805.1210.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Mill v1.0.3 is out, with greatly improved tab-completion and explorability from Bash and Zsh shells]]></title>
-        <id>https://www.reddit.com/r/scala/comments/1mi6t8h/mill_v103_is_out_with_greatly_improved/</id>
-        <link href="https://www.reddit.com/r/scala/comments/1mi6t8h/mill_v103_is_out_with_greatly_improved/"/>
-        <updated>2025-08-05T11:39:27.000Z</updated>
-        <summary type="html"><![CDATA[Check it out! https://github.com/com-lihaoyi/mill/blob/main/changelog.adoc#103
-    submitted by    /u/lihaoyi  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Scala</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[annotation (20250805.1029) --- Functions for annotating text with faces and help bubbles]]></title>
-        <id>https://melpa.org/packages/annotation-20250805.1029.tar</id>
-        <link href="https://melpa.org/#/annotation"/>
-        <updated>2025-08-05T10:29:00.000Z</updated>
-        <summary type="html"><![CDATA[The annotation package has been updated to version 20250805.1029.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[persistent-soft (20250805.1017) --- Persistent storage, returning nil on failure]]></title>
-        <id>https://melpa.org/packages/persistent-soft-20250805.1017.tar</id>
-        <link href="https://melpa.org/#/persistent-soft"/>
-        <updated>2025-08-05T10:17:00.000Z</updated>
-        <summary type="html"><![CDATA[The persistent-soft package has been updated to version 20250805.1017.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[sideline-lsp (20250805.922) --- Show lsp information with sideline]]></title>
-        <id>https://melpa.org/packages/sideline-lsp-20250805.922.tar</id>
-        <link href="https://melpa.org/#/sideline-lsp"/>
-        <updated>2025-08-05T09:22:00.000Z</updated>
-        <summary type="html"><![CDATA[The sideline-lsp package has been updated to version 20250805.922.]]></summary>
-        <author>
-            <name>MELPA package updates</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Figured out a way to export from Apple Notes to orgmode]]></title>
-        <id>https://www.reddit.com/r/orgmode/comments/1mi456p/figured_out_a_way_to_export_from_apple_notes_to/</id>
-        <link href="https://www.reddit.com/r/orgmode/comments/1mi456p/figured_out_a_way_to_export_from_apple_notes_to/"/>
-        <updated>2025-08-05T09:03:53.000Z</updated>
-        <summary type="html"><![CDATA[If, like me, you're using a mac+iphone and struggling to use org on mobile, you may, like me, have come to the conclusion that Apple Notes is, bar none, the best solution for making quick notes on the go (mostly in my case saved links, but also ideas I have while not in front of a computer) and, of course, org-mode is bar none the best place to actually keep those notes in the long term. What do?
- I've been trying to find a good solution for ages, and I think I've finally figured out a reasonable workflow. The apps Captee and Scrim ($7.99 bundled together on the app store) are designed to act as a bridge between org-capture and the share menu on mac, and they do a pretty good job. So my workflow is, I capture stuff on my phone, open notes on the mac (once a day, once a week, whatever), and use the share function on each one. It goes through an org-capture template of my choosing, and winds up in the right place. 
- (As a bonus, just using Scrim works as a bridge for the org capture browser extension without having to do any of the heavy lifting around making an emacs capture app and etc they suggest. Yes I know I could set that up, but this just works, all I have to do is three lines to start a server per the Scrim docs)
- I'm not paid by the app devs or anything of course, and I know at least Scrim has been mentioned here before, but none of my searches for how to do this were fruitful, so if nothing else I'm making this post for the next person like me trying to figure this out. 
- ETA: this isn't, of course, the best solution for tasks on mobile, imho beorg is still far superior for that. But on an iphone absolutely nothing works to input random crap like Apple Notes.
-    submitted by    /u/mediapathic  
- [link]   [comments]]]></summary>
-        <author>
-            <name>Org-mode</name>
         </author>
     </entry>
 </feed>
