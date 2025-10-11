@@ -44,16 +44,6 @@
           "wordCount": 886,
           "title": "Issue 490",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/489.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nATC Monthly Status Update - September 7th 2025 by lazyLambda\nAs its now the 7th its time for the second Ace Haskell Talent update. In case you have not read the first post, we are a community that teaches and mentors students using Haskell as a tool to learn proper fundamentals of coding. We write these posts as we are sure we aren’t the only ones in the greater Haskell community that are interested in sustainability growing the number of haskell contributors.\nBetter Haskell stack traces via user annotations by Hannes Siebenhandl, Matthew Pickering\nGetting an accurate and precise backtra…",
-          "link": "https://haskellweekly.news/issue/489.html",
-          "publishedOn": "2025-09-11T12:00:00.000Z",
-          "wordCount": 812,
-          "title": "Issue 489",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -62,6 +52,36 @@
       "feedUrl": "https://reddit.com/r/haskell/.rss",
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1o45omg/wrote_an_nes_emulator_in_haskell/",
+          "author": null,
+          "description": "I've been working on my first emulator for the NES console. For funsies, I decided to write it in Haskell. I wanted to see if the functional paradigm could be relevant when writing such virtual machines.\n Turns out, with a nice monadic interface, the code is really nice to look at/work with. The type-safety is a plus, but didn't bring much to the table (compared to, e.g. Rust).\n The emulator is working, but nowhere near as mature or stable as other emulators. But the source code is available on GitHub, if you want to check it out!\n (PS: I am not the first to use Haskell to write an NES emulator)\n    submitted by    /u/arthicho  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1o45omg/wrote_an_nes_emulator_in_haskell/",
+          "publishedOn": "2025-10-11T20:19:05.000Z",
+          "wordCount": null,
+          "title": "Wrote an NES emulator in Haskell",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1o40u4d/ann_symparsec_20_type_level_string_parsing/",
+          "author": null,
+          "description": "(Main post on Haskell Discourse.)\n I have released a major update on Hackage to my type level string parser combinator library Symparsec. The previous version was limited: it seemed impossible to define mutually recursive or certain failable parsers. That’s now a thing of the past. Symparsec 2.0 lets you do whatever:\n > import Symparsec > import Symparsec.Example.Expr > :k! Run PExpr \"1+2*3\" ... = Right '(EBOp Add (ELit 1) (EBOp Mul (ELit 2) (ELit 3)), \"\") \n Error messages are tweaked to approximate megaparsec:\n > import Data.Proxy -- workaround for GHCi to print type errors > Proxy @(RunTest PExpr \"1++\") <interactive>:18:1: error: [GHC-47403] • Symparsec parse error: 1:3 | 1 | 1++ | ^ badly formed expression • When checking the inferred type it :: Proxy (TypeError ...) \n I think one should be able to define most Parsec-style parsers now. Parsers often utilize instances on the parser type, like Applicative and Alternative. But this isn’t an issue: I provide monomorphized versions using the same operators, so you can write e.g.\n type Optional p = Con1 Just <$> p <|> Pure Nothing \n which effectively matches the term-level definition in Control.Applicative:\n optional v = Just <$> v <|> pure Nothing \n This time around, I don’t feel like the library is very complete. In particular, I want to re-add parser singling (complex and tedious), and write lots more “how to use” materials. I would be very receptive to any interest in working on or using Symparsec, and would gladly help!\n    submitted by    /u/raehik  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1o40u4d/ann_symparsec_20_type_level_string_parsing/",
+          "publishedOn": "2025-10-11T17:02:29.000Z",
+          "wordCount": null,
+          "title": "[ANN] Symparsec 2.0: Type level string parsing",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1o3t2cq/how_we_test_a_compilerdriven_haskell_fullstack/",
+          "author": null,
+          "description": "Wasp's compiler is written in Haskell, so we do have some Haskell-focused points, but it's mostly about general philosophy and problems we encountered.\n If you have any questions or feedback, let me know!\n    submitted by    /u/matijash  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1o3t2cq/how_we_test_a_compilerdriven_haskell_fullstack/",
+          "publishedOn": "2025-10-11T11:19:49.000Z",
+          "wordCount": null,
+          "title": "How we test a compiler-driven (Haskell) full-stack web framework (JS)",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/haskell/comments/1o2ynvq/ann_postgresqlconnectionstring_structured_model/",
           "author": null,
@@ -701,46 +721,6 @@
           "wordCount": null,
           "title": "Death💀 to type classes",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1neueco/when_function_question/",
-          "author": null,
-          "description": "somefn :: String -> Either String (Int, String) somefn input = do when (length input < 10) $ Left \"Some Error\" pure (0, \"Value\") \n I don't understand why when could be used here. It's type is Applicative f => Bool -> f () -> f ()\n my f is Either String\n The type doesn't match on (Int, String) with ()\n So how come it even compiles? \n I can kinda feel that it's \"short-circuiting\" or ignoring the () because it's returning an Either String, but the type mismatching really confuses me\n I thought everything in the do has to return type Either String (Int, String) because that's enforced by the type signature, but here it's permitting Either String ()\n    submitted by    /u/CodeNameGodTri  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1neueco/when_function_question/",
-          "publishedOn": "2025-09-12T04:58:19.000Z",
-          "wordCount": null,
-          "title": "when function question",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1nef03q/canadian_haskellers/",
-          "author": null,
-          "description": "Any chance there are other developers here who are in Canada?\n Better yet, Ontario?\n Better, better yet, waterloo? \n I ask because im looking to start meetups but also would just be cool to know, seems like most haskell people are in Europe\n    submitted by    /u/_lazyLambda  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1nef03q/canadian_haskellers/",
-          "publishedOn": "2025-09-11T17:29:54.000Z",
-          "wordCount": null,
-          "title": "Canadian Haskellers?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ned8k8/ann_googlecloudhaskell_1100_released/",
-          "author": null,
-          "description": "Hey Haskellers!\n I'm excited to share the latest release of google-cloud-haskell (v1.1.0.0).\n You can now manage Pub/Sub topics and subscriptions. This is the first new service package addition, and I'm keen to add more.\n The library now automatically uses compute metadata for authentication if a service_account file isn't available. This is perfect for anyone running on GCE, GKE, Cloud Functions, or Cloud Run.\n I know the excellent gogol library exists and it's a fantastic, comprehensive tool. The goal for google-cloud-haskell is different: to be a very straightforward, minimal dependency wrapper. If you just want to hit a few REST API endpoints without a lot of abstraction, this might be the library for you.\n This is still a work in progress! I'm actively testing and know there might still be mistakes. I'm committed to fixing and improving it. As of now, there are only a few functions implemented. I would love to hear from the community: What GCP client functions or services would you want to see supported next? Your feedback will directly guide the library's development.\n AI Usage Warning: For full transparency, a good amount of the changes and new code in this release were developed with assistance from AI tools, specifically Cursor and a GPT-5 model.\n  \nHackage: https://hackage.haskell.org/package/google-cloud-pubsub\n \nGitHub: https://github.com/tusharad/google-cloud-haskell\n \n    submitted by    /u/Worldly_Dish_48  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ned8k8/ann_googlecloudhaskell_1100_released/",
-          "publishedOn": "2025-09-11T16:23:20.000Z",
-          "wordCount": null,
-          "title": "[ANN] Google-Cloud-Haskell 1.1.0.0 released!",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ne5ko1/haskell_weekly_issue_489/",
-          "author": null,
-          "description": "submitted by    /u/amalinovic  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ne5ko1/haskell_weekly_issue_489/",
-          "publishedOn": "2025-09-11T10:50:06.000Z",
-          "wordCount": null,
-          "title": "Haskell Weekly - Issue 489",
-          "imageUrl": null
         }
       ]
     },
@@ -749,6 +729,16 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1o41eue/need_help_to_choose_either_java_or_scala/",
+          "author": null,
+          "description": "To begin with, I am an trainee data engineer(recently joined one small startup)I mostly work on data bricks, azure data factory, azure cloud, recently after joining the company I completed course on apache spark developer(in databricks academy) so I got better understanding on spark and learnt pyspark.\n In addition, I am very curious to learn dsa and Iam very good at python and sql and I can solve easy problems on leetcode(solved 180+ till now) but, when I tried to solve medium or hard I will get out of memory error because I am applying brute force approach to solve problems. \n I wanted to increase my skillset where I cannot able to draw a conclusion about which language I have to use either java or scala. I will give reasons that are running in my head:\n My opinion for learning java, I feel that it will be helpful and I can land on a better job after 2 years and also it will help me in the long run of my career.\n My opinion for learning scala, To ace in data engineering field I have to use scala to achieve better time efficiency compared to pyspark and I believe that it is used by many product based company’s. And for solving leetcode problems leetcode support scala for some problems which are under data structures and algorithms\n So if you are a scala developer or a person uses scala in your job. which language do you prefer for me to learn and why\n Please help me I am very confused…\n    submitted by    /u/madhuraj9030  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1o41eue/need_help_to_choose_either_java_or_scala/",
+          "publishedOn": "2025-10-11T17:25:58.000Z",
+          "wordCount": null,
+          "title": "Need help to choose either java or Scala",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1o2pbc2/why_domain_knowledge_is_so_important/",
           "author": null,
@@ -1228,36 +1218,6 @@
           "wordCount": null,
           "title": "ScalaIO Organization: Latest News!",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1nekkir/dottycpsasync114/",
-          "author": null,
-          "description": "Changelog:\n Macroses:\n  \nfixed a bug with not-widening type after select after await (#107, thanks @benhutchison)\n Implemented a call of Scala 3.7.x macro API from a macro compiled on 3.3.6. (This eliminates a need in dotty-cps-async-next)\n  \nCompiler plugin:\n  \nNow compiler plugin is cross-compiled using CrossVersion.full (#105, thanks @WojciechMazur )\n  \nLogic Monad\n  \nAdded fromObserver\n Implemented default foldWhile in a base CpsLogicMonad. This will allow the simplification of the development of custom derived classes.\n  \nGithub: https://github.com/dotty-cps-async/dotty-cps-async\n    submitted by    /u/rssh1  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1nekkir/dottycpsasync114/",
-          "publishedOn": "2025-09-11T21:04:02.000Z",
-          "wordCount": null,
-          "title": "dotty-cps-async-1.1.4",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1nec0ks/scalasql_021_is_out_now_with_support_for/",
-          "author": null,
-          "description": "submitted by    /u/lihaoyi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1nec0ks/scalasql_021_is_out_now_with_support_for/",
-          "publishedOn": "2025-09-11T15:35:47.000Z",
-          "wordCount": null,
-          "title": "ScalaSql 0.2.1 is out, now with support for Microsoft SQL Server",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1neb3p8/play_framework_299_and_309_released/",
-          "author": null,
-          "description": "Shipping official Java 25 support! 🌟\n  \nPlay 2.9.9\n Play 3.0.9\n  \n   submitted by    /u/mkurz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1neb3p8/play_framework_299_and_309_released/",
-          "publishedOn": "2025-09-11T14:59:34.000Z",
-          "wordCount": null,
-          "title": "Play Framework 2.9.9 and 3.0.9 released",
-          "imageUrl": null
         }
       ]
     },
@@ -1607,36 +1567,6 @@
           "wordCount": null,
           "title": "I made a Svelte preprocessor so that I can use the most superior markup language.",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1nexbek/emacs_workflow_ideas_how_i_use_hydra_in_a_minor/",
-          "author": null,
-          "description": "submitted by    /u/Ardie83  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1nexbek/emacs_workflow_ideas_how_i_use_hydra_in_a_minor/",
-          "publishedOn": "2025-09-12T08:03:48.000Z",
-          "wordCount": null,
-          "title": "Emacs workflow ideas: How I use Hydra in a minor mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1nex09n/update_orgsupertag_51_implement_interactive/",
-          "author": null,
-          "description": "Introduce supertag-schema-view, a dedicated buffer for visualizing and managing the entire tag hierarchy.\n The view is fully interactive, allowing direct manipulation of the tag and field schema from a single interface.\n Hierarchical Display: :extends relationships are shown as an indented tree for clarity.\n Interactive Commands: \n a: Add a new tag.\n On a tag: n (new field), e (set extends), d (delete tag).\n On a field: r (rename), d (delete), M-up/M-down (reorder).\n \n UX Enhancements: \n g: Intelligent refresh that preserves cursor position.\n j/k/p: Standard navigation keys for familiar Emacs-style browsing.\n \n The field reordering capability (M-up/M-down) has also been added to the Node View (supertag-view-node.el) for a consistent experience.\n  \n   submitted by    /u/yibie  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1nex09n/update_orgsupertag_51_implement_interactive/",
-          "publishedOn": "2025-09-12T07:42:49.000Z",
-          "wordCount": null,
-          "title": "(Update) org-supertag 5.1: Implement Interactive Schema View for Tag Management",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/orgmode/comments/1nepc8w/generating_a_websiteblog_from_org_files_with/",
-          "author": null,
-          "description": "submitted by    /u/TrepidTurtle  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/orgmode/comments/1nepc8w/generating_a_websiteblog_from_org_files_with/",
-          "publishedOn": "2025-09-12T00:37:18.000Z",
-          "wordCount": null,
-          "title": "Generating a website/blog from Org files with Hakyll",
-          "imageUrl": null
         }
       ]
     },
@@ -1645,6 +1575,46 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/empv-20251011.1909.tar",
+          "author": null,
+          "description": "The empv package has been updated to version 20251011.1909.",
+          "link": "https://melpa.org/#/empv",
+          "publishedOn": "2025-10-11T19:09:00.000Z",
+          "wordCount": 105,
+          "title": "empv (20251011.1909) --- A multimedia player/manager, YouTube interface",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/bicycle-20251011.1822.tar",
+          "author": null,
+          "description": "The bicycle package has been updated to version 20251011.1822.",
+          "link": "https://melpa.org/#/bicycle",
+          "publishedOn": "2025-10-11T18:22:00.000Z",
+          "wordCount": 105,
+          "title": "bicycle (20251011.1822) --- Cycle outline and code visibility",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/closql-20251011.1819.tar",
+          "author": null,
+          "description": "The closql package has been updated to version 20251011.1819.",
+          "link": "https://melpa.org/#/closql",
+          "publishedOn": "2025-10-11T18:19:00.000Z",
+          "wordCount": 105,
+          "title": "closql (20251011.1819) --- Store EIEIO objects using EmacSQL",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/bufferfile-20251011.1158.tar",
+          "author": null,
+          "description": "The bufferfile package has been updated to version 20251011.1158.",
+          "link": "https://melpa.org/#/bufferfile",
+          "publishedOn": "2025-10-11T11:58:00.000Z",
+          "wordCount": 105,
+          "title": "bufferfile (20251011.1158) --- Rename/Delete/Copy Files and Associated Buffers",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/thankful-eyes-theme-20251010.1114.tar",
           "author": null,
@@ -2336,6 +2306,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/beluga-mode-20250930.700.tar",
+          "author": null,
+          "description": "The beluga-mode package has been updated to version 20250930.700.",
+          "link": "https://melpa.org/#/beluga-mode",
+          "publishedOn": "2025-09-30T07:00:00.000Z",
+          "wordCount": 105,
+          "title": "beluga-mode (20250930.700) --- Major mode for Beluga source code",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/org-jira-20250930.140.tar",
           "author": null,
           "description": "The org-jira package has been updated to version 20250930.140.",
@@ -2743,6 +2723,16 @@
           "publishedOn": "2025-09-25T14:37:00.000Z",
           "wordCount": 105,
           "title": "kql-mode (20250925.1437) --- Major mode for highlighting KQL",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/nerd-icons-completion-20250925.1420.tar",
+          "author": null,
+          "description": "The nerd-icons-completion package has been updated to version 20250925.1420.",
+          "link": "https://melpa.org/#/nerd-icons-completion",
+          "publishedOn": "2025-09-25T14:20:00.000Z",
+          "wordCount": 105,
+          "title": "nerd-icons-completion (20250925.1420) --- Add icons to completion candidates",
           "imageUrl": null
         },
         {
@@ -4334,36 +4324,6 @@
           "wordCount": 105,
           "title": "async1 (20250912.931) --- Unroll chain of async callbacks, parallel and sequencial",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dpkg-dev-el-20250912.823.tar",
-          "author": null,
-          "description": "The dpkg-dev-el package has been updated to version 20250912.823.",
-          "link": "https://melpa.org/#/dpkg-dev-el",
-          "publishedOn": "2025-09-12T08:23:00.000Z",
-          "wordCount": 105,
-          "title": "dpkg-dev-el (20250912.823) --- Startup file for the elpa-dpkg-dev-el package",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/clean-kill-ring-20250911.2357.tar",
-          "author": null,
-          "description": "The clean-kill-ring package has been updated to version 20250911.2357.",
-          "link": "https://melpa.org/#/clean-kill-ring",
-          "publishedOn": "2025-09-11T23:57:00.000Z",
-          "wordCount": 105,
-          "title": "clean-kill-ring (20250911.2357) --- Keep the kill ring clean",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elisp-dev-mcp-20250911.1248.tar",
-          "author": null,
-          "description": "The elisp-dev-mcp package has been updated to version 20250911.1248.",
-          "link": "https://melpa.org/#/elisp-dev-mcp",
-          "publishedOn": "2025-09-11T12:48:00.000Z",
-          "wordCount": 105,
-          "title": "elisp-dev-mcp (20250911.1248) --- MCP server for agentic Elisp development",
-          "imageUrl": null
         }
       ]
     },
@@ -4372,6 +4332,66 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1o44h6d/dart_and_eglot/",
+          "author": null,
+          "description": "I’m starting to dabble with Dart/Flutter as a possible alternative to SwiftUI for a macOS project. I have dart-mode installed, and in theory, dart’s LSP is one that eglot knows “out of the box.” And M-x eglot seems to connect with no errors. Yet, there’s absolutely no sign I see of it actually running. Doing something goofy (for Dart) like\n int a = nil; \n instantly comes up with a type error in VSCode, but no complaints in Emacs. There’s no sign of autocompletion, and trying to rename a symbol hangs for a few seconds and then gets a JSON timeout.\n Is there any trick that people know for this, or a debugging path I should take? Does Dart’s LSP server only work with lsp-mode and lsp-dart? So far, eglot has worked just fine for me, and I’d rather stick with it if possible. (I’m not sure whether eglot and lsp-mode can happily co-exist, e.g., just use lsp-mode for this and stick with eglot for everything else.)\n I’m on macOS 26, on an M1 Mac, with flutter/dart installed via Homebrew. They’re on the path and the path is injected into my Emacs at startup.\n    submitted by    /u/chipotlecoyote  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1o44h6d/dart_and_eglot/",
+          "publishedOn": "2025-10-11T19:29:04.000Z",
+          "wordCount": null,
+          "title": "Dart and eglot",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1o42ppt/does_anyone_know_what_theme_this_is/",
+          "author": null,
+          "description": "https://preview.redd.it/99yzuo23yiuf1.png?width=1380&format=png&auto=webp&s=f775d7a45a6dea48c5c8b226f327c4714deb3d06\n from https://github.com/minad/corfu\n    submitted by    /u/la023  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1o42ppt/does_anyone_know_what_theme_this_is/",
+          "publishedOn": "2025-10-11T18:18:08.000Z",
+          "wordCount": null,
+          "title": "Does anyone know what theme this is?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1o40twb/issue_with_vhdltsmode/",
+          "author": null,
+          "description": "I have encountered an issue when using vhdl mode (also present in -ts version) where templates are trigger even if if the word has an underscore. So if I am writing a signal name that start with sig_ this triggers the signal template.\n Disabling vhdl-electric-mode fixes it, but I still want the mode to be enable. The templates are useful and this is a new problem that I didn't had with previous versions. I experience this issue with both underscore being part of a word or not (variable vhdl-underscore-is-part-of-word).\n    submitted by    /u/bj-fer  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1o40twb/issue_with_vhdltsmode/",
+          "publishedOn": "2025-10-11T17:02:14.000Z",
+          "wordCount": null,
+          "title": "Issue with vhdl(-ts)-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1o40j2v/extending_activitiesel/",
+          "author": null,
+          "description": "Anyone using activities.el. I don't use it much myself but I was wondering if it is possible to have things like the following:\n  \nC-x p p - (project-switch-project DIR) would \"switch to activity\" if an activity named basename DIR already exists or \"create new activity\" if an activity named basename DIR does not exists. Obviously, this means project activities are always named basename DIR (which I always do).\n \nSimilar C-x p k - (project-kill-buffers &optional NO-CONFIRM) would close all project buffers and the activity itself if currently in an activity.\n \n    submitted by    /u/jvillasante  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1o40j2v/extending_activitiesel/",
+          "publishedOn": "2025-10-11T16:50:14.000Z",
+          "wordCount": null,
+          "title": "Extending activities.el",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1o3yhg4/emacs_or_vim_i_need_help/",
+          "author": null,
+          "description": "Hi im a CS student, i curretly use vscode and i realized that my workflow improved after using the keyboard shortcuts and stop using the mouse, thats when i investigated keyboard oriented workflows, that lead me to vim and emacs. \n Actually i tried both emacs and vim (neovim to be more precise), and i kinda like both, this is what lead me to tbe question what can i use?, i investigated a lot, and i realized that regarding pluggins most of them end up with similar keymaps regardless of whether they are emacs or vim plugins. \n So the most important thing to me is a good LSP integration, snippets and linting, also the sistem being stable so it won't break after every two updates, forgot to mention that i dont like distros that much i prefer having my own config ( i prefer more minimalistic configs with less pluggins). \n In your experience what could be more suitable, since the editors have high learning curves i wnat to learn the ones that is best suited for me. \n PD: i seen that much peapole uses vim because they work with servers, thats not my case, so i doubt it will be. \n PD 2: also y like to take notes in plain text, markdown or org will work for me, but in the future i would need to be able to insert math formulas in my notes (i want to study math as a hobby, to nerdy i know hahaha)\n    submitted by    /u/PythonNebula  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1o3yhg4/emacs_or_vim_i_need_help/",
+          "publishedOn": "2025-10-11T15:28:02.000Z",
+          "wordCount": null,
+          "title": "Emacs or Vim: I need help",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1o3l5vw/getting_to_know_evilmode_and_the_evilcollection/",
+          "author": null,
+          "description": "submitted by    /u/Warlock_SK  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1o3l5vw/getting_to_know_evilmode_and_the_evilcollection/",
+          "publishedOn": "2025-10-11T03:23:50.000Z",
+          "wordCount": null,
+          "title": "Getting to know evil-mode and the evil-collection?",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1o39voo/best_setup_to_share_beorg_files/",
           "author": null,
@@ -6490,56 +6510,6 @@
           "publishedOn": "2025-09-12T10:53:55.000Z",
           "wordCount": null,
           "title": "Using Emacs Org-Mode With Databases: A getting-started guide",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1new97m/how_to_solve_the_problem_that_emacs_cannot_open/",
-          "author": null,
-          "description": "I don't wanna create desktop cache files everywhere, I wanna use a general method. Thanks in advance.\n    submitted by    /u/ming2k  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1new97m/how_to_solve_the_problem_that_emacs_cannot_open/",
-          "publishedOn": "2025-09-12T06:53:31.000Z",
-          "wordCount": null,
-          "title": "How to solve the problem that emacs cannot open multiple emacs instances due to \"desktop\" lock problem",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1new835/should_i_migrate_from_launching_emacs_directly_to/",
-          "author": null,
-          "description": "submitted by    /u/ming2k  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1new835/should_i_migrate_from_launching_emacs_directly_to/",
-          "publishedOn": "2025-09-12T06:51:20.000Z",
-          "wordCount": null,
-          "title": "Should I migrate from launching emacs directly to using daemon+client?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1neryp1/best_way_to_search_terraform_docs_from_emacs/",
-          "author": null,
-          "description": "I did a quick install of terraform-docs and tried to install terraform for lsp, both aren't working properly for me. If you have gotten this to work, please share your recipe! Many thanks!\n    submitted by    /u/TheLastSock  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1neryp1/best_way_to_search_terraform_docs_from_emacs/",
-          "publishedOn": "2025-09-12T02:46:58.000Z",
-          "wordCount": null,
-          "title": "best way to search terraform docs from emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1neiw5j/why_rewriting_emacs_is_hard/",
-          "author": null,
-          "description": "submitted by    /u/larrasket  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1neiw5j/why_rewriting_emacs_is_hard/",
-          "publishedOn": "2025-09-11T19:58:58.000Z",
-          "wordCount": null,
-          "title": "Why Rewriting Emacs Is Hard",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ne92pm/question_regarding_usepackage_with_the_vc_keyword/",
-          "author": null,
-          "description": "Hello,\n First post here.\n I have read about using the use-package macro with the :vc keyword built into Emacs 30. I am trying to use both to install the emacs-websocket package from the GitHub repository with the following Emacs Lisp:\n (use-package emacs-websocket :vc (:url \"https://github.com/ahyatt/emacs-websocket\" :rev :newest) :ensure t) \n After evaluating the above Emacs Lisp, I saw the following output to the *Messages* buffer:\n Found ~/.emacs.d/elpa/emacs-websocket/... 1 project were found Saving file ~/.emacs... Wrote ~/.emacs INFO Scraping 3 files for loaddefs...done GEN emacs-websocket-autoloads.el Checking ~/.emacs.d/elpa/emacs-websocket/... [3 times] Wrote ~/.emacs.d/elpa/emacs-websocket/websocket-functional-test.elc Checking ~/.emacs.d/elpa/emacs-websocket/... Wrote ~/.emacs.d…",
-          "link": "https://www.reddit.com/r/emacs/comments/1ne92pm/question_regarding_usepackage_with_the_vc_keyword/",
-          "publishedOn": "2025-09-11T13:38:46.000Z",
-          "wordCount": null,
-          "title": "Question Regarding use-package with the :vc Keyword in Emacs 30",
           "imageUrl": null
         }
       ]
