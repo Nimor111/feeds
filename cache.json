@@ -63,6 +63,36 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1pksxcp/parallel_foldmap_abelian_groups_and_nondeterminism/",
+          "author": null,
+          "description": "I am playing with par and pseq and came up with the following code to implement parallel foldMap: ``` newtype ParMonoid m = ParMonoid { getParMonoid :: m }\n instance Semigroup m => Semigroup (ParMonoid m) where ParMonoid x <> ParMonoid y = ParMonoid $ x par y pseq (x <> y)\n instance Monoid m => Monoid (ParMonoid m) where mempty = ParMonoid mempty\n {- Splis a list into n sublists, e.g.: splitInto 3 [1,2,3,4,5,6,7] ==> [[1,4,7],[2,5],[3,6]] -} splitInto :: Int -> [a] -> [[a]] splitInto n = transpose . chunksOf n\n -- \"Unzip\" input list, process elements and \"zip\" it after parFoldMap :: Monoid c => Int -> ([a] -> c) -> [a] -> c parFoldMap n f = (getParMonoid . foldMap (ParMonoid . f)) . splitInto n ```\n The above code enforces order of merging results in parFoldMap. Is there a way to implement it in such a way that merging (<> on c) is computed in a \"first come, first go\" indeterministic order? (Ie. c is Abelian)\n EDIT - some context: I would like to implement parallel stream processing - both input and output is a list that I would like to process in parallel. I don't care about order of elements in the output but I don't want threads to wait for each other:\n ``` newtype MergeList a = MergeList { getMergeList :: [a] } deriving Foldable\n instance Semigroup (MergeList a) where MergeList (x:xs) <> MergeList (y:ys) = MergeList (x : y : getMergeList (MergeList xs <> MergeList ys)) MergeList [] <> r = r l <> MergeList [] = l instance Monoid (MergeList a) where mempty = MergeList mempty\n parStream n f = getMergeList $ parFoldMap n (MergeList . f) ```\n    submitted by    /u/klekpl  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1pksxcp/parallel_foldmap_abelian_groups_and_nondeterminism/",
+          "publishedOn": "2025-12-12T14:14:51.000Z",
+          "wordCount": null,
+          "title": "Parallel foldMap, abelian groups and non-determinism",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1pkq3bl/know_when_to_fold_em_haskell_for_dilettantes/",
+          "author": null,
+          "description": "submitted by    /u/peterb12  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1pkq3bl/know_when_to_fold_em_haskell_for_dilettantes/",
+          "publishedOn": "2025-12-12T11:57:38.000Z",
+          "wordCount": null,
+          "title": "Know When To Fold ‘Em: Haskell for Dilettantes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1pkjfpc/advent_of_code_2025_day_12/",
+          "author": null,
+          "description": "submitted by    /u/AutoModerator  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1pkjfpc/advent_of_code_2025_day_12/",
+          "publishedOn": "2025-12-12T05:02:27.000Z",
+          "wordCount": null,
+          "title": "Advent of Code 2025 day 12",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1pk2fw8/when_manual_shrinking_beats_integrated_shrinking/",
           "author": null,
           "description": "This post includes spoilers for the Day 1 puzzle of the Advent of Code 2025. Please don't read any further if you would like to avoid that.\n How is shrinking done in PBT\n Property-based testing libraries differ in their approach to counter-example reduction, a.k.a. shrinking. Haskell's QuickCheck requires shrinking to be defined separately from generation whereas Haskell's Hedgehog and Falsify and also Python's Hypothesis integrate shrinking with generation. See Edsko de Vries's great blog posts for an in-depth discussions of the various approaches: integrated-shrinking, falsify\n Integrated shrinking is often considered preferable to the separate approach because it relieves developers of having to write a separate shrinking code that must hold the same invariants of the generator. However…",
@@ -821,26 +851,6 @@
           "wordCount": null,
           "title": "clarify versions for hls + ghc ... ?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ovb24d/typed_servers_using_sopcore_haskell_unfolder_51/",
-          "author": null,
-          "description": "Will be streamed today, 2025-11-12, at 1930 UTC.\n Abstract:\n In this episode we consider how we can design a typed client/server interface for a simple API. We will use this as an introduction to some of the foundational concepts of the sop-core library, and we will discuss some ways of dealing with serialization in a more strongly typed setting. While does this require a bit of type level programming, hopefully by the end of this episode that won't look quite so intimidating anymore, and the benefit is not just better Haskell types, but also a better bits-on-the-wire communication protocol.\n    submitted by    /u/kosmikus  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ovb24d/typed_servers_using_sopcore_haskell_unfolder_51/",
-          "publishedOn": "2025-11-12T17:13:07.000Z",
-          "wordCount": null,
-          "title": "Typed servers using sop-core (Haskell Unfolder #51)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1ov5s7s/composing_event_migrations_with_default/",
-          "author": null,
-          "description": "submitted by    /u/gdeest  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1ov5s7s/composing_event_migrations_with_default/",
-          "publishedOn": "2025-11-12T13:56:08.000Z",
-          "wordCount": null,
-          "title": "Composing Event Migrations with Default Implementations - Hindsight",
-          "imageUrl": null
         }
       ]
     },
@@ -849,6 +859,56 @@
       "feedUrl": "https://reddit.com/r/scala/.rss",
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1pkug5k/scala_reload_2025_aichip_and_dsl_202512hybrid/",
+          "author": null,
+          "description": "submitted by    /u/doofin  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1pkug5k/scala_reload_2025_aichip_and_dsl_202512hybrid/",
+          "publishedOn": "2025-12-12T15:17:30.000Z",
+          "wordCount": null,
+          "title": "Scala reload 2025: AI，chip and DSL (202512)(hybrid meetup)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1pknn3i/how_should_i_use_swing_with_zio/",
+          "author": null,
+          "description": "Does anyone know how to do this? I want to run a minimal swing application with ZIO.\n    submitted by    /u/antineolib  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1pknn3i/how_should_i_use_swing_with_zio/",
+          "publishedOn": "2025-12-12T09:23:38.000Z",
+          "wordCount": null,
+          "title": "How should I use swing with ZIO?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1pkl1ac/baku_better_separation_of_tapir_definitions_from/",
+          "author": null,
+          "description": "Hello everyone,\n I wanted to share a small library I’ve been working on to help structure Tapir projects better: https://github.com/arkida39/baku\n I often want to share my Tapir endpoint definitions with teammates (client-side) so they can generate safe clients. \n However, with Tapir, you either: \n  \nprovide the server and security logic together with the endpoint, leaking internal dependencies and implementation details to the consumer. \n \nor separate the full server endpoints (with logic) from the API, risking forgetting to implement a particular endpoint.\n \n \"Baku\" solves it with a thin abstraction layer: you define the endpoints and logic independently, and a macro handles the boilerplate of tying them together (see README for more): scala trait MyContract extends Contract { val foo: PublicEndpoint[String, Unit, String, Any] } object MyResource extends MyContract, Resource { override val foo = endpoint.get.in(\"foo\").in(query[String](\"name\")) .out(stringBody) } object MyService extends MyContract, Service[Identity] { override val foo = (name: String) => Right(s\"[FOO] Hello $name\") } // ... val myComponent = Component.of[MyContract, Identity](MyResource, MyService) myComponent.foo // val foo: ServerEndpoint[Any, Identity]{type SECURITY_INPUT = Unit; type PRINCIPAL = Unit; type INPUT = String; type ERROR_OUTPUT = Unit; type OUTPUT = String} \n P.S. This started as an internal tool that I refactored for open source. It’s also my first time publishing a library to Maven Central, so if you have any feedback on the code, docs, or release structure, please let me know!\n    submitted by    /u/arkida39  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1pkl1ac/baku_better_separation_of_tapir_definitions_from/",
+          "publishedOn": "2025-12-12T06:32:22.000Z",
+          "wordCount": null,
+          "title": "Baku - better separation of Tapir definitions from server and security logic.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1pketzq/dallas_scala_enthusiasts_is_now_the_scala_hangout/",
+          "author": null,
+          "description": "After more than a decade of regular monthly meetups Dallas Scala Enthusiasts will be no more. \n But not to fear! We're now \"The Scala Hangout\" over on Heylo! \n You can find us at: https://www.heylo.com/g/d5af4da4-d578-4bce-9f2d-197182264ba6\n We'll continue to meet monthly, discussing whatever is fun and Scala related. Hope to see you there.\n    submitted by    /u/littlenag  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1pketzq/dallas_scala_enthusiasts_is_now_the_scala_hangout/",
+          "publishedOn": "2025-12-12T01:20:08.000Z",
+          "wordCount": null,
+          "title": "Dallas Scala Enthusiasts is now The Scala Hangout on Heylo",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1pka56c/scala_21221_is_here/",
+          "author": null,
+          "description": "This release brings JDK 25 LTS support to the 2.12 series.\n For details, refer to the release notes on GitHub: https://github.com/scala/scala/releases/tag/v2.12.21\n    submitted by    /u/SethTisue_Scala  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1pka56c/scala_21221_is_here/",
+          "publishedOn": "2025-12-11T21:52:40.000Z",
+          "wordCount": null,
+          "title": "Scala 2.12.21 is here",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/scala/comments/1pj7yl6/lightdb_4120_released/",
           "author": null,
@@ -1916,6 +1976,86 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/ein-20251212.1623.tar",
+          "author": null,
+          "description": "The ein package has been updated to version 20251212.1623.",
+          "link": "https://melpa.org/#/ein",
+          "publishedOn": "2025-12-12T16:23:00.000Z",
+          "wordCount": 105,
+          "title": "ein (20251212.1623) --- Jupyter notebook client",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/boon-20251212.1343.tar",
+          "author": null,
+          "description": "The boon package has been updated to version 20251212.1343.",
+          "link": "https://melpa.org/#/boon",
+          "publishedOn": "2025-12-12T13:43:00.000Z",
+          "wordCount": 105,
+          "title": "boon (20251212.1343) --- Ergonomic Command Mode for Emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/puppet-ts-mode-20251212.1319.tar",
+          "author": null,
+          "description": "The puppet-ts-mode package has been updated to version 20251212.1319.",
+          "link": "https://melpa.org/#/puppet-ts-mode",
+          "publishedOn": "2025-12-12T13:19:00.000Z",
+          "wordCount": 105,
+          "title": "puppet-ts-mode (20251212.1319) --- Major mode for Puppet using Tree-sitter",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/evil-matchit-20251212.1256.tar",
+          "author": null,
+          "description": "The evil-matchit package has been updated to version 20251212.1256.",
+          "link": "https://melpa.org/#/evil-matchit",
+          "publishedOn": "2025-12-12T12:56:00.000Z",
+          "wordCount": 105,
+          "title": "evil-matchit (20251212.1256) --- Vim matchit ported to Evil",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/elx-20251212.1101.tar",
+          "author": null,
+          "description": "The elx package has been updated to version 20251212.1101.",
+          "link": "https://melpa.org/#/elx",
+          "publishedOn": "2025-12-12T11:01:00.000Z",
+          "wordCount": 105,
+          "title": "elx (20251212.1101) --- Extract information from Emacs Lisp libraries",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ess-20251212.937.tar",
+          "author": null,
+          "description": "The ess package has been updated to version 20251212.937.",
+          "link": "https://melpa.org/#/ess",
+          "publishedOn": "2025-12-12T09:37:00.000Z",
+          "wordCount": 105,
+          "title": "ess (20251212.937) --- Emacs Speaks Statistics",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ctrlf-20251212.141.tar",
+          "author": null,
+          "description": "The ctrlf package has been updated to version 20251212.141.",
+          "link": "https://melpa.org/#/ctrlf",
+          "publishedOn": "2025-12-12T01:41:00.000Z",
+          "wordCount": 105,
+          "title": "ctrlf (20251212.141) --- Emacs finally learns how to ctrl+F",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/julia-snail-20251211.2305.tar",
+          "author": null,
+          "description": "The julia-snail package has been updated to version 20251211.2305.",
+          "link": "https://melpa.org/#/julia-snail",
+          "publishedOn": "2025-12-11T23:05:00.000Z",
+          "wordCount": 105,
+          "title": "julia-snail (20251211.2305) --- Julia Snail",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/dockerfile-mode-20251211.1819.tar",
           "author": null,
           "description": "The dockerfile-mode package has been updated to version 20251211.1819.",
@@ -2003,6 +2143,16 @@
           "publishedOn": "2025-12-11T01:06:00.000Z",
           "wordCount": 105,
           "title": "doom-themes (20251211.106) --- An opinionated pack of modern color-themes",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/apheleia-20251210.2352.tar",
+          "author": null,
+          "description": "The apheleia package has been updated to version 20251210.2352.",
+          "link": "https://melpa.org/#/apheleia",
+          "publishedOn": "2025-12-10T23:52:00.000Z",
+          "wordCount": 105,
+          "title": "apheleia (20251210.2352) --- Reformat buffer stably",
           "imageUrl": null
         },
         {
@@ -2146,6 +2296,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/khoj-20251208.432.tar",
+          "author": null,
+          "description": "The khoj package has been updated to version 20251208.432.",
+          "link": "https://melpa.org/#/khoj",
+          "publishedOn": "2025-12-08T04:32:00.000Z",
+          "wordCount": 105,
+          "title": "khoj (20251208.432) --- Your Second Brain",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/srfi-20251208.51.tar",
           "author": null,
           "description": "The srfi package has been updated to version 20251208.51.",
@@ -2153,6 +2313,16 @@
           "publishedOn": "2025-12-08T00:51:00.000Z",
           "wordCount": 105,
           "title": "srfi (20251208.51) --- Scheme Requests for Implementation browser",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ob-llm-20251208.18.tar",
+          "author": null,
+          "description": "The ob-llm package has been updated to version 20251208.18.",
+          "link": "https://melpa.org/#/ob-llm",
+          "publishedOn": "2025-12-08T00:18:00.000Z",
+          "wordCount": 105,
+          "title": "ob-llm (20251208.18) --- Use `llm' as an Org Babel language",
           "imageUrl": null
         },
         {
@@ -2383,6 +2553,16 @@
           "publishedOn": "2025-12-04T08:52:00.000Z",
           "wordCount": 105,
           "title": "markdown-mode (20251204.852) --- Major mode for Markdown-formatted text",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/aidermacs-20251203.2318.tar",
+          "author": null,
+          "description": "The aidermacs package has been updated to version 20251203.2318.",
+          "link": "https://melpa.org/#/aidermacs",
+          "publishedOn": "2025-12-03T23:18:00.000Z",
+          "wordCount": 105,
+          "title": "aidermacs (20251203.2318) --- AI pair programming with Aider",
           "imageUrl": null
         },
         {
@@ -2726,6 +2906,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/tray-20251130.2326.tar",
+          "author": null,
+          "description": "The tray package has been updated to version 20251130.2326.",
+          "link": "https://melpa.org/#/tray",
+          "publishedOn": "2025-11-30T23:26:00.000Z",
+          "wordCount": 105,
+          "title": "tray (20251130.2326) --- Various transient menus",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/ob-athena-20251130.2251.tar",
           "author": null,
           "description": "The ob-athena package has been updated to version 20251130.2251.",
@@ -2923,6 +3113,16 @@
           "publishedOn": "2025-11-29T10:02:00.000Z",
           "wordCount": 105,
           "title": "lsp-mode (20251129.1002) --- LSP mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/jinx-20251129.800.tar",
+          "author": null,
+          "description": "The jinx package has been updated to version 20251129.800.",
+          "link": "https://melpa.org/#/jinx",
+          "publishedOn": "2025-11-29T08:00:00.000Z",
+          "wordCount": 105,
+          "title": "jinx (20251129.800) --- Enchanted Spell Checker",
           "imageUrl": null
         },
         {
@@ -4514,86 +4714,6 @@
           "wordCount": 105,
           "title": "blue (20251113.1213) --- BLUE build system interface",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-bookmarks-20251113.351.tar",
-          "author": null,
-          "description": "The org-bookmarks package has been updated to version 20251113.351.",
-          "link": "https://melpa.org/#/org-bookmarks",
-          "publishedOn": "2025-11-13T03:51:00.000Z",
-          "wordCount": 105,
-          "title": "org-bookmarks (20251113.351) --- Manage bookmarks in Org mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/marginalia-20251112.2350.tar",
-          "author": null,
-          "description": "The marginalia package has been updated to version 20251112.2350.",
-          "link": "https://melpa.org/#/marginalia",
-          "publishedOn": "2025-11-12T23:50:00.000Z",
-          "wordCount": 105,
-          "title": "marginalia (20251112.2350) --- Enrich existing commands with completion annotations",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/fpga-20251112.1926.tar",
-          "author": null,
-          "description": "The fpga package has been updated to version 20251112.1926.",
-          "link": "https://melpa.org/#/fpga",
-          "publishedOn": "2025-11-12T19:26:00.000Z",
-          "wordCount": 105,
-          "title": "fpga (20251112.1926) --- FPGA & ASIC Utils",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/shell-maker-20251112.1702.tar",
-          "author": null,
-          "description": "The shell-maker package has been updated to version 20251112.1702.",
-          "link": "https://melpa.org/#/shell-maker",
-          "publishedOn": "2025-11-12T17:02:00.000Z",
-          "wordCount": 105,
-          "title": "shell-maker (20251112.1702) --- Interaction mode for making comint shells",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/aider-20251112.1610.tar",
-          "author": null,
-          "description": "The aider package has been updated to version 20251112.1610.",
-          "link": "https://melpa.org/#/aider",
-          "publishedOn": "2025-11-12T16:10:00.000Z",
-          "wordCount": 105,
-          "title": "aider (20251112.1610) --- AI assisted programming with Aider and LLM",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/lsp-java-20251112.1248.tar",
-          "author": null,
-          "description": "The lsp-java package has been updated to version 20251112.1248.",
-          "link": "https://melpa.org/#/lsp-java",
-          "publishedOn": "2025-11-12T12:48:00.000Z",
-          "wordCount": 105,
-          "title": "lsp-java (20251112.1248) --- Java support for lsp-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/copilot-chat-20251112.1222.tar",
-          "author": null,
-          "description": "The copilot-chat package has been updated to version 20251112.1222.",
-          "link": "https://melpa.org/#/copilot-chat",
-          "publishedOn": "2025-11-12T12:22:00.000Z",
-          "wordCount": 105,
-          "title": "copilot-chat (20251112.1222) --- Copilot chat interface",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/clojure-ts-mode-20251112.927.tar",
-          "author": null,
-          "description": "The clojure-ts-mode package has been updated to version 20251112.927.",
-          "link": "https://melpa.org/#/clojure-ts-mode",
-          "publishedOn": "2025-11-12T09:27:00.000Z",
-          "wordCount": 105,
-          "title": "clojure-ts-mode (20251112.927) --- Major mode for Clojure code",
-          "imageUrl": null
         }
       ]
     },
@@ -4602,6 +4722,86 @@
       "feedUrl": "https://reddit.com/r/emacs/.rss",
       "siteUrl": "https://www.reddit.com/r/emacs/",
       "articles": [
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1pl1uiu/orgroam_daily_capture_templates/",
+          "author": null,
+          "description": "Hello, I noticed my dailies were not showing up in my autocomplete list for linking, and I finally figured out that it was due to multiple ID fields in the files. Every time I capture, the template ends in a new properties section with an new id, even if it's on an existing day.  ◉ :PROPERTIES: :ID: e1193ffa-1419-400e-b8e0-2086ab68f257 :END:  So this is appended to the existing daily.\n Why would this be the default behaviour if it breaks linking? The template drops in a title once, why put in multiple ID properties?\n I'm not even configuring a non-default capture template in my config. Help appreciated. \n    submitted by    /u/msoulier  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1pl1uiu/orgroam_daily_capture_templates/",
+          "publishedOn": "2025-12-12T20:10:57.000Z",
+          "wordCount": null,
+          "title": "org-roam daily capture templates",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1pktlz0/bending_emacs_episode_8/",
+          "author": null,
+          "description": "Happy Friday! A look and some uses for the completing-read function.\n For anyone preferring written form, here's a corresponding blog post: https://xenodium.com/bending-emacs-episode-8-completing-read\n    submitted by    /u/xenodium  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1pktlz0/bending_emacs_episode_8/",
+          "publishedOn": "2025-12-12T14:43:39.000Z",
+          "wordCount": null,
+          "title": "Bending Emacs - Episode 8",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1pkth2y/when_your_beloved_dired_works_as_expected/",
+          "author": null,
+          "description": "When I was using Dired as a file manager, its functionality was often restricted to the current working directory. However, when I wanted to create or goto a folder or file in any subdirectory, it prevented me from doing so. Therefore, I wrote these two utility functions as a replacement.\n ``elisp (defun dired-create-dir-or-file (path) \"Usedired-create-directory' or `dired-create-empty-file' based on PATH. If PATH has an extension, create an empty file. If it has no extension, create a directory. If PATH already exists, report with a message and stop.\" (interactive \"FCreate (dir or file): \") (if (file-exists-p path) (message \"Error: '%s' already exists.\" path) (if (file-name-extension path) (dired-create-empty-file path) (dired-create-directory path))))\n (defun dired-goto-dir-or-file (path) \"Open PATH in Dired. If PATH is a directory, open it. If PATH is a file, open its parent directory and move point to the file.\" (interactive \"fGoto (dir or file): \") (let* ((expanded (expand-file-name path)) (dir (if (file-directory-p expanded) expanded (file-name-directory expanded)))) (dired dir) (when (file-exists-p expanded) (dired-goto-file expanded)))) ```\n Edit:\n As a side note, you can try using it to replace the original keybindings + for dired-create-directory and j for dired-goto-file by either:\n elisp (with-eval-after-load 'dired (define-key dired-mode-map (kbd \"+\") 'dired-create-dir-or-file) (define-key dired-mode-map (kbd \"j\") 'dired-goto-dir-or-file)) \n or\n elisp (use-package dired :ensure nil :commands (dired) :bind (:map dired-mode-map (\"+\" . dired-create-dir-or-file) (\"j\" . dired-goto-dir-or-file))) \n    submitted by    /u/OutOfCharm  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1pkth2y/when_your_beloved_dired_works_as_expected/",
+          "publishedOn": "2025-12-12T14:37:55.000Z",
+          "wordCount": null,
+          "title": "When your beloved Dired works as expected",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1pkikne/is_c_inside_emacs_actually_viable_for/",
+          "author": null,
+          "description": "Looking to set up Emacs for .NET 8+ development. I know Omnisharp was the standard for a long time, but I've heard mixed things about its current state.\n    submitted by    /u/Guilherme_dAlmeida  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1pkikne/is_c_inside_emacs_actually_viable_for/",
+          "publishedOn": "2025-12-12T04:17:42.000Z",
+          "wordCount": null,
+          "title": "Is C# inside Emacs actually viable for professional work in 2025?",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1pkdocb/limiting_the_size_of_recentflist/",
+          "author": null,
+          "description": "My recentf-list currently has 96 files in it, even after running recentf-cleanup. This honestly makes it a bit useless; I don't care about my ENTIRE file history, just what I've used recently. I'd like to keep maybe about 10 files in it.\n There doesn't even seem to be a way to hook into anything it's doing, so I guess I could add callbacks on open/write/kill? Or add advice to recentf-track-open-file?\n It seems like most of its functionality is geared towards showing recent files in a menu, which isn't anything I need.\n Anyway, just wondering if anyone else is already doing this or using something else entirely.\n    submitted by    /u/vjgoh  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1pkdocb/limiting_the_size_of_recentflist/",
+          "publishedOn": "2025-12-12T00:26:50.000Z",
+          "wordCount": null,
+          "title": "Limiting the size of recentf-list",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1pkbmzm/stuck_on_connecting_host_melpaorg443/",
+          "author": null,
+          "description": "Hi, i on macOS and want play with lisp. For it i install emacs from brew (brew install --cask emacs). I want treemacs and add in my config melpa. But stuck when use pa-co. I try change network policy to low, use http (stuck on melpa.org:80). Nothing. Can you help?\n    submitted by    /u/FR0GG1D  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1pkbmzm/stuck_on_connecting_host_melpaorg443/",
+          "publishedOn": "2025-12-11T22:55:33.000Z",
+          "wordCount": null,
+          "title": "Stuck on \"Connecting host: melpa.org:443\"",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1pkan2e/yet_another_post_about_eglot_python_ruff_lsp/",
+          "author": null,
+          "description": "Update: I found a solution! I'll include it at the bottom of this post.\n I've been using emacs since 1996, and I've never liked it for writing larger coding projects, always preferring IDE's. Today I decided (again) to try whether the new LSP support can do what I want..\n My wishlist:\n - ruff for linting\n - ruff for auto-format on save\n - support for jumping to definitions\n - autocomplete\n Nice to haves (but not necessary):\n - quick fixes for linting problems\n - auto-import (is that even possible?)\n I'm using vertico and have added eglot-completion-at-point to the completion-at-point-functions..\n Following the steps from the ruff documentation (https://docs.astral.sh/ruff/editors/setup/#emacs) works.. I see linting errors and eglot offers quick fixes.\n But ruff does not do autocomplete, no…",
+          "link": "https://www.reddit.com/r/emacs/comments/1pkan2e/yet_another_post_about_eglot_python_ruff_lsp/",
+          "publishedOn": "2025-12-11T22:12:34.000Z",
+          "wordCount": null,
+          "title": "Yet another post about eglot, python, ruff, lsp",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/emacs/comments/1pk8rks/editing_system_files/",
+          "author": null,
+          "description": "Don't know if this is a known fact but I like to share how you can edit files as root not running from it. If variable shell-command-with-editor-mode is set to t function async-shell-command will set EDITOR variable as current instance of Emacs. So it is possible to use sudoedit with buffer opening to edit a file as root. Function with-editor-async-shell-command will also do the trick.\n    submitted by    /u/Key_Raspberry2288  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/emacs/comments/1pk8rks/editing_system_files/",
+          "publishedOn": "2025-12-11T20:57:16.000Z",
+          "wordCount": null,
+          "title": "Editing system files",
+          "imageUrl": null
+        },
         {
           "id": "https://www.reddit.com/r/emacs/comments/1pk66lj/emacs_on_windows_11_on_armbased_processor/",
           "author": null,
@@ -6651,36 +6851,6 @@
           "wordCount": null,
           "title": "Knockknock - Unobtrusive notifications for Emacs",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ovtwoy/emacs_being_broken_for_years_on_wsl_was_like/",
-          "author": null,
-          "description": "What can i do to get back into it? I do a lot more python and some web dev now. Is there an opinionated fork or init.el that can get me back up and running? A few years back I was working on a cmake project with rtags, good times, but that's behind me now. Emacs shouldn't be.\n    submitted by    /u/Less-Service1478  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ovtwoy/emacs_being_broken_for_years_on_wsl_was_like/",
-          "publishedOn": "2025-11-13T06:27:09.000Z",
-          "wordCount": null,
-          "title": "Emacs being broken for years on wsl was like breaking up with emacs due to a long distance relationship.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ovey91/my_biggest_fear/",
-          "author": null,
-          "description": "The more I convert to open source the more I love emacs and hate Microsoft. I do have one huge fear though. With all my hard work be unusable because packages no longer get updated kind of like if Google discontinues nest. Or are they built in such a way that even if they're no longer maintain they still work\n    submitted by    /u/uvuguy  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ovey91/my_biggest_fear/",
-          "publishedOn": "2025-11-12T19:32:08.000Z",
-          "wordCount": null,
-          "title": "My biggest fear",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/emacs/comments/1ov6sj7/want_nice_emacs_things_will_you_fund_them/",
-          "author": null,
-          "description": "Last week, I shared a simple prototype sending WhatsApp messages.\n Since then, I've done a bunch of additional work protoyping things. See my latest post:\n https://xenodium.com/want-a-whatsapp-emacs-client\n Spoiler alert, we have everything we need to provide a great Emacs experience, but it needs a fair amount of work and it's hard to justify it without some form of sustainability.\n Last week's post showed quite a bit of interest. My question for those who are interested, how interested are ya? Enough to sponsor this project?\n Neovim lurkers, I know you're around ;) Look closer at my blog post. Part of the work I've been doing is to enable json-rpc over stdio in wuzapi. This facilitates WhatsApp integration in Emacs of course, but any other json-rpc-capable project. Maybe tell your friends? ;)\n ps. I get there are far better alternatives than WhatsApp, but ditching WhatsApp is simply not an option for me for complicated reasons. If you've managed to migrate away, deep respect. I wish I could.\n This post is for those who have to live with WhatsApp.\n    submitted by    /u/xenodium  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/emacs/comments/1ov6sj7/want_nice_emacs_things_will_you_fund_them/",
-          "publishedOn": "2025-11-12T14:36:12.000Z",
-          "wordCount": null,
-          "title": "Want nice Emacs things? Will you fund them? ;-)",
-          "imageUrl": null
         }
       ]
     },
@@ -6689,6 +6859,26 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "3372@/discussions",
+          "author": "zettelsan",
+          "description": "I don’t think I’ve seen any thread about using podcasts as a source of references. I enjoy listening to podcasts and audiobooks during my daily walks. Over the years, they’ve made substantial contributions to my repository of literature and reference notes.\nIn the past, I’ve sporadically seen and joined discussions about the challenge of integrating audio (and visual) content into Zettelkasten. It might be useful to have a thread dedicated to sharing interesting episodes, insights, tips, and so on. Here it is.",
+          "link": "https://forum.zettelkasten.de/discussion/3372/podcast-on-zettelkasten",
+          "publishedOn": "2025-12-12T08:16:04.000Z",
+          "wordCount": 849,
+          "title": "Podcast on Zettelkasten",
+          "imageUrl": null
+        },
+        {
+          "id": "3371@/discussions",
+          "author": "EtnaMoose",
+          "description": "Longtime user and devotee of Notational Velocity, nvALT and then FSNotes. I prefer having the \"notes list\" between the OmniBar and the note as it is in nvALT. Is there any way to view it there instead of to the side of the note?",
+          "link": "https://forum.zettelkasten.de/discussion/3371/note-list-atop-note",
+          "publishedOn": "2025-12-12T00:49:36.000Z",
+          "wordCount": 551,
+          "title": "Note List Atop Note",
+          "imageUrl": null
+        },
         {
           "id": "3370@/discussions",
           "author": "System",
@@ -6797,16 +6987,6 @@
           "publishedOn": "2025-11-18T12:43:35.000Z",
           "wordCount": 607,
           "title": "Psychological effects of syntactic appearance",
-          "imageUrl": null
-        },
-        {
-          "id": "3358@/discussions",
-          "author": "ctietze",
-          "description": "I wanted to do a 20min recording for a short blog post of a highly specialized, technical topic -- and ended up rethinking far more, with 80min total on camera.\nhttps://christiantietze.de/posts/2025/11/learning-swift-concurrency-matt-massicotte-with-zettelkasten/",
-          "link": "https://forum.zettelkasten.de/discussion/3358/zk-live-demo-programming-swift-concurrency",
-          "publishedOn": "2025-11-12T17:51:42.000Z",
-          "wordCount": 539,
-          "title": "ZK Live Demo: Programming, Swift Concurrency",
           "imageUrl": null
         }
       ]
