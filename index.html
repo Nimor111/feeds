@@ -22,11 +22,1264 @@
             data-action="toggle-accordions"
             title="Click to toggle the day, Ctrl + click to toggle all."
           >
-            <time class="daily-heading-toggle__weekday js-offset-weekday" data-offset-date=2026-06-08 datetime="2026-06-08T21:54:17.000Z">2026-06-08</time>
-            <time class="daily-heading-toggle__date js-offset-date" data-offset-date=2026-06-08 datetime="2026-06-08T21:54:17.000Z"></time>
+            <time class="daily-heading-toggle__weekday js-offset-weekday" data-offset-date=2026-06-09 datetime="2026-06-09T21:17:08.000Z">2026-06-09</time>
+            <time class="daily-heading-toggle__date js-offset-date" data-offset-date=2026-06-09 datetime="2026-06-09T21:17:08.000Z"></time>
           </button>
         </h2>
         <ul class="sources card">
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >Scala</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/scala/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/scala/comments/1u1i5nz/improving_scalas_documentation_and_website/"
+                        open
+                      >
+                        <summary class="article-expander__title">Improving Scala’s documentation and website</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/1u1i5nz/improving_scalas_documentation_and_website/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The Scala Center is working on improving Scala&#x27;s documentation and website. This blog post describes what we hope to achieve in 2026, based on community feedback: https://www.scala-lang.org/blog/2026/06/09/sovereign-doc-project.html
+    submitted by    /u/SethTisue_Scala  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/scala/comments/1u0xhhp/typesafeconfigyaml_yaml_support_for_typesafe/"
+                        open
+                      >
+                        <summary class="article-expander__title">typesafe-config-yaml: YAML support for Typesafe Config / Lightbend Config</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/1u0xhhp/typesafeconfigyaml_yaml_support_for_typesafe/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Hi everyone,
+ I have published a small library that adds YAML support to Typesafe Config / Lightbend Config:
+ https://github.com/H8IO/typesafe-config-yaml
+ Maven / sbt coordinates:
+ libraryDependencies +&#x3D; &quot;io.h8&quot; % &quot;typesafe-config-yaml&quot; % &quot;1.1.0&quot; 
+ The goal is simple: allow projects to use YAML configuration files while keeping the usual com.typesafe.config.Config API in application code.
+ The library parses YAML into ConfigValue / Config, so it can be used together with existing code that already expects Typesafe Config.
+ Main features:
+  
+loading YAML files as Config;
+ converting YAML mappings, sequences, strings, numbers, booleans and nulls into corresponding Typesafe Config values;
+ integration with ConfigParseOptions / ConfigIncluder;
+ support for including YAML files from HOCON;
+ SnakeYAML Engine under the hood, targeting YAML 1.2.
+  
+Some intentional limitations:
+  
+this is not a replacement for HOCON;
+ YAML is treated as structured data, not as another HOCON-like configuration language;
+ YAML files cannot include other files;
+ the library does not add HOCON substitutions, path expressions or concatenation semantics to YAML;
+ the API is intentionally small for now.
+  
+The project is written in Java on purpose. Typesafe Config itself is a Java library, and I wanted this integration to be usable from both Java and Scala without introducing a Scala binary-version dependency.
+ I am posting it here because Typesafe Config is widely used in the Scala ecosystem, and YAML support has been requested several times over the years. This library is meant to cover that practical gap without changing the Typesafe Config API.
+ Feedback, bug reports and design criticism are welcome.
+    submitted by    /u/MrChrysoprase  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/scala/comments/1u0xaks/streaming_content_rewriting_for_zio_streams/"
+                        open
+                      >
+                        <summary class="article-expander__title">Streaming content rewriting for ZIO Streams</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/1u0xaks/streaming_content_rewriting_for_zio_streams/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I made a ZIO Streams port of Prism:
+ https://github.com/hanishi/zio-prism
+ The original version was for Apache Pekko Streams:
+ val flow: Flow[ByteString, ByteString, NotUsed] &#x3D; RewriteFlow(rewriter) 
+ This version exposes the same idea as a ZIO Streams pipeline:
+ val pipeline: ZPipeline[Any, Nothing, Byte, Byte] &#x3D; RewritePipeline(rewriter) 
+ The problem is not Pekko-specific. It is a streaming systems problem:
+  
+rewrite a byte stream correctly while it is still streaming, including matches that cross chunk boundaries, without buffering the entire body.
+  
+This matters because HTTP bodies, proxied responses, TCP streams, and file streams do not naturally arrive as one complete string. They arrive as chunks:
+ Chunk 1: ... href&#x3D;&quot;https://internal.exam Chunk 2: ple.com/path&quot; ... 
+ A naive per-…</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >The wonderful world of Travelers Notebooks</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/Travelersnotebooks/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u1hzgv/photo_and_sticker_printercutter/"
+                        open
+                      >
+                        <summary class="article-expander__title">Photo and sticker printer/cutter</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u1hzgv/photo_and_sticker_printercutter/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>approve things to decorate my TN
+    submitted by    /u/Additional_Cherry898  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u1f4xj/gel_pen_recs_for_the_20th_anniversary_card_size/"
+                        open
+                      >
+                        <summary class="article-expander__title">Gel pen recs for the 20th anniversary card size?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u1f4xj/gel_pen_recs_for_the_20th_anniversary_card_size/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I like this pilot frixion pen but it&#x27;s too long. What are y&#x27;all using?
+ ​
+ I love fountain pens and have the small kawecos but I&#x27;m in a stage of life where I cannot use fountain pens without my kids getting into them and getting ink everywhere. 
+    submitted by    /u/AdventurousGrass2043  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u1cho5/what_do_we_think/"
+                        open
+                      >
+                        <summary class="article-expander__title">What do we think?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u1cho5/what_do_we_think/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Got this journal and accessories all from shein
+    submitted by    /u/Holiday_Poem_6079  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u190pw/my_trip_to_denver_colorado/"
+                        open
+                      >
+                        <summary class="article-expander__title">My Trip to Denver, Colorado</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u190pw/my_trip_to_denver_colorado/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>One of my first attempts at scrapbooking my travels. Really happy with how it turned out 🔥
+    submitted by    /u/Coffeelover2500  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u17icw/travellers_20th_anniversary_card_size_set/"
+                        open
+                      >
+                        <summary class="article-expander__title">Traveller&#x27;s 20th anniversary card size set</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u17icw/travellers_20th_anniversary_card_size_set/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Well. This is a bit of a surprise. At Kitchener in Bern, Switzerland. Anyone who is en Suisse and had been hoping to get one of these special editions, there&#x27;s a tidy stack of both colours here. Meanwhile, almost NO stock of the regular passport size refills I was hoping to find. Very strange. 🙃
+ ​
+    submitted by    /u/OG_heideland  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u16ii3/started_my_journal_one_year_ago/"
+                        open
+                      >
+                        <summary class="article-expander__title">Started my journal one year ago</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u16ii3/started_my_journal_one_year_ago/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I wrote down my full journey and setup on substack if you are interested, but I just wanted to share how happy I am that I gave this a try. 
+    submitted by    /u/Far_Reference_3894  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u11a2w/this_sub_altered_my_ad_algorithm_s/"
+                        open
+                      >
+                        <summary class="article-expander__title">This sub altered my ad algorithm /s</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u11a2w/this_sub_altered_my_ad_algorithm_s/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/noobakosowhat  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0ziqr/finally_i_think_ive_got_it_right/"
+                        open
+                      >
+                        <summary class="article-expander__title">Finally I think I’ve got it right.</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0ziqr/finally_i_think_ive_got_it_right/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I must have made half a dozen attempts to get the optimal passport sized notebook cover. I think I’ve finally got it right, other attempts were variously slightly too big or too small.
+ I’ve opted for a trifold type cover with a decent sized wrap around section which helps protect the contents and the pen. I tried a leather loop for the pen but while it may look smarter, a couple of shock cord loops are much more versatile. I also use a single length of 2mm shock cord for the closure and insert retainers (65-70 cm).
+ Size wise, it could hold up to five inserts, possibly six at a squeeze but then it bulks out and doesn’t fit my pocket quite so well. Currently I have three full inserts and a pouch cum diary combo.
+ Will see how long this one lasts before I find some minor glitch. 
+    submitted by    /u/Longjumping-Try-9356  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0xzoq/wraparound_tn_homemade/"
+                        open
+                      >
+                        <summary class="article-expander__title">Wraparound TN Homemade</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0xzoq/wraparound_tn_homemade/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Rather than spend £60 on a Hobonichi Tragen cover, I decided to make my own TN version! It&#x27;s A6 in size, and it&#x27;s turned out pretty nicely I think!
+    submitted by    /u/Weary_Word6212  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0rxzu/what_leather_is_the_camel/"
+                        open
+                      >
+                        <summary class="article-expander__title">What Leather is the Camel?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0rxzu/what_leather_is_the_camel/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I really love the feel of my Camel covers. It&#x27;s definitely a sensory thing for me. But I&#x27;m obsessed with the softer, fuzzier (?) suede like feel of them. 
+ I&#x27;d really like to buy a panel of this same textured leather to make a cover or two in a non-standard size. Does anyone have any leads on what it&#x27;s called and where to buy it? I&#x27;ve purchased a half dozen samples from Rocky Mountain Leather and didn&#x27;t find it. 
+    submitted by    /u/Admirable-Name-7058  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0qvro/travelers_notebook_and_accessories_in_rainbow/"
+                        open
+                      >
+                        <summary class="article-expander__title">Traveler&#x27;s notebook and accessories in rainbow</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0qvro/travelers_notebook_and_accessories_in_rainbow/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>🌈 Honoring the Pride month 🌈
+ There are many times that I wish Traveler&#x27;s notebook related products has more colors. Why is it always be brown, black, grey, dark navy ? can we have brighter colors ? The Love and trip is such a refreshing release and it shouldn&#x27;t be a LE imo.
+ TSL has a lot more colorful choices but the prices has been getting really out of hand orz.
+    submitted by    /u/Particular_Song3539  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0pmjd/my_trip_to_zermatt_switzerland/"
+                        open
+                      >
+                        <summary class="article-expander__title">My trip to Zermatt, Switzerland</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0pmjd/my_trip_to_zermatt_switzerland/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I’ve heard people say that Zermatt is overrated…but in my personal opinion, can I just say that it is not? Matterhorn was truly so beautiful and I was many times dumbfounded by its beauty (thankful for the non-cloudy days during my trip). I had fun doing up this spread and was looking forward to be able to put in the nice photos of Matterhorn onto my journal!
+    submitted by    /u/milkystick88  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >M-x emacs-reddit</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/emacs/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u1hxyf/my_blog_now_has_a_gemini_mirror/"
+                        open
+                      >
+                        <summary class="article-expander__title">My Blog Now Has a Gemini Mirror</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u1hxyf/my_blog_now_has_a_gemini_mirror/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>A small announcement for fellow Emacs users and small-web enthusiasts:
+ I&#x27;ve added a Gemini capsule for my blog, so everything I publish on the web is now also available through Gemini too (I talk a bit about it in this post).
+ On Emacs you&#x27;ll need the excellent elpher.el package, then point it at:
+ gemini://gemini.rahuljuliato.com
+ You&#x27;ll find the same posts there, rendered as plain gemtext.
+ Anyone else here running a capsule or gemlog?
+    submitted by    /u/LionyxML  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u1fmm5/replace_shellpop_with_builtin_displaybufferalist/"
+                        open
+                      >
+                        <summary class="article-expander__title">Replace shell-pop with built-in display-buffer-alist</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u1fmm5/replace_shellpop_with_builtin_displaybufferalist/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Hey folks,
+ here is a small snippet to replace the shell-pop package with the built-in display-buffer-alist. 
+ Feel free to comment and give feedback.
+ https://rtzptz.xyz/posts/eat-replace-shell-pop.html
+    submitted by    /u/rtzptz  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u1f97v/maximizing_the_frame_on_startup_on_windows_11/"
+                        open
+                      >
+                        <summary class="article-expander__title">Maximizing the frame on startup on Windows (11) doesn&#x27;t work</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u1f97v/maximizing_the_frame_on_startup_on_windows_11/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>This seems crazy, but I&#x27;m pretty sure Windows is forcing my frame back to normal size after it maximizes during startup.
+ Here&#x27;s my initial-frame-alist
+ (setq initial-frame-alist &#x27;((cursor-type . box) (font . &quot;-*-Maple Mono-regular-normal-normal-*-14-*-*-*-m-0-iso8859-1&quot;) (tool-bar-lines . 0) (fullscreen . maximized) )) 
+ It&#x27;s set in my early-init.el.
+ I&#x27;m attaching a screenshot of the windows shortcut that I&#x27;ve bound my hotkey to. You can see that I&#x27;m both passing --maximized and setting the run window to maximised.
+ I&#x27;m also attaching a screenshot of my scratchbuffer where I&#x27;ve queried the frame parameter fullscreen. Even though emacs is clearly NOT fullscreen, the frame parameter is set. Interestingly, if I (toggle-frame-fullscreen) it works right away, rather than failing on the first attempt.
+ The way the startup is going is like this:
+  
+The emacs frame is small
+ The emacs frame is full screen
+ emacs finishes loading my packages and initializing.
+ dashboard is displayed
+ 0.5-1.0s pass
+ The emacs frame goes back to being the default small size again (not the size in my default-frame-alist, which I&#x27;ve temporarily removed for the purposes of this test.
+  
+Look, I get that this shouldn&#x27;t be bothering me so much. I already have F11 bound to toggle-frame-fullscreen but I&#x27;m really annoyed that this is broken and I can&#x27;t figure out how to fix it. I don&#x27;t even know when the resize event happens--it seems to happen outside of emacs&#x27; knowledge.
+ Anyone know what this is about? Does it work for you? Am I going crazy?
+ https://preview.redd.it/a1jzot8y6b6h1.png?width&#x3D;706&amp;format&#x3D;png&amp;auto&#x3D;webp&amp;s&#x3D;4aa4631be46537f8f81e8abe62ac5ff2bb9de732
+ https://preview.redd.it/gnq9du8y6b6h1.png?width&#x3D;390&amp;format&#x3D;png&amp;auto&#x3D;webp&amp;s&#x3D;927dbe8f6f3f26352e3e41d85301df1b5585c2a9
+    submitted by    /u/vjgoh  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u1brnr/agent_skills_for_lispy_code/"
+                        open
+                      >
+                        <summary class="article-expander__title">Agent skills for lispy code?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u1brnr/agent_skills_for_lispy_code/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Is anyone aware of any good skills to help coding agents write lispier code that takes full advantage of Emacs?
+ Opus 4.8 does a pretty good job with elisp, but it often gets stuck in patterns that would make more sense for normal programming languages. I notice it tends to reach for advice-add a lot instead of using simple closures or leveraging things like .dir-locals.el. Don&#x27;t think I&#x27;ve ever seen an agent write a macro or define a minor mode without me asking explicitly.
+    submitted by    /u/-cvdub-  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u1agkq/steps_beyond_the_tutorial/"
+                        open
+                      >
+                        <summary class="article-expander__title">Steps Beyond the Tutorial</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u1agkq/steps_beyond_the_tutorial/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Hi all, I just finished the C-h t tutorial and I&#x27;m comfortable jumping around between screens and buffers and it&#x27;s all making sense now. I&#x27;m glad I did it and I can see the cleverness of its design, but I know I&#x27;m just scratching the surface of what it can do. What would you guys consider a good resource to jump to after a user has this baseline knowledge? For background, I&#x27;m hoping to replace my use of a graphical IDE with just emacs and I mainly develop in Rust, Swift, and Python. I&#x27;ve seen the screens of other users where they&#x27;ve got a nice project file view going in a side screen with full syntax highlighting and completion with easy file switching and I&#x27;d like to build myself up to that sort of instance.
+    submitted by    /u/isonlikedonkeykong  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u18jlq/outlineindent_a_modern_indentationbased_text/"
+                        open
+                      >
+                        <summary class="article-expander__title">outline-indent, a modern Indentation-based Text Folding Mode for Emacs (Release 1.2.0)</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u18jlq/outlineindent_a_modern_indentationbased_text/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/jamescherti  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u17dmp/emacs_31090_pretest_packages_for_fedora/"
+                        open
+                      >
+                        <summary class="article-expander__title">Emacs 31.0.90 pretest packages for Fedora</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u17dmp/emacs_31090_pretest_packages_for_fedora/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Please test, and report any bugs that you find.
+  
+Packaging bugs
+ Emacs bugs
+  
+   submitted by    /u/mavit0  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u16omn/what_emacs_does_to_a_laptop/"
+                        open
+                      >
+                        <summary class="article-expander__title">what emacs does to a laptop</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u16omn/what_emacs_does_to_a_laptop/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/klavelat  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u0zsj9/magit_constantly_breaking/"
+                        open
+                      >
+                        <summary class="article-expander__title">Magit constantly breaking</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u0zsj9/magit_constantly_breaking/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Hello everyone, I&#x27;m constantly encountering an error in magit, switched to magit non-gnu, because I thought maybe melpa was unstable. I had completely removed the elpa and cache directories, but the error keeps appearing. If anyone knows the solution to this, I would appreciate it. Thanks. 
+ &quot;Debugger entered--Lisp error: (void-variable magit-log-margin--custom-type)
+ byte-code(&quot;\301\302!\210\301\303!\210\301\304!\210\301\305!\210\301\306!\210\307\310\311\312#\210\307\313\311\312#\210\314\315\316\317\320\321\322\323\322\324&amp;\11\210\325\326\327\330\331DD\332\322\315\333\334&amp;\7\210\325\335\327\330\336DD\337\340\341\322\315\333\342\343\344&amp;\13\210\325\345\327\330\346DD\347\340\350\322\315\333\351&amp;\11\210\325\352\327\330\353DD\354\322\315\333\355&amp;\7\210\325\356\327\330\357DD\360\340\361\322\31…</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u0xeq6/anyone_use_a_split_ergo_mechanical_keyboard/"
+                        open
+                      >
+                        <summary class="article-expander__title">Anyone use a split ergo mechanical keyboard without a modal editing mode?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u0xeq6/anyone_use_a_split_ergo_mechanical_keyboard/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>What keyboard and or keymaps do you use? Any tips? 
+    submitted by    /u/BeanHeadedTwat  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u0pyfj/common_lisp_treesitter_grammar_with_a_majormode/"
+                        open
+                      >
+                        <summary class="article-expander__title">Common Lisp tree-sitter grammar with a major-mode and Sly powered semantic highlighting</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u0pyfj/common_lisp_treesitter_grammar_with_a_majormode/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I&#x27;ve been working on a tree-sitter grammar for CL. There&#x27;s already one floating around but it&#x27;s pretty basic and I didn&#x27;t think a tree-sitter based major mode would benefit much from it. I tried to model CL&#x27;s syntax with maximum precision, though I&#x27;m sure there are deficiencies as testing so far has been limited.
+ Alongside the grammar I wrote a major mode and a very colorful minor mode to highlight code semantically, communicating with an inferior Lisp via Sly (SLIME support coming soon). See the screenshot in the repo. If you&#x27;re not into that visual noise, I still highly recommend you check out the FORMAT directive highlighting because it helps a lot when writing and debugging intricate format strings. FORMAT has its own grammar so it&#x27;s applied as an embedded parser. 
+ Would love to hear feedback, and if anyone is willing to be a guinea pig I&#x27;m wondering how it runs on others&#x27; setups. Everything is still very experimental, so don&#x27;t expect a smooth experience yet. I don&#x27;t know for sure if it&#x27;s compatible with Emacs 30.2, as I run from master, but the 31.0.9 pre-release should be supported. Only dependency for the semantic library is Sly and cond*, the latter is on ELPA and highly back compatible.
+    submitted by    /u/floss_gang  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1u0p704/having_less_keybindings/"
+                        open
+                      >
+                        <summary class="article-expander__title">Having less keybindings</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1u0p704/having_less_keybindings/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Hello everyone 👋🏾 
+ I started using Emacs few months ago and at a very weird moment: when I broke my wirst. Coming from Helix a my main text editor, it was hard to understand Emacs keybindings. And they are still weird to me.
+ At the begining, I used one hand and it was horrible to execute a single keybind. Then I finally installed meow to have an experience closer to Helix and finally execute commands with a single key.
+ However even with meow, I still find keybindings weird and difficult to remember. I tap &#x60;SPC x&#x60; (&#x60;C-x&#x60;) in meow with which-key enabled, I feel a bit overwelmed by the number of commands and sometimes nested commands.
+ Exemple of C-x
+ I also fight with some keybindings like &#x60;ESC&#x60;. I expect &#x60;ESC&#x60; to cancel the action I started to do but it is not the case. To actually cancel something, this is &#x60;G&#x60; or &#x60;ESC ESC ESC&#x60;. 
+ In comparison, I was also overwelmed by Blender&#x27;s keybindings at the beginning, but at the end, it was always the same whatever the panel or the context we are (eg.: &quot;X&quot; will always delete something. &quot;A&quot; will add something). I learned few which worked everywhere and learned new one when I got tired to use the mouse.
+ Well to keep this post short, I was wondering if it is possible to have less keybindings at start. I realised that a lot of commands are assigned to key by default. It would be nice to assign commands when the user wants to introduce them or got tired to look into the command palette.
+ For information, I mainly use &#x60;org-mode&#x60; right now and I know that &#x60;org-mode&#x60; has many commands (a lot!) and also many keybindings. Why are they assigned by default?
+    submitted by    /u/furiouzz  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >Douceur de l&#x27;écriture.</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/notebooks/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1u1gjnj/in_foiled_again_out_pitch_black_2nd_printing/"
+                        open
+                      >
+                        <summary class="article-expander__title">In- Foiled Again. Out- Pitch Black (2nd printing)</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1u1gjnj/in_foiled_again_out_pitch_black_2nd_printing/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/historynerd87  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1u1gjbr/what_i_didnt_like_about_the_kokuyo_campus_2x2/"
+                        open
+                      >
+                        <summary class="article-expander__title">What I didn&#x27;t like about the Kokuyo Campus 2x2 Binder Notebook</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1u1gjbr/what_i_didnt_like_about_the_kokuyo_campus_2x2/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The two rings at the top and at the bottom are attached to plastic bars that aren&#x27;t flush with the notebook. cover.
+ As a result, the notebook and pages don&#x27;t really lay flat. The pages sag between the top and bottom rings. It&#x27;s not the best experience with fountain pens.
+ The comfortable solution for me was to fold it over. The covers provide support so that the pages don&#x27;t sag.
+    submitted by    /u/WhollyInformal  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1u1gaxg/cat_notebooks/"
+                        open
+                      >
+                        <summary class="article-expander__title">Cat Notebooks</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1u1gaxg/cat_notebooks/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Purchased today from Flying Tiger Copenhagen. They both feel and look nice in my opinion and I adore the cats. 
+    submitted by    /u/RewiredMew  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1u1ds21/creative_notebook_for_story_ideas_and_maybe/"
+                        open
+                      >
+                        <summary class="article-expander__title">Creative Notebook for story ideas and maybe journaling</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1u1ds21/creative_notebook_for_story_ideas_and_maybe/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I’m not sure if this is the right place to ask this but I have a blank notebook and I want to use it for writing ideas and maybe journaling, but I don’t really know how to structure it. What are some ways you personally use your notebooks?
+    submitted by    /u/Homeless_aahOan  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1u1brrr/seeking_a_thicker_notebook_with_an_untreated/"
+                        open
+                      >
+                        <summary class="article-expander__title">Seeking a thicker notebook with an untreated paper cover.</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1u1brrr/seeking_a_thicker_notebook_with_an_untreated/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I’m looking for a notebook with a completely blank untreated exterior that I can linoprint onto (no linen, no gloss, just a nice thickish paper). Ideally it would also have a decent amount of pages (40-60+), not something that is completely flat and staple-bound. Anybody know any good shops for this (I’m in Europe)?
+    submitted by    /u/Stowaway_Sandwich  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1u1b18z/peter_pauper_press_journals_breaking/"
+                        open
+                      >
+                        <summary class="article-expander__title">Peter Pauper Press journals breaking?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1u1b18z/peter_pauper_press_journals_breaking/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>i’ve had a couple of these journals and just got a new one and they always break. i use them as an everyday journal and the binding always breaks. anyone else having this happen??
+    submitted by    /u/Careful_Trouble_5817  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1u16zbj/some_cute_notebooks/"
+                        open
+                      >
+                        <summary class="article-expander__title">some cute notebooks..</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1u16zbj/some_cute_notebooks/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/pankaj_kumarr  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1u15p0i/do_you_prefer_rings_or_strings/"
+                        open
+                      >
+                        <summary class="article-expander__title">Do you prefer rings or strings?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1u15p0i/do_you_prefer_rings_or_strings/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I&#x27;m getting ready to make my own leather journal cover, and I&#x27;m torn between doing a travelers notebook or 6 ring setup. I have the supplies to do either one, and the overall design of the cover won&#x27;t change except the fastening method.
+ I really like a 6 ring and used one for years and years, so I have a lot of accessories to go inside already. It&#x27;s versatile, and I can add and remove pages at will without tearing anything up.
+ I also like a nice notebook. I&#x27;m using one for the rest of the year that I made myself, and although I love it, I feel a bit constrained by fastened pages.
+ I&#x27;m really leaning toward a 6 ring system. Because the rings I&#x27;m using are attached with Chicago screws, it wouldn&#x27;t be difficult to remove and string the journal if I changed my mind.
+ I have decision paralysis. Give me your thoughts, pros/cons.
+    submitted by    /u/JTMissileTits  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1u11yaa/purposeless_notebook_now_what/"
+                        open
+                      >
+                        <summary class="article-expander__title">Purposeless notebook - now what?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1u11yaa/purposeless_notebook_now_what/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Hello,
+ I have an old, pocket-sized notebook that I&#x27;ve had since 2017.
+ I initially bought it just as a small, everyday carry notebook for quick note-taking instead of my phone, however to this day I don&#x27;t think I&#x27;ve used more than 1/3 of it, and I&#x27;m not happy with any of the pages. There&#x27;s no cohesion between any of the pages - to give an example, on one page I&#x27;ve got notes on possible career goals (at 18, I had no idea) and on the next I have simply written:
+ *beans on toast*.
+ I want to start using this notebook properly, but I am not happy at all with any of the previous pages.
+ Is there anything I can do to cover-up the previous pages? I want to have a blank slate, but I don&#x27;t know what to do.
+ In truth, I have no idea what to use this notebook for and it&#x27;s driving me nuts. I am 100% overthinking it, and nobody can tell me how to use something, but I&#x27;d appreciate any suggestions.
+ TYIA
+    submitted by    /u/twd026  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >MELPA package updates</button>
+                  <a class="source-heading__link" href="https://melpa.org">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/agent-shell-20260609.1951.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">agent-shell (20260609.1951) --- Native agentic integrations for Claude Code, Gemini CLI, etc</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/agent-shell">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The agent-shell package has been updated to version 20260609.1951.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/dimmer-20260609.1710.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">dimmer (20260609.1710) --- Visually highlight the selected buffer</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/dimmer">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The dimmer package has been updated to version 20260609.1710.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/tempel-20260609.1545.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">tempel (20260609.1545) --- Tempo templates/snippets with in-buffer field editing</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/tempel">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The tempel package has been updated to version 20260609.1545.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/realgud-20260609.1331.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">realgud (20260609.1331) --- A modular front-end for interacting with external debuggers</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/realgud">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The realgud package has been updated to version 20260609.1331.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://melpa.org/packages/yara-mode-20260609.52.tar"
+                        open
+                      >
+                        <summary class="article-expander__title">yara-mode (20260609.52) --- Major mode for editing yara rule file</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/yara-mode">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>The yara-mode package has been updated to version 20260609.52.</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >Haskell :: Reddit</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/haskell/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/haskell/comments/1u10614/haskells_missing_mutable_reference_type/"
+                        open
+                      >
+                        <summary class="article-expander__title">Haskell’s missing mutable reference type</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/haskell/comments/1u10614/haskells_missing_mutable_reference_type/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>submitted by    /u/tomejaguar  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
+        </ul>
+      </section>
+      <section class="daily-content js-toggle-accordions-scope">
+        <h2 class="daily-heading">
+          <button
+            class="daily-heading-toggle"
+            data-action="toggle-accordions"
+            title="Click to toggle the day, Ctrl + click to toggle all."
+          >
+            <time class="daily-heading-toggle__weekday js-offset-weekday" data-offset-date=2026-06-08 datetime="2026-06-08T23:48:16.000Z">2026-06-08</time>
+            <time class="daily-heading-toggle__date js-offset-date" data-offset-date=2026-06-08 datetime="2026-06-08T23:48:16.000Z"></time>
+          </button>
+        </h2>
+        <ul class="sources card">
+            <li class="card__section">
+              <section class="js-toggle-accordions-scope">
+                <h3 class="source-heading">
+                  <button
+                    class="source-heading__name"
+                    data-action="toggle-accordions"
+                    title="Click to toggle the source, Ctrl + click to toggle all."
+                  >The wonderful world of Travelers Notebooks</button>
+                  <a class="source-heading__link" href="https://www.reddit.com/r/Travelersnotebooks/">Open</a>
+                </h3>
+                <section class="articles-per-source">
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0ouxv/does_fishing_count_as_travelling/"
+                        open
+                      >
+                        <summary class="article-expander__title">Does fishing count as travelling</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0ouxv/does_fishing_count_as_travelling/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Both come with me everywhere, even to the lake (and camping!)
+    submitted by    /u/ThunderingBlues  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0oudv/lucky_paris_haul/"
+                        open
+                      >
+                        <summary class="article-expander__title">Lucky Paris haul</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0oudv/lucky_paris_haul/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I had been checking into the Traveler’s website and Jetpens for a Traveler’s Notebook for quite a while. While I was in Paris the last week, I thought I’d pop into a Traveler’s partner shop to check for any and luckily they had one more limited Tokyo edition in stock! Also got a sticker pack and stopped by Shakespeare and Company for their exclusive Kaweco fountain pen as well.
+ Super happy with this haul and thought I’d share my excitement to join the Traveler’s community.
+ EDIT: The shop (Boutique Maison Boursier) isn’t a partner shop, they just carry Traveler’s products officially.
+    submitted by    /u/fromers  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0hq7d/facing_the_twilight/"
+                        open
+                      >
+                        <summary class="article-expander__title">Facing the Twilight</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0hq7d/facing_the_twilight/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>One must always be ready, even to confront head-on the gentle twilight of the evening
+    submitted by    /u/DanilaoIT  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0h7yz/creating_my_5year_diary_on_tn/"
+                        open
+                      >
+                        <summary class="article-expander__title">Creating my 5-year diary on TN</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0h7yz/creating_my_5year_diary_on_tn/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Any ideas?
+    submitted by    /u/Additional_Cherry898  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0dfb4/stamping_the_leather_cover_at_a_stamp_caravan/"
+                        open
+                      >
+                        <summary class="article-expander__title">Stamping the leather cover at a Stamp Caravan?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0dfb4/stamping_the_leather_cover_at_a_stamp_caravan/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>My country is getting our first stamp caravan ever. Is it possible to stamp the leather cover instead of an insert?
+ Has anybody done this? and if so, does it last? can you share pics?
+ Or should the stamps available at the stamp caravan only be used on paper?
+    submitted by    /u/PaperBun  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0bcy3/finally_joined_the_family/"
+                        open
+                      >
+                        <summary class="article-expander__title">Finally joined the family!</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0bcy3/finally_joined_the_family/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I&#x27;ve been eyeing the Traveler&#x27;s Notebook Passport for months now, but it seemed to be OOS every time I checked. While in Portland, I saw that Oblation Papers and Press had some Regular sizes in stock, so I ran over and picked one up. I immediately fell in love, but couldn&#x27;t help but envy the Passport they had on display. As luck would have it, Oblation restocked on my last day in town, and I was able to cop this blue Passport. 
+ It&#x27;s been about a month, and already I&#x27;m in love with these notebooks. I&#x27;d been trying a multi-notebook system for six months and kept running into hurdles. Those haven&#x27;t been a problem with these guys. I keep three notebooks in each: one for an idea dump, one for book quotes while reading, and one for sketching while I&#x27;m out and about.
+ Now I just need to settle on a charm and pen loop.
+    submitted by    /u/SureShotTavner  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u08c47/hacked_my_travelers_notebook_passport_and_put_an/"
+                        open
+                      >
+                        <summary class="article-expander__title">Hacked my Travelers Notebook Passport and put an XTEINK X4 eReader insider</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u08c47/hacked_my_travelers_notebook_passport_and_put_an/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>https://preview.redd.it/p0lpsyc0c26h1.jpg?width&#x3D;1024&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;56a2265409546a7cced466125f288b31dee7253a
+ Thought the group might dig this little mod I did last month. XTEINK X4 fits very nicely inside the travelers notebook passport size. Lovely setup for note taking and leather-bound reading. More info here: I hacked my Travelers Notebook to be a leather-bound X4 Reader
+    submitted by    /u/creativegamelife  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u07rmc/which_character_it_reminds_you_of/"
+                        open
+                      >
+                        <summary class="article-expander__title">Which character it reminds you of?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u07rmc/which_character_it_reminds_you_of/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>A felt nose placed on TN, and it became ….
+    submitted by    /u/patrickngscription  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u05knw/my_tiny_xteink_x4_analog_kit_to_avoid/"
+                        open
+                      >
+                        <summary class="article-expander__title">My tiny Xteink X4 &quot;analog&quot; kit to avoid doomscrooling using the cheapest and old items I own. Trying my best, guys!</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u05knw/my_tiny_xteink_x4_analog_kit_to_avoid/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>https://preview.redd.it/cywn93ycr16h1.jpg?width&#x3D;928&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;fa15805a61d6a6064c1fadeb25f701510b557c8c
+ https://preview.redd.it/vu8703vdr16h1.jpg?width&#x3D;917&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;3e81c9484b53949fde1a4df76c07d60dae9e8177
+ https://preview.redd.it/ztnc9m5fr16h1.jpg?width&#x3D;1052&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;fba7e82198252cfbccb3d9fe4a6914f2b61b5d23
+ https://preview.redd.it/fzqsnwnfr16h1.jpg?width&#x3D;1037&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;a66939bcbf3bed3bb5b98860bb367ccd3073c197
+ My tiny Xteink X4 &quot;analog&quot; kit to avoid doomscrooling using the cheapest and old items I own. Trying my best, guys!
+    submitted by    /u/rogerio_acioli  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u04vcm/my_first_tn/"
+                        open
+                      >
+                        <summary class="article-expander__title">My first tn ✨</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u04vcm/my_first_tn/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I got my first Traveler’s Notebook during my Japan trip in May 2026. I visited both the Traveler’s Factory Nakameguro and the Traveler’s Factory Narita Airport, and honestly, I loved both stores.
+ I first picked up a notebook refill at Narita Airport mainly to collect stamps along the way. I ended up loving it so much that when I returned to Tokyo later on, I made a trip to the Nakameguro store and came home with a whole lot more Traveler’s Notebook goodies. 
+    submitted by    /u/sgsaltedpopcorn  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1tzzve3/started_using_tn_in_sep_2024and_since_then/"
+                        open
+                      >
+                        <summary class="article-expander__title">Started using TN in Sep 2024…and since then…</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1tzzve3/started_using_tn_in_sep_2024and_since_then/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>I’ve utilized 4 full TN inserts and 2 Accordion paper insert 🥰 I tend to fall short of updating it on a more regular basis when things get busy for me, but I never fail to do my travel journals whenever I do a trip! Since then, i’ve documented these trips on my TN: Europe (2x), Bali, Malaysia - Penang, Sydney Australia, Taiwan, and will be working on my recent Perth trip TN! 
+    submitted by    /u/milkystick88  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1tzvak0/suggestions/"
+                        open
+                      >
+                        <summary class="article-expander__title">Suggestions?</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1tzvak0/suggestions/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>Any suggestions for what to use the passport for? The regular is sort of my EDC. 
+ Currently in the regular size we have weekly planner, blank notebook, and sketch. 
+ In the passport we have sketch, blank notebook, and watercolor. 
+    submitted by    /u/snewo0909  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                    <article>
+                      <details
+                        class="article-expander"
+                        data-action="toggle-native-accordion"
+                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1tzuuwu/my_original_olive_with_my_tokyo_station/"
+                        open
+                      >
+                        <summary class="article-expander__title">My Original Olive with my Tokyo Station</summary>
+                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1tzuuwu/my_original_olive_with_my_tokyo_station/">
+                          <div class="article-summary-box-inner media-object">
+                            <span class="media-object__text">
+                              <span>My original olive next to my Tokyo Station for comparison. Added a Sterling Ink 272 pg grid notebook to the olive and started a Common Place book in the Traveler&#x27;s System. I have a Sterling Ink Lined 272 pg for a diary in the Tokyo Station 
+    submitted by    /u/Director_Dooby  
+ [link]   [comments]</span>
+                            </span>
+                          </div>
+                        </a>
+                      </details>
+                    </article>
+                </section>
+              </section>
+            </li>
             <li class="card__section">
               <section class="js-toggle-accordions-scope">
                 <h3 class="source-heading">
@@ -596,241 +1849,6 @@
  https://preview.redd.it/zv8pd1cupz5h1.png?width&#x3D;1319&amp;format&#x3D;png&amp;auto&#x3D;webp&amp;s&#x3D;33be55ebb4821955baf23f8b3fe7621f357e186f
  https://preview.redd.it/r3dco18vpz5h1.png?width&#x3D;1313&amp;format&#x3D;png&amp;auto&#x3D;webp&amp;s&#x3D;3d528f801de8bdbcfcc2133de1d4ce7b77b553cb
     submitted by    /u/Exact_Engine_7218  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >The wonderful world of Travelers Notebooks</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/Travelersnotebooks/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0hq7d/facing_the_twilight/"
-                        open
-                      >
-                        <summary class="article-expander__title">Facing the Twilight</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0hq7d/facing_the_twilight/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>One must always be ready, even to confront head-on the gentle twilight of the evening
-    submitted by    /u/DanilaoIT  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0h7yz/creating_my_5year_diary_on_tn/"
-                        open
-                      >
-                        <summary class="article-expander__title">Creating my 5-year diary on TN</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0h7yz/creating_my_5year_diary_on_tn/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Any ideas?
-    submitted by    /u/Additional_Cherry898  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0dfb4/stamping_the_leather_cover_at_a_stamp_caravan/"
-                        open
-                      >
-                        <summary class="article-expander__title">Stamping the leather cover at a Stamp Caravan?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0dfb4/stamping_the_leather_cover_at_a_stamp_caravan/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>My country is getting our first stamp caravan ever. Is it possible to stamp the leather cover instead of an insert?
- Has anybody done this? and if so, does it last? can you share pics?
- Or should the stamps available at the stamp caravan only be used on paper?
-    submitted by    /u/PaperBun  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u0bcy3/finally_joined_the_family/"
-                        open
-                      >
-                        <summary class="article-expander__title">Finally joined the family!</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u0bcy3/finally_joined_the_family/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I&#x27;ve been eyeing the Traveler&#x27;s Notebook Passport for months now, but it seemed to be OOS every time I checked. While in Portland, I saw that Oblation Papers and Press had some Regular sizes in stock, so I ran over and picked one up. I immediately fell in love, but couldn&#x27;t help but envy the Passport they had on display. As luck would have it, Oblation restocked on my last day in town, and I was able to cop this blue Passport. 
- It&#x27;s been about a month, and already I&#x27;m in love with these notebooks. I&#x27;d been trying a multi-notebook system for six months and kept running into hurdles. Those haven&#x27;t been a problem with these guys. I keep three notebooks in each: one for an idea dump, one for book quotes while reading, and one for sketching while I&#x27;m out and about.
- Now I just need to settle on a charm and pen loop.
-    submitted by    /u/SureShotTavner  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u08c47/hacked_my_travelers_notebook_passport_and_put_an/"
-                        open
-                      >
-                        <summary class="article-expander__title">Hacked my Travelers Notebook Passport and put an XTEINK X4 eReader insider</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u08c47/hacked_my_travelers_notebook_passport_and_put_an/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>https://preview.redd.it/p0lpsyc0c26h1.jpg?width&#x3D;1024&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;56a2265409546a7cced466125f288b31dee7253a
- Thought the group might dig this little mod I did last month. XTEINK X4 fits very nicely inside the travelers notebook passport size. Lovely setup for note taking and leather-bound reading. More info here: I hacked my Travelers Notebook to be a leather-bound X4 Reader
-    submitted by    /u/creativegamelife  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u07rmc/which_character_it_reminds_you_of/"
-                        open
-                      >
-                        <summary class="article-expander__title">Which character it reminds you of?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u07rmc/which_character_it_reminds_you_of/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>A felt nose placed on TN, and it became ….
-    submitted by    /u/patrickngscription  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u05knw/my_tiny_xteink_x4_analog_kit_to_avoid/"
-                        open
-                      >
-                        <summary class="article-expander__title">My tiny Xteink X4 &quot;analog&quot; kit to avoid doomscrooling using the cheapest and old items I own. Trying my best, guys!</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u05knw/my_tiny_xteink_x4_analog_kit_to_avoid/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>https://preview.redd.it/cywn93ycr16h1.jpg?width&#x3D;928&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;fa15805a61d6a6064c1fadeb25f701510b557c8c
- https://preview.redd.it/vu8703vdr16h1.jpg?width&#x3D;917&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;3e81c9484b53949fde1a4df76c07d60dae9e8177
- https://preview.redd.it/ztnc9m5fr16h1.jpg?width&#x3D;1052&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;fba7e82198252cfbccb3d9fe4a6914f2b61b5d23
- https://preview.redd.it/fzqsnwnfr16h1.jpg?width&#x3D;1037&amp;format&#x3D;pjpg&amp;auto&#x3D;webp&amp;s&#x3D;a66939bcbf3bed3bb5b98860bb367ccd3073c197
- My tiny Xteink X4 &quot;analog&quot; kit to avoid doomscrooling using the cheapest and old items I own. Trying my best, guys!
-    submitted by    /u/rogerio_acioli  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1u04vcm/my_first_tn/"
-                        open
-                      >
-                        <summary class="article-expander__title">My first tn ✨</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1u04vcm/my_first_tn/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I got my first Traveler’s Notebook during my Japan trip in May 2026. I visited both the Traveler’s Factory Nakameguro and the Traveler’s Factory Narita Airport, and honestly, I loved both stores.
- I first picked up a notebook refill at Narita Airport mainly to collect stamps along the way. I ended up loving it so much that when I returned to Tokyo later on, I made a trip to the Nakameguro store and came home with a whole lot more Traveler’s Notebook goodies. 
-    submitted by    /u/sgsaltedpopcorn  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1tzzve3/started_using_tn_in_sep_2024and_since_then/"
-                        open
-                      >
-                        <summary class="article-expander__title">Started using TN in Sep 2024…and since then…</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1tzzve3/started_using_tn_in_sep_2024and_since_then/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I’ve utilized 4 full TN inserts and 2 Accordion paper insert 🥰 I tend to fall short of updating it on a more regular basis when things get busy for me, but I never fail to do my travel journals whenever I do a trip! Since then, i’ve documented these trips on my TN: Europe (2x), Bali, Malaysia - Penang, Sydney Australia, Taiwan, and will be working on my recent Perth trip TN! 
-    submitted by    /u/milkystick88  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1tzvak0/suggestions/"
-                        open
-                      >
-                        <summary class="article-expander__title">Suggestions?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1tzvak0/suggestions/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Any suggestions for what to use the passport for? The regular is sort of my EDC. 
- Currently in the regular size we have weekly planner, blank notebook, and sketch. 
- In the passport we have sketch, blank notebook, and watercolor. 
-    submitted by    /u/snewo0909  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1tzuuwu/my_original_olive_with_my_tokyo_station/"
-                        open
-                      >
-                        <summary class="article-expander__title">My Original Olive with my Tokyo Station</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1tzuuwu/my_original_olive_with_my_tokyo_station/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>My original olive next to my Tokyo Station for comparison. Added a Sterling Ink 272 pg grid notebook to the olive and started a Common Place book in the Traveler&#x27;s System. I have a Sterling Ink Lined 272 pg for a diary in the Tokyo Station 
-    submitted by    /u/Director_Dooby  
  [link]   [comments]</span>
                             </span>
                           </div>
@@ -32408,69 +33426,6 @@ Morning Pages notebook
                         </a>
                       </details>
                     </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t9yosa/what_pen_for_the_tn_card_size/"
-                        open
-                      >
-                        <summary class="article-expander__title">What pen for the TN card size ?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t9yosa/what_pen_for_the_tn_card_size/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Hi there ! Looking for a recommandation of a good pen to hold in a TN card size. Although I&#x27;m a fountain pen lover, I don&#x27;t want to use my Kaweco Sport, I&#x27;m looking for something that will match with the all-terrain use of my TN, without fear of leakage, and not too expensive so I won&#x27;t fear to loose it neither. I&#x27;m looking more a ball ou gel pen. Currently I have a cute little free ball pen that fits ideally, but the writing experience is the worst I had with a ball pen... Any suggestion ?
-    submitted by    /u/veroa6  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t9qtby/update_media_journal/"
-                        open
-                      >
-                        <summary class="article-expander__title">Update: Media Journal</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t9qtby/update_media_journal/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>At the beginning of the year I shared my 2026 journal prep which included my media journal. I’m happy(ish) to announce it’s been the only journal I am consistent with, which means I’m really enjoying it. 
- A few of you asked to see how I planned to write in it so here’s a peek at what I’ve done so far. 
- If you want to experience a movie/song/show again for the first time, this is a great way to do it! 
-    submitted by    /u/No_Huckleberry6281  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t9qdy9/my_little_complete_collection_for_now/"
-                        open
-                      >
-                        <summary class="article-expander__title">my little complete collection (for now) 📚</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t9qdy9/my_little_complete_collection_for_now/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I wanted to show you all my collection of covers! The tiny one is from M.Lovewell. :)
- Today, I received the tokyo edition TN from a tn group on facebook. They added a lot of extra goodies- all brand new and unopened for a super affordable price- so kind! I am super stoked! I have been wanting it since discovering tn&#x27;s last year.
- I feel like my collection has been completed- I don&#x27;t think I will need anymore beyond this... famous last words.. maybe.. 🤥
- If any of you have the special edition tokyo tn, can you please show me the patina after a while? I heard the foil comes off after a while, but I haven&#x27;t been able to find photos.
- The next slide is my desk set up. I wanted it to feel like a stationery store. hehehe! 
-    submitted by    /u/clapmyasstwice  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
                 </section>
               </section>
             </li>
@@ -32650,74 +33605,6 @@ Morning Pages notebook
                           <div class="article-summary-box-inner media-object">
                             <span class="media-object__text">
                               <span>The company-c-headers package has been updated to version 20260511.1117.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/slack-20260511.950.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">slack (20260511.950) --- Slack client</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/slack">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The slack package has been updated to version 20260511.950.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/magit-commit-mark-20260511.839.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">magit-commit-mark (20260511.839) --- Support marking commits as read</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/magit-commit-mark">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The magit-commit-mark package has been updated to version 20260511.839.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/ast-grep-20260511.749.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">ast-grep (20260511.749) --- Search code using ast-grep with completing-read interface</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/ast-grep">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The ast-grep package has been updated to version 20260511.749.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/vterm-20260511.19.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">vterm (20260511.19) --- Fully-featured terminal emulator</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/vterm">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The vterm package has been updated to version 20260511.19.</span>
                             </span>
                           </div>
                         </a>
@@ -32947,117 +33834,6 @@ Slight bleed through seen with P8126 Medium Rollerball refill
                         </a>
                       </details>
                     </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t9ybxl/removed_by_reddit/"
-                        open
-                      >
-                        <summary class="article-expander__title">[ Removed by Reddit ]</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t9ybxl/removed_by_reddit/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>[ Removed by Reddit on account of violating the content policy. ]
-    submitted by    /u/Altruistic-Two8250  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t9w5w7/seeking_combinedhybrid_planner_notebook/"
-                        open
-                      >
-                        <summary class="article-expander__title">Seeking Combined/Hybrid Planner &amp; Notebook</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t9w5w7/seeking_combinedhybrid_planner_notebook/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I am in desperate need of help finding the right planner + notebook combo that meets the features I’m looking for. I have spent countless time trying to find something, but I just can’t seem to find one that I can settle or compromise on. The need behind what I’m looking for is because I am starting a new job in an office setting as a coordinator. My main uses for it will be to stay organized during the week with my tasks, projects, specific to-dos, deadlines, etc. and having a good amount of notebook space for meetings, general notes, etc.
- Things I’m looking for:
- -A5 size
- -All-in-one
- -Weekly planner without hourly timeline
- -Open to dated or undated, but probably prefer undated since I’m starting right in mid-May
- -A dedicated amount of notebook paper in the back (open to lined, blank, grid, etc. but prefer lined)
- -Planner timeframe would be either 6 or 12 months
- -I do not want any sections that strictly pertain to things that would to keep track of personal/at-home things
- Ideally, this would look like having a weekly planner layout uninterrupted in one section with decent space to write out various things per day, with other boxes/sections that maybe include priorities, to-dos, reminders, goals, etc. I’m moderately flexible with the box categories so long as I feel like it makes sense for me. Then there would be a good amount of pages for regular notes, basically like a standard notebook. I’m also indifferent to whether it’s a refillable or not.
- I’ve found some options that are alright, they just don’t end up meeting most of what I need out of it. And while I’m not opposed to a Hobonichi, please refrain from suggesting it unless you can provide me with a link to buy one because I can barely find any in stock that is available in the US 😭
-    submitted by    /u/Current-Brief-7594  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t9repk/how_do_you_guys_keep_physical_journals_while/"
-                        open
-                      >
-                        <summary class="article-expander__title">How do you guys keep Physical Journals while Travelling?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t9repk/how_do_you_guys_keep_physical_journals_while/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I have been journaling for over 5 years now.
- I started travelling last year so I had to unfortunately get rid of the Physical Journals that I maintained over the last few years and since I plan to travel again, this situation will come again.
- I don&#x27;t have a permanent base and maybe I will never have because I get bored of a place after every 2-3 years and want to move.
- Does anyone here face the same issue and is there a service where I can keep it until I do have a base?
- I thought of maybe going to a copy shop and have them scan and send it to me but feels like it will loose the essence of it.
- Is there a viable solution someone might have found, I am all ears!!
- Thanks in advance:)
-    submitted by    /u/Mayank1001  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t9ptqm/anyone_else_have_notebook_chaos/"
-                        open
-                      >
-                        <summary class="article-expander__title">Anyone else have notebook chaos?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t9ptqm/anyone_else_have_notebook_chaos/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>My whole life is cluttered. Has anyone acknowledged their notebook clutter and found a way out of it?
- Mainly, I believe I haven&#x27;t settled on an &quot;ecosystem&quot; as others have posted. Too many To Do list notebooks. Not sure where to start.
-    submitted by    /u/bkmboss  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t9nl5h/moleskine_planner_paper_test_of/"
-                        open
-                      >
-                        <summary class="article-expander__title">Moleskine Planner Paper Test of</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t9nl5h/moleskine_planner_paper_test_of/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>submitted by    /u/Livingwithmychart  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
                 </section>
               </section>
             </li>
@@ -33184,793 +33960,6 @@ Slight bleed through seen with P8126 Medium Rollerball refill
                         </a>
                       </details>
                     </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1t9wree/elpagnuorg_is_down/"
-                        open
-                      >
-                        <summary class="article-expander__title">elpa.gnu.org is down</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1t9wree/elpagnuorg_is_down/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>submitted by    /u/de_sonnaz  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >Scala</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/scala/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/scala/comments/1t9so28/kyo_going_pure_scala_3_100rc2_is_out/"
-                        open
-                      >
-                        <summary class="article-expander__title">Kyo going pure Scala 3 - 1.0.0-RC2 is out!</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/1t9so28/kyo_going_pure_scala_3_100rc2_is_out/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>v1.0.0-RC2
- v1.0.0-RC2 is a large release. Nine new modules land, the HTTP stack is rewritten from scratch in pure Scala (with both client and server running on JVM, JS, and Native), and Scala Native picks up the remaining pieces it needed to be a viable target for everything Kyo ships 🚀
- A recurring theme across the release is dependency reduction. Netty, libcurl, h2o, JCTools, Caffeine, HdrHistogram, the Java OpenTelemetry SDK, sttp, and tapir are all gone, replaced by pure-Scala implementations that share Kyo&#x27;s scheduler and effect channels and compile to all three platforms. The new modules build directly on that foundation: durable workflows (kyo-flow), container orchestration (kyo-pod), feature flags (kyo-config), and OpenTelemetry export (kyo-stats-otlp) all rely almost exclusively…</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-        </ul>
-      </section>
-      <section class="daily-content js-toggle-accordions-scope">
-        <h2 class="daily-heading">
-          <button
-            class="daily-heading-toggle"
-            data-action="toggle-accordions"
-            title="Click to toggle the day, Ctrl + click to toggle all."
-          >
-            <time class="daily-heading-toggle__weekday js-offset-weekday" data-offset-date=2026-05-10 datetime="2026-05-10T21:01:00.000Z">2026-05-10</time>
-            <time class="daily-heading-toggle__date js-offset-date" data-offset-date=2026-05-10 datetime="2026-05-10T21:01:00.000Z"></time>
-          </button>
-        </h2>
-        <ul class="sources card">
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >MELPA package updates</button>
-                  <a class="source-heading__link" href="https://melpa.org">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/pi-coding-agent-20260510.2101.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">pi-coding-agent (20260510.2101) --- Emacs frontend for pi coding agent</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/pi-coding-agent">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The pi-coding-agent package has been updated to version 20260510.2101.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/ellama-20260510.2036.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">ellama (20260510.2036) --- Tool for interacting with LLMs</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/ellama">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The ellama package has been updated to version 20260510.2036.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/gerrit-20260510.2014.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">gerrit (20260510.2014) --- Gerrit client</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/gerrit">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The gerrit package has been updated to version 20260510.2014.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/outline-indent-20260510.1901.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">outline-indent (20260510.1901) --- Folding text based on indentation (origami alternative)</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/outline-indent">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The outline-indent package has been updated to version 20260510.1901.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/term-cmd-20260510.1834.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">term-cmd (20260510.1834) --- Send commands from programs running in term.el</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/term-cmd">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The term-cmd package has been updated to version 20260510.1834.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/geiser-guile-20260510.1733.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">geiser-guile (20260510.1733) --- Guile and Geiser talk to each other</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/geiser-guile">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The geiser-guile package has been updated to version 20260510.1733.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/go-rename-20260510.1707.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">go-rename (20260510.1707) --- Integration of the &#x27;gorename&#x27; tool into Emacs</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/go-rename">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The go-rename package has been updated to version 20260510.1707.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/go-mode-20260510.1707.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">go-mode (20260510.1707) --- Major mode for the Go programming language</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/go-mode">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The go-mode package has been updated to version 20260510.1707.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/go-guru-20260510.1707.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">go-guru (20260510.1707) --- Integration of the Go &#x27;guru&#x27; analysis tool into Emacs</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/go-guru">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The go-guru package has been updated to version 20260510.1707.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/tree-sitter-langs-20260510.1654.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">tree-sitter-langs (20260510.1654) --- Grammar bundle for tree-sitter</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/tree-sitter-langs">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The tree-sitter-langs package has been updated to version 20260510.1654.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/thrift-20260510.1632.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">thrift (20260510.1632) --- Major mode for fbthrift and Apache Thrift files</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/thrift">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The thrift package has been updated to version 20260510.1632.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://melpa.org/packages/folgezett-20260510.1449.tar"
-                        open
-                      >
-                        <summary class="article-expander__title">folgezett (20260510.1449) --- Folgezettel IDs for org-roam</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://melpa.org/#/folgezett">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>The folgezett package has been updated to version 20260510.1449.</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >Douceur de l&#x27;écriture.</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/notebooks/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t9iki9/first_attempt/"
-                        open
-                      >
-                        <summary class="article-expander__title">First Attempt</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t9iki9/first_attempt/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I have these nice 3x5 To-Do list cards that I can&#x27;t live without. I would like to bind them into small spiral notebooks, maybe 25 cards each. How would I approach doing that myself? Secondary to this, I would be interested in purchasing cardstock pocket notebooks of this size, but I can&#x27;t find anything online anywhere. Am I searching wrong? Someone else has to have the same want as me, right? 
-    submitted by    /u/byfail  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t9g840/finding_my_dream_notebook/"
-                        open
-                      >
-                        <summary class="article-expander__title">Finding my dream notebook</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t9g840/finding_my_dream_notebook/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Hey everyone! I’m on the hunt for a notebook that’s somewhere in between A5 and A6, because A5 feels too large for my daily use, while A6 and B6 are too small. 
- A5 feels a bit too big for my daily use, but A6 and B6 feel like I don’t have enough space. I’m wondering if there’s some kind of slim or intermediate size that might work better.
- What I’m ideally looking for is:
- - A daily planner or notebook with a grid layout
- - A grid smaller than 5 mm, ideally around 3 mm or 3.7 mm
- - Something with a similar feel to Hobonichi daily (I believe it’s the cousin what I’m talking about)
- - A layout where the grid doesn’t cover the entire page, because I really like the look of having some blank space or margins on the sides
- Does anyone know of any brands, specific planners, or notebook lines that might fit this?
- Thanks in advance!
-    submitted by    /u/Valuable_Air_1747  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t9e1kg/180gsm/"
-                        open
-                      >
-                        <summary class="article-expander__title">180gsm</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t9e1kg/180gsm/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I bought this notebook when I bought their ink. Thinking it would showcase the ink. What can I do here. Ink shows flat and it&#x27;s all shimmer ink. My Accel 5 subject note book shows shimmer on these way better. I write with med and broad nibs. Did ink test with qtip. It shows in 5 subject great but not this Kiwi. Is it just too thick or is it because it&#x27;s bamboo?
-    submitted by    /u/Nebetmiw  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t99kgr/orlando/"
-                        open
-                      >
-                        <summary class="article-expander__title">Orlando</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t99kgr/orlando/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Are there stores in Orlando that carry hobonichi, Midori, or similar journals/planners (other than Barnes and Noble)? 
-    submitted by    /u/Ok-Albatross7396  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t99gtx/more_photos_of_leather_notebook_cover_from_etsy/"
-                        open
-                      >
-                        <summary class="article-expander__title">More photos of leather notebook cover from Etsy</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t99gtx/more_photos_of_leather_notebook_cover_from_etsy/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>submitted by    /u/Sewpercee  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t95cbw/what_notebooks_do_you_use/"
-                        open
-                      >
-                        <summary class="article-expander__title">What notebooks do you use?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t95cbw/what_notebooks_do_you_use/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I use many different pens, markers, and inks, but i can never find something high quality under 10 USD. thanks much.
-    submitted by    /u/JackfruitVirtual2087  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/notebooks/comments/1t9328l/finished_notebook_leuchtturm1917_monocle_b6_navy/"
-                        open
-                      >
-                        <summary class="article-expander__title">Finished notebook: Leuchtturm1917 Monocle B6+ navy blue</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/notebooks/comments/1t9328l/finished_notebook_leuchtturm1917_monocle_b6_navy/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>It&#x27;s my bullet journal March - mid may 2026 :)
- I&#x27;m starting a new one, same brand same model only that it&#x27;s a yellow one now!
-    submitted by    /u/luthiel-the-elf  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >The wonderful world of Travelers Notebooks</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/Travelersnotebooks/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t9ibmq/where_to_buy_tn_in_hokkaido_and_tokyo/"
-                        open
-                      >
-                        <summary class="article-expander__title">Where to buy TN in Hokkaido and Tokyo?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t9ibmq/where_to_buy_tn_in_hokkaido_and_tokyo/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>I will be in Hokkaido for 12 Days and one week in Tokyo. May i know where is the best place to shop for TN?
-    submitted by    /u/Dry_Schedule6762  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t9i8gt/tn_card_size_search/"
-                        open
-                      >
-                        <summary class="article-expander__title">TN Card Size search</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t9i8gt/tn_card_size_search/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Where can I find one available at a fair price?
-    submitted by    /u/jerrybryant86  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t9hj8a/all_my_travelers_notebook_anniversary_editions/"
-                        open
-                      >
-                        <summary class="article-expander__title">All my Traveler’s Notebook Anniversary Editions</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t9hj8a/all_my_travelers_notebook_anniversary_editions/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>My little Traveler’s Notebook Anniversary Edition collection. I adore my brown card size TN, but very slightly miffed that it broke my camel streak. 
-    submitted by    /u/lettucemove  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t9feu3/bujo_et_tn/"
-                        open
-                      >
-                        <summary class="article-expander__title">BuJo et TN</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t9feu3/bujo_et_tn/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Bonjour à tous.
- Nouveau dans l’univers du TN - mais y pensant depuis déjà pas mal de temps - j’ai jeté mon dévolu sur le format Passport pour essayer ce carnet. Il me suit partout et a même remplacé mon portefeuille en EDC. 
- Mon TDAH n’aidant pas, je lorgne maintenant aussi vers le Regular car le petit souhaiterait un grand frère pour se compléter. 
- Pour ceux qui font du BuJo, comment utilisez-vous votre TN ? Est-ce que le TN est plus pratique que le traditionnel carnet A5 ? Quelles recharges utilisez-vous le plus ?
- Le Passport va devenir mon carnet de sketching et d’aquarelle ou je pense faire mes propres recharges avec du 250g ou du 300g. 
- Tellement de possibilités que cela fait tourner la tête 😝 
- Au plaisir de vous lire et d’échanger avec vous. 
-    submitted by    /u/FrancoisCochin  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t9d6a2/all_my_goodies_from_my_trip_to_japan_cant_wait_to/"
-                        open
-                      >
-                        <summary class="article-expander__title">All my goodies from my trip to Japan. Can’t wait to set up my new TN.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t9d6a2/all_my_goodies_from_my_trip_to_japan_cant_wait_to/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>submitted by    /u/eauxbehv  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t9a4iv/follow_up_notebook_now_complete_for_now/"
-                        open
-                      >
-                        <summary class="article-expander__title">Follow Up. Notebook now complete for now.</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t9a4iv/follow_up_notebook_now_complete_for_now/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Had to watch some videos as a lot of different ways to attach inserts. The pen is an anterique with brass bottom. The Mt. Fuji logo was because I purchased the pieces at Narita. The coffee insert from Starbucks roastery.
-    submitted by    /u/Mezcalnerd0077  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t97rur/card_size_tn/"
-                        open
-                      >
-                        <summary class="article-expander__title">Card Size TN</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t97rur/card_size_tn/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Just got the new Traveler’s Notebook Card Size and I really like it so far. The size and feel are great, but I still haven’t figured out the best way to use it in daily life.
- I tried using it as a wallet, but that didn’t really work for me. Now I’m looking for other ideas or setups. How are you using yours? Any inspiration appreciated
- 🩷
-    submitted by    /u/wildworld88  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t94rh7/teeheehee/"
-                        open
-                      >
-                        <summary class="article-expander__title">Teeheehee</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t94rh7/teeheehee/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>so smol &#x3D;^.^&#x3D;
-    submitted by    /u/chidianaconda  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/Travelersnotebooks/comments/1t93a1f/finally_onboard_with_tn_passport/"
-                        open
-                      >
-                        <summary class="article-expander__title">Finally onboard with TN passport</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/Travelersnotebooks/comments/1t93a1f/finally_onboard_with_tn_passport/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>It all started with randomly purchasing refills and using them independently. Then few weeks ago i bought a ‘knock-off’ from China to get a feel on how it would fit in my EDC. And i am happy to report that i finally bought a blue TN passport.
- TN passport: 3 notebooks; dot grid for braindumps/quick notes/reminders, lined for commonplace book and free monthly diary for reading tracker.
- Supernote Nomad: everything work-related, journal, finished-book summary.
- Xteink 4: quick on-the-go reading.
-    submitted by    /u/pomeng  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >M-x emacs-reddit</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/emacs/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1t9ib4b/finally_gotodefinition_w_eglot_on_jvm_languages/"
-                        open
-                      >
-                        <summary class="article-expander__title">Finally go-to-definition w/ Eglot on JVM languages (Kotlin and Java)! do you know how to improve it?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1t9ib4b/finally_gotodefinition_w_eglot_on_jvm_languages/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Hey everyone, after much frustration and diving deep into my setup, I can finally say I will be using IntelliJ a lot less, for my daily work (personal projects and 90% of life already in Emacs, but work wasn&#x27;t)
- Kotlin-LSP (by Intellij team) and Eclipse JDTLS have go-to-definition problems for me, specially for 3rd party packages
- Links to inside JARs didn&#x27;t work, e.g. jar:///home/joe/.gradle/.../ConfigurationProperties.java or jar:file:///home/joe/.gradle/caches/modules-2/files-2.1/io.github.oshai/kotlin-logging-jvm/8.0.01/328a6389fbbf23e94b71586d3abb545bc86303a/kotlin-logging-jvm-8.0.01-sources.jar!/commonMain/io/github/oshai/kotlinlogging/KotlinLogging.kt
- Finally, I am able to use Eglot nicely with Kotlin &amp; Java thanks to the power of Emacs
- Do you think this (or an improved way) should be upstreamed to Eglot, so that people out-of-the box get this fixed?
-  (defun fix-ls-jar-uri (orig-fn uri &amp;rest args) &quot;Fix malformed jar:/// URIs sent by kotlin-language-server so jarchive can read them.&quot; (if (and (stringp uri) (string-prefix-p &quot;jar:///&quot; uri)) ;; Inject &#x27;file:&#x27; to make it a standard &#x27;jar:file:///&#x27; URI (apply orig-fn (replace-regexp-in-string &quot;^jar:///&quot; &quot;jar:file:///&quot; uri) args) (apply orig-fn uri args))) ;; Apply the patch to Eglot&#x27;s URI parser (handles both old and new Eglot versions) (if (fboundp &#x27;eglot-uri-to-path) (advice-add &#x27;eglot-uri-to-path :around #&#x27;fix-ls-jar-uri) (advice-add &#x27;eglot--uri-to-path :around #&#x27;fix-ls-jar-uri)) 
-    submitted by    /u/SandPrestigious2317  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1t9huk5/how_to_enable_lspmode_highlighting/"
-                        open
-                      >
-                        <summary class="article-expander__title">How to enable lsp-mode highlighting?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1t9huk5/how_to_enable_lspmode_highlighting/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>So before something mysterious happened, my lsp-mode was highlighting the text correctly. I was not using tree-sitter-hl-mode or even tree-sitter. 
- First image is a random file I screenshotted like a week ago that had correct highlighting, the second one is a C hello world I made with the current highlighting (ugly)
- Help please!
-    submitted by    /u/MrKrot1999  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/emacs/comments/1t971be/what_is_the_best_way_to_influence_the_next_buffer/"
-                        open
-                      >
-                        <summary class="article-expander__title">What is the best way to influence the next buffer after kill?</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/emacs/comments/1t971be/what_is_the_best_way_to_influence_the_next_buffer/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Is there a way to make Emacs prefer showing buffers with the same major mode when I kill a buffer instead of random buffers (or whatever order it uses)?
- I just bricked my session (loaded &quot;package.el&quot; from the next version of Emacs), and I wanted to kill all Agent-Shell sessions one by one, and write a prompt to save what it has in the context into SESSION.md file.
- And after a few kills (I have about 10 agent-shell buffers that I toggle in one window), it changed to something totally random (a yaml file).
- I want to have all major modes one by one when I&#x27;m killing buffers.
- I asked Grok, but the code didn&#x27;t look very nice. There should be some clean way to do this.
- What is the best way to add this to Emacs?
- It would be nice if you could just sort (group by) the history kill buffer is using, by major mode.
-    submitted by    /u/jcubic  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >Scala</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/scala/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/scala/comments/1t9b8r2/this_week_in_scala_may_11_2026/"
-                        open
-                      >
-                        <summary class="article-expander__title">This week in #Scala (May 11, 2026)</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/scala/comments/1t9b8r2/this_week_in_scala_may_11_2026/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>submitted by    /u/petrzapletal  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
-                </section>
-              </section>
-            </li>
-            <li class="card__section">
-              <section class="js-toggle-accordions-scope">
-                <h3 class="source-heading">
-                  <button
-                    class="source-heading__name"
-                    data-action="toggle-accordions"
-                    title="Click to toggle the source, Ctrl + click to toggle all."
-                  >Org-mode</button>
-                  <a class="source-heading__link" href="https://www.reddit.com/r/orgmode/">Open</a>
-                </h3>
-                <section class="articles-per-source">
-                    <article>
-                      <details
-                        class="article-expander"
-                        data-action="toggle-native-accordion"
-                        data-accordion-key="https://www.reddit.com/r/orgmode/comments/1t93h3e/tiny_package_for_org_links_which_base64_embed/"
-                        open
-                      >
-                        <summary class="article-expander__title">Tiny package for org links which base64 embed files into HTML export for sharing</summary>
-                        <a class="article-summary-link article-summary-box-outer" href="https://www.reddit.com/r/orgmode/comments/1t93h3e/tiny_package_for_org_links_which_base64_embed/">
-                          <div class="article-summary-box-inner media-object">
-                            <span class="media-object__text">
-                              <span>Hi all,
- I write org notebooks with analysis code for scientific collaborators, and post-process with monolith to embed the plots. Then my collaborators can see the context that produced them, and then drag and drop any plots they want to save, which works well.
- I kept wanting to also embed other files like config files, large results tables, etc, couldn&#x27;t find a package to speed this up, so wrote one: ox-html-file-embedding
- Screenshot showing functionality, above is the in-buffer org-link, bottom with clickable button is what gets exported by default.
- I&#x27;ve written a lot of elisp for myself before, but this is my first time sharing it, so let me know if this could be useful for you, any improvements you&#x27;d like to see, or if something that covers this use-case already exists!
- LLM use: I had Claude Sonnet 4.6 write multiple implementations (inline keywords, top-level keywords where the links get collected to the bottom of the document, embedding the base64 directly in-buffer, and an org-link type). I tested these with a notebook I&#x27;m currently sharing with a collaborator, and found the link version most ergonomic, then re-wrote it by hand to improve my emacs understanding, and added completion and follow behavior for the links. 
-    submitted by    /u/NextTimeJim  
- [link]   [comments]</span>
-                            </span>
-                          </div>
-                        </a>
-                      </details>
-                    </article>
                 </section>
               </section>
             </li>
@@ -33978,8 +33967,8 @@ Slight bleed through seen with P8126 Medium Rollerball refill
       </section>
 
     <footer>
-      <a class="footer-link" href="https://github.com/Nimor111/feeds/actions/runs/27170089302">
-        <time id="build-timestamp" datetime="2026-06-08T22:07:59.639Z">2026-06-08T22:07:59.639Z</time>
+      <a class="footer-link" href="https://github.com/Nimor111/feeds/actions/runs/27238805334">
+        <time id="build-timestamp" datetime="2026-06-09T22:03:46.720Z">2026-06-09T22:03:46.720Z</time>
       </a>
       <a class="footer-link" href="https://github.com/osmoscraft/osmosfeed">osmosfeed 1.15.1</a>
     </footer>
