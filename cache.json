@@ -44,16 +44,6 @@
           "wordCount": 963,
           "title": "Issue 526",
           "imageUrl": "https://haskellweekly.news/logo.png"
-        },
-        {
-          "id": "https://haskellweekly.news/issue/525.html",
-          "author": null,
-          "description": "Welcome to another issue of Haskell Weekly!\nHaskell is a safe, purely functional programming language with a fast, concurrent runtime.\nThis is a weekly summary of what’s going on in its community.\nFeatured\nEmulating a 6502…in Haskell?! by Tea Leaves\nOur EmuDevz JavaScript emulator is finally finished! And now on to the next challenge…writing an NES emulator in Haskell!\nEpisode 82 – Fraser Tweedale by The Haskell Interlude\nWe talked to Fraser Tweedale. Fraser works at Red Hat, and is on the Haskell Security Response Team. We talked about security in the context of Haskell, both technical and organizational issues, and also the political issues involved. Fraser’s work is both really important and not well-known in the Haskell ecosystem, so it was high time for him to come on the show.\nHaskel…",
-          "link": "https://haskellweekly.news/issue/525.html",
-          "publishedOn": "2026-05-21T12:00:00.000Z",
-          "wordCount": 764,
-          "title": "Issue 525",
-          "imageUrl": "https://haskellweekly.news/logo.png"
         }
       ]
     },
@@ -840,6 +830,36 @@
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/scala/comments/1uaton6/declinio_and_h4sbl/",
+          "author": null,
+          "description": "I've just released the latest version of two small Scala utility libraries that I wrote! They're small libraries that I use for my own personal projects (more on these later) and they gave me the change to work a bit more with OSS projects.\n I hope someone will find these useful, if not, I had (and have) fun writing them. Any feedback is welcome, I still have so much to learn!\n https://github.com/ColOfAbRiX/h4sbl - Http4s Better Logging\n https://github.com/ColOfAbRiX/declinio - Seamless integration between Decline and Cats Effect without the awkward constructor syntax of Decline.\n    submitted by    /u/ColOfAbRiX  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1uaton6/declinio_and_h4sbl/",
+          "publishedOn": "2026-06-20T10:56:55.000Z",
+          "wordCount": null,
+          "title": "Declinio and h4sbl",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1uas1ie/introducing_scalapptainer_drive_linux_containers/",
+          "author": null,
+          "description": "🚀 Introducing Scalapptainer: drive Linux containers from Scala 3, on any OS. No daemon, no root.\n Ever wanted a reproducible Linux toolchain (a specific compiler, simulator, CLI, or even a GUI app) that behaves identically on every machine? Apptainer gives you exactly that: a whole environment as a single, immutable .sif file. The catch is it only runs on Linux and usually means wrestling with shell scripts.\n Scalapptainer makes that catch disappear. One dependency, and the same Scala code runs on Linux, Windows (via WSL2), and macOS (via Lima). It detects your host and routes commands to the right backend. On first use it installs Apptainer for you in user mode, bundling the helper tools the installer needs so even a minimal distro just works.\n The API is typed and fluent: pull/build hand you back an immutable image handle you configure with bind mounts, env vars, and X11 forwarding, then exec / run / shell. Yes, that includes GUI apps rendered right on your desktop.\n Want a taste? No project, no build file, just a .scala file:\n ```scala //> using dep io.github.dfiantworks::scalapptainer:0.2.1 import scalapptainer.*\n main def cow(): Unit = Apptainer.pull(\"docker://ghcr.io/dfiantworks/scalapptainer-cowsay\").runInteractive() ```\n  scala run cow.scala \n A ~30 MB image, an ASCII cow, and a random fortune, running in seconds. 🐮\n ⭐ Check it out on GitHub: https://github.com/DFiantWorks/Scalapptainer\n Apache-2.0, built with Mill. Give it a try and let me know what you build with it!\n    submitted by    /u/soronpo  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1uas1ie/introducing_scalapptainer_drive_linux_containers/",
+          "publishedOn": "2026-06-20T09:18:02.000Z",
+          "wordCount": null,
+          "title": "🚀 Introducing Scalapptainer: drive Linux containers from Scala 3, on any OS. No daemon, no root.",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1uarnah/reducing_scaladoc_file_size_with_sbtsaladdays/",
+          "author": null,
+          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1uarnah/reducing_scaladoc_file_size_with_sbtsaladdays/",
+          "publishedOn": "2026-06-20T08:53:11.000Z",
+          "wordCount": null,
+          "title": "reducing scaladoc file size with sbt-salad-days",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/scala/comments/1ua0jb2/idea_versioned_distributable_observability/",
           "author": null,
           "description": "Scala has decent OTEL support growing (otel4s, cats-effect 3.7 metrics, etc), but every team still hand-rolls their own Grafana dashboards and alerts for the same libraries. Feels like wasted effort that could be shared.\n A few ideas, roughly in order of \"how big a yak shave is this\":\n 1. Metrics schemas per library\n Libraries exposing OTEL metrics (cats-effect, fs2-kafka, fs2-grpc, hikari, keypool, ZIO ecosystem, etc) could publish a schema describing what they emit — names, types, labels, units. Right now you have to read source or trial-and-error your way to a dashboard.\n 2. Dashboards as code, distributed alongside the schema\n Use something like the Grafana Foundation SDK (or a Scala equivalent) to define dashboards in code, then publish them — not just as JSON you copy-paste into Grafana, but via a registry/platform a consumer can pull from.\n 3. A platform that resolves dashboards by library + version range\n Like a package registry, but for dashboards. \"I'm running cats-effect 3.7.x and fs2-kafka 3.x\" → here's the matching dashboard set. Handles drift when metric names/labels change between versions.\n 4. A k8s operator to wire it up automatically\n App emits something like an SBOM (or a lighter metrics-manifest) → operator reads it → knows what's deployed, what's scrapeable, fetches/applies the right dashboards. Could extend to declarative alert rules per library too (e.g. \"hikari pool exhaustion\" ships as a reusable alert definition, not something every team reinvents).\n Curious if:\n  \nsomething like this already exists and I've missed it\n whether this fits as an OTEL semantic-conventions style effort, or is too Scala/library-specific for that\n anyone's hit the \"dashboard sprawl per microservice\" pain enough to want this\n  \nNot pitching myself as the one to build all of this — more interested if it resonates or if there's prior art to point to.\n    submitted by    /u/Fristi86  \n [link]   [comments]",
@@ -1398,16 +1418,6 @@
           "wordCount": null,
           "title": "Switching UI format from Scalatags to something else?",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1tjfwvd/play_framework_2911_and_3011_released/",
-          "author": null,
-          "description": "Upgrading dependencies and fixing CVEs in play-ws! 🙌\n  \nPlay 2.9.11\n Play 3.0.11\n  \n   submitted by    /u/mkurz  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1tjfwvd/play_framework_2911_and_3011_released/",
-          "publishedOn": "2026-05-21T10:04:31.000Z",
-          "wordCount": null,
-          "title": "Play Framework 2.9.11 and 3.0.11 released",
-          "imageUrl": null
         }
       ]
     },
@@ -1740,6 +1750,66 @@
       "feedUrl": "https://melpa.org/updates.rss",
       "siteUrl": "https://melpa.org",
       "articles": [
+        {
+          "id": "https://melpa.org/packages/borland-blue-theme-20260620.1425.tar",
+          "author": null,
+          "description": "The borland-blue-theme package has been updated to version 20260620.1425.",
+          "link": "https://melpa.org/#/borland-blue-theme",
+          "publishedOn": "2026-06-20T14:25:00.000Z",
+          "wordCount": 104,
+          "title": "borland-blue-theme (20260620.1425) --- Blue/yellow theme based on old DOS Borland/Turbo C IDE",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/blue-20260620.951.tar",
+          "author": null,
+          "description": "The blue package has been updated to version 20260620.951.",
+          "link": "https://melpa.org/#/blue",
+          "publishedOn": "2026-06-20T09:51:00.000Z",
+          "wordCount": 104,
+          "title": "blue (20260620.951) --- BLUE build system interface",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/bitbake-20260620.217.tar",
+          "author": null,
+          "description": "The bitbake package has been updated to version 20260620.217.",
+          "link": "https://melpa.org/#/bitbake",
+          "publishedOn": "2026-06-20T02:17:00.000Z",
+          "wordCount": 104,
+          "title": "bitbake (20260620.217) --- Running bitbake from emacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/eldoc-box-20260620.158.tar",
+          "author": null,
+          "description": "The eldoc-box package has been updated to version 20260620.158.",
+          "link": "https://melpa.org/#/eldoc-box",
+          "publishedOn": "2026-06-20T01:58:00.000Z",
+          "wordCount": 104,
+          "title": "eldoc-box (20260620.158) --- Display documentation in childframe",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/tablist-20260619.2309.tar",
+          "author": null,
+          "description": "The tablist package has been updated to version 20260619.2309.",
+          "link": "https://melpa.org/#/tablist",
+          "publishedOn": "2026-06-19T23:09:00.000Z",
+          "wordCount": 104,
+          "title": "tablist (20260619.2309) --- Extended tabulated-list-mode",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/elmpd-20260619.2114.tar",
+          "author": null,
+          "description": "The elmpd package has been updated to version 20260619.2114.",
+          "link": "https://melpa.org/#/elmpd",
+          "publishedOn": "2026-06-19T21:14:00.000Z",
+          "wordCount": 104,
+          "title": "elmpd (20260619.2114) --- A tight, ergonomic, async client library for mpd",
+          "imageUrl": null
+        },
         {
           "id": "https://melpa.org/packages/docker-20260619.1940.tar",
           "author": null,
@@ -4849,196 +4919,6 @@
           "wordCount": 104,
           "title": "otpp (20260522.1558) --- One tab per project, with unique names",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/kanagawa-themes-20260522.325.tar",
-          "author": null,
-          "description": "The kanagawa-themes package has been updated to version 20260522.325.",
-          "link": "https://melpa.org/#/kanagawa-themes",
-          "publishedOn": "2026-05-22T03:25:00.000Z",
-          "wordCount": 104,
-          "title": "kanagawa-themes (20260522.325) --- Elegant theme inspired by The Great Wave off Kanagawa",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/clutch-20260522.322.tar",
-          "author": null,
-          "description": "The clutch package has been updated to version 20260522.322.",
-          "link": "https://melpa.org/#/clutch",
-          "publishedOn": "2026-05-22T03:22:00.000Z",
-          "wordCount": 104,
-          "title": "clutch (20260522.322) --- Interactive database client",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/company-20260521.2156.tar",
-          "author": null,
-          "description": "The company package has been updated to version 20260521.2156.",
-          "link": "https://melpa.org/#/company",
-          "publishedOn": "2026-05-21T21:56:00.000Z",
-          "wordCount": 104,
-          "title": "company (20260521.2156) --- Modular text completion framework",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/easysession-20260521.2003.tar",
-          "author": null,
-          "description": "The easysession package has been updated to version 20260521.2003.",
-          "link": "https://melpa.org/#/easysession",
-          "publishedOn": "2026-05-21T20:03:00.000Z",
-          "wordCount": 104,
-          "title": "easysession (20260521.2003) --- Persist and restore your sessions (desktop.el alternative)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/aidermacs-20260521.1930.tar",
-          "author": null,
-          "description": "The aidermacs package has been updated to version 20260521.1930.",
-          "link": "https://melpa.org/#/aidermacs",
-          "publishedOn": "2026-05-21T19:30:00.000Z",
-          "wordCount": 104,
-          "title": "aidermacs (20260521.1930) --- AI pair programming with Aider",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/cmake-mode-20260521.1832.tar",
-          "author": null,
-          "description": "The cmake-mode package has been updated to version 20260521.1832.",
-          "link": "https://melpa.org/#/cmake-mode",
-          "publishedOn": "2026-05-21T18:32:00.000Z",
-          "wordCount": 104,
-          "title": "cmake-mode (20260521.1832) --- Major-mode for editing CMake sources",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/guava-themes-20260521.1824.tar",
-          "author": null,
-          "description": "The guava-themes package has been updated to version 20260521.1824.",
-          "link": "https://melpa.org/#/guava-themes",
-          "publishedOn": "2026-05-21T18:24:00.000Z",
-          "wordCount": 104,
-          "title": "guava-themes (20260521.1824) --- A pack of plant-inspired themes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/auto-read-only-20260521.1659.tar",
-          "author": null,
-          "description": "The auto-read-only package has been updated to version 20260521.1659.",
-          "link": "https://melpa.org/#/auto-read-only",
-          "publishedOn": "2026-05-21T16:59:00.000Z",
-          "wordCount": 104,
-          "title": "auto-read-only (20260521.1659) --- Automatically make the buffer to read-only",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dashboard-hackernews-20260521.1635.tar",
-          "author": null,
-          "description": "The dashboard-hackernews package has been updated to version 20260521.1635.",
-          "link": "https://melpa.org/#/dashboard-hackernews",
-          "publishedOn": "2026-05-21T16:35:00.000Z",
-          "wordCount": 104,
-          "title": "dashboard-hackernews (20260521.1635) --- Display Hacker News on dashboard",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ai-code-20260521.1427.tar",
-          "author": null,
-          "description": "The ai-code package has been updated to version 20260521.1427.",
-          "link": "https://melpa.org/#/ai-code",
-          "publishedOn": "2026-05-21T14:27:00.000Z",
-          "wordCount": 104,
-          "title": "ai-code (20260521.1427) --- Unified interface for AI coding backends such as Codex CLI, Copilot CLI, Claude Code, Gemini CLI, Opencode, Kilo, Grok CLI, etc",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/no-littering-20260521.1204.tar",
-          "author": null,
-          "description": "The no-littering package has been updated to version 20260521.1204.",
-          "link": "https://melpa.org/#/no-littering",
-          "publishedOn": "2026-05-21T12:04:00.000Z",
-          "wordCount": 104,
-          "title": "no-littering (20260521.1204) --- Help keeping ~/.config/emacs clean",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/paren-face-20260521.1204.tar",
-          "author": null,
-          "description": "The paren-face package has been updated to version 20260521.1204.",
-          "link": "https://melpa.org/#/paren-face",
-          "publishedOn": "2026-05-21T12:04:00.000Z",
-          "wordCount": 104,
-          "title": "paren-face (20260521.1204) --- A face for parentheses in lisp modes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/fwb-cmds-20260521.1204.tar",
-          "author": null,
-          "description": "The fwb-cmds package has been updated to version 20260521.1204.",
-          "link": "https://melpa.org/#/fwb-cmds",
-          "publishedOn": "2026-05-21T12:04:00.000Z",
-          "wordCount": 104,
-          "title": "fwb-cmds (20260521.1204) --- Misc frame, window and buffer commands",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dim-autoload-20260521.1204.tar",
-          "author": null,
-          "description": "The dim-autoload package has been updated to version 20260521.1204.",
-          "link": "https://melpa.org/#/dim-autoload",
-          "publishedOn": "2026-05-21T12:04:00.000Z",
-          "wordCount": 104,
-          "title": "dim-autoload (20260521.1204) --- Dim or hide autoload cookie lines",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/imake-20260521.1105.tar",
-          "author": null,
-          "description": "The imake package has been updated to version 20260521.1105.",
-          "link": "https://melpa.org/#/imake",
-          "publishedOn": "2026-05-21T11:05:00.000Z",
-          "wordCount": 104,
-          "title": "imake (20260521.1105) --- Simple, opinionated make target runner",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/git-modes-20260521.1105.tar",
-          "author": null,
-          "description": "The git-modes package has been updated to version 20260521.1105.",
-          "link": "https://melpa.org/#/git-modes",
-          "publishedOn": "2026-05-21T11:05:00.000Z",
-          "wordCount": 104,
-          "title": "git-modes (20260521.1105) --- Major modes for editing Git configuration files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/outline-minor-faces-20260521.1102.tar",
-          "author": null,
-          "description": "The outline-minor-faces package has been updated to version 20260521.1102.",
-          "link": "https://melpa.org/#/outline-minor-faces",
-          "publishedOn": "2026-05-21T11:02:00.000Z",
-          "wordCount": 104,
-          "title": "outline-minor-faces (20260521.1102) --- Highlight only section headings",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/backline-20260521.1101.tar",
-          "author": null,
-          "description": "The backline package has been updated to version 20260521.1101.",
-          "link": "https://melpa.org/#/backline",
-          "publishedOn": "2026-05-21T11:01:00.000Z",
-          "wordCount": 104,
-          "title": "backline (20260521.1101) --- Preserve appearance of outline headings",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/auto-compile-20260521.1100.tar",
-          "author": null,
-          "description": "The auto-compile package has been updated to version 20260521.1100.",
-          "link": "https://melpa.org/#/auto-compile",
-          "publishedOn": "2026-05-21T11:00:00.000Z",
-          "wordCount": 104,
-          "title": "auto-compile (20260521.1100) --- Automatically compile Emacs Lisp libraries",
-          "imageUrl": null
         }
       ]
     },
@@ -7215,6 +7095,16 @@
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
         {
+          "id": "3489@/discussions",
+          "author": "harr",
+          "description": "I'd like to brush up on some basic thinking skills. Can anyone recommend a textbook on logic, that does not require a STEM background?\nIt should:\nbe written for undergraduate college students with majors like law, politics, history or philosophy\ncover all the basics of logic that would be helpful for students who needs to analyze argumentations in complex or ambiguous texts,\ncontain many examples,\ncontain many exercises for self-testing,\nbe written by a reputable author,\nbe supported by reputable references.\nTopics should include:\ndeduction and induction\ntruth value\npropositional logic\nsoundness and validity of arguments\ncorrect and erroneous use of syllogisms\nfallacies like false dichotomy, equivocation or faulty generalization\nrules and fallacies of definition, stipulative and lexical definition\nhow to deal with vagueness, ambiguity and probability\nMy favorite bot recommends:\nConcise Introduction to Logic by Patrick J. Hurley. (goodreads)\nA Concise Introduction to Logic by Craig DeLancey. (open library)\nWhat are your experiences? What textbooks did you read and find helpful? What textbook would you recommend?",
+          "link": "https://forum.zettelkasten.de/discussion/3489/can-you-recommend-a-textbook-on-logic",
+          "publishedOn": "2026-06-20T12:21:38.000Z",
+          "wordCount": 735,
+          "title": "Can you recommend a textbook on logic?",
+          "imageUrl": null
+        },
+        {
           "id": "3488@/discussions",
           "author": "harr",
           "description": "\"The universe is made of stories, not of atoms.\"\n\nPicture from the Library Walk in New York City.\nLicence: Public Domain\nhttps://commons.wikimedia.org/wiki/File:Library_Walk_6.JPG",
@@ -7373,26 +7263,6 @@
           "wordCount": 582,
           "title": "Facsimiles of Luhmann 9/8 zettels laid out on canvas",
           "imageUrl": "https://forum.zettelkasten.de/uploads/editor/b0/4lxv5wa1cgkp.jpg"
-        },
-        {
-          "id": "3472@/discussions",
-          "author": "findflax",
-          "description": "Hi, I am a student currently taking computer engineering. I have been taking zettelkasten for the past three months. I have learned through asking AI but it seems almost impractical so I am asking the community. I use emacs to take my notes, more specifically doom emacs. I was irritated the other day and felt that my notes did not seem like it was reaching the standard for zettelkasten. My different kinds of notes are atomic, source, tags, reference, and fleeting. I link all these as nodes, so theres not really much identification but just notes linking to other notes. It looks nice visually (org-roam) but I feel like something is missing? Any Ideas? Thoughts? Thank you",
-          "link": "https://forum.zettelkasten.de/discussion/3472/my-method-of-zettelkasten",
-          "publishedOn": "2026-05-22T07:49:05.000Z",
-          "wordCount": 1208,
-          "title": "My Method of Zettelkasten",
-          "imageUrl": null
-        },
-        {
-          "id": "3471@/discussions",
-          "author": "mlbrandt",
-          "description": "First of all, I LOVE reading about coding, systems, and engineering so in no way is there any judgement in my question! As someone who spends more time in the humanities (I'm a physician, writer, and theologian) I wonder if there might be others on this forum who have a different \"lens\" (or suggestions) about how they use their ZK.",
-          "link": "https://forum.zettelkasten.de/discussion/3471/any-non-engineers-out-there",
-          "publishedOn": "2026-05-21T21:25:09.000Z",
-          "wordCount": 581,
-          "title": "Any non-engineers out there?",
-          "imageUrl": null
         }
       ]
     },
