@@ -610,6 +610,26 @@
       "siteUrl": "https://www.reddit.com/r/scala/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/scala/comments/1v0sdcj/abstracting_over_execution_with_higher_kinded/",
+          "author": null,
+          "description": "submitted by    /u/philip_schwarz  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1v0sdcj/abstracting_over_execution_with_higher_kinded/",
+          "publishedOn": "2026-07-19T14:42:40.000Z",
+          "wordCount": null,
+          "title": "Abstracting over Execution with Higher Kinded Types, and how to remain Purely Functional (oldie but goodie - belatedly uploaded)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/scala/comments/1v0qhp0/this_week_in_scala_jul_20_2026/",
+          "author": null,
+          "description": "submitted by    /u/petrzapletal  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/scala/comments/1v0qhp0/this_week_in_scala_jul_20_2026/",
+          "publishedOn": "2026-07-19T13:22:27.000Z",
+          "wordCount": null,
+          "title": "This week in #Scala (Jul 20, 2026)",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/scala/comments/1v00p09/bulletproofing_user_sync_handling_clerk_and_auth0/",
           "author": null,
           "description": "If you're building a web application today, chances are you aren't writing your own authentication system. Managed identity providers like Clerk, Auth0, and Kinde have become the default choice, offering out-of-the-box support for passkeys, multi-factor authentication, and enterprise SSO. That convenience introduces a distributed-systems problem, though: data synchronization. When a user creates an account on a managed auth provider, that system has to notify your primary application database so you can create a matching user record. Please read the complete article here - https://instawebhook.com/blog/bulletproofing-user-sync-handling-clerk-and-auth0-webhook-failures\n This happens through webhooks. But what happens if your server is down, your serverless function cold-starts and times out, or your database is momentarily locked when that webhook arrives? A user successfully signs up with your auth provider, but your application has no idea they exist. That breaks the very first login experience, and it's how phantom accounts, broken onboarding flows, and frustrated users happen.\n This guide walks through the anatomy of webhook-driven auth architecture, current Auth0 and Clerk webhook practices, and how a resilience layer — using InstaWebhook as a worked example — closes the gap that idempotency and signature verification alone can't.\n    submitted by    /u/JadeLuxe  \n [link]   [comments]",
@@ -1168,46 +1188,6 @@
           "wordCount": null,
           "title": "Declinio and h4sbl",
           "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1uas1ie/introducing_scalapptainer_drive_linux_containers/",
-          "author": null,
-          "description": "🚀 Introducing Scalapptainer: drive Linux containers from Scala 3, on any OS. No daemon, no root.\n Ever wanted a reproducible Linux toolchain (a specific compiler, simulator, CLI, or even a GUI app) that behaves identically on every machine? Apptainer gives you exactly that: a whole environment as a single, immutable .sif file. The catch is it only runs on Linux and usually means wrestling with shell scripts.\n Scalapptainer makes that catch disappear. One dependency, and the same Scala code runs on Linux, Windows (via WSL2), and macOS (via Lima). It detects your host and routes commands to the right backend. On first use it installs Apptainer for you in user mode, bundling the helper tools the installer needs so even a minimal distro just works.\n The API is typed and fluent: pull/build hand you back an immutable image handle you configure with bind mounts, env vars, and X11 forwarding, then exec / run / shell. Yes, that includes GUI apps rendered right on your desktop.\n Want a taste? No project, no build file, just a .scala file:\n ```scala //> using dep io.github.dfiantworks::scalapptainer:0.2.1 import scalapptainer.*\n main def cow(): Unit = Apptainer.pull(\"docker://ghcr.io/dfiantworks/scalapptainer-cowsay\").runInteractive() ```\n  scala run cow.scala \n A ~30 MB image, an ASCII cow, and a random fortune, running in seconds. 🐮\n ⭐ Check it out on GitHub: https://github.com/DFiantWorks/Scalapptainer\n Apache-2.0, built with Mill. Give it a try and let me know what you build with it!\n    submitted by    /u/soronpo  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1uas1ie/introducing_scalapptainer_drive_linux_containers/",
-          "publishedOn": "2026-06-20T09:18:02.000Z",
-          "wordCount": null,
-          "title": "🚀 Introducing Scalapptainer: drive Linux containers from Scala 3, on any OS. No daemon, no root.",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1uarnah/reducing_scaladoc_file_size_with_sbtsaladdays/",
-          "author": null,
-          "description": "submitted by    /u/eed3si9n  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1uarnah/reducing_scaladoc_file_size_with_sbtsaladdays/",
-          "publishedOn": "2026-06-20T08:53:11.000Z",
-          "wordCount": null,
-          "title": "reducing scaladoc file size with sbt-salad-days",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1ua0jb2/idea_versioned_distributable_observability/",
-          "author": null,
-          "description": "Scala has decent OTEL support growing (otel4s, cats-effect 3.7 metrics, etc), but every team still hand-rolls their own Grafana dashboards and alerts for the same libraries. Feels like wasted effort that could be shared.\n A few ideas, roughly in order of \"how big a yak shave is this\":\n 1. Metrics schemas per library\n Libraries exposing OTEL metrics (cats-effect, fs2-kafka, fs2-grpc, hikari, keypool, ZIO ecosystem, etc) could publish a schema describing what they emit — names, types, labels, units. Right now you have to read source or trial-and-error your way to a dashboard.\n 2. Dashboards as code, distributed alongside the schema\n Use something like the Grafana Foundation SDK (or a Scala equivalent) to define dashboards in code, then publish them — not just as JSON you copy-paste into Grafana, but via a registry/platform a consumer can pull from.\n 3. A platform that resolves dashboards by library + version range\n Like a package registry, but for dashboards. \"I'm running cats-effect 3.7.x and fs2-kafka 3.x\" → here's the matching dashboard set. Handles drift when metric names/labels change between versions.\n 4. A k8s operator to wire it up automatically\n App emits something like an SBOM (or a lighter metrics-manifest) → operator reads it → knows what's deployed, what's scrapeable, fetches/applies the right dashboards. Could extend to declarative alert rules per library too (e.g. \"hikari pool exhaustion\" ships as a reusable alert definition, not something every team reinvents).\n Curious if:\n  \nsomething like this already exists and I've missed it\n whether this fits as an OTEL semantic-conventions style effort, or is too Scala/library-specific for that\n anyone's hit the \"dashboard sprawl per microservice\" pain enough to want this\n  \nNot pitching myself as the one to build all of this — more interested if it resonates or if there's prior art to point to.\n    submitted by    /u/Fristi86  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1ua0jb2/idea_versioned_distributable_observability/",
-          "publishedOn": "2026-06-19T12:21:16.000Z",
-          "wordCount": null,
-          "title": "Idea: versioned, distributable observability metadata for Scala libraries (OTEL schemas + Grafana dashboards)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/scala/comments/1u9y0vs/apparently_maven_central_3_days_ago_announced/",
-          "author": null,
-          "description": "More info is in this post https://central.sonatype.org/publish/maven-central-publishing-limits/ .\n Both state that OSS will be able to apply for exemptions, but it's not stated if it's no limits, higher limits, do SNAPSHOTs count toward limits etc.\n Currently, the tracker that warn publishers how close to monthly limits they are shows:\n  \n80MB total size of published files\n 1000 total amount of published files\n 7 releases\n  \nso if you have any published and maintained OSS project that cross-compiles (JVM/JS/Native, 2.13/3) you can one shot the limit when it will go live in 3 months. Worth checking if you'd have to contact the support.\n    submitted by    /u/raghar  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/scala/comments/1u9y0vs/apparently_maven_central_3_days_ago_announced/",
-          "publishedOn": "2026-06-19T10:10:37.000Z",
-          "wordCount": null,
-          "title": "Apparently Maven Central 3 days ago announced that they will introduce limits on publishing",
-          "imageUrl": null
         }
       ]
     },
@@ -1501,6 +1481,46 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/context-clues-20260719.2046.tar",
+          "author": null,
+          "description": "The context-clues package has been updated to version 20260719.2046.",
+          "link": "https://melpa.org/#/context-clues",
+          "publishedOn": "2026-07-19T20:46:00.000Z",
+          "wordCount": 104,
+          "title": "context-clues (20260719.2046) --- Easily copy context like the current file name and path",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/binky-20260719.1537.tar",
+          "author": null,
+          "description": "The binky package has been updated to version 20260719.1537.",
+          "link": "https://melpa.org/#/binky",
+          "publishedOn": "2026-07-19T15:37:00.000Z",
+          "wordCount": 104,
+          "title": "binky (20260719.1537) --- Jump between points like a rabbit",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/denote-explore-20260719.936.tar",
+          "author": null,
+          "description": "The denote-explore package has been updated to version 20260719.936.",
+          "link": "https://melpa.org/#/denote-explore",
+          "publishedOn": "2026-07-19T09:36:00.000Z",
+          "wordCount": 104,
+          "title": "denote-explore (20260719.936) --- Explore and visualise Denote files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/sumibi-20260719.559.tar",
+          "author": null,
+          "description": "The sumibi package has been updated to version 20260719.559.",
+          "link": "https://melpa.org/#/sumibi",
+          "publishedOn": "2026-07-19T05:59:00.000Z",
+          "wordCount": 104,
+          "title": "sumibi (20260719.559) --- Japanese input method powered by ChatGPT API",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/helm-bbdb-20260718.1450.tar",
           "author": null,
           "description": "The helm-bbdb package has been updated to version 20260718.1450.",
@@ -1508,6 +1528,16 @@
           "publishedOn": "2026-07-18T14:50:00.000Z",
           "wordCount": 104,
           "title": "helm-bbdb (20260718.1450) --- Helm interface for bbdb",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/company-20260718.1243.tar",
+          "author": null,
+          "description": "The company package has been updated to version 20260718.1243.",
+          "link": "https://melpa.org/#/company",
+          "publishedOn": "2026-07-18T12:43:00.000Z",
+          "wordCount": 104,
+          "title": "company (20260718.1243) --- Modular text completion framework",
           "imageUrl": null
         },
         {
@@ -1538,6 +1568,16 @@
           "publishedOn": "2026-07-18T04:41:00.000Z",
           "wordCount": 104,
           "title": "org-repeat-by-cron (20260718.441) --- An Org mode task repeater based on Cron expressions",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/hnview-20260718.20.tar",
+          "author": null,
+          "description": "The hnview package has been updated to version 20260718.20.",
+          "link": "https://melpa.org/#/hnview",
+          "publishedOn": "2026-07-18T00:20:00.000Z",
+          "wordCount": 104,
+          "title": "hnview (20260718.20) --- Standalone Hacker News client",
           "imageUrl": null
         },
         {
@@ -1678,6 +1718,16 @@
           "publishedOn": "2026-07-16T21:20:00.000Z",
           "wordCount": 104,
           "title": "org-appear (20260716.2120) --- Auto-toggle Org elements",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/eca-20260716.1447.tar",
+          "author": null,
+          "description": "The eca package has been updated to version 20260716.1447.",
+          "link": "https://melpa.org/#/eca",
+          "publishedOn": "2026-07-16T14:47:00.000Z",
+          "wordCount": 104,
+          "title": "eca (20260716.1447) --- AI pair programming via ECA (Editor Code Assistant)",
           "imageUrl": null
         },
         {
@@ -2048,6 +2098,16 @@
           "publishedOn": "2026-07-13T17:55:00.000Z",
           "wordCount": 104,
           "title": "gdscript-mode (20260713.1755) --- Major mode for Godot's GDScript language",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/sema-mode-20260713.653.tar",
+          "author": null,
+          "description": "The sema-mode package has been updated to version 20260713.653.",
+          "link": "https://melpa.org/#/sema-mode",
+          "publishedOn": "2026-07-13T06:53:00.000Z",
+          "wordCount": 104,
+          "title": "sema-mode (20260713.653) --- Major mode for editing Sema files",
           "imageUrl": null
         },
         {
@@ -2458,6 +2518,16 @@
           "publishedOn": "2026-07-09T06:55:00.000Z",
           "wordCount": 104,
           "title": "khalel (20260709.655) --- Import, edit and create calendar events through khal",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/mediawiki-20260708.2249.tar",
+          "author": null,
+          "description": "The mediawiki package has been updated to version 20260708.2249.",
+          "link": "https://melpa.org/#/mediawiki",
+          "publishedOn": "2026-07-08T22:49:00.000Z",
+          "wordCount": 104,
+          "title": "mediawiki (20260708.2249) --- Mediawiki frontend",
           "imageUrl": null
         },
         {
@@ -4829,126 +4899,6 @@
           "wordCount": 104,
           "title": "blue (20260620.951) --- BLUE build system interface",
           "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/bitbake-20260620.217.tar",
-          "author": null,
-          "description": "The bitbake package has been updated to version 20260620.217.",
-          "link": "https://melpa.org/#/bitbake",
-          "publishedOn": "2026-06-20T02:17:00.000Z",
-          "wordCount": 104,
-          "title": "bitbake (20260620.217) --- Running bitbake from emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/eldoc-box-20260620.158.tar",
-          "author": null,
-          "description": "The eldoc-box package has been updated to version 20260620.158.",
-          "link": "https://melpa.org/#/eldoc-box",
-          "publishedOn": "2026-06-20T01:58:00.000Z",
-          "wordCount": 104,
-          "title": "eldoc-box (20260620.158) --- Display documentation in childframe",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-window-habit-20260620.108.tar",
-          "author": null,
-          "description": "The org-window-habit package has been updated to version 20260620.108.",
-          "link": "https://melpa.org/#/org-window-habit",
-          "publishedOn": "2026-06-20T01:08:00.000Z",
-          "wordCount": 104,
-          "title": "org-window-habit (20260620.108) --- Time window based habits",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/tablist-20260619.2309.tar",
-          "author": null,
-          "description": "The tablist package has been updated to version 20260619.2309.",
-          "link": "https://melpa.org/#/tablist",
-          "publishedOn": "2026-06-19T23:09:00.000Z",
-          "wordCount": 104,
-          "title": "tablist (20260619.2309) --- Extended tabulated-list-mode",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/elmpd-20260619.2114.tar",
-          "author": null,
-          "description": "The elmpd package has been updated to version 20260619.2114.",
-          "link": "https://melpa.org/#/elmpd",
-          "publishedOn": "2026-06-19T21:14:00.000Z",
-          "wordCount": 104,
-          "title": "elmpd (20260619.2114) --- A tight, ergonomic, async client library for mpd",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/docker-20260619.1940.tar",
-          "author": null,
-          "description": "The docker package has been updated to version 20260619.1940.",
-          "link": "https://melpa.org/#/docker",
-          "publishedOn": "2026-06-19T19:40:00.000Z",
-          "wordCount": 104,
-          "title": "docker (20260619.1940) --- Interface to Docker",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/pinyin-isearch-20260619.1917.tar",
-          "author": null,
-          "description": "The pinyin-isearch package has been updated to version 20260619.1917.",
-          "link": "https://melpa.org/#/pinyin-isearch",
-          "publishedOn": "2026-06-19T19:17:00.000Z",
-          "wordCount": 104,
-          "title": "pinyin-isearch (20260619.1917) --- Pinyin mode for isearch",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dialog-mode-20260619.1559.tar",
-          "author": null,
-          "description": "The dialog-mode package has been updated to version 20260619.1559.",
-          "link": "https://melpa.org/#/dialog-mode",
-          "publishedOn": "2026-06-19T15:59:00.000Z",
-          "wordCount": 104,
-          "title": "dialog-mode (20260619.1559) --- Major mode for editing Dialog files",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/org-cite-overlay-20260619.1531.tar",
-          "author": null,
-          "description": "The org-cite-overlay package has been updated to version 20260619.1531.",
-          "link": "https://melpa.org/#/org-cite-overlay",
-          "publishedOn": "2026-06-19T15:31:00.000Z",
-          "wordCount": 104,
-          "title": "org-cite-overlay (20260619.1531) --- Overlays for org-cite citations",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/python-x-20260619.1406.tar",
-          "author": null,
-          "description": "The python-x package has been updated to version 20260619.1406.",
-          "link": "https://melpa.org/#/python-x",
-          "publishedOn": "2026-06-19T14:06:00.000Z",
-          "wordCount": 104,
-          "title": "python-x (20260619.1406) --- Python.el extras for interactive evaluation",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/package-lint-20260619.1246.tar",
-          "author": null,
-          "description": "The package-lint package has been updated to version 20260619.1246.",
-          "link": "https://melpa.org/#/package-lint",
-          "publishedOn": "2026-06-19T12:46:00.000Z",
-          "wordCount": 104,
-          "title": "package-lint (20260619.1246) --- A linting library for elisp package authors",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/meow-20260619.1030.tar",
-          "author": null,
-          "description": "The meow package has been updated to version 20260619.1030.",
-          "link": "https://melpa.org/#/meow",
-          "publishedOn": "2026-06-19T10:30:00.000Z",
-          "wordCount": 104,
-          "title": "meow (20260619.1030) --- Yet Another modal editing",
-          "imageUrl": null
         }
       ]
     },
@@ -7124,6 +7074,16 @@
       "feedUrl": "https://forum.zettelkasten.de/discussions/feed.rss",
       "siteUrl": "https://forum.zettelkasten.de/",
       "articles": [
+        {
+          "id": "3512@/discussions",
+          "author": "jameslongley",
+          "description": "Is there anyone here using The Archive as the local file storage and organisation tool that allows their local files to be queried by an AI harness, such as Claude Code or ChatGPT Desktop?\nIf so, is that working for you? Are there any cautionary aspects of the setup of the archive for this use case that you have identified? For example, linking causing potential issues with the queryable database.",
+          "link": "https://forum.zettelkasten.de/discussion/3512/the-archive-as-ai-context-folder",
+          "publishedOn": "2026-07-19T12:30:20.000Z",
+          "wordCount": 621,
+          "title": "The Archive as AI Context Folder",
+          "imageUrl": null
+        },
         {
           "id": "3511@/discussions",
           "author": "ctietze",
