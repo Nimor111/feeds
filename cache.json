@@ -53,6 +53,26 @@
       "siteUrl": "https://www.reddit.com/r/haskell/",
       "articles": [
         {
+          "id": "https://www.reddit.com/r/haskell/comments/1vjlzqm/project_wont_build_neither_stack_nor_cabal_can/",
+          "author": null,
+          "description": "I'm returning to a project that I've neglected for several years and now find that neither Stack nor Cabal will build it. I thought the idea of these build systems was to prevent stupid problems like incompatible versions of packages but it appears not to be working in my case, or I don't understand something. The project is here.\n Stack fails with two errors (picking the important lines out of the build output):\n ConfigFile > 39 | import Control.Monad.Error [cannot find module] postgresql-libpq-configure > configure: error: Library requirements (PostgreSQL) not met. \n It looks like Stack chose two package versions that are not buildable. How does such a situation arise???\n Cabal reports Could not resolve dependencies followed by a lot of lines of what it's trying.\n Can anyone state what is wrong here?\n    submitted by    /u/mounty1_0  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1vjlzqm/project_wont_build_neither_stack_nor_cabal_can/",
+          "publishedOn": "2026-08-09T10:03:17.000Z",
+          "wordCount": null,
+          "title": "Project won't build; neither Stack nor Cabal can find a set of packages",
+          "imageUrl": null
+        },
+        {
+          "id": "https://www.reddit.com/r/haskell/comments/1vjampt/added_pattern_matching_support_to_my_programming/",
+          "author": null,
+          "description": "Mascheya now supports pattern matching, the syntax and semantics of which are based on Haskell's and Miranda's.\n For context, Mascheya is a polymorphically typed functional programming language that I'm currently building. Like most functional languages (e.g., Haskell, Scala, and OCaml), Mascheya's design boils down to the lambda calculus. See previous post here.\n Pattern matching is a great addition to the language, and it will help with the ergonomics of algebraic data types, which I'm planning to implement next. \n You can see in the examples below that I was able to simulate if-expressions and logical operators and and or, using pattern matching. The short-circuiting nature of these operators was handled automatically by Mascheya's lazy evaluation scheme.\n ``` mascheya> matchC = \\'c' -> 'b' () mascheya> matchC 'c' b mascheya> matchC 'a' Runtime Error at line 1. Pattern match error. mascheya> foo 1 = 10; foo 2 = 20; foo x = x + 1 () mascheya> foo 2 20 mascheya> foo 67 68 mascheya> :set line=multi mascheya> if True a _ = a; if False _ b = b -- end () mascheya> :set line=single mascheya> if (5 < 6) 'a' 'b' a mascheya> if False 'a' 'b' b mascheya> :set line=multi mascheya> let and True True = True; and True False = False; and False True = False; and _ _ = False;\n or True True = True; or True False = True; or False True = True; or _ _ = False in or (and True (5 > 7)) (8 < 9) -- end True mascheya> ```\n The next focus will be on Algebraic Data Types, Case-expressions, and Where-clauses.\n I'm definitely having fun with this project and it's teaching me a lot about Haskell.\n Source code: https://github.com/melvic-ybanez/mascheya\n    submitted by    /u/ybamelcash  \n [link]   [comments]",
+          "link": "https://www.reddit.com/r/haskell/comments/1vjampt/added_pattern_matching_support_to_my_programming/",
+          "publishedOn": "2026-08-08T23:46:00.000Z",
+          "wordCount": null,
+          "title": "Added Pattern Matching Support to My Programming Language",
+          "imageUrl": null
+        },
+        {
           "id": "https://www.reddit.com/r/haskell/comments/1vj6pzd/haskell_o_prolog_the_hacen_m%C3%A1s_inteligente/",
           "author": null,
           "description": "Quiero escuchar a programadores que usaron alguno de estos lenguajes i que creen con certeza que después de practicarlo profundamente su razonamiento lógico o deductivo o abstracto o incluso fluido a mejorado.compartirlo por favor.\n    submitted by    /u/Zirotuxx  \n [link]   [comments]",
@@ -540,46 +560,6 @@
           "publishedOn": "2026-07-11T16:10:44.000Z",
           "wordCount": null,
           "title": "HLS, stack new, and vs code issues",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1uspkyk/postliterate_programming/",
-          "author": null,
-          "description": "submitted by    /u/messedupwindows123  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1uspkyk/postliterate_programming/",
-          "publishedOn": "2026-07-10T14:39:38.000Z",
-          "wordCount": null,
-          "title": "Post-Literate Programming",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1usnywg/after_7_years_in_production_scarf_has_reluctantly/",
-          "author": null,
-          "description": "submitted by    /u/aviaviaviavi  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1usnywg/after_7_years_in_production_scarf_has_reluctantly/",
-          "publishedOn": "2026-07-10T13:38:13.000Z",
-          "wordCount": null,
-          "title": "After 7 years in production, Scarf has reluctantly moved away from Haskell",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1usn7lw/what_is_an_ideomatic_way_to_modify_records_with/",
-          "author": null,
-          "description": "I have a record type Rec s with a field of type s:\n data Rec s = Rec { val :: s, foo :: Int, bar :: Bool } deriving Functor \n and a lens Lens s t a b. I want to modify Rec s by a modification function for Rec a. The desired behaviour is the following:\n modifyRec :: Lens s t a b -> (Rec a -> Rec b) -> Rec s -> Rec t modifyRec l h Rec{val, foo, bar} = Rec{val=set l val' val, foo=foo', bar=bar'} where Rec{val=val', foo=foo', bar=bar'} = h Rec{val=view (getting l) val, foo, bar} \n This can be simplified by using Functor instance of Rec:\n modifyRecF :: Lens s t a b -> (Rec a -> Rec b) -> Rec s -> Rec t modifyRecF l h r0@Rec{val} = (\\b -> set l b val) <$> r1 where r1 = h $ view (getting l) <$> r0 \n I found some other solutions of this problem:\n  \nAccessing via lens\n  \n​\n lensVal :: Lens (Rec s) …",
-          "link": "https://www.reddit.com/r/haskell/comments/1usn7lw/what_is_an_ideomatic_way_to_modify_records_with/",
-          "publishedOn": "2026-07-10T13:07:47.000Z",
-          "wordCount": null,
-          "title": "What is an ideomatic way to modify records with parameters using lenses?",
-          "imageUrl": null
-        },
-        {
-          "id": "https://www.reddit.com/r/haskell/comments/1usn6dh/a_mise_plugin_for_installing_ghcup_and_cabal/",
-          "author": null,
-          "description": "At my day job, we have a big monorepo with both JS and Haskell code. I've been lobbying for my company to move to Mise, which is a very neat program to manage your whole developer toolchain easily.\n However, in trying to migrate our devtools to Mise, I ran into the following problems:\n  \nThe default way to install GHC and HLS through Mise is with asdf-ghcup, which doesn't support Windows.\n Some tools like HLint and Stan do not distribute prebuilt binaries and are intended to be installed through cabal install.\n  \nSo, I wrote two Mise-native plugins that we open-sourced, so everyone can use:\n  \nmise-ghcup, which can install the Haskell toolchain with GHCup\n mise-cabal, which installs binaries from Hackage, building them with Cabal\n  \nBoth plugins are multiplatform; and both install their tools to Mise-specific folder, leaving your global state intact. They're independent but work well together, and are very simple to use (instructions in each plugin's repo).\n I hope you enjoy them, and looking forward for any feedback or issues!\n    submitted by    /u/cprecioso  \n [link]   [comments]",
-          "link": "https://www.reddit.com/r/haskell/comments/1usn6dh/a_mise_plugin_for_installing_ghcup_and_cabal/",
-          "publishedOn": "2026-07-10T13:06:21.000Z",
-          "wordCount": null,
-          "title": "A Mise plugin for installing GHCup and Cabal executables",
           "imageUrl": null
         }
       ]
@@ -1266,6 +1246,66 @@
       "siteUrl": "https://melpa.org",
       "articles": [
         {
+          "id": "https://melpa.org/packages/yaml-mode-20260809.1724.tar",
+          "author": null,
+          "description": "The yaml-mode package has been updated to version 20260809.1724.",
+          "link": "https://melpa.org/#/yaml-mode",
+          "publishedOn": "2026-08-09T17:24:00.000Z",
+          "wordCount": 104,
+          "title": "yaml-mode (20260809.1724) --- Major mode for editing YAML files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/meshmonitor-chat-20260809.1045.tar",
+          "author": null,
+          "description": "The meshmonitor-chat package has been updated to version 20260809.1045.",
+          "link": "https://melpa.org/#/meshmonitor-chat",
+          "publishedOn": "2026-08-09T10:45:00.000Z",
+          "wordCount": 104,
+          "title": "meshmonitor-chat (20260809.1045) --- Chat client for MeshMonitor (Meshtastic)",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/agent-shell-20260809.915.tar",
+          "author": null,
+          "description": "The agent-shell package has been updated to version 20260809.915.",
+          "link": "https://melpa.org/#/agent-shell",
+          "publishedOn": "2026-08-09T09:15:00.000Z",
+          "wordCount": 104,
+          "title": "agent-shell (20260809.915) --- Native agentic integrations for Claude Code, Gemini CLI, etc",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/dashboard-20260809.447.tar",
+          "author": null,
+          "description": "The dashboard package has been updated to version 20260809.447.",
+          "link": "https://melpa.org/#/dashboard",
+          "publishedOn": "2026-08-09T04:47:00.000Z",
+          "wordCount": 104,
+          "title": "dashboard (20260809.447) --- A startup screen extracted from Spacemacs",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/spatial-window-20260808.2306.tar",
+          "author": null,
+          "description": "The spatial-window package has been updated to version 20260808.2306.",
+          "link": "https://melpa.org/#/spatial-window",
+          "publishedOn": "2026-08-08T23:06:00.000Z",
+          "wordCount": 104,
+          "title": "spatial-window (20260808.2306) --- Jump to windows using keyboard spatial mapping",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/org-window-habit-20260808.2040.tar",
+          "author": null,
+          "description": "The org-window-habit package has been updated to version 20260808.2040.",
+          "link": "https://melpa.org/#/org-window-habit",
+          "publishedOn": "2026-08-08T20:40:00.000Z",
+          "wordCount": 104,
+          "title": "org-window-habit (20260808.2040) --- Time window based habits",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/package-lint-20260808.1622.tar",
           "author": null,
           "description": "The package-lint package has been updated to version 20260808.1622.",
@@ -1293,6 +1333,16 @@
           "publishedOn": "2026-08-08T12:05:00.000Z",
           "wordCount": 104,
           "title": "mastodon (20260808.1205) --- Client for fediverse services using the Mastodon API",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/clutch-20260808.826.tar",
+          "author": null,
+          "description": "The clutch package has been updated to version 20260808.826.",
+          "link": "https://melpa.org/#/clutch",
+          "publishedOn": "2026-08-08T08:26:00.000Z",
+          "wordCount": 104,
+          "title": "clutch (20260808.826) --- Interactive database client",
           "imageUrl": null
         },
         {
@@ -1436,6 +1486,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/php-mode-20260805.1304.tar",
+          "author": null,
+          "description": "The php-mode package has been updated to version 20260805.1304.",
+          "link": "https://melpa.org/#/php-mode",
+          "publishedOn": "2026-08-05T13:04:00.000Z",
+          "wordCount": 104,
+          "title": "php-mode (20260805.1304) --- Major mode for editing PHP code",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/wordreference-20260805.1233.tar",
           "author": null,
           "description": "The wordreference package has been updated to version 20260805.1233.",
@@ -1476,6 +1536,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/vertico-20260805.1129.tar",
+          "author": null,
+          "description": "The vertico package has been updated to version 20260805.1129.",
+          "link": "https://melpa.org/#/vertico",
+          "publishedOn": "2026-08-05T11:29:00.000Z",
+          "wordCount": 104,
+          "title": "vertico (20260805.1129) --- VERTical Interactive COmpletion",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/ocp-indent-20260805.738.tar",
           "author": null,
           "description": "The ocp-indent package has been updated to version 20260805.738.",
@@ -1506,6 +1576,16 @@
           "imageUrl": null
         },
         {
+          "id": "https://melpa.org/packages/elot-20260804.900.tar",
+          "author": null,
+          "description": "The elot package has been updated to version 20260804.900.",
+          "link": "https://melpa.org/#/elot",
+          "publishedOn": "2026-08-04T09:00:00.000Z",
+          "wordCount": 104,
+          "title": "elot (20260804.900) --- Emacs Literate Ontology Tool (ELOT)",
+          "imageUrl": null
+        },
+        {
           "id": "https://melpa.org/packages/acp-20260803.2034.tar",
           "author": null,
           "description": "The acp package has been updated to version 20260803.2034.",
@@ -1533,6 +1613,16 @@
           "publishedOn": "2026-08-03T09:44:00.000Z",
           "wordCount": 104,
           "title": "thrift (20260803.944) --- Major mode for fbthrift and Apache Thrift files",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/docker-20260803.930.tar",
+          "author": null,
+          "description": "The docker package has been updated to version 20260803.930.",
+          "link": "https://melpa.org/#/docker",
+          "publishedOn": "2026-08-03T09:30:00.000Z",
+          "wordCount": 104,
+          "title": "docker (20260803.930) --- Interface to Docker",
           "imageUrl": null
         },
         {
@@ -2023,6 +2113,16 @@
           "publishedOn": "2026-07-31T13:47:00.000Z",
           "wordCount": 104,
           "title": "flycheck-languagetool (20260731.1347) --- Flycheck support for LanguageTool",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/cmake-mode-20260731.1301.tar",
+          "author": null,
+          "description": "The cmake-mode package has been updated to version 20260731.1301.",
+          "link": "https://melpa.org/#/cmake-mode",
+          "publishedOn": "2026-07-31T13:01:00.000Z",
+          "wordCount": 104,
+          "title": "cmake-mode (20260731.1301) --- Major-mode for editing CMake sources",
           "imageUrl": null
         },
         {
@@ -2543,6 +2643,16 @@
           "publishedOn": "2026-07-27T05:22:00.000Z",
           "wordCount": 104,
           "title": "sixcolors-theme (20260727.522) --- Just another theme",
+          "imageUrl": null
+        },
+        {
+          "id": "https://melpa.org/packages/ledger-mode-20260727.518.tar",
+          "author": null,
+          "description": "The ledger-mode package has been updated to version 20260727.518.",
+          "link": "https://melpa.org/#/ledger-mode",
+          "publishedOn": "2026-07-27T05:18:00.000Z",
+          "wordCount": 104,
+          "title": "ledger-mode (20260727.518) --- Helper code for use with the \"ledger\" command-line tool",
           "imageUrl": null
         },
         {
@@ -4263,166 +4373,6 @@
           "publishedOn": "2026-07-11T09:45:00.000Z",
           "wordCount": 104,
           "title": "magnus (20260711.945) --- Manage multiple Claude Code instances",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/flash-20260711.805.tar",
-          "author": null,
-          "description": "The flash package has been updated to version 20260711.805.",
-          "link": "https://melpa.org/#/flash",
-          "publishedOn": "2026-07-11T08:05:00.000Z",
-          "wordCount": 104,
-          "title": "flash (20260711.805) --- Flash-style navigation",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/chordpro-mode-20260711.623.tar",
-          "author": null,
-          "description": "The chordpro-mode package has been updated to version 20260711.623.",
-          "link": "https://melpa.org/#/chordpro-mode",
-          "publishedOn": "2026-07-11T06:23:00.000Z",
-          "wordCount": 104,
-          "title": "chordpro-mode (20260711.623) --- Major mode for ChordPro lead sheet file format",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/guix-20260711.616.tar",
-          "author": null,
-          "description": "The guix package has been updated to version 20260711.616.",
-          "link": "https://melpa.org/#/guix",
-          "publishedOn": "2026-07-11T06:16:00.000Z",
-          "wordCount": 104,
-          "title": "guix (20260711.616) --- Interface for GNU Guix",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/sis-20260711.608.tar",
-          "author": null,
-          "description": "The sis package has been updated to version 20260711.608.",
-          "link": "https://melpa.org/#/sis",
-          "publishedOn": "2026-07-11T06:08:00.000Z",
-          "wordCount": 104,
-          "title": "sis (20260711.608) --- Minimize manual input source (input method) switching",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dpkg-dev-el-20260711.348.tar",
-          "author": null,
-          "description": "The dpkg-dev-el package has been updated to version 20260711.348.",
-          "link": "https://melpa.org/#/dpkg-dev-el",
-          "publishedOn": "2026-07-11T03:48:00.000Z",
-          "wordCount": 104,
-          "title": "dpkg-dev-el (20260711.348) --- Startup file for the elpa-dpkg-dev-el package",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/folio-theme-20260711.13.tar",
-          "author": null,
-          "description": "The folio-theme package has been updated to version 20260711.13.",
-          "link": "https://melpa.org/#/folio-theme",
-          "publishedOn": "2026-07-11T00:13:00.000Z",
-          "wordCount": 104,
-          "title": "folio-theme (20260711.13) --- Warm paper-like theme built on Modus and Ef",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/slime-20260711.7.tar",
-          "author": null,
-          "description": "The slime package has been updated to version 20260711.7.",
-          "link": "https://melpa.org/#/slime",
-          "publishedOn": "2026-07-11T00:07:00.000Z",
-          "wordCount": 104,
-          "title": "slime (20260711.7) --- Superior Lisp Interaction Mode for Emacs",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/frame-mode-20260710.1851.tar",
-          "author": null,
-          "description": "The frame-mode package has been updated to version 20260710.1851.",
-          "link": "https://melpa.org/#/frame-mode",
-          "publishedOn": "2026-07-10T18:51:00.000Z",
-          "wordCount": 104,
-          "title": "frame-mode (20260710.1851) --- Use frames instead of windows",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/nerd-icons-20260710.1627.tar",
-          "author": null,
-          "description": "The nerd-icons package has been updated to version 20260710.1627.",
-          "link": "https://melpa.org/#/nerd-icons",
-          "publishedOn": "2026-07-10T16:27:00.000Z",
-          "wordCount": 104,
-          "title": "nerd-icons (20260710.1627) --- Emacs Nerd Font Icons Library",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/tomorrow-night-deepblue-theme-20260710.1611.tar",
-          "author": null,
-          "description": "The tomorrow-night-deepblue-theme package has been updated to version 20260710.1611.",
-          "link": "https://melpa.org/#/tomorrow-night-deepblue-theme",
-          "publishedOn": "2026-07-10T16:11:00.000Z",
-          "wordCount": 104,
-          "title": "tomorrow-night-deepblue-theme (20260710.1611) --- The Tomorrow Night Deepblue color theme",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/dir-config-20260710.1609.tar",
-          "author": null,
-          "description": "The dir-config package has been updated to version 20260710.1609.",
-          "link": "https://melpa.org/#/dir-config",
-          "publishedOn": "2026-07-10T16:09:00.000Z",
-          "wordCount": 104,
-          "title": "dir-config (20260710.1609) --- Find and evaluate .dir-config.el (dir-locals alternative)",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/color-theme-sanityinc-tomorrow-20260710.1606.tar",
-          "author": null,
-          "description": "The color-theme-sanityinc-tomorrow package has been updated to version 20260710.1606.",
-          "link": "https://melpa.org/#/color-theme-sanityinc-tomorrow",
-          "publishedOn": "2026-07-10T16:06:00.000Z",
-          "wordCount": 104,
-          "title": "color-theme-sanityinc-tomorrow (20260710.1606) --- A version of Chris Kempson's \"tomorrow\" themes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/smartscan-20260710.1518.tar",
-          "author": null,
-          "description": "The smartscan package has been updated to version 20260710.1518.",
-          "link": "https://melpa.org/#/smartscan",
-          "publishedOn": "2026-07-10T15:18:00.000Z",
-          "wordCount": 104,
-          "title": "smartscan (20260710.1518) --- Jumps between other symbols found at point",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/ligature-20260710.1518.tar",
-          "author": null,
-          "description": "The ligature package has been updated to version 20260710.1518.",
-          "link": "https://melpa.org/#/ligature",
-          "publishedOn": "2026-07-10T15:18:00.000Z",
-          "wordCount": 104,
-          "title": "ligature (20260710.1518) --- Display typographical ligatures in major modes",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/minimal-dashboard-20260710.1120.tar",
-          "author": null,
-          "description": "The minimal-dashboard package has been updated to version 20260710.1120.",
-          "link": "https://melpa.org/#/minimal-dashboard",
-          "publishedOn": "2026-07-10T11:20:00.000Z",
-          "wordCount": 104,
-          "title": "minimal-dashboard (20260710.1120) --- A very minimal dashboard plugin",
-          "imageUrl": null
-        },
-        {
-          "id": "https://melpa.org/packages/python-mode-20260710.1059.tar",
-          "author": null,
-          "description": "The python-mode package has been updated to version 20260710.1059.",
-          "link": "https://melpa.org/#/python-mode",
-          "publishedOn": "2026-07-10T10:59:00.000Z",
-          "wordCount": 104,
-          "title": "python-mode (20260710.1059) --- Python major mode",
           "imageUrl": null
         }
       ]
@@ -6758,26 +6708,6 @@
           "wordCount": 3402,
           "title": "Data vs Capta",
           "imageUrl": "https://forum.zettelkasten.de/resources/emoji/smile.png"
-        },
-        {
-          "id": "3509@/discussions",
-          "author": "Seibzehn",
-          "description": "Hello everyone,\nIt would be great if the cursor could be freely configured, for example:\nthin line\nBest regards,\nSeibzehn",
-          "link": "https://forum.zettelkasten.de/discussion/3509/the-cursor",
-          "publishedOn": "2026-07-10T15:07:14.000Z",
-          "wordCount": 615,
-          "title": "the cursor....",
-          "imageUrl": null
-        },
-        {
-          "id": "3508@/discussions",
-          "author": "Amontillado",
-          "description": "I'm a proponent of outlining even though I really don't like - loathe, actually - Harvard style outlines.\nMy kind of outline is backed by a database of facts. A Zettelkasten of factual items without dependency on any particular narrative order plus a list in story order.\nThe story points in the outline link to facts or tagged groups of facts in the Zettelkasten.\nIn this way there is a single point of truth for facts appearing in multiple outline topics.\nAs much as I don't like Harvard outlines, I do like modest indentation. One or maybe two sublevels helps me see subdivisions in my writing like chapters and scenes.\nThe Archive streaming to Marked is very cool. There is a limitation in Marked that bugs me.\nImagine an outline in a Markdown note in The Archive, built with an indented list.\nI can transclude a document, but Marked will only recognize the transclusion if there is no leading space before the {{transcluded file here.md}} placeholder.\nThat breaks the list's indentation.\nHowever, if I edit the Markdown note in iaWriter and use its content block syntax, any leading space on the line will indent the transclusion.\nMy Markdown source looks like:\n- a dark and stormy night\n  /weatherscience.md\n   - more troubles with tribbles\n     /startrek.md\n\n\nRendered in iaWriter's preview I get the topic \"a dark and stormy night\" with an indented note from my weatherscience.md file.\nThe subtopic \"more troubles with tribbles\" has a properly indented note under it with my Star Trek notes.\nFor this to work, the archive directory has to be added to iaWriter as a location. That's not too big a deal. You can add and delete locations at will in iaWriter.\niaWriter has always been quirky for me. In this case, the overall plan works but the list entry following a note gets highlighted in gray.\nCan anyone recommend a previewer that would handle indented transclusions?\nAs an aside, it is very cool that The Archive doesn't block use of its content by other applications.",
-          "link": "https://forum.zettelkasten.de/discussion/3508/transclusion-outlining",
-          "publishedOn": "2026-07-10T14:41:28.000Z",
-          "wordCount": 1778,
-          "title": "transclusion outlining",
-          "imageUrl": null
         }
       ]
     },
