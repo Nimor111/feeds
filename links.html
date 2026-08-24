@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>daily · inputs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f2a43;
+    --ink-soft:#456179;
+    --paper:#e7edf1;
+    --surface:#fbfcfd;
+    --rule:#c3d0da;
+    --blue:#2f6f9f;
+    --gold:#a8761a;
+    --warn:#9c3b25;
+    --display:"Barlow Condensed",Impact,sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:15px;
+    line-height:1.45;
+    padding:0 20px 80px;
+  }
+  .wrap{max-width:940px;margin:0 auto}
+
+  /* ---- masthead ---- */
+  header{
+    padding:44px 0 20px;
+    border-bottom:2px solid var(--ink);
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(46px,9vw,86px);
+    letter-spacing:-.015em;
+    text-transform:uppercase;
+    line-height:.86;
+    margin:0;
+  }
+  h1 em{font-style:normal;color:var(--blue)}
+  .meta{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-soft);
+    text-align:right;
+    line-height:1.7;
+    letter-spacing:.02em;
+  }
+
+  /* ---- filter: the one loud element ---- */
+  .finder{
+    position:sticky;top:0;z-index:5;
+    background:var(--paper);
+    padding:14px 0 12px;
+    border-bottom:1px solid var(--rule);
+    display:flex;align-items:center;gap:12px;
+  }
+  .finder .prompt{
+    font-family:var(--mono);font-size:15px;color:var(--blue);
+    font-weight:500;flex:none;
+  }
+  #q{
+    flex:1;border:0;background:transparent;
+    font-family:var(--mono);font-size:16px;color:var(--ink);
+    padding:4px 0;outline:none;
+  }
+  #q::placeholder{color:var(--ink-soft);opacity:.7}
+  .count{font-family:var(--mono);font-size:11px;color:var(--ink-soft);flex:none}
+
+  /* ---- sections ---- */
+  section{margin-top:38px}
+  h2{
+    font-family:var(--display);
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:19px;
+    margin:0 0 2px;
+    display:flex;align-items:baseline;gap:10px;
+  }
+  h2 .note{
+    font-family:var(--mono);font-size:10px;letter-spacing:.04em;
+    color:var(--ink-soft);text-transform:none;font-weight:400;
+  }
+  ul{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--rule)}
+  li{border-bottom:1px solid var(--rule)}
+  li.hide{display:none}
+  a.row{
+    display:grid;
+    grid-template-columns:22px minmax(150px,1fr) 2.1fr;
+    gap:14px;align-items:baseline;
+    padding:11px 10px 11px 4px;
+    text-decoration:none;color:inherit;
+    background:transparent;
+  }
+  a.row:hover,a.row:focus-visible{background:var(--surface);outline:none}
+  a.row:focus-visible{box-shadow:inset 3px 0 0 var(--blue)}
+  li.cursor a.row{background:var(--surface);box-shadow:inset 3px 0 0 var(--blue)}
+  .mark{
+    font-family:var(--mono);font-size:13px;line-height:1.3;
+    color:var(--gold);
+  }
+  .mark.manual{color:var(--rule)}
+  .name{font-weight:500}
+  a.row:hover .name{color:var(--blue)}
+  .desc{color:var(--ink-soft);font-size:13.5px}
+  .host{
+    font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);
+    display:block;margin-top:2px;letter-spacing:.02em;
+  }
+
+  .warn{
+    margin-top:12px;padding:10px 12px;
+    border-left:3px solid var(--warn);
+    background:var(--surface);
+    font-size:13px;color:var(--warn);
+  }
+  .warn code{font-family:var(--mono);font-size:12px}
+
+  footer{
+    margin-top:56px;padding-top:16px;border-top:2px solid var(--ink);
+    font-family:var(--mono);font-size:11px;color:var(--ink-soft);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  kbd{
+    font-family:var(--mono);font-size:10px;
+    border:1px solid var(--rule);border-bottom-width:2px;
+    border-radius:3px;padding:1px 4px;background:var(--surface);color:var(--ink);
+  }
+  .empty{padding:26px 4px;color:var(--ink-soft);font-family:var(--mono);font-size:13px}
+  @media (max-width:620px){
+    a.row{grid-template-columns:20px 1fr;gap:10px}
+    .desc{grid-column:2}
+    .meta{text-align:left}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    li{transition:background .12s ease}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Daily<br><em>inputs</em></h1>
+  <div class="meta">
+    <div>▣ &nbsp;piped into the feed reader</div>
+    <div>▢ &nbsp;open it yourself</div>
+    <div>links checked 2026-08-24</div>
+  </div>
+</header>
+
+<div class="finder">
+  <span class="prompt">›</span>
+  <input id="q" type="search" placeholder="filter — try &quot;poetry&quot;, &quot;philosophy&quot;, &quot;free&quot;" autocomplete="off" spellcheck="false" aria-label="Filter links">
+  <span class="count" id="count"></span>
+</div>
+
+<main id="list"></main>
+
+<footer>
+  <span><kbd>/</kbd> filter · <kbd>j</kbd><kbd>k</kbd> move · <kbd>↵</kbd> open · <kbd>esc</kbd> clear</span>
+  <span><a href="./" style="color:inherit">← feed reader</a></span>
+</footer>
+
+</div>
+
+<script>
+const DATA = [
+  {t:"Games", note:"five minutes, then stop", warn:"This genre is drowning in SEO clones — <code>geogames.io</code>, <code>globleunlimited.com</code>, <code>worldle.online</code>, endless \"-dle\" knockoffs. Use exactly these domains.", items:[
+    {n:"TimeGuessr", u:"https://timeguessr.com", d:"Historic photo — guess where and when. Best single daily for geography and history at once."},
+    {n:"Worldle", u:"https://worldle.teuteuf.fr", d:"Country from its silhouette, six tries."},
+    {n:"Globle", u:"https://globle-game.com/game", d:"Country by hot/cold distance on a 3D globe. Abe Train's other games: trainwrecklabs.com."},
+    {n:"Tradle", u:"https://games.oec.world/en/tradle/", d:"Country from its export treemap. The real one, run by the Observatory of Economic Complexity — the rest are rebuilds."},
+  ]},
+  {t:"Quizzes", note:"pick one", items:[
+    {n:"JetPunk Daily Trivia", u:"https://www.jetpunk.com/daily-trivia", d:"Ten timed multiple-choice questions, new each day. No account needed since January 2026."},
+    {n:"Sporcle", u:"https://www.sporcle.com", d:"The older equivalent, same idea, bigger library."},
+    {n:"Britannica", u:"https://www.britannica.com", d:"The Quiz section — editorially vetted general knowledge."},
+    {n:"Seterra", u:"https://www.geoguessr.com/quiz/seterra", d:"400+ customizable map quizzes. Moved onto GeoGuessr's domain; seterra.com is dead. For actually learning borders."},
+  ]},
+  {t:"Ideas", note:"philosophy · psychology · history", items:[
+    {n:"Aeon", u:"https://aeon.co", f:1, d:"Philosophy, psychology and history longform, commissioned from academics and serious writers. Free."},
+    {n:"Psyche", u:"https://psyche.co", f:1, d:"Aeon's sister site — psychology and practical philosophy."},
+    {n:"Stanford Encyclopedia of Philosophy", u:"https://plato.stanford.edu", f:1, d:"Peer-reviewed, the gold standard. Feed carries new and revised entries; a random entry weekly is its own habit."},
+    {n:"1000-Word Philosophy", u:"https://1000wordphilosophy.com", f:1, d:"Short peer-reviewed introductions. Good on-ramps."},
+    {n:"Nautilus", u:"https://nautil.us", f:1, d:"Science meeting philosophy and culture. Partial paywall."},
+    {n:"JSTOR Daily", u:"https://daily.jstor.org", f:1, d:"Every piece links the free scholarship underneath it."},
+    {n:"Quanta", u:"https://www.quantamagazine.org", f:1, d:"Maths, physics, CS. Best science journalism running."},
+    {n:"The Marginalian", u:"https://www.themarginalian.org", f:1, d:"Maria Popova, twenty years of literature, art and science. Florid, but genuine."},
+    {n:"3 Quarks Daily", u:"https://3quarksdaily.com", f:1, d:"Curated links to everything above, and more."},
+    {n:"Arts & Letters Daily", u:"https://www.aldaily.com", d:"The older, drier curator. Feed is unreliable, so this one you bookmark."},
+    {n:"The Public Domain Review", u:"https://publicdomainreview.org", f:1, d:"Historical oddities, beautifully done."},
+    {n:"Longreads", u:"https://longreads.com", f:1, d:"Daily curated longform picks."},
+    {n:"Works in Progress", u:"https://worksinprogress.co", f:1, d:"Long, careful pieces on science and progress."},
+    {n:"Asterisk", u:"https://asteriskmag.com", f:1, d:"Same register, quarterly."},
+    {n:"Our World in Data", u:"https://ourworldindata.org", f:1, d:"Recalibrates intuitions against actual numbers."},
+    {n:"Atlas Obscura", u:"https://www.atlasobscura.com", f:1, d:"Well-researched curiosities."},
+    {n:"Damn Interesting", u:"https://www.damninteresting.com", f:1, d:"The same, longer and rarer."},
+    {n:"Тоест", u:"https://toest.bg", f:1, d:"Bulgarian essays and criticism — you write in both."},
+  ]},
+  {t:"Programming", note:"the non-slop tier", items:[
+    {n:"LWN.net", u:"https://lwn.net", f:1, d:"Kernel and Linux. Subscription-funded, so no SEO incentive."},
+    {n:"ACM Queue", u:"https://queue.acm.org", f:1, d:"Practitioner-focused peer review."},
+    {n:"Julia Evans", u:"https://jvns.ca", f:1, d:"Thinks in public. No filler."},
+    {n:"Dan Luu", u:"https://danluu.com", f:1, d:"The same, more contrarian."},
+    {n:"Hillel Wayne", u:"https://hillelwayne.com", f:1, d:"Formal methods and software history."},
+    {n:"Red Blob Games", u:"https://www.redblobgames.com", f:1, d:"Interactive explainers on pathfinding, hex grids, procedural generation. Directly useful for the Love2D work."},
+    {n:"Lobsters", u:"https://lobste.rs", f:1, d:"Smaller, better-moderated Hacker News."},
+  ]},
+  {t:"Free courses", note:"browse, not daily", items:[
+    {n:"MIT OpenCourseWare", u:"https://ocw.mit.edu", d:"Full MIT course materials, no signup."},
+    {n:"Open Yale Courses", u:"https://oyc.yale.edu", d:"Whole lecture series. Strong on philosophy and literature."},
+    {n:"Class Central", u:"https://www.classcentral.com", f:1, d:"The aggregator — ~200k courses, filterable by free. Its report blog is in the feed and announces new free ones."},
+    {n:"Complexity Explorer", u:"https://www.complexityexplorer.org", d:"Santa Fe Institute: complexity, networks, dynamics. Underrated."},
+    {n:"Saylor", u:"https://www.saylor.org", d:"Structured, free, certificate-bearing."},
+    {n:"Khan Academy", u:"https://www.khanacademy.org", d:"Same, broader and more elementary."},
+    {n:"Coursera", u:"https://www.coursera.org", d:"Audit mode is free for most courses. Don't pay for the certificate."},
+    {n:"edX", u:"https://www.edx.org", d:"Same deal, different catalogue."},
+  ]},
+  {t:"Writing", note:"prompts and poems", items:[
+    {n:"Reedsy Prompts", u:"https://reedsy.com/creative-writing-prompts", d:"Five themed prompts every Friday plus a weekly contest; 2,700+ archived. Entry costs $5, but the prompts and the deadline are free — and the deadline is the useful part."},
+    {n:"The Time Is Now", u:"https://www.pw.org/writing-prompts-exercises", d:"Poets & Writers: poetry Tuesday, fiction Wednesday, nonfiction Thursday. 1,800+ archived, with craft context."},
+    {n:"r/WritingPrompts", u:"https://www.reddit.com/r/WritingPrompts/", f:1, d:"Volume, uneven quality, fine for a five-minute drill. Feed is filtered to the daily top."},
+    {n:"Poem-a-Day", u:"https://poets.org/poem-a-day", f:1, d:"Academy of American Poets — the only daily series publishing new work by living poets."},
+    {n:"Poem of the Day", u:"https://www.poetryfoundation.org/poems/poem-of-the-day", f:1, d:"Editor-selected from a 58,000-poem archive. Reading a poem daily will do more for your meter than any prompt will."},
+    {n:"OneWord", u:"https://oneword.com", d:"One word, sixty seconds. Minimal-friction daily habit."},
+  ]},
+  {t:"Knowledge & retention", items:[
+    {n:"Wikipedia — On this day", u:"https://en.wikipedia.org/wiki/Main_Page", f:1, d:"On this day and the featured article, both piped in via the featuredfeed API."},
+    {n:"Vital Articles", u:"https://en.wikipedia.org/wiki/Wikipedia:Vital_articles", d:"A structured way to read Wikipedia rather than drifting."},
+    {n:"Anki", u:"https://apps.ankiweb.net", d:"If you want any of this to stick rather than evaporate. Ten minutes daily beats an hour weekly."},
+  ]},
+];
+
+const list = document.getElementById('list');
+const q = document.getElementById('q');
+const count = document.getElementById('count');
+
+list.innerHTML = DATA.map(sec => `
+  <section>
+    <h2>${sec.t}${sec.note ? `<span class="note">${sec.note}</span>` : ''}</h2>
+    ${sec.warn ? `<p class="warn">${sec.warn}</p>` : ''}
+    <ul>
+      ${sec.items.map(i => `
+        <li data-hay="${(i.n + ' ' + i.d + ' ' + sec.t + ' ' + i.u).toLowerCase().replace(/"/g,'')}">
+          <a class="row" href="${i.u}" rel="noopener">
+            <span class="mark ${i.f ? '' : 'manual'}" aria-hidden="true">${i.f ? '▣' : '▢'}</span>
+            <span class="name">${i.n}<span class="host">${new URL(i.u).host.replace(/^www\./,'')}</span></span>
+            <span class="desc">${i.d}</span>
+          </a>
+        </li>`).join('')}
+    </ul>
+  </section>`).join('') + '<p class="empty" id="empty" hidden>No match. <kbd>esc</kbd> to clear.</p>';
+
+const rows = [...document.querySelectorAll('li')];
+let cursor = -1;
+
+function visible(){ return rows.filter(r => !r.classList.contains('hide')); }
+
+function setCursor(i){
+  rows.forEach(r => r.classList.remove('cursor'));
+  const v = visible();
+  if(!v.length) return;
+  cursor = Math.max(0, Math.min(i, v.length - 1));
+  v[cursor].classList.add('cursor');
+  v[cursor].scrollIntoView({block:'nearest'});
+}
+
+function filter(){
+  const term = q.value.trim().toLowerCase();
+  let shown = 0;
+  rows.forEach(r => {
+    const hit = !term || r.dataset.hay.includes(term);
+    r.classList.toggle('hide', !hit);
+    if(hit) shown++;
+  });
+  document.querySelectorAll('section').forEach(s => {
+    s.hidden = ![...s.querySelectorAll('li')].some(l => !l.classList.contains('hide'));
+  });
+  document.getElementById('empty').hidden = shown > 0;
+  count.textContent = term ? `${shown}/${rows.length}` : `${rows.length} links`;
+  cursor = -1;
+  rows.forEach(r => r.classList.remove('cursor'));
+  if(term && shown) setCursor(0);
+}
+
+q.addEventListener('input', filter);
+filter();
+
+document.addEventListener('keydown', e => {
+  const typing = document.activeElement === q;
+  if(e.key === '/' && !typing){ e.preventDefault(); q.focus(); q.select(); return; }
+  if(e.key === 'Escape'){ q.value = ''; filter(); q.blur(); return; }
+  if(typing && !['Enter','ArrowDown','ArrowUp'].includes(e.key)) return;
+  if(e.key === 'j' || e.key === 'ArrowDown'){ e.preventDefault(); setCursor(cursor + 1); }
+  if(e.key === 'k' || e.key === 'ArrowUp'){ e.preventDefault(); setCursor(cursor - 1); }
+  if(e.key === 'Enter'){
+    const v = visible();
+    if(v[cursor]) v[cursor].querySelector('a').click();
+  }
+});
+</script>
+</body>
+</html>
